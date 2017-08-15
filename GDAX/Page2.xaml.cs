@@ -78,7 +78,6 @@ namespace GDAX {
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         private void BTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateBTC();
-
         }
 
         private void ETH_Update_click(object sender, RoutedEventArgs e) {
