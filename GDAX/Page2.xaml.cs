@@ -29,53 +29,23 @@ namespace GDAX {
                 App.firstTime = false;
             }
 
-            
+
         }
 
         async private void InitValues() {
-            await UpdateBTC();
-            await UpdateETH();
-            await UpdateLTC();
-        }
-
-        async private Task UpdateBTC() {
-            await App.GetData("BTC-EUR");
-            BTC_current_price.Text = "Current price: " + App.currency_BTC.ToString();
-
-            await App.GetHistoricValues(3600, "BTC-EUR");
-
-            (BTC_chart.Series[0] as WinRTXamlToolkit.Controls.DataVisualization.Charting.LineSeries).ItemsSource = LoadChartContents();
-        }
-        async private Task UpdateETH() {
-            await App.GetData("ETH-EUR");
-            ETH_current_price.Text = "Current price: " + App.currency_ETH.ToString();
-
-            await App.GetHistoricValues(3600, "ETH-EUR");
-
-            (ETH_Chart.Series[0] as WinRTXamlToolkit.Controls.DataVisualization.Charting.LineSeries).ItemsSource = LoadChartContents();
-        }
-
-        async private Task UpdateLTC() {
-            await App.GetData("LTC-EUR");
-            LTC_curr.Text = "Current price: " + App.currency_LTC.ToString();
-
-            await App.GetHistoricValues(3600, "LTC-EUR");
-
-            List<ChartDataObject> dataSouce = new List<ChartDataObject>();
-
-            for (int i = 0; i < 100; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.pp[i].DateTime, Value = App.pp[i].High };
-                dataSouce.Add(obj);
+            try {
+                await UpdateBTC();
+                await UpdateETH();
+                await UpdateLTC();
             }
-
-            Telerik.UI.Xaml.Controls.Chart.LineSeries series = (Telerik.UI.Xaml.Controls.Chart.LineSeries)testChart.Series[0];
-            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-
-            series.ItemsSource = dataSouce;
+            catch {
+                ETH_curr.Text = "Maybe you have no internet?";
+                BTC_curr.Text = "Maybe you have no internet?";
+                LTC_curr.Text = "Maybe you have no internet?";
+            }
         }
 
-        // //////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void BTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateBTC();
         }
@@ -86,6 +56,64 @@ namespace GDAX {
 
         private void LTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateLTC();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        async private Task UpdateBTC() {
+            await App.GetData("BTC-EUR");
+            BTC_curr.Text = "Current price: " + App.currency_BTC.ToString();
+
+            await App.GetHistoricValues(3600, "BTC-EUR");
+
+            List<ChartDataObject> data = UpdateChartContent();
+
+            Telerik.UI.Xaml.Controls.Chart.LineSeries series = (Telerik.UI.Xaml.Controls.Chart.LineSeries)BTC_Chart.Series[0];
+            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+
+            series.ItemsSource = data;
+        }
+        async private Task UpdateETH() {
+            await App.GetData("ETH-EUR");
+            ETH_curr.Text = "Current price: " + App.currency_ETH.ToString();
+
+            await App.GetHistoricValues(3600, "ETH-EUR");
+
+            //(ETH_Chart.Series[0] as WinRTXamlToolkit.Controls.DataVisualization.Charting.LineSeries).ItemsSource = LoadChartContents();
+            List<ChartDataObject> data = UpdateChartContent();
+
+            Telerik.UI.Xaml.Controls.Chart.LineSeries series = (Telerik.UI.Xaml.Controls.Chart.LineSeries)ETH_Chart.Series[0];
+            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+
+            series.ItemsSource = data;
+        }
+
+        async private Task UpdateLTC() {
+            await App.GetData("LTC-EUR");
+            LTC_curr.Text = "Current price: " + App.currency_LTC.ToString();
+
+            await App.GetHistoricValues(3600, "LTC-EUR");
+
+            List<ChartDataObject> data = UpdateChartContent();
+
+            Telerik.UI.Xaml.Controls.Chart.LineSeries series = (Telerik.UI.Xaml.Controls.Chart.LineSeries)LTC_Chart.Series[0];
+            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+
+            series.ItemsSource = data;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        private List<ChartDataObject> UpdateChartContent() {
+            List<ChartDataObject> data = new List<ChartDataObject>();
+
+            for (int i = 0; i < 100; ++i) {
+                ChartDataObject obj = new ChartDataObject { Date = App.pp[i].DateTime, Value = App.pp[i].High };
+                data.Add(obj);
+            }
+
+            return data;
         }
 
         private List<PricePoint> LoadChartContents() {
@@ -103,3 +131,17 @@ namespace GDAX {
 
     }
 }
+/*
+ *          List<ChartDataObject> dataSouce = new List<ChartDataObject>();
+
+            for (int i = 0; i < 100; ++i) {
+                ChartDataObject obj = new ChartDataObject { Date = App.pp[i].DateTime, Value = App.pp[i].High };
+                dataSouce.Add(obj);
+            }
+
+            Telerik.UI.Xaml.Controls.Chart.LineSeries series = (Telerik.UI.Xaml.Controls.Chart.LineSeries)LTC_Chart.Series[0];
+            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+
+            series.ItemsSource = dataSouce;
+*/

@@ -14,8 +14,8 @@
 		<Style TargetType="Button" x:Key="HeaderUpdateButton">
 			<Setter Property="Background" Value="Transparent"/>
 			<Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-			<Setter Property="FontSize" Value="18"/>
-			<Setter Property="Margin" Value="10"/>
+			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="Margin" Value="18"/>
 			<Setter Property="HorizontalAlignment" Value="Right"/>
 			<Setter Property="VerticalAlignment" Value="Top"/>
 			<Setter Property="Content" Value="&#xE117;"/>
@@ -42,20 +42,20 @@
 
 		<GridViewHeaderItem Grid.Column="0">
 			<StackPanel Orientation="Horizontal">
-				<Image Source="Assets\currency_BTC.png" Width="20" />
-				<TextBlock Text="Bitcoin" FontWeight="Light" Margin="10,0,0,0"/>
+				<Image Source="Assets\currency_BTC.png" Width="30" />
+				<TextBlock Text="Bitcoin" Margin="10,0,0,0" Style="{ThemeResource SubheaderTextBlockStyle}"/>
 			</StackPanel>
 		</GridViewHeaderItem>
 		<GridViewHeaderItem Grid.Column="1">
 			<StackPanel Orientation="Horizontal">
-				<Image Source="Assets\currency_ETH.png" Width="20"/>
-				<TextBlock Text="Ethereum" FontWeight="Light" Margin="10,0,0,0"/>
+				<Image Source="Assets\currency_ETH.png" Width="30"/>
+				<TextBlock Text="Ethereum" Margin="10,0,0,0" Style="{ThemeResource SubheaderTextBlockStyle}"/>
 			</StackPanel>
 		</GridViewHeaderItem>
 		<GridViewHeaderItem Grid.Column="2">
 			<StackPanel Orientation="Horizontal">
-				<Image Source="Assets\currency_LTC.png" Width="20"/>
-				<TextBlock Text="Litecoin" FontWeight="Light" Margin="10,0,0,0"/>
+				<Image Source="Assets\currency_LTC.png" Width="30"/>
+				<TextBlock Text="Litecoin" Margin="10,0,0,0" Style="{ThemeResource SubheaderTextBlockStyle}"/>
 			</StackPanel>
 		</GridViewHeaderItem>
 
@@ -63,7 +63,7 @@
 		<Button Grid.Column="1" Style="{StaticResource HeaderUpdateButton}" Click="ETH_Update_click"/>
 		<Button Grid.Column="2" Style="{StaticResource HeaderUpdateButton}" Click="LTC_Update_click"/>
 
-		<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+		<!-- ///////////////////////////////////////////////////////////////////////////////////////
 		<StackPanel Margin="20,70,0,0" Grid.Column="0">
 
 			<Charting:Chart x:Name="BTC_chart" Style="{StaticResource ChartStyle}">
@@ -78,35 +78,16 @@
 				<TextBlock Name="BTC_from" Text=" yesterday: " Style="{ThemeResource SubtitleTextBlockStyle}"/>
 				<TextBlock Name="BTC_difference"  Style="{ThemeResource SubtitleTextBlockStyle}"/>
 			</StackPanel>
-		</StackPanel>
+		</StackPanel> -->
 
-		<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
-		<StackPanel Margin="20,70,0,0" Grid.Column="1">
-			<Charting:Chart x:Name="ETH_Chart" Style="{StaticResource ChartStyle}">
-				<Charting:LineSeries Title="" IndependentValuePath="Time" DependentValuePath="Value"/>
-			</Charting:Chart>
-
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Name="ETH_current_price" Text="Current_price" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="From" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-				<TextBlock Name="ETH_from" Text=" yesterday: " Style="{ThemeResource SubtitleTextBlockStyle}"/>
-				<TextBlock Name="ETH_difference"  Style="{ThemeResource SubtitleTextBlockStyle}"/>
-			</StackPanel>
-		</StackPanel>
-		
-		
-		
-		<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
-		<Grid Grid.Column="2" Margin="10,50,10,10">
+		<Grid Grid.Column="0" Margin="10,50,10,10">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="auto"/>
 				<RowDefinition Height="auto"/>
 			</Grid.RowDefinitions>
 
-			<telerik:RadCartesianChart x:Name="testChart" Grid.Column="2">
+			<telerik:RadCartesianChart x:Name="BTC_Chart" Grid.Column="2">
 				<telerik:RadCartesianChart.HorizontalAxis>
 					<telerik:DateTimeCategoricalAxis  LabelFitMode="Rotate" LabelInterval="10" />
 				</telerik:RadCartesianChart.HorizontalAxis>
@@ -120,10 +101,67 @@
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>
 
-			<TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" 
-					   Style="{ThemeResource SubheaderTextBlockStyle}"/>
-			<TextBlock Name="LTC_diff" Text="From yesterday: " Grid.Row="2" 
-					   Style="{ThemeResource SubheaderTextBlockStyle}"/>
+			<TextBlock Name="BTC_curr" Text="Current value:"  Grid.Row="1" Margin="10,5"
+					   Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Light"/>
+			<TextBlock Name="BTC_diff" Text="From yesterday:" Grid.Row="2" Margin="10,5"
+					   Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Light"/>
+		</Grid>
+
+		<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+		<Grid Grid.Column="1" Margin="10,50,10,10">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+
+			<telerik:RadCartesianChart x:Name="ETH_Chart" Grid.Column="2">
+				<telerik:RadCartesianChart.HorizontalAxis>
+					<telerik:DateTimeCategoricalAxis  LabelFitMode="Rotate" LabelInterval="10" />
+				</telerik:RadCartesianChart.HorizontalAxis>
+
+				<telerik:RadCartesianChart.VerticalAxis>
+					<telerik:LinearAxis/>
+				</telerik:RadCartesianChart.VerticalAxis>
+
+				<telerik:RadCartesianChart.Series>
+					<telerik:LineSeries Stroke="CadetBlue" StrokeThickness="1"/>
+				</telerik:RadCartesianChart.Series>
+			</telerik:RadCartesianChart>
+
+			<TextBlock Name="ETH_curr" Text="Current value:"  Grid.Row="1" Margin="10,5"
+					   Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Light"/>
+			<TextBlock Name="ETH_diff" Text="From yesterday:" Grid.Row="2" Margin="10,5"
+					   Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Light"/>
+		</Grid>
+
+
+		<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+		<Grid Grid.Column="2" Margin="10,50,10,10">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+
+			<telerik:RadCartesianChart x:Name="LTC_Chart" Grid.Column="2">
+				<telerik:RadCartesianChart.HorizontalAxis>
+					<telerik:DateTimeCategoricalAxis  LabelFitMode="Rotate" LabelInterval="10" />
+				</telerik:RadCartesianChart.HorizontalAxis>
+
+				<telerik:RadCartesianChart.VerticalAxis>
+					<telerik:LinearAxis/>
+				</telerik:RadCartesianChart.VerticalAxis>
+
+				<telerik:RadCartesianChart.Series>
+					<telerik:LineSeries Stroke="CadetBlue" StrokeThickness="1"/>
+				</telerik:RadCartesianChart.Series>
+			</telerik:RadCartesianChart>
+
+			<TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Margin="10,5"
+					   Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Light"/>
+			<TextBlock Name="LTC_diff" Text="From yesterday:" Grid.Row="2" Margin="10,5"
+					   Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Light"/>
 		</Grid>
 
 		

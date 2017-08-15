@@ -7,8 +7,8 @@
     <ProjectGuid>{7E2C342E-1D50-499B-9006-7CD6AC674534}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GDAX</RootNamespace>
-    <AssemblyName>GDAX</AssemblyName>
+    <RootNamespace>CoinBase</RootNamespace>
+    <AssemblyName>CoinBase</AssemblyName>
     <DefaultLanguage>es-ES</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -120,6 +120,56 @@
     <Content Include="Assets\currency_ETH.png" />
     <Content Include="Assets\currency_LTC round.png" />
     <Content Include="Assets\currency_LTC.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\LargeTile.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\LargeTile.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\LargeTile.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\LargeTile.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\LargeTile.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\SmallTile.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\SmallTile.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\SmallTile.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\SmallTile.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\SmallTile.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
