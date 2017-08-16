@@ -6,26 +6,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
+	<Page.Resources>
+		<SolidColorBrush x:Key="CoinBase_Blue" Color="#0d6edd"/>
+	</Page.Resources>
 	
 	<Grid >
-
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-
-
-		<RelativePanel Grid.Row="0" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-			<TextBlock Text="Coinbase" Style="{ThemeResource HeaderTextBlockStyle}"
-                       FontSize="42" Margin="10" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
-                       RelativePanel.AlignLeftWithPanel="True"/>
-			<!--<AutoSuggestBox PlaceholderText="Search" Width="200" Margin="10" 
-							RelativePanel.AlignRightWithPanel="True" QueryIcon="Find"/>-->
-
+		<!-- ThemeResource SystemControlPageBackgroundChromeLowBrush -->
+		<RelativePanel Grid.Row="0" Background="{StaticResource CoinBase_Blue}">
+			<TextBlock Text="Coinbase" Name="Title" 
+					   Style="{ThemeResource HeaderTextBlockStyle}"
+                       FontSize="42" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
+					   Margin="20,20,20,10"
+                       RelativePanel.AlignLeftWithPanel="True" />
+			
 			<Button FontFamily="Segoe MDL2 Assets" Content="&#xE115;" Click="SettingsButton"
-					FontSize="36" Background="Transparent" BorderBrush="Transparent" Margin="10"
+					FontSize="32" Background="Transparent" BorderBrush="Transparent" 
 					Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
-					RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+					Margin="20,20,20,10"
+					RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWith="Title"/>
 
 		</RelativePanel>
 
