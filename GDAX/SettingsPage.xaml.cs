@@ -12,17 +12,5 @@ namespace GDAX {
             this.InitializeComponent();
         }
 
-        private void ThemeToggled(object sender, RoutedEventArgs e) {
-
-            RadioButton rb = sender as RadioButton;
-
-            if (rb.Tag.ToString().Equals("Light"))
-                ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
-
-            else if (rb.Tag.ToString().Equals("Dark"))
-                ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
-
-        }
-
     }
 }

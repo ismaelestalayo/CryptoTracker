@@ -24,27 +24,35 @@
 				   Width="60" Margin="0,-10" 
 				   RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-			<Button Name="SyncAllButton" 
+			<Button Name="ThemeButton" Click="ThemeButton_Click"
+					Background="Transparent" BorderBrush="Transparent"
+					Content="&#xE790;" Foreground="White"
+					FontFamily="Segoe MDL2 Assets" FontSize="24"
+					RelativePanel.AlignVerticalCenterWithPanel="True"
+					RelativePanel.LeftOf="SyncAllButton">
+			</Button>
+			
+			<Button Name="SyncAllButton" Click="SyncAllButton_Click"
 					Background="Transparent" BorderBrush="Transparent"
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.LeftOf="SettingsButton">
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center" Margin="0,5"
 							   FontFamily="Segoe MDL2 Assets" Text="&#xE117;" Foreground="White" FontSize="22"/>
-					<TextBlock Text="Sync All" 
+					<TextBlock Text="Sync All" Visibility="Collapsed"
 							   Foreground="White" Margin="5,0"
 							   FontWeight="Light" FontSize="22"/>
 				</StackPanel>
 			</Button>
 
+
+
 			<Button Name="SettingsButton" Click="SettingsButtonClick"
 					Background="Transparent" BorderBrush="Transparent"
+					Content="&#xE712;" Foreground="White"
+					FontFamily="Segoe MDL2 Assets" FontSize="24"
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.AlignRightWithPanel="True" >
-				<StackPanel Orientation="Horizontal" Margin="5,0">
-					<TextBlock VerticalAlignment="Center" Margin="0,5"
-							   FontFamily="Segoe MDL2 Assets" Text="&#xE712;" Foreground="White" FontSize="22"/>
-				</StackPanel>
 			</Button>
 			<!--					&#xE700; &#xE712; &#xE946;-->
 

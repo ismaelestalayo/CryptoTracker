@@ -9,12 +9,9 @@
 
 	<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
-		<StackPanel Margin="10">
-			<RadioButton x:Name="Light" Content="Light Theme" Tag="Light" Click="ThemeToggled"/>
-			<RadioButton x:Name="Dark" Content="Dark Theme"  Tag="Dark"  Click="ThemeToggled"/>
-		</StackPanel>
-		
-		
-		
+		<TextBlock Text="SETTINGS!" FontSize="64" FontWeight="Light" Margin="20"/>
+
+
+
 	</Grid>
 </Page>

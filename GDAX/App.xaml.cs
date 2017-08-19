@@ -15,6 +15,8 @@ namespace GDAX {
         internal static float currency_BTC;
         internal static float currency_ETH;
         internal static float currency_LTC;
+        internal static float USD_EUR;
+        internal static bool EUR = true;
         internal static bool firstTime = true;
         
         internal static String ss { get; set; }
@@ -87,8 +89,7 @@ namespace GDAX {
             String response;
             try {
                 response = await client.GetStringAsync(URL);
-            }
-            catch {
+            } catch {
                 response = " ";
             }
             var data = JObject.Parse(response);
@@ -99,6 +100,16 @@ namespace GDAX {
                 currency_ETH = (float)data["data"]["amount"];
             else if (currency_pair == "LTC-EUR")
                 currency_LTC = (float)data["data"]["amount"];
+
+            URL = "https://api.coinbase.com/v2/exchange-rates";
+            try {
+                response = await client.GetStringAsync(URL);
+            }
+            catch {
+                response = " ";
+            }
+            data = JObject.Parse(response);
+            USD_EUR = (float)data["data"]["rates"]["EUR"];
         }
 
         async internal static Task GetHistoricValues(int granularity, string currency_pair) {
@@ -142,7 +153,7 @@ namespace GDAX {
                 pp.Clear();
                 //List<PricePoint> p = new List<PricePoint>();
                 for (int i = 0; i < count; i++) {
-                    pp.Add( PricePoint.GetPricePoint(data[i] ) );
+                    pp.Add( PricePoint.GetPricePoint(data[i], currency_pair) );
                 }
                 
 
@@ -156,6 +167,7 @@ namespace GDAX {
         public class PricePoint {
             public int LinuxTime;
             public string Date { get; set; }
+            public string Currency { get; set; }
             public DateTime DateTime { get; set; }
             public float Low { get; set; }
             public float High { get; set; }
@@ -163,8 +175,10 @@ namespace GDAX {
             public float Close { get; set; }
             public float Volume { get; set; }
 
-            public static PricePoint GetPricePoint(JToken test) {
+            public static PricePoint GetPricePoint(JToken test, string currency_pair) {
                 PricePoint p = new PricePoint();
+
+                p.Currency = currency_pair;
 
                 p.LinuxTime = (int)test[0];
                 p.Low = (float)test[1];
@@ -172,6 +186,9 @@ namespace GDAX {
                 p.Open = (float)test[3];
                 p.Close = (float)test[4];
                 p.Volume = (float)test[5];
+
+                if (currency_pair.EndsWith("USD"))
+                    p.Low = p.Low * USD_EUR;
 
                 int unixTimeStamp = p.LinuxTime;
 
@@ -183,6 +200,9 @@ namespace GDAX {
                 return p;
             }
         }
+
+
+
 
     }
 }

@@ -8,6 +8,9 @@ using Windows.UI.Xaml.Controls;
 namespace GDAX {
     public sealed partial class MainPage : Page {
 
+        private bool LightTheme = true;
+        private string content = "&#xE706;";
+
         public MainPage() {
             this.InitializeComponent();
 
@@ -41,6 +44,28 @@ namespace GDAX {
 
             else if (x.Equals("GDAX.SettingsPage"))
                 MainFrame.GoBack();
+        }
+
+        private void ThemeButton_Click(object sender, RoutedEventArgs e) {
+            if (LightTheme) { 
+                ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
+                LightTheme = false;
+            } else {
+                ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
+                LightTheme = true;
+            }
+
+        }
+
+        private void SyncAllButton_Click(object sender, RoutedEventArgs e) {
+            SyncAll();
+        }
+        private async Task SyncAll() {
+            var p = (Page2)MainFrame.Content;
+            p.BTC_Update_click(null, null);
+            p.ETH_Update_click(null, null);
+            p.LTC_Update_click(null, null);
+
         }
     }
 }

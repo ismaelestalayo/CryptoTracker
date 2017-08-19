@@ -192,10 +192,9 @@
 
 			<TextBlock Name="ETH_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
 			<TextBlock Name="ETH_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10"/>
-			<Slider Name="ETH_slider" Grid.Row="3"
-					Style="{StaticResource SliderStyle}" 
-					ToolTipService.ToolTip="a"
-					ValueChanged="ETH_slider_changed" />
+			<Slider	   Name="ETH_slider" Grid.Row="3"
+					   Style="{StaticResource SliderStyle}" ToolTipService.ToolTip="Time span"
+					   ValueChanged="ETH_slider_changed" />
 		</Grid>
 
 
@@ -217,11 +216,10 @@
 				<telerik:RadCartesianChart.Grid>
 					<telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
 				</telerik:RadCartesianChart.Grid>
-
+				
 				<telerik:RadCartesianChart.HorizontalAxis>
 					<telerik:DateTimeContinuousAxis 
 						x:Name="LTC_DateTimeAxis"
-						LabelFitMode="Rotate"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
 				</telerik:RadCartesianChart.HorizontalAxis>
@@ -240,9 +238,9 @@
 
 			<TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
 			<TextBlock Name="LTC_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10"/>
-			<Slider Name="LTC_slider" Grid.Row="3"
-					Style="{StaticResource SliderStyle}"
-					ValueChanged="LTC_slider_changed" />
+			<Slider    Name="LTC_slider" Grid.Row="3" 
+					   Style="{StaticResource SliderStyle}" ToolTipService.ToolTip="Time span" 
+					   ValueChanged="LTC_slider_changed" />
 		</Grid>
 
 
