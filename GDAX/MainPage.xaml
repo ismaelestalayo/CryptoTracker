@@ -8,7 +8,8 @@
     mc:Ignorable="d">
 
 	<Page.Resources>
-		<SolidColorBrush x:Key="CoinBase_Blue" Color="#0d6edd"/>
+		<SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94"/>
+		<SolidColorBrush x:Key="CoinBase_BlueButton" Color="#1f7bc8"/>
 	</Page.Resources>
 	
 	<Grid >
@@ -16,19 +17,36 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<!-- ThemeResource SystemControlPageBackgroundChromeLowBrush -->
-		<RelativePanel Grid.Row="0" Background="{StaticResource CoinBase_Blue}">
-			<TextBlock Text="Coinbase" Name="Title" 
-					   Style="{ThemeResource HeaderTextBlockStyle}"
-                       FontSize="42" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
-					   Margin="20,20,20,10"
-                       RelativePanel.AlignLeftWithPanel="True" />
-			
-			<Button FontFamily="Segoe MDL2 Assets" Content="&#xE115;" Click="SettingsButton"
-					FontSize="32" Background="Transparent" BorderBrush="Transparent" 
-					Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
-					Margin="20,20,20,10"
-					RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWith="Title"/>
+
+		<RelativePanel Grid.Row="0" Background="{StaticResource CoinBase_Blue}" Padding="0,4">
+
+			<Image Name="Logo" Source="Assets/CoinBase Transparent.png" 
+				   Width="60" Margin="0,-10" 
+				   RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+			<Button Name="SyncAllButton" 
+					Background="Transparent" BorderBrush="Transparent"
+					RelativePanel.AlignVerticalCenterWithPanel="True"
+					RelativePanel.LeftOf="SettingsButton">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center" Margin="0,5"
+							   FontFamily="Segoe MDL2 Assets" Text="&#xE117;" Foreground="White" FontSize="22"/>
+					<TextBlock Text="Sync All" 
+							   Foreground="White" Margin="5,0"
+							   FontWeight="Light" FontSize="22"/>
+				</StackPanel>
+			</Button>
+
+			<Button Name="SettingsButton" Click="SettingsButtonClick"
+					Background="Transparent" BorderBrush="Transparent"
+					RelativePanel.AlignVerticalCenterWithPanel="True"
+					RelativePanel.AlignRightWithPanel="True" >
+				<StackPanel Orientation="Horizontal" Margin="5,0">
+					<TextBlock VerticalAlignment="Center" Margin="0,5"
+							   FontFamily="Segoe MDL2 Assets" Text="&#xE712;" Foreground="White" FontSize="22"/>
+				</StackPanel>
+			</Button>
+			<!--					&#xE700; &#xE712; &#xE946;-->
 
 		</RelativePanel>
 

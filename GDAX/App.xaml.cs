@@ -16,10 +16,18 @@ namespace GDAX {
         internal static float currency_ETH;
         internal static float currency_LTC;
         internal static bool firstTime = true;
+        
+        internal static String ss { get; set; }
 
         internal static List<PricePoint> pp = new List<PricePoint>();
 
         static HttpClient client = new HttpClient();
+
+        class Ssttringg {
+            private String GetString() {
+                return ss;
+            }
+        }
 
         public App() {
             this.InitializeComponent();

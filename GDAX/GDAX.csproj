@@ -114,6 +114,7 @@
     <None Include="GDAX_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\CoinBase Transparent.png" />
     <Content Include="Assets\currency_BTC round.png" />
     <Content Include="Assets\currency_BTC.png" />
     <Content Include="Assets\currency_ETH round.png" />
