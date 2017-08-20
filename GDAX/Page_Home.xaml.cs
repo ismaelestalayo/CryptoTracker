@@ -6,10 +6,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
-// La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=234238
-
-namespace GDAX {
-    public sealed partial class Page2 : Page {
+namespace CoinBase {
+    public sealed partial class Page_Home : Page {
 
         internal static int granularityBTC = 3600;
         internal static int granularityETH = 3600;
@@ -18,14 +16,12 @@ namespace GDAX {
         internal static int numETH = 60;
         internal static int numLTC = 60;
 
-        internal static int loop = 0;
-
         public class ChartDataObject {
             public DateTime Date { get; set; }
             public float Value { get; set; }
         }
 
-        public Page2() {
+        public Page_Home() {
             this.InitializeComponent();
             InitValues();
 
@@ -292,7 +288,7 @@ namespace GDAX {
                     LTC_DateTimeAxis.MajorStep = 1;
                     LTC_DateTimeAxis.Minimum = DateTime.Today.AddMonths(-4);
                     granularityLTC = 14400;
-                    numETH = 401;
+                    numLTC = 401;
                     break;
             }
 

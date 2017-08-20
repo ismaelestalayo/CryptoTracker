@@ -1,0 +1,130 @@
+﻿<Page
+    x:Class="CoinBase.Page_LTC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+	NavigationCacheMode="Required">
+
+	<Page.Resources>
+		<Style TargetType="Button" x:Key="HeaderUpdateButton">
+			<Setter Property="Background"		   Value="Transparent"/>
+			<Setter Property="FontFamily"		   Value="Segoe MDL2 Assets"/>
+			<Setter Property="FontSize"			   Value="18"/>
+			<Setter Property="Margin"			   Value="20, 14"/>
+			<Setter Property="HorizontalAlignment" Value="Right"/>
+			<Setter Property="VerticalAlignment"   Value="Top"/>
+			<Setter Property="Content"			   Value="&#xE117;"/>
+		</Style>
+
+		<Style TargetType="TextBlock" x:Key="BottomTextBlockStyle">
+			<Setter Property="FontWeight"		      Value="Light"/>
+			<Setter Property="Margin"			 	  Value="10,5"/>
+			<Setter Property="FontSize"				  Value="20"/>
+			<Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
+		</Style>
+
+		<Style TargetType="Line" x:Key="ChartGridColor">
+			<Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}"/>
+			<Setter Property="StrokeDashArray" Value="3,7"/>
+			<Setter Property="StrokeThickness" Value="1"/>
+		</Style>
+
+		<Style TargetType="Slider" x:Key="SliderStyle">
+			<Setter Property="SnapsTo"		 Value="StepValues" />
+			<Setter Property="StepFrequency" Value="1" />
+			<Setter Property="TickFrequency" Value="1"/>
+			<Setter Property="TickPlacement" Value="BottomRight"/>
+			<Setter Property="Minimum"		 Value="1"/>
+			<Setter Property="Maximum"		 Value="6"/>
+			<Setter Property="Grid.Row"		 Value="3"/>
+			<Setter Property="Margin"		 Value="10,5"/>
+		</Style>
+
+		<SolidColorBrush x:Key="BTC_color"		Color="#FFB119"/>
+		<SolidColorBrush x:Key="BTC_colorLight" Color="#FFB119" Opacity="0.3"/>
+		<SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA"/>
+		<SolidColorBrush x:Key="ETH_colorLight" Color="#6F7CBA" Opacity="0.3"/>
+		<SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5"/>
+		<SolidColorBrush x:Key="LTC_colorLight" Color="#B5B5B5" Opacity="0.3"/>
+
+	</Page.Resources>
+
+	<!-- 
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Headers of the three grids -->
+
+		<GridViewHeaderItem Grid.Column="0" Margin="0,-5">
+			<StackPanel Orientation="Horizontal">
+				<RelativePanel VerticalAlignment="Center" Margin="10, 10, 10, 0">
+					<Ellipse Fill="#B5B5B5" Width="32" Height="32"/>
+					<Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="-3" Data="M12.29 28.04l1.29-5.52-1.58.67.63-2.85 1.64-.68L16.52 10h5.23l-1.52 7.14 2.09-.74-.58 2.7-2.05.8-.9 4.34h8.1l-.99 3.8z" />
+				</RelativePanel>
+				<TextBlock Text="Litecoin" 
+						   Margin="10,5,0,0" 
+						   Style="{ThemeResource SubheaderTextBlockStyle}"/>
+
+			</StackPanel>
+		</GridViewHeaderItem>
+
+		<!-- 
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+		<Grid Grid.Column="0" Margin="10,50,10,10" x:Name="LTC_Row" x:FieldModifier="public">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+
+			<telerik:RadCartesianChart x:Name="LTC_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+
+				<telerik:RadCartesianChart.Behaviors>
+					<telerik:ChartTrackBallBehavior />
+				</telerik:RadCartesianChart.Behaviors>
+
+				<telerik:RadCartesianChart.Grid>
+					<telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
+				</telerik:RadCartesianChart.Grid>
+
+				<telerik:RadCartesianChart.HorizontalAxis>
+					<telerik:DateTimeContinuousAxis 
+						x:Name="LTC_DateTimeAxis"
+						FontWeight="Light" FontFamily="Segoe UI"
+						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+				</telerik:RadCartesianChart.HorizontalAxis>
+
+				<telerik:RadCartesianChart.VerticalAxis>
+					<telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+				</telerik:RadCartesianChart.VerticalAxis>
+
+				<telerik:RadCartesianChart.Series>
+					<telerik:AreaSeries 
+						Stroke="{StaticResource LTC_color}" 
+						StrokeThickness="1" 
+						Fill="{StaticResource LTC_colorLight}"/>
+				</telerik:RadCartesianChart.Series>
+			</telerik:RadCartesianChart>
+
+			<TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
+			<TextBlock Name="LTC_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10"/>
+
+			<Slider Name="LTC_slider" Grid.Row="3"
+					Style="{StaticResource SliderStyle}" 
+					ToolTipService.ToolTip="a"
+					ValueChanged="LTC_slider_changed" />
+		</Grid>
+
+	</Grid>
+</Page>
+

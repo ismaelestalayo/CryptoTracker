@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="CoinBase.Page_Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CoinBase"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	NavigationCacheMode="Required">
+
+	<StackPanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+
+		<StackPanel Orientation="Vertical">
+			<RadioButton Tag="Theme" Content="Light" Name="LightRadioBtn" Click="LightTheme"/>
+			<RadioButton Tag="Theme" Content="Dark"  Name="DarkRadioBtn"  Click="DarkTheme"/>
+		</StackPanel>
+
+
+
+	</StackPanel>
+</Page>

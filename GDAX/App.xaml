@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="GDAX.App"
+    x:Class="CoinBase.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GDAX"
-    RequestedTheme="Light">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<!-- RequestedTheme="Light"> -->
+	
 
 </Application>

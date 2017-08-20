@@ -5,11 +5,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace GDAX {
+namespace CoinBase {
     sealed partial class App : Application {
 
         internal static float currency_BTC;
@@ -18,20 +19,36 @@ namespace GDAX {
         internal static float USD_EUR;
         internal static bool EUR = true;
         internal static bool firstTime = true;
-        
-        internal static String ss { get; set; }
 
         internal static List<PricePoint> pp = new List<PricePoint>();
 
         static HttpClient client = new HttpClient();
 
-        class Ssttringg {
-            private String GetString() {
-                return ss;
-            }
-        }
+        internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
 
         public App() {
+
+            string z;
+
+            try {
+                z = localSettings.Values["Theme"].ToString();
+                
+                if (z != null) {
+                    switch (z) {
+                        case "Light":
+                            this.RequestedTheme = ApplicationTheme.Light;
+                            break;
+                        case "Dark":
+                            this.RequestedTheme = ApplicationTheme.Dark;
+                            break;
+                    }
+                }
+            } catch (Exception ex){
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+            
+
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }

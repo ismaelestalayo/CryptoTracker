@@ -17,7 +17,11 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>GDAX_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>GDAX_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>A2E2BEDEDB2B3833C5ACE3EDA5FCCC8D13B61FE6</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,18 +103,28 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page2.xaml.cs">
-      <DependentUpon>Page2.xaml</DependentUpon>
+    <Compile Include="Page_BTC.xaml.cs">
+      <DependentUpon>Page_BTC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page_ETH.xaml.cs">
+      <DependentUpon>Page_ETH.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page_Home.xaml.cs">
+      <DependentUpon>Page_Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page_LTC.xaml.cs">
+      <DependentUpon>Page_LTC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    <Compile Include="Page_Settings.xaml.cs">
+      <DependentUpon>Page_Settings.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="GDAX_StoreKey.pfx" />
     <None Include="GDAX_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +185,7 @@
     <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -189,11 +204,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Page2.xaml">
+    <Page Include="Page_BTC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingsPage.xaml">
+    <Page Include="Page_ETH.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page_Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page_LTC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page_Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
