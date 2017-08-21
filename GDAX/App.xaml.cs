@@ -18,14 +18,12 @@ namespace CoinBase {
         internal static float currency_LTC;
         internal static float USD_EUR;
         internal static bool EUR = true;
-        internal static bool firstTime = true;
 
         internal static List<PricePoint> pp = new List<PricePoint>();
 
         static HttpClient client = new HttpClient();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
 
         public App() {
 
@@ -53,11 +51,6 @@ namespace CoinBase {
             this.Suspending += OnSuspending;
         }
 
-        /// <summary>
-        /// Se invoca cuando el usuario final inicia la aplicación normalmente. Se usarán otros puntos
-        /// de entrada cuando la aplicación se inicie para abrir un archivo específico, por ejemplo.
-        /// </summary>
-        /// <param name="e">Información detallada acerca de la solicitud y el proceso de inicio.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -99,7 +92,7 @@ namespace CoinBase {
             deferral.Complete();
         }
 
-
+        /////////////////////////////////////////////////////////////////////////////////
         async internal static Task GetData(string currency_pair) {
 
             String URL = "https://api.coinbase.com/v2/prices/" + currency_pair + "/spot";

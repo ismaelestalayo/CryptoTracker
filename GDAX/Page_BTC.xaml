@@ -10,55 +10,54 @@
 
 	<Page.Resources>
 		<Style TargetType="Button" x:Key="HeaderUpdateButton">
-			<Setter Property="Background"		   Value="Transparent"/>
-			<Setter Property="FontFamily"		   Value="Segoe MDL2 Assets"/>
-			<Setter Property="FontSize"			   Value="18"/>
-			<Setter Property="Margin"			   Value="20, 14"/>
-			<Setter Property="HorizontalAlignment" Value="Right"/>
-			<Setter Property="VerticalAlignment"   Value="Top"/>
-			<Setter Property="Content"			   Value="&#xE117;"/>
+			<Setter Property="Background"		   Value="Transparent" />
+			<Setter Property="FontFamily"		   Value="Segoe MDL2 Assets" />
+			<Setter Property="FontSize"			   Value="18" />
+			<Setter Property="Margin"			   Value="20, 14" />
+			<Setter Property="HorizontalAlignment" Value="Right" />
+			<Setter Property="VerticalAlignment"   Value="Top" />
+			<Setter Property="Content"			   Value="&#xE117;" />
 		</Style>
 
 		<Style TargetType="TextBlock" x:Key="BottomTextBlockStyle">
-			<Setter Property="FontWeight"		      Value="Light"/>
-			<Setter Property="Margin"			 	  Value="10,5"/>
-			<Setter Property="FontSize"				  Value="20"/>
-			<Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
+			<Setter Property="FontWeight"		      Value="Light" />
+			<Setter Property="Margin"			 	  Value="10,5" />
+			<Setter Property="FontSize"				  Value="20" />
+			<Setter Property="OpticalMarginAlignment" Value="TrimSideBearings" />
 		</Style>
 
 		<Style TargetType="Line" x:Key="ChartGridColor">
-			<Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}"/>
-			<Setter Property="StrokeDashArray" Value="3,7"/>
-			<Setter Property="StrokeThickness" Value="1"/>
+			<Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}" />
+			<Setter Property="StrokeDashArray" Value="3,7" />
+			<Setter Property="StrokeThickness" Value="1" />
 		</Style>
 
 		<Style TargetType="Slider" x:Key="SliderStyle">
 			<Setter Property="SnapsTo"		 Value="StepValues" />
 			<Setter Property="StepFrequency" Value="1" />
-			<Setter Property="TickFrequency" Value="1"/>
-			<Setter Property="TickPlacement" Value="BottomRight"/>
-			<Setter Property="Minimum"		 Value="1"/>
-			<Setter Property="Maximum"		 Value="6"/>
-			<Setter Property="Grid.Row"		 Value="3"/>
-			<Setter Property="Margin"		 Value="10,5"/>
+			<Setter Property="TickFrequency" Value="1" />
+			<Setter Property="TickPlacement" Value="BottomRight" />
+			<Setter Property="Minimum"		 Value="1" />
+			<Setter Property="Maximum"		 Value="6" />
+			<Setter Property="Grid.Row"		 Value="3" />
+			<Setter Property="Margin"		 Value="10,5" />
 		</Style>
 
-		<SolidColorBrush x:Key="BTC_color"		Color="#FFB119"/>
-		<SolidColorBrush x:Key="BTC_colorLight" Color="#FFB119" Opacity="0.3"/>
-		<SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA"/>
-		<SolidColorBrush x:Key="ETH_colorLight" Color="#6F7CBA" Opacity="0.3"/>
-		<SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5"/>
-		<SolidColorBrush x:Key="LTC_colorLight" Color="#B5B5B5" Opacity="0.3"/>
-
+		<SolidColorBrush x:Key="BTC_color"		Color="#FFB119" />
+		<SolidColorBrush x:Key="BTC_colorLight" Color="#FFB119" Opacity="0.3" />
+		<SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA" />
+		<SolidColorBrush x:Key="ETH_colorLight" Color="#6F7CBA" Opacity="0.3" />
+		<SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5" />
+		<SolidColorBrush x:Key="LTC_colorLight" Color="#B5B5B5" Opacity="0.3" />
 	</Page.Resources>
 
-	<!-- 
+	<!--
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 	<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2*"/>
-			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="2*" />
+			<ColumnDefinition Width="1*" />
 		</Grid.ColumnDefinitions>
 
 		<!-- Headers of the three grids -->
@@ -66,26 +65,25 @@
 		<GridViewHeaderItem Grid.Column="0" Margin="0,-5">
 			<StackPanel Orientation="Horizontal">
 				<RelativePanel VerticalAlignment="Center" Margin="10, 10, 10, 0">
-					<Ellipse Fill="#FFB119" 
-							 Width="32" Height="32"/>
+					<Ellipse Fill="#FFB119"
+							 Width="32" Height="32" />
 					<Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Data="M21.78 15.37c.51-.61.83-1.4.83-2.26 0-2.74-1.6-4.38-4.24-4.38V5.45c0-.12-.1-.22-.22-.22h-1.27c-.11 0-.2.1-.2.21v3.3h-1.7V5.44c0-.12-.1-.22-.22-.22H13.5c-.12 0-.2.1-.21.21v3.3H9.67c-.12 0-.21.09-.21.21v1.31c0 .12.1.22.21.22h.21c.94 0 1.7.79 1.7 1.75v7c0 .92-.68 1.67-1.55 1.75a.21.21 0 0 0-.18.16l-.33 1.32c-.01.06 0 .13.04.19.04.05.1.08.17.08h3.55v3.3c0 .1.1.2.2.2h1.28c.12 0 .21-.1.21-.22v-3.28h1.7v3.3c0 .1.1.2.21.2h1.27c.12 0 .22-.1.22-.22v-3.28h.85c2.65 0 4.24-1.64 4.24-4.37 0-1.28-.68-2.39-1.68-3zm-6.8-4.01h2.54c.94 0 1.7.78 1.7 1.75 0 .96-.76 1.75-1.7 1.75h-2.55v-3.5zm3.39 8.75h-3.4v-3.5h3.4c.93 0 1.7.78 1.7 1.75 0 .96-.77 1.75-1.7 1.75z" />
 				</RelativePanel>
-				<TextBlock Text="Bitcoin" 
-						   Margin="10,5,0,0" 
-						   Style="{ThemeResource SubheaderTextBlockStyle}"/>
-
+				<TextBlock Text="Bitcoin"
+						   Margin="10,5,0,0"
+						   Style="{ThemeResource SubheaderTextBlockStyle}" />
 			</StackPanel>
 		</GridViewHeaderItem>
 
-		<!-- 
+		<!--
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 		<Grid Grid.Column="0" Margin="10,50,10,10" x:Name="BTC_Row" x:FieldModifier="public">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="auto"/>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
 			</Grid.RowDefinitions>
 
 			<telerik:RadCartesianChart x:Name="BTC_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
@@ -95,37 +93,35 @@
 				</telerik:RadCartesianChart.Behaviors>
 
 				<telerik:RadCartesianChart.Grid>
-					<telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
+					<telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}" />
 				</telerik:RadCartesianChart.Grid>
 
 				<telerik:RadCartesianChart.HorizontalAxis>
-					<telerik:DateTimeContinuousAxis 
+					<telerik:DateTimeContinuousAxis
 						x:Name="BTC_DateTimeAxis"
 						FontWeight="Light" FontFamily="Segoe UI"
-						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" />
 				</telerik:RadCartesianChart.HorizontalAxis>
 
 				<telerik:RadCartesianChart.VerticalAxis>
-					<telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+					<telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" />
 				</telerik:RadCartesianChart.VerticalAxis>
 
 				<telerik:RadCartesianChart.Series>
-					<telerik:AreaSeries 
-						Stroke="{StaticResource BTC_color}" 
-						StrokeThickness="1" 
-						Fill="{StaticResource BTC_colorLight}"/>
+					<telerik:AreaSeries
+						Stroke="{StaticResource BTC_color}"
+						StrokeThickness="1"
+						Fill="{StaticResource BTC_colorLight}" />
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>
 
-			<TextBlock Name="BTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
-			<TextBlock Name="BTC_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10"/>
+			<TextBlock Name="BTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
+			<TextBlock Name="BTC_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10" />
 
 			<Slider Name="BTC_slider" Grid.Row="3"
-					Style="{StaticResource SliderStyle}" 
+					Style="{StaticResource SliderStyle}"
 					ToolTipService.ToolTip="a"
 					ValueChanged="BTC_slider_changed" />
 		</Grid>
-
 	</Grid>
 </Page>
-

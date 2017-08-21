@@ -6,11 +6,16 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace CoinBase {
     public sealed partial class MainPage : Page {
 
         private bool LightTheme = true;
+
+        private SolidColorBrush Color_CoinBase       = new SolidColorBrush(Color.FromArgb(255, 0,   91, 148));
+        private SolidColorBrush Color_CoinBaseButton = new SolidColorBrush(Color.FromArgb(255, 33, 132, 215));
+        private SolidColorBrush Color_CoinBaseDark = new SolidColorBrush(Color.FromArgb(255, 0,   49,  80));
 
         public MainPage() {
             this.InitializeComponent();
@@ -36,10 +41,16 @@ namespace CoinBase {
             //titleBar.ButtonInactiveForegroundColor = Color.FromArgb(0, 255, 255, 255);
 
             MainFrame.Navigate(typeof(Page_Home));
+            MenuHome.Background = Color_CoinBaseDark;
         }
 
         private void SettingsButtonClick(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Settings));
+            MenuHome.Background= Color_CoinBase;
+            MenuBTC.Background = Color_CoinBase;
+            MenuETH.Background = Color_CoinBase;
+            MenuLTC.Background = Color_CoinBase;
+            MenuSettings.Background = Color_CoinBaseDark;
         }
 
         private void ThemeButton_Click(object sender, RoutedEventArgs e) {
@@ -56,18 +67,38 @@ namespace CoinBase {
 
         private void MenuHome_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Home));
+            MenuHome.Background= Color_CoinBaseDark;
+            MenuBTC.Background = Color_CoinBase;
+            MenuETH.Background = Color_CoinBase;
+            MenuLTC.Background = Color_CoinBase;
+            MenuSettings.Background = Color_CoinBase;
         }
 
         private void MenuBTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_BTC));
+            MenuHome.Background= Color_CoinBase;
+            MenuBTC.Background = Color_CoinBaseDark;
+            MenuETH.Background = Color_CoinBase;
+            MenuLTC.Background = Color_CoinBase;
+            MenuSettings.Background = Color_CoinBase;
         }
 
         private void MenuETH_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_ETH));
+            MenuHome.Background = Color_CoinBase;
+            MenuBTC.Background = Color_CoinBase;
+            MenuETH.Background = Color_CoinBaseDark;
+            MenuLTC.Background = Color_CoinBase;
+            MenuSettings.Background = Color_CoinBase;
         }
 
         private void MenuLTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_LTC));
+            MenuHome.Background = Color_CoinBase;
+            MenuBTC.Background = Color_CoinBase;
+            MenuETH.Background = Color_CoinBase;
+            MenuLTC.Background = Color_CoinBaseDark;
+            MenuSettings.Background = Color_CoinBase;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////

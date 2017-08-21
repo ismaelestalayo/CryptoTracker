@@ -11,11 +11,8 @@
 	<StackPanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
 		<StackPanel Orientation="Vertical">
-			<RadioButton Tag="Theme" Content="Light" Name="LightRadioBtn" Click="LightTheme"/>
-			<RadioButton Tag="Theme" Content="Dark"  Name="DarkRadioBtn"  Click="DarkTheme"/>
+			<RadioButton Tag="Theme" Content="Light" Name="LightRadioBtn" Click="LightTheme" />
+			<RadioButton Tag="Theme" Content="Dark"  Name="DarkRadioBtn"  Click="DarkTheme" />
 		</StackPanel>
-
-
-
 	</StackPanel>
 </Page>
