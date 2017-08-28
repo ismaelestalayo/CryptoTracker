@@ -19,9 +19,10 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>GDAX_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>A2E2BEDEDB2B3833C5ACE3EDA5FCCC8D13B61FE6</PackageCertificateThumbprint>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxPackageDir>C:\Users\ismae\Desktop\GDAX UWP\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -250,4 +251,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="SpicNSpan" AfterTargets="Clean"> <!-- common vars https://msdn.microsoft.com/en-us/library/c02as0cs.aspx?f=255&MSPPError=-2147217396 -->
+     <RemoveDir Directories="$(TargetDir)" /> <!-- bin -->
+     <RemoveDir Directories="$(SolutionDir).vs" /> <!-- .vs -->
+     <RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" /> <!-- obj -->
+</Target>
 </Project>
