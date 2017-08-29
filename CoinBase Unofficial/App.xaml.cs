@@ -19,7 +19,9 @@ namespace CoinBase {
         internal static float USD_EUR;
         internal static bool EUR = true;
 
-        internal static List<PricePoint> pp = new List<PricePoint>();
+        internal static List<PricePoint> ppBTC = new List<PricePoint>();
+        internal static List<PricePoint> ppETH = new List<PricePoint>();
+        internal static List<PricePoint> ppLTC = new List<PricePoint>();
 
         static HttpClient client = new HttpClient();
 
@@ -43,7 +45,9 @@ namespace CoinBase {
                     }
                 }
             } catch (Exception ex){
-                System.Diagnostics.Debug.WriteLine(ex);
+                // Light theme by default
+                localSettings.Values["Theme"] = "Light";
+                this.RequestedTheme = ApplicationTheme.Light;
             }
             
 
@@ -126,7 +130,7 @@ namespace CoinBase {
             String URL = "https://api.gdax.com/products/" + currency_pair + "/candles";
 
             if (granularity != 0)
-                URL += "?granularity=" + granularity; //https://api.gdax.com/products/ETH-EUR/candles?granularity=60
+                URL += "?granularity=" + granularity;
 
             HttpClient httpClient = new HttpClient();
 
@@ -160,14 +164,27 @@ namespace CoinBase {
 
                 int count = ((JContainer)data).Count;
 
-                pp.Clear();
-                //List<PricePoint> p = new List<PricePoint>();
-                for (int i = 0; i < count; i++) {
-                    pp.Add( PricePoint.GetPricePoint(data[i], currency_pair) );
+                if (currency_pair.StartsWith("BTC")) {
+                    ppBTC.Clear();
+
+                    for (int i = 0; i < count; i++) {
+                        ppBTC.Add(PricePoint.GetPricePoint(data[i], currency_pair));
+                    }
                 }
-                
+                else if (currency_pair.StartsWith("ETH")) {
+                    ppETH.Clear();
 
+                    for (int i = 0; i < count; i++) {
+                        ppETH.Add(PricePoint.GetPricePoint(data[i], currency_pair));
+                    }
+                }
+                else if (currency_pair.StartsWith("LTC")) {
+                    ppLTC.Clear();
 
+                    for (int i = 0; i < count; i++) {
+                        ppLTC.Add(PricePoint.GetPricePoint(data[i], currency_pair));
+                    }
+                }
             }
             catch (Exception ex) {
                 response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;

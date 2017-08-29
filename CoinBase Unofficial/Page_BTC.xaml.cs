@@ -46,24 +46,16 @@ namespace CoinBase {
 
             await App.GetHistoricValues(granularityBTC, "BTC-EUR");
 
-            List<ChartDataObject> data = UpdateChartContent(numBTC);
+            List<ChartDataObject> data = new List<ChartDataObject>();
+            for (int i = 0; i < numBTC; ++i) {
+                ChartDataObject obj = new ChartDataObject { Date = App.ppBTC[i].DateTime, Value = App.ppBTC[i].Low };
+                data.Add(obj);
+            }
+
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private List<ChartDataObject> UpdateChartContent(int num) {
-
-            List<ChartDataObject> data = new List<ChartDataObject>();
-
-            for (int i = 0; i < num; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.pp[i].DateTime, Value = App.pp[i].Low };
-                data.Add(obj);
-            }
-
-            return data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////

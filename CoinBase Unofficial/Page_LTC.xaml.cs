@@ -44,25 +44,17 @@ namespace CoinBase {
 
             await App.GetHistoricValues(granularityLTC, "LTC-USD");
 
-            List<ChartDataObject> data = UpdateChartContent(numLTC);
+            List<ChartDataObject> data = new List<ChartDataObject>();
+            for (int i = 0; i < numLTC; ++i) {
+                ChartDataObject obj = new ChartDataObject { Date = App.ppLTC[i].DateTime, Value = App.ppLTC[i].Low };
+                data.Add(obj);
+            }
+
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private List<ChartDataObject> UpdateChartContent(int num) {
-
-            List<ChartDataObject> data = new List<ChartDataObject>();
-
-            for (int i = 0; i < num; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.pp[i].DateTime, Value = App.pp[i].Low };
-                data.Add(obj);
-            }
-
-            return data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////

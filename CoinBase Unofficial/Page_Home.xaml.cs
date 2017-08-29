@@ -62,7 +62,12 @@ namespace CoinBase {
 
             await App.GetHistoricValues(granularityBTC, "BTC-EUR");
 
-            List<ChartDataObject> data = UpdateChartContent(numBTC);
+            List<ChartDataObject> data = new List<ChartDataObject>();
+            for (int i = 0; i < numBTC; ++i) {
+                ChartDataObject obj = new ChartDataObject { Date = App.ppBTC[i].DateTime, Value = App.ppBTC[i].Low };
+                data.Add(obj);
+            }
+
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
@@ -75,7 +80,11 @@ namespace CoinBase {
 
             await App.GetHistoricValues(granularityETH, "ETH-USD");
 
-            List<ChartDataObject> data = UpdateChartContent(numETH);
+            List<ChartDataObject> data = new List<ChartDataObject>();
+            for (int i = 0; i < numETH; ++i) {
+                ChartDataObject obj = new ChartDataObject { Date = App.ppETH[i].DateTime, Value = App.ppETH[i].Low };
+                data.Add(obj);
+            }
 
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -88,26 +97,18 @@ namespace CoinBase {
             LTC_curr.Text = "Current price: " + App.currency_LTC.ToString() + "€";
 
             await App.GetHistoricValues(granularityLTC, "LTC-USD");
+            
+            List<ChartDataObject> data = new List<ChartDataObject>();
+            for (int i = 0; i < numLTC; ++i) {
+                ChartDataObject obj = new ChartDataObject { Date = App.ppLTC[i].DateTime, Value = App.ppLTC[i].Low };
+                data.Add(obj);
+            }
 
-            List<ChartDataObject> data = UpdateChartContent(numLTC);
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private List<ChartDataObject> UpdateChartContent(int num) {
-
-            List<ChartDataObject> data = new List<ChartDataObject>();
-
-            for (int i = 0; i < num; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.pp[i].DateTime, Value = App.pp[i].Low };
-                data.Add(obj);
-            }
-
-            return data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////

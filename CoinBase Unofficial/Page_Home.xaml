@@ -137,7 +137,7 @@
 				<telerik:RadCartesianChart.Series>
 					<telerik:AreaSeries
 						Stroke="{StaticResource BTC_color}"
-						StrokeThickness="1"
+						StrokeThickness="2"
 						Fill="{StaticResource BTC_colorLight}" />
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>
@@ -184,7 +184,7 @@
 				<telerik:RadCartesianChart.Series>
 					<telerik:AreaSeries
 						Stroke="{StaticResource ETH_color}"
-						StrokeThickness="1"
+						StrokeThickness="2"
 						Fill="{StaticResource ETH_colorLight}" />
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>
@@ -229,7 +229,7 @@
 				<telerik:RadCartesianChart.Series>
 					<telerik:AreaSeries
 						Stroke="{StaticResource LTC_color}"
-						StrokeThickness="1"
+						StrokeThickness="2"
 						Fill="{StaticResource LTC_colorLight}" />
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>

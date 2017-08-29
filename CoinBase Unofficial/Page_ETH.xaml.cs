@@ -1,6 +1,8 @@
 ﻿using CoinBase;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI.Xaml;
@@ -27,6 +29,7 @@ namespace CoinBase {
         async private void InitValues() {
             try {
                 await UpdateETH();
+                await GetStats("ETH-EUR");
 
             } catch (Exception ex) {
                 ETH_curr.Text = "Maybe you have no internet?";
@@ -34,7 +37,8 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void ETH_Update_click(object sender, RoutedEventArgs e) {
+        //For SyncAll button
+        public void ETH_Update_click(object sender, RoutedEventArgs e) { 
             UpdateETH();
             ETH_slider_changed(ETH_slider, null);
         }
@@ -46,24 +50,34 @@ namespace CoinBase {
 
             await App.GetHistoricValues(granularityETH, "ETH-USD");
 
-            List<ChartDataObject> data = UpdateChartContent(numETH);
+            List<ChartDataObject> data = new List<ChartDataObject>();
+            for (int i = 0; i < numETH; ++i) {
+                ChartDataObject obj = new ChartDataObject { Date = App.ppETH[i].DateTime, Value = App.ppETH[i].Low };
+                data.Add(obj);
+            }
+
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private List<ChartDataObject> UpdateChartContent(int num) {
+        async public Task GetStats(string currency_pair) {
+            HttpClient client = new HttpClient();
 
-            List<ChartDataObject> data = new List<ChartDataObject>();
-
-            for (int i = 0; i < num; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.pp[i].DateTime, Value = App.pp[i].Low };
-                data.Add(obj);
+            String URL = "https://api.gdax.com/products/" + currency_pair + "/stats";
+            String response;
+            try {
+                response = await client.GetStringAsync(URL);
+            } catch {
+                response = " ";
             }
+            var data = JObject.Parse(response);
 
-            return data;
+            ETH_Volume30.Text = "Volume last 30 days:" + data["volume_30day"].ToString();
+            ETH_High.Text = "High:" + data["high"].ToString();
+            ETH_Low.Text = "Low:" + data["low"].ToString();
+            ETH_Open.Text = "Open:" + data["open"].ToString();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////

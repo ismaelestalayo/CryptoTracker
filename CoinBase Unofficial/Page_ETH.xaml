@@ -79,7 +79,7 @@
 		<!-- 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<Grid Grid.Column="0" Margin="10,50,10,10" x:Name="ETH_Row" x:FieldModifier="public">
+		<Grid Grid.Column="0" Margin="10,50,10,10">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="auto"/>
@@ -124,6 +124,14 @@
 					ToolTipService.ToolTip="a"
 					ValueChanged="ETH_slider_changed" />
 		</Grid>
+
+		<StackPanel Grid.Column="1" Margin="10, 20">
+			<TextBlock Text="Stats:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="22"/>
+			<TextBlock Text="Volume last 30 days: " Name="ETH_Volume30"/>
+			<TextBlock Text="High: " Name="ETH_High"/>
+			<TextBlock Text="Low: " Name="ETH_Low"/>
+			<TextBlock Text="Open: " Name="ETH_Open"/>
+		</StackPanel>
 
 	</Grid>
 </Page>
