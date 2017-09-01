@@ -6,12 +6,17 @@ Shows graphics for the three most used cryptocurrencies: Bitcoin, Ethereum and L
 It lets you choose a time-span for each of the graphics (last hour/day/week/month...), and also comes with light and dark theme.
 
 <p align = "center">
-  <img src="https://raw.githubusercontent.com/ismaelestalayo/CoinBase/master/GDAX/Assets/Screenshots/Screenshot1.png" 
+  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Light.png?raw=true" 
   width = "100%"/>
 </p>
 
 <p align = "center">
-  <img src="https://raw.githubusercontent.com/ismaelestalayo/CoinBase/master/GDAX/Assets/Screenshots/Screenshot2.png" 
+  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Dark.png?raw=true" 
+  width = "100%"/>
+</p>
+
+<p align = "center">
+  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/LTC%20Light.png?raw=true" 
   width = "100%"/>
 </p>
 
