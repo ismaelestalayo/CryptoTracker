@@ -1,17 +1,22 @@
-# CoinBase
+# [CoinBase](https://www.microsoft.com/store/apps/9n3b47hbvblc)
 CoinBase Unofficial UWP app made with GDAX C# API on VisualStudio 2017.
 
-Currently it shows graphics for Bitcoin, Ethereum and Litecoin, the three most used cryptocurrencies on the market.
+Shows graphics for the three most used cryptocurrencies: Bitcoin, Ethereum and Litecoin.
 
-It lets you choose the time-span of the graphics (last hour/day/week/month...), and also lets you choose between a light and dark theme for the app.
+It lets you choose a time-span for each of the graphics (last hour/day/week/month...), and also comes with light and dark theme.
 
 <p align = "center">
-  <img src="https://raw.githubusercontent.com/ismaelestalayo/CoinBase/master/GDAX/Assets/Screenshots/Screenshot1.png" 
+  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Light.png?raw=true" 
   width = "100%"/>
 </p>
 
 <p align = "center">
-  <img src="https://raw.githubusercontent.com/ismaelestalayo/CoinBase/master/GDAX/Assets/Screenshots/Screenshot2.png" 
+  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Dark.png?raw=true" 
+  width = "100%"/>
+</p>
+
+<p align = "center">
+  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/LTC%20Light.png?raw=true" 
   width = "100%"/>
 </p>
 
@@ -30,6 +35,8 @@ It lets you choose the time-span of the graphics (last hour/day/week/month...), 
 # Future plans:
 - ~~Remember user's choosen theme.~~
 - Log in with CoinBase user account.
+- Live-tile
+- Port to Android (maybe iOS but not cheap)
 
 # Suggest anything at:
 
