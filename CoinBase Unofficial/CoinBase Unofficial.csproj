@@ -201,6 +201,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="DeviceFamily-Mobile\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\Page_BTC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\Page_ETH.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\Page_Home.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\Page_LTC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -251,9 +271,13 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="SpicNSpan" AfterTargets="Clean"> <!-- common vars https://msdn.microsoft.com/en-us/library/c02as0cs.aspx?f=255&MSPPError=-2147217396 -->
-     <RemoveDir Directories="$(TargetDir)" /> <!-- bin -->
-     <RemoveDir Directories="$(SolutionDir).vs" /> <!-- .vs -->
-     <RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" /> <!-- obj -->
-</Target>
+  <Target Name="SpicNSpan" AfterTargets="Clean">
+    <!-- common vars https://msdn.microsoft.com/en-us/library/c02as0cs.aspx?f=255&MSPPError=-2147217396 -->
+    <RemoveDir Directories="$(TargetDir)" />
+    <!-- bin -->
+    <RemoveDir Directories="$(SolutionDir).vs" />
+    <!-- .vs -->
+    <RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" />
+    <!-- obj -->
+  </Target>
 </Project>

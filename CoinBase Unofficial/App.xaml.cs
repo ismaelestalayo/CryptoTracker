@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -13,15 +15,21 @@ using Windows.UI.Xaml.Navigation;
 namespace CoinBase {
     sealed partial class App : Application {
 
-        internal static float currency_BTC;
-        internal static float currency_ETH;
-        internal static float currency_LTC;
         internal static float USD_EUR;
         internal static bool EUR = true;
+
+        internal static float BTC_old;
+        internal static float ETH_old;
+        internal static float LTC_old;
+
+        internal static float BTC_now;
+        internal static float ETH_now;
+        internal static float LTC_now;
 
         internal static List<PricePoint> ppBTC = new List<PricePoint>();
         internal static List<PricePoint> ppETH = new List<PricePoint>();
         internal static List<PricePoint> ppLTC = new List<PricePoint>();
+        internal static PricePoint stats = new PricePoint();
 
         static HttpClient client = new HttpClient();
 
@@ -33,7 +41,7 @@ namespace CoinBase {
 
             try {
                 z = localSettings.Values["Theme"].ToString();
-                
+
                 if (z != null) {
                     switch (z) {
                         case "Light":
@@ -44,12 +52,12 @@ namespace CoinBase {
                             break;
                     }
                 }
-            } catch (Exception ex){
+            } catch (Exception ex) {
                 // Light theme by default
                 localSettings.Values["Theme"] = "Light";
                 this.RequestedTheme = ApplicationTheme.Light;
             }
-            
+
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
@@ -96,7 +104,9 @@ namespace CoinBase {
             deferral.Complete();
         }
 
-        /////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
         async internal static Task GetData(string currency_pair) {
 
             String URL = "https://api.coinbase.com/v2/prices/" + currency_pair + "/spot";
@@ -108,50 +118,45 @@ namespace CoinBase {
             }
             var data = JObject.Parse(response);
 
-            if (currency_pair == "BTC-EUR")
-                currency_BTC = (float)data["data"]["amount"];
-            else if (currency_pair == "ETH-EUR")
-                currency_ETH = (float)data["data"]["amount"];
-            else if (currency_pair == "LTC-EUR")
-                currency_LTC = (float)data["data"]["amount"];
+            if (currency_pair.StartsWith("BTC-EUR")) {
+                BTC_now = (float)data["data"]["amount"];
+            }
+            else if (currency_pair.StartsWith("ETH")) {
+                ETH_now = (float)data["data"]["amount"];
+            }
+            else if (currency_pair.StartsWith("LTC")) {
+                LTC_now = (float)data["data"]["amount"];
+            }
 
             URL = "https://api.coinbase.com/v2/exchange-rates";
             try {
                 response = await client.GetStringAsync(URL);
-            }
-            catch {
+            } catch {
                 response = " ";
             }
             data = JObject.Parse(response);
             USD_EUR = (float)data["data"]["rates"]["EUR"];
         }
 
-        async internal static Task GetHistoricValues(int granularity, string currency_pair) {
-            String URL = "https://api.gdax.com/products/" + currency_pair + "/candles";
+        ////////////////////////////////////////////////////////////////////////////////////////
+        async internal static Task GetHisto(string crypto, string coin, string time, int limit) {
+            String URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
+                + crypto + "&tsym=" + coin + "&limit=" + limit;
 
-            if (granularity != 0)
-                URL += "?granularity=" + granularity;
+            if (limit == 0)
+                URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + coin + "&allData=true";
 
+            Uri requestUri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
 
             //Add a user-agent header to the GET request. 
             var headers = httpClient.DefaultRequestHeaders;
-
-            //The safe way to add a header value is to use the TryParseAdd method and verify the return value is true,
-            //especially if the header value is coming from user input.
-            string header = "ie";
+            String header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
             if (!headers.UserAgent.TryParseAdd(header)) {
                 throw new Exception("Invalid header value: " + header);
             }
 
-            header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-            if (!headers.UserAgent.TryParseAdd(header)) {
-                throw new Exception("Invalid header value: " + header);
-            }
-
-            Uri requestUri = new Uri(URL);
-
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
             string response = "";
 
             try {
@@ -162,35 +167,42 @@ namespace CoinBase {
                 response = await httpResponse.Content.ReadAsStringAsync();
                 var data = JRaw.Parse(response);
 
-                int count = ((JContainer)data).Count;
-
-                if (currency_pair.StartsWith("BTC")) {
+                if (crypto.Equals("BTC")) {
                     ppBTC.Clear();
 
-                    for (int i = 0; i < count; i++) {
-                        ppBTC.Add(PricePoint.GetPricePoint(data[i], currency_pair));
+                    for (int i = 0; i < limit; i++) {
+                        ppBTC.Add(PricePoint.GetPricePoint2(data["Data"][i], coin));
                     }
-                }
-                else if (currency_pair.StartsWith("ETH")) {
+                    BTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                    BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
+
+                } else if (crypto.Equals("ETH")) {
                     ppETH.Clear();
 
-                    for (int i = 0; i < count; i++) {
-                        ppETH.Add(PricePoint.GetPricePoint(data[i], currency_pair));
+                    for (int i = 0; i < limit; i++) {
+                        ppETH.Add(PricePoint.GetPricePoint2(data["Data"][i], coin));
                     }
-                }
-                else if (currency_pair.StartsWith("LTC")) {
+                    ETH_now = (float)Math.Round( (float)data["Data"][limit]["close"], 2);
+                    ETH_old = (float)Math.Round( (float)data["Data"][0]["close"], 2);
+
+                } else if (crypto.Equals("LTC")) {
                     ppLTC.Clear();
 
-                    for (int i = 0; i < count; i++) {
-                        ppLTC.Add(PricePoint.GetPricePoint(data[i], currency_pair));
+                    for (int i = 0; i < limit; i++) {
+                        ppLTC.Add(PricePoint.GetPricePoint2(data["Data"][i], coin));
                     }
+                    LTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                    LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                 }
-            }
-            catch (Exception ex) {
+
+            } catch (Exception ex) {
                 response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
         public class PricePoint {
             public int LinuxTime;
             public string Date { get; set; }
@@ -201,25 +213,32 @@ namespace CoinBase {
             public float Open { get; set; }
             public float Close { get; set; }
             public float Volume { get; set; }
+            public float Volumefrom { get; set; }
+            public float Volumeto { get; set; }
 
-            public static PricePoint GetPricePoint(JToken test, string currency_pair) {
+            public static PricePoint GetPricePoint2(JToken test, string currency_pair) {
                 PricePoint p = new PricePoint();
 
                 p.Currency = currency_pair;
 
-                p.LinuxTime = (int)test[0];
-                p.Low = (float)test[1];
-                p.High = (float)test[2];
-                p.Open = (float)test[3];
-                p.Close = (float)test[4];
-                p.Volume = (float)test[5];
+                p.LinuxTime = (int)test["time"];
+                p.Low = (float)test["low"];
+                p.High = (float)test["high"];
+                p.Open = (float)test["open"];
+                p.Close = (float)test["close"];
+                p.Volumefrom = (float)test["volumefrom"];
+                p.Volumeto = (float)test["volumeto"];
 
-                if (currency_pair.EndsWith("USD"))
+                if (currency_pair.EndsWith("USD") && EUR) {
                     p.Low = p.Low * USD_EUR;
+                }
+                else if (currency_pair.EndsWith("EUR") && !EUR) {
+                    p.Low = p.Low / USD_EUR;
+                }
 
                 int unixTimeStamp = p.LinuxTime;
 
-                System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                 DateTime date = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
                 p.DateTime = date;
                 p.Date = date.ToString();
@@ -227,9 +246,9 @@ namespace CoinBase {
                 return p;
             }
         }
-
-
-
-
     }
+
+
+
 }
+

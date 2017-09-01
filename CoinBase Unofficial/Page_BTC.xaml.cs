@@ -3,16 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 
 namespace CoinBase {
     public sealed partial class Page_BTC : Page {
 
-        internal static int granularityBTC = 3600;
-        internal static int numBTC = 60;
-
+        internal int limit = 60;
+        private string timeSpan = "hour";
 
         public class ChartDataObject {
             public DateTime Date { get; set; }
@@ -42,14 +43,43 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
             await App.GetData("BTC-EUR");
-            BTC_curr.Text = "Current price: " + App.currency_BTC.ToString() + "€";
+            BTC_curr.Text = "Current price: " + App.BTC_now.ToString() + "€";
 
-            await App.GetHistoricValues(granularityBTC, "BTC-EUR");
+            switch (timeSpan) {
+                case "hour":
+                    await App.GetHisto("BTC", "EUR", "minute", limit);
+                    break;
+                case "day":
+                    await App.GetHisto("BTC", "EUR", "minute", limit);
+                    break;
+                case "week":
+                    await App.GetHisto("BTC", "EUR", "hour", limit);
+                    break;
+                case "month":
+                    await App.GetHisto("BTC", "EUR", "hour", limit);
+                    break;
+                case "year":
+                    await App.GetHisto("BTC", "EUR", "day", limit);
+                    break;
+                case "all":
+                    await App.GetHisto("BTC", "EUR", "day", 0);
+                    break;
+            }
 
             List<ChartDataObject> data = new List<ChartDataObject>();
-            for (int i = 0; i < numBTC; ++i) {
+            for (int i = 0; i < limit; ++i) {
                 ChartDataObject obj = new ChartDataObject { Date = App.ppBTC[i].DateTime, Value = App.ppBTC[i].Low };
                 data.Add(obj);
+            }
+
+            float dBTC = ((App.BTC_now / App.BTC_old) - 1) * 100;
+            dBTC = (float)Math.Round(dBTC, 2);
+            BTC_diff.Text = dBTC.ToString() + "%";
+            if (dBTC < 0) {
+                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+            }
+            else {
+                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
             }
 
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
@@ -63,58 +93,63 @@ namespace CoinBase {
             Slider s = (Slider)sender;
             switch (s.Value) {
                 case 1:
-                    BTC_diff.Text = "Last hour: ";
+                    BTC_from.Text = "Last hour: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     BTC_DateTimeAxis.MajorStep = 10;
                     BTC_DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
-                    granularityBTC = 60;
-                    numBTC = 60;
+                    timeSpan = "hour";
+                    limit = 60;
                     break;
+
                 case 2:
-                    BTC_diff.Text = "Last day: ";
+                    BTC_from.Text = "Last day: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     BTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
                     BTC_DateTimeAxis.MajorStep = 6;
-                    granularityBTC = 900;
-                    numBTC = 100;
+                    timeSpan = "day";
+                    limit = 1500;
                     break;
+
                 case 3:
-                    BTC_diff.Text = "Last week: ";
+                    BTC_from.Text = "Last week: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     BTC_DateTimeAxis.MajorStep = 1;
                     BTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-7);
-                    granularityBTC = 3600;
-                    numBTC = 200;
+                    timeSpan = "week";
+                    limit = 168;
                     break;
+
                 case 4:
-                    BTC_diff.Text = "Last month: ";
+                    BTC_from.Text = "Last month: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:d/M}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     BTC_DateTimeAxis.MajorStep = 1;
                     BTC_DateTimeAxis.Minimum = DateTime.Now.AddMonths(-1);
-                    granularityBTC = 14400;
-                    numBTC = 250;
+                    timeSpan = "month";
+                    limit = 744;
                     break;
+
                 case 5:
-                    BTC_diff.Text = "Last year: ";
+                    BTC_from.Text = "Last year: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     BTC_DateTimeAxis.MajorStep = 1;
                     BTC_DateTimeAxis.Minimum = DateTime.MinValue;
-                    granularityBTC = 14400;
-                    numBTC = 401;
+                    timeSpan = "year";
+                    limit = 365;
                     break;
+
                 case 6:
-                    BTC_diff.Text = "Sorry, can't go back in time so far ";
+                    BTC_from.Text = "Sorry, can't go back in time so far ";
                     BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     BTC_DateTimeAxis.MajorStep = 1;
                     BTC_DateTimeAxis.Minimum = DateTime.Today.AddMonths(-4);
-                    granularityBTC = 14400;
-                    numBTC = 401;
+                    timeSpan = "all";
+                    limit = 0;
                     break;
             }
 

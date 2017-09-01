@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="CoinBase.Page_ETH"
+    x:Class="CoinBase.Page_LTC"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -57,19 +57,18 @@
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 	<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2*"/>
-			<ColumnDefinition Width="1*"/>
-		</Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
 
 		<!-- Headers of the three grids -->
 
 		<GridViewHeaderItem Grid.Column="0" Margin="0,-5">
 			<StackPanel Orientation="Horizontal">
 				<RelativePanel VerticalAlignment="Center" Margin="10, 10, 10, 0">
-					<Ellipse Fill="#6F7CBA" Width="32" Height="32"/>
-					<Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Data="M10.13 17.76c-.1-.15-.06-.2.09-.12l5.49 3.09c.15.08.4.08.56 0l5.58-3.08c.16-.08.2-.03.1.11L16.2 25.9c-.1.15-.28.15-.38 0l-5.7-8.13zm.04-2.03a.3.3 0 0 1-.13-.42l5.74-9.2c.1-.15.25-.15.34 0l5.77 9.19c.1.14.05.33-.12.41l-5.5 2.78a.73.73 0 0 1-.6 0l-5.5-2.76z" />
+					<Ellipse Fill="#B5B5B5" Width="32" Height="32"/>
+					<Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="-3" Data="M12.29 28.04l1.29-5.52-1.58.67.63-2.85 1.64-.68L16.52 10h5.23l-1.52 7.14 2.09-.74-.58 2.7-2.05.8-.9 4.34h8.1l-.99 3.8z" />
 				</RelativePanel>
-				<TextBlock Text="Ethereum" 
+				<TextBlock Text="Litecoin" 
 						   Margin="10,5,0,0" 
 						   Style="{ThemeResource SubheaderTextBlockStyle}"/>
 
@@ -79,7 +78,7 @@
 		<!-- 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<Grid Grid.Column="0" Margin="10,50,10,10">
+		<Grid Grid.Column="0" Margin="10,50,10,10" x:Name="LTC_Row" x:FieldModifier="public">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="auto"/>
@@ -87,7 +86,7 @@
 				<RowDefinition Height="auto"/>
 			</Grid.RowDefinitions>
 
-			<telerik:RadCartesianChart x:Name="ETH_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+			<telerik:RadCartesianChart x:Name="LTC_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
 				<telerik:RadCartesianChart.Behaviors>
 					<telerik:ChartTrackBallBehavior />
@@ -99,7 +98,7 @@
 
 				<telerik:RadCartesianChart.HorizontalAxis>
 					<telerik:DateTimeContinuousAxis 
-						x:Name="ETH_DateTimeAxis"
+						x:Name="LTC_DateTimeAxis"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
 				</telerik:RadCartesianChart.HorizontalAxis>
@@ -110,34 +109,23 @@
 
 				<telerik:RadCartesianChart.Series>
 					<telerik:AreaSeries 
-						Stroke="{StaticResource ETH_color}" 
+						Stroke="{StaticResource LTC_color}" 
 						StrokeThickness="1" 
-						Fill="{StaticResource ETH_colorLight}"/>
+						Fill="{StaticResource LTC_colorLight}"/>
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>
 
-			<TextBlock Name="ETH_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
+			<TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
 			<StackPanel Grid.Row="2" Orientation="Horizontal">
-				<TextBlock Name="ETH_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
-				<TextBlock Name="ETH_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+				<TextBlock Name="LTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
+				<TextBlock Name="LTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
 			</StackPanel>
 
-			<Slider Name="ETH_slider" Grid.Row="3"
+			<Slider Name="LTC_slider" Grid.Row="3"
 					Style="{StaticResource SliderStyle}" 
 					ToolTipService.ToolTip="a"
-					ValueChanged="ETH_slider_changed" />
+					ValueChanged="LTC_slider_changed" />
 		</Grid>
-
-		<StackPanel Grid.Column="1" Margin="10, 60">
-			<TextBlock Text="Stats:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="36"/>
-			<TextBlock Text="Volume (30 days): " Name="ETH_Volume30"/>
-			<TextBlock Text="High: " Name="ETH_High"/>
-			<TextBlock Text="Low: " Name="ETH_Low"/>
-			<TextBlock Text="Open: " Name="ETH_Open"/>
-			<TextBlock Text="Diff: " Name="ETH_Diff"/>
-			<TextBlock Text="Old: " Name="ETH_oold"/>
-			<TextBlock Text="New: " Name="ETH_nnew"/>
-		</StackPanel>
 
 	</Grid>
 </Page>

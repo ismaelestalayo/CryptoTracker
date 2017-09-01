@@ -142,9 +142,14 @@
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>
 
-			<TextBlock Name="BTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
-			<TextBlock Name="BTC_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10" />
-
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock                 Text="Current value: " Style="{StaticResource BottomTextBlockStyle}" />
+                <TextBlock Name="BTC_curr" Text="val" Style="{StaticResource BottomTextBlockStyle}" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+				<TextBlock Name="BTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
+				<TextBlock Name="BTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+			</StackPanel>
 			<Slider Name="BTC_slider" Grid.Row="3"
 					Style="{StaticResource SliderStyle}"
 					ToolTipService.ToolTip="a"
@@ -189,8 +194,15 @@
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>
 
-			<TextBlock Name="ETH_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
-			<TextBlock Name="ETH_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10" />
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock                 Text="Current value: "  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
+                <TextBlock Name="ETH_curr" Text="val"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+				<TextBlock Name="ETH_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
+				<TextBlock Name="ETH_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+			</StackPanel>
+			
 			<Slider	   Name="ETH_slider" Grid.Row="3"
 					   Style="{StaticResource SliderStyle}" ToolTipService.ToolTip="Time span"
 					   ValueChanged="ETH_slider_changed" />
@@ -234,8 +246,14 @@
 				</telerik:RadCartesianChart.Series>
 			</telerik:RadCartesianChart>
 
-			<TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
-			<TextBlock Name="LTC_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10" />
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock                 Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
+                <TextBlock Name="LTC_curr" Text="val"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+				<TextBlock Name="LTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
+				<TextBlock Name="LTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+			</StackPanel>
 			<Slider    Name="LTC_slider" Grid.Row="3"
 					   Style="{StaticResource SliderStyle}" ToolTipService.ToolTip="Time span"
 					   ValueChanged="LTC_slider_changed" />

@@ -56,9 +56,8 @@
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 	<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2*" />
-			<ColumnDefinition Width="1*" />
-		</Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
 		<!-- Headers of the three grids -->
 
@@ -86,7 +85,7 @@
 				<RowDefinition Height="auto" />
 			</Grid.RowDefinitions>
 
-			<telerik:RadCartesianChart x:Name="BTC_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+			<telerik:RadCartesianChart x:Name="BTC_Chart" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
 				<telerik:RadCartesianChart.Behaviors>
 					<telerik:ChartTrackBallBehavior />

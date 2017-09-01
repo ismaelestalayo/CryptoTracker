@@ -57,9 +57,8 @@
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 	<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2*"/>
-			<ColumnDefinition Width="1*"/>
-		</Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
 		<!-- Headers of the three grids -->
 
@@ -79,66 +78,55 @@
 		<!-- 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<Grid Grid.Column="0" Margin="10,50,10,10">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="auto"/>
-			</Grid.RowDefinitions>
+        <Grid Grid.Column="0" Margin="10,50,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-			<telerik:RadCartesianChart x:Name="ETH_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+            <telerik:RadCartesianChart x:Name="ETH_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
-				<telerik:RadCartesianChart.Behaviors>
-					<telerik:ChartTrackBallBehavior />
-				</telerik:RadCartesianChart.Behaviors>
+                <telerik:RadCartesianChart.Behaviors>
+                    <telerik:ChartTrackBallBehavior />
+                </telerik:RadCartesianChart.Behaviors>
 
-				<telerik:RadCartesianChart.Grid>
-					<telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
-				</telerik:RadCartesianChart.Grid>
+                <telerik:RadCartesianChart.Grid>
+                    <telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
+                </telerik:RadCartesianChart.Grid>
 
-				<telerik:RadCartesianChart.HorizontalAxis>
-					<telerik:DateTimeContinuousAxis 
+                <telerik:RadCartesianChart.HorizontalAxis>
+                    <telerik:DateTimeContinuousAxis 
 						x:Name="ETH_DateTimeAxis"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
-				</telerik:RadCartesianChart.HorizontalAxis>
+                </telerik:RadCartesianChart.HorizontalAxis>
 
-				<telerik:RadCartesianChart.VerticalAxis>
-					<telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
-				</telerik:RadCartesianChart.VerticalAxis>
+                <telerik:RadCartesianChart.VerticalAxis>
+                    <telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+                </telerik:RadCartesianChart.VerticalAxis>
 
-				<telerik:RadCartesianChart.Series>
-					<telerik:AreaSeries 
+                <telerik:RadCartesianChart.Series>
+                    <telerik:AreaSeries 
 						Stroke="{StaticResource ETH_color}" 
 						StrokeThickness="1" 
 						Fill="{StaticResource ETH_colorLight}"/>
-				</telerik:RadCartesianChart.Series>
-			</telerik:RadCartesianChart>
+                </telerik:RadCartesianChart.Series>
+            </telerik:RadCartesianChart>
 
-			<TextBlock Name="ETH_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
-			<StackPanel Grid.Row="2" Orientation="Horizontal">
-				<TextBlock Name="ETH_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
-				<TextBlock Name="ETH_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
-			</StackPanel>
+            <TextBlock Name="ETH_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <TextBlock Name="ETH_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
+                <TextBlock Name="ETH_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+            </StackPanel>
 
-			<Slider Name="ETH_slider" Grid.Row="3"
+            <Slider Name="ETH_slider" Grid.Row="3"
 					Style="{StaticResource SliderStyle}" 
 					ToolTipService.ToolTip="a"
 					ValueChanged="ETH_slider_changed" />
-		</Grid>
+        </Grid>
 
-		<StackPanel Grid.Column="1" Margin="10, 60">
-			<TextBlock Text="Stats:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="36"/>
-			<TextBlock Text="Volume (30 days): " Name="ETH_Volume30"/>
-			<TextBlock Text="High: " Name="ETH_High"/>
-			<TextBlock Text="Low: " Name="ETH_Low"/>
-			<TextBlock Text="Open: " Name="ETH_Open"/>
-			<TextBlock Text="Diff: " Name="ETH_Diff"/>
-			<TextBlock Text="Old: " Name="ETH_oold"/>
-			<TextBlock Text="New: " Name="ETH_nnew"/>
-		</StackPanel>
-
-	</Grid>
+    </Grid>
 </Page>
 

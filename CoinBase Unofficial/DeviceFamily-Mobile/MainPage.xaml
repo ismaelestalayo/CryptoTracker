@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-	<Page.Resources>
+    <Page.Resources>
 		<SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
 		<SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
 		<SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
@@ -24,8 +24,9 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
 
 		<RelativePanel Grid.Row="0" Background="{StaticResource CoinBase_Blue}"
 					   Padding="0,0" BorderBrush="#003150" BorderThickness="0,0,0,5">
@@ -64,7 +65,24 @@
 		</RelativePanel>
 
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<SplitView Name="MySplitView" Grid.Row="1"
+        <CommandBar Grid.Row="2">
+            <AppBarButton>
+                <TextBlock Text="&#xE10F;" Foreground="Black" FontSize="20" 
+                           FontFamily="Segoe MDL2 Assets"/>
+            </AppBarButton>
+            <AppBarSeparator/>
+            <AppBarButton Icon="Back" Label="Back" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Stop" Label="Stop" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Play" Label="Play" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Forward" Label="Forward" Click="AppBarButton_Click"/>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Like" Label="Like" Click="AppBarButton_Click"/>
+                <AppBarButton Icon="Dislike" Label="Dislike" Click="AppBarButton_Click"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+
+        <SplitView Name="MySplitView" Grid.Row="1"
 				   CompactPaneLength="55" OpenPaneLength="260"
 				   DisplayMode="CompactOverlay" Grid.ColumnSpan="2">
 
@@ -77,7 +95,7 @@
 								<Ellipse Fill="{StaticResource CoinBase_BlueButton}" Width="32" Height="32" Name="Ellipse1" />
 								<TextBlock Text="&#xE10F;" Foreground="White" FontSize="20" FontFamily="Segoe MDL2 Assets"
 										   RelativePanel.AlignVerticalCenterWithPanel="True"
-								RelativePanel.AlignHorizontalCenterWithPanel="True" />
+								           RelativePanel.AlignHorizontalCenterWithPanel="True" />
 							</RelativePanel>
 
 							<TextBlock Text="Home" Style="{StaticResource RelativePanelMenus}" />

@@ -117,7 +117,10 @@
 			</telerik:RadCartesianChart>
 
 			<TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
-			<TextBlock Name="LTC_diff" Text="From yesterday:" Grid.Row="2" Style="{StaticResource BottomTextBlockStyle}" Margin="10,5,10,10"/>
+			<StackPanel Grid.Row="2" Orientation="Horizontal">
+				<TextBlock Name="LTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
+				<TextBlock Name="LTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+			</StackPanel>
 
 			<Slider Name="LTC_slider" Grid.Row="3"
 					Style="{StaticResource SliderStyle}" 
