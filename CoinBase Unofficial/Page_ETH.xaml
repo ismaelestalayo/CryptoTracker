@@ -134,10 +134,8 @@
 			<TextBlock Text="High: " Name="ETH_High"/>
 			<TextBlock Text="Low: " Name="ETH_Low"/>
 			<TextBlock Text="Open: " Name="ETH_Open"/>
-			<TextBlock Text="Diff: " Name="ETH_Diff"/>
-			<TextBlock Text="Old: " Name="ETH_oold"/>
-			<TextBlock Text="New: " Name="ETH_nnew"/>
-		</StackPanel>
+            <TextBlock Text="Diff: " Name="ETH_Diff"/>
+        </StackPanel>
 
 	</Grid>
 </Page>

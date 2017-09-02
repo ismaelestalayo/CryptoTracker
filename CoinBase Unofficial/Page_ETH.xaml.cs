@@ -46,27 +46,32 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateETH() {
-            await App.GetData("ETH-EUR");
-            ETH_curr.Text = "Current price: " + App.ETH_now.ToString() + "€";
+            await App.GetData("ETH");
+            ETH_curr.Text = "Current price: " + App.ETH_now.ToString();
+            if (App.coin.Equals("EUR"))
+                ETH_curr.Text += "€";
+            else {
+                ETH_curr.Text += "$";
+            }
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("ETH", "EUR", "minute", limit);
+                    await App.GetHisto("ETH", "minute", limit);
                     break;
                 case "day":
-                    await App.GetHisto("ETH", "EUR", "minute", limit);
+                    await App.GetHisto("ETH", "minute", limit);
                     break;
                 case "week":
-                    await App.GetHisto("ETH", "EUR", "hour",   limit);
+                    await App.GetHisto("ETH", "hour",   limit);
                     break;
                 case "month":
-                    await App.GetHisto("ETH", "EUR", "hour",   limit);
+                    await App.GetHisto("ETH", "hour",   limit);
                     break;
                 case "year":
-                    await App.GetHisto("ETH", "EUR", "day",    limit);
+                    await App.GetHisto("ETH", "day",    limit);
                     break;
                 case "all":
-                    await App.GetHisto("ETH", "EUR", "day",    0);
+                    await App.GetHisto("ETH", "day",    0);
                     break;
             }
 

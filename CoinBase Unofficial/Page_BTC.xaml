@@ -121,10 +121,20 @@
 				<TextBlock Name="BTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
 			</StackPanel>
 
-			<Slider Name="BTC_slider" Grid.Row="3"
+            <Slider Name="BTC_slider" Grid.Row="3"
 					Style="{StaticResource SliderStyle}"
 					ToolTipService.ToolTip="a"
 					ValueChanged="BTC_slider_changed" />
-		</Grid>
-	</Grid>
+        </Grid>
+
+        <StackPanel Grid.Column="1" Margin="10, 60">
+            <TextBlock Text="Stats:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="36"/>
+            <TextBlock Text="Volume (30 days): " Name="BTC_Volume30"/>
+            <TextBlock Text="High: " Name="BTC_High"/>
+            <TextBlock Text="Low: " Name="BTC_Low"/>
+            <TextBlock Text="Open: " Name="BTC_Open"/>
+            <TextBlock Text="Diff: " Name="BTC_Diff"/>
+        </StackPanel>
+
+    </Grid>
 </Page>

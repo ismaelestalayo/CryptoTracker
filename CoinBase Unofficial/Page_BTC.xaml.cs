@@ -42,27 +42,32 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
-            await App.GetData("BTC-EUR");
-            BTC_curr.Text = "Current price: " + App.BTC_now.ToString() + "€";
+            await App.GetData("BTC");
+            BTC_curr.Text = "Current price: " + App.BTC_now.ToString();
+            if (App.coin.Equals("EUR")) {
+                BTC_curr.Text += "€";
+            } else {
+                BTC_curr.Text += "$";
+            }
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("BTC", "EUR", "minute", limit);
+                    await App.GetHisto("BTC", "minute", limit);
                     break;
                 case "day":
-                    await App.GetHisto("BTC", "EUR", "minute", limit);
+                    await App.GetHisto("BTC", "minute", limit);
                     break;
                 case "week":
-                    await App.GetHisto("BTC", "EUR", "hour", limit);
+                    await App.GetHisto("BTC", "hour", limit);
                     break;
                 case "month":
-                    await App.GetHisto("BTC", "EUR", "hour", limit);
+                    await App.GetHisto("BTC", "hour", limit);
                     break;
                 case "year":
-                    await App.GetHisto("BTC", "EUR", "day", limit);
+                    await App.GetHisto("BTC", "day", limit);
                     break;
                 case "all":
-                    await App.GetHisto("BTC", "EUR", "day", 0);
+                    await App.GetHisto("BTC", "day", 0);
                     break;
             }
 

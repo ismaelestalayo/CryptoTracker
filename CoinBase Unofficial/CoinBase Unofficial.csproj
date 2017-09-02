@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\CoinBase Transparent.png" />
+    <Content Include="Assets\coinbase.png" />
     <Content Include="Assets\currency_BTC round.png" />
     <Content Include="Assets\currency_BTC.png" />
     <Content Include="Assets\currency_ETH round.png" />
@@ -259,6 +260,11 @@
     <PackageReference Include="WinRTXamlToolkit.Controls.DataVisualization.UWP">
       <Version>2.3.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.16257.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -63,7 +63,7 @@
 
         <!-- Headers of the three grids -->
 
-        <GridViewHeaderItem Grid.Row="0" Margin="0,-15">
+        <GridViewHeaderItem Grid.Row="0" Margin="0, -20">
             <StackPanel Orientation="Horizontal">
                 <RelativePanel VerticalAlignment="Center" Margin="0, 10, 0, 0">
                     <Ellipse Fill="#FFB119"
@@ -75,9 +75,13 @@
 						   Style="{ThemeResource SubheaderTextBlockStyle}" />
                 <TextBlock Name="BTC_curr" Text="Val" VerticalAlignment="Bottom" 
                            Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
+                <TextBlock Text="|" VerticalAlignment="Center"
+                           Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
+                <TextBlock Name="BTC_diff" Text="%" VerticalAlignment="Bottom"
+                           Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
             </StackPanel>
         </GridViewHeaderItem>
-        <GridViewHeaderItem Grid.Row="1" Margin="0, -15">
+        <GridViewHeaderItem Grid.Row="1" Margin="0, -20">
             <StackPanel Orientation="Horizontal">
                 <RelativePanel VerticalAlignment="Center" Margin="0, 10, 10, 0">
                     <Ellipse Fill="#6F7CBA" Width="32" Height="32" />
@@ -88,9 +92,13 @@
 						   Style="{ThemeResource SubheaderTextBlockStyle}" />
                 <TextBlock Name="ETH_curr" Text="Val:" VerticalAlignment="Bottom" 
                            Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
+                <TextBlock Text="|" VerticalAlignment="Center"
+                           Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
+                <TextBlock Name="ETH_diff" Text="%" VerticalAlignment="Bottom"
+                           Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
             </StackPanel>
         </GridViewHeaderItem>
-        <GridViewHeaderItem Grid.Row="2" Margin="0,-15">
+        <GridViewHeaderItem Grid.Row="2" Margin="0, -20">
             <StackPanel Orientation="Horizontal">
                 <RelativePanel VerticalAlignment="Center" Margin="0, 10, 10, 0">
                     <Ellipse Fill="#B5B5B5" Width="32" Height="32" />
@@ -101,17 +109,17 @@
 						   Style="{ThemeResource SubheaderTextBlockStyle}" />
                 <TextBlock Name="LTC_curr" Text="Val:" VerticalAlignment="Bottom"
                            Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
+                <TextBlock Text="|" VerticalAlignment="Center"
+                           Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
+                <TextBlock Name="LTC_diff" Text="%" VerticalAlignment="Bottom"
+                           Style="{StaticResource BottomTextBlockStyle}" FontSize="24"/>
             </StackPanel>
         </GridViewHeaderItem>
-
-        <Button Grid.Row="0" Style="{StaticResource HeaderUpdateButton}" Click="BTC_Update_click" />
-        <Button Grid.Row="1" Style="{StaticResource HeaderUpdateButton}" Click="ETH_Update_click" />
-        <Button Grid.Row="2" Style="{StaticResource HeaderUpdateButton}" Click="LTC_Update_click" />
 
         <!--
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <Grid Grid.Row="0" Margin="10,50,10,10" x:Name="BTC_Row" x:FieldModifier="public">
+        <Grid Grid.Row="0" Margin="0, 60, 0, 0" x:Name="BTC_Row" x:FieldModifier="public">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
@@ -147,21 +155,10 @@
 						Fill="{StaticResource BTC_colorLight}" />
                 </telerik:RadCartesianChart.Series>
             </telerik:RadCartesianChart>
-
-
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBlock Name="BTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
-                <TextBlock Name="BTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
-            </StackPanel>
-            
-            <Slider Name="BTC_slider" Grid.Row="3" Visibility="Collapsed"
-					Style="{StaticResource SliderStyle}"
-					ValueChanged="BTC_slider_changed" />
-
         </Grid>
 
         <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <Grid Grid.Row="1" Margin="10,50,10,10" x:Name="ETH_Row" x:FieldModifier="public">
+        <Grid Grid.Row="1" Margin="0, 60, 0, 0" x:Name="ETH_Row" x:FieldModifier="public">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
@@ -197,20 +194,10 @@
 						Fill="{StaticResource ETH_colorLight}" />
                 </telerik:RadCartesianChart.Series>
             </telerik:RadCartesianChart>
-            
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBlock Name="ETH_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
-                <TextBlock Name="ETH_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
-            </StackPanel>
-            
-
-            <Slider	Name="ETH_slider" Grid.Row="3" Visibility="Collapsed"
-					Style="{StaticResource SliderStyle}" ToolTipService.ToolTip="Time span"
-					ValueChanged="ETH_slider_changed" />
         </Grid>
 
         <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <Grid Grid.Row="2" Margin="10,50,10,10" x:Name="LTC_Row" x:FieldModifier="public">
+        <Grid Grid.Row="2" Margin="0, 60, 0, 0" x:Name="LTC_Row" x:FieldModifier="public">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
@@ -246,15 +233,6 @@
 						Fill="{StaticResource LTC_colorLight}" />
                 </telerik:RadCartesianChart.Series>
             </telerik:RadCartesianChart>
-            
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBlock Name="LTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
-                <TextBlock Name="LTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
-            </StackPanel>
-
-                <Slider Name="LTC_slider" Grid.Row="3" Visibility="Collapsed"
-					Style="{StaticResource SliderStyle}" ToolTipService.ToolTip="Time span"
-					ValueChanged="LTC_slider_changed" />
         </Grid>
     </Grid>
 </Page>

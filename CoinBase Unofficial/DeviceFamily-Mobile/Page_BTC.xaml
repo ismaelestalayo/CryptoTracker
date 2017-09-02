@@ -61,7 +61,7 @@
 
 		<!-- Headers of the three grids -->
 
-		<GridViewHeaderItem Grid.Column="0" Margin="0,-5">
+		<GridViewHeaderItem Grid.Column="0" Margin="0, -15">
 			<StackPanel Orientation="Horizontal">
 				<RelativePanel VerticalAlignment="Center" Margin="10, 10, 10, 0">
 					<Ellipse Fill="#FFB119"
@@ -77,7 +77,7 @@
 		<!--
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<Grid Grid.Column="0" Margin="10,50,10,10" x:Name="BTC_Row" x:FieldModifier="public">
+		<Grid Grid.Column="0" Margin="10,60,10,10">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*" />
 				<RowDefinition Height="auto" />

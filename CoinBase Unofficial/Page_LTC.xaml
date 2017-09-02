@@ -79,55 +79,64 @@
 		<!-- 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<Grid Grid.Column="0" Margin="10,50,10,10" x:Name="LTC_Row" x:FieldModifier="public">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="auto"/>
-			</Grid.RowDefinitions>
+        <Grid Grid.Column="0" Margin="10,50,10,10" x:Name="LTC_Row" x:FieldModifier="public">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-			<telerik:RadCartesianChart x:Name="LTC_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+            <telerik:RadCartesianChart x:Name="LTC_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
-				<telerik:RadCartesianChart.Behaviors>
-					<telerik:ChartTrackBallBehavior />
-				</telerik:RadCartesianChart.Behaviors>
+                <telerik:RadCartesianChart.Behaviors>
+                    <telerik:ChartTrackBallBehavior />
+                </telerik:RadCartesianChart.Behaviors>
 
-				<telerik:RadCartesianChart.Grid>
-					<telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
-				</telerik:RadCartesianChart.Grid>
+                <telerik:RadCartesianChart.Grid>
+                    <telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
+                </telerik:RadCartesianChart.Grid>
 
-				<telerik:RadCartesianChart.HorizontalAxis>
-					<telerik:DateTimeContinuousAxis 
+                <telerik:RadCartesianChart.HorizontalAxis>
+                    <telerik:DateTimeContinuousAxis 
 						x:Name="LTC_DateTimeAxis"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
-				</telerik:RadCartesianChart.HorizontalAxis>
+                </telerik:RadCartesianChart.HorizontalAxis>
 
-				<telerik:RadCartesianChart.VerticalAxis>
-					<telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
-				</telerik:RadCartesianChart.VerticalAxis>
+                <telerik:RadCartesianChart.VerticalAxis>
+                    <telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+                </telerik:RadCartesianChart.VerticalAxis>
 
-				<telerik:RadCartesianChart.Series>
-					<telerik:AreaSeries 
+                <telerik:RadCartesianChart.Series>
+                    <telerik:AreaSeries 
 						Stroke="{StaticResource LTC_color}" 
 						StrokeThickness="1" 
 						Fill="{StaticResource LTC_colorLight}"/>
-				</telerik:RadCartesianChart.Series>
-			</telerik:RadCartesianChart>
+                </telerik:RadCartesianChart.Series>
+            </telerik:RadCartesianChart>
 
-			<TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
-			<StackPanel Grid.Row="2" Orientation="Horizontal">
-				<TextBlock Name="LTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
-				<TextBlock Name="LTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
-			</StackPanel>
+            <TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <TextBlock Name="LTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
+                <TextBlock Name="LTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+            </StackPanel>
 
-			<Slider Name="LTC_slider" Grid.Row="3"
+            <Slider Name="LTC_slider" Grid.Row="3"
 					Style="{StaticResource SliderStyle}" 
 					ToolTipService.ToolTip="a"
 					ValueChanged="LTC_slider_changed" />
-		</Grid>
+        </Grid>
 
-	</Grid>
+        <StackPanel Grid.Column="1" Margin="10, 60">
+            <TextBlock Text="Stats:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="36"/>
+            <TextBlock Text="Volume (30 days): " Name="LTC_Volume30"/>
+            <TextBlock Text="High: " Name="LTC_High"/>
+            <TextBlock Text="Low: " Name="LTC_Low"/>
+            <TextBlock Text="Open: " Name="LTC_Open"/>
+            <TextBlock Text="Diff: " Name="LTC_Diff"/>
+        </StackPanel>
+
+    </Grid>
 </Page>
 

@@ -41,27 +41,32 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateLTC() {
-            await App.GetData("LTC-EUR");
-            LTC_curr.Text = "Current price: " + App.LTC_now.ToString() + "€";
+            await App.GetData("LTC");
+            LTC_curr.Text = "Current price: " + App.LTC_now.ToString();
+            if (App.coin.Equals("EUR"))
+                LTC_curr.Text += "€";
+            else {
+                LTC_curr.Text += "$";
+            }
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("LTC", "EUR", "minute", limit);
+                    await App.GetHisto("LTC", "minute", limit);
                     break;
                 case "day":
-                    await App.GetHisto("LTC", "EUR", "minute", limit);
+                    await App.GetHisto("LTC", "minute", limit);
                     break;
                 case "week":
-                    await App.GetHisto("LTC", "EUR", "hour", limit);
+                    await App.GetHisto("LTC", "hour", limit);
                     break;
                 case "month":
-                    await App.GetHisto("LTC", "EUR", "hour", limit);
+                    await App.GetHisto("LTC", "hour", limit);
                     break;
                 case "year":
-                    await App.GetHisto("LTC", "EUR", "day", limit);
+                    await App.GetHisto("LTC", "day", limit);
                     break;
                 case "all":
-                    await App.GetHisto("LTC", "EUR", "day", 0);
+                    await App.GetHisto("LTC", "day", 0);
                     break;
             }
 

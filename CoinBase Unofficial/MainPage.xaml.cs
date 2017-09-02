@@ -26,19 +26,25 @@ namespace CoinBase {
 
             titleBar.BackgroundColor = Color.FromArgb(255, 0, 91, 148);
             titleBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
+            titleBar.ButtonBackgroundColor = Color.FromArgb(255, 0, 91, 148);
+            titleBar.ButtonForegroundColor = Color.FromArgb(255, 255, 255, 255);
 
-            titleBar.InactiveBackgroundColor = Color.FromArgb(0, 0, 91, 148);
-            titleBar.InactiveForegroundColor = Color.FromArgb(0, 255, 255, 255);
+            titleBar.InactiveBackgroundColor = Color.FromArgb(255, 0, 91, 148);
+            titleBar.InactiveForegroundColor = Color.FromArgb(255, 255, 255, 255);
 
             /// Alpha channel does nothing 
             /// (guess it's not supported on TitleBars
-
-            titleBar.ButtonBackgroundColor = Color.FromArgb(0, 0, 91, 148);
-            titleBar.ButtonForegroundColor = Color.FromArgb(0, 255, 255, 255);
+            
             //titleBar.ButtonHoverBackgroundColor = Color.FromArgb(0, 20, 20, 20);
             //titleBar.ButtonPressedBackgroundColor = Color.FromArgb(0, 50, 50, 50);
             titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(0, 0, 91, 148);
             //titleBar.ButtonInactiveForegroundColor = Color.FromArgb(0, 255, 255, 255);
+
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
+                var statusBar = StatusBar.GetForCurrentView();
+                statusBar.BackgroundColor = Color.FromArgb(255, 0, 91, 148);
+                statusBar.BackgroundOpacity = 1;
+            }
 
             MainFrame.Navigate(typeof(Page_Home));
             MenuHome.Background = Color_CoinBaseDark;

@@ -62,7 +62,7 @@
 
 		<!-- Headers of the three grids -->
 
-		<GridViewHeaderItem Grid.Column="0" Margin="0,-5">
+		<GridViewHeaderItem Grid.Column="0" Margin="0, -15">
 			<StackPanel Orientation="Horizontal">
 				<RelativePanel VerticalAlignment="Center" Margin="10, 10, 10, 0">
 					<Ellipse Fill="#B5B5B5" Width="32" Height="32"/>
@@ -78,7 +78,7 @@
 		<!-- 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<Grid Grid.Column="0" Margin="10,50,10,10" x:Name="LTC_Row" x:FieldModifier="public">
+        <Grid Grid.Column="0" Margin="10,60,10,10">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="auto"/>
@@ -86,7 +86,7 @@
 				<RowDefinition Height="auto"/>
 			</Grid.RowDefinitions>
 
-			<telerik:RadCartesianChart x:Name="LTC_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+			<telerik:RadCartesianChart x:Name="LTC_Chart" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
 				<telerik:RadCartesianChart.Behaviors>
 					<telerik:ChartTrackBallBehavior />

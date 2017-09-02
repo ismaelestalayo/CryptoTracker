@@ -8,11 +8,26 @@
     mc:Ignorable="d"
 	NavigationCacheMode="Required">
 
-	<StackPanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+	<RelativePanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
-		<StackPanel Orientation="Vertical">
-			<RadioButton Tag="Theme" Content="Light" Name="LightRadioBtn" Click="LightTheme" />
-			<RadioButton Tag="Theme" Content="Dark"  Name="DarkRadioBtn"  Click="DarkTheme" />
-		</StackPanel>
-	</StackPanel>
+        <StackPanel Margin="20">
+
+            <ToggleSwitch Name="ThemeSwitcher" Header="Theme" 
+                          OffContent="Light" OnContent="Dark" 
+                          Toggled="ThemeToogled"/>
+            <ToggleSwitch Name="CoinSwitcher" Header="Coin" 
+                          OffContent="EUR" OnContent="USD" 
+                          Toggled="CoinToogled"/>
+            
+        </StackPanel>
+
+        <StackPanel RelativePanel.AlignBottomWithPanel="True" Margin="20">
+            <Image Source="Assets/coinbase.png" Width="50" HorizontalAlignment="Left" Margin="0, 10"/>
+            <TextBlock Text="CoinBase Unnoficial" Style="{ThemeResource FlyoutPickerTitleTextBlockStyle}"/>
+            <TextBlock Text="By Ismael Estalayo" Style="{ThemeResource BodyTextBlockStyle}"/>
+            <TextBlock Text="Version: 1.2.0" Style="{ThemeResource BodyTextBlockStyle}"/>
+            <HyperlinkButton Content="http://ismaelestalayo.github.io/" Margin="0, -6, 0, 0"/>
+        </StackPanel>
+        
+    </RelativePanel>
 </Page>

@@ -56,27 +56,32 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
-            await App.GetData("BTC-EUR");
-            BTC_curr.Text = App.BTC_now.ToString() + "€";
+            await App.GetData("BTC");
+            BTC_curr.Text = App.BTC_now.ToString();
+            if (App.coin.Equals("EUR"))
+                BTC_curr.Text += "€";
+            else {
+                BTC_curr.Text += "$";
+            }
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("BTC", "EUR", "minute", limit);
+                    await App.GetHisto("BTC", "minute", limit);
                     break;
                 case "day":
-                    await App.GetHisto("BTC", "EUR", "minute", limit);
+                    await App.GetHisto("BTC", "minute", limit);
                     break;
                 case "week":
-                    await App.GetHisto("BTC", "EUR", "hour", limit);
+                    await App.GetHisto("BTC", "hour", limit);
                     break;
                 case "month":
-                    await App.GetHisto("BTC", "EUR", "hour", limit);
+                    await App.GetHisto("BTC", "hour", limit);
                     break;
                 case "year":
-                    await App.GetHisto("BTC", "EUR", "day", limit);
+                    await App.GetHisto("BTC", "day", limit);
                     break;
                 case "all":
-                    await App.GetHisto("BTC", "EUR", "day", 0);
+                    await App.GetHisto("BTC", "day", 0);
                     break;
             }
 
@@ -102,27 +107,32 @@ namespace CoinBase {
             series.ItemsSource = data;
         }
         async public Task UpdateETH() {
-            await App.GetData("ETH-EUR");
-            ETH_curr.Text = App.ETH_now.ToString() + "€";
+            await App.GetData("ETH");
+            ETH_curr.Text = App.ETH_now.ToString();
+            if (App.coin.Equals("EUR"))
+                ETH_curr.Text += "€";
+            else {
+                ETH_curr.Text += "$";
+            }
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("ETH", "EUR", "minute", limit);
+                    await App.GetHisto("ETH",  "minute", limit);
                     break;
                 case "day":
-                    await App.GetHisto("ETH", "EUR", "minute", limit);
+                    await App.GetHisto("ETH", "minute", limit);
                     break;
                 case "week":
-                    await App.GetHisto("ETH", "EUR", "hour", limit);
+                    await App.GetHisto("ETH", "hour", limit);
                     break;
                 case "month":
-                    await App.GetHisto("ETH", "EUR", "hour", limit);
+                    await App.GetHisto("ETH", "hour", limit);
                     break;
                 case "year":
-                    await App.GetHisto("ETH", "EUR", "day", limit);
+                    await App.GetHisto("ETH", "day", limit);
                     break;
                 case "all":
-                    await App.GetHisto("ETH", "EUR", "day", 0);
+                    await App.GetHisto("ETH", "day", 0);
                     break;
             }
 
@@ -149,27 +159,33 @@ namespace CoinBase {
         }
 
         async public Task UpdateLTC() {
-            await App.GetData("LTC-EUR");
-            LTC_curr.Text = App.LTC_now.ToString() + "€";
+            await App.GetData("LTC");
+            LTC_curr.Text = App.LTC_now.ToString();
+
+            if (App.coin.Equals("EUR"))
+                LTC_curr.Text += "€";
+            else {
+                LTC_curr.Text += "$";
+            }
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("LTC", "EUR", "minute", limit);
+                    await App.GetHisto("LTC", "minute", limit);
                     break;
                 case "day":
-                    await App.GetHisto("LTC", "EUR", "minute", limit);
+                    await App.GetHisto("LTC", "minute", limit);
                     break;
                 case "week":
-                    await App.GetHisto("LTC", "EUR", "hour", limit);
+                    await App.GetHisto("LTC", "hour", limit);
                     break;
                 case "month":
-                    await App.GetHisto("LTC", "EUR", "hour", limit);
+                    await App.GetHisto("LTC", "hour", limit);
                     break;
                 case "year":
-                    await App.GetHisto("LTC", "EUR", "day", limit);
+                    await App.GetHisto("LTC", "day", limit);
                     break;
                 case "all":
-                    await App.GetHisto("LTC", "EUR", "day", 0);
+                    await App.GetHisto("LTC", "day", 0);
                     break;
             }
 
