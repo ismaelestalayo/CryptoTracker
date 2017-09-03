@@ -11,11 +11,11 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using System.Collections;
 
 namespace CoinBase {
     sealed partial class App : Application {
-
-        internal static float USD_EUR;
+        
         internal static string coin = "EUR";
 
         internal static float BTC_old;
@@ -112,39 +112,45 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
-        async internal static Task GetData(string crypto) {
+        async internal static Task GetCurrentPrice(string crypto) {
+            
+            Uri requestUri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN");
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+            String response = "";
 
-            String URL = "https://api.coinbase.com/v2/prices/" +crypto+ "-" +coin + "/spot";
-            String response;
+            //Add a user-agent header to the GET request. 
+            var headers = httpClient.DefaultRequestHeaders;
+            String header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
+            if (!headers.UserAgent.TryParseAdd(header)) {
+                throw new Exception("Invalid header value: " + header);
+            }
+
             try {
-                response = await client.GetStringAsync(URL);
-            } catch {
-                response = " ";
+                //Send the GET request
+                httpResponse = await httpClient.GetAsync(requestUri);
+                httpResponse.EnsureSuccessStatusCode();
+
+                response = await httpResponse.Content.ReadAsStringAsync();
+                var data = JRaw.Parse(response);
+
+                switch (crypto) {
+                    case "BTC":
+                        BTC_now = (float)data[coin];
+                        break;
+
+                    case "ETH":
+                        ETH_now = (float)data[coin];
+                        break;
+
+                    case "LTC":
+                        LTC_now = (float)data[coin];
+                        break;
+                }
+
+            } catch (Exception ex) {
+                response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
-            var data = JObject.Parse(response);
-
-            switch (crypto) {
-                case "BTC":
-                    BTC_now = (float)data["data"]["amount"];
-                    break;
-
-                case "ETH":
-                    ETH_now = (float)data["data"]["amount"];
-                    break;
-
-                case "LTC":
-                    LTC_now = (float)data["data"]["amount"];
-                    break;
-            }
-
-            URL = "https://api.coinbase.com/v2/exchange-rates";
-            try {
-                response = await client.GetStringAsync(URL);
-            } catch {
-                response = " ";
-            }
-            data = JObject.Parse(response);
-            USD_EUR = (float)data["data"]["rates"]["EUR"];
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -154,6 +160,69 @@ namespace CoinBase {
 
             if (limit == 0)
                 URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + coin + "&allData=true";
+
+            Uri requestUri = new Uri(URL);
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+            string response = "";
+
+            //Add a user-agent header to the GET request. 
+            var headers = httpClient.DefaultRequestHeaders;
+            String header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
+            if (!headers.UserAgent.TryParseAdd(header)) {
+                throw new Exception("Invalid header value: " + header);
+            }
+
+
+            try {
+                //Send the GET request
+                httpResponse = await httpClient.GetAsync(requestUri);
+                httpResponse.EnsureSuccessStatusCode();
+
+                response = await httpResponse.Content.ReadAsStringAsync();
+                var data = JRaw.Parse(response);
+
+                switch (crypto) {
+                    case "BTC":
+                        ppBTC.Clear();
+
+                        for (int i = 0; i < limit; i++) {
+                            ppBTC.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
+                        }
+                        BTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                        BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
+                        break;
+
+
+                    case "ETH":
+                        ppETH.Clear();
+
+                        for (int i = 0; i < limit; i++) {
+                            ppETH.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
+                        }
+                        ETH_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                        ETH_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
+                        break;
+
+                    case "LTC":
+                        ppLTC.Clear();
+
+                        for (int i = 0; i < limit; i++) {
+                            ppLTC.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
+                        }
+                        LTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                        LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
+                        break;
+                }
+
+            } catch (Exception ex) {
+                response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+            }
+        }
+
+        async internal static Task GetStats(string crypto) {
+
+            String URL = "https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=" +crypto+ "&tsym=" + coin;
 
             Uri requestUri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
@@ -176,33 +245,7 @@ namespace CoinBase {
                 response = await httpResponse.Content.ReadAsStringAsync();
                 var data = JRaw.Parse(response);
 
-                if (crypto.Equals("BTC")) {
-                    ppBTC.Clear();
-
-                    for (int i = 0; i < limit; i++) {
-                        ppBTC.Add(PricePoint.GetPricePoint(data["Data"][i], coin));
-                    }
-                    BTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
-                    BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-
-                } else if (crypto.Equals("ETH")) {
-                    ppETH.Clear();
-
-                    for (int i = 0; i < limit; i++) {
-                        ppETH.Add(PricePoint.GetPricePoint(data["Data"][i], coin));
-                    }
-                    ETH_now = (float)Math.Round( (float)data["Data"][limit]["close"], 2);
-                    ETH_old = (float)Math.Round( (float)data["Data"][0]["close"], 2);
-
-                } else if (crypto.Equals("LTC")) {
-                    ppLTC.Clear();
-
-                    for (int i = 0; i < limit; i++) {
-                        ppLTC.Add(PricePoint.GetPricePoint(data["Data"][i], coin));
-                    }
-                    LTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
-                    LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                }
+                stats = PricePoint.GetPricePointStats(data["Data"]["AggregatedData"]);
 
             } catch (Exception ex) {
                 response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
@@ -223,16 +266,23 @@ namespace CoinBase {
             public float Volumefrom { get; set; }
             public float Volumeto { get; set; }
 
-            public static PricePoint GetPricePoint(JToken test, string currency_pair) {
+            // For stats only
+            public float Low24 { get; set; }
+            public float High24 { get; set; }
+            public float Open24 { get; set; }
+            public float Volume24 { get; set; }
+            public float Volume24To { get; set; }
+
+            public static PricePoint GetPricePointHisto(JToken data) {
                 PricePoint p = new PricePoint();
 
-                p.LinuxTime = (int)test["time"];
-                p.Low = (float)test["low"];
-                p.High = (float)test["high"];
-                p.Open = (float)test["open"];
-                p.Close = (float)test["close"];
-                p.Volumefrom = (float)test["volumefrom"];
-                p.Volumeto = (float)test["volumeto"];
+                p.LinuxTime  = (int)data["time"];
+                p.Low        = (float)Math.Round((float)data["low"], 2);
+                p.High       = (float)Math.Round((float)data["high"], 2);
+                p.Open       = (float)Math.Round((float)data["open"], 2);
+                p.Close      = (float)Math.Round((float)data["close"], 2);
+                p.Volumefrom = (float)Math.Round((float)data["volumefrom"], 2);
+                p.Volumeto   = (float)Math.Round((float)data["volumeto"], 2);
 
                 int unixTimeStamp = p.LinuxTime;
 
@@ -240,6 +290,18 @@ namespace CoinBase {
                 DateTime date = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
                 p.DateTime = date;
                 p.Date = date.ToString();
+
+                return p;
+            }
+
+            public static PricePoint GetPricePointStats(JToken data) {
+                PricePoint p = new PricePoint();
+
+                p.Low24 = (float)Math.Round((float)data["LOW24HOUR"], 2);
+                p.High24 = (float)Math.Round((float)data["HIGH24HOUR"], 2);
+                p.Open24 = (float)Math.Round((float)data["OPEN24HOUR"], 2);
+                p.Volume24 = (float)Math.Round((float)data["VOLUME24HOUR"], 2);
+                p.Volume24To = (float)Math.Round((float)data["VOLUME24HOURTO"], 2);
 
                 return p;
             }

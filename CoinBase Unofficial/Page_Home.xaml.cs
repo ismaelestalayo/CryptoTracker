@@ -56,7 +56,7 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
-            await App.GetData("BTC");
+            await App.GetCurrentPrice("BTC");
             BTC_curr.Text = App.BTC_now.ToString();
             if (App.coin.Equals("EUR"))
                 BTC_curr.Text += "€";
@@ -107,7 +107,7 @@ namespace CoinBase {
             series.ItemsSource = data;
         }
         async public Task UpdateETH() {
-            await App.GetData("ETH");
+            await App.GetCurrentPrice("ETH");
             ETH_curr.Text = App.ETH_now.ToString();
             if (App.coin.Equals("EUR"))
                 ETH_curr.Text += "€";
@@ -159,7 +159,7 @@ namespace CoinBase {
         }
 
         async public Task UpdateLTC() {
-            await App.GetData("LTC");
+            await App.GetCurrentPrice("LTC");
             LTC_curr.Text = App.LTC_now.ToString();
 
             if (App.coin.Equals("EUR"))

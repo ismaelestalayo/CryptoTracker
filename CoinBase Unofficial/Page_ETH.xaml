@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 	xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
 	NavigationCacheMode="Required">
 
 	<Page.Resources>
@@ -57,13 +58,13 @@
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 	<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="5*"/>
 			<ColumnDefinition Width="2*"/>
-			<ColumnDefinition Width="1*"/>
 		</Grid.ColumnDefinitions>
 
 		<!-- Headers of the three grids -->
 
-		<GridViewHeaderItem Grid.Column="0" Margin="0,-5">
+		<GridViewHeaderItem Grid.Column="0" Margin="0,-5" Grid.ColumnSpan="2">
 			<StackPanel Orientation="Horizontal">
 				<RelativePanel VerticalAlignment="Center" Margin="10, 10, 10, 0">
 					<Ellipse Fill="#6F7CBA" Width="32" Height="32"/>
@@ -89,11 +90,23 @@
 
 			<telerik:RadCartesianChart x:Name="ETH_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
-				<telerik:RadCartesianChart.Behaviors>
-					<telerik:ChartTrackBallBehavior />
-				</telerik:RadCartesianChart.Behaviors>
+                <telerik:RadCartesianChart.Behaviors>
+                    <telerik:ChartTrackBallBehavior InfoMode="Multiple">
+                        <telerik:ChartTrackBallBehavior.InfoStyle>
+                            <Style TargetType="telerikPrimitives:TrackBallInfoControl">
+                                <Setter Property="Background" Value="{StaticResource ETH_colorLight}"/>
+                                <Setter Property="Foreground" Value="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource ETH_color}"/>
+                                <Setter Property="FontFamily" Value="Segoe UI Light"/>
+                                <Setter Property="FontWeight" Value="Light"/>
+                            </Style>
+                        </telerik:ChartTrackBallBehavior.InfoStyle>
+                    </telerik:ChartTrackBallBehavior>
+                    <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal" />
 
-				<telerik:RadCartesianChart.Grid>
+                </telerik:RadCartesianChart.Behaviors>
+
+                <telerik:RadCartesianChart.Grid>
 					<telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
 				</telerik:RadCartesianChart.Grid>
 
@@ -122,21 +135,40 @@
 				<TextBlock Name="ETH_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
 			</StackPanel>
 
-			<Slider Name="ETH_slider" Grid.Row="3"
+			<Slider Name="ETH_slider" Grid.Row="3" Value="2"
 					Style="{StaticResource SliderStyle}" 
 					ToolTipService.ToolTip="a"
 					ValueChanged="ETH_slider_changed" />
 		</Grid>
 
-		<StackPanel Grid.Column="1" Margin="10, 60">
-			<TextBlock Text="Stats:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="36"/>
-			<TextBlock Text="Volume (30 days): " Name="ETH_Volume30"/>
-			<TextBlock Text="High: " Name="ETH_High"/>
-			<TextBlock Text="Low: " Name="ETH_Low"/>
-			<TextBlock Text="Open: " Name="ETH_Open"/>
-            <TextBlock Text="Diff: " Name="ETH_Diff"/>
+        <StackPanel Grid.Column="1" Margin="10, 60">
+            <TextBlock Text="Stats 24h:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="32"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+
+                <TextBlock Name="ETH_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
+                <TextBlock Name="ETH_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
+                <TextBlock Name="ETH_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
+                <TextBlock Name="ETH_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+            </Grid>
+
         </StackPanel>
 
-	</Grid>
+    </Grid>
 </Page>
 

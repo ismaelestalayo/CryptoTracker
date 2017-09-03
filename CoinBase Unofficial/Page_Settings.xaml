@@ -8,26 +8,54 @@
     mc:Ignorable="d"
 	NavigationCacheMode="Required">
 
-	<RelativePanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+    <RelativePanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
-        <StackPanel Margin="20">
+        <StackPanel Margin="30">
 
-            <ToggleSwitch Name="ThemeSwitcher" Header="Theme" 
+            <ToggleSwitch Name="ThemeSwitcher" Header="Theme"
                           OffContent="Light" OnContent="Dark" 
                           Toggled="ThemeToogled"/>
-            <ToggleSwitch Name="CoinSwitcher" Header="Coin" 
-                          OffContent="EUR" OnContent="USD" 
-                          Toggled="CoinToogled"/>
-            
+
+            <ComboBox x:Name="CoinComboBox" PlaceholderText="Coin" Margin="0, 20" SelectionChanged="CoinBox_changed">
+                <ComboBoxItem Content="EUR" Name="EUR" />
+                <ComboBoxItem Content="USD" Name="USD" />
+                <ComboBoxItem Content="CAD" Name="CAD" />
+                <ComboBoxItem Content="MXN" Name="MXN" />
+            </ComboBox>
+
+            <Button Background="Transparent" x:Name="reviewButton" Click="reviewButton_Click" Margin="-20,40,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE1CE;" FontFamily="Segoe MDL2 Assets" Margin="10,0" FontSize="25"/>
+                    <TextBlock Text="Review" FontFamily="Segoe UI Light" FontWeight="Light" FontSize="25"/>
+
+                </StackPanel>
+            </Button>
+
+            <Button Background="Transparent" x:Name="feedbackButton" Click="feedbackButton_Click" Margin="-20,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE939;" FontFamily="Segoe MDL2 Assets" Margin="10,0"   FontSize="25"/>
+                    <TextBlock Text="Feedback" FontFamily="Segoe UI Light" FontWeight="Light" FontSize="25"/>
+
+                </StackPanel>
+            </Button>
+
+            <Button Background="Transparent" x:Name="mailButton" Click="mailButton_Click" Margin="-20,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE119;" FontFamily="Segoe MDL2 Assets" Margin="10,0" FontSize="25"/>
+                    <TextBlock Text="Mail" FontFamily="Segoe UI Light" FontWeight="Light"   FontSize="25"/>
+                </StackPanel>
+            </Button>
+
         </StackPanel>
 
-        <StackPanel RelativePanel.AlignBottomWithPanel="True" Margin="20">
+        <StackPanel RelativePanel.AlignBottomWithPanel="True" Margin="30" x:Name="InfoStack">
             <Image Source="Assets/coinbase.png" Width="50" HorizontalAlignment="Left" Margin="0, 10"/>
             <TextBlock Text="CoinBase Unnoficial" Style="{ThemeResource FlyoutPickerTitleTextBlockStyle}"/>
             <TextBlock Text="By Ismael Estalayo" Style="{ThemeResource BodyTextBlockStyle}"/>
-            <TextBlock Text="Version: 1.2.0" Style="{ThemeResource BodyTextBlockStyle}"/>
-            <HyperlinkButton Content="http://ismaelestalayo.github.io/" Margin="0, -6, 0, 0"/>
+            <TextBlock Text="Version: 1.3.0" />
+            <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
+                             Content    ="http://ismaelestalayo.github.io/" Margin="0, -6, 0, 0"/>
         </StackPanel>
-        
+
     </RelativePanel>
 </Page>

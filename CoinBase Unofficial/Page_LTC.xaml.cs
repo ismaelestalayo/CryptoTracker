@@ -12,7 +12,7 @@ namespace CoinBase {
     public sealed partial class Page_LTC : Page {
 
         internal int limit = 60;
-        private string timeSpan = "hour";
+        private string timeSpan = "day";
 
         public class ChartDataObject {
             public DateTime Date { get; set; }
@@ -28,6 +28,8 @@ namespace CoinBase {
         async private void InitValues() {
             try {
                 await UpdateLTC();
+                await GetStats();
+
             } catch (Exception ex) {
                 LTC_curr.Text = "Maybe you have no internet?";
             }
@@ -37,11 +39,12 @@ namespace CoinBase {
         public void LTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateLTC();
             LTC_slider_changed(LTC_slider, null);
+            GetStats();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateLTC() {
-            await App.GetData("LTC");
+            await App.GetCurrentPrice("LTC");
             LTC_curr.Text = "Current price: " + App.LTC_now.ToString();
             if (App.coin.Equals("EUR"))
                 LTC_curr.Text += "€";
@@ -51,20 +54,19 @@ namespace CoinBase {
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("LTC", "minute", limit);
-                    break;
                 case "day":
                     await App.GetHisto("LTC", "minute", limit);
                     break;
+
                 case "week":
-                    await App.GetHisto("LTC", "hour", limit);
-                    break;
                 case "month":
                     await App.GetHisto("LTC", "hour", limit);
                     break;
+
                 case "year":
                     await App.GetHisto("LTC", "day", limit);
                     break;
+
                 case "all":
                     await App.GetHisto("LTC", "day", 0);
                     break;
@@ -90,6 +92,24 @@ namespace CoinBase {
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
+        }
+
+        async public Task GetStats() {
+
+            await App.GetStats("LTC");
+
+            string sym;
+            if (App.coin.Equals("EUR")) {
+                sym = "€";
+            } else {
+                sym = "$";
+            }
+
+            LTC_Open.Text  = App.stats.Open24 + sym;
+            LTC_High.Text  = App.stats.High24 + sym;
+            LTC_Low.Text   = App.stats.Low24 + sym;
+            LTC_Vol24.Text = App.stats.Volume24 + "LTC";
+
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,8 +178,6 @@ namespace CoinBase {
 
             UpdateLTC();
         }
-
-
 
     }
 }

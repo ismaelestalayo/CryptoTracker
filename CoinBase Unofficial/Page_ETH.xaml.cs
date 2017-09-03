@@ -15,7 +15,7 @@ namespace CoinBase {
     public sealed partial class Page_ETH : Page {
         
         internal static int limit = 60;
-        private static string timeSpan = "hour";
+        private static string timeSpan = "day";
 
         public class ChartDataObject {
             public DateTime Date { get; set; }
@@ -30,7 +30,7 @@ namespace CoinBase {
         async private void InitValues() {
             try {
                 await UpdateETH();
-                await GetStats("ETH-EUR");
+                await GetStats();
 
             } catch (Exception ex) {
                 ETH_curr.Text = "Maybe you have no internet?";
@@ -42,11 +42,12 @@ namespace CoinBase {
         public void ETH_Update_click(object sender, RoutedEventArgs e) {
             UpdateETH();
             ETH_slider_changed(ETH_slider, null);
+            GetStats();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateETH() {
-            await App.GetData("ETH");
+            await App.GetCurrentPrice("ETH");
             ETH_curr.Text = "Current price: " + App.ETH_now.ToString();
             if (App.coin.Equals("EUR"))
                 ETH_curr.Text += "€";
@@ -56,20 +57,19 @@ namespace CoinBase {
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("ETH", "minute", limit);
-                    break;
                 case "day":
                     await App.GetHisto("ETH", "minute", limit);
                     break;
+
                 case "week":
-                    await App.GetHisto("ETH", "hour",   limit);
-                    break;
                 case "month":
                     await App.GetHisto("ETH", "hour",   limit);
                     break;
+
                 case "year":
                     await App.GetHisto("ETH", "day",    limit);
                     break;
+
                 case "all":
                     await App.GetHisto("ETH", "day",    0);
                     break;
@@ -97,17 +97,22 @@ namespace CoinBase {
             series.ItemsSource = data;
         }
 
-        async public Task GetStats(string currency_pair) {
+        async public Task GetStats() {
 
-            // NEED NEW FUNCTION
+            await App.GetStats("ETH");
 
-            //ETH_Open.Text       = "Open: " + App.stats.Open;
-            //ETH_High.Text       = "High: " + App.stats.High;
-            //ETH_Low.Text        = "Low: " + App.stats.Low;
-            //ETH_Volume30.Text   = "Volume (30 days): " + App.stats.Volume;
+            string sym;
+            if (App.coin.Equals("EUR")) { 
+                sym = "€";
+            } else{ 
+                sym = "$";
+            }
 
-            //ETH_oold.Text = "Old: " + App.ETH_old.ToString();
-            //ETH_nnew.Text = "Now: " + App.ETH_now.ToString();
+            ETH_Open.Text  = App.stats.Open24 + sym;
+            ETH_High.Text  = App.stats.High24 + sym;
+            ETH_Low.Text   = App.stats.Low24 + sym;
+            ETH_Vol24.Text = App.stats.Volume24 + "ETH";
+            
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -177,5 +182,6 @@ namespace CoinBase {
 
             UpdateETH();
         }
+
     }
 }

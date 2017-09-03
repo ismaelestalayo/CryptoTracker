@@ -13,7 +13,7 @@ namespace CoinBase {
     public sealed partial class Page_BTC : Page {
 
         internal int limit = 60;
-        private string timeSpan = "hour";
+        private string timeSpan = "day";
 
         public class ChartDataObject {
             public DateTime Date { get; set; }
@@ -28,6 +28,7 @@ namespace CoinBase {
         async private void InitValues() {
             try {
                 await UpdateBTC();
+                await GetStats();
 
             } catch (Exception ex) {
                 BTC_curr.Text = "Maybe you have no internet?";
@@ -38,34 +39,34 @@ namespace CoinBase {
         public void BTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateBTC();
             BTC_slider_changed(BTC_slider, null);
+            GetStats();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
-            await App.GetData("BTC");
+            await App.GetCurrentPrice("BTC");
             BTC_curr.Text = "Current price: " + App.BTC_now.ToString();
             if (App.coin.Equals("EUR")) {
                 BTC_curr.Text += "€";
-            } else {
+            } else{
                 BTC_curr.Text += "$";
             }
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("BTC", "minute", limit);
-                    break;
                 case "day":
                     await App.GetHisto("BTC", "minute", limit);
                     break;
+
                 case "week":
-                    await App.GetHisto("BTC", "hour", limit);
-                    break;
                 case "month":
                     await App.GetHisto("BTC", "hour", limit);
                     break;
+
                 case "year":
                     await App.GetHisto("BTC", "day", limit);
                     break;
+
                 case "all":
                     await App.GetHisto("BTC", "day", 0);
                     break;
@@ -90,7 +91,26 @@ namespace CoinBase {
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+            series.Name = "Bitcoin";
             series.ItemsSource = data;
+        }
+
+        async public Task GetStats() {
+
+            await App.GetStats("BTC");
+
+            string sym;
+            if (App.coin.Equals("EUR")) {
+                sym = "€";
+            } else {
+                sym = "$";
+            }
+
+            BTC_Open.Text  = App.stats.Open24 + sym;
+            BTC_High.Text  = App.stats.High24 + sym;
+            BTC_Low.Text   = App.stats.Low24 + sym;
+            BTC_Vol24.Text = App.stats.Volume24 + "BTC";
+
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,5 +180,6 @@ namespace CoinBase {
 
             UpdateBTC();
         }
+
     }
 }

@@ -28,7 +28,7 @@
 		</Grid.RowDefinitions>
 
 		<RelativePanel Grid.Row="0" Background="{StaticResource CoinBase_Blue}"
-					   Padding="0,0" BorderBrush="#003150" BorderThickness="0,0,0,5">
+					   Padding="0,0" >
 
 			<Button Background="Transparent" BorderBrush="Transparent" Click="HamburgerLogo_Click">
 				<Image Name="Logo" Source="Assets/CoinBase Transparent.png"
