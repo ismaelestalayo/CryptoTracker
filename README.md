@@ -1,26 +1,43 @@
 # [CoinBase](https://www.microsoft.com/store/apps/9n3b47hbvblc)
 CoinBase Unofficial UWP app made with GDAX C# API on VisualStudio 2017.
 
-Shows graphics for the three most used cryptocurrencies: Bitcoin, Ethereum and Litecoin.
+Unofficial CoinBase client to keep up with the three most used crypto-currencies: Bitcoin, Ethereum and Litecoin. 
 
-It lets you choose a time-span for each of the graphics (last hour/day/week/month...), and also comes with light and dark theme.
+It allows you to see graphics of each coin for the last hourt, day, week, month, year and for all the time the coin has been on the market. Supports both EUR and USD for the moment, and has also light and dark theme for you to choose!
 
-<p align = "center">
-  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Light.png?raw=true" 
-  width = "100%"/>
-</p>
+[x] - Adjust the time range of each graphic independently
 
-<p align = "center">
-  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Dark.png?raw=true" 
-  width = "100%"/>
-</p>
+[x] - Dark and light and dark theme
 
-<p align = "center">
-  <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/LTC%20Light.png?raw=true" 
-  width = "100%"/>
-</p>
+[x] - Support for EUR/USD
+
+[~] - Mobile friendly UI
+
+[  ] - Stats about each coin on their pages
+
+[  ] - More cryptocurrencies
+
+[  ] - Live tile
+
+[  ] - More languages
+
+[  ] - Log in to CoinBase account
+
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Light.png?raw=true" width = "50%"/>
+
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Dark.png?raw=true" width = "50%"/>
+
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/ETH%20Light.png?raw=true" width = "100%"/>
+
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/LTC%20Dark.png?raw=true" width = "100%"/>
+
 
 # Changelog:
+#### 1.2:
+- Ability to choose between EUR and USD
+- More friendly mobile UI (still work in progress)
+- Added the bases for 
+
 #### 1.1:
 - Added local storage to save choosen theme. (Light/Dark theme)
 - New navigation method (hamburger menu).
