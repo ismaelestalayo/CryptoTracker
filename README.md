@@ -5,32 +5,20 @@ Unofficial CoinBase client to keep up with the three most used crypto-currencies
 
 It allows you to see graphics of each coin for the last hourt, day, week, month, year and for all the time the coin has been on the market. Supports both EUR and USD for the moment, and has also light and dark theme for you to choose!
 
-[x] - Adjust the time range of each graphic independently
+## PC Version
 
-[x] - Dark and light and dark theme
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_Home%20Light.png?raw=true" width = "80%"/>
 
-[x] - Support for EUR/USD
 
-[~] - Mobile friendly UI
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ETH%20Light.png?raw=true" width = "80%"/>
 
-[  ] - Stats about each coin on their pages
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_LTC%20Dark.png?raw=true" width = "80%"/>
 
-[  ] - More cryptocurrencies
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_Settings.png?raw=true" width = "80%"/>
 
-[  ] - Live tile
+## Mobile version:
 
-[  ] - More languages
-
-[  ] - Log in to CoinBase account
-
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Light.png?raw=true" width = "50%"/>
-
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/Home%20Dark.png?raw=true" width = "50%"/>
-
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/ETH%20Light.png?raw=true" width = "100%"/>
-
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/CoinBase%20Unofficial/Assets/Screenshots/LTC%20Dark.png?raw=true" width = "100%"/>
-
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_BTC%20Light.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ETH%20Dark.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_LTC%20Light.png?raw=true" width = "30%"/>
 
 # Changelog:
 #### 1.2:
@@ -49,11 +37,17 @@ It allows you to see graphics of each coin for the last hourt, day, week, month,
 - Each coin has a slider to choose a time-span for the graph.
 
 
-# Future plans:
-- ~~Remember user's choosen theme.~~
-- Log in with CoinBase user account.
-- Live-tile
-- Port to Android (maybe iOS but not cheap)
+# Task list:
+- [x] Adjust the time range of each graphic independently
+- [x] Dark and light and dark theme
+- [x] Support for EUR, USD, CAD, MXN
+- [x] Mobile friendly UI
+- [x] Stats about each coin on their pages
+- [ ] More cryptocurrencies
+- [ ] Live tile
+- [ ] More languages
+- [ ] Log in to CoinBase account
+- [ ] Port to Android (maybe iOS but not cheap)
 
 # Suggest anything at:
 
