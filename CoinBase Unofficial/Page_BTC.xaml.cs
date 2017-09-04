@@ -82,10 +82,12 @@ namespace CoinBase {
             dBTC = (float)Math.Round(dBTC, 2);
             BTC_diff.Text = dBTC.ToString() + "%";
             if (dBTC < 0) {
-                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                BTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
             }
             else {
-                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                BTC_difff.Text = "\xEB11";
             }
 
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];

@@ -13,9 +13,9 @@ namespace CoinBase {
 
         private bool LightTheme = true;
 
-        private SolidColorBrush Color_CoinBase       = new SolidColorBrush(Color.FromArgb(255, 0,   91, 148));
+        private SolidColorBrush Color_CoinBase = new SolidColorBrush(Color.FromArgb(255, 0, 91, 148));
         private SolidColorBrush Color_CoinBaseButton = new SolidColorBrush(Color.FromArgb(255, 33, 132, 215));
-        private SolidColorBrush Color_CoinBaseDark = new SolidColorBrush(Color.FromArgb(255, 0,   49,  80));
+        private SolidColorBrush Color_CoinBaseDark = new SolidColorBrush(Color.FromArgb(255, 0, 49, 80));
 
         public MainPage() {
             this.InitializeComponent();
@@ -34,7 +34,7 @@ namespace CoinBase {
 
             /// Alpha channel does nothing 
             /// (guess it's not supported on TitleBars
-            
+
             //titleBar.ButtonHoverBackgroundColor = Color.FromArgb(0, 20, 20, 20);
             //titleBar.ButtonPressedBackgroundColor = Color.FromArgb(0, 50, 50, 50);
             titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(0, 0, 91, 148);
@@ -52,28 +52,16 @@ namespace CoinBase {
 
         private void SettingsButtonClick(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Settings));
-            MenuHome.Background= Color_CoinBase;
+            MenuHome.Background = Color_CoinBase;
             MenuBTC.Background = Color_CoinBase;
             MenuETH.Background = Color_CoinBase;
             MenuLTC.Background = Color_CoinBase;
             MenuSettings.Background = Color_CoinBaseDark;
         }
 
-        private void ThemeButton_Click(object sender, RoutedEventArgs e) {
-            if (LightTheme) {
-                ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
-                LightTheme = false;
-            }
-            else {
-                ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
-                LightTheme = true;
-            }
-
-        }
-
         private void MenuHome_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Home));
-            MenuHome.Background= Color_CoinBaseDark;
+            MenuHome.Background = Color_CoinBaseDark;
             MenuBTC.Background = Color_CoinBase;
             MenuETH.Background = Color_CoinBase;
             MenuLTC.Background = Color_CoinBase;
@@ -82,7 +70,7 @@ namespace CoinBase {
 
         private void MenuBTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_BTC));
-            MenuHome.Background= Color_CoinBase;
+            MenuHome.Background = Color_CoinBase;
             MenuBTC.Background = Color_CoinBaseDark;
             MenuETH.Background = Color_CoinBase;
             MenuLTC.Background = Color_CoinBase;
@@ -120,16 +108,16 @@ namespace CoinBase {
                 p.BTC_Update_click(null, null);
                 p.ETH_Update_click(null, null);
                 p.LTC_Update_click(null, null);
-            }
-            else if (x.Equals("CoinBase.Page_BTC")) {
+
+            } else if (x.Equals("CoinBase.Page_BTC")) {
                 var p = (Page_BTC)MainFrame.Content;
                 p.BTC_Update_click(null, null);
-            }
-            else if (x.Equals("CoinBase.Page_ETH")) {
+
+            } else if (x.Equals("CoinBase.Page_ETH")) {
                 var p = (Page_ETH)MainFrame.Content;
                 p.ETH_Update_click(null, null);
-            }
-            else if (x.Equals("CoinBase.Page_LTC")) {
+
+            } else if (x.Equals("CoinBase.Page_LTC")) {
                 var p = (Page_LTC)MainFrame.Content;
                 p.LTC_Update_click(null, null);
             }
@@ -141,5 +129,35 @@ namespace CoinBase {
         private void HamburgerLogo_Click(object sender, RoutedEventArgs e) {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
+
+        private void ShowVolumeChartButton_Click(object sender, RoutedEventArgs e) {
+            string x = MainFrame.Content.ToString();
+
+            if (x.Equals("CoinBase.Page_Home")) {
+                var p = (Page_Home)MainFrame.Content;
+                
+
+            } else if (x.Equals("CoinBase.Page_BTC")) {
+                var p = (Page_BTC)MainFrame.Content;
+
+            } else if (x.Equals("CoinBase.Page_ETH")) {
+                var p = (Page_ETH)MainFrame.Content;
+
+            } else if (x.Equals("CoinBase.Page_LTC")) {
+                var p = (Page_LTC)MainFrame.Content;
+                p.VolumeChart.Background = Color_CoinBaseDark;
+                p.VolumeChart.Foreground = Color_CoinBaseDark;
+
+                if (p.VolumeChart.Visibility == Visibility.Visible) {
+                    p.VolumeChart.Visibility = Visibility.Collapsed;
+                } else {
+                    p.VolumeChart.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+
+
+
     }
 }

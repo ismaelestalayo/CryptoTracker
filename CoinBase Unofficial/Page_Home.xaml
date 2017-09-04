@@ -28,9 +28,9 @@
 		</Style>
 
 		<Style TargetType="Line" x:Key="ChartGridColor">
-			<Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}" />
-			<Setter Property="StrokeDashArray" Value="3, 7" />
-			<Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}" />
+            <Setter Property="StrokeDashArray" Value="3,7"/>
+            <Setter Property="StrokeThickness" Value="0.2" />
 		</Style>
 
 		<Style TargetType="Slider" x:Key="SliderStyle">
@@ -169,6 +169,8 @@
             <StackPanel Grid.Row="2" Orientation="Horizontal">
 				<TextBlock Name="BTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
 				<TextBlock Name="BTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+                <TextBlock Name="BTC_difff"  Text="&#xEB11;" VerticalAlignment="Center" 
+                           FontFamily="Segoe MDL2 Assets" FontSize="28" Margin="-10, 2, 0, 0"/>
 			</StackPanel>
 			<Slider Name="BTC_slider" Grid.Row="3"
 					Style="{StaticResource SliderStyle}"
@@ -233,6 +235,8 @@
             <StackPanel Grid.Row="2" Orientation="Horizontal">
 				<TextBlock Name="ETH_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
 				<TextBlock Name="ETH_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+                <TextBlock Name="ETH_difff"  Text="&#xEB11;" VerticalAlignment="Center" 
+                           FontFamily="Segoe MDL2 Assets" FontSize="28" Margin="-10, 2, 0, 0"/>
 			</StackPanel>
 			
 			<Slider	   Name="ETH_slider" Grid.Row="3"
@@ -328,6 +332,8 @@
             <StackPanel Grid.Row="2" Orientation="Horizontal">
 				<TextBlock Name="LTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
 				<TextBlock Name="LTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
+                <TextBlock Name="LTC_difff"  Text="&#xEB11;" VerticalAlignment="Center" 
+                           FontFamily="Segoe MDL2 Assets" FontSize="28" Margin="-10, 2, 0, 0"/>
 			</StackPanel>
 			<Slider    Name="LTC_slider" Grid.Row="3"
 					   Style="{StaticResource SliderStyle}" ToolTipService.ToolTip="Time span"

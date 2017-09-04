@@ -36,20 +36,20 @@
 				   RelativePanel.AlignVerticalCenterWithPanel="True" />
 			</Button>
 
-			<Button Name="ThemeButton" Click="ThemeButton_Click" Visibility="Collapsed"
+            <Button Name="ShowVolumeChartButton" Click="ShowVolumeChartButton_Click"
 					Background="Transparent" BorderBrush="Transparent"
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.LeftOf="SyncAllButton">
-				<StackPanel Orientation="Horizontal">
-					<TextBlock VerticalAlignment="Center" Margin="0,5"
-							   FontFamily="Segoe MDL2 Assets" Text="&#xE790;" Foreground="White" FontSize="18" />
-					<TextBlock Text="Theme"
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Margin="0,5"
+							   FontFamily="Segoe MDL2 Assets" Text="&#xE1E9;" Foreground="White" FontSize="18" />
+                    <TextBlock Text="Volume"
 							   Foreground="White" Margin="5,0"
 							   FontWeight="Light" FontSize="18" />
-				</StackPanel>
-			</Button>
+                </StackPanel>
+            </Button>
 
-			<Button Name="SyncAllButton" Click="SyncAllButton_Click"
+            <Button Name="SyncAllButton" Click="SyncAllButton_Click"
 					Background="Transparent" BorderBrush="Transparent"
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.AlignRightWithPanel="True">

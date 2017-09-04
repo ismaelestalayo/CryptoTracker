@@ -95,10 +95,11 @@ namespace CoinBase {
             dBTC = (float)Math.Round(dBTC, 2);
             BTC_diff.Text = dBTC.ToString() + "%";
             if (dBTC < 0) {
-                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
-            }
-            else {
-                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                BTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+            } else {
+                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                BTC_difff.Text = "\xEB11";
             }
 
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
@@ -146,10 +147,11 @@ namespace CoinBase {
             dETH = (float)Math.Round(dETH, 2);
             ETH_diff.Text = dETH.ToString() + "%";
             if (dETH < 0) {
-                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
-            }
-            else {
-                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                ETH_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+            } else {
+                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                ETH_difff.Text = "\xEB11";
             }
 
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
@@ -199,10 +201,11 @@ namespace CoinBase {
             dLTC = (float)Math.Round(dLTC, 2);
             LTC_diff.Text = dLTC.ToString() + "%";
             if (dLTC < 0) {
-                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
-            }
-            else {
-                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                LTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+            } else {
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                LTC_difff.Text = "\xEB11";
             }
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];

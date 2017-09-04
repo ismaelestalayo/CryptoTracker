@@ -85,10 +85,11 @@ namespace CoinBase {
             dETH = (float)Math.Round(dETH, 2);
             ETH_diff.Text = dETH.ToString() + "%";
             if (dETH < 0) {
-                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
-            }
-            else {
-                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                ETH_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+            } else {
+                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                ETH_difff.Text = "\xEB11";
             }
 
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];

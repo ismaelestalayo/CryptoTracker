@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI;
@@ -14,9 +15,15 @@ namespace CoinBase {
         internal int limit = 60;
         private string timeSpan = "day";
 
-        public class ChartDataObject {
+        public class CharDataObject {
             public DateTime Date { get; set; }
             public float Value { get; set; }
+            public float Low { get; set; }
+            public float High { get; set; }
+            public float Open { get; set; }
+            public float Close { get; set; }
+            public float Volume { get; set; }
+            public string Category { get; set; }
         }
 
         public Page_LTC() {
@@ -29,6 +36,7 @@ namespace CoinBase {
             try {
                 await UpdateLTC();
                 await GetStats();
+                await Get24Volume();
 
             } catch (Exception ex) {
                 LTC_curr.Text = "Maybe you have no internet?";
@@ -72,20 +80,28 @@ namespace CoinBase {
                     break;
             }
 
-            List<ChartDataObject> data = new List<ChartDataObject>();
+            List<CharDataObject> data = new List<CharDataObject>();
             for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.ppLTC[i].DateTime, Value = App.ppLTC[i].Low };
+                CharDataObject obj = new CharDataObject { Date  =  App.ppLTC[i].DateTime,
+                                                          Value = (App.ppLTC[i].Low + App.ppLTC[i].High) / 2,
+                                                          Low   =  App.ppLTC[i].Low,
+                                                          High  =  App.ppLTC[i].High,
+                                                          Open  =  App.ppLTC[i].Open,
+                                                          Close =  App.ppLTC[i].Close,
+                                                          Volume=  App.ppLTC[i].Volumefrom};
                 data.Add(obj);
+                
             }
 
             float dLTC = ((App.LTC_now / App.LTC_old) - 1) * 100;
             dLTC = (float)Math.Round(dLTC, 2);
             LTC_diff.Text = dLTC.ToString() + "%";
             if (dLTC < 0) {
-                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
-            }
-            else {
-                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                LTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+            } else {
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                LTC_difff.Text = "\xEB11";
             }
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
@@ -94,7 +110,7 @@ namespace CoinBase {
             series.ItemsSource = data;
         }
 
-        async public Task GetStats() {
+        async private Task GetStats() {
 
             await App.GetStats("LTC");
 
@@ -109,7 +125,18 @@ namespace CoinBase {
             LTC_High.Text  = App.stats.High24 + sym;
             LTC_Low.Text   = App.stats.Low24 + sym;
             LTC_Vol24.Text = App.stats.Volume24 + "LTC";
+        }
 
+        async private Task Get24Volume() {
+            await App.GetHisto("LTC", "hour", 24);
+
+            List<CharDataObject> data = new List<CharDataObject>();
+            for (int i = 0; i < 24; i++) {
+                data.Add( new CharDataObject() { Date = App.ppLTC[i].DateTime,
+                                                 Volume = App.ppLTC[i].Volumefrom} );
+            }
+            this.barSeries.DataContext = data;
+            this.LTC_Chart.DataContext = data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
