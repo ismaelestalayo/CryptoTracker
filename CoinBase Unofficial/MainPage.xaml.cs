@@ -133,20 +133,24 @@ namespace CoinBase {
         private void ShowVolumeChartButton_Click(object sender, RoutedEventArgs e) {
             string x = MainFrame.Content.ToString();
 
-            if (x.Equals("CoinBase.Page_Home")) {
-                var p = (Page_Home)MainFrame.Content;
-                
-
-            } else if (x.Equals("CoinBase.Page_BTC")) {
+            if (x.Equals("CoinBase.Page_BTC")) {
                 var p = (Page_BTC)MainFrame.Content;
 
+                if (p.VolumeChart.Visibility == Visibility.Visible) {
+                    p.VolumeChart.Visibility = Visibility.Collapsed;
+                } else {
+                    p.VolumeChart.Visibility = Visibility.Visible;
+                }
             } else if (x.Equals("CoinBase.Page_ETH")) {
                 var p = (Page_ETH)MainFrame.Content;
 
+                if (p.VolumeChart.Visibility == Visibility.Visible) {
+                    p.VolumeChart.Visibility = Visibility.Collapsed;
+                } else {
+                    p.VolumeChart.Visibility = Visibility.Visible;
+                }
             } else if (x.Equals("CoinBase.Page_LTC")) {
                 var p = (Page_LTC)MainFrame.Content;
-                p.VolumeChart.Background = Color_CoinBaseDark;
-                p.VolumeChart.Foreground = Color_CoinBaseDark;
 
                 if (p.VolumeChart.Visibility == Visibility.Visible) {
                     p.VolumeChart.Visibility = Visibility.Collapsed;

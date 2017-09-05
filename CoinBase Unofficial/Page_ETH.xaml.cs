@@ -20,6 +20,12 @@ namespace CoinBase {
         public class ChartDataObject {
             public DateTime Date { get; set; }
             public float Value { get; set; }
+            public float Low { get; set; }
+            public float High { get; set; }
+            public float Open { get; set; }
+            public float Close { get; set; }
+            public float Volume { get; set; }
+            public string Category { get; set; }
         }
 
         public Page_ETH() {
@@ -31,6 +37,7 @@ namespace CoinBase {
             try {
                 await UpdateETH();
                 await GetStats();
+                await Get24Volume();
 
             } catch (Exception ex) {
                 ETH_curr.Text = "Maybe you have no internet?";
@@ -43,12 +50,13 @@ namespace CoinBase {
             UpdateETH();
             ETH_slider_changed(ETH_slider, null);
             GetStats();
+            Get24Volume();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateETH() {
             await App.GetCurrentPrice("ETH");
-            ETH_curr.Text = "Current price: " + App.ETH_now.ToString();
+            ETH_curr.Text = App.ETH_now.ToString();
             if (App.coin.Equals("EUR"))
                 ETH_curr.Text += "€";
             else {
@@ -77,20 +85,29 @@ namespace CoinBase {
 
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.ppETH[i].DateTime, Value = App.ppETH[i].Low };
+                ChartDataObject obj = new ChartDataObject { Date   = App.ppETH[i].DateTime,
+                                                            Value  =(App.ppETH[i].Low + App.ppETH[i].High) / 2,
+                                                            Low    = App.ppETH[i].Low,
+                                                            High   = App.ppETH[i].High,
+                                                            Open   = App.ppETH[i].Open,
+                                                            Close  = App.ppETH[i].Close,
+                                                            Volume = App.ppETH[i].Volumefrom
+                };
                 data.Add(obj);
+
             }
 
             float dETH = ((App.ETH_now / App.ETH_old) - 1) * 100;
             dETH = (float)Math.Round(dETH, 2);
-            ETH_diff.Text = dETH.ToString() + "%";
             if (dETH < 0) {
                 ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
                 ETH_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+                dETH = Math.Abs(dETH);
             } else {
                 ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
                 ETH_difff.Text = "\xEB11";
             }
+            ETH_diff.Text = dETH.ToString() + "%";
 
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -111,9 +128,22 @@ namespace CoinBase {
 
             ETH_Open.Text  = App.stats.Open24 + sym;
             ETH_High.Text  = App.stats.High24 + sym;
-            ETH_Low.Text   = App.stats.Low24 + sym;
+            ETH_Low.Text   = App.stats.Low24  + sym;
             ETH_Vol24.Text = App.stats.Volume24 + "ETH";
             
+        }
+
+        async private Task Get24Volume() {
+            await App.GetHisto("ETH", "hour", 24);
+
+            List<ChartDataObject> data = new List<ChartDataObject>();
+            for (int i = 0; i < 24; i++) {
+                data.Add(new ChartDataObject() {
+                    Date = App.ppETH[i].DateTime,
+                    Volume = App.ppETH[i].Volumefrom
+                });
+            }
+            this.ETH_Chart.DataContext = data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +151,7 @@ namespace CoinBase {
             Slider s = (Slider)sender;
             switch (s.Value) {
                 case 1:
-                    ETH_from.Text = "Last hour: ";
+                    ETH_from.Text = "(1h)";
                     ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     ETH_DateTimeAxis.MajorStep = 10;
@@ -131,7 +161,7 @@ namespace CoinBase {
                     break;
 
                 case 2:
-                    ETH_from.Text = "Last day: ";
+                    ETH_from.Text = "(24h)";
                     ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     ETH_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
@@ -141,7 +171,7 @@ namespace CoinBase {
                     break;
 
                 case 3:
-                    ETH_from.Text = "Last week: ";
+                    ETH_from.Text = "(7d)";
                     ETH_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -151,7 +181,7 @@ namespace CoinBase {
                     break;
 
                 case 4:
-                    ETH_from.Text = "Last month: ";
+                    ETH_from.Text = "last month";
                     ETH_DateTimeAxis.LabelFormat = "{0:d/M}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -161,7 +191,7 @@ namespace CoinBase {
                     break;
 
                 case 5:
-                    ETH_from.Text = "Last year: ";
+                    ETH_from.Text = "Last year";
                     ETH_DateTimeAxis.LabelFormat = "{0:MMM}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -171,7 +201,7 @@ namespace CoinBase {
                     break;
 
                 case 6:
-                    ETH_from.Text = "Sorry, can't go back in time so far ";
+                    ETH_from.Text = "Sorry, can't go back in time so far";
                     ETH_DateTimeAxis.LabelFormat = "{0:MMM}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     ETH_DateTimeAxis.MajorStep = 1;

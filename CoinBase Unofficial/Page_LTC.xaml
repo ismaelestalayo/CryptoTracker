@@ -65,35 +65,61 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Headers of the three grids -->
-
         <GridViewHeaderItem Grid.Column="0" Margin="0,-5" Grid.ColumnSpan="2">
+            
             <StackPanel Orientation="Horizontal">
-                <RelativePanel VerticalAlignment="Center" Margin="10, 10, 10, 0">
-                    <Ellipse Fill="#B5B5B5" Width="32" Height="32"/>
+                <RelativePanel VerticalAlignment="Center" Margin="10, 5, 10, 0">
+                    <Ellipse Fill="#B5B5B5" 
+                             Width="32" Height="32"/>
                     <Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="-3" Data="M12.29 28.04l1.29-5.52-1.58.67.63-2.85 1.64-.68L16.52 10h5.23l-1.52 7.14 2.09-.74-.58 2.7-2.05.8-.9 4.34h8.1l-.99 3.8z" />
                 </RelativePanel>
+                
                 <TextBlock Text="Litecoin" 
-						   Margin="10,5,0,0" 
+						   Margin="10, 0"
+                           VerticalAlignment="Bottom"
 						   Style="{ThemeResource SubheaderTextBlockStyle}"/>
 
+                <TextBlock Name="LTC_curr" 
+                           Text="val€" 
+                           Margin="80, 0, 0, 0"
+                           FontSize="34"
+                           FontWeight="Light"/>
+
+                <TextBlock Name="LTC_diff" 
+                           Text="0%"
+                           VerticalAlignment="Bottom"
+                           Margin="10, 0, 0, 4"
+                           FontSize="18"
+                           FontWeight="Light"/>
+                <TextBlock Name="LTC_difff"  
+                           Text="&#xEB11;" 
+                           VerticalAlignment="Bottom" 
+                           Margin="0, 0, 0, 4"
+                           FontSize="21"
+                           FontFamily="Segoe MDL2 Assets"/>
+
+                <TextBlock Name="LTC_from" Visibility="Collapsed"
+                           Text="(24h)" 
+                           VerticalAlignment="Bottom"
+                           FontWeight="Light"
+                           FontSize="15"/>
             </StackPanel>
         </GridViewHeaderItem>
+        
 
         <!-- 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <Grid Grid.Column="0" Margin="10,50,10,10">
+        <Grid Grid.Column="0" Margin="10, 50, 10, 10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <telerik:RadCartesianChart x:Name="LTC_Chart" Margin="15" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+            <telerik:RadCartesianChart x:Name="LTC_Chart" Margin="5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
                 <telerik:RadCartesianChart.Behaviors>
-                    <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" >
+                    <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
                         <telerik:ChartTrackBallBehavior.InfoStyle>
                             <Style TargetType="telerikPrimitives:TrackBallInfoControl">
                                 <Setter Property="Background" Value="{StaticResource LTC_colorLight}"/>
@@ -108,8 +134,7 @@
 
                 <telerik:RadCartesianChart.Grid>
                     <telerik:CartesianChartGrid 
-                        MajorLinesVisibility="Y" 
-                        MajorYLineStyle="{StaticResource ChartGridColor}"/>
+                        MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
                 </telerik:RadCartesianChart.Grid>
 
                 <telerik:RadCartesianChart.HorizontalAxis>
@@ -137,11 +162,12 @@
                     BorderThickness="5"
                     Foreground="Magenta">
                     <telerik:BarSeries.Background>
-                        <SolidColorBrush Color="Green" Opacity="0.30000001192092896"/>
+                        <SolidColorBrush Color="Green" Opacity="0.3"/>
                     </telerik:BarSeries.Background>
 
                     <telerik:BarSeries.VerticalAxis>
                         <telerik:LinearAxis 
+                            Visibility="Collapsed"
                             HorizontalLocation="Right"/>
                     </telerik:BarSeries.VerticalAxis>
 
@@ -160,33 +186,22 @@
                     </telerik:BarSeries.ValueBinding>
 
                 </telerik:BarSeries>
-
-
             </telerik:RadCartesianChart>
-
-
-
-
-            <TextBlock Name="LTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}"/>
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBlock Name="LTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
-                <TextBlock Name="LTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
-                <TextBlock Name="LTC_difff"  Text="&#xEB11;" VerticalAlignment="Center" 
-                           FontFamily="Segoe MDL2 Assets" FontSize="28" Margin="-10, 2, 0, 0"/>
-            </StackPanel>
+            
+            
+            
+            
 
             <Slider Name="LTC_slider" Grid.Row="2" Value="2"
-                    Margin="300, 0, 50, 0" 
+                    Margin="180, 0" 
 					Style="{StaticResource SliderStyle}" 
-					ToolTipService.ToolTip="LTC" 
-                    Background="{StaticResource LTC_color}" 
-                    Foreground="{StaticResource LTC_colorLight}"
+					ToolTipService.ToolTip="Time range" 
 					ValueChanged="LTC_slider_changed"  />
         </Grid>
 
         <!-- 
         ###################################################################################################################-->
-        <StackPanel Grid.Column="1" Margin="10, 60">
+        <StackPanel Grid.Column="1" Margin="0, 70">
             <TextBlock Text="Stats 24h:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="32"/>
 
             <Grid>

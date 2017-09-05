@@ -18,17 +18,25 @@ namespace CoinBase {
         public class ChartDataObject {
             public DateTime Date { get; set; }
             public float Value { get; set; }
+            public float Low { get; set; }
+            public float High { get; set; }
+            public float Open { get; set; }
+            public float Close { get; set; }
+            public float Volume { get; set; }
+            public string Category { get; set; }
         }
 
         public Page_BTC() {
             this.InitializeComponent();
             InitValues();
+
         }
 
         async private void InitValues() {
             try {
                 await UpdateBTC();
                 await GetStats();
+                await Get24Volume();
 
             } catch (Exception ex) {
                 BTC_curr.Text = "Maybe you have no internet?";
@@ -40,12 +48,13 @@ namespace CoinBase {
             UpdateBTC();
             BTC_slider_changed(BTC_slider, null);
             GetStats();
+            Get24Volume();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
             await App.GetCurrentPrice("BTC");
-            BTC_curr.Text = "Current price: " + App.BTC_now.ToString();
+            BTC_curr.Text = App.BTC_now.ToString();
             if (App.coin.Equals("EUR")) {
                 BTC_curr.Text += "€";
             } else{
@@ -74,21 +83,29 @@ namespace CoinBase {
 
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.ppBTC[i].DateTime, Value = App.ppBTC[i].Low };
+                ChartDataObject obj = new ChartDataObject { Date   = App.ppBTC[i].DateTime,
+                                                            Value  =(App.ppBTC[i].Low + App.ppBTC[i].High) / 2,
+                                                            Low    = App.ppBTC[i].Low,
+                                                            High   = App.ppBTC[i].High,
+                                                            Open   = App.ppBTC[i].Open,
+                                                            Close  = App.ppBTC[i].Close,
+                                                            Volume = App.ppBTC[i].Volumefrom
+                };
                 data.Add(obj);
+
             }
 
             float dBTC = ((App.BTC_now / App.BTC_old) - 1) * 100;
             dBTC = (float)Math.Round(dBTC, 2);
-            BTC_diff.Text = dBTC.ToString() + "%";
             if (dBTC < 0) {
                 BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
                 BTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
-            }
-            else {
+                dBTC = Math.Abs(dBTC);
+            } else {
                 BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
                 BTC_difff.Text = "\xEB11";
             }
+            BTC_diff.Text = dBTC.ToString() + "%";
 
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -112,7 +129,19 @@ namespace CoinBase {
             BTC_High.Text  = App.stats.High24 + sym;
             BTC_Low.Text   = App.stats.Low24 + sym;
             BTC_Vol24.Text = App.stats.Volume24 + "BTC";
+        }
 
+        async private Task Get24Volume() {
+            await App.GetHisto("BTC", "hour", 24);
+
+            List<ChartDataObject> data = new List<ChartDataObject>();
+            for (int i = 0; i < 24; i++) {
+                data.Add(new ChartDataObject() {
+                    Date = App.ppBTC[i].DateTime,
+                    Volume = App.ppBTC[i].Volumefrom
+                });
+            }
+            this.BTC_Chart.DataContext = data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +149,7 @@ namespace CoinBase {
             Slider s = (Slider)sender;
             switch (s.Value) {
                 case 1:
-                    BTC_from.Text = "Last hour: ";
+                    BTC_from.Text = "(1h)";
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     BTC_DateTimeAxis.MajorStep = 10;
@@ -130,7 +159,7 @@ namespace CoinBase {
                     break;
 
                 case 2:
-                    BTC_from.Text = "Last day: ";
+                    BTC_from.Text = "(24h)";
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     BTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
@@ -140,7 +169,7 @@ namespace CoinBase {
                     break;
 
                 case 3:
-                    BTC_from.Text = "Last week: ";
+                    BTC_from.Text = "(7d)";
                     BTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -150,7 +179,7 @@ namespace CoinBase {
                     break;
 
                 case 4:
-                    BTC_from.Text = "Last month: ";
+                    BTC_from.Text = "last month";
                     BTC_DateTimeAxis.LabelFormat = "{0:d/M}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -160,7 +189,7 @@ namespace CoinBase {
                     break;
 
                 case 5:
-                    BTC_from.Text = "Last year: ";
+                    BTC_from.Text = "Last year";
                     BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -170,7 +199,7 @@ namespace CoinBase {
                     break;
 
                 case 6:
-                    BTC_from.Text = "Sorry, can't go back in time so far ";
+                    BTC_from.Text = "Sorry, can't go back in time so far";
                     BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     BTC_DateTimeAxis.MajorStep = 1;
