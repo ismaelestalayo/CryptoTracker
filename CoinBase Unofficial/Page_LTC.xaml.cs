@@ -11,8 +11,8 @@ using Windows.UI.Xaml.Media;
 namespace CoinBase {
     public sealed partial class Page_LTC : Page {
 
-        internal int limit = 60;
-        private string timeSpan = "day";
+        internal static int limit = 60;
+        internal static string timeSpan = "day";
 
         public class ChartDataObject {
             public DateTime Date { get; set; }
@@ -28,7 +28,6 @@ namespace CoinBase {
         public Page_LTC() {
             this.InitializeComponent();
             InitValues();
-
         }
 
         async private void InitValues() {
@@ -38,11 +37,12 @@ namespace CoinBase {
                 await Get24Volume();
 
             } catch (Exception ex) {
-                LTC_curr.Text = "Maybe you have no internet?";
+                LTC_curr.Text = "Error: " + ex;
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //For SyncAll button
         public void LTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateLTC();
             LTC_slider_changed(LTC_slider, null);
@@ -97,11 +97,11 @@ namespace CoinBase {
             float dLTC = ((App.LTC_now / App.LTC_old) - 1) * 100;
             dLTC = (float)Math.Round(dLTC, 2);
             if (dLTC < 0) {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));   //Red
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
                 LTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
                 dLTC = Math.Abs(dLTC);
             } else {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));   //Green
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
                 LTC_difff.Text = "\xEB11";
             }
             LTC_diff.Text = dLTC.ToString() + "%";
@@ -134,8 +134,10 @@ namespace CoinBase {
 
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < 24; i++) {
-                data.Add( new ChartDataObject() { Date = App.ppLTC[i].DateTime,
-                                                 Volume = App.ppLTC[i].Volumefrom} );
+                data.Add( new ChartDataObject() {
+                    Date = App.ppLTC[i].DateTime,
+                    Volume = App.ppLTC[i].Volumefrom
+                });
             }
             this.LTC_Chart.DataContext = data;
         }

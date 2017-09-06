@@ -1,5 +1,4 @@
-﻿using CoinBase;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
@@ -12,8 +11,8 @@ using Windows.UI.Xaml.Media;
 namespace CoinBase {
     public sealed partial class Page_BTC : Page {
 
-        internal int limit = 60;
-        private string timeSpan = "day";
+        internal static int limit = 60;
+        internal static string timeSpan = "day";
 
         public class ChartDataObject {
             public DateTime Date { get; set; }
@@ -29,7 +28,6 @@ namespace CoinBase {
         public Page_BTC() {
             this.InitializeComponent();
             InitValues();
-
         }
 
         async private void InitValues() {
@@ -39,11 +37,12 @@ namespace CoinBase {
                 await Get24Volume();
 
             } catch (Exception ex) {
-                BTC_curr.Text = "Maybe you have no internet?";
+                BTC_curr.Text = "Error: " + ex;
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //For SyncAll button
         public void BTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateBTC();
             BTC_slider_changed(BTC_slider, null);
@@ -136,7 +135,7 @@ namespace CoinBase {
 
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < 24; i++) {
-                data.Add(new ChartDataObject() {
+                data.Add( new ChartDataObject() {
                     Date = App.ppBTC[i].DateTime,
                     Volume = App.ppBTC[i].Volumefrom
                 });

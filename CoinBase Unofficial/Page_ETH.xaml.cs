@@ -1,8 +1,5 @@
-﻿using CoinBase;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI;
@@ -15,7 +12,7 @@ namespace CoinBase {
     public sealed partial class Page_ETH : Page {
         
         internal static int limit = 60;
-        private static string timeSpan = "day";
+        internal static string timeSpan = "day";
 
         public class ChartDataObject {
             public DateTime Date { get; set; }
@@ -40,7 +37,7 @@ namespace CoinBase {
                 await Get24Volume();
 
             } catch (Exception ex) {
-                ETH_curr.Text = "Maybe you have no internet?";
+                ETH_curr.Text = "Error: " + ex;
             }
         }
 

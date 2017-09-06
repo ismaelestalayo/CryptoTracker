@@ -1,7 +1,5 @@
-﻿using CoinBase;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -10,8 +8,6 @@ using Windows.UI.Xaml.Media;
 
 namespace CoinBase {
     public sealed partial class MainPage : Page {
-
-        private bool LightTheme = true;
 
         private SolidColorBrush Color_CoinBase = new SolidColorBrush(Color.FromArgb(255, 0, 91, 148));
         private SolidColorBrush Color_CoinBaseButton = new SolidColorBrush(Color.FromArgb(255, 33, 132, 215));
