@@ -140,7 +140,7 @@ namespace CoinBase {
                     Volume = App.ppBTC[i].Volumefrom
                 });
             }
-            this.BTC_Chart.DataContext = data;
+            this.VolumeChart.DataContext = data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////

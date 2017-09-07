@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
+        <SolidColorBrush x:Key="CoinBase_Blue" Color="#222222" />
         <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
 

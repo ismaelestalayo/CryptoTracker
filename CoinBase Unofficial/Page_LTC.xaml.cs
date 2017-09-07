@@ -139,7 +139,7 @@ namespace CoinBase {
                     Volume = App.ppLTC[i].Volumefrom
                 });
             }
-            this.LTC_Chart.DataContext = data;
+            this.VolumeChart.DataContext = data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////

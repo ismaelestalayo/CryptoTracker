@@ -30,12 +30,15 @@
         <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
         <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
-        <SolidColorBrush x:Key="BTC_color"		Color="#FFB119"/>
-        <SolidColorBrush x:Key="BTC_colorLight" Color="#FFB119" Opacity="0.3"/>
-        <SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA"/>
-        <SolidColorBrush x:Key="ETH_colorLight" Color="#6F7CBA" Opacity="0.3"/>
-        <SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5"/>
-        <SolidColorBrush x:Key="LTC_colorLight" Color="#B5B5B5" Opacity="0.3"/>
+        <SolidColorBrush x:Key="BTC_color"		Color="#FFB119" />
+        <SolidColorBrush x:Key="BTC_colorT"     Color="#FFB119" Opacity="0.3" />
+        <SolidColorBrush x:Key="BTC_colorLight"	Color="#f6dfb1" />
+        <SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA" />
+        <SolidColorBrush x:Key="ETH_colorT"     Color="#6F7CBA" Opacity="0.3" />
+        <SolidColorBrush x:Key="ETH_colorLight" Color="#cbcfe1" />
+        <SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5" />
+        <SolidColorBrush x:Key="LTC_colorT"		Color="#B5B5B5" Opacity="0.3"/>
+        <SolidColorBrush x:Key="LTC_colorLight" Color="#e0e0e0"/>
 
     </Page.Resources>
 
@@ -71,7 +74,7 @@
                 </StackPanel>
             </GridViewHeaderItem>
 
-            <StackPanel Orientation="Horizontal" Margin="20, 0"
+            <StackPanel Orientation="Horizontal" Margin="5, 0"
                         RelativePanel.AlignVerticalCenterWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True">
 
@@ -106,7 +109,7 @@
         <!-- 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <Grid Grid.Column="0" Grid.Row="1" Margin="0">
+        <Grid Grid.Column="0" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
@@ -116,12 +119,17 @@
 
                 <telerik:RadCartesianChart.Behaviors>
                     <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
+                        <telerik:ChartTrackBallBehavior.LineStyle>
+                            <Style TargetType="Polyline">
+                                <Setter Property="Stroke" Value="{StaticResource ETH_color}"/>
+                                <Setter Property="StrokeThickness" Value="2"/>
+                            </Style>
+                        </telerik:ChartTrackBallBehavior.LineStyle>
                         <telerik:ChartTrackBallBehavior.InfoStyle>
                             <Style TargetType="telerikPrimitives:TrackBallInfoControl">
                                 <Setter Property="Background" Value="{StaticResource ETH_colorLight}"/>
-                                <Setter Property="Foreground" Value="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+                                <Setter Property="Foreground" Value="Black"/>
                                 <Setter Property="BorderBrush" Value="{StaticResource ETH_color}"/>
-                                <Setter Property="FontWeight" Value="Light"/>
                             </Style>
                         </telerik:ChartTrackBallBehavior.InfoStyle>
                     </telerik:ChartTrackBallBehavior>
@@ -147,46 +155,18 @@
                 <telerik:AreaSeries 
                     Stroke="{StaticResource ETH_color}" 
 					StrokeThickness="1" 
-					Fill="{StaticResource ETH_colorLight}"/>
+					Fill="{StaticResource ETH_colorT}">
+                    <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding DataPoint.Value}"/>
+                                <TextBlock Text="{Binding DataPoint.Category}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+                </telerik:AreaSeries>
 
-                <telerik:BarSeries 
-                    x:Name="VolumeChart"
-                    x:FieldModifier="internal"
-                    Visibility="Collapsed"
-                    ItemsSource="{Binding}"
-                    BorderBrush="Pink"
-                    BorderThickness="5"
-                    Foreground="Magenta">
-                    <telerik:BarSeries.Background>
-                        <SolidColorBrush Color="Green" Opacity="0.3"/>
-                    </telerik:BarSeries.Background>
-
-                    <telerik:BarSeries.VerticalAxis>
-                        <telerik:LinearAxis 
-                            Visibility="Collapsed"
-                            HorizontalLocation="Right"/>
-                    </telerik:BarSeries.VerticalAxis>
-
-                    <telerik:BarSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis 
-                            Visibility="Collapsed"
-                            LabelFormat="{}{0,0:HH:mm}"/>
-                    </telerik:BarSeries.HorizontalAxis>
-
-                    <telerik:BarSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:BarSeries.CategoryBinding>
-
-                    <telerik:BarSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                    </telerik:BarSeries.ValueBinding>
-
-                </telerik:BarSeries>
             </telerik:RadCartesianChart>
-
-
-
-
 
             <Slider Name="ETH_slider" Grid.Row="2" Value="2"
                     Margin="180, 0"
@@ -195,6 +175,8 @@
 					ValueChanged="ETH_slider_changed" />
         </Grid>
 
+        <!-- 
+        ###################################################################################################################-->
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="10, 10">
             <TextBlock Text="Stats 24h:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="32"/>
 
@@ -220,6 +202,41 @@
                 <TextBlock Name="ETH_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
                 <TextBlock Name="ETH_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
             </Grid>
+
+            <telerik:RadCartesianChart Height="250" Margin="0, 20">
+                <telerik:BarSeries 
+                    x:Name="VolumeChart"
+                    x:FieldModifier="internal"
+                    ItemsSource="{Binding}">
+                    
+                    <telerik:BarSeries.PointTemplate>
+                        <DataTemplate>
+                            <Border Background="{StaticResource ETH_colorLight}"/>
+                        </DataTemplate>
+                    </telerik:BarSeries.PointTemplate>
+
+                    <telerik:BarSeries.VerticalAxis>
+                        <telerik:LinearAxis
+                            Visibility="Collapsed"
+                            HorizontalLocation="Right"/>
+                    </telerik:BarSeries.VerticalAxis>
+
+                    <telerik:BarSeries.HorizontalAxis>
+                        <telerik:DateTimeCategoricalAxis 
+                            LabelInterval="3"
+                            LabelFormat="{}{0,0:HH}"/>
+                    </telerik:BarSeries.HorizontalAxis>
+
+                    <telerik:BarSeries.CategoryBinding>
+                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                    </telerik:BarSeries.CategoryBinding>
+
+                    <telerik:BarSeries.ValueBinding>
+                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                    </telerik:BarSeries.ValueBinding>
+
+                </telerik:BarSeries>
+            </telerik:RadCartesianChart>
 
         </StackPanel>
 

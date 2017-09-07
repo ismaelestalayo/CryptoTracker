@@ -140,7 +140,7 @@ namespace CoinBase {
                     Volume = App.ppETH[i].Volumefrom
                 });
             }
-            this.ETH_Chart.DataContext = data;
+            this.VolumeChart.DataContext = data;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
