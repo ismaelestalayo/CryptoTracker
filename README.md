@@ -21,6 +21,10 @@ It allows you to see graphics of each coin for the last hourt, day, week, month,
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_BTC%20Light.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ETH%20Dark.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_LTC%20Light.png?raw=true" width = "30%"/>
 
 # Changelog:
+#### 1.3:
+- CAD and MXN added to the coins options.
+- Layout of the coins page improved
+
 #### 1.2:
 - Ability to choose between EUR and USD
 - More friendly mobile UI (still work in progress)
