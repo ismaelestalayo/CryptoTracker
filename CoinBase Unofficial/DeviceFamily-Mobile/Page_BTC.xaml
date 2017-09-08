@@ -215,7 +215,7 @@
 
                 <telerik:BarSeries.PointTemplate>
                     <DataTemplate>
-                        <Border Background="{StaticResource BTC_colorLight}"/>
+                        <Border Background="{StaticResource BTC_color}"/>
                     </DataTemplate>
                 </telerik:BarSeries.PointTemplate>
 

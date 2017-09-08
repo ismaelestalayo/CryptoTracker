@@ -210,7 +210,7 @@
 
                     <telerik:BarSeries.PointTemplate>
                         <DataTemplate>
-                            <Border Background="{StaticResource LTC_colorLight}"/>
+                            <Border Background="{StaticResource LTC_color}"/>
                         </DataTemplate>
                     </telerik:BarSeries.PointTemplate>
 

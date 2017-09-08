@@ -23,7 +23,7 @@
                 <ComboBoxItem Content="MXN" Name="MXN" />
             </ComboBox>
 
-            <Button Background="Transparent" x:Name="reviewButton" Click="reviewButton_Click" Margin="-20,40,0,0">
+            <Button Background="Transparent" x:Name="reviewButton" Click="reviewButton_Click" Margin="-20,40,0,0" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE1CE;" FontFamily="Segoe MDL2 Assets" Margin="10,0" FontSize="25"/>
                     <TextBlock Text="Review" FontFamily="Segoe UI Light" FontWeight="Light" FontSize="25"/>
@@ -31,7 +31,7 @@
                 </StackPanel>
             </Button>
 
-            <Button Background="Transparent" x:Name="feedbackButton" Click="feedbackButton_Click" Margin="-20,0,0,0">
+            <Button Background="Transparent" x:Name="feedbackButton" Click="feedbackButton_Click" Margin="-20,40,0,0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE939;" FontFamily="Segoe MDL2 Assets" Margin="10,0"   FontSize="25"/>
                     <TextBlock Text="Feedback" FontFamily="Segoe UI Light" FontWeight="Light" FontSize="25"/>
@@ -52,7 +52,7 @@
             <Image Source="Assets/coinbase.png" Width="50" HorizontalAlignment="Left" Margin="0, 10"/>
             <TextBlock Text="CoinBase Unnoficial" Style="{ThemeResource FlyoutPickerTitleTextBlockStyle}"/>
             <TextBlock Text="By Ismael Estalayo" Style="{ThemeResource BodyTextBlockStyle}"/>
-            <TextBlock Text="Version: 1.3.0" />
+            <TextBlock Text="Version: 1.4.0" />
             <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
                              Content    ="http://ismaelestalayo.github.io/" Margin="0, -6, 0, 0"/>
         </StackPanel>

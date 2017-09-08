@@ -123,7 +123,7 @@
                         <telerik:ChartTrackBallBehavior.InfoStyle>
                             <Style TargetType="telerikPrimitives:TrackBallInfoControl">
                                 <Setter Property="Background" Value="{StaticResource LTC_colorLight}"/>
-                                <Setter Property="Foreground" Value="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+                                <Setter Property="Foreground" Value="Black"/>
                                 <Setter Property="BorderBrush" Value="{StaticResource LTC_color}"/>
                                 <Setter Property="FontWeight" Value="Light"/>
                             </Style>
@@ -208,7 +208,7 @@
 
                 <telerik:BarSeries.PointTemplate>
                     <DataTemplate>
-                        <Border Background="{StaticResource LTC_colorLight}"/>
+                        <Border Background="{StaticResource LTC_color}"/>
                     </DataTemplate>
                 </telerik:BarSeries.PointTemplate>
                 

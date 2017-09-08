@@ -36,14 +36,14 @@
 				   RelativePanel.AlignVerticalCenterWithPanel="True" />
             </Button>
 
-            <Button Name="SyncAllButton" Click="SyncAllButton_Click"
+            <Button Name="SyncAllButton" Click="UpdateButton_Click"
 					Background="Transparent" BorderBrush="Transparent"
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.AlignRightWithPanel="True">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0, 4"
 							   FontFamily="Segoe MDL2 Assets" Text="&#xE117;" Foreground="White" FontSize="18" />
-                    <TextBlock Text="Sync All"
+                    <TextBlock Text="Update"
 							   Foreground="White" Margin="5,0"
 							   FontWeight="Light" FontSize="18" />
                 </StackPanel>

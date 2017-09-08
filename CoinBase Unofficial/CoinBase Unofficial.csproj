@@ -19,7 +19,7 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>GDAX_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>A2E2BEDEDB2B3833C5ACE3EDA5FCCC8D13B61FE6</PackageCertificateThumbprint>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxPackageDir>C:\Users\ismae\Desktop\appxUpload</AppxPackageDir>
