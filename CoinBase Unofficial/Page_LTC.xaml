@@ -50,7 +50,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="2*"/>
@@ -76,7 +76,7 @@
             <StackPanel Orientation="Horizontal" Margin="5, 0"
                         RelativePanel.AlignVerticalCenterWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True">
-                
+
                 <TextBlock Name="LTC_curr" 
                            Text="val€" 
                            Margin="80, 0, 0, 0"
@@ -207,13 +207,13 @@
                     x:Name="VolumeChart"
                     x:FieldModifier="internal"
                     ItemsSource="{Binding}">
-                    
+
                     <telerik:BarSeries.PointTemplate>
                         <DataTemplate>
                             <Border Background="{StaticResource LTC_colorLight}"/>
                         </DataTemplate>
                     </telerik:BarSeries.PointTemplate>
-                    
+
                     <telerik:BarSeries.Background>
                         <SolidColorBrush Color="Green" Opacity="0.3"/>
                     </telerik:BarSeries.Background>
@@ -240,7 +240,7 @@
 
                 </telerik:BarSeries>
             </telerik:RadCartesianChart>
-            
+
         </StackPanel>
 
     </Grid>

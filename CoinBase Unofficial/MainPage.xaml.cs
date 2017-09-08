@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -38,57 +39,32 @@ namespace CoinBase {
 
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
-                statusBar.BackgroundColor = Color.FromArgb(255, 0, 91, 148);
+                statusBar.BackgroundColor = Color.FromArgb(255, 34, 34, 34);
                 statusBar.BackgroundOpacity = 1;
+                DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
             }
 
             MainFrame.Navigate(typeof(Page_Home));
-            //MenuHome.Background = Color_CoinBaseDark;
         }
 
         private void SettingsButtonClick(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Settings));
-            //MenuHome.Background = Color_CoinBase;
-            //MenuBTC.Background = Color_CoinBase;
-            //MenuETH.Background = Color_CoinBase;
-            //MenuLTC.Background = Color_CoinBase;
-            //MenuSettings.Background = Color_CoinBaseDark;
         }
 
         private void MenuHome_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Home));
-            //MenuHome.Background = Color_CoinBaseDark;
-            //MenuBTC.Background = Color_CoinBase;
-            //MenuETH.Background = Color_CoinBase;
-            //MenuLTC.Background = Color_CoinBase;
-            //MenuSettings.Background = Color_CoinBase;
         }
 
         private void MenuBTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_BTC));
-            //MenuHome.Background = Color_CoinBase;
-            //MenuBTC.Background = Color_CoinBaseDark;
-            //MenuETH.Background = Color_CoinBase;
-            //MenuLTC.Background = Color_CoinBase;
-            //MenuSettings.Background = Color_CoinBase;
         }
 
         private void MenuETH_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_ETH));
-            //MenuHome.Background = Color_CoinBase;
-            //MenuBTC.Background = Color_CoinBase;
-            //MenuETH.Background = Color_CoinBaseDark;
-            //MenuLTC.Background = Color_CoinBase;
-            //MenuSettings.Background = Color_CoinBase;
         }
 
         private void MenuLTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_LTC));
-            //MenuHome.Background = Color_CoinBase;
-            //MenuBTC.Background = Color_CoinBase;
-            //MenuETH.Background = Color_CoinBase;
-            //MenuLTC.Background = Color_CoinBaseDark;
-            //MenuSettings.Background = Color_CoinBase;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +99,7 @@ namespace CoinBase {
         }
 
         private void HamburgerLogo_Click(object sender, RoutedEventArgs e) {
-            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+            //MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
         private void ShowVolumeChartButton_Click(object sender, RoutedEventArgs e) {

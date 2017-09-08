@@ -53,8 +53,9 @@ namespace CoinBase {
                 if (y != null)
                     coin = y;
                 
-            } catch {
+            } catch (Exception ex){
                 // Light theme and EUR by default (first time on the app)
+                string err = ex.StackTrace;
                 localSettings.Values["Theme"] = "Light";
                 localSettings.Values["Coin"] = "EUR";
                 this.RequestedTheme = ApplicationTheme.Light;

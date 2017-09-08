@@ -96,7 +96,7 @@
                            FontSize="18"
                            FontWeight="Light"/>
 
-                <TextBlock Name="BTC_from"  Visibility="Collapsed"
+                <TextBlock Name="BTC_from" Visibility="Collapsed"
                            Text="(24h)" 
                            VerticalAlignment="Bottom"
                            FontWeight="Light"

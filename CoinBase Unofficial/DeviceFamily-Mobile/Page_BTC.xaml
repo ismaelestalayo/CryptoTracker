@@ -6,124 +6,245 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 	xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
 	NavigationCacheMode="Required">
 
-	<Page.Resources>
-		<Style TargetType="Button" x:Key="HeaderUpdateButton">
-			<Setter Property="Background"		   Value="Transparent" />
-			<Setter Property="FontFamily"		   Value="Segoe MDL2 Assets" />
-			<Setter Property="FontSize"			   Value="18" />
-			<Setter Property="Margin"			   Value="20, 14" />
-			<Setter Property="HorizontalAlignment" Value="Right" />
-			<Setter Property="VerticalAlignment"   Value="Top" />
-			<Setter Property="Content"			   Value="&#xE117;" />
-		</Style>
+    <Page.Resources>
+        <Style TargetType="Line" x:Key="ChartGridColor">
+            <Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}" />
+            <Setter Property="StrokeDashArray" Value="3,7" />
+            <Setter Property="StrokeThickness" Value="0.2" />
+        </Style>
 
-		<Style TargetType="TextBlock" x:Key="BottomTextBlockStyle">
-			<Setter Property="FontWeight"		      Value="Light" />
-			<Setter Property="Margin"			 	  Value="10,5" />
-			<Setter Property="FontSize"				  Value="20" />
-			<Setter Property="OpticalMarginAlignment" Value="TrimSideBearings" />
-		</Style>
+        <Style TargetType="Line" x:Key="TransparentLine">
+            <Setter Property="Stroke" Value="Transparent"/>
+        </Style>
+        <DataTemplate x:Key="TransparentRect">
+            <Rectangle Stroke="Transparent"/>
+        </DataTemplate>
 
-		<Style TargetType="Line" x:Key="ChartGridColor">
-			<Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}" />
-			<Setter Property="StrokeDashArray" Value="3,7" />
-			<Setter Property="StrokeThickness" Value="1" />
-		</Style>
+        <Style TargetType="Slider" x:Key="SliderStyle">
+            <Setter Property="SnapsTo"		 Value="StepValues" />
+            <Setter Property="StepFrequency" Value="1" />
+            <Setter Property="TickFrequency" Value="1" />
+            <Setter Property="TickPlacement" Value="BottomRight" />
+            <Setter Property="Minimum"		 Value="1" />
+            <Setter Property="Maximum"		 Value="6" />
+            <Setter Property="Grid.Row"		 Value="3" />
+            <Setter Property="Margin"		 Value="10,5" />
+        </Style>
 
-		<Style TargetType="Slider" x:Key="SliderStyle">
-			<Setter Property="SnapsTo"		 Value="StepValues" />
-			<Setter Property="StepFrequency" Value="1" />
-			<Setter Property="TickFrequency" Value="1" />
-			<Setter Property="TickPlacement" Value="BottomRight" />
-			<Setter Property="Minimum"		 Value="1" />
-			<Setter Property="Maximum"		 Value="6" />
-			<Setter Property="Grid.Row"		 Value="3" />
-			<Setter Property="Margin"		 Value="10,5" />
-		</Style>
+        <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
+        <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
+        <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
+        <SolidColorBrush x:Key="BTC_color"		Color="#FFB119" />
+        <SolidColorBrush x:Key="BTC_colorT"     Color="#FFB119" Opacity="0.3" />
+        <SolidColorBrush x:Key="BTC_colorLight"	Color="#f6dfb1" />
+        <SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA" />
+        <SolidColorBrush x:Key="ETH_colorT"     Color="#6F7CBA" Opacity="0.3" />
+        <SolidColorBrush x:Key="ETH_colorLight" Color="#cbcfe1" />
+        <SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5" />
+        <SolidColorBrush x:Key="LTC_colorT"		Color="#B5B5B5" Opacity="0.3"/>
+        <SolidColorBrush x:Key="LTC_colorLight" Color="#e0e0e0"/>
+    </Page.Resources>
 
-		<SolidColorBrush x:Key="BTC_color"		Color="#FFB119" />
-		<SolidColorBrush x:Key="BTC_colorLight" Color="#FFB119" Opacity="0.3" />
-		<SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA" />
-		<SolidColorBrush x:Key="ETH_colorLight" Color="#6F7CBA" Opacity="0.3" />
-		<SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5" />
-		<SolidColorBrush x:Key="LTC_colorLight" Color="#B5B5B5" Opacity="0.3" />
-	</Page.Resources>
-
-	<!--
+    <!--
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-	<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-		<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
 
-		<!-- Headers of the three grids -->
+        <RelativePanel>
+            <GridViewHeaderItem Width="500" Margin="-15, 0" Padding="0, -5">
 
-		<GridViewHeaderItem Grid.Column="0" Margin="0, -15">
-			<StackPanel Orientation="Horizontal">
-				<RelativePanel VerticalAlignment="Center" Margin="10, 10, 10, 0">
-					<Ellipse Fill="#FFB119"
+                <StackPanel Orientation="Horizontal">
+                    <RelativePanel VerticalAlignment="Center" Margin="20, 10, 5, 5">
+                        <Ellipse Fill="#FFB119"
 							 Width="32" Height="32" />
-					<Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Data="M21.78 15.37c.51-.61.83-1.4.83-2.26 0-2.74-1.6-4.38-4.24-4.38V5.45c0-.12-.1-.22-.22-.22h-1.27c-.11 0-.2.1-.2.21v3.3h-1.7V5.44c0-.12-.1-.22-.22-.22H13.5c-.12 0-.2.1-.21.21v3.3H9.67c-.12 0-.21.09-.21.21v1.31c0 .12.1.22.21.22h.21c.94 0 1.7.79 1.7 1.75v7c0 .92-.68 1.67-1.55 1.75a.21.21 0 0 0-.18.16l-.33 1.32c-.01.06 0 .13.04.19.04.05.1.08.17.08h3.55v3.3c0 .1.1.2.2.2h1.28c.12 0 .21-.1.21-.22v-3.28h1.7v3.3c0 .1.1.2.21.2h1.27c.12 0 .22-.1.22-.22v-3.28h.85c2.65 0 4.24-1.64 4.24-4.37 0-1.28-.68-2.39-1.68-3zm-6.8-4.01h2.54c.94 0 1.7.78 1.7 1.75 0 .96-.76 1.75-1.7 1.75h-2.55v-3.5zm3.39 8.75h-3.4v-3.5h3.4c.93 0 1.7.78 1.7 1.75 0 .96-.77 1.75-1.7 1.75z" />
-				</RelativePanel>
-				<TextBlock Text="Bitcoin"
-						   Margin="10,5,0,0"
-						   Style="{ThemeResource SubheaderTextBlockStyle}" />
-			</StackPanel>
-		</GridViewHeaderItem>
+                        <Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                              Data="M21.78 15.37c.51-.61.83-1.4.83-2.26 0-2.74-1.6-4.38-4.24-4.38V5.45c0-.12-.1-.22-.22-.22h-1.27c-.11 0-.2.1-.2.21v3.3h-1.7V5.44c0-.12-.1-.22-.22-.22H13.5c-.12 0-.2.1-.21.21v3.3H9.67c-.12 0-.21.09-.21.21v1.31c0 .12.1.22.21.22h.21c.94 0 1.7.79 1.7 1.75v7c0 .92-.68 1.67-1.55 1.75a.21.21 0 0 0-.18.16l-.33 1.32c-.01.06 0 .13.04.19.04.05.1.08.17.08h3.55v3.3c0 .1.1.2.2.2h1.28c.12 0 .21-.1.21-.22v-3.28h1.7v3.3c0 .1.1.2.21.2h1.27c.12 0 .22-.1.22-.22v-3.28h.85c2.65 0 4.24-1.64 4.24-4.37 0-1.28-.68-2.39-1.68-3zm-6.8-4.01h2.54c.94 0 1.7.78 1.7 1.75 0 .96-.76 1.75-1.7 1.75h-2.55v-3.5zm3.39 8.75h-3.4v-3.5h3.4c.93 0 1.7.78 1.7 1.75 0 .96-.77 1.75-1.7 1.75z" />
+                    </RelativePanel>
 
-		<!--
+                    <TextBlock 
+                        Text="Bitcoin"
+                        VerticalAlignment="Center"
+	    				Style="{ThemeResource SubheaderTextBlockStyle}" 
+                        FontSize="28"/>
+                </StackPanel>
+            </GridViewHeaderItem>
+
+            <StackPanel Orientation="Horizontal" Margin="5"
+                        RelativePanel.AlignRightWithPanel="True">
+
+                <TextBlock Name="BTC_curr" 
+                           Text="val€"  
+                           FontSize="24"
+                           FontWeight="Light"/>
+
+                <TextBlock Name="BTC_difff" 
+                           Text="&#xeB11;"
+                           VerticalAlignment="Bottom"
+                           FontSize="20"
+                           FontFamily="Segoe MDL2 Assets"/>
+                <TextBlock Name="BTC_diff" 
+                           Text="0%"
+                           VerticalAlignment="Bottom"
+                           Margin="-2, 0, 0, 0"
+                           FontSize="17"
+                           FontWeight="Light"/>
+
+                <TextBlock Name="BTC_from" Visibility="Collapsed"
+                           Text="(24h)" 
+                           VerticalAlignment="Bottom"
+                           FontWeight="Light"
+                           FontSize="15"/>
+            </StackPanel>
+        </RelativePanel>
+
+        <!--
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<Grid Grid.Column="0" Margin="10,60,10,10">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*" />
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="auto" />
-			</Grid.RowDefinitions>
+        <Grid Grid.Row="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
 
-			<telerik:RadCartesianChart x:Name="BTC_Chart" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+            <telerik:RadCartesianChart x:Name="BTC_Chart" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
-				<telerik:RadCartesianChart.Behaviors>
-					<telerik:ChartTrackBallBehavior />
-				</telerik:RadCartesianChart.Behaviors>
+                <telerik:RadCartesianChart.Behaviors>
+                    <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">
+                        <telerik:ChartTrackBallBehavior.LineStyle>
+                            <Style TargetType="Polyline">
+                                <Setter Property="Stroke" Value="{StaticResource BTC_color}"/>
+                                <Setter Property="StrokeThickness" Value="2"/>
+                            </Style>
+                        </telerik:ChartTrackBallBehavior.LineStyle>
+                        <telerik:ChartTrackBallBehavior.InfoStyle>
+                            <Style TargetType="telerikPrimitives:TrackBallInfoControl">
+                                <Setter Property="Background" Value="{StaticResource BTC_colorLight}"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource BTC_color}"/>
+                            </Style>
+                        </telerik:ChartTrackBallBehavior.InfoStyle>
 
-				<telerik:RadCartesianChart.Grid>
-					<telerik:CartesianChartGrid MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}" />
-				</telerik:RadCartesianChart.Grid>
+                    </telerik:ChartTrackBallBehavior>
+                    <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal" />
 
-				<telerik:RadCartesianChart.HorizontalAxis>
-					<telerik:DateTimeContinuousAxis
+                </telerik:RadCartesianChart.Behaviors>
+
+                <telerik:RadCartesianChart.Grid>
+                    <telerik:CartesianChartGrid
+                        MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}" />
+                </telerik:RadCartesianChart.Grid>
+
+                <telerik:RadCartesianChart.HorizontalAxis>
+                    <telerik:DateTimeContinuousAxis
 						x:Name="BTC_DateTimeAxis"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" />
-				</telerik:RadCartesianChart.HorizontalAxis>
+                </telerik:RadCartesianChart.HorizontalAxis>
 
-				<telerik:RadCartesianChart.VerticalAxis>
-					<telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" />
-				</telerik:RadCartesianChart.VerticalAxis>
+                <telerik:RadCartesianChart.VerticalAxis>
+                    <telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" />
+                </telerik:RadCartesianChart.VerticalAxis>
 
-				<telerik:RadCartesianChart.Series>
-					<telerik:AreaSeries
-						Stroke="{StaticResource BTC_color}"
-						StrokeThickness="1"
-						Fill="{StaticResource BTC_colorLight}" />
-				</telerik:RadCartesianChart.Series>
-			</telerik:RadCartesianChart>
+                <telerik:AreaSeries 
+                    Stroke="{StaticResource BTC_color}" 
+                    StrokeThickness="1" 
+                    Fill="{StaticResource BTC_colorT}">
+                    <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding DataPoint.Value}"/>
+                                <TextBlock Text="{Binding DataPoint.Category}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+                </telerik:AreaSeries>
+                
+            </telerik:RadCartesianChart>
 
-			<TextBlock Name="BTC_curr" Text="Current value:"  Grid.Row="1" Style="{StaticResource BottomTextBlockStyle}" />
-			<StackPanel Grid.Row="2" Orientation="Horizontal">
-				<TextBlock Name="BTC_from" Text="From yesterday: " Style="{StaticResource BottomTextBlockStyle}"/>
-				<TextBlock Name="BTC_diff" Text="%"				   Style="{StaticResource BottomTextBlockStyle}"/>
-			</StackPanel>
-
-			<Slider Name="BTC_slider" Grid.Row="3"
+            <Slider Name="BTC_slider" Grid.Row="1"
+                    Margin="50, 0"
 					Style="{StaticResource SliderStyle}"
-					ToolTipService.ToolTip="a"
+					ToolTipService.ToolTip="time range"
 					ValueChanged="BTC_slider_changed" />
-		</Grid>
-	</Grid>
+        </Grid>
+
+        <!--
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <StackPanel Grid.Row="2" Margin="10, 0">
+            <TextBlock Text="Stats 24h:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="28"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+
+                <TextBlock Name="BTC_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
+                <TextBlock Name="BTC_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
+                <TextBlock Name="BTC_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
+                <TextBlock Name="BTC_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+            </Grid>
+        </StackPanel>
+
+        <telerik:RadCartesianChart Grid.Row="3" Margin="10">
+            <telerik:BarSeries 
+                    x:Name="VolumeChart"
+                    x:FieldModifier="internal"
+                    ItemsSource="{Binding}">
+
+                <telerik:BarSeries.PointTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource BTC_colorLight}"/>
+                    </DataTemplate>
+                </telerik:BarSeries.PointTemplate>
+
+                <telerik:BarSeries.VerticalAxis>
+                    <telerik:LinearAxis Visibility="Collapsed"/>
+                </telerik:BarSeries.VerticalAxis>
+
+                <telerik:BarSeries.HorizontalAxis>
+                    <telerik:DateTimeCategoricalAxis 
+                        MajorTickTemplate="{StaticResource TransparentRect}"
+                        Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+                        LineStyle="{StaticResource TransparentLine}"
+                        VerticalLocation="Bottom"
+                        LabelInterval="3"
+                        LabelFormat="{}{0,0:HH}">
+                    </telerik:DateTimeCategoricalAxis>
+                </telerik:BarSeries.HorizontalAxis>
+
+                <telerik:BarSeries.CategoryBinding>
+                    <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                </telerik:BarSeries.CategoryBinding>
+
+                <telerik:BarSeries.ValueBinding>
+                    <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                </telerik:BarSeries.ValueBinding>
+
+            </telerik:BarSeries>
+        </telerik:RadCartesianChart>
+
+
+    </Grid>
 </Page>
