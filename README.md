@@ -3,27 +3,35 @@ CoinBase Unofficial UWP app made with GDAX C# API on VisualStudio 2017.
 
 Unofficial CoinBase client to keep up with the three most used crypto-currencies: Bitcoin, Ethereum and Litecoin. 
 
-It allows you to see graphics of each coin for the last hourt, day, week, month, year and for all the time the coin has been on the market. Supports both EUR and USD for the moment, and has also light and dark theme for you to choose!
+Charts of each coin for the last hourt, day, week, month, year and for all the time the coin has been on the market. Supports EUR, USD, CAD and MXN at the moment, and has also light and dark theme for you to choose!
+
+Near future plans: ability to add bought crypto-coins to keep track of your earnings/loses, and log in to CoinBase account.
 
 ## PC Version
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_Home%20Light.png?raw=true" width = "80%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_HomeL.png?raw=true" width = "80%"/>
 
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ETH%20Light.png?raw=true" width = "80%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ethL.png?raw=true" width = "80%"/>
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_LTC%20Dark.png?raw=true" width = "80%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ltcD.png?raw=true" width = "80%"/>
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_Settings.png?raw=true" width = "80%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_settingsL.png?raw=true" width = "80%"/>
 
 ## Mobile version:
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_BTC%20Light.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ETH%20Dark.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_LTC%20Light.png?raw=true" width = "30%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_btcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ltcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ethD.png?raw=true" width = "30%"/>
+
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/>
 
 # Changelog:
+#### 1.4:
+- New minimal UI for both PC and mobile.
+- Few errors fixed.
+
 #### 1.3:
-- CAD and MXN added to the coins options.
-- Layout of the coins page improved
+- CAD and MXN added to currency options.
+- Added 24h stats and 24h volume chart.
 
 #### 1.2:
 - Ability to choose between EUR and USD
