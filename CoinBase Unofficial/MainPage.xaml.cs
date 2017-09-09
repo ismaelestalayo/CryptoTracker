@@ -1,7 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.Notifications;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI;
+using Windows.UI.Notifications;
+using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -50,19 +54,15 @@ namespace CoinBase {
         private void SettingsButtonClick(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Settings));
         }
-
         private void MenuHome_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Home));
         }
-
         private void MenuBTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_BTC));
         }
-
         private void MenuETH_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_ETH));
         }
-
         private void MenuLTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_LTC));
         }
@@ -102,35 +102,111 @@ namespace CoinBase {
             //MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
-        private void ShowVolumeChartButton_Click(object sender, RoutedEventArgs e) {
-            string x = MainFrame.Content.ToString();
+        private async void LiveTileButton_Click(object sender, RoutedEventArgs e) {
+            testLiveTile();
 
-            if (x.Equals("CoinBase.Page_BTC")) {
-                var p = (Page_BTC)MainFrame.Content;
 
-                if (p.VolumeChart.Visibility == Visibility.Visible) {
-                    p.VolumeChart.Visibility = Visibility.Collapsed;
-                } else {
-                    p.VolumeChart.Visibility = Visibility.Visible;
-                }
-            } else if (x.Equals("CoinBase.Page_ETH")) {
-                var p = (Page_ETH)MainFrame.Content;
-
-                if (p.VolumeChart.Visibility == Visibility.Visible) {
-                    p.VolumeChart.Visibility = Visibility.Collapsed;
-                } else {
-                    p.VolumeChart.Visibility = Visibility.Visible;
-                }
-            } else if (x.Equals("CoinBase.Page_LTC")) {
-                var p = (Page_LTC)MainFrame.Content;
-
-                if (p.VolumeChart.Visibility == Visibility.Visible) {
-                    p.VolumeChart.Visibility = Visibility.Collapsed;
-                } else {
-                    p.VolumeChart.Visibility = Visibility.Visible;
-                }
-            }
         }
+
+
+
+
+
+
+
+        public void testLiveTile() {
+
+            var tileContent = new TileContent() {
+                Visual = new TileVisual() {
+                    Branding = TileBranding.Name,
+
+                    TileMedium = new TileBinding() {
+                        Content = new TileBindingContentAdaptive() {
+                            Children = {
+                                new AdaptiveText(){
+                                    Text = "9:50 AM, Wednesday",
+                                    HintStyle = AdaptiveTextStyle.Caption
+                                },
+                                new AdaptiveText(){
+                                    Text = "263 Grove St, San Francisco, CA 94102",
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
+                                    HintWrap = true
+                                }
+                            }
+                        }
+                    },
+
+                    TileWide = new TileBinding() {
+                        Content = new TileBindingContentAdaptive() {
+                            Children ={
+                                new AdaptiveGroup(){
+                                    Children ={
+                                        new AdaptiveSubgroup(){
+                                            HintWeight = 33,
+                                            Children ={
+                                                new AdaptiveImage(){
+                                                    Source = "Assets/coinbase.png"
+                                                }
+                                            }
+                                        },
+                                        new AdaptiveSubgroup(){
+                                            Children ={
+                                                new AdaptiveText(){
+                                                    Text = "9:50 AM, Wednesday",
+                                                    HintStyle = AdaptiveTextStyle.Caption
+                                                },
+                                                new AdaptiveText(){
+                                                    Text = "263 Grove St, San Francisco, CA 94102",
+                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
+                                                    HintWrap = true,
+                                                    HintMaxLines = 3
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    TileLarge = new TileBinding() {
+                        Content = new TileBindingContentAdaptive() {
+                            Children = {
+                                new AdaptiveGroup(){
+                                    Children ={
+                                        new AdaptiveSubgroup(){
+                                            HintWeight = 33,
+                                            Children = {
+                                                new AdaptiveImage(){
+                                                    Source = "/Assets/coinbase.png"
+                                                }
+                                            }
+                                        },
+                                        new AdaptiveSubgroup(){
+                                            Children = {
+                                                new AdaptiveText(){
+                                                    Text = "9:50 AM, Wednesday",
+                                                    HintStyle = AdaptiveTextStyle.Caption
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                new AdaptiveImage(){
+                                    Source = "Assets/coinbase.png"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Create the tile notification
+            var tileNotif = new TileNotification(tileContent.GetXml());
+
+            // And send the notification to the primary tile
+            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotif);
+        }
+
 
 
 

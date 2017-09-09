@@ -38,14 +38,14 @@
 				   RelativePanel.AlignVerticalCenterWithPanel="True" />
             </Button>
 
-            <Button Name="ShowVolumeChartButton" Click="ShowVolumeChartButton_Click" Visibility="Collapsed"
+            <Button Name="LiveTileButton" Click="LiveTileButton_Click"
 					Background="Transparent" BorderBrush="Transparent"
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.LeftOf="SyncAllButton">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,5"
-							   FontFamily="Segoe MDL2 Assets" Text="&#xE1E9;" Foreground="White" FontSize="18" />
-                    <TextBlock Text="Volume"
+							   FontFamily="Segoe MDL2 Assets" Text="&#xE840;" Foreground="White" FontSize="18" />
+                    <TextBlock Text="Live tile"
 							   Foreground="White" Margin="5,0"
 							   FontWeight="Light" FontSize="18" />
                 </StackPanel>
@@ -125,4 +125,9 @@
             </SplitView.Content>
         </SplitView>
     </Grid>
+    
+    
+    
+    
+    
 </Page>

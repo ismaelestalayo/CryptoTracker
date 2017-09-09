@@ -36,6 +36,7 @@ namespace CoinBase {
                 BTC_curr.Text = ex.StackTrace;
                 LTC_curr.Text = ex.Message;
             }
+
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
