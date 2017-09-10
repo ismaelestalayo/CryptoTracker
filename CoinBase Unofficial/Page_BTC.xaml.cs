@@ -32,7 +32,7 @@ namespace CoinBase {
 
         async private void InitValues() {
             try {
-                await UpdateBTC();
+                BTC_Update_click(null, null);
                 await GetStats();
                 await Get24Volume();
 
@@ -45,7 +45,8 @@ namespace CoinBase {
         //For SyncAll button
         public void BTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateBTC();
-            BTC_slider_changed(BTC_slider, null);
+            RadioButton r = new RadioButton { Content = "hour" };
+            BTC_TimerangeButton_Click(r, null);
             GetStats();
             Get24Volume();
         }
@@ -144,11 +145,12 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void BTC_slider_changed(object sender, RangeBaseValueChangedEventArgs e) {
-            Slider s = (Slider)sender;
-            switch (s.Value) {
-                case 1:
-                    BTC_from.Text = "(1h)";
+        private void BTC_TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            RadioButton btn = sender as RadioButton;
+
+            switch (btn.Content) {
+                case "hour":
+                    BTC_from.Text = "Last hour: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     BTC_DateTimeAxis.MajorStep = 10;
@@ -157,8 +159,8 @@ namespace CoinBase {
                     limit = 60;
                     break;
 
-                case 2:
-                    BTC_from.Text = "(24h)";
+                case "day":
+                    BTC_from.Text = "Last day: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     BTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
@@ -167,8 +169,8 @@ namespace CoinBase {
                     limit = 1500;
                     break;
 
-                case 3:
-                    BTC_from.Text = "(7d)";
+                case "week":
+                    BTC_from.Text = "Last week: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -177,8 +179,8 @@ namespace CoinBase {
                     limit = 168;
                     break;
 
-                case 4:
-                    BTC_from.Text = "last month";
+                case "month":
+                    BTC_from.Text = "Last month: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:d/M}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -186,9 +188,8 @@ namespace CoinBase {
                     timeSpan = "month";
                     limit = 744;
                     break;
-
-                case 5:
-                    BTC_from.Text = "Last year";
+                case "year":
+                    BTC_from.Text = "Last year: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -197,8 +198,8 @@ namespace CoinBase {
                     limit = 365;
                     break;
 
-                case 6:
-                    BTC_from.Text = "Sorry, can't go back in time so far";
+                case "all":
+                    BTC_from.Text = "Sorry, can't go back in time so far ";
                     BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -206,10 +207,9 @@ namespace CoinBase {
                     timeSpan = "all";
                     limit = 0;
                     break;
-            }
 
+            }
             UpdateBTC();
         }
-
     }
 }

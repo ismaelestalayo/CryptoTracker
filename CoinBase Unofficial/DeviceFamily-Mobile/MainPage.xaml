@@ -84,7 +84,7 @@
                 <Image Source="/Assets/iconLTC.png"  Width="24"/>
             </Button>
 
-            <Button Name="MenuSettings" Grid.Column="4" Click="SettingsButtonClick" HorizontalAlignment="Center"
+            <Button Name="MenuSettings" Grid.Column="4" Click="MenuSettings_Click" HorizontalAlignment="Center"
                     Background="Transparent" >
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE115;" Foreground="White" FontSize="20" FontFamily="Segoe MDL2 Assets"

@@ -16,17 +16,6 @@
             <Setter Property="StrokeThickness" Value="0.2" />
         </Style>
 
-        <Style TargetType="Slider" x:Key="SliderStyle">
-            <Setter Property="SnapsTo"		 Value="StepValues" />
-            <Setter Property="StepFrequency" Value="1" />
-            <Setter Property="TickFrequency" Value="1" />
-            <Setter Property="TickPlacement" Value="BottomRight" />
-            <Setter Property="Minimum"		 Value="1" />
-            <Setter Property="Maximum"		 Value="6" />
-            <Setter Property="Grid.Row"		 Value="3" />
-            <Setter Property="Margin"		 Value="10,5" />
-        </Style>
-
         <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
         <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
@@ -57,43 +46,40 @@
         </Grid.ColumnDefinitions>
 
         <RelativePanel Grid.ColumnSpan="2">
-            <GridViewHeaderItem Width="2000" Margin="0, -5" >
+            <GridViewHeaderItem Width="2000" Margin="-10, 5" Padding="0, -5">
 
                 <StackPanel Orientation="Horizontal">
-                    <RelativePanel VerticalAlignment="Center" Margin="10, 5, 10, 0">
-                        <Ellipse Fill="#FFB119"
-							 Width="32" Height="32" />
+                    <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
+                        <Ellipse Fill="#FFB119" Width="32" Height="32" />
                         <Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Data="M21.78 15.37c.51-.61.83-1.4.83-2.26 0-2.74-1.6-4.38-4.24-4.38V5.45c0-.12-.1-.22-.22-.22h-1.27c-.11 0-.2.1-.2.21v3.3h-1.7V5.44c0-.12-.1-.22-.22-.22H13.5c-.12 0-.2.1-.21.21v3.3H9.67c-.12 0-.21.09-.21.21v1.31c0 .12.1.22.21.22h.21c.94 0 1.7.79 1.7 1.75v7c0 .92-.68 1.67-1.55 1.75a.21.21 0 0 0-.18.16l-.33 1.32c-.01.06 0 .13.04.19.04.05.1.08.17.08h3.55v3.3c0 .1.1.2.2.2h1.28c.12 0 .21-.1.21-.22v-3.28h1.7v3.3c0 .1.1.2.21.2h1.27c.12 0 .22-.1.22-.22v-3.28h.85c2.65 0 4.24-1.64 4.24-4.37 0-1.28-.68-2.39-1.68-3zm-6.8-4.01h2.54c.94 0 1.7.78 1.7 1.75 0 .96-.76 1.75-1.7 1.75h-2.55v-3.5zm3.39 8.75h-3.4v-3.5h3.4c.93 0 1.7.78 1.7 1.75 0 .96-.77 1.75-1.7 1.75z" />
                     </RelativePanel>
-                    <TextBlock Text="Bitcoin"
-						   Margin="10, 0"
-                           VerticalAlignment="Bottom"
-						   Style="{ThemeResource SubheaderTextBlockStyle}" />
-                    
+
+                    <TextBlock 
+                        Text="Bitcoin"
+                        VerticalAlignment="Center"
+						Style="{ThemeResource SubheaderTextBlockStyle}"
+                        FontSize="28"/>
                 </StackPanel>
             </GridViewHeaderItem>
 
-            <StackPanel Orientation="Horizontal" Margin="5, 0"
-                        RelativePanel.AlignVerticalCenterWithPanel="True"
+            <StackPanel Orientation="Horizontal" Margin="10"
                         RelativePanel.AlignRightWithPanel="True">
                 
                 <TextBlock Name="BTC_curr" 
                            Text="val€"  
-                           Margin="80, 0, 0, 0"
-                           FontSize="34"
+                           FontSize="24"
                            FontWeight="Light"/>
 
                 <TextBlock Name="BTC_difff" 
                            Text="&#xEB11;" 
                            VerticalAlignment="Bottom" 
-                           Margin="4, 0, 0, 4"
-                           FontSize="21"
+                           FontSize="22"
                            FontFamily="Segoe MDL2 Assets" />
                 <TextBlock Name="BTC_diff" 
                            Text="0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 0, 4"
-                           FontSize="18"
+                           Margin="-2, 0, 5, 0"
+                           FontSize="19"
                            FontWeight="Light"/>
 
                 <TextBlock Name="BTC_from" Visibility="Collapsed"
@@ -113,7 +99,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <telerik:RadCartesianChart x:Name="BTC_Chart" Margin="5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+            <telerik:RadCartesianChart x:Name="BTC_Chart" Margin="10, 0, 0, 5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
                 <telerik:RadCartesianChart.Behaviors>
                     <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">
@@ -130,7 +116,7 @@
                                 <Setter Property="BorderBrush" Value="{StaticResource BTC_color}"/>
                             </Style>
                         </telerik:ChartTrackBallBehavior.InfoStyle>
-                        
+
                     </telerik:ChartTrackBallBehavior>
                     <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal" />
 
@@ -144,12 +130,15 @@
                 <telerik:RadCartesianChart.HorizontalAxis>
                     <telerik:DateTimeContinuousAxis
 						x:Name="BTC_DateTimeAxis"
+                        LabelOffset="1"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" />
                 </telerik:RadCartesianChart.HorizontalAxis>
 
                 <telerik:RadCartesianChart.VerticalAxis>
-                    <telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" />
+                    <telerik:LinearAxis 
+                        Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" 
+                        HorizontalLocation="Right"/>
                 </telerik:RadCartesianChart.VerticalAxis>
 
                 <telerik:AreaSeries 
@@ -167,11 +156,14 @@
                 </telerik:AreaSeries>
             </telerik:RadCartesianChart>
 
-            <Slider Name="BTC_slider" Grid.Row="1" Value="2"
-                    Margin="180, 0"
-					Style="{StaticResource SliderStyle}"
-					ToolTipService.ToolTip="Time range"
-					ValueChanged="BTC_slider_changed" Grid.ColumnSpan="2" />
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                <RadioButton Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" IsChecked="True"/>
+                <RadioButton Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton Content="month" Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+            </StackPanel>
         </Grid>
 
         <!-- 

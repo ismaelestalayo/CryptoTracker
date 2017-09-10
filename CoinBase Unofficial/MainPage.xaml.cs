@@ -51,9 +51,6 @@ namespace CoinBase {
             MainFrame.Navigate(typeof(Page_Home));
         }
 
-        private void SettingsButtonClick(object sender, RoutedEventArgs e) {
-            MainFrame.Navigate(typeof(Page_Settings));
-        }
         private void MenuHome_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Home));
         }
@@ -65,6 +62,15 @@ namespace CoinBase {
         }
         private void MenuLTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_LTC));
+        }
+        private void MenuAll_Click(object sender, RoutedEventArgs e) {
+            MainFrame.Navigate(typeof(Page_All));
+        }
+        private void MenuPortfolio_Click(object sender, RoutedEventArgs e) {
+            MainFrame.Navigate(typeof(Page_Portfolio));
+        }
+        private void MenuSettings_Click(object sender, RoutedEventArgs e) {
+            MainFrame.Navigate(typeof(Page_Settings));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -206,10 +212,6 @@ namespace CoinBase {
             // And send the notification to the primary tile
             TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotif);
         }
-
-
-
-
 
     }
 }

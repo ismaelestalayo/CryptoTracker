@@ -98,7 +98,7 @@
                             <TextBlock Text="Ethereum (ETH)" Style="{StaticResource RelativePanelMenus}" />
                         </StackPanel>
                     </Button>
-                    
+
                     <Button Name="MenuLTC" Background="Transparent" RelativePanel.Below="MenuETH" Click="MenuLTC_Click">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Assets/iconLTC.png"  Width="30"/>
@@ -107,7 +107,26 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Name="MenuSettings" Background="Transparent" RelativePanel.AlignBottomWithPanel="True" Click="SettingsButtonClick">
+                    <Button Name="MenuAll" Background="Transparent" RelativePanel.Below="MenuLTC" Click="MenuAll_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="ViewAll" Width="30" Foreground="White"/>
+
+                            <TextBlock Text="All" Style="{StaticResource RelativePanelMenus}" />
+                        </StackPanel>
+                    </Button>
+
+                    <!-- ############################################################################################################ -->
+                    <Button Name="MenuPortfolio" Background="Transparent" RelativePanel.Above="MenuSettings" Click="MenuPortfolio_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE14D;" Foreground="White" FontSize="20" FontFamily="Segoe MDL2 Assets"
+									   VerticalAlignment="Center"
+                                       Margin="5, 0, 0, 0"/>
+
+                            <TextBlock Text="Portfolio" Style="{StaticResource RelativePanelMenus}" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="MenuSettings" Background="Transparent" RelativePanel.AlignBottomWithPanel="True" Click="MenuSettings_Click">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE115;" Foreground="White" FontSize="20" FontFamily="Segoe MDL2 Assets"
 									   VerticalAlignment="Center"

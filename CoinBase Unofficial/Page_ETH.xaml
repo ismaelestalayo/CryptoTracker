@@ -16,17 +16,6 @@
             <Setter Property="StrokeThickness" Value="0.2"/>
         </Style>
 
-        <Style TargetType="Slider" x:Key="SliderStyle">
-            <Setter Property="SnapsTo"		 Value="StepValues" />
-            <Setter Property="StepFrequency" Value="1" />
-            <Setter Property="TickFrequency" Value="1"/>
-            <Setter Property="TickPlacement" Value="BottomRight"/>
-            <Setter Property="Minimum"		 Value="1"/>
-            <Setter Property="Maximum"		 Value="6"/>
-            <Setter Property="Grid.Row"		 Value="3"/>
-            <Setter Property="Margin"		 Value="10,5"/>
-        </Style>
-
         <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
         <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
@@ -57,44 +46,40 @@
         </Grid.ColumnDefinitions>
 
         <RelativePanel Grid.ColumnSpan="2">
-            <GridViewHeaderItem Width="2000" Margin="0, -5">
+            <GridViewHeaderItem Width="2000" Margin="-10, 5" Padding="0, -5">
 
                 <StackPanel Orientation="Horizontal">
-                    <RelativePanel VerticalAlignment="Center" Margin="10, 5, 10, 0">
-                        <Ellipse Fill="#6F7CBA" 
-                             Width="32" Height="32"/>
+                    <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
+                        <Ellipse Fill="#6F7CBA" Width="32" Height="32"/>
                         <Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Data="M10.13 17.76c-.1-.15-.06-.2.09-.12l5.49 3.09c.15.08.4.08.56 0l5.58-3.08c.16-.08.2-.03.1.11L16.2 25.9c-.1.15-.28.15-.38 0l-5.7-8.13zm.04-2.03a.3.3 0 0 1-.13-.42l5.74-9.2c.1-.15.25-.15.34 0l5.77 9.19c.1.14.05.33-.12.41l-5.5 2.78a.73.73 0 0 1-.6 0l-5.5-2.76z" />
                     </RelativePanel>
 
-                    <TextBlock Text="Ethereum" 
-						   Margin="10, 0" 
-                           VerticalAlignment="Bottom"
-						   Style="{ThemeResource SubheaderTextBlockStyle}"/>
-                    
+                    <TextBlock 
+                        Text="Ethereum" 
+                        VerticalAlignment="Center"
+						Style="{ThemeResource SubheaderTextBlockStyle}"
+                        FontSize="28"/>
                 </StackPanel>
             </GridViewHeaderItem>
 
-            <StackPanel Orientation="Horizontal" Margin="5, 0"
-                        RelativePanel.AlignVerticalCenterWithPanel="True"
+            <StackPanel Orientation="Horizontal" Margin="10"
                         RelativePanel.AlignRightWithPanel="True">
 
                 <TextBlock Name="ETH_curr" 
                            Text="val€" 
-                           Margin="80, 0, 0, 0"
-                           FontSize="34"
+                           FontSize="24"
                            FontWeight="Light"/>
 
                 <TextBlock Name="ETH_difff"  
                            Text="&#xEB11;" 
                            VerticalAlignment="Bottom"
-                           Margin="4, 0, 0, 4"
-                           FontSize="21" 
+                           FontSize="22" 
                            FontFamily="Segoe MDL2 Assets"/>
                 <TextBlock Name="ETH_diff" 
                            Text="0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 0, 4"
-                           FontSize="18"
+                           Margin="-2, 0, 5, 0"
+                           FontSize="19"
                            FontWeight="Light"/>
                 
                 <TextBlock Name="ETH_from" Visibility="Collapsed"
@@ -115,7 +100,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <telerik:RadCartesianChart x:Name="ETH_Chart" Margin="5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+            <telerik:RadCartesianChart x:Name="ETH_Chart" Margin="10, 0, 0, 5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
                 <telerik:RadCartesianChart.Behaviors>
                     <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
@@ -144,12 +129,15 @@
                 <telerik:RadCartesianChart.HorizontalAxis>
                     <telerik:DateTimeContinuousAxis 
 						x:Name="ETH_DateTimeAxis"
+                        LabelOffset="1"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
                 </telerik:RadCartesianChart.HorizontalAxis>
 
                 <telerik:RadCartesianChart.VerticalAxis>
-                    <telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+                    <telerik:LinearAxis 
+                        Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
+                        HorizontalLocation="Right"/>
                 </telerik:RadCartesianChart.VerticalAxis>
 
                 <telerik:AreaSeries 
@@ -168,11 +156,14 @@
 
             </telerik:RadCartesianChart>
 
-            <Slider Name="ETH_slider" Grid.Row="2" Value="2"
-                    Margin="180, 0"
-					Style="{StaticResource SliderStyle}" 
-					ToolTipService.ToolTip="Time range"
-					ValueChanged="ETH_slider_changed" />
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                <RadioButton Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click"/>
+                <RadioButton Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" IsChecked="True"/>
+                <RadioButton Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click"/>
+                <RadioButton Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click"/>
+                <RadioButton Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click"/>
+                <RadioButton Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click"/>
+            </StackPanel>
         </Grid>
 
         <!-- 

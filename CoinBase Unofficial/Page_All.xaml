@@ -1,0 +1,112 @@
+﻿<Page
+    x:Class="CoinBase.Page_All"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CoinBase"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
+    mc:Ignorable="d">
+
+    <Grid Padding="10" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="MainGrid">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="auto"/> <!--Hides second column-->
+                        <Setter Target="MainGrid.RowDefinitions[0].Height" Value="5*"/>
+                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="2*"/>
+                        <Setter Target="InfoGrid.Margin"  Value="0 5 0 0"/>
+                        <Setter Target="ChartGrid.Margin" Value="0 0 0 5"/>
+                        <Setter Target="InfoGrid.(Grid.Row)"     Value="1"/>
+                        <Setter Target="ChartGrid.(Grid.Row)"    Value="0"/>
+                        <Setter Target="ChartGrid.(Grid.Column)" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="750" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="auto"/> <!--Hides second row-->
+                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="2*"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="5*"/>
+                        <Setter Target="InfoGrid.Margin"  Value="0 0 5 0"/>
+                        <Setter Target="ChartGrid.Margin" Value="5 0 0 0"/>
+                        <Setter Target="InfoGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="InfoGrid.(Grid.Row)"    Value="0"/>
+                        <Setter Target="ChartGrid.(Grid.Column)"  Value="1"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <!--Starts the Grid itself -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="InfoGrid" Grid.Column="0" Grid.Row="0" Padding="10" Background="#555555">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
+                <StackPanel>
+                    <CheckBox Content="BTC" Click="Chart_BTC"/>
+                    <CheckBox Content="ETH" Click="Chart_ETH"/>
+                    <CheckBox Content="LTC" Click="Chart_LTC"/>
+                    <CheckBox Content="BLA"/>
+
+                    <RadioButton Tag="a" Content="yo1"/>
+                    <RadioButton Tag="a" Content="yo2"/>
+                    <RadioButton Tag="a" Content="yo3"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- ###########################################################################################################################
+        ################################################################################################################################
+        ############################################################################################################################ -->
+        <Grid x:Name="ChartGrid" Grid.Column="1" Grid.Row="0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <telerik:RadCartesianChart x:Name="AllChartt" Margin="5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+
+                <telerik:LineSeries
+                    x:Name="AllChart"
+                    ItemsSource="{Binding}"
+					Stroke="Black"
+					StrokeThickness="1">
+                    
+                    <telerik:LineSeries.VerticalAxis>
+                        <telerik:LinearAxis
+                            Visibility="Collapsed"
+                            HorizontalLocation="Right"/>
+                    </telerik:LineSeries.VerticalAxis>
+
+                    <telerik:LineSeries.HorizontalAxis>
+                        <telerik:DateTimeCategoricalAxis />
+                    </telerik:LineSeries.HorizontalAxis>
+
+                    <telerik:LineSeries.CategoryBinding>
+                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                    </telerik:LineSeries.CategoryBinding>
+
+                    <telerik:LineSeries.ValueBinding>
+                        <telerik:PropertyNameDataPointBinding PropertyName="High"/>
+                    </telerik:LineSeries.ValueBinding>
+                    
+                </telerik:LineSeries>
+            </telerik:RadCartesianChart>
+        </Grid>
+
+    </Grid>
+</Page>

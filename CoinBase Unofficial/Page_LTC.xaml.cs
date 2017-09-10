@@ -32,7 +32,7 @@ namespace CoinBase {
 
         async private void InitValues() {
             try {
-                await UpdateLTC();
+                LTC_Update_click(null, null);
                 await GetStats();
                 await Get24Volume();
 
@@ -45,7 +45,8 @@ namespace CoinBase {
         //For SyncAll button
         public void LTC_Update_click(object sender, RoutedEventArgs e) {
             UpdateLTC();
-            LTC_slider_changed(LTC_slider, null);
+            RadioButton r = new RadioButton { Content = "hour" };
+            LTC_TimerangeButton_Click(r, null);
             GetStats();
             Get24Volume();
         }
@@ -143,11 +144,12 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void LTC_slider_changed(object sender, RangeBaseValueChangedEventArgs e) {
-            Slider s = (Slider)sender;
-            switch (s.Value) {
-                case 1:
-                    LTC_from.Text = "(1h)";
+        private void LTC_TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            RadioButton btn = sender as RadioButton;
+
+            switch (btn.Content) {
+                case "hour":
+                    LTC_from.Text = "Last hour: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     LTC_DateTimeAxis.MajorStep = 10;
@@ -155,18 +157,19 @@ namespace CoinBase {
                     timeSpan = "hour";
                     limit = 60;
                     break;
-                case 2:
-                    LTC_from.Text = "(24h) ";
+
+                case "day":
+                    LTC_from.Text = "Last day: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    LTC_DateTimeAxis.MajorStep = 6;
                     LTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
+                    LTC_DateTimeAxis.MajorStep = 6;
                     timeSpan = "day";
                     limit = 1500;
                     break;
 
-                case 3:
-                    LTC_from.Text = "(7d)";
+                case "week":
+                    LTC_from.Text = "Last week: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -175,8 +178,8 @@ namespace CoinBase {
                     limit = 168;
                     break;
 
-                case 4:
-                    LTC_from.Text = "last month";
+                case "month":
+                    LTC_from.Text = "Last month: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:d/M}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -184,19 +187,18 @@ namespace CoinBase {
                     timeSpan = "month";
                     limit = 744;
                     break;
-
-                case 5:
-                    LTC_from.Text = "Last year";
+                case "year":
+                    LTC_from.Text = "Last year: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     LTC_DateTimeAxis.MajorStep = 1;
                     LTC_DateTimeAxis.Minimum = DateTime.MinValue;
-                    timeSpan = "all";
-                    limit = 0;
+                    timeSpan = "year";
+                    limit = 365;
                     break;
 
-                case 6:
-                    LTC_from.Text = "Can't go back in time so far";
+                case "all":
+                    LTC_from.Text = "Sorry, can't go back in time so far ";
                     LTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -204,10 +206,9 @@ namespace CoinBase {
                     timeSpan = "all";
                     limit = 0;
                     break;
-            }
 
+            }
             UpdateLTC();
         }
-
     }
 }

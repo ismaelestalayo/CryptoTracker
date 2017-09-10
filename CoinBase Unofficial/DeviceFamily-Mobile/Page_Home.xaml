@@ -16,17 +16,6 @@
             <Setter Property="StrokeThickness" Value="0.2" />
         </Style>
 
-        <Style TargetType="Slider" x:Key="SliderStyle">
-            <Setter Property="SnapsTo"		 Value="StepValues" />
-            <Setter Property="StepFrequency" Value="1" />
-            <Setter Property="TickFrequency" Value="1" />
-            <Setter Property="TickPlacement" Value="BottomRight" />
-            <Setter Property="Minimum"		 Value="1" />
-            <Setter Property="Maximum"		 Value="6" />
-            <Setter Property="Grid.Row"		 Value="3" />
-            <Setter Property="Margin"		 Value="10,5" />
-        </Style>
-
         <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
         <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />

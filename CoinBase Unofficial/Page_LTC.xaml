@@ -16,17 +16,6 @@
             <Setter Property="StrokeThickness" Value="0.2"/>
         </Style>
 
-        <Style TargetType="Slider" x:Key="SliderStyle">
-            <Setter Property="SnapsTo"		 Value="StepValues" />
-            <Setter Property="StepFrequency" Value="1" />
-            <Setter Property="TickFrequency" Value="1"/>
-            <Setter Property="TickPlacement" Value="BottomRight"/>
-            <Setter Property="Minimum"		 Value="1"/>
-            <Setter Property="Maximum"		 Value="6"/>
-            <Setter Property="Grid.Row"		 Value="3"/>
-            <Setter Property="Margin"		 Value="10,5"/>
-        </Style>
-
         <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
         <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
@@ -57,43 +46,40 @@
         </Grid.ColumnDefinitions>
 
         <RelativePanel Grid.ColumnSpan="2">
-            <GridViewHeaderItem Width="2000"  Margin="0, -5">
+            <GridViewHeaderItem Width="2000" Margin="-10, 5" Padding="0, -5">
 
                 <StackPanel Orientation="Horizontal">
-                    <RelativePanel VerticalAlignment="Center" Margin="10, 5, 10, 0">
+                    <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
                         <Ellipse Fill="#B5B5B5" Width="32" Height="32"/>
                         <Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="-3" Data="M12.29 28.04l1.29-5.52-1.58.67.63-2.85 1.64-.68L16.52 10h5.23l-1.52 7.14 2.09-.74-.58 2.7-2.05.8-.9 4.34h8.1l-.99 3.8z" />
                     </RelativePanel>
 
-                    <TextBlock Text="Litecoin" 
-						   Margin="10, 0"
-                           VerticalAlignment="Bottom"
-						   Style="{ThemeResource SubheaderTextBlockStyle}"/>
-
+                    <TextBlock 
+                        Text="Litecoin" 
+                        VerticalAlignment="Center"
+						Style="{ThemeResource SubheaderTextBlockStyle}"
+                        FontSize="28"/>
                 </StackPanel>
             </GridViewHeaderItem>
 
-            <StackPanel Orientation="Horizontal" Margin="5, 0"
-                        RelativePanel.AlignVerticalCenterWithPanel="True"
+            <StackPanel Orientation="Horizontal" Margin="10"
                         RelativePanel.AlignRightWithPanel="True">
 
                 <TextBlock Name="LTC_curr" 
                            Text="val€" 
-                           Margin="80, 0, 0, 0"
-                           FontSize="34"
+                           FontSize="24"
                            FontWeight="Light"/>
 
                 <TextBlock Name="LTC_difff"  
                            Text="&#xEB11;" 
-                           VerticalAlignment="Bottom" 
-                           Margin="4, 0, 0, 4"
-                           FontSize="21"
+                           VerticalAlignment="Bottom"
+                           FontSize="22"
                            FontFamily="Segoe MDL2 Assets"/>
                 <TextBlock Name="LTC_diff" 
                            Text="0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 0, 4"
-                           FontSize="18"
+                           Margin="-2, 0, 5, 0"
+                           FontSize="19"
                            FontWeight="Light"/>
 
                 <TextBlock Name="LTC_from" Visibility="Collapsed"
@@ -115,7 +101,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <telerik:RadCartesianChart x:Name="LTC_Chart" Margin="5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+            <telerik:RadCartesianChart x:Name="LTC_Chart" Margin="10, 0, 0, 5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
                 <telerik:RadCartesianChart.Behaviors>
                     <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
@@ -144,12 +130,15 @@
                 <telerik:RadCartesianChart.HorizontalAxis>
                     <telerik:DateTimeContinuousAxis 
 						x:Name="LTC_DateTimeAxis"
+                        LabelOffset="1"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
                 </telerik:RadCartesianChart.HorizontalAxis>
 
                 <telerik:RadCartesianChart.VerticalAxis>
-                    <telerik:LinearAxis Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
+                    <telerik:LinearAxis 
+                        Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
+                        HorizontalLocation="Right"/>
                 </telerik:RadCartesianChart.VerticalAxis>
 
                 <telerik:AreaSeries
@@ -167,11 +156,14 @@
                 </telerik:AreaSeries>
             </telerik:RadCartesianChart>
 
-            <Slider Name="LTC_slider" Grid.Row="2" Value="2"
-                    Margin="180, 0" 
-					Style="{StaticResource SliderStyle}" 
-					ToolTipService.ToolTip="Time range" 
-					ValueChanged="LTC_slider_changed"  />
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                <RadioButton Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click"/>
+                <RadioButton Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" IsChecked="True"/>
+                <RadioButton Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click"/>
+                <RadioButton Content="month" Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click"/>
+                <RadioButton Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click"/>
+                <RadioButton Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click"/>
+            </StackPanel>
         </Grid>
 
         <!-- 
