@@ -7,6 +7,8 @@ Charts of each coin for the last hourt, day, week, month, year and for all the t
 
 Near future plans: ability to add bought crypto-coins to keep track of your earnings/loses, and log in to CoinBase account.
 
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Promotion/Laptop%20eth.png?raw=true" width = "130%"/>
+
 ## PC Version
 
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_HomeL.png?raw=true" width = "80%"/>
