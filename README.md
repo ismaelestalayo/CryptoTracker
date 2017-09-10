@@ -7,7 +7,7 @@ Charts of each coin for the last hourt, day, week, month, year and for all the t
 
 Near future plans: ability to add bought crypto-coins to keep track of your earnings/loses, and log in to CoinBase account.
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Promotion/Laptop%20eth.png?raw=true" width = "130%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Promotion/All.png?raw=true" width = "130%"/>
 
 ## PC Version
 
@@ -27,6 +27,11 @@ Near future plans: ability to add bought crypto-coins to keep track of your earn
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/>
 
 # Changelog:
+#### 1.5:
+- Improved the whole UI (tons of details)
+- Changed sliders to buttons (for less bugs)
+- Added animations while loading a chart
+
 #### 1.4:
 - New minimal UI for both PC and mobile.
 - Few errors fixed.

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace CoinBase {
@@ -13,17 +13,6 @@ namespace CoinBase {
 
         internal static int limit = 60;
         internal static string timeSpan = "day";
-
-        public class ChartDataObject {
-            public DateTime Date { get; set; }
-            public float Value { get; set; }
-            public float Low { get; set; }
-            public float High { get; set; }
-            public float Open { get; set; }
-            public float Close { get; set; }
-            public float Volume { get; set; }
-            public string Category { get; set; }
-        }
 
         public Page_LTC() {
             this.InitializeComponent();
@@ -37,6 +26,7 @@ namespace CoinBase {
                 await Get24Volume();
 
             } catch (Exception ex) {
+                LoadingControl.IsLoading = false;
                 LTC_curr.Text = "Error: " + ex;
             }
         }
@@ -44,8 +34,13 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //For SyncAll button
         public void LTC_Update_click(object sender, RoutedEventArgs e) {
+            if (LoadingControl == null)
+                LoadingControl = new Loading();
+
+            LoadingControl.IsLoading = true;
+
             UpdateLTC();
-            RadioButton r = new RadioButton { Content = "hour" };
+            RadioButton r = new RadioButton { Content = timeSpan };
             LTC_TimerangeButton_Click(r, null);
             GetStats();
             Get24Volume();
@@ -55,11 +50,7 @@ namespace CoinBase {
         async public Task UpdateLTC() {
             await App.GetCurrentPrice("LTC");
             LTC_curr.Text = App.LTC_now.ToString();
-            if (App.coin.Equals("EUR"))
-                LTC_curr.Text += "€";
-            else {
-                LTC_curr.Text += "$";
-            }
+            LTC_curr.Text = (App.coin.Equals("EUR")) ? LTC_curr.Text += "€" : LTC_curr.Text += "$";
 
             switch (timeSpan) {
                 case "hour":
@@ -81,9 +72,9 @@ namespace CoinBase {
                     break;
             }
 
-            List<ChartDataObject> data = new List<ChartDataObject>();
+            List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date   = App.ppLTC[i].DateTime,
+                App.ChartDataObject obj = new App.ChartDataObject { Date   = App.ppLTC[i].DateTime,
                                                             Value  = (App.ppLTC[i].Low + App.ppLTC[i].High) / 2,
                                                             Low    = App.ppLTC[i].Low,
                                                             High   = App.ppLTC[i].High,
@@ -98,11 +89,11 @@ namespace CoinBase {
             float dLTC = ((App.LTC_now / App.LTC_old) - 1) * 100;
             dLTC = (float)Math.Round(dLTC, 2);
             if (dLTC < 0) {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 LTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
                 dLTC = Math.Abs(dLTC);
             } else {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
                 LTC_difff.Text = "\xEB11";
             }
             LTC_diff.Text = dLTC.ToString() + "%";
@@ -111,6 +102,7 @@ namespace CoinBase {
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
+            LoadingControl.IsLoading = false;
         }
 
         async private Task GetStats() {
@@ -133,9 +125,9 @@ namespace CoinBase {
         async private Task Get24Volume() {
             await App.GetHisto("LTC", "hour", 24);
 
-            List<ChartDataObject> data = new List<ChartDataObject>();
+            List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < 24; i++) {
-                data.Add( new ChartDataObject() {
+                data.Add( new App.ChartDataObject() {
                     Date = App.ppLTC[i].DateTime,
                     Volume = App.ppLTC[i].Volumefrom
                 });
@@ -145,11 +137,11 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void LTC_TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            LoadingControl.IsLoading = true;
             RadioButton btn = sender as RadioButton;
 
             switch (btn.Content) {
                 case "hour":
-                    LTC_from.Text = "Last hour: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     LTC_DateTimeAxis.MajorStep = 10;
@@ -159,7 +151,6 @@ namespace CoinBase {
                     break;
 
                 case "day":
-                    LTC_from.Text = "Last day: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     LTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
@@ -169,7 +160,6 @@ namespace CoinBase {
                     break;
 
                 case "week":
-                    LTC_from.Text = "Last week: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -179,7 +169,6 @@ namespace CoinBase {
                     break;
 
                 case "month":
-                    LTC_from.Text = "Last month: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:d/M}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -188,7 +177,6 @@ namespace CoinBase {
                     limit = 744;
                     break;
                 case "year":
-                    LTC_from.Text = "Last year: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -198,7 +186,6 @@ namespace CoinBase {
                     break;
 
                 case "all":
-                    LTC_from.Text = "Sorry, can't go back in time so far ";
                     LTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     LTC_DateTimeAxis.MajorStep = 1;

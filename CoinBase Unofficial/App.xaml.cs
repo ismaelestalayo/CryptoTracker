@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -98,6 +100,7 @@ namespace CoinBase {
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
 
+                ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 500));
                 Window.Current.Activate();
             }
         }

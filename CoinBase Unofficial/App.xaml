@@ -1,24 +1,37 @@
 ﻿<Application
     x:Class="CoinBase.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- RequestedTheme="Light"> -->
 
-    <!--<Application.Resources>
-        <ResourceDictionary>
-            <media:AcrylicBrush 
-                x:Name="InAppAcrylic"
-                BackgroundSource="HostBackdrop"
-                Opacity="1"
-                FallbackColor="#EE555555"
-                TintColor="SkyBlue"
-                TintOpacity="0.2"/>
-        </ResourceDictionary>
-    </Application.Resources>-->
-
     <Application.Resources>
+        <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
+        <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
+        <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
+        <SolidColorBrush x:Key="BTC_color"		Color="#FFB119" />
+        <SolidColorBrush x:Key="BTC_colorT"     Color="#FFB119" Opacity="0.3" />
+        <SolidColorBrush x:Key="BTC_colorLight"	Color="#f6dfb1" />
+        <SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA" />
+        <SolidColorBrush x:Key="ETH_colorT"     Color="#6F7CBA" Opacity="0.3" />
+        <SolidColorBrush x:Key="ETH_colorLight" Color="#cbcfe1" />
+        <SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5" />
+        <SolidColorBrush x:Key="LTC_colorT"		Color="#B5B5B5" Opacity="0.3"/>
+        <SolidColorBrush x:Key="LTC_colorLight" Color="#e0e0e0"/>
+
+        <Style TargetType="Line" x:Key="ChartGridColor">
+            <Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}"/>
+            <Setter Property="StrokeDashArray" Value="3,7"/>
+            <Setter Property="StrokeThickness" Value="0.2"/>
+        </Style>
+
+        <Style TargetType="Line" x:Key="TransparentLine">
+            <Setter Property="Stroke" Value="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
+        </Style>
+        <DataTemplate x:Key="TransparentRect">
+            <Rectangle Stroke="Transparent"/>
+        </DataTemplate>
+
         <Style TargetType="Button" x:Key="timerangeButton" x:FieldModifier="internal">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
@@ -32,6 +45,8 @@
         </Style>
 
         <Style TargetType="RadioButton" x:Key="timerangeRadioBtn">
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="MinHeight" Value="30"/>
             <Setter Property="MinWidth" Value="100"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -90,16 +105,16 @@
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter 
                                 x:Name="ContentPresenter"
-                                Margin="0, 0, 0, 20"
+                                Margin="0, 10, 0, 20"
                                 Foreground="{ThemeResource ButtonForeground}"
                                 FontWeight="Light"
-                                Height="40"
                                 MinWidth="{TemplateBinding MinWidth}"
+                                MinHeight="{TemplateBinding MinHeight}"
+                                FontSize="{TemplateBinding FontSize}"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
                                 HorizontalAlignment="Center"
                                 HorizontalContentAlignment="Center"
-                                FontSize="16"
                                               
                                 Content="{TemplateBinding Content}"
                                 ContentTransitions="{TemplateBinding ContentTransitions}"

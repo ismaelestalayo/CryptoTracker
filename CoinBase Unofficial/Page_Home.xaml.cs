@@ -98,11 +98,11 @@ namespace CoinBase {
             float dBTC = ((App.BTC_now / App.BTC_old) - 1) * 100;
             dBTC = (float)Math.Round(dBTC, 2);
             if (dBTC < 0) {
-                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 BTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
                 dBTC = Math.Abs(dBTC);
             } else {
-                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
                 BTC_difff.Text = "\xEB11";
             }
             BTC_diff.Text = dBTC.ToString() + "%";
@@ -226,7 +226,6 @@ namespace CoinBase {
 
             switch (btn.Content) {
                 case "hour":
-                    BTC_from.Text = "Last hour: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     BTC_DateTimeAxis.MajorStep = 10;
@@ -236,7 +235,6 @@ namespace CoinBase {
                     break;
 
                 case "day":
-                    BTC_from.Text = "Last day: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     BTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
@@ -246,7 +244,6 @@ namespace CoinBase {
                     break;
 
                 case "week":
-                    BTC_from.Text = "Last week: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -256,7 +253,6 @@ namespace CoinBase {
                     break;
 
                 case "month":
-                    BTC_from.Text = "Last month: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:d/M}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -265,7 +261,6 @@ namespace CoinBase {
                     limit = 744;
                     break;
                 case "year":
-                    BTC_from.Text = "Last year: ";
                     BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -275,7 +270,6 @@ namespace CoinBase {
                     break;
 
                 case "all":
-                    BTC_from.Text = "Sorry, can't go back in time so far ";
                     BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     BTC_DateTimeAxis.MajorStep = 1;
@@ -292,7 +286,6 @@ namespace CoinBase {
 
             switch (btn.Content) {
                 case "hour":
-                    ETH_from.Text = "Last hour: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     ETH_DateTimeAxis.MajorStep = 10;
@@ -302,7 +295,6 @@ namespace CoinBase {
                     break;
 
                 case "day":
-                    ETH_from.Text = "Last day: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     ETH_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
@@ -312,7 +304,6 @@ namespace CoinBase {
                     break;
 
                 case "week":
-                    ETH_from.Text = "Last week: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -322,7 +313,6 @@ namespace CoinBase {
                     break;
 
                 case "month":
-                    ETH_from.Text = "Last month: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:d/M}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -331,7 +321,6 @@ namespace CoinBase {
                     limit = 744;
                     break;
                 case "year":
-                    ETH_from.Text = "Last year: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:MMM}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -341,7 +330,6 @@ namespace CoinBase {
                     break;
 
                 case "all":
-                    ETH_from.Text = "Sorry, can't go back in time so far ";
                     ETH_DateTimeAxis.LabelFormat = "{0:MMM}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -358,7 +346,6 @@ namespace CoinBase {
 
             switch (btn.Content) {
                 case "hour":
-                    LTC_from.Text = "Last hour: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     LTC_DateTimeAxis.MajorStep = 10;
@@ -368,7 +355,6 @@ namespace CoinBase {
                     break;
 
                 case "day":
-                    LTC_from.Text = "Last day: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     LTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
@@ -378,7 +364,6 @@ namespace CoinBase {
                     break;
 
                 case "week":
-                    LTC_from.Text = "Last week: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -388,7 +373,6 @@ namespace CoinBase {
                     break;
 
                 case "month":
-                    LTC_from.Text = "Last month: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:d/M}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -397,7 +381,6 @@ namespace CoinBase {
                     limit = 744;
                     break;
                 case "year":
-                    LTC_from.Text = "Last year: ";
                     LTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     LTC_DateTimeAxis.MajorStep = 1;
@@ -407,7 +390,6 @@ namespace CoinBase {
                     break;
 
                 case "all":
-                    LTC_from.Text = "Sorry, can't go back in time so far ";
                     LTC_DateTimeAxis.LabelFormat = "{0:MMM}";
                     LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     LTC_DateTimeAxis.MajorStep = 1;

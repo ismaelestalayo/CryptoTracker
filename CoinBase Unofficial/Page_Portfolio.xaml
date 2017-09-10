@@ -7,10 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Padding="10" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel Padding="10" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
         
         <TextBlock Text="Portfolio"
                    Style="{ThemeResource HeaderTextBlockStyle}"/>
-
+        <TextBlock Text="Coming soon" 
+                   Style="{ThemeResource SubtitleTextBlockStyle}"/>
+        <TextBlock Text="Ability to add your crypto-currencies to keep track of your earnings/loses." 
+                   FontSize="14"
+                   TextWrapping="WrapWholeWords"/>
     </StackPanel>
 </Page>

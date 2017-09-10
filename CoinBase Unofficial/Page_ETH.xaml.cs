@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace CoinBase {
@@ -26,6 +26,7 @@ namespace CoinBase {
                 await Get24Volume();
 
             } catch (Exception ex) {
+                LoadingControl.IsLoading = false;
                 ETH_curr.Text = "Error: " + ex;
             }
         }
@@ -33,8 +34,13 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //For SyncAll button
         public void ETH_Update_click(object sender, RoutedEventArgs e) {
+            if (LoadingControl == null)
+                LoadingControl = new Loading();
+
+            LoadingControl.IsLoading = true;
+
             UpdateETH();
-            RadioButton r = new RadioButton { Content = "hour" };
+            RadioButton r = new RadioButton { Content = timeSpan };
             ETH_TimerangeButton_Click(r, null);
             GetStats();
             Get24Volume();
@@ -44,11 +50,7 @@ namespace CoinBase {
         async public Task UpdateETH() {
             await App.GetCurrentPrice("ETH");
             ETH_curr.Text = App.ETH_now.ToString();
-            if (App.coin.Equals("EUR"))
-                ETH_curr.Text += "€";
-            else {
-                ETH_curr.Text += "$";
-            }
+            ETH_curr.Text = (App.coin.Equals("EUR")) ? ETH_curr.Text += "€" : ETH_curr.Text += "$";
 
             switch (timeSpan) {
                 case "hour":
@@ -58,15 +60,15 @@ namespace CoinBase {
 
                 case "week":
                 case "month":
-                    await App.GetHisto("ETH", "hour",   limit);
+                    await App.GetHisto("ETH", "hour", limit);
                     break;
 
                 case "year":
-                    await App.GetHisto("ETH", "day",    limit);
+                    await App.GetHisto("ETH", "day", limit);
                     break;
 
                 case "all":
-                    await App.GetHisto("ETH", "day",    0);
+                    await App.GetHisto("ETH", "day", 0);
                     break;
             }
 
@@ -87,11 +89,11 @@ namespace CoinBase {
             float dETH = ((App.ETH_now / App.ETH_old) - 1) * 100;
             dETH = (float)Math.Round(dETH, 2);
             if (dETH < 0) {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 ETH_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
                 dETH = Math.Abs(dETH);
             } else {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
                 ETH_difff.Text = "\xEB11";
             }
             ETH_diff.Text = dETH.ToString() + "%";
@@ -100,6 +102,7 @@ namespace CoinBase {
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
+            LoadingControl.IsLoading = false;
         }
 
         async public Task GetStats() {
@@ -119,7 +122,6 @@ namespace CoinBase {
             ETH_Vol24.Text = App.stats.Volume24 + "ETH";
             
         }
-
         async private Task Get24Volume() {
             await App.GetHisto("ETH", "hour", 24);
 
@@ -135,11 +137,11 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void ETH_TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            LoadingControl.IsLoading = true;
             RadioButton btn = sender as RadioButton;
 
             switch (btn.Content) {
                 case "hour":
-                    ETH_from.Text = "Last hour: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     ETH_DateTimeAxis.MajorStep = 10;
@@ -149,7 +151,6 @@ namespace CoinBase {
                     break;
 
                 case "day":
-                    ETH_from.Text = "Last day: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     ETH_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
@@ -159,7 +160,6 @@ namespace CoinBase {
                     break;
 
                 case "week":
-                    ETH_from.Text = "Last week: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -169,7 +169,6 @@ namespace CoinBase {
                     break;
 
                 case "month":
-                    ETH_from.Text = "Last month: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:d/M}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -178,7 +177,6 @@ namespace CoinBase {
                     limit = 744;
                     break;
                 case "year":
-                    ETH_from.Text = "Last year: ";
                     ETH_DateTimeAxis.LabelFormat = "{0:MMM}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     ETH_DateTimeAxis.MajorStep = 1;
@@ -188,7 +186,6 @@ namespace CoinBase {
                     break;
 
                 case "all":
-                    ETH_from.Text = "Sorry, can't go back in time so far ";
                     ETH_DateTimeAxis.LabelFormat = "{0:MMM}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     ETH_DateTimeAxis.MajorStep = 1;

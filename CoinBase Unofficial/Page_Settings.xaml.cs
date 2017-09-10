@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Email;
 using Windows.System;
@@ -9,8 +10,15 @@ using Windows.UI.Xaml.Controls;
 
 namespace CoinBase {
     public sealed partial class Page_Settings : Page {
+
+        private string v;
+
         public Page_Settings() {
             this.InitializeComponent();
+
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+            v = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
+            VersionTextBlock.Text = "Version: " + v;
 
             ThemeSwitcher.IsOn = App.localSettings.Values["Theme"].Equals("Dark");
 
@@ -66,7 +74,8 @@ namespace CoinBase {
         private async void mailButton_Click(object sender, RoutedEventArgs e) {
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));
-            
+            emailMessage.Subject = "Feedback for CoinBase Unofficial v" + v;
+
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
         }
 

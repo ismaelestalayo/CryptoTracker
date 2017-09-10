@@ -52,8 +52,9 @@
 
         <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //// Bottom bar -->
-        <Grid Grid.Row="2" Background="{StaticResource CoinBase_Blue}" >
+        <Grid Grid.Row="2" Padding="0, 2" Background="{StaticResource CoinBase_Blue}" >
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -64,7 +65,7 @@
             <Button Name="MenuHome" Grid.Column="0" Click="MenuHome_Click" HorizontalAlignment="Center"
                     Background="Transparent">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="&#xE10F;" Foreground="White" FontSize="24" FontFamily="Segoe MDL2 Assets"
+                    <TextBlock Text="&#xE10F;" Foreground="White" FontSize="26" FontFamily="Segoe MDL2 Assets"
 							   RelativePanel.AlignVerticalCenterWithPanel="True"
 							   RelativePanel.AlignHorizontalCenterWithPanel="True" />
                 </StackPanel>
@@ -72,22 +73,31 @@
 
             <Button Name="MenuBTC" Grid.Column="1" Click="MenuBTC_Click" HorizontalAlignment="Center"
                     Background="Transparent" >
-                <Image Source="/Assets/iconBTC.png"  Width="24"/>
+                <Image Source="/Assets/iconBTC.png"  Width="26"/>
             </Button>
             
             <Button Name="MenuETH" Grid.Column="2" Click="MenuETH_Click" HorizontalAlignment="Center"
                     Background="Transparent" >
-                <Image Source="/Assets/iconETH.png"  Width="24"/>
+                <Image Source="/Assets/iconETH.png"  Width="26"/>
             </Button>
             <Button Name="MenuLTC" Grid.Column="3" Click="MenuLTC_Click" HorizontalAlignment="Center"
                     Background="Transparent" >
-                <Image Source="/Assets/iconLTC.png"  Width="24"/>
+                <Image Source="/Assets/iconLTC.png"  Width="26"/>
             </Button>
 
-            <Button Name="MenuSettings" Grid.Column="4" Click="MenuSettings_Click" HorizontalAlignment="Center"
+            <Button Name="MenuPortfolio" Grid.Column="4" Click="MenuPortfolio_Click" HorizontalAlignment="Center"
                     Background="Transparent" >
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="&#xE115;" Foreground="White" FontSize="20" FontFamily="Segoe MDL2 Assets"
+                    <TextBlock Text="&#xE14D;" Foreground="White" FontSize="24" FontFamily="Segoe MDL2 Assets"
+							   RelativePanel.AlignVerticalCenterWithPanel="True"
+							   RelativePanel.AlignHorizontalCenterWithPanel="True" />
+                </StackPanel>
+            </Button>
+
+            <Button Name="MenuSettings" Grid.Column="5" Click="MenuSettings_Click" HorizontalAlignment="Center"
+                    Background="Transparent" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE115;" Foreground="White" FontSize="24" FontFamily="Segoe MDL2 Assets"
 							   RelativePanel.AlignVerticalCenterWithPanel="True"
 							   RelativePanel.AlignHorizontalCenterWithPanel="True" />
                 </StackPanel>

@@ -3,6 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CoinBase"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -56,8 +58,8 @@
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.AlignRightWithPanel="True">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,5"
-							   FontFamily="Segoe MDL2 Assets" Text="&#xE117;" Foreground="White" FontSize="18" />
+                    <TextBlock x:Name="UpdateIcon" VerticalAlignment="Center" Margin="0,5"
+							   FontFamily="Segoe MDL2 Assets" Text="&#xE117;" Foreground="White" FontSize="18"/>
                     <TextBlock Text="Update"
 							   Foreground="White" Margin="5,0"
 							   FontWeight="Light" FontSize="18" />
