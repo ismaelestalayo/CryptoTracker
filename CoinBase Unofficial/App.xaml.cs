@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,6 +25,10 @@ namespace CoinBase {
         internal static float BTC_now;
         internal static float ETH_now;
         internal static float LTC_now;
+
+        internal static string BTC_change1h = "0";
+        internal static string ETH_change1h = "0";
+        internal static string LTC_change1h = "0";
 
         internal static List<PricePoint> ppBTC = new List<PricePoint>();
         internal static List<PricePoint> ppETH = new List<PricePoint>();
@@ -48,6 +53,8 @@ namespace CoinBase {
         public App() {
 
             string x, y;
+
+            TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true);
 
             try {
                 x = localSettings.Values["Theme"].ToString();
@@ -100,7 +107,7 @@ namespace CoinBase {
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
 
-                ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 500));
+                ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(900, 550));
                 Window.Current.Activate();
             }
         }

@@ -94,7 +94,7 @@
                 <TextBlock Name="BTC_diff" 
                            Text="0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 5, 0"
+                           Margin="-2, 0, 0, 0"
                            FontSize="19"
                            FontWeight="Light"/>
             </StackPanel>
@@ -136,7 +136,7 @@
                 <TextBlock Name="ETH_diff" 
                            Text="0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 5, 0"
+                           Margin="-2, 0, 0, 0"
                            FontSize="19"
                            FontWeight="Light"/>
             </StackPanel>
@@ -178,7 +178,7 @@
                 <TextBlock Name="LTC_diff" 
                            Text="0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 5, 0"
+                           Margin="-2, 0, 0, 0"
                            FontSize="18"
                            FontWeight="Light"/>
             </StackPanel>
@@ -267,12 +267,12 @@
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
-                <RadioButton GroupName="BTC" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="70" IsChecked="True"/>
-                <RadioButton GroupName="BTC" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="BTC" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="BTC" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="BTC" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="BTC" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="70"/>
+                <RadioButton GroupName="BTC" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="50" FontSize="15" IsChecked="True"/>
+                <RadioButton GroupName="BTC" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
             </StackPanel>
 		</Grid>
 
@@ -361,12 +361,12 @@
             </telerik:RadCartesianChart>
             
             <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
-                <RadioButton GroupName="ETH" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="70" IsChecked="True"/>
-                <RadioButton GroupName="ETH" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="ETH" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="ETH" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="ETH" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="ETH" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="70"/>
+                <RadioButton GroupName="ETH" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="50" FontSize="15" IsChecked="True"/>
+                <RadioButton GroupName="ETH" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="ETH" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="ETH" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="ETH" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="ETH" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ETH_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
             </StackPanel>
         </Grid>
 
@@ -453,12 +453,12 @@
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                <RadioButton GroupName="LTC" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="70" IsChecked="True"/>
-                <RadioButton GroupName="LTC" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="LTC" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="LTC" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="LTC" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="70"/>
-                <RadioButton GroupName="LTC" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="70"/>
+                <RadioButton GroupName="LTC" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15" IsChecked="True"/>
+                <RadioButton GroupName="LTC" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="LTC" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="LTC" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="LTC" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="LTC" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
             </StackPanel>
         </Grid>
     </Grid>

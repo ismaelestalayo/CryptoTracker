@@ -1,15 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.Notifications;
-using Windows.ApplicationModel;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.ApplicationModel.Core;
+using Windows.Data.Xml.Dom;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Notifications;
-using Windows.UI.StartScreen;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.UI.Xaml.Media;
 
 namespace CoinBase {
@@ -23,10 +24,15 @@ namespace CoinBase {
         public MainPage() {
             this.InitializeComponent();
 
+            // Clear the current tile
+            TileUpdateManager.CreateTileUpdaterForApplication().Clear();
+
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             ApplicationView view = ApplicationView.GetForCurrentView();
             ApplicationViewTitleBar titleBar = view.TitleBar;
 
+            /// Alpha channel does nothing 
+            /// (guess it's not supported on TitleBars
             titleBar.BackgroundColor = Color.FromArgb(255, 0, 91, 148);
             titleBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
             titleBar.ButtonBackgroundColor = Color.FromArgb(255, 34, 34, 34);  //New minimal gray
@@ -34,9 +40,6 @@ namespace CoinBase {
 
             titleBar.InactiveBackgroundColor = Color.FromArgb(255, 0, 91, 148);
             titleBar.InactiveForegroundColor = Color.FromArgb(255, 255, 255, 255);
-
-            /// Alpha channel does nothing 
-            /// (guess it's not supported on TitleBars
 
             //titleBar.ButtonHoverBackgroundColor = Color.FromArgb(0, 20, 20, 20);
             //titleBar.ButtonPressedBackgroundColor = Color.FromArgb(0, 50, 50, 50);
@@ -51,6 +54,7 @@ namespace CoinBase {
             }
 
             MainFrame.Navigate(typeof(Page_Home));
+            SyncAll();
         }
 
         private void MenuHome_Click(object sender, RoutedEventArgs e) {
@@ -117,106 +121,61 @@ namespace CoinBase {
                 var p = (Page_LTC)MainFrame.Content;
                 p.LTC_Update_click(null, null);
             }
-
-
-
+            
+            LiveTileButton_Click(null, null);
         }
 
         private void HamburgerLogo_Click(object sender, RoutedEventArgs e) {
             //MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
-        private async void LiveTileButton_Click(object sender, RoutedEventArgs e) {
-            testLiveTile();
+        private void LiveTileButton_Click(object sender, RoutedEventArgs e) {
+            //testLiveTile();
 
-
+            try {
+                SendStockTileNotification("BTC", App.BTC_now, App.BTC_change1h, DateTime.Now);
+                SendStockTileNotification("ETH", App.ETH_now, App.ETH_change1h, DateTime.Now);
+                SendStockTileNotification("LTC", App.LTC_now, App.LTC_change1h, DateTime.Now);
+            } catch (Exception ex) {
+                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
+            }
         }
 
+        private void SendStockTileNotification(string symbol, double price, string diff, DateTime dateUpdated) {
 
+            XmlDocument content = GenerateNotificationContent(symbol, price, diff, dateUpdated);
 
+            TileNotification notification = new TileNotification(content);
 
+            notification.Tag = symbol;
 
+            TileUpdateManager.CreateTileUpdaterForApplication().Update(notification);
+        }
 
+        private XmlDocument GenerateNotificationContent(string symbol, double price, string diff, DateTime dateUpdated) {
+            //string percentString = (percentChange < 0 ? "▼" : "▲") + " " + percentChange.ToString("N") + "%";
 
-        public void testLiveTile() {
-
-            var tileContent = new TileContent() {
+            var content = new TileContent() {
                 Visual = new TileVisual() {
-                    Branding = TileBranding.Name,
-
                     TileMedium = new TileBinding() {
                         Content = new TileBindingContentAdaptive() {
                             Children = {
                                 new AdaptiveText(){
-                                    Text = "9:50 AM, Wednesday",
-                                    HintStyle = AdaptiveTextStyle.Caption
+                                    Text = symbol
                                 },
-                                new AdaptiveText(){
-                                    Text = "263 Grove St, San Francisco, CA 94102",
-                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
-                                    HintWrap = true
-                                }
-                            }
-                        }
-                    },
 
-                    TileWide = new TileBinding() {
-                        Content = new TileBindingContentAdaptive() {
-                            Children ={
-                                new AdaptiveGroup(){
-                                    Children ={
-                                        new AdaptiveSubgroup(){
-                                            HintWeight = 33,
-                                            Children ={
-                                                new AdaptiveImage(){
-                                                    Source = "Assets/coinbase.png"
-                                                }
-                                            }
-                                        },
-                                        new AdaptiveSubgroup(){
-                                            Children ={
-                                                new AdaptiveText(){
-                                                    Text = "9:50 AM, Wednesday",
-                                                    HintStyle = AdaptiveTextStyle.Caption
-                                                },
-                                                new AdaptiveText(){
-                                                    Text = "263 Grove St, San Francisco, CA 94102",
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
-                                                    HintWrap = true,
-                                                    HintMaxLines = 3
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    TileLarge = new TileBinding() {
-                        Content = new TileBindingContentAdaptive() {
-                            Children = {
-                                new AdaptiveGroup(){
-                                    Children ={
-                                        new AdaptiveSubgroup(){
-                                            HintWeight = 33,
-                                            Children = {
-                                                new AdaptiveImage(){
-                                                    Source = "/Assets/coinbase.png"
-                                                }
-                                            }
-                                        },
-                                        new AdaptiveSubgroup(){
-                                            Children = {
-                                                new AdaptiveText(){
-                                                    Text = "9:50 AM, Wednesday",
-                                                    HintStyle = AdaptiveTextStyle.Caption
-                                                }
-                                            }
-                                        }
-                                    }
+                                new AdaptiveText(){
+                                    Text = (App.coin.Equals("EUR")) ? price.ToString("N") +"€" : price.ToString("N") +"$"
                                 },
-                                new AdaptiveImage(){
-                                    Source = "Assets/coinbase.png"
+
+                                new AdaptiveText(){
+                                    Text = diff,
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
+                                },
+
+                                new AdaptiveText(){
+                                    Text = dateUpdated.ToString("t"),
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
                                 }
                             }
                         }
@@ -224,11 +183,7 @@ namespace CoinBase {
                 }
             };
 
-            // Create the tile notification
-            var tileNotif = new TileNotification(tileContent.GetXml());
-
-            // And send the notification to the primary tile
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotif);
+            return content.GetXml();
         }
 
     }

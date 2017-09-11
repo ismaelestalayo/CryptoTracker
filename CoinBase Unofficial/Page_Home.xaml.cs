@@ -99,13 +99,16 @@ namespace CoinBase {
             dBTC = (float)Math.Round(dBTC, 2);
             if (dBTC < 0) {
                 BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                BTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
                 dBTC = Math.Abs(dBTC);
+                BTC_diff.Text = "▼" + dBTC.ToString() + " % ";
             } else {
                 BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                BTC_difff.Text = "\xEB11";
+                BTC_diff.Text = "▲" + dBTC.ToString() + " % ";
             }
-            BTC_diff.Text = dBTC.ToString() + "%";
+
+            if (timeSpan.Equals("hour")) {
+                App.BTC_change1h = BTC_diff.Text;
+            }
 
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -151,14 +154,18 @@ namespace CoinBase {
             float dETH = ((App.ETH_now / App.ETH_old) - 1) * 100;
             dETH = (float)Math.Round(dETH, 2);
             if (dETH < 0) {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 ETH_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
                 dETH = Math.Abs(dETH);
             } else {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
                 ETH_difff.Text = "\xEB11";
             }
             ETH_diff.Text = dETH.ToString() + "%";
+
+            if (timeSpan.Equals("hour")) {
+                App.ETH_change1h = dETH.ToString();
+            }
 
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -205,14 +212,18 @@ namespace CoinBase {
             float dLTC = ((App.LTC_now / App.LTC_old) - 1) * 100;
             dLTC = (float)Math.Round(dLTC, 2);
             if (dLTC < 0) {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 127, 0, 0));
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 LTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
                 dLTC = Math.Abs(dLTC);
             } else {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 127, 0));
+                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
                 LTC_difff.Text = "\xEB11";
             }
             LTC_diff.Text = dLTC.ToString() + "%";
+
+            if (timeSpan.Equals("hour")) {
+                App.LTC_change1h = dLTC.ToString();
+            }
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };

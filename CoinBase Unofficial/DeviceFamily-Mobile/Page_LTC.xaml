@@ -157,12 +157,12 @@
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
-                <RadioButton GroupName="BTC" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" MinHeight="30" FontSize="15"/>
-                <RadioButton GroupName="BTC" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" MinHeight="30" FontSize="15" IsChecked="True"/>
-                <RadioButton GroupName="BTC" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" MinHeight="30" FontSize="15"/>
-                <RadioButton GroupName="BTC" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" MinHeight="30" FontSize="15"/>
-                <RadioButton GroupName="BTC" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" MinHeight="30" FontSize="15"/>
-                <RadioButton GroupName="BTC" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" MinHeight="30" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15" IsChecked="True"/>
+                <RadioButton GroupName="BTC" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
+                <RadioButton GroupName="BTC" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="LTC_TimerangeButton_Click" MinWidth="50" FontSize="15"/>
             </StackPanel>
         </Grid>
 

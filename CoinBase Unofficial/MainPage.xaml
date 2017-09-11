@@ -1,11 +1,8 @@
 ﻿<Page
     x:Class="CoinBase.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CoinBase"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -40,7 +37,7 @@
 				   RelativePanel.AlignVerticalCenterWithPanel="True" />
             </Button>
 
-            <Button Name="LiveTileButton" Click="LiveTileButton_Click"
+            <Button Name="LiveTileButton" Click="LiveTileButton_Click" Visibility="Collapsed"
 					Background="Transparent" BorderBrush="Transparent"
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.LeftOf="SyncAllButton">
@@ -109,7 +106,8 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Name="MenuAll" Background="Transparent" RelativePanel.Below="MenuLTC" Click="MenuAll_Click">
+                    <Button Name="MenuAll" Background="Transparent" RelativePanel.Below="MenuLTC" Click="MenuAll_Click" 
+                            Visibility="Collapsed">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="ViewAll" Width="30" Foreground="White"/>
 
