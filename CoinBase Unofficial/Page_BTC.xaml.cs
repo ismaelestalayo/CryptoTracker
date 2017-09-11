@@ -19,11 +19,9 @@ namespace CoinBase {
             InitValues();
         }
 
-        async private void InitValues() {
+        private async Task InitValues() {
             try {
-                BTC_Update_click(null, null);
-                await GetStats();
-                await Get24Volume();
+                await BTC_Update_click(null, null);
 
             } catch (Exception ex) {
                 LoadingControl.IsLoading = false;
@@ -32,43 +30,41 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        //For SyncAll button
-        public void BTC_Update_click(object sender, RoutedEventArgs e) {
+        public async Task BTC_Update_click(object sender, RoutedEventArgs e) {
             if (LoadingControl == null)
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
-
-            UpdateBTC();
+            
             RadioButton r = new RadioButton { Content = timeSpan };
             BTC_TimerangeButton_Click(r, null);
-            GetStats();
+            await GetStats();
             Get24Volume();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        async public Task UpdateBTC() {
-            await App.GetCurrentPrice("BTC");
+        public void UpdateBTC() {
+            App.GetCurrentPrice("BTC");
             BTC_curr.Text = App.BTC_now.ToString();
             BTC_curr.Text = (App.coin.Equals("EUR")) ? BTC_curr.Text += "€" : BTC_curr.Text += "$";
 
             switch (timeSpan) {
                 case "hour":
                 case "day":
-                    await App.GetHisto("BTC", "minute", limit);
+                    App.GetHisto("BTC", "minute", limit);
                     break;
 
                 case "week":
                 case "month":
-                    await App.GetHisto("BTC", "hour", limit);
+                    App.GetHisto("BTC", "hour", limit);
                     break;
 
                 case "year":
-                    await App.GetHisto("BTC", "day", limit);
+                    App.GetHisto("BTC", "day", limit);
                     break;
 
                 case "all":
-                    await App.GetHisto("BTC", "day", 0);
+                    App.GetHisto("BTC", "day", 0);
                     break;
             }
 
@@ -88,15 +84,18 @@ namespace CoinBase {
 
             float dBTC = ((App.BTC_now / App.BTC_old) - 1) * 100;
             dBTC = (float)Math.Round(dBTC, 2);
+            if (timeSpan.Equals("hour"))
+                App.BTC_change1h = dBTC;
+
             if (dBTC < 0) {
-                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                BTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 dBTC = Math.Abs(dBTC);
+                BTC_diff.Text = "▼";
             } else {
-                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                BTC_difff.Text = "\xEB11";
+                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                BTC_diff.Text = "▲";
             }
-            BTC_diff.Text = dBTC.ToString() + "%";
+            BTC_diff.Text += dBTC.ToString() + "%";
 
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -105,7 +104,7 @@ namespace CoinBase {
             LoadingControl.IsLoading = false;
         }
 
-        async public Task GetStats() {
+        async private Task GetStats() {
 
             await App.GetStats("BTC");
 
@@ -121,8 +120,8 @@ namespace CoinBase {
             BTC_Low.Text   = App.stats.Low24 + sym;
             BTC_Vol24.Text = App.stats.Volume24 + "BTC";
         }
-        async private Task Get24Volume() {
-            await App.GetHisto("BTC", "hour", 24);
+        private void Get24Volume() {
+            App.GetHisto("BTC", "hour", 24);
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < 24; i++) {

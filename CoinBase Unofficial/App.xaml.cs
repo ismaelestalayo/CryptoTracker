@@ -26,16 +26,14 @@ namespace CoinBase {
         internal static float ETH_now;
         internal static float LTC_now;
 
-        internal static string BTC_change1h = "0";
-        internal static string ETH_change1h = "0";
-        internal static string LTC_change1h = "0";
+        internal static float BTC_change1h = 0;
+        internal static float ETH_change1h = 0;
+        internal static float LTC_change1h = 0;
 
         internal static List<PricePoint> ppBTC = new List<PricePoint>();
         internal static List<PricePoint> ppETH = new List<PricePoint>();
         internal static List<PricePoint> ppLTC = new List<PricePoint>();
         internal static PricePoint stats = new PricePoint();
-
-        static HttpClient client = new HttpClient();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -125,27 +123,13 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
-        async internal static Task GetCurrentPrice(string crypto) {
+        internal static void GetCurrentPrice(string crypto) {
             
-            Uri requestUri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN");
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
-            String response = "";
-
-            //Add a user-agent header to the GET request. 
-            var headers = httpClient.DefaultRequestHeaders;
-            String header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-            if (!headers.UserAgent.TryParseAdd(header)) {
-                throw new Exception("Invalid header value: " + header);
-            }
+            var requestUri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN");
 
             try {
-                //Send the GET request
-                httpResponse = await httpClient.GetAsync(requestUri);
-                httpResponse.EnsureSuccessStatusCode();
-
-                response = await httpResponse.Content.ReadAsStringAsync();
-                var data = JRaw.Parse(response);
+                var jsonStatham = GetJSONAsync(requestUri);
+                JToken data = jsonStatham.Result;
 
                 switch (crypto) {
                     case "BTC":
@@ -162,12 +146,12 @@ namespace CoinBase {
                 }
 
             } catch (Exception ex) {
-                response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                string response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        async internal static Task GetHisto(string crypto, string time, int limit) {
+        internal static void GetHisto(string crypto, string time, int limit) {
             String URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
                 + crypto + "&tsym=" + coin + "&limit=" + limit;
 
@@ -175,25 +159,10 @@ namespace CoinBase {
                 URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + coin + "&allData=true";
 
             Uri requestUri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
-            string response = "";
-
-            //Add a user-agent header to the GET request. 
-            var headers = httpClient.DefaultRequestHeaders;
-            String header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-            if (!headers.UserAgent.TryParseAdd(header)) {
-                throw new Exception("Invalid header value: " + header);
-            }
-
 
             try {
-                //Send the GET request
-                httpResponse = await httpClient.GetAsync(requestUri);
-                httpResponse.EnsureSuccessStatusCode();
-
-                response = await httpResponse.Content.ReadAsStringAsync();
-                var data = JRaw.Parse(response);
+                var jsonStatham = GetJSONAsync(requestUri);
+                JToken data = jsonStatham.Result;
 
                 switch (crypto) {
                     case "BTC":
@@ -229,7 +198,7 @@ namespace CoinBase {
                 }
 
             } catch (Exception ex) {
-                response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                string response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
         }
 
@@ -265,6 +234,21 @@ namespace CoinBase {
             }
         }
 
+        /// <summary>
+        /// do NOT mess with async methods...
+        /// 
+        /// Thank god I found this article (thanks Stephen Cleary)
+        /// http://blog.stephencleary.com/2012/07/dont-block-on-async-code.html
+        /// 
+        /// </summary>
+        private static async Task<JToken> GetJSONAsync(Uri uri) {
+
+            using (var client = new HttpClient()) {
+                // Send the GET request
+                var jsonString = await client.GetStringAsync(uri).ConfigureAwait(false);
+                return JToken.Parse(jsonString);
+            }
+        }
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////

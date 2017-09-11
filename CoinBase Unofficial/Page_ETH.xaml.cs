@@ -19,11 +19,9 @@ namespace CoinBase {
             InitValues();
         }
 
-        async private void InitValues() {
+        private async Task InitValues() {
             try {
-                ETH_Update_click(null, null);
-                await GetStats();
-                await Get24Volume();
+                await ETH_Update_click(null, null);
 
             } catch (Exception ex) {
                 LoadingControl.IsLoading = false;
@@ -32,43 +30,41 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        //For SyncAll button
-        public void ETH_Update_click(object sender, RoutedEventArgs e) {
+        public async Task ETH_Update_click(object sender, RoutedEventArgs e) {
             if (LoadingControl == null)
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
-
-            UpdateETH();
+            
             RadioButton r = new RadioButton { Content = timeSpan };
             ETH_TimerangeButton_Click(r, null);
-            GetStats();
+            await GetStats();
             Get24Volume();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        async public Task UpdateETH() {
-            await App.GetCurrentPrice("ETH");
+        public void UpdateETH() {
+            App.GetCurrentPrice("ETH");
             ETH_curr.Text = App.ETH_now.ToString();
             ETH_curr.Text = (App.coin.Equals("EUR")) ? ETH_curr.Text += "€" : ETH_curr.Text += "$";
 
             switch (timeSpan) {
                 case "hour":
                 case "day":
-                    await App.GetHisto("ETH", "minute", limit);
+                    App.GetHisto("ETH", "minute", limit);
                     break;
 
                 case "week":
                 case "month":
-                    await App.GetHisto("ETH", "hour", limit);
+                    App.GetHisto("ETH", "hour", limit);
                     break;
 
                 case "year":
-                    await App.GetHisto("ETH", "day", limit);
+                    App.GetHisto("ETH", "day", limit);
                     break;
 
                 case "all":
-                    await App.GetHisto("ETH", "day", 0);
+                    App.GetHisto("ETH", "day", 0);
                     break;
             }
 
@@ -88,15 +84,18 @@ namespace CoinBase {
 
             float dETH = ((App.ETH_now / App.ETH_old) - 1) * 100;
             dETH = (float)Math.Round(dETH, 2);
+            if (timeSpan.Equals("hour"))
+                App.ETH_change1h = dETH;
+
             if (dETH < 0) {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                ETH_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 dETH = Math.Abs(dETH);
+                ETH_diff.Text = "▼";
             } else {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                ETH_difff.Text = "\xEB11";
+                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                ETH_diff.Text = "▲";
             }
-            ETH_diff.Text = dETH.ToString() + "%";
+            ETH_diff.Text += dETH.ToString() + "%";
 
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -105,14 +104,14 @@ namespace CoinBase {
             LoadingControl.IsLoading = false;
         }
 
-        async public Task GetStats() {
+        async private Task GetStats() {
 
             await App.GetStats("ETH");
 
             string sym;
             if (App.coin.Equals("EUR")) { 
                 sym = "€";
-            } else{ 
+            } else { 
                 sym = "$";
             }
 
@@ -120,14 +119,13 @@ namespace CoinBase {
             ETH_High.Text  = App.stats.High24 + sym;
             ETH_Low.Text   = App.stats.Low24  + sym;
             ETH_Vol24.Text = App.stats.Volume24 + "ETH";
-            
         }
-        async private Task Get24Volume() {
-            await App.GetHisto("ETH", "hour", 24);
+        private void Get24Volume() {
+            App.GetHisto("ETH", "hour", 24);
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < 24; i++) {
-                data.Add(new App.ChartDataObject() {
+                data.Add( new App.ChartDataObject() {
                     Date = App.ppETH[i].DateTime,
                     Volume = App.ppETH[i].Volumefrom
                 });

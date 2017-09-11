@@ -1,13 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Toolkit.Uwp.Notifications;
+﻿using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.ApplicationModel.Core;
-using Windows.Data.Xml.Dom;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Notifications;
-using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -54,7 +50,6 @@ namespace CoinBase {
             }
 
             MainFrame.Navigate(typeof(Page_Home));
-            SyncAll();
         }
 
         private void MenuHome_Click(object sender, RoutedEventArgs e) {
@@ -79,9 +74,13 @@ namespace CoinBase {
             MainFrame.Navigate(typeof(Page_Settings));
         }
 
+        private void HamburgerLogo_Click(object sender, RoutedEventArgs e) {
+            //MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////
         private async void UpdateButton_Click(object sender, RoutedEventArgs e) {
-            SyncAll();
+            await SyncAll();
             if (r == 0) {
                 await UpdateIcon.Rotate(value: 360,
                              centerX: 9,
@@ -100,7 +99,7 @@ namespace CoinBase {
 
         }
 
-        private async Task SyncAll() {
+        internal async Task SyncAll() {
             string x = MainFrame.Content.ToString();
 
             if (x.Equals("CoinBase.Page_Home")) {
@@ -111,80 +110,24 @@ namespace CoinBase {
 
             } else if (x.Equals("CoinBase.Page_BTC")) {
                 var p = (Page_BTC)MainFrame.Content;
-                p.BTC_Update_click(null, null);
+                await p.BTC_Update_click(null, null);
 
             } else if (x.Equals("CoinBase.Page_ETH")) {
                 var p = (Page_ETH)MainFrame.Content;
-                p.ETH_Update_click(null, null);
+                await p.ETH_Update_click(null, null);
 
             } else if (x.Equals("CoinBase.Page_LTC")) {
                 var p = (Page_LTC)MainFrame.Content;
-                p.LTC_Update_click(null, null);
+                await p.LTC_Update_click(null, null);
             }
             
-            LiveTileButton_Click(null, null);
+            LiveTile l = new LiveTile();
+            l.UpdateLiveTile();
         }
 
-        private void HamburgerLogo_Click(object sender, RoutedEventArgs e) {
-            //MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
-        }
+        
 
-        private void LiveTileButton_Click(object sender, RoutedEventArgs e) {
-            //testLiveTile();
-
-            try {
-                SendStockTileNotification("BTC", App.BTC_now, App.BTC_change1h, DateTime.Now);
-                SendStockTileNotification("ETH", App.ETH_now, App.ETH_change1h, DateTime.Now);
-                SendStockTileNotification("LTC", App.LTC_now, App.LTC_change1h, DateTime.Now);
-            } catch (Exception ex) {
-                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
-            }
-        }
-
-        private void SendStockTileNotification(string symbol, double price, string diff, DateTime dateUpdated) {
-
-            XmlDocument content = GenerateNotificationContent(symbol, price, diff, dateUpdated);
-
-            TileNotification notification = new TileNotification(content);
-
-            notification.Tag = symbol;
-
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(notification);
-        }
-
-        private XmlDocument GenerateNotificationContent(string symbol, double price, string diff, DateTime dateUpdated) {
-            //string percentString = (percentChange < 0 ? "▼" : "▲") + " " + percentChange.ToString("N") + "%";
-
-            var content = new TileContent() {
-                Visual = new TileVisual() {
-                    TileMedium = new TileBinding() {
-                        Content = new TileBindingContentAdaptive() {
-                            Children = {
-                                new AdaptiveText(){
-                                    Text = symbol
-                                },
-
-                                new AdaptiveText(){
-                                    Text = (App.coin.Equals("EUR")) ? price.ToString("N") +"€" : price.ToString("N") +"$"
-                                },
-
-                                new AdaptiveText(){
-                                    Text = diff,
-                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                },
-
-                                new AdaptiveText(){
-                                    Text = dateUpdated.ToString("t"),
-                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-
-            return content.GetXml();
-        }
+        
 
     }
 }

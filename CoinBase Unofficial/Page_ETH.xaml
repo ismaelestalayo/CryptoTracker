@@ -4,9 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
 	NavigationCacheMode="Required">
 
@@ -52,17 +52,12 @@
                            Text="val€" 
                            FontSize="24"
                            FontWeight="Light"/>
-
-                <TextBlock Name="ETH_difff"  
-                           Text="&#xEB11;" 
-                           VerticalAlignment="Bottom"
-                           FontSize="22" 
-                           FontFamily="Segoe MDL2 Assets"/>
+                
                 <TextBlock Name="ETH_diff" 
-                           Text="0%"
+                           Text="▲0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 5, 0"
-                           FontSize="19"
+                           Margin="5, 0, 0, 1"
+                           FontSize="18"
                            FontWeight="Light"/>
             </StackPanel>
 

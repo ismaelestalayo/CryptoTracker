@@ -19,11 +19,9 @@ namespace CoinBase {
             InitValues();
         }
 
-        async private void InitValues() {
+        async private Task InitValues() {
             try {
-                LTC_Update_click(null, null);
-                await GetStats();
-                await Get24Volume();
+                await LTC_Update_click(null, null);
 
             } catch (Exception ex) {
                 LoadingControl.IsLoading = false;
@@ -32,43 +30,41 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        //For SyncAll button
-        public void LTC_Update_click(object sender, RoutedEventArgs e) {
+        public async Task LTC_Update_click(object sender, RoutedEventArgs e) {
             if (LoadingControl == null)
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
-
-            UpdateLTC();
+            
             RadioButton r = new RadioButton { Content = timeSpan };
             LTC_TimerangeButton_Click(r, null);
-            GetStats();
+            await GetStats();
             Get24Volume();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        async public Task UpdateLTC() {
-            await App.GetCurrentPrice("LTC");
+        public void UpdateLTC() {
+            App.GetCurrentPrice("LTC");
             LTC_curr.Text = App.LTC_now.ToString();
             LTC_curr.Text = (App.coin.Equals("EUR")) ? LTC_curr.Text += "€" : LTC_curr.Text += "$";
 
             switch (timeSpan) {
                 case "hour":
                 case "day":
-                    await App.GetHisto("LTC", "minute", limit);
+                    App.GetHisto("LTC", "minute", limit);
                     break;
 
                 case "week":
                 case "month":
-                    await App.GetHisto("LTC", "hour", limit);
+                    App.GetHisto("LTC", "hour", limit);
                     break;
 
                 case "year":
-                    await App.GetHisto("LTC", "day", limit);
+                    App.GetHisto("LTC", "day", limit);
                     break;
 
                 case "all":
-                    await App.GetHisto("LTC", "day", 0);
+                    App.GetHisto("LTC", "day", 0);
                     break;
             }
 
@@ -88,15 +84,18 @@ namespace CoinBase {
 
             float dLTC = ((App.LTC_now / App.LTC_old) - 1) * 100;
             dLTC = (float)Math.Round(dLTC, 2);
+            if (timeSpan.Equals("hour"))
+                App.LTC_change1h = dLTC;
+
             if (dLTC < 0) {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                LTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 dLTC = Math.Abs(dLTC);
+                LTC_diff.Text = "▼";
             } else {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                LTC_difff.Text = "\xEB11";
+                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                LTC_diff.Text = "▲";
             }
-            LTC_diff.Text = dLTC.ToString() + "%";
+            LTC_diff.Text += dLTC.ToString() + "%";
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -121,9 +120,8 @@ namespace CoinBase {
             LTC_Low.Text   = App.stats.Low24 + sym;
             LTC_Vol24.Text = App.stats.Volume24 + "LTC";
         }
-
-        async private Task Get24Volume() {
-            await App.GetHisto("LTC", "hour", 24);
+        private void Get24Volume() {
+            App.GetHisto("LTC", "hour", 24);
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < 24; i++) {

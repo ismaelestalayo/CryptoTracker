@@ -37,7 +37,7 @@
 				   RelativePanel.AlignVerticalCenterWithPanel="True" />
             </Button>
 
-            <Button Name="LiveTileButton" Click="LiveTileButton_Click" Visibility="Collapsed"
+            <!--<Button Name="LiveTileButton" Click="LiveTileButton_Click" Visibility="Collapsed"
 					Background="Transparent" BorderBrush="Transparent"
 					RelativePanel.AlignVerticalCenterWithPanel="True"
 					RelativePanel.LeftOf="SyncAllButton">
@@ -48,7 +48,7 @@
 							   Foreground="White" Margin="5,0"
 							   FontWeight="Light" FontSize="18" />
                 </StackPanel>
-            </Button>
+            </Button>-->
 
             <Button Name="SyncAllButton" Click="UpdateButton_Click"
 					Background="Transparent" BorderBrush="Transparent"
