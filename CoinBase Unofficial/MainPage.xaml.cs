@@ -79,6 +79,9 @@ namespace CoinBase {
             MainFrame.Navigate(typeof(Page_Settings));
         }
 
+        private void HamburgerLogo_Click(object sender, RoutedEventArgs e) {
+            //MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
         ////////////////////////////////////////////////////////////////////////////////////////
         private async void UpdateButton_Click(object sender, RoutedEventArgs e) {
             SyncAll();
@@ -96,8 +99,8 @@ namespace CoinBase {
                 r = 0;
             }
 
-
-
+            LiveTile l = new LiveTile();
+            l.UpdateLiveTile();
         }
 
         private async Task SyncAll() {
@@ -121,70 +124,13 @@ namespace CoinBase {
                 var p = (Page_LTC)MainFrame.Content;
                 p.LTC_Update_click(null, null);
             }
-            
-            LiveTileButton_Click(null, null);
+
+            LiveTile l = new LiveTile();
+            l.UpdateLiveTile();
         }
 
-        private void HamburgerLogo_Click(object sender, RoutedEventArgs e) {
-            //MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
-        }
 
-        private void LiveTileButton_Click(object sender, RoutedEventArgs e) {
-            //testLiveTile();
-
-            try {
-                SendStockTileNotification("BTC", App.BTC_now, App.BTC_change1h, DateTime.Now);
-                SendStockTileNotification("ETH", App.ETH_now, App.ETH_change1h, DateTime.Now);
-                SendStockTileNotification("LTC", App.LTC_now, App.LTC_change1h, DateTime.Now);
-            } catch (Exception ex) {
-                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
-            }
-        }
-
-        private void SendStockTileNotification(string symbol, double price, string diff, DateTime dateUpdated) {
-
-            XmlDocument content = GenerateNotificationContent(symbol, price, diff, dateUpdated);
-
-            TileNotification notification = new TileNotification(content);
-
-            notification.Tag = symbol;
-
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(notification);
-        }
-
-        private XmlDocument GenerateNotificationContent(string symbol, double price, string diff, DateTime dateUpdated) {
-            //string percentString = (percentChange < 0 ? "▼" : "▲") + " " + percentChange.ToString("N") + "%";
-
-            var content = new TileContent() {
-                Visual = new TileVisual() {
-                    TileMedium = new TileBinding() {
-                        Content = new TileBindingContentAdaptive() {
-                            Children = {
-                                new AdaptiveText(){
-                                    Text = symbol
-                                },
-
-                                new AdaptiveText(){
-                                    Text = (App.coin.Equals("EUR")) ? price.ToString("N") +"€" : price.ToString("N") +"$"
-                                },
-
-                                new AdaptiveText(){
-                                    Text = diff,
-                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                },
-
-                                new AdaptiveText(){
-                                    Text = dateUpdated.ToString("t"),
-                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-
-            return content.GetXml();
-        }
+        
 
     }
 }

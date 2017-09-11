@@ -26,16 +26,14 @@ namespace CoinBase {
         internal static float ETH_now;
         internal static float LTC_now;
 
-        internal static string BTC_change1h = "0";
-        internal static string ETH_change1h = "0";
-        internal static string LTC_change1h = "0";
+        internal static float BTC_change1h = 0;
+        internal static float ETH_change1h = 0;
+        internal static float LTC_change1h = 0;
 
         internal static List<PricePoint> ppBTC = new List<PricePoint>();
         internal static List<PricePoint> ppETH = new List<PricePoint>();
         internal static List<PricePoint> ppLTC = new List<PricePoint>();
         internal static PricePoint stats = new PricePoint();
-
-        static HttpClient client = new HttpClient();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -129,22 +127,12 @@ namespace CoinBase {
             
             Uri requestUri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN");
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
             String response = "";
-
-            //Add a user-agent header to the GET request. 
-            var headers = httpClient.DefaultRequestHeaders;
-            String header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-            if (!headers.UserAgent.TryParseAdd(header)) {
-                throw new Exception("Invalid header value: " + header);
-            }
 
             try {
                 //Send the GET request
-                httpResponse = await httpClient.GetAsync(requestUri);
-                httpResponse.EnsureSuccessStatusCode();
+                response = await httpClient.GetStringAsync(requestUri);
 
-                response = await httpResponse.Content.ReadAsStringAsync();
                 var data = JRaw.Parse(response);
 
                 switch (crypto) {
@@ -176,23 +164,13 @@ namespace CoinBase {
 
             Uri requestUri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
             string response = "";
-
-            //Add a user-agent header to the GET request. 
-            var headers = httpClient.DefaultRequestHeaders;
-            String header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-            if (!headers.UserAgent.TryParseAdd(header)) {
-                throw new Exception("Invalid header value: " + header);
-            }
 
 
             try {
                 //Send the GET request
-                httpResponse = await httpClient.GetAsync(requestUri);
-                httpResponse.EnsureSuccessStatusCode();
-
-                response = await httpResponse.Content.ReadAsStringAsync();
+                response = await httpClient.GetStringAsync(requestUri);
+                
                 var data = JRaw.Parse(response);
 
                 switch (crypto) {

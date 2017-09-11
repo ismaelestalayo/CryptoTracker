@@ -38,8 +38,7 @@ namespace CoinBase {
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
-
-            UpdateLTC();
+            
             RadioButton r = new RadioButton { Content = timeSpan };
             LTC_TimerangeButton_Click(r, null);
             GetStats();

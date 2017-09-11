@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,13 +27,17 @@ namespace CoinBase {
 
         }
 
-        async private void InitValues() {
+        private void InitValues() {
             try {
                 BTC_Update_click(null, null);
                 ETH_Update_click(null, null);
                 LTC_Update_click(null, null);
 
             } catch (Exception ex) {
+                LoadingControl_BTC.IsLoading = false;
+                LoadingControl_ETH.IsLoading = false;
+                LoadingControl_LTC.IsLoading = false;
+                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
                 ETH_curr.Text = "Error! ";
                 BTC_curr.Text = ex.StackTrace;
                 LTC_curr.Text = ex.Message;
@@ -41,19 +47,31 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public void BTC_Update_click(object sender, RoutedEventArgs e) {
-            UpdateBTC();
+            if (LoadingControl_BTC == null)
+                LoadingControl_BTC = new Loading();
+            
+            LoadingControl_BTC.IsLoading = true;
+            
             RadioButton r = new RadioButton { Content = "hour" };
             BTC_TimerangeButton_Click(r, null);
         }
 
         public void ETH_Update_click(object sender, RoutedEventArgs e) {
-            UpdateETH();
+            if (LoadingControl_ETH == null)
+                LoadingControl_ETH = new Loading();
+            
+            LoadingControl_ETH.IsLoading = true;
+            
             RadioButton r = new RadioButton { Content = "hour" };
             ETH_TimerangeButton_Click(r, null);
         }
 
         public void LTC_Update_click(object sender, RoutedEventArgs e) {
-            UpdateLTC();
+            if (LoadingControl_LTC == null)
+                LoadingControl_LTC = new Loading();
+            
+            LoadingControl_LTC.IsLoading = true;
+            
             RadioButton r = new RadioButton { Content = "hour" };
             LTC_TimerangeButton_Click(r, null);
         }
@@ -97,23 +115,23 @@ namespace CoinBase {
 
             float dBTC = ((App.BTC_now / App.BTC_old) - 1) * 100;
             dBTC = (float)Math.Round(dBTC, 2);
+            if (timeSpan.Equals("hour")) 
+                App.BTC_change1h = dBTC;
+
             if (dBTC < 0) {
-                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
+                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 dBTC = Math.Abs(dBTC);
                 BTC_diff.Text = "▼" + dBTC.ToString() + " % ";
             } else {
-                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
                 BTC_diff.Text = "▲" + dBTC.ToString() + " % ";
-            }
-
-            if (timeSpan.Equals("hour")) {
-                App.BTC_change1h = BTC_diff.Text;
             }
 
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
+            LoadingControl_BTC.IsLoading = false;
         }
         async public Task UpdateETH() {
             await App.GetCurrentPrice("ETH");
@@ -153,24 +171,23 @@ namespace CoinBase {
 
             float dETH = ((App.ETH_now / App.ETH_old) - 1) * 100;
             dETH = (float)Math.Round(dETH, 2);
-            if (dETH < 0) {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                ETH_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
-                dETH = Math.Abs(dETH);
-            } else {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                ETH_difff.Text = "\xEB11";
-            }
-            ETH_diff.Text = dETH.ToString() + "%";
+            if (timeSpan.Equals("hour")) 
+                App.ETH_change1h = dETH;
 
-            if (timeSpan.Equals("hour")) {
-                App.ETH_change1h = dETH.ToString();
-            }
+            if (dETH < 0) {
+                ETH_diff.Foreground  = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
+                dETH = Math.Abs(dETH);
+                ETH_diff.Text = "▼" + dETH.ToString() + " % ";
+            } else {
+                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                ETH_diff.Text = "▲" + dETH.ToString() + " % ";
+            }            
 
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
+            LoadingControl_ETH.IsLoading = false;
         }
         async public Task UpdateLTC() {
             await App.GetCurrentPrice("LTC");
@@ -211,28 +228,30 @@ namespace CoinBase {
 
             float dLTC = ((App.LTC_now / App.LTC_old) - 1) * 100;
             dLTC = (float)Math.Round(dLTC, 2);
-            if (dLTC < 0) {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                LTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
-                dLTC = Math.Abs(dLTC);
-            } else {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                LTC_difff.Text = "\xEB11";
-            }
-            LTC_diff.Text = dLTC.ToString() + "%";
+            if (timeSpan.Equals("hour")) 
+                App.LTC_change1h = dLTC;
 
-            if (timeSpan.Equals("hour")) {
-                App.LTC_change1h = dLTC.ToString();
+            if (dLTC < 0) {
+                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
+                dLTC = Math.Abs(dLTC);
+                LTC_diff.Text = "▼" + dLTC.ToString() + " % ";
+            } else {
+                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                LTC_diff.Text = "▲" + dLTC.ToString() + " % ";
             }
+
+            
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
+            LoadingControl_LTC.IsLoading = false;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void BTC_TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            LoadingControl_BTC.IsLoading = true;
             RadioButton btn = sender as RadioButton;
 
             switch (btn.Content) {
@@ -293,6 +312,7 @@ namespace CoinBase {
             UpdateBTC();
         }
         private void ETH_TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            LoadingControl_ETH.IsLoading = true;
             RadioButton btn = sender as RadioButton;
 
             switch (btn.Content) {
@@ -353,6 +373,7 @@ namespace CoinBase {
             UpdateETH();
         }
         private void LTC_TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            LoadingControl_LTC.IsLoading = true;
             RadioButton btn = sender as RadioButton;
 
             switch (btn.Content) {

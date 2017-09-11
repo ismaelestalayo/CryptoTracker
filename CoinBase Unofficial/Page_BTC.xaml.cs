@@ -38,8 +38,7 @@ namespace CoinBase {
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
-
-            UpdateBTC();
+            
             RadioButton r = new RadioButton { Content = timeSpan };
             BTC_TimerangeButton_Click(r, null);
             GetStats();

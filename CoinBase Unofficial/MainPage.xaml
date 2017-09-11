@@ -37,19 +37,6 @@
 				   RelativePanel.AlignVerticalCenterWithPanel="True" />
             </Button>
 
-            <Button Name="LiveTileButton" Click="LiveTileButton_Click" Visibility="Collapsed"
-					Background="Transparent" BorderBrush="Transparent"
-					RelativePanel.AlignVerticalCenterWithPanel="True"
-					RelativePanel.LeftOf="SyncAllButton">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,5"
-							   FontFamily="Segoe MDL2 Assets" Text="&#xE840;" Foreground="White" FontSize="18" />
-                    <TextBlock Text="Live tile"
-							   Foreground="White" Margin="5,0"
-							   FontWeight="Light" FontSize="18" />
-                </StackPanel>
-            </Button>
-
             <Button Name="SyncAllButton" Click="UpdateButton_Click"
 					Background="Transparent" BorderBrush="Transparent"
 					RelativePanel.AlignVerticalCenterWithPanel="True"

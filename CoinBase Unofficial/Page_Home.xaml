@@ -6,6 +6,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
 	NavigationCacheMode="Required">
 
@@ -84,18 +85,12 @@
                            Text="val€" 
                            FontSize="24"
                            FontWeight="Light"/>
-
-                <TextBlock Name="BTC_difff"  
-                           Text="&#xEB11;" 
-                           VerticalAlignment="Bottom" 
-                           Margin="4, 0, 0, 0"
-                           FontSize="22"
-                           FontFamily="Segoe MDL2 Assets"/>
+                
                 <TextBlock Name="BTC_diff" 
-                           Text="0%"
+                           Text="▲0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 0, 0"
-                           FontSize="19"
+                           Margin="5, 0, 0, 1"
+                           FontSize="20"
                            FontWeight="Light"/>
             </StackPanel>
         </RelativePanel>
@@ -126,18 +121,12 @@
                            Text="val€"
                            FontSize="24"
                            FontWeight="Light"/>
-
-                <TextBlock Name="ETH_difff"  
-                           Text="&#xEB11;" 
-                           VerticalAlignment="Bottom" 
-                           Margin="4, 0, 0, 0"
-                           FontSize="22"
-                           FontFamily="Segoe MDL2 Assets"/>
+                
                 <TextBlock Name="ETH_diff" 
-                           Text="0%"
+                           Text="▲0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 0, 0"
-                           FontSize="19"
+                           Margin="5, 0, 0, 1"
+                           FontSize="20"
                            FontWeight="Light"/>
             </StackPanel>
         </RelativePanel>
@@ -168,17 +157,11 @@
                            Text="val€" 
                            FontSize="24"
                            FontWeight="Light"/>
-
-                <TextBlock Name="LTC_difff"  
-                           Text="&#xEB11;" 
-                           VerticalAlignment="Bottom" 
-                           Margin="4, 0, 0, 0"
-                           FontSize="21"
-                           FontFamily="Segoe MDL2 Assets"/>
+                
                 <TextBlock Name="LTC_diff" 
-                           Text="0%"
+                           Text="▲0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 0, 0"
+                           Margin="5, 0, 0, 1"
                            FontSize="18"
                            FontWeight="Light"/>
             </StackPanel>
@@ -188,12 +171,22 @@
         ################################################################################################################################
         ############################################################################################################################ -->
 		<Grid Grid.Column="0" Grid.Row="1">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*" />
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="auto" />
-			</Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <controls:Loading x:Name="LoadingControl_BTC" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Grid.RowSpan="2" Grid.ColumnSpan="2"
+                          Background="Transparent" Opacity="0.4">
+                <ContentControl x:Name="LoadingContentControl">
+                    <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                </ContentControl>
+            </controls:Loading>
 
             <telerik:RadCartesianChart x:Name="BTC_Chart" Margin="10, 0, 0, 5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
@@ -286,6 +279,16 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
+
+            <controls:Loading x:Name="LoadingControl_ETH" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Grid.RowSpan="2" Grid.ColumnSpan="2"
+                          Background="Transparent" Opacity="0.4">
+                <ContentControl>
+                    <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                </ContentControl>
+            </controls:Loading>
 
             <telerik:RadCartesianChart x:Name="ETH_Chart" Margin="10, 0, 0, 5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
                 <telerik:RadCartesianChart.Behaviors>
@@ -380,6 +383,16 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
+
+            <controls:Loading x:Name="LoadingControl_LTC" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Grid.RowSpan="2" Grid.ColumnSpan="2"
+                          Background="Transparent" Opacity="0.4">
+                <ContentControl>
+                    <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                </ContentControl>
+            </controls:Loading>
 
             <telerik:RadCartesianChart x:Name="LTC_Chart" Margin="10, 0, 0, 5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
                 <telerik:RadCartesianChart.Behaviors>

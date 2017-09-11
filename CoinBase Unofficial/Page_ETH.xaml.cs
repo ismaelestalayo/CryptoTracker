@@ -38,8 +38,7 @@ namespace CoinBase {
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
-
-            UpdateETH();
+            
             RadioButton r = new RadioButton { Content = timeSpan };
             ETH_TimerangeButton_Click(r, null);
             GetStats();
