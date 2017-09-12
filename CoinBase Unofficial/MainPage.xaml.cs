@@ -85,19 +85,19 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////
         private async void UpdateButton_Click(object sender, RoutedEventArgs e) {
             SyncAll();
-            if (r == 0) {
-                await UpdateIcon.Rotate(value: 360,
-                             centerX: 9,
-                             centerY: 9,
-                             duration: 1000, delay: 0).StartAsync();
-                r = 1;
-            } else {
-                await UpdateIcon.Rotate(value: 0,
-                             centerX: 9,
-                             centerY: 9,
-                             duration: 1000, delay: 0).StartAsync();
-                r = 0;
-            }
+            //if (r == 0) {
+            //    await UpdateIcon.Rotate(value: 360,
+            //                 centerX: 9,
+            //                 centerY: 9,
+            //                 duration: 1000, delay: 0).StartAsync();
+            //    r = 1;
+            //} else {
+            //    await UpdateIcon.Rotate(value: 0,
+            //                 centerX: 9,
+            //                 centerY: 9,
+            //                 duration: 1000, delay: 0).StartAsync();
+            //    r = 0;
+            //}
 
             LiveTile l = new LiveTile();
             l.UpdateLiveTile();

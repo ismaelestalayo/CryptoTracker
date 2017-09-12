@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -27,7 +28,8 @@ namespace CoinBase {
 
             } catch (Exception ex) {
                 LoadingControl.IsLoading = false;
-                LTC_curr.Text = "Error: " + ex;
+                LTC_curr.Text = "Error!";
+                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 
@@ -48,8 +50,7 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateLTC() {
             await App.GetCurrentPrice("LTC");
-            LTC_curr.Text = App.LTC_now.ToString();
-            LTC_curr.Text = (App.coin.Equals("EUR")) ? LTC_curr.Text += "€" : LTC_curr.Text += "$";
+            LTC_curr.Text = (App.coin.Equals("EUR")) ? App.LTC_now.ToString() + "€" : App.LTC_now.ToString() + "$";
 
             switch (timeSpan) {
                 case "hour":
@@ -87,15 +88,17 @@ namespace CoinBase {
 
             float dLTC = ((App.LTC_now / App.LTC_old) - 1) * 100;
             dLTC = (float)Math.Round(dLTC, 2);
+            if (timeSpan.Equals("hour"))
+                App.LTC_change1h = dLTC;
+
             if (dLTC < 0) {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                LTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 dLTC = Math.Abs(dLTC);
+                LTC_diff.Text = "▼" + dLTC.ToString() + "% ";
             } else {
-                LTC_diff.Foreground = LTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                LTC_difff.Text = "\xEB11";
+                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                LTC_diff.Text = "▲" + dLTC.ToString() + "% ";
             }
-            LTC_diff.Text = dLTC.ToString() + "%";
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -108,12 +111,7 @@ namespace CoinBase {
 
             await App.GetStats("LTC");
 
-            string sym;
-            if (App.coin.Equals("EUR")) {
-                sym = "€";
-            } else {
-                sym = "$";
-            }
+            string sym = (App.coin.Equals("EUR")) ? "€" : "$";
 
             LTC_Open.Text  = App.stats.Open24 + sym;
             LTC_High.Text  = App.stats.High24 + sym;

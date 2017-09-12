@@ -52,17 +52,12 @@
                            Text="val€" 
                            FontSize="24"
                            FontWeight="Light"/>
-
-                <TextBlock Name="ETH_difff"  
-                           Text="&#xEB11;" 
-                           VerticalAlignment="Bottom"
-                           FontSize="22" 
-                           FontFamily="Segoe MDL2 Assets"/>
+                
                 <TextBlock Name="ETH_diff" 
                            Text="0%"
                            VerticalAlignment="Bottom"
-                           Margin="-2, 0, 5, 0"
-                           FontSize="19"
+                           Margin="5, 0, 0, 1"
+                           FontSize="20"
                            FontWeight="Light"/>
             </StackPanel>
 

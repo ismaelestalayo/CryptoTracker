@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -22,12 +23,13 @@ namespace CoinBase {
         async private void InitValues() {
             try {
                 BTC_Update_click(null, null);
-                await GetStats();
-                await Get24Volume();
+                //await GetStats();
+                //await Get24Volume();
 
             } catch (Exception ex) {
                 LoadingControl.IsLoading = false;
-                BTC_curr.Text = "Error: " + ex;
+                BTC_curr.Text = "Error!";
+                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 
@@ -48,8 +50,7 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
             await App.GetCurrentPrice("BTC");
-            BTC_curr.Text = App.BTC_now.ToString();
-            BTC_curr.Text = (App.coin.Equals("EUR")) ? BTC_curr.Text += "€" : BTC_curr.Text += "$";
+            BTC_curr.Text = (App.coin.Equals("EUR")) ? App.BTC_now.ToString() + "€" : App.BTC_now.ToString() + "$";
 
             switch (timeSpan) {
                 case "hour":
@@ -87,15 +88,17 @@ namespace CoinBase {
 
             float dBTC = ((App.BTC_now / App.BTC_old) - 1) * 100;
             dBTC = (float)Math.Round(dBTC, 2);
+            if (timeSpan.Equals("hour"))
+                App.BTC_change1h = dBTC;
+
             if (dBTC < 0) {
-                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                BTC_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 dBTC = Math.Abs(dBTC);
+                BTC_diff.Text = "▼" + dBTC.ToString() + "%";
             } else {
-                BTC_diff.Foreground = BTC_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                BTC_difff.Text = "\xEB11";
+                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                BTC_diff.Text = "▲" + dBTC.ToString() + "%";
             }
-            BTC_diff.Text = dBTC.ToString() + "%";
 
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -108,12 +111,7 @@ namespace CoinBase {
 
             await App.GetStats("BTC");
 
-            string sym;
-            if (App.coin.Equals("EUR")) {
-                sym = "€";
-            } else {
-                sym = "$";
-            }
+            string sym = (App.coin.Equals("EUR")) ? "€" : "$";
 
             BTC_Open.Text  = App.stats.Open24 + sym;
             BTC_High.Text  = App.stats.High24 + sym;

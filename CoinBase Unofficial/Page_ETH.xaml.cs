@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -22,12 +23,13 @@ namespace CoinBase {
         async private void InitValues() {
             try {
                 ETH_Update_click(null, null);
-                await GetStats();
-                await Get24Volume();
+                //await GetStats();
+                //await Get24Volume();
 
             } catch (Exception ex) {
                 LoadingControl.IsLoading = false;
-                ETH_curr.Text = "Error: " + ex;
+                ETH_curr.Text = "Error!";
+                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 
@@ -48,8 +50,7 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateETH() {
             await App.GetCurrentPrice("ETH");
-            ETH_curr.Text = App.ETH_now.ToString();
-            ETH_curr.Text = (App.coin.Equals("EUR")) ? ETH_curr.Text += "€" : ETH_curr.Text += "$";
+            ETH_curr.Text = (App.coin.Equals("EUR")) ? App.ETH_now.ToString() + "€" : App.ETH_now.ToString() + "$";
 
             switch (timeSpan) {
                 case "hour":
@@ -87,15 +88,17 @@ namespace CoinBase {
 
             float dETH = ((App.ETH_now / App.ETH_old) - 1) * 100;
             dETH = (float)Math.Round(dETH, 2);
+            if (timeSpan.Equals("hour"))
+                App.ETH_change1h = dETH;
+
             if (dETH < 0) {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
-                ETH_difff.Text = "\xEB0F"; //C# parser works different from XAML parser
+                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
                 dETH = Math.Abs(dETH);
+                ETH_diff.Text = "▼" + dETH.ToString() + "%";
             } else {
-                ETH_diff.Foreground = ETH_difff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                ETH_difff.Text = "\xEB11";
+                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                ETH_diff.Text = "▼" + dETH.ToString() + "%";
             }
-            ETH_diff.Text = dETH.ToString() + "%";
 
             AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
@@ -108,12 +111,7 @@ namespace CoinBase {
 
             await App.GetStats("ETH");
 
-            string sym;
-            if (App.coin.Equals("EUR")) { 
-                sym = "€";
-            } else{ 
-                sym = "$";
-            }
+            string sym = (App.coin.Equals("EUR")) ? "€" : "$";
 
             ETH_Open.Text  = App.stats.Open24 + sym;
             ETH_High.Text  = App.stats.High24 + sym;

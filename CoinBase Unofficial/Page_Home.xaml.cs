@@ -38,9 +38,9 @@ namespace CoinBase {
                 LoadingControl_ETH.IsLoading = false;
                 LoadingControl_LTC.IsLoading = false;
                 var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
-                ETH_curr.Text = "Error! ";
-                BTC_curr.Text = ex.StackTrace;
-                LTC_curr.Text = ex.Message;
+                ETH_curr.Text = "Error!";
+                BTC_curr.Text = "Error!";
+                LTC_curr.Text = "Error!";
             }
 
         }
@@ -79,12 +79,7 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
             await App.GetCurrentPrice("BTC");
-            BTC_curr.Text = App.BTC_now.ToString();
-            if (App.coin.Equals("EUR"))
-                BTC_curr.Text += "€";
-            else {
-                BTC_curr.Text += "$";
-            }
+            BTC_curr.Text = (App.coin.Equals("EUR")) ? App.BTC_now.ToString() + "€" : App.BTC_now.ToString() + "$";
 
             switch (timeSpan) {
                 case "hour":
@@ -135,12 +130,7 @@ namespace CoinBase {
         }
         async public Task UpdateETH() {
             await App.GetCurrentPrice("ETH");
-            ETH_curr.Text = App.ETH_now.ToString();
-            if (App.coin.Equals("EUR"))
-                ETH_curr.Text += "€";
-            else {
-                ETH_curr.Text += "$";
-            }
+            ETH_curr.Text = (App.coin.Equals("EUR")) ? App.ETH_now.ToString() + "€" : App.ETH_now.ToString() + "$";
 
             switch (timeSpan) {
                 case "hour":
@@ -191,13 +181,7 @@ namespace CoinBase {
         }
         async public Task UpdateLTC() {
             await App.GetCurrentPrice("LTC");
-            LTC_curr.Text = App.LTC_now.ToString();
-
-            if (App.coin.Equals("EUR"))
-                LTC_curr.Text += "€";
-            else {
-                LTC_curr.Text += "$";
-            }
+            LTC_curr.Text = (App.coin.Equals("EUR")) ? App.LTC_now.ToString() + "€" : App.LTC_now.ToString() + "$";
 
             switch (timeSpan) {
                 case "hour":
@@ -239,8 +223,6 @@ namespace CoinBase {
                 LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
                 LTC_diff.Text = "▲" + dLTC.ToString() + " % ";
             }
-
-            
 
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };

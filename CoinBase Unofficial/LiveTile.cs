@@ -37,7 +37,35 @@ namespace CoinBase {
 
             var content = new TileContent() {
                 Visual = new TileVisual() {
+
+                    LockDetailedStatus1 = "BTC: " + App.BTC_now.ToString() + ((App.coin.Equals("EUR")) ? "€" : "$"),
+                    LockDetailedStatus2 = "ETH: " + App.ETH_now.ToString() + ((App.coin.Equals("EUR")) ? "€" : "$"),
+                    LockDetailedStatus3 = "LTC: " + App.LTC_now.ToString() + ((App.coin.Equals("EUR")) ? "€" : "$"),
+
                     TileMedium = new TileBinding() {
+                        Content = new TileBindingContentAdaptive() {
+                            Children = {
+                                new AdaptiveText(){
+                                    Text = symbol
+                                },
+
+                                new AdaptiveText(){
+                                    Text = (App.coin.Equals("EUR") ) ? price.ToString("N") +"€" : price.ToString("N") +"$"
+                                },
+
+                                new AdaptiveText(){
+                                    Text = percentString,
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
+                                },
+
+                                new AdaptiveText(){
+                                    Text = dateUpdated.ToString("t"),
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
+                                }
+                            }
+                        }
+                    },
+                    TileWide = new TileBinding() {
                         Content = new TileBindingContentAdaptive() {
                             Children = {
                                 new AdaptiveText(){
