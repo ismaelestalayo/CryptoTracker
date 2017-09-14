@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI.Notifications;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -125,53 +126,73 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////
         async internal static Task GetCurrentPrice(string crypto) {
             
-            Uri requestUri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN");
-            HttpClient httpClient = new HttpClient();
-            String response = "";
+            var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN");
+            //HttpClient httpClient = new HttpClient();
+            //String response = "";
 
             try {
                 //Send the GET request
-                response = await httpClient.GetStringAsync(requestUri);
+                //response = await httpClient.GetStringAsync(uri);
+                //response = await GetJSONAsync(uri);
 
-                var data = JRaw.Parse(response);
+                //var data = JRaw.Parse(response);
 
                 switch (crypto) {
                     case "BTC":
-                        BTC_now = (float)data[coin];
+                        BTC_now = 11; // (float)data[coin];
                         break;
 
                     case "ETH":
-                        ETH_now = (float)data[coin];
+                        ETH_now = 22; // (float)data[coin];
                         break;
 
                     case "LTC":
-                        LTC_now = (float)data[coin];
+                        LTC_now = 33; // (float)data[coin];
                         break;
                 }
 
             } catch (Exception ex) {
-                response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        async internal static Task GetHisto(string crypto, string time, int limit) {
+        internal async static Task GetHisto(string crypto, string time, int limit) {
             String URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
                 + crypto + "&tsym=" + coin + "&limit=" + limit;
 
             if (limit == 0)
                 URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + coin + "&allData=true";
 
-            Uri requestUri = new Uri(URL);
+            Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+            var headers = httpClient.DefaultRequestHeaders;
+
+            string header = "ie";
+            header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
+            if (!headers.UserAgent.TryParseAdd(header)) {
+                throw new Exception("Invalid header value: " + header);
+            }
+
             string response = "";
 
 
             try {
                 //Send the GET request
-                response = await httpClient.GetStringAsync(requestUri);
-                
-                var data = JRaw.Parse(response);
+                //response = await httpClient.GetStringAsync(uri);
+                //var data = JToken.Parse(response);
+
+                httpResponse = await httpClient.GetAsync(uri);
+                httpResponse.EnsureSuccessStatusCode();
+                response = await httpResponse.Content.ReadAsStringAsync();
+                var data = JToken.Parse(response);
+                httpResponse.Dispose();
+
+                //var jsonStatham = await GetJSONAsync(requestUri);
+                //JToken data = jsonStatham.Result;
+                //var x = jsonStatham["Data"];
+                //var z = JToken.Parse(jsonStatham.ToString() );
 
                 switch (crypto) {
                     case "BTC":
@@ -207,24 +228,20 @@ namespace CoinBase {
                 }
 
             } catch (Exception ex) {
-                response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
+                App.BTC_now = 0;
+                App.ETH_now = 0;
+                App.LTC_now = 0;
             }
         }
 
-        async internal static Task GetStats(string crypto) {
+        internal async static Task GetStats(string crypto) {
 
             String URL = "https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=" +crypto+ "&tsym=" + coin;
 
             Uri requestUri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
-
-            //Add a user-agent header to the GET request. 
-            var headers = httpClient.DefaultRequestHeaders;
-            String header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-            if (!headers.UserAgent.TryParseAdd(header)) {
-                throw new Exception("Invalid header value: " + header);
-            }
 
             string response = "";
 
@@ -234,12 +251,28 @@ namespace CoinBase {
                 httpResponse.EnsureSuccessStatusCode();
 
                 response = await httpResponse.Content.ReadAsStringAsync();
-                var data = JRaw.Parse(response);
+                var data = JToken.Parse(response);
 
                 stats = PricePoint.GetPricePointStats(data["Data"]["AggregatedData"]);
 
             } catch (Exception ex) {
                 response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+            }
+        }
+
+
+        /// <summary>
+        /// do NOT mess with async methods...
+        /// 
+        /// Thank god I found this article (thanks Stephen Cleary)
+        /// http://blog.stephencleary.com/2012/07/dont-block-on-async-code.html
+        /// 
+        /// </summary>
+        private static async Task<JToken> GetJSONAsync(Uri uri) {
+
+            using (var client = new HttpClient()) {
+                var jsonString = await client.GetStringAsync(uri).ConfigureAwait(false);
+                return JToken.Parse(jsonString);
             }
         }
 

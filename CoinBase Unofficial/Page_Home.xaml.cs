@@ -134,14 +134,10 @@ namespace CoinBase {
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("ETH",  "minute", limit);
-                    break;
                 case "day":
                     await App.GetHisto("ETH", "minute", limit);
                     break;
                 case "week":
-                    await App.GetHisto("ETH", "hour", limit);
-                    break;
                 case "month":
                     await App.GetHisto("ETH", "hour", limit);
                     break;
@@ -185,17 +181,15 @@ namespace CoinBase {
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("LTC", "minute", limit);
-                    break;
                 case "day":
                     await App.GetHisto("LTC", "minute", limit);
                     break;
+
                 case "week":
-                    await App.GetHisto("LTC", "hour", limit);
-                    break;
                 case "month":
                     await App.GetHisto("LTC", "hour", limit);
                     break;
+
                 case "year":
                     await App.GetHisto("LTC", "day", limit);
                     break;
@@ -224,6 +218,7 @@ namespace CoinBase {
                 LTC_diff.Text = "▲" + dLTC.ToString() + " % ";
             }
 
+            //LTC_Chart.Series.Clear();
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
@@ -291,7 +286,8 @@ namespace CoinBase {
                     break;
 
             }
-            UpdateBTC();
+            if(!btn.Content.Equals("hour"))
+                UpdateBTC();
         }
         private void ETH_TimerangeButton_Click(object sender, RoutedEventArgs e) {
             LoadingControl_ETH.IsLoading = true;

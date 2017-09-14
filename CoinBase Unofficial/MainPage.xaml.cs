@@ -16,7 +16,6 @@ using Windows.UI.Xaml.Media;
 namespace CoinBase {
     public sealed partial class MainPage : Page {
 
-        private int r = 0;
         private SolidColorBrush Color_CoinBase = new SolidColorBrush(Color.FromArgb(255, 0, 91, 148));
         private SolidColorBrush Color_CoinBaseButton = new SolidColorBrush(Color.FromArgb(255, 33, 132, 215));
         private SolidColorBrush Color_CoinBaseDark = new SolidColorBrush(Color.FromArgb(255, 0, 49, 80));
@@ -25,7 +24,7 @@ namespace CoinBase {
             this.InitializeComponent();
 
             // Clear the current tile
-            TileUpdateManager.CreateTileUpdaterForApplication().Clear();
+            //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
 
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             ApplicationView view = ApplicationView.GetForCurrentView();
@@ -54,7 +53,7 @@ namespace CoinBase {
             }
 
             MainFrame.Navigate(typeof(Page_Home));
-            SyncAll();
+            //SyncAll();
         }
 
         private void MenuHome_Click(object sender, RoutedEventArgs e) {
