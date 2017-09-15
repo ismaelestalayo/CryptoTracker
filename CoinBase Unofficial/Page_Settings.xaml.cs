@@ -66,11 +66,9 @@ namespace CoinBase {
             var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
             await launcher.LaunchAsync();
         }
-
         private async void reviewButton_Click(object sender, RoutedEventArgs e) {
             await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store:reviewapp?appid=" + Windows.ApplicationModel.Store.CurrentApp.AppId));
         }
-
         private async void mailButton_Click(object sender, RoutedEventArgs e) {
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));

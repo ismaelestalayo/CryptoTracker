@@ -127,27 +127,25 @@ namespace CoinBase {
         async internal static Task GetCurrentPrice(string crypto) {
             
             var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN");
-            //HttpClient httpClient = new HttpClient();
-            //String response = "";
+            HttpClient httpClient = new HttpClient();
+            String response = "";
 
             try {
                 //Send the GET request
-                //response = await httpClient.GetStringAsync(uri);
-                //response = await GetJSONAsync(uri);
-
-                //var data = JRaw.Parse(response);
+                response = await httpClient.GetStringAsync(uri);
+                var data = JToken.Parse(response);
 
                 switch (crypto) {
                     case "BTC":
-                        BTC_now = 11; // (float)data[coin];
+                        BTC_now = (float)data[coin];
                         break;
 
                     case "ETH":
-                        ETH_now = 22; // (float)data[coin];
+                        ETH_now = (float)data[coin];
                         break;
 
                     case "LTC":
-                        LTC_now = 33; // (float)data[coin];
+                        LTC_now = (float)data[coin];
                         break;
                 }
 
@@ -167,32 +165,13 @@ namespace CoinBase {
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
-            var headers = httpClient.DefaultRequestHeaders;
-
-            string header = "ie";
-            header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
-            if (!headers.UserAgent.TryParseAdd(header)) {
-                throw new Exception("Invalid header value: " + header);
-            }
 
             string response = "";
 
-
             try {
                 //Send the GET request
-                //response = await httpClient.GetStringAsync(uri);
-                //var data = JToken.Parse(response);
-
-                httpResponse = await httpClient.GetAsync(uri);
-                httpResponse.EnsureSuccessStatusCode();
-                response = await httpResponse.Content.ReadAsStringAsync();
+                response = await httpClient.GetStringAsync(uri);
                 var data = JToken.Parse(response);
-                httpResponse.Dispose();
-
-                //var jsonStatham = await GetJSONAsync(requestUri);
-                //JToken data = jsonStatham.Result;
-                //var x = jsonStatham["Data"];
-                //var z = JToken.Parse(jsonStatham.ToString() );
 
                 switch (crypto) {
                     case "BTC":
@@ -229,9 +208,6 @@ namespace CoinBase {
 
             } catch (Exception ex) {
                 var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
-                App.BTC_now = 0;
-                App.ETH_now = 0;
-                App.LTC_now = 0;
             }
         }
 

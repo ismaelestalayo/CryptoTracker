@@ -22,7 +22,7 @@ namespace CoinBase {
 
         async private void InitValues() {
             try {
-                ETH_Update_click(null, null);
+                ETH_Update_click();
                 //await GetStats();
                 //await Get24Volume();
 
@@ -35,7 +35,7 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //For SyncAll button
-        public void ETH_Update_click(object sender, RoutedEventArgs e) {
+        public void ETH_Update_click() {
             if (LoadingControl == null)
                 LoadingControl = new Loading();
 

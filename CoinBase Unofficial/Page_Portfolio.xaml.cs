@@ -1,30 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
-// La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=234238
+namespace CoinBase {
 
-namespace CoinBase
-{
-    /// <summary>
-    /// Una página vacía que se puede usar de forma independiente o a la que se puede navegar dentro de un objeto Frame.
-    /// </summary>
-    public sealed partial class Page_Portfolio : Page
-    {
-        public Page_Portfolio()
-        {
+    class Purchase : INotifyPropertyChanged {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public string Crypto { get; set; }
+        public string Amount { get; set; }
+        public string Invested { get; set; }
+        private string _Current = App.BTC_now.ToString();
+        public string Current { get; set; }
+
+    }
+
+    public partial class Page_Portfolio : Page    {
+        
+        ObservableCollection<Purchase> dataList { get; set; }
+
+        public Page_Portfolio(){
             this.InitializeComponent();
+
+            MyListView.ItemsSource = dataList;
         }
+
+        private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            string _crypto = ((ComboBoxItem)CryptoComboBox.SelectedItem).Content.ToString();
+
+            dataList.Add( new Purchase {
+                Crypto = _crypto,
+                Amount = _cryptoAmount.Text,
+                Invested = _invested.Text,
+                Current = App.LTC_now.ToString()
+            });
+
+        }
+
+        private void DeleteItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            //ListView v = MyListView;
+            for (int i = 0; i < MyListView.Items.Count; i++) {
+                dataList[i].Current = App.LTC_now.ToString();
+            }
+        }
+
     }
 }

@@ -22,7 +22,7 @@ namespace CoinBase {
 
         async private void InitValues() {
             try {
-                LTC_Update_click(null, null);
+                LTC_Update_click();
                 await GetStats();
                 await Get24Volume();
 
@@ -35,7 +35,7 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //For SyncAll button
-        public void LTC_Update_click(object sender, RoutedEventArgs e) {
+        public void LTC_Update_click() {
             if (LoadingControl == null)
                 LoadingControl = new Loading();
 

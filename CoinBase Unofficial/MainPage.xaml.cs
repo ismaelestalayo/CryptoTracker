@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CoinBase.Helpers;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.ApplicationModel.Core;
@@ -52,6 +53,7 @@ namespace CoinBase {
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
             }
 
+            FirstRunDialogHelper.ShowIfAppropriateAsync();
             MainFrame.Navigate(typeof(Page_Home));
             //SyncAll();
         }
@@ -107,21 +109,21 @@ namespace CoinBase {
 
             if (x.Equals("CoinBase.Page_Home")) {
                 var p = (Page_Home)MainFrame.Content;
-                p.BTC_Update_click(null, null);
-                p.ETH_Update_click(null, null);
-                p.LTC_Update_click(null, null);
+                p.BTC_Update_click();
+                p.ETH_Update_click();
+                p.LTC_Update_click();
 
             } else if (x.Equals("CoinBase.Page_BTC")) {
                 var p = (Page_BTC)MainFrame.Content;
-                p.BTC_Update_click(null, null);
+                p.BTC_Update_click();
 
             } else if (x.Equals("CoinBase.Page_ETH")) {
                 var p = (Page_ETH)MainFrame.Content;
-                p.ETH_Update_click(null, null);
+                p.ETH_Update_click();
 
             } else if (x.Equals("CoinBase.Page_LTC")) {
                 var p = (Page_LTC)MainFrame.Content;
-                p.LTC_Update_click(null, null);
+                p.LTC_Update_click();
             }
 
             LiveTile l = new LiveTile();

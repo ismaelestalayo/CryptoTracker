@@ -96,7 +96,7 @@
         </RelativePanel>
 
         <RelativePanel Grid.Column="1">
-            <GridViewHeaderItem Width="1000" Margin="-10, 5" Padding="0, -5">
+            <GridViewHeaderItem Width="1000" Margin="-5, 5" Padding="0, -5">
                 
                 <StackPanel Orientation="Horizontal">
                     <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
@@ -132,7 +132,7 @@
         </RelativePanel>
 
         <RelativePanel Grid.Column="2">
-            <GridViewHeaderItem Width="1000" Margin="-10, 5" Padding="0, -5">
+            <GridViewHeaderItem Width="1000" Margin="-5, 5" Padding="0, -5">
                 
                 <StackPanel Orientation="Horizontal">
                     <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
@@ -242,6 +242,7 @@
                 </telerik:RadCartesianChart.VerticalAxis>
 
                 <telerik:AreaSeries
+                    x:Name="BTC_AreaS"
 					Stroke="{StaticResource BTC_color}"
 					StrokeThickness="1"
 					Fill="{StaticResource BTC_colorT}">

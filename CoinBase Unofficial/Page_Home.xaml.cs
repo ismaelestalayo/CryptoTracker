@@ -29,9 +29,9 @@ namespace CoinBase {
 
         private void InitValues() {
             try {
-                BTC_Update_click(null, null);
-                ETH_Update_click(null, null);
-                LTC_Update_click(null, null);
+                BTC_Update_click();
+                ETH_Update_click();
+                LTC_Update_click();
 
             } catch (Exception ex) {
                 LoadingControl_BTC.IsLoading = false;
@@ -46,7 +46,7 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void BTC_Update_click(object sender, RoutedEventArgs e) {
+        public void BTC_Update_click() {
             if (LoadingControl_BTC == null)
                 LoadingControl_BTC = new Loading();
             
@@ -56,7 +56,7 @@ namespace CoinBase {
             BTC_TimerangeButton_Click(r, null);
         }
 
-        public void ETH_Update_click(object sender, RoutedEventArgs e) {
+        public void ETH_Update_click() {
             if (LoadingControl_ETH == null)
                 LoadingControl_ETH = new Loading();
             
@@ -66,7 +66,7 @@ namespace CoinBase {
             ETH_TimerangeButton_Click(r, null);
         }
 
-        public void LTC_Update_click(object sender, RoutedEventArgs e) {
+        public void LTC_Update_click() {
             if (LoadingControl_LTC == null)
                 LoadingControl_LTC = new Loading();
             
@@ -83,17 +83,15 @@ namespace CoinBase {
 
             switch (timeSpan) {
                 case "hour":
-                    await App.GetHisto("BTC", "minute", limit);
-                    break;
                 case "day":
                     await App.GetHisto("BTC", "minute", limit);
                     break;
+
                 case "week":
-                    await App.GetHisto("BTC", "hour", limit);
-                    break;
                 case "month":
                     await App.GetHisto("BTC", "hour", limit);
                     break;
+
                 case "year":
                     await App.GetHisto("BTC", "day", limit);
                     break;
@@ -104,7 +102,9 @@ namespace CoinBase {
 
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.ppBTC[i].DateTime, Value = App.ppBTC[i].Low };
+                ChartDataObject obj = new ChartDataObject {
+                    Date = App.ppBTC[i].DateTime,
+                    Value = App.ppBTC[i].Low };
                 data.Add(obj);
             }
 
@@ -122,6 +122,7 @@ namespace CoinBase {
                 BTC_diff.Text = "▲" + dBTC.ToString() + " % ";
             }
 
+            
             AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
@@ -137,10 +138,12 @@ namespace CoinBase {
                 case "day":
                     await App.GetHisto("ETH", "minute", limit);
                     break;
+
                 case "week":
                 case "month":
                     await App.GetHisto("ETH", "hour", limit);
                     break;
+
                 case "year":
                     await App.GetHisto("ETH", "day", limit);
                     break;
@@ -200,7 +203,9 @@ namespace CoinBase {
 
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.ppLTC[i].DateTime, Value = App.ppLTC[i].Low };
+                ChartDataObject obj = new ChartDataObject {
+                    Date = App.ppLTC[i].DateTime,
+                    Value = App.ppLTC[i].Low };
                 data.Add(obj);
             }
 
@@ -217,8 +222,7 @@ namespace CoinBase {
                 LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
                 LTC_diff.Text = "▲" + dLTC.ToString() + " % ";
             }
-
-            //LTC_Chart.Series.Clear();
+            
             AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
@@ -234,13 +238,12 @@ namespace CoinBase {
             switch (btn.Content) {
                 case "hour":
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     BTC_DateTimeAxis.MajorStep = 10;
-                    BTC_DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
+                    BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
+                    BTC_DateTimeAxis.Minimum = DateTime.MinValue;
                     timeSpan = "hour";
                     limit = 60;
                     break;
-
                 case "day":
                     BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
@@ -249,7 +252,6 @@ namespace CoinBase {
                     timeSpan = "day";
                     limit = 1500;
                     break;
-
                 case "week":
                     BTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
@@ -258,7 +260,6 @@ namespace CoinBase {
                     timeSpan = "week";
                     limit = 168;
                     break;
-
                 case "month":
                     BTC_DateTimeAxis.LabelFormat = "{0:d/M}";
                     BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
@@ -286,8 +287,7 @@ namespace CoinBase {
                     break;
 
             }
-            if(!btn.Content.Equals("hour"))
-                UpdateBTC();
+            UpdateBTC();
         }
         private void ETH_TimerangeButton_Click(object sender, RoutedEventArgs e) {
             LoadingControl_ETH.IsLoading = true;
@@ -298,7 +298,7 @@ namespace CoinBase {
                     ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
                     ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     ETH_DateTimeAxis.MajorStep = 10;
-                    ETH_DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
+                    ETH_DateTimeAxis.Minimum = DateTime.MinValue;
                     timeSpan = "hour";
                     limit = 60;
                     break;
@@ -357,9 +357,9 @@ namespace CoinBase {
             switch (btn.Content) {
                 case "hour":
                     LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     LTC_DateTimeAxis.MajorStep = 10;
-                    LTC_DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
+                    LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
+                    LTC_DateTimeAxis.Minimum = DateTime.MinValue;
                     timeSpan = "hour";
                     limit = 60;
                     break;
