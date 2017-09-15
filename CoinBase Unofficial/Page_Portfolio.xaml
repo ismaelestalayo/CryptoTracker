@@ -34,7 +34,8 @@
             <TextBox 
                 x:Name="_invested" Header="Money €/$"
                 Margin="10, 0" PlaceholderText="41" Width="100"/>
-            <Button Content="Add" Click="AddButton_Click" VerticalAlignment="Bottom" Width="100"/>
+            <Button Content="Add" Click="AddButton_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"/>
+            <Button Content="Update" Click="UpdatePortfolio_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"/>
         </StackPanel>
         
         <StackPanel Margin="0, 20, 0, 0">
@@ -48,7 +49,7 @@
                 </Grid.ColumnDefinitions>
             </Grid>
 
-            <ListView x:Name="MyListView" ItemsSource="{Binding dataList}">
+            <ListView x:Name="MyListView" ItemsSource="{Binding dataListm, Mode=OneWay}">
                 <ListView.ItemTemplate>
 
                     <DataTemplate>
@@ -63,21 +64,17 @@
                                 <TextBlock Text="Original investment: " Style="{StaticResource ListViewTextBlock}"/>
                                 <TextBlock Text="{Binding Invested}" Style="{StaticResource ListViewTextBlock}"/>
                             </StackPanel>
-                            
+
                             <StackPanel Orientation="Horizontal" Grid.Column="2">
                                 <TextBlock Text="Current value: " Style="{StaticResource ListViewTextBlock}"/>
-                                <TextBlock Text="{Binding Current}" Style="{StaticResource ListViewTextBlock}"/>
+                                <TextBlock Text="{Binding Current, Mode=OneWay}" Style="{StaticResource ListViewTextBlock}"/>
                             </StackPanel>
-
-                            <Button Background="Transparent" Click="DeleteItem_Click">
-                                <SymbolIcon Symbol="Cancel"/>
-                            </Button>
                         </StackPanel>
                     </DataTemplate>
 
                 </ListView.ItemTemplate>
                 
-                <ListViewItem>
+                <!--<ListViewItem>
                     <StackPanel Orientation="Horizontal" Background="{ThemeResource SystemControlBackgroundListLowBrush}">
                         <StackPanel Orientation="Horizontal" Grid.Column="0" Width="100">
                             <TextBlock Text="0.5912" Style="{StaticResource ListViewTextBlock}"/>
@@ -98,7 +95,7 @@
                             <SymbolIcon Symbol="Cancel"/>
                         </Button>
                     </StackPanel>
-                </ListViewItem>
+                </ListViewItem>-->
                 
             </ListView>
 

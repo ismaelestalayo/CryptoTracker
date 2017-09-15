@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
+using Windows.System.Threading;
 
 namespace CoinBase {
     public sealed partial class Page_Home : Page {
@@ -42,7 +43,6 @@ namespace CoinBase {
                 BTC_curr.Text = "Error!";
                 LTC_curr.Text = "Error!";
             }
-
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
