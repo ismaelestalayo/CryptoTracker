@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
     <Compile Include="Helpers\LiveTile.cs" />
+    <Compile Include="Helpers\PurchaseClass.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

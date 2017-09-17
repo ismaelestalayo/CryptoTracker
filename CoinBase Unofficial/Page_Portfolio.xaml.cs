@@ -1,76 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using CoinBase.Helpers;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
 namespace CoinBase {
 
-    class Purchase : INotifyPropertyChanged {
-
-        public string Crypto { get; set; }
-        public string Amount { get; set; }
-        public string Invested { get; set; }
-        public string _Current;
-        public string Current {
-            get { return _Current;  }
-            set {
-                if(value != _Current) {
-                    _Current = value;
-                    NotifyPropertyChanged("Current");
-                }
-
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged([CallerMemberName]string propertyName = "") {
-            System.Diagnostics.Debug.WriteLine("Shortly before update. PropertyName = " + propertyName);
-            if (PropertyChanged != null) {
-                System.Diagnostics.Debug.WriteLine("Update now");
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-
     public partial class Page_Portfolio : Page    {
 
-        ObservableCollection<Purchase> dataList { get; set; }
+        ObservableCollection<PurchaseClass> dataList { get; set; }
 
         public Page_Portfolio(){
             this.InitializeComponent();
 
-            dataList = new ObservableCollection<Purchase>();
-
+            dataList = new ObservableCollection<PurchaseClass>();
             MyListView.ItemsSource = dataList;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
         private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             string _crypto = ((ComboBoxItem)CryptoComboBox.SelectedItem).Content.ToString();
+            string curr = "0";
+            switch (_crypto) {
+                case "BTC":
+                    curr = App.BTC_now.ToString();
+                    break;
+                case "ETH":
+                    curr = App.ETH_now.ToString();
+                    break;
+                case "LTC":
+                    curr = App.LTC_now.ToString();
+                    break;
+            }
 
-            dataList.Add( new Purchase {
-                Crypto = _crypto,
-                Amount = _cryptoAmount.Text,
-                Invested = _invested.Text,
-                Current = App.LTC_now.ToString()
-                //switch (_crypto) {
-                //    case "BTC":
-                //        Current = App.BTC_now.ToString();
-                //        break;
-                //    case "ETH":
-                //        Current = App.ETH_now.ToString();
-                //        break;
-                //    case "LTC":
-                //        Current = App.LTC_now.ToString();
-                //        break;
-                //}
+            float priceBought = (1 / float.Parse(_cryptoAmount.Text)) * float.Parse(_invested.Text);
+            float earningz = float.Parse(curr) - priceBought;
+            string c = ((App.coin.Equals("EUR")) ? "€" : "$");
+
+            dataList.Add(new PurchaseClass {
+                Crypto       = _crypto,
+                CryptoAmount = _cryptoAmount.Text,
+                Invested     = _invested.Text + c,
+                BoughtAt     = Math.Round(priceBought, 2).ToString() + c,
+                Earnings     = (earningz < 0 ? "▼" : "▲") + Math.Abs(earningz).ToString() + c
             });
+
 
         }
 
-        private void UpdatePortfolio_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private async void UpdatePortfolio_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+
+            await App.GetCurrentPrice("BTC");
+            await App.GetCurrentPrice("ETH");
+            await App.GetCurrentPrice("LTC");
 
             for (int i = 0; i < MyListView.Items.Count; i++) {
                 switch (dataList[i].Crypto) {
@@ -84,9 +66,18 @@ namespace CoinBase {
                         dataList[i].Current = App.LTC_now.ToString();
                         break;
                 }
-                dataList[i].Current = App.LTC_now.ToString();
             }
         }
+        private void RemovePortfolio_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            if(MyListView.SelectedIndex != -1)
+                dataList.RemoveAt(MyListView.SelectedIndex);
+        }
 
+        private void SavePortfolio() {
+            // Composite setting
+            var composite = new ApplicationDataCompositeValue();
+
+            App.localSettings.Values["portfolio"] = composite;
+        }
     }
 }

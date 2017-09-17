@@ -9,13 +9,23 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="ListViewTextBlockTitle">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
         <Style TargetType="TextBlock" x:Key="ListViewTextBlock">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="Light"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
         </Style>
     </Page.Resources>
-    
+
+
     <StackPanel Padding="10" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
         <TextBlock Text="Portfolio"
@@ -36,69 +46,62 @@
                 Margin="10, 0" PlaceholderText="41" Width="100"/>
             <Button Content="Add" Click="AddButton_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"/>
             <Button Content="Update" Click="UpdatePortfolio_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"/>
+            <Button Content="Remove" Click="RemovePortfolio_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"
+                    Name="Remove_Button"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0, 20, 340, 0">
+            <TextBlock Width="100" Text="Crypto" Style="{StaticResource ListViewTextBlockTitle}"/>
+            <TextBlock Width="150" Text="Invested" Style="{StaticResource ListViewTextBlockTitle}"/>
+            <TextBlock Width="150" Text="Bought at" Style="{StaticResource ListViewTextBlockTitle}"/>
+            <TextBlock Width="150" Text="Earnings" Style="{StaticResource ListViewTextBlockTitle}"/>
         </StackPanel>
         
-        <StackPanel Margin="0, 20, 0, 0">
+        <Grid Margin="0, 0, 340, 0">
+            <ListView x:Name="MyListView" 
+                      ItemsSource="{Binding dataListm, Mode=OneWay}" 
+                      Background="{ThemeResource SystemControlBackgroundListLowBrush}"
+                      SelectionMode="Single"
+                      HorizontalAlignment="Left">
 
-            <Grid Background="Red" Height="400" Visibility="Collapsed">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="10*"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-
-            <ListView x:Name="MyListView" ItemsSource="{Binding dataListm, Mode=OneWay}">
                 <ListView.ItemTemplate>
-
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="10, 10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
 
-                            <StackPanel Orientation="Horizontal" Grid.Column="0" Width="100">
-                                <TextBlock Text="{Binding Amount}" Style="{StaticResource ListViewTextBlock}"/>
-                                <TextBlock Text="{Binding Crypto}" Style="{StaticResource ListViewTextBlock}"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding CryptoAmount}" Style="{StaticResource ListViewTextBlock}"/>
+                                <TextBlock Text="{Binding Crypto}"       Style="{StaticResource ListViewTextBlock}"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Column="1" Width="300">
-                                <TextBlock Text="Original investment: " Style="{StaticResource ListViewTextBlock}"/>
-                                <TextBlock Text="{Binding Invested}" Style="{StaticResource ListViewTextBlock}"/>
-                            </StackPanel>
+                            <TextBlock Grid.Column="1" 
+                                       Text="{Binding Invested}" 
+                                       Style="{StaticResource ListViewTextBlock}"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Column="2">
-                                <TextBlock Text="Current value: " Style="{StaticResource ListViewTextBlock}"/>
-                                <TextBlock Text="{Binding Current, Mode=OneWay}" Style="{StaticResource ListViewTextBlock}"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding BoughtAt}" 
+                                           Style="{StaticResource ListViewTextBlock}"/>
+                                <TextBlock Text="{Binding Earnings, Mode=OneWay}" 
+                                           
+                                           Style="{StaticResource ListViewTextBlock}"/>                                
                             </StackPanel>
-                        </StackPanel>
+                            
+                            <TextBlock Grid.Column="3" 
+                                       Text="{Binding Earnings, Mode=OneWay}" 
+                                       Style="{StaticResource ListViewTextBlock}"/>
+
+                        </Grid>
                     </DataTemplate>
 
                 </ListView.ItemTemplate>
-                
-                <!--<ListViewItem>
-                    <StackPanel Orientation="Horizontal" Background="{ThemeResource SystemControlBackgroundListLowBrush}">
-                        <StackPanel Orientation="Horizontal" Grid.Column="0" Width="100">
-                            <TextBlock Text="0.5912" Style="{StaticResource ListViewTextBlock}"/>
-                            <TextBlock Text="BTC" Style="{StaticResource ListViewTextBlock}"/>
-                        </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Column="1" Width="300">
-                            <TextBlock Text="Original investment: " Style="{StaticResource ListViewTextBlock}"/>
-                            <TextBlock Text="{Binding Invested}" Style="{StaticResource ListViewTextBlock}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" Grid.Column="2" Width="300">
-                            <TextBlock Text="Current value: " Style="{StaticResource ListViewTextBlock}"/>
-                            <TextBlock Text="{Binding Current}" Style="{StaticResource ListViewTextBlock}"/>
-                        </StackPanel>
-
-                        <Button Background="Transparent">
-                            <SymbolIcon Symbol="Cancel"/>
-                        </Button>
-                    </StackPanel>
-                </ListViewItem>-->
-                
             </ListView>
-
-        </StackPanel>
+        </Grid>
     </StackPanel>
+
 </Page>
