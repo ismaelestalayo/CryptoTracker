@@ -40,33 +40,41 @@ namespace CoinBase {
             dataList.Add(new PurchaseClass {
                 Crypto       = _crypto,
                 CryptoAmount = _cryptoAmount.Text,
-                Invested     = _invested.Text + c,
+                Invested     = _invested.Text,
                 BoughtAt     = Math.Round(priceBought, 2).ToString() + c,
                 Earnings     = (earningz < 0 ? "▼" : "▲") + Math.Abs(earningz).ToString() + c
             });
 
-
+            _cryptoAmount.Text = "";
+            _invested.Text = "";
         }
 
-        private async void UpdatePortfolio_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        //For Sync all
+        internal async void UpdatePortfolio() {
 
             await App.GetCurrentPrice("BTC");
             await App.GetCurrentPrice("ETH");
             await App.GetCurrentPrice("LTC");
 
+            string curr = "0";
+
             for (int i = 0; i < MyListView.Items.Count; i++) {
                 switch (dataList[i].Crypto) {
                     case "BTC":
-                        dataList[i].Current = App.BTC_now.ToString();
+                        curr = App.BTC_now.ToString();
                         break;
                     case "ETH":
-                        dataList[i].Current = App.ETH_now.ToString();
+                        curr = App.ETH_now.ToString();
                         break;
                     case "LTC":
-                        dataList[i].Current = App.LTC_now.ToString();
+                        curr = App.LTC_now.ToString();
                         break;
                 }
+                dataList[i].Current = curr;
+                float priceBought = (1 / float.Parse(dataList[i].CryptoAmount)) * float.Parse(dataList[i].Invested);
+                dataList[i].Earnings = (float.Parse(curr) - priceBought).ToString();
             }
+            
         }
         private void RemovePortfolio_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             if(MyListView.SelectedIndex != -1)
@@ -75,9 +83,9 @@ namespace CoinBase {
 
         private void SavePortfolio() {
             // Composite setting
-            var composite = new ApplicationDataCompositeValue();
+            //var composite = new ApplicationDataCompositeValue();
 
-            App.localSettings.Values["portfolio"] = composite;
+            //App.localSettings.Values["portfolio"] = composite;
         }
     }
 }

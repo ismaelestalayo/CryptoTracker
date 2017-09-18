@@ -45,7 +45,6 @@
                 x:Name="_invested" Header="Money €/$"
                 Margin="10, 0" PlaceholderText="41" Width="100"/>
             <Button Content="Add" Click="AddButton_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"/>
-            <Button Content="Update" Click="UpdatePortfolio_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"/>
             <Button Content="Remove" Click="RemovePortfolio_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"
                     Name="Remove_Button"/>
         </StackPanel>

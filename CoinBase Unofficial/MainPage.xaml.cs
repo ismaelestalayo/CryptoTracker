@@ -84,7 +84,7 @@ namespace CoinBase {
             //MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
         ////////////////////////////////////////////////////////////////////////////////////////
-        private async void UpdateButton_Click(object sender, RoutedEventArgs e) {
+        private void UpdateButton_Click(object sender, RoutedEventArgs e) {
             SyncAll();
             //if (r == 0) {
             //    await UpdateIcon.Rotate(value: 360,
@@ -124,6 +124,9 @@ namespace CoinBase {
             } else if (x.Equals("CoinBase.Page_LTC")) {
                 var p = (Page_LTC)MainFrame.Content;
                 p.LTC_Update_click();
+            } else if (x.Equals("CoinBase.Page_Portfolio")) {
+                var p = (Page_Portfolio)MainFrame.Content;
+                p.UpdatePortfolio();
             }
 
             LiveTile l = new LiveTile();
