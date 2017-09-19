@@ -19,34 +19,35 @@ namespace CoinBase {
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            string _crypto = ((ComboBoxItem)CryptoComboBox.SelectedItem).Content.ToString();
-            string curr = "0";
-            switch (_crypto) {
+            string crypto = ((ComboBoxItem)CryptoComboBox.SelectedItem).Content.ToString();
+            double curr = 0;
+            switch (crypto) {
                 case "BTC":
-                    curr = App.BTC_now.ToString();
+                    curr = Math.Round( App.BTC_now, 3);
                     break;
                 case "ETH":
-                    curr = App.ETH_now.ToString();
+                    curr = Math.Round( App.ETH_now, 3);
                     break;
                 case "LTC":
-                    curr = App.LTC_now.ToString();
+                    curr = Math.Round( App.LTC_now, 3);
                     break;
             }
 
-            float priceBought = (1 / float.Parse(_cryptoAmount.Text)) * float.Parse(_invested.Text);
-            float earningz = float.Parse(curr) - priceBought;
+            double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
+            priceBought = Math.Round(priceBought, 3);
+            double earningz = curr - priceBought;
             string c = ((App.coin.Equals("EUR")) ? "€" : "$");
 
             dataList.Add(new PurchaseClass {
-                Crypto       = _crypto,
-                CryptoAmount = _cryptoAmount.Text,
-                Invested     = _invested.Text,
-                BoughtAt     = Math.Round(priceBought, 2).ToString() + c,
+                _Crypto      = crypto,
+                _CryptoQty   = double.Parse( cryptoQtyTextBox.Text),
+                _InvestedQty = double.Parse( investedQtyTextBox.Text),
+                _BoughtAt    = Math.Round(priceBought, 2),
                 Earnings     = (earningz < 0 ? "▼" : "▲") + Math.Abs(earningz).ToString() + c
             });
 
-            _cryptoAmount.Text = "";
-            _invested.Text = "";
+            cryptoQtyTextBox.Text = String.Empty;
+            investedQtyTextBox.Text = String.Empty;
         }
 
         //For Sync all
@@ -56,23 +57,23 @@ namespace CoinBase {
             await App.GetCurrentPrice("ETH");
             await App.GetCurrentPrice("LTC");
 
-            string curr = "0";
+            double curr = 0;
 
             for (int i = 0; i < MyListView.Items.Count; i++) {
-                switch (dataList[i].Crypto) {
+                switch (dataList[i]._Crypto) {
                     case "BTC":
-                        curr = App.BTC_now.ToString();
+                        curr = Math.Round( App.BTC_now, 3);
                         break;
                     case "ETH":
-                        curr = App.ETH_now.ToString();
+                        curr = Math.Round( App.ETH_now, 3);
                         break;
                     case "LTC":
-                        curr = App.LTC_now.ToString();
+                        curr = Math.Round( App.LTC_now, 3);
                         break;
                 }
-                dataList[i].Current = curr;
+                dataList[i].Current = curr.ToString();
                 float priceBought = (1 / float.Parse(dataList[i].CryptoAmount)) * float.Parse(dataList[i].Invested);
-                dataList[i].Earnings = (float.Parse(curr) - priceBought).ToString();
+                dataList[i].Earnings = (curr - priceBought).ToString();
             }
             
         }
@@ -82,10 +83,10 @@ namespace CoinBase {
         }
 
         private void SavePortfolio() {
-            // Composite setting
-            //var composite = new ApplicationDataCompositeValue();
-
-            //App.localSettings.Values["portfolio"] = composite;
+            
         }
+
+
+
     }
 }

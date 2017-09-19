@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,16 @@ namespace CoinBase.Helpers {
     [Serializable()]
     internal class PurchaseClass : INotifyPropertyChanged {
 
-        public string Crypto { get; set; }
+        [DataMember()]
+        public string _Crypto { get; set; }
+        [DataMember()]
+        public double _CryptoQty { get; set; }
+        [DataMember()]
+        public double _InvestedQty { get; set; }
+        [DataMember()]
+        public double _BoughtAt { get; set; }
+
+
         public string CryptoAmount { get; set; }
         public string Invested { get; set; }
         public string BoughtAt { get; set; }
