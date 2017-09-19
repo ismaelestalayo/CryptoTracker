@@ -71,7 +71,7 @@
 
 
 
-        <controls:DataGrid x:Name="DataGrid" Grid.Row="1" 
+        <!--<controls:DataGrid x:Name="DataGrid" Grid.Row="1" 
                            ItemsSource="{Binding People}" 
                            SelectionMode="Multiple" 
                            SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
@@ -95,18 +95,18 @@
                     </StackPanel>
                 </DataTemplate>
             </controls:DataGrid.ItemDetailsTemplate>
-            <!--<controls:DataGrid.RowStyle>
+            --><!--<controls:DataGrid.RowStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Padding" Value="0"></Setter>
                 </Style>
-            </controls:DataGrid.RowStyle>-->
-        </controls:DataGrid>
+            </controls:DataGrid.RowStyle>--><!--
+        </controls:DataGrid>-->
 
 
 
 
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 20, 340, 0" Visibility="Collapsed">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 20, 340, 0">
             <TextBlock Width="100" Text="Crypto" Style="{StaticResource ListViewTextBlockTitle}"/>
             <TextBlock Width="150" Text="Invested" Style="{StaticResource ListViewTextBlockTitle}"/>
             <TextBlock Width="150" Text="Bought at" Style="{StaticResource ListViewTextBlockTitle}"/>
@@ -114,7 +114,7 @@
             <TextBlock Width="150" Text="Yoo" Style="{StaticResource ListViewTextBlockTitle}"/>
         </StackPanel>
 
-        <Grid Grid.Row="2" Visibility="Collapsed" >
+        <Grid Grid.Row="2" >
 
             <ListView x:Name="MyListView" 
                       ItemsSource="{Binding dataListm, Mode=OneWay}" 
