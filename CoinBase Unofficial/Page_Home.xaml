@@ -189,7 +189,7 @@
             </controls:Loading>
 
             <telerik:RadCartesianChart x:Name="BTC_Chart" Margin="10, 0, 0, 5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
-
+                
                 <telerik:RadCartesianChart.Behaviors>
                     <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
                         <telerik:ChartTrackBallBehavior.LineStyle>

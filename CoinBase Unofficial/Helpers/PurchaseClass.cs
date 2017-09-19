@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace CoinBase.Helpers {
     [Serializable()]
@@ -21,7 +23,7 @@ namespace CoinBase.Helpers {
         [DataMember()]
         public double _BoughtAt { get; set; }
 
-
+        public SolidColorBrush earningsFG { get; set; }
         public string CryptoAmount { get; set; }
         public string Invested { get; set; }
         public string BoughtAt { get; set; }

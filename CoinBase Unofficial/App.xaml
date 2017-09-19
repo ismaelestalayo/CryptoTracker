@@ -6,124 +6,14 @@
     <!-- RequestedTheme="Light"> -->
 
     <Application.Resources>
-        <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
-        <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
-        <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
-        <SolidColorBrush x:Key="BTC_color"		Color="#FFB119" />
-        <SolidColorBrush x:Key="BTC_colorT"     Color="#FFB119" Opacity="0.3" />
-        <SolidColorBrush x:Key="BTC_colorLight"	Color="#f6dfb1" />
-        <SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA" />
-        <SolidColorBrush x:Key="ETH_colorT"     Color="#6F7CBA" Opacity="0.3" />
-        <SolidColorBrush x:Key="ETH_colorLight" Color="#cbcfe1" />
-        <SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5" />
-        <SolidColorBrush x:Key="LTC_colorT"		Color="#B5B5B5" Opacity="0.3"/>
-        <SolidColorBrush x:Key="LTC_colorLight" Color="#e0e0e0"/>
 
-        <Style TargetType="Line" x:Key="ChartGridColor">
-            <Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}"/>
-            <Setter Property="StrokeDashArray" Value="3,7"/>
-            <Setter Property="StrokeThickness" Value="0.2"/>
-        </Style>
-
-        <Style TargetType="Line" x:Key="TransparentLine">
-            <Setter Property="Stroke" Value="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
-        </Style>
-        <DataTemplate x:Key="TransparentRect">
-            <Rectangle Stroke="Transparent"/>
-        </DataTemplate>
-
-        <Style TargetType="Button" x:Key="timerangeButton" x:FieldModifier="internal">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
-            <Setter Property="UseLayoutRounding" Value="False"/>
-            <Setter Property="BorderBrush" Value="{ThemeResource ButtonForeground}"/>
-            <Setter Property="BorderThickness" Value="0, 1"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="Margin" Value="0, 0, 0, 20"/>
-            <Setter Property="Width" Value="60"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-
-        <Style TargetType="RadioButton" x:Key="timerangeRadioBtn">
-            <Setter Property="FontSize" Value="17"/>
-            <Setter Property="MinHeight" Value="30"/>
-            <Setter Property="MinWidth" Value="100"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ButtonBase">
-                        <Grid Background="{TemplateBinding Background}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonBackgroundPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonBorderBrushPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonBackgroundPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonBorderBrushPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonForegroundPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                    <VisualState x:Name="Checked">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemChromeAltLowColor}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderThickness">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="0, 1" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <ContentPresenter 
-                                x:Name="ContentPresenter"
-                                Margin="0, 10, 0, 20"
-                                Foreground="{ThemeResource ButtonForeground}"
-                                FontWeight="Light"
-                                MinWidth="{TemplateBinding MinWidth}"
-                                MinHeight="{TemplateBinding MinHeight}"
-                                FontSize="{TemplateBinding FontSize}"
-                                VerticalAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                HorizontalAlignment="Center"
-                                HorizontalContentAlignment="Center"
-                                              
-                                Content="{TemplateBinding Content}"
-                                ContentTransitions="{TemplateBinding ContentTransitions}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Buttons.xaml" />
+                <ResourceDictionary Source="/Styles/Colors.xaml" />
+                <ResourceDictionary Source="/Styles/Forms.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
 
     </Application.Resources>    
 </Application>

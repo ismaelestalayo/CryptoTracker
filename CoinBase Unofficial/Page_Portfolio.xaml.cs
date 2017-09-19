@@ -2,7 +2,9 @@
 using System.Collections.ObjectModel;
 using CoinBase.Helpers;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace CoinBase {
 
@@ -35,7 +37,7 @@ namespace CoinBase {
 
             double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
             priceBought = Math.Round(priceBought, 3);
-            double earningz = curr - priceBought;
+            double earningz = Math.Round( curr - priceBought, 3);
             string c = ((App.coin.Equals("EUR")) ? "€" : "$");
 
             dataList.Add(new PurchaseClass {
@@ -44,10 +46,9 @@ namespace CoinBase {
                 _InvestedQty = double.Parse( investedQtyTextBox.Text),
                 _BoughtAt    = Math.Round(priceBought, 2),
                 Earnings     = (earningz < 0 ? "▼" : "▲") + Math.Abs(earningz).ToString() + c
+                //earningsFG = (earningz < 0) ? new SolidColorBrush(Color.FromArgb(255, 180, 0, 0)) : new SolidColorBrush(Color.FromArgb(255, 0, 120, 0))
             });
 
-            cryptoQtyTextBox.Text = String.Empty;
-            investedQtyTextBox.Text = String.Empty;
         }
 
         //For Sync all
@@ -72,8 +73,9 @@ namespace CoinBase {
                         break;
                 }
                 dataList[i].Current = curr.ToString();
-                float priceBought = (1 / float.Parse(dataList[i].CryptoAmount)) * float.Parse(dataList[i].Invested);
-                dataList[i].Earnings = (curr - priceBought).ToString();
+                double priceBought = (1 / float.Parse(dataList[i].CryptoAmount)) * float.Parse(dataList[i].Invested);
+                priceBought = Math.Round(priceBought, 3);
+                dataList[i].Earnings = Math.Round((curr - priceBought), 3).ToString();
             }
             
         }

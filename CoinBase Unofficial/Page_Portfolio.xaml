@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     NavigationCacheMode="Enabled"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    
+    xmlns:controls="using:MyToolkit.Controls">
 
     <Page.Resources>
         <Style TargetType="TextBlock" x:Key="ListViewTextBlockTitle">
@@ -26,25 +28,26 @@
     </Page.Resources>
 
 
-    <StackPanel Padding="10, 0" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+    <StackPanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
-        <GridViewHeaderItem Margin="-20, 0">
+        <GridViewHeaderItem Margin="0, 5" Padding="0, -5">
             <StackPanel Orientation="Horizontal" Margin="10, 0">
                 <RelativePanel VerticalAlignment="Center" Margin="0, 10, 10, 5">
                     <Ellipse Fill="#222222" Width="32" Height="32"/>
-                    <TextBlock Text="&#xE14D;" FontFamily="Segoe MDL2 Assets" FontSize="20" Margin="6" 
-                               Foreground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
+                    <TextBlock Text="&#xE14D;" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="7" 
+                                   Foreground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
                 </RelativePanel>
 
                 <TextBlock Text="Portfolio"
-                           VerticalAlignment="Center"
-					       Style="{ThemeResource SubheaderTextBlockStyle}"
-                           FontSize="28"/>
+                               VerticalAlignment="Center"
+					           Style="{ThemeResource SubheaderTextBlockStyle}"
+                               FontSize="28"/>
             </StackPanel>
 
         </GridViewHeaderItem>
 
-        <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0" >
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10, 0, 0, 0" >
             <ComboBox x:Name="CryptoComboBox" PlaceholderText="BTC" Header="Crypto">
                 <ComboBoxItem Content="BTC" Name="BTC" IsSelected="True"/>
                 <ComboBoxItem Content="ETH" Name="ETH" />
@@ -57,19 +60,62 @@
             <TextBox 
                 x:Name="investedQtyTextBox" Header="Money €/$"
                 Margin="10, 0" PlaceholderText="41" Width="100"/>
-            <Button Content="Add" Click="AddButton_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"/>
-            <Button Content="Remove" Click="RemovePortfolio_Click" VerticalAlignment="Bottom" Width="100" Margin="10, 0"
-                    Name="Remove_Button"/>
+            <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10, 0">
+                <SymbolIcon Symbol="Add"/>
+            </Button>
+            <Button Click="RemovePortfolio_Click" VerticalAlignment="Bottom" Margin="10, 0">
+                <SymbolIcon Symbol="Delete"/>
+            </Button>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Margin="0, 20, 340, 0">
+
+
+
+        <controls:DataGrid x:Name="DataGrid" Grid.Row="1" 
+                           ItemsSource="{Binding People}" 
+                           SelectionMode="Multiple" 
+                           SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
+                           DefaultOrderIndex="1">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Width="*" Header="Firstname" Binding="{Binding FirstName}" />
+                <controls:DataGridTextColumn Width="*" Binding="{Binding LastName}" IsAscendingDefault="False">
+                    <controls:DataGridTextColumn.Header>
+                        <TextBlock Text="Lastname" Foreground="Green" />
+                    </controls:DataGridTextColumn.Header>
+                </controls:DataGridTextColumn>
+                <controls:DataGridTextColumn Width="2*" Header="Category" Binding="{Binding Category}" />
+            </controls:DataGrid.Columns>
+            <controls:DataGrid.ItemDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="12,0,12,12">
+                        <TextBlock Text="Details: " FontWeight="Bold" />
+                        <TextBlock Text="{Binding FirstName}" />
+                        <TextBlock Text="{Binding LastName}" />
+                        <TextBlock Text="{Binding Category}" />
+                    </StackPanel>
+                </DataTemplate>
+            </controls:DataGrid.ItemDetailsTemplate>
+            <!--<controls:DataGrid.RowStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="0"></Setter>
+                </Style>
+            </controls:DataGrid.RowStyle>-->
+        </controls:DataGrid>
+
+
+
+
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 20, 340, 0" Visibility="Collapsed">
             <TextBlock Width="100" Text="Crypto" Style="{StaticResource ListViewTextBlockTitle}"/>
             <TextBlock Width="150" Text="Invested" Style="{StaticResource ListViewTextBlockTitle}"/>
             <TextBlock Width="150" Text="Bought at" Style="{StaticResource ListViewTextBlockTitle}"/>
             <TextBlock Width="150" Text="Earnings" Style="{StaticResource ListViewTextBlockTitle}"/>
+            <TextBlock Width="150" Text="Yoo" Style="{StaticResource ListViewTextBlockTitle}"/>
         </StackPanel>
-        
-        <Grid Margin="0, 0, 340, 0">
+
+        <Grid Grid.Row="2" Visibility="Collapsed" >
+
             <ListView x:Name="MyListView" 
                       ItemsSource="{Binding dataListm, Mode=OneWay}" 
                       Background="{ThemeResource SystemControlBackgroundListLowBrush}"
@@ -81,6 +127,7 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
@@ -98,13 +145,13 @@
                                        Style="{StaticResource ListViewTextBlock}"/>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center">
-                                <TextBlock Text="{Binding BoughtAt}" 
+                                <TextBlock Text="{Binding _BoughtAt}" 
                                            Style="{StaticResource ListViewTextBlock}"/>
                                 <TextBlock Text="{Binding Earnings, Mode=OneWay}" 
-                                           
-                                           Style="{StaticResource ListViewTextBlock}"/>                                
+                                           Foreground="{Binding earningsFG, Mode=OneWay}"
+                                           Style="{StaticResource ListViewTextBlock}"/>
                             </StackPanel>
-                            
+
                             <TextBlock Grid.Column="3" 
                                        Text="{Binding Earnings, Mode=OneWay}" 
                                        Style="{StaticResource ListViewTextBlock}"/>
