@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace CoinBase.Helpers {
-    [Serializable()]
+    [DataContractAttribute()]
     internal class PurchaseClass : INotifyPropertyChanged {
 
         [DataMember()]
@@ -22,33 +16,23 @@ namespace CoinBase.Helpers {
         public double _InvestedQty { get; set; }
         [DataMember()]
         public double _BoughtAt { get; set; }
+        [DataMember()]
+        public string c { get; set; }
+        [DataMember()]
+        public string upDown { get; set; }
 
-        public SolidColorBrush earningsFG { get; set; }
-        public string CryptoAmount { get; set; }
-        public string Invested { get; set; }
-        public string BoughtAt { get; set; }
-        public string _Current;
-        public string Current {
+        public double _Current;
+        [DataMember()]
+        public double Current {
             get { return _Current; }
-            set {
-                if (value != _Current) {
-                    _Current = value;
-                    NotifyPropertyChanged("Current");
-                }
-
-            }
-        }
+            set { if (value != _Current) { _Current = value; NotifyPropertyChanged("Current");}}}
         public string _Earnings;
+        [DataMember()]
         public string Earnings {
             get { return _Earnings; }
-            set {
-                if (value != _Earnings) {
-                    _Earnings = value;
-                    NotifyPropertyChanged("Earnings");
-                }
+            set { if (value != _Earnings) { _Earnings = value; NotifyPropertyChanged("Earnings"); } }}
 
-            }
-        }
+        public SolidColorBrush earningsFG { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
