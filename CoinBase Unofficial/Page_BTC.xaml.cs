@@ -50,7 +50,7 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
             await App.GetCurrentPrice("BTC");
-            BTC_curr.Text = (App.coin.Equals("EUR")) ? App.BTC_now.ToString() + "€" : App.BTC_now.ToString() + "$";
+            BTC_curr.Text = App.BTC_now.ToString() + App.coinSymbol;
 
             switch (timeSpan) {
                 case "hour":
@@ -111,11 +111,9 @@ namespace CoinBase {
 
             await App.GetStats("BTC");
 
-            string sym = (App.coin.Equals("EUR")) ? "€" : "$";
-
-            BTC_Open.Text  = App.stats.Open24 + sym;
-            BTC_High.Text  = App.stats.High24 + sym;
-            BTC_Low.Text   = App.stats.Low24 + sym;
+            BTC_Open.Text  = App.stats.Open24 + App.coinSymbol;
+            BTC_High.Text  = App.stats.High24 + App.coinSymbol;
+            BTC_Low.Text   = App.stats.Low24 + App.coinSymbol;
             BTC_Vol24.Text = App.stats.Volume24 + "BTC";
         }
         async private Task Get24Volume() {

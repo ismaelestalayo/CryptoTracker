@@ -23,8 +23,16 @@
             <TextBlock TextWrapping="WrapWholeWords">
                 <Run>Thanks for installing CoinBase Unofficial!</Run><LineBreak/>
                 <LineBreak/>
+                
+                <Run>New in this version:</Run><LineBreak/>
+                <Run Text=" - WorkInProgress Live Tile (only updates when clicking Update button)" FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - Added Portfolio section" FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - Changed sliders for buttons (faster and less bugs)" FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - Added support for Chinese Renminbi (CNY) ¥" FontWeight="ExtraLight"/><LineBreak/>
+                
+                <LineBreak/>
                 <Run>If you expereience any kind of bug or have any suggestion, be sure to reach me through 
-                    email, Twitter or the Windows Store (contact info on the app settings).</Run>
+                    Email, Twitter or the Windows Store (contact info on the app settings).</Run>
             </TextBlock>
         </StackPanel>
     </ScrollViewer>

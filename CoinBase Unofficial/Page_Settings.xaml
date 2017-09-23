@@ -24,10 +24,11 @@
                           PlaceholderText="Coin" 
                           Margin="0, 0, 0, 0" 
                           SelectionChanged="CoinBox_changed">
-                    <ComboBoxItem Content="EUR" Name="EUR" />
-                    <ComboBoxItem Content="USD" Name="USD" />
-                    <ComboBoxItem Content="CAD" Name="CAD" />
-                    <ComboBoxItem Content="MXN" Name="MXN" />
+                    <ComboBoxItem Content="EUR (€)" Name="EUR"/>
+                    <ComboBoxItem Content="USD ($)" Name="USD"/>
+                    <ComboBoxItem Content="CAD ($)" Name="CAD"/>
+                    <ComboBoxItem Content="MXN ($)" Name="MXN"/>
+                    <ComboBoxItem Content="CNY (¥)" Name="CNY"/>
                 </ComboBox>
             </StackPanel>
             

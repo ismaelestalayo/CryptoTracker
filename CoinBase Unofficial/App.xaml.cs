@@ -17,7 +17,8 @@ using Windows.UI.Xaml.Navigation;
 namespace CoinBase {
     sealed partial class App : Application {
         
-        internal static string coin = "EUR";
+        internal static string coin       = "EUR";
+        internal static string coinSymbol = "€";
 
         internal static float BTC_old;
         internal static float ETH_old;
@@ -126,7 +127,7 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////
         async internal static Task GetCurrentPrice(string crypto) {
             
-            var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN");
+            var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN,CNY");
             HttpClient httpClient = new HttpClient();
             String response = "";
 

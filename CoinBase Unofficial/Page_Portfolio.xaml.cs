@@ -18,7 +18,12 @@ namespace CoinBase {
         public Page_Portfolio(){
             this.InitializeComponent();
 
-            dataList = new ObservableCollection<PurchaseClass>(ReadPortfolio().Result);
+            try {
+                dataList = new ObservableCollection<PurchaseClass>(ReadPortfolio().Result);
+
+            } catch {
+                dataList = new ObservableCollection<PurchaseClass>();
+            }
             MyListView.ItemsSource = dataList;
         }
 
@@ -40,14 +45,13 @@ namespace CoinBase {
             double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
             priceBought = Math.Round(priceBought, 3);
             double earningz = Math.Round( curr - priceBought, 3);
-            string c = ((App.coin.Equals("EUR")) ? "€" : "$");
 
             dataList.Add(new PurchaseClass {
                 _Crypto      = crypto,
                 _CryptoQty   = double.Parse( cryptoQtyTextBox.Text),
                 _InvestedQty = double.Parse( investedQtyTextBox.Text),
                 _BoughtAt    = Math.Round(priceBought, 2),
-                c            = (App.coin.Equals("EUR") ? "€" : "$"),
+                c            = App.coinSymbol,
                 upDown       = (earningz < 0 ? "▼" : "▲"),
                 Current      = curr,
                 Earnings     = Math.Abs(earningz).ToString()

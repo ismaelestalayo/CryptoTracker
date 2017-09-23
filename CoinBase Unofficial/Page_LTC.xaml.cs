@@ -111,11 +111,9 @@ namespace CoinBase {
 
             await App.GetStats("LTC");
 
-            string sym = (App.coin.Equals("EUR")) ? "€" : "$";
-
-            LTC_Open.Text  = App.stats.Open24 + sym;
-            LTC_High.Text  = App.stats.High24 + sym;
-            LTC_Low.Text   = App.stats.Low24 + sym;
+            LTC_Open.Text  = App.stats.Open24 + App.coinSymbol;
+            LTC_High.Text  = App.stats.High24 + App.coinSymbol;
+            LTC_Low.Text   = App.stats.Low24  + App.coinSymbol;
             LTC_Vol24.Text = App.stats.Volume24 + "LTC";
         }
 

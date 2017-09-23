@@ -111,11 +111,9 @@ namespace CoinBase {
 
             await App.GetStats("ETH");
 
-            string sym = (App.coin.Equals("EUR")) ? "€" : "$";
-
-            ETH_Open.Text  = App.stats.Open24 + sym;
-            ETH_High.Text  = App.stats.High24 + sym;
-            ETH_Low.Text   = App.stats.Low24  + sym;
+            ETH_Open.Text  = App.stats.Open24 + App.coinSymbol;
+            ETH_High.Text  = App.stats.High24 + App.coinSymbol;
+            ETH_Low.Text   = App.stats.Low24  + App.coinSymbol;
             ETH_Vol24.Text = App.stats.Volume24 + "ETH";
             
         }

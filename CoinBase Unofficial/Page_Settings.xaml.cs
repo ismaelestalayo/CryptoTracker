@@ -35,6 +35,9 @@ namespace CoinBase {
                 case "MXN":
                     MXN.IsSelected = true;
                     break;
+                case "CNY":
+                    CNY.IsSelected = true;
+                    break;
             }
             CoinComboBox.PlaceholderText = App.localSettings.Values["Coin"].ToString();
 
@@ -79,23 +82,31 @@ namespace CoinBase {
 
         private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
             ComboBox c = sender as ComboBox;
-            switch (((ComboBoxItem)c.SelectedItem).Content.ToString()) {
+            switch (((ComboBoxItem)c.SelectedItem).Name.ToString()) {
                 case "EUR":
                     App.localSettings.Values["Coin"] = "EUR";
-                    App.coin = "EUR";
+                    App.coin       = "EUR";
+                    App.coinSymbol = "€";
                     break;
                 case "USD":
                     App.localSettings.Values["Coin"] = "USD";
-                    App.coin = "USD";
+                    App.coin       = "USD";
+                    App.coinSymbol = "$";
                     break;
                 case "CAD":
                     App.localSettings.Values["Coin"] = "CAD";
-                    App.coin = "CAD";
-                    
+                    App.coin       = "CAD";
+                    App.coinSymbol = "€";
                     break;
                 case "MXN":
                     App.localSettings.Values["Coin"] = "MXN";
-                    App.coin = "MXN";
+                    App.coin       = "MXN";
+                    App.coinSymbol = "€";
+                    break;
+                case "CNY":
+                    App.localSettings.Values["Coin"] = "CNY";
+                    App.coin       = "CNY";
+                    App.coinSymbol = "¥";
                     break;
 
             }

@@ -79,7 +79,7 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
             await App.GetCurrentPrice("BTC");
-            BTC_curr.Text = (App.coin.Equals("EUR")) ? App.BTC_now.ToString() + "€" : App.BTC_now.ToString() + "$";
+            BTC_curr.Text = App.BTC_now.ToString() + App.coinSymbol;
 
             switch (timeSpan) {
                 case "hour":
@@ -131,7 +131,7 @@ namespace CoinBase {
         }
         async public Task UpdateETH() {
             await App.GetCurrentPrice("ETH");
-            ETH_curr.Text = (App.coin.Equals("EUR")) ? App.ETH_now.ToString() + "€" : App.ETH_now.ToString() + "$";
+            ETH_curr.Text = App.ETH_now.ToString() + App.coinSymbol;
 
             switch (timeSpan) {
                 case "hour":
@@ -180,7 +180,7 @@ namespace CoinBase {
         }
         async public Task UpdateLTC() {
             await App.GetCurrentPrice("LTC");
-            LTC_curr.Text = (App.coin.Equals("EUR")) ? App.LTC_now.ToString() + "€" : App.LTC_now.ToString() + "$";
+            LTC_curr.Text = App.LTC_now.ToString() + App.coinSymbol;
 
             switch (timeSpan) {
                 case "hour":
