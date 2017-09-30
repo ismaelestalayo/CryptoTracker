@@ -81,11 +81,10 @@
             <telerik:RadCartesianChart x:Name="AllChartt" Margin="5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
                 <telerik:LineSeries
-                    x:Name="AllChart"
                     ItemsSource="{Binding}"
 					Stroke="Black"
 					StrokeThickness="1">
-                    
+
                     <telerik:LineSeries.VerticalAxis>
                         <telerik:LinearAxis
                             Visibility="Collapsed"
@@ -93,7 +92,7 @@
                     </telerik:LineSeries.VerticalAxis>
 
                     <telerik:LineSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis />
+                        <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
                     </telerik:LineSeries.HorizontalAxis>
 
                     <telerik:LineSeries.CategoryBinding>
@@ -103,7 +102,57 @@
                     <telerik:LineSeries.ValueBinding>
                         <telerik:PropertyNameDataPointBinding PropertyName="High"/>
                     </telerik:LineSeries.ValueBinding>
-                    
+
+                </telerik:LineSeries>
+
+                <telerik:LineSeries
+                    ItemsSource="{Binding}"
+					Stroke="Black"
+					StrokeThickness="1">
+
+                    <telerik:LineSeries.VerticalAxis>
+                        <telerik:LinearAxis
+                            Visibility="Collapsed"
+                            HorizontalLocation="Right"/>
+                    </telerik:LineSeries.VerticalAxis>
+
+                    <telerik:LineSeries.HorizontalAxis>
+                        <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
+                    </telerik:LineSeries.HorizontalAxis>
+
+                    <telerik:LineSeries.CategoryBinding>
+                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                    </telerik:LineSeries.CategoryBinding>
+
+                    <telerik:LineSeries.ValueBinding>
+                        <telerik:PropertyNameDataPointBinding PropertyName="High"/>
+                    </telerik:LineSeries.ValueBinding>
+
+                </telerik:LineSeries>
+
+                <telerik:LineSeries
+                    ItemsSource="{Binding}"
+					Stroke="Black"
+					StrokeThickness="1">
+
+                    <telerik:LineSeries.VerticalAxis>
+                        <telerik:LinearAxis
+                            Visibility="Collapsed"
+                            HorizontalLocation="Right"/>
+                    </telerik:LineSeries.VerticalAxis>
+
+                    <telerik:LineSeries.HorizontalAxis>
+                        <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
+                    </telerik:LineSeries.HorizontalAxis>
+
+                    <telerik:LineSeries.CategoryBinding>
+                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                    </telerik:LineSeries.CategoryBinding>
+
+                    <telerik:LineSeries.ValueBinding>
+                        <telerik:PropertyNameDataPointBinding PropertyName="High"/>
+                    </telerik:LineSeries.ValueBinding>
+
                 </telerik:LineSeries>
             </telerik:RadCartesianChart>
         </Grid>

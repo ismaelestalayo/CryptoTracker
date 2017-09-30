@@ -94,7 +94,7 @@
                     </Button>
 
                     <Button Name="MenuAll" Background="Transparent" RelativePanel.Below="MenuLTC" Click="MenuAll_Click" 
-                            Visibility="Collapsed">
+                            Visibility="Visible">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="ViewAll" Width="30" Foreground="White"/>
 
