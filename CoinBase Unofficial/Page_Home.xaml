@@ -242,7 +242,6 @@
                 </telerik:RadCartesianChart.VerticalAxis>
 
                 <telerik:SplineAreaSeries
-                    x:Name="BTC_AreaS"
 					Stroke="{StaticResource BTC_color}"
 					StrokeThickness="1"
 					Fill="{StaticResource BTC_colorT}">

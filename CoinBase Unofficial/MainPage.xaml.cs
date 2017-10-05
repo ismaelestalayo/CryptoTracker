@@ -64,7 +64,7 @@ namespace CoinBase {
         private void MenuBTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_BTC));
         }
-        private void MenuETH_Click(object sender, RoutedEventArgs e) {
+        public void MenuETH_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_ETH));
         }
         private void MenuLTC_Click(object sender, RoutedEventArgs e) {

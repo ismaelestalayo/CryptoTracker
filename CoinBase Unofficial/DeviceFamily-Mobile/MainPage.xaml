@@ -85,7 +85,7 @@
                 <Image Source="/Assets/iconLTC.png"  Width="26"/>
             </Button>
 
-            <Button Name="MenuPortfolio" Grid.Column="4" Click="MenuPortfolio_Click" HorizontalAlignment="Center"
+            <Button Name="MenuPortfolio" Grid.Column="4" Click="MenuAll_Click" HorizontalAlignment="Center"
                     Background="Transparent" >
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE14D;" Foreground="White" FontSize="24" FontFamily="Segoe MDL2 Assets"

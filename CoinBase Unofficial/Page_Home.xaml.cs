@@ -55,7 +55,6 @@ namespace CoinBase {
             RadioButton r = new RadioButton { Content = "hour" };
             BTC_TimerangeButton_Click(r, null);
         }
-
         public void ETH_Update_click() {
             if (LoadingControl_ETH == null)
                 LoadingControl_ETH = new Loading();
@@ -65,7 +64,6 @@ namespace CoinBase {
             RadioButton r = new RadioButton { Content = "hour" };
             ETH_TimerangeButton_Click(r, null);
         }
-
         public void LTC_Update_click() {
             if (LoadingControl_LTC == null)
                 LoadingControl_LTC = new Loading();

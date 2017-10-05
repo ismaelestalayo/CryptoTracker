@@ -5,9 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
+    <!--NavigationCacheMode="Required"-->
 
-    <Grid Padding="10" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="MainGrid">
+    <Grid Background="White" x:Name="MainGrid">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -16,15 +18,10 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
+
                     <VisualState.Setters>
-                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="auto"/> <!--Hides second column-->
-                        <Setter Target="MainGrid.RowDefinitions[0].Height" Value="5*"/>
-                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="2*"/>
-                        <Setter Target="InfoGrid.Margin"  Value="0 5 0 0"/>
-                        <Setter Target="ChartGrid.Margin" Value="0 0 0 5"/>
-                        <Setter Target="InfoGrid.(Grid.Row)"     Value="1"/>
-                        <Setter Target="ChartGrid.(Grid.Row)"    Value="0"/>
-                        <Setter Target="ChartGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="*"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="1"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -32,131 +29,191 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="750" />
                     </VisualState.StateTriggers>
+
                     <VisualState.Setters>
-                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="auto"/> <!--Hides second row-->
-                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="2*"/>
-                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="5*"/>
-                        <Setter Target="InfoGrid.Margin"  Value="0 0 5 0"/>
-                        <Setter Target="ChartGrid.Margin" Value="5 0 0 0"/>
-                        <Setter Target="InfoGrid.(Grid.Column)" Value="0"/>
-                        <Setter Target="InfoGrid.(Grid.Row)"    Value="0"/>
-                        <Setter Target="ChartGrid.(Grid.Column)"  Value="1"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="5*"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="2*"/>
                     </VisualState.Setters>
                 </VisualState>
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
         <!--Starts the Grid itself -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <Grid x:Name="InfoGrid" Grid.Column="0" Grid.Row="0" Padding="10" Background="#555555">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
-                <StackPanel>
-                    <CheckBox Content="BTC" Click="Chart_BTC" IsChecked="True"/>
-                    <CheckBox Content="ETH" Click="Chart_ETH" IsChecked="False"/>
-                    <CheckBox Content="LTC" Click="Chart_LTC" IsChecked="False"/>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
 
         <!-- ###########################################################################################################################
         ################################################################################################################################
         ############################################################################################################################ -->
-        <Grid x:Name="ChartGrid" Grid.Column="1" Grid.Row="0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+        <RelativePanel Margin="10" Grid.Row="0" Background="WhiteSmoke">
 
+            <controls:Loading x:Name="LoadingControl_BTC" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Background="Transparent" Opacity="0.4">
+                <ContentControl x:Name="LoadingContentControl">
+                    <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                </ContentControl>
+            </controls:Loading>
 
+            <TextBlock Text="Bitcoin" 
+                       Style="{ThemeResource TitleTextBlockStyle}"
+                       FontWeight="ExtraLight" Padding="10, 0" x:Name="BTC_Title"/>
+            <TextBlock Name="BTC_curr"
+                       Text="val€" Style="{ThemeResource TitleTextBlockStyle}" 
+                       RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                       Foreground="{StaticResource BTC_color}"
+                       FontWeight="ExtraLight" Padding="5, 0"/>
 
-            <telerik:RadCartesianChart x:Name="AllChartt" Margin="5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+            <telerik:RadCartesianChart x:Name="BTC_Chart" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" RelativePanel.Below="BTC_Title">
 
-                <telerik:SplineAreaSeries 
-                    ItemsSource="{Binding BTCserie, Mode=TwoWay}"
-					Stroke="{StaticResource BTC_color}"
-                    Fill="{StaticResource BTC_colorT}"
-					StrokeThickness="1">
+                <telerik:RadCartesianChart.Grid>
+                    <telerik:CartesianChartGrid MajorLinesVisibility="None" />
+                </telerik:RadCartesianChart.Grid>
 
-                    <telerik:SplineAreaSeries.VerticalAxis>
-                        <telerik:LinearAxis
-                            Visibility="Collapsed"
-                            HorizontalLocation="Right"/>
-                    </telerik:SplineAreaSeries.VerticalAxis>
+                <telerik:RadCartesianChart.HorizontalAxis>
+                    <telerik:DateTimeContinuousAxis
+						    x:Name="BTC_DateTimeAxis"
+                            Visibility="Collapsed"/>
+                </telerik:RadCartesianChart.HorizontalAxis>
 
-                    <telerik:SplineAreaSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
-                    </telerik:SplineAreaSeries.HorizontalAxis>
-
-                    <telerik:SplineAreaSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:SplineAreaSeries.CategoryBinding>
-
-                    <telerik:SplineAreaSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="High"/>
-                    </telerik:SplineAreaSeries.ValueBinding>
-
-                </telerik:SplineAreaSeries>
-
-                <telerik:SplineAreaSeries
-                    ItemsSource="{Binding ETHserie, Mode=TwoWay}"
-					Stroke="{StaticResource ETH_color}"
-                    Fill="{StaticResource ETH_colorT}"
-					StrokeThickness="1"
-                    Visibility="Collapsed">
-
-                    <telerik:SplineAreaSeries.VerticalAxis>
-                        <telerik:LinearAxis
-                            Visibility="Collapsed"
-                            HorizontalLocation="Right"/>
-                    </telerik:SplineAreaSeries.VerticalAxis>
-
-                    <telerik:SplineAreaSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
-                    </telerik:SplineAreaSeries.HorizontalAxis>
-
-                    <telerik:SplineAreaSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:SplineAreaSeries.CategoryBinding>
-
-                    <telerik:SplineAreaSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="High"/>
-                    </telerik:SplineAreaSeries.ValueBinding>
-
-                </telerik:SplineAreaSeries>
+                <telerik:RadCartesianChart.VerticalAxis>
+                    <telerik:LinearAxis 
+                        x:Name="BTC_verticalAxis"
+                        DesiredTickCount="5"
+                        HorizontalLocation="Left"
+                        Visibility="Collapsed"
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        FontWeight="Light" FontFamily="Segoe UI"
+                        Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+                    </telerik:LinearAxis>
+                </telerik:RadCartesianChart.VerticalAxis>
 
                 <telerik:SplineAreaSeries
-                    ItemsSource="{Binding LTCserie, Mode=TwoWay}"
-					Stroke="{StaticResource LTC_color}"
-                    Fill="{StaticResource LTC_colorT}"
-					StrokeThickness="1"
-                    Visibility="Collapsed">
-
-                    <telerik:SplineAreaSeries.VerticalAxis>
-                        <telerik:LinearAxis
-                            Visibility="Collapsed"
-                            HorizontalLocation="Right"/>
-                    </telerik:SplineAreaSeries.VerticalAxis>
-
-                    <telerik:SplineAreaSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
-                    </telerik:SplineAreaSeries.HorizontalAxis>
-
-                    <telerik:SplineAreaSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:SplineAreaSeries.CategoryBinding>
-
-                    <telerik:SplineAreaSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="High"/>
-                    </telerik:SplineAreaSeries.ValueBinding>
-
+					    Stroke="{StaticResource BTC_color}"
+					    StrokeThickness="1"
+					    Fill="{StaticResource BTC_colorT}">
                 </telerik:SplineAreaSeries>
             </telerik:RadCartesianChart>
-        </Grid>
+        </RelativePanel>
+
+        <!-- ############################################################################################################### -->
+        <RelativePanel Margin="15" Grid.Row="1" Background="WhiteSmoke">
+
+            <controls:Loading x:Name="LoadingControl_ETH" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Background="Transparent" Opacity="0.4">
+                <ContentControl>
+                    <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                </ContentControl>
+            </controls:Loading>
+
+            <TextBlock Text="Ethereum" Style="{ThemeResource TitleTextBlockStyle}"
+                       FontWeight="ExtraLight" Padding="10, 0" x:Name="ETH_Title"/>
+            <TextBlock Name="ETH_curr"
+                       Text="val€" Style="{ThemeResource TitleTextBlockStyle}" 
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignRightWithPanel="True"
+                       Foreground="{StaticResource ETH_color}"
+                       FontWeight="ExtraLight" Padding="5, 0"/>
+
+            <telerik:RadCartesianChart x:Name="ETH_Chart" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" RelativePanel.Below="ETH_Title">
+
+                <telerik:RadCartesianChart.Grid>
+                    <telerik:CartesianChartGrid MajorLinesVisibility="None" />
+                </telerik:RadCartesianChart.Grid>
+
+                <telerik:RadCartesianChart.HorizontalAxis>
+                    <telerik:DateTimeContinuousAxis
+						x:Name="ETH_DateTimeAxis"
+                        Visibility="Collapsed"/>
+                </telerik:RadCartesianChart.HorizontalAxis>
+
+                <telerik:RadCartesianChart.VerticalAxis>
+                    <telerik:LinearAxis 
+                        x:Name="ETH_verticalAxis"
+                        DesiredTickCount="5"
+                        Visibility="Collapsed"
+                        HorizontalLocation="Left"
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        FontWeight="Light" FontFamily="Segoe UI"
+                        Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+                    </telerik:LinearAxis>
+                </telerik:RadCartesianChart.VerticalAxis>
+
+                <telerik:SplineAreaSeries
+					Stroke="{StaticResource ETH_color}"
+					StrokeThickness="1"
+					Fill="{StaticResource ETH_colorT}">
+                </telerik:SplineAreaSeries>
+            </telerik:RadCartesianChart>
+        </RelativePanel>
+
+
+        <!-- ############################################################################################################### -->
+        <RelativePanel Margin="15" Grid.Row="2" Background="WhiteSmoke">
+
+            <controls:Loading x:Name="LoadingControl_LTC" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Background="Transparent" Opacity="0.4">
+                <ContentControl>
+                    <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                </ContentControl>
+            </controls:Loading>
+
+            <TextBlock Text="Litecoin" Style="{ThemeResource TitleTextBlockStyle}"
+                       FontWeight="ExtraLight" Padding="10, 0" x:Name="LTC_Title"/>
+            <TextBlock Name="LTC_curr"
+                       Text="val€" Style="{ThemeResource TitleTextBlockStyle}" 
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignRightWithPanel="True"
+                       Foreground="{StaticResource LTC_color}"
+                       FontWeight="ExtraLight" Padding="5, 0"/>
+
+            <telerik:RadCartesianChart x:Name="LTC_Chart" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}" RelativePanel.Below="LTC_Title">
+
+                <telerik:RadCartesianChart.Grid>
+                    <telerik:CartesianChartGrid MajorLinesVisibility="None" />
+                </telerik:RadCartesianChart.Grid>
+
+                <telerik:RadCartesianChart.HorizontalAxis>
+                    <telerik:DateTimeContinuousAxis
+						x:Name="LTC_DateTimeAxis"
+                        Visibility="Collapsed"/>
+                </telerik:RadCartesianChart.HorizontalAxis>
+
+                <telerik:RadCartesianChart.VerticalAxis>
+                    <telerik:LinearAxis 
+                        x:Name="LTC_verticalAxis"
+                        DesiredTickCount="5"
+                        Visibility="Collapsed"
+                        HorizontalLocation="Left"
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        FontWeight="Light" FontFamily="Segoe UI"
+                        Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+                    </telerik:LinearAxis>
+                </telerik:RadCartesianChart.VerticalAxis>
+
+                <telerik:SplineAreaSeries
+					Stroke="{StaticResource LTC_color}"
+					StrokeThickness="1"
+					Fill="{StaticResource LTC_colorT}">
+                </telerik:SplineAreaSeries>
+            </telerik:RadCartesianChart>
+        </RelativePanel>
 
     </Grid>
 </Page>
