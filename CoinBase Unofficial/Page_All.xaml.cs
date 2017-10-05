@@ -10,51 +10,54 @@ namespace CoinBase {
         public Page_All() {
             this.InitializeComponent();
 
-            List<App.ChartDataObject> data = new List<App.ChartDataObject>();
+            List<App.ChartDataObject> dataBTC = new List<App.ChartDataObject>();
+            List<App.ChartDataObject> dataETH = new List<App.ChartDataObject>();
+            List<App.ChartDataObject> dataLTC = new List<App.ChartDataObject>();
 
             for (int i = 0; i < App.ppBTC.Count - 1; i++) {
-                data.Add(new App.ChartDataObject() {
-                    Date = App.ppBTC[i].DateTime,
+                dataBTC.Add(new App.ChartDataObject() {
+                    Date  = App.ppBTC[i].DateTime,
                     Value = App.ppBTC[i].Low,
-                    Low  = App.ppBTC[i].Low,
-                    High = App.ppBTC[i].High
+                    Low   = App.ppBTC[i].Low,
+                    High  = App.ppBTC[i].High
                 });
             }
 
-            LineSeries BTCserie = (LineSeries)AllChartt.Series[0];
+            SplineAreaSeries BTCserie = (SplineAreaSeries)AllChartt.Series[0];
             BTCserie.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             BTCserie.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            BTCserie.ItemsSource = data;
+            BTCserie.ItemsSource = dataBTC;
+            //dataBTC.Clear();
 
-            data.Clear();
             for (int i = 0; i < App.ppBTC.Count - 1; i++) {
-                data.Add(new App.ChartDataObject() {
-                    Date = App.ppETH[i].DateTime,
+                dataETH.Add(new App.ChartDataObject() {
+                    Date   = App.ppETH[i].DateTime,
                     Value  = App.ppETH[i].Low,
-                    Low  = App.ppETH[i].Low,
-                    High = App.ppETH[i].High
+                    Low    = App.ppETH[i].Low,
+                    High   = App.ppETH[i].High
                 });
             }
 
-            LineSeries ETHserie = (LineSeries)AllChartt.Series[1];
+            SplineAreaSeries ETHserie = (SplineAreaSeries)AllChartt.Series[1];
             ETHserie.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             ETHserie.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            ETHserie.ItemsSource = data;
+            ETHserie.ItemsSource = dataETH;
+            //dataETH.Clear();
 
-            data.Clear();
             for (int i = 0; i < App.ppBTC.Count - 1; i++) {
-                data.Add(new App.ChartDataObject() {
-                    Date = App.ppLTC[i].DateTime,
+                dataLTC.Add(new App.ChartDataObject() {
+                    Date   = App.ppLTC[i].DateTime,
                     Value  = App.ppLTC[i].Low,
-                    Low  = App.ppLTC[i].Low,
-                    High = App.ppLTC[i].High
+                    Low    = App.ppLTC[i].Low,
+                    High   = App.ppLTC[i].High
                 });
             }
 
-            LineSeries LTCserie = (LineSeries)AllChartt.Series[2];
+            SplineAreaSeries LTCserie = (SplineAreaSeries)AllChartt.Series[2];
             LTCserie.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             LTCserie.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            LTCserie.ItemsSource = data;
+            LTCserie.ItemsSource = dataLTC;
+            //dataLTC.Clear();
 
 
         }

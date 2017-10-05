@@ -100,7 +100,7 @@ namespace CoinBase {
                 LTC_diff.Text = "▲" + dLTC.ToString() + "% ";
             }
 
-            AreaSeries series = (AreaSeries)LTC_Chart.Series[0];
+            SplineAreaSeries series = (SplineAreaSeries)LTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;

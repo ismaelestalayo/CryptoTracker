@@ -100,7 +100,7 @@ namespace CoinBase {
                 BTC_diff.Text = "▲" + dBTC.ToString() + "%";
             }
 
-            AreaSeries series = (AreaSeries)BTC_Chart.Series[0];
+            SplineAreaSeries series = (SplineAreaSeries)BTC_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;

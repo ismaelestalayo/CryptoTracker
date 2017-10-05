@@ -241,7 +241,7 @@
                     </telerik:LinearAxis>
                 </telerik:RadCartesianChart.VerticalAxis>
 
-                <telerik:AreaSeries
+                <telerik:SplineAreaSeries
                     x:Name="BTC_AreaS"
 					Stroke="{StaticResource BTC_color}"
 					StrokeThickness="1"
@@ -257,7 +257,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                </telerik:AreaSeries>
+                </telerik:SplineAreaSeries>
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
@@ -345,7 +345,7 @@
                     </telerik:LinearAxis>
                 </telerik:RadCartesianChart.VerticalAxis>
 
-                <telerik:AreaSeries 
+                <telerik:SplineAreaSeries 
                     Stroke="{StaticResource ETH_color}"
                     StrokeThickness="1"
 					Fill="{StaticResource ETH_colorT}">
@@ -360,7 +360,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                </telerik:AreaSeries>
+                </telerik:SplineAreaSeries>
 
             </telerik:RadCartesianChart>
             
@@ -448,7 +448,7 @@
                     </telerik:LinearAxis>
                 </telerik:RadCartesianChart.VerticalAxis>
 
-                <telerik:AreaSeries
+                <telerik:SplineAreaSeries
 					Stroke="{StaticResource LTC_color}"
 					StrokeThickness="1"
 					Fill="{StaticResource LTC_colorT}">
@@ -463,7 +463,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                </telerik:AreaSeries>
+                </telerik:SplineAreaSeries>
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">

@@ -190,7 +190,7 @@
                         Visibility="Collapsed"/>
                 </telerik:RadCartesianChart.VerticalAxis>
 
-                <telerik:AreaSeries
+                <telerik:SplineAreaSeries
 					Stroke="{StaticResource BTC_color}"
 					StrokeThickness="1"
 					Fill="{StaticResource BTC_colorT}">
@@ -202,7 +202,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                </telerik:AreaSeries>
+                </telerik:SplineAreaSeries>
             </telerik:RadCartesianChart>
         </Grid>
 
@@ -247,7 +247,7 @@
                         Visibility="Collapsed"/>
                 </telerik:RadCartesianChart.VerticalAxis>
 
-                <telerik:AreaSeries
+                <telerik:SplineAreaSeries
 					Stroke="{StaticResource ETH_color}"
 					StrokeThickness="1"
 					Fill="{StaticResource ETH_colorT}">
@@ -259,7 +259,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                </telerik:AreaSeries>
+                </telerik:SplineAreaSeries>
             </telerik:RadCartesianChart>
         </Grid>
 
@@ -304,7 +304,7 @@
                         Visibility="Collapsed"/>
                 </telerik:RadCartesianChart.VerticalAxis>
 
-                <telerik:AreaSeries
+                <telerik:SplineAreaSeries
 					Stroke="{StaticResource LTC_color}"
 					StrokeThickness="1"
 					Fill="{StaticResource LTC_colorT}">
@@ -316,7 +316,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                </telerik:AreaSeries>
+                </telerik:SplineAreaSeries>
             </telerik:RadCartesianChart>
         </Grid>
         

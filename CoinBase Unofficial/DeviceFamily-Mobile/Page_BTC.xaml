@@ -134,7 +134,7 @@
                     </telerik:LinearAxis>
                 </telerik:RadCartesianChart.VerticalAxis>
 
-                <telerik:AreaSeries 
+                <telerik:SplineAreaSeries 
                     Stroke="{StaticResource BTC_color}" 
                     StrokeThickness="1" 
                     Fill="{StaticResource BTC_colorT}">
@@ -146,7 +146,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                </telerik:AreaSeries>
+                </telerik:SplineAreaSeries>
                 
             </telerik:RadCartesianChart>
 

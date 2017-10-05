@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
 using Newtonsoft.Json.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -110,6 +112,8 @@ namespace CoinBase {
                 ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(900, 550));
                 Window.Current.Activate();
             }
+
+            MobileCenter.Start("1385f8f2-22f5-4493-9409-38f9ba1a5461", typeof(Analytics));
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {

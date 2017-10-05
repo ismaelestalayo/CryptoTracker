@@ -1,12 +1,10 @@
 ﻿<Page
     x:Class="CoinBase.Page_All"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CoinBase"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
     mc:Ignorable="d">
 
     <Grid Padding="10" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="MainGrid">
@@ -62,14 +60,9 @@
         <Grid x:Name="InfoGrid" Grid.Column="0" Grid.Row="0" Padding="10" Background="#555555">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
                 <StackPanel>
-                    <CheckBox Content="BTC" Click="Chart_BTC"/>
-                    <CheckBox Content="ETH" Click="Chart_ETH"/>
-                    <CheckBox Content="LTC" Click="Chart_LTC"/>
-                    <CheckBox Content="BLA"/>
-
-                    <RadioButton Tag="a" Content="yo1"/>
-                    <RadioButton Tag="a" Content="yo2"/>
-                    <RadioButton Tag="a" Content="yo3"/>
+                    <CheckBox Content="BTC" Click="Chart_BTC" IsChecked="True"/>
+                    <CheckBox Content="ETH" Click="Chart_ETH" IsChecked="False"/>
+                    <CheckBox Content="LTC" Click="Chart_LTC" IsChecked="False"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
@@ -78,82 +71,90 @@
         ################################################################################################################################
         ############################################################################################################################ -->
         <Grid x:Name="ChartGrid" Grid.Column="1" Grid.Row="0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+
+
+
             <telerik:RadCartesianChart x:Name="AllChartt" Margin="5" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
 
-                <telerik:LineSeries
-                    ItemsSource="{Binding}"
-					Stroke="Black"
+                <telerik:SplineAreaSeries 
+                    ItemsSource="{Binding BTCserie, Mode=TwoWay}"
+					Stroke="{StaticResource BTC_color}"
+                    Fill="{StaticResource BTC_colorT}"
 					StrokeThickness="1">
 
-                    <telerik:LineSeries.VerticalAxis>
+                    <telerik:SplineAreaSeries.VerticalAxis>
                         <telerik:LinearAxis
                             Visibility="Collapsed"
                             HorizontalLocation="Right"/>
-                    </telerik:LineSeries.VerticalAxis>
+                    </telerik:SplineAreaSeries.VerticalAxis>
 
-                    <telerik:LineSeries.HorizontalAxis>
+                    <telerik:SplineAreaSeries.HorizontalAxis>
                         <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
-                    </telerik:LineSeries.HorizontalAxis>
+                    </telerik:SplineAreaSeries.HorizontalAxis>
 
-                    <telerik:LineSeries.CategoryBinding>
+                    <telerik:SplineAreaSeries.CategoryBinding>
                         <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:LineSeries.CategoryBinding>
+                    </telerik:SplineAreaSeries.CategoryBinding>
 
-                    <telerik:LineSeries.ValueBinding>
+                    <telerik:SplineAreaSeries.ValueBinding>
                         <telerik:PropertyNameDataPointBinding PropertyName="High"/>
-                    </telerik:LineSeries.ValueBinding>
+                    </telerik:SplineAreaSeries.ValueBinding>
 
-                </telerik:LineSeries>
+                </telerik:SplineAreaSeries>
 
-                <telerik:LineSeries
-                    ItemsSource="{Binding}"
-					Stroke="Black"
-					StrokeThickness="1">
+                <telerik:SplineAreaSeries
+                    ItemsSource="{Binding ETHserie, Mode=TwoWay}"
+					Stroke="{StaticResource ETH_color}"
+                    Fill="{StaticResource ETH_colorT}"
+					StrokeThickness="1"
+                    Visibility="Collapsed">
 
-                    <telerik:LineSeries.VerticalAxis>
+                    <telerik:SplineAreaSeries.VerticalAxis>
                         <telerik:LinearAxis
                             Visibility="Collapsed"
                             HorizontalLocation="Right"/>
-                    </telerik:LineSeries.VerticalAxis>
+                    </telerik:SplineAreaSeries.VerticalAxis>
 
-                    <telerik:LineSeries.HorizontalAxis>
+                    <telerik:SplineAreaSeries.HorizontalAxis>
                         <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
-                    </telerik:LineSeries.HorizontalAxis>
+                    </telerik:SplineAreaSeries.HorizontalAxis>
 
-                    <telerik:LineSeries.CategoryBinding>
+                    <telerik:SplineAreaSeries.CategoryBinding>
                         <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:LineSeries.CategoryBinding>
+                    </telerik:SplineAreaSeries.CategoryBinding>
 
-                    <telerik:LineSeries.ValueBinding>
+                    <telerik:SplineAreaSeries.ValueBinding>
                         <telerik:PropertyNameDataPointBinding PropertyName="High"/>
-                    </telerik:LineSeries.ValueBinding>
+                    </telerik:SplineAreaSeries.ValueBinding>
 
-                </telerik:LineSeries>
+                </telerik:SplineAreaSeries>
 
-                <telerik:LineSeries
-                    ItemsSource="{Binding}"
-					Stroke="Black"
-					StrokeThickness="1">
+                <telerik:SplineAreaSeries
+                    ItemsSource="{Binding LTCserie, Mode=TwoWay}"
+					Stroke="{StaticResource LTC_color}"
+                    Fill="{StaticResource LTC_colorT}"
+					StrokeThickness="1"
+                    Visibility="Collapsed">
 
-                    <telerik:LineSeries.VerticalAxis>
+                    <telerik:SplineAreaSeries.VerticalAxis>
                         <telerik:LinearAxis
                             Visibility="Collapsed"
                             HorizontalLocation="Right"/>
-                    </telerik:LineSeries.VerticalAxis>
+                    </telerik:SplineAreaSeries.VerticalAxis>
 
-                    <telerik:LineSeries.HorizontalAxis>
+                    <telerik:SplineAreaSeries.HorizontalAxis>
                         <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
-                    </telerik:LineSeries.HorizontalAxis>
+                    </telerik:SplineAreaSeries.HorizontalAxis>
 
-                    <telerik:LineSeries.CategoryBinding>
+                    <telerik:SplineAreaSeries.CategoryBinding>
                         <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:LineSeries.CategoryBinding>
+                    </telerik:SplineAreaSeries.CategoryBinding>
 
-                    <telerik:LineSeries.ValueBinding>
+                    <telerik:SplineAreaSeries.ValueBinding>
                         <telerik:PropertyNameDataPointBinding PropertyName="High"/>
-                    </telerik:LineSeries.ValueBinding>
+                    </telerik:SplineAreaSeries.ValueBinding>
 
-                </telerik:LineSeries>
+                </telerik:SplineAreaSeries>
             </telerik:RadCartesianChart>
         </Grid>
 

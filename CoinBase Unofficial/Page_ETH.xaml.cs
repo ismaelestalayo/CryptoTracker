@@ -100,7 +100,7 @@ namespace CoinBase {
                 ETH_diff.Text = "▼" + dETH.ToString() + "%";
             }
 
-            AreaSeries series = (AreaSeries)ETH_Chart.Series[0];
+            SplineAreaSeries series = (SplineAreaSeries)ETH_Chart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
