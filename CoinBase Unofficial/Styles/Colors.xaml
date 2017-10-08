@@ -15,7 +15,7 @@
     <SolidColorBrush x:Key="LTC_colorT"		Color="#B5B5B5" Opacity="0.3"/>
     <SolidColorBrush x:Key="LTC_colorLight" Color="#e0e0e0"/>
 
-    <SolidColorBrush x:Key="MinimalRed"     Color="#B40000"/> <!-- 180, 0, 0-->
-    <SolidColorBrush x:Key="MinimalGreen"   Color="#007800"/> <!-- 0, 120, 0-->
+    <SolidColorBrush x:Key="MinimalRed"     Color="#eb4d5c"/>
+    <SolidColorBrush x:Key="MinimalGreen"   Color="#00cc6a"/>
 
 </ResourceDictionary>
