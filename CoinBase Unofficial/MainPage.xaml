@@ -93,15 +93,6 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Name="MenuAll" Background="Transparent" RelativePanel.Below="MenuLTC" Click="MenuAll_Click" 
-                            Visibility="Visible">
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon Symbol="ViewAll" Width="30" Foreground="White"/>
-
-                            <TextBlock Text="All" Style="{StaticResource RelativePanelMenus}" />
-                        </StackPanel>
-                    </Button>
-
                     <!-- ############################################################################################################ -->
                     <Button Name="MenuPortfolio" Background="Transparent" RelativePanel.Above="MenuSettings" Click="MenuPortfolio_Click">
                         <StackPanel Orientation="Horizontal">

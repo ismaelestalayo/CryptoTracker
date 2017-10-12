@@ -108,17 +108,14 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page_All.xaml.cs">
-      <DependentUpon>Page_All.xaml</DependentUpon>
+    <Compile Include="Page_Home.xaml.cs">
+      <DependentUpon>Page_Home.xaml</DependentUpon>
     </Compile>
     <Compile Include="Page_BTC.xaml.cs">
       <DependentUpon>Page_BTC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Page_ETH.xaml.cs">
       <DependentUpon>Page_ETH.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Page_Home.xaml.cs">
-      <DependentUpon>Page_Home.xaml</DependentUpon>
     </Compile>
     <Compile Include="Page_LTC.xaml.cs">
       <DependentUpon>Page_LTC.xaml</DependentUpon>
@@ -224,10 +221,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DeviceFamily-Mobile\Page_Home.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="DeviceFamily-Mobile\Page_LTC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -236,7 +229,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Page_All.xaml">
+    <Page Include="Page_Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,10 +238,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Page_ETH.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Page_Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

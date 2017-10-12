@@ -70,9 +70,6 @@ namespace CoinBase {
         private void MenuLTC_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_LTC));
         }
-        private void MenuAll_Click(object sender, RoutedEventArgs e) {
-            MainFrame.Navigate(typeof(Page_All));
-        }
         private void MenuPortfolio_Click(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(typeof(Page_Portfolio));
         }
@@ -109,9 +106,7 @@ namespace CoinBase {
 
             if (x.Equals("CoinBase.Page_Home")) {
                 var p = (Page_Home)MainFrame.Content;
-                p.BTC_Update_click();
-                p.ETH_Update_click();
-                p.LTC_Update_click();
+                p.UpdateHome();
 
             } else if (x.Equals("CoinBase.Page_BTC")) {
                 var p = (Page_BTC)MainFrame.Content;
