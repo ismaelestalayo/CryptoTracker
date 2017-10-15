@@ -6,13 +6,13 @@
     <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
     <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
     <SolidColorBrush x:Key="BTC_color"		Color="#FFB119" />
-    <SolidColorBrush x:Key="BTC_colorT"     Color="#FFB119" Opacity="0.3" />
+    <SolidColorBrush x:Key="BTC_colorT"     Color="#FFB119" Opacity="0.4" />
     <SolidColorBrush x:Key="BTC_colorLight"	Color="#f6dfb1" />
     <SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA" />
-    <SolidColorBrush x:Key="ETH_colorT"     Color="#6F7CBA" Opacity="0.3" />
+    <SolidColorBrush x:Key="ETH_colorT"     Color="#6F7CBA" Opacity="0.4" />
     <SolidColorBrush x:Key="ETH_colorLight" Color="#cbcfe1" />
     <SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5" />
-    <SolidColorBrush x:Key="LTC_colorT"		Color="#B5B5B5" Opacity="0.3"/>
+    <SolidColorBrush x:Key="LTC_colorT"		Color="#B5B5B5" Opacity="0.4"/>
     <SolidColorBrush x:Key="LTC_colorLight" Color="#e0e0e0"/>
 
     <SolidColorBrush x:Key="MinimalRed"     Color="#eb4d5c"/>

@@ -17,7 +17,37 @@
     <!-- 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+    <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" x:Name="MainGrid">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="*"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="5*"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="2*"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -28,8 +58,11 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <RelativePanel Grid.ColumnSpan="2">
-            <GridViewHeaderItem Width="2000" Margin="-10, 5" Padding="0, -5">
+        <RelativePanel 
+            Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
+            BorderThickness="0, 0, 0, 0.5" 
+            BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+            <StackPanel Margin="-10, 5" Padding="0, -10, 0, 5">
 
                 <StackPanel Orientation="Horizontal">
                     <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
@@ -43,9 +76,9 @@
 						Style="{ThemeResource SubheaderTextBlockStyle}"
                         FontSize="28"/>
                 </StackPanel>
-            </GridViewHeaderItem>
+            </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="10"
+            <StackPanel Orientation="Horizontal" Margin="5"
                         RelativePanel.AlignRightWithPanel="True">
 
                 <TextBlock Name="LTC_curr" 

@@ -11,120 +11,49 @@
         <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
 
-        <Style TargetType="TextBlock" x:Key="RelativePanelMenus">
-            <Setter Property="FontSize" Value="28" />
-            <Setter Property="FontWeight" Value="Light" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="20, 0, 0, 5" />
-            <Setter Property="Foreground" Value="White" />
-        </Style>
+        <DataTemplate x:Key="pivotHeader">
+            <TextBlock Text="{Binding}" FontSize="20" FontWeight="ExtraLight"
+                       HorizontalAlignment="Right"/>
+        </DataTemplate>
 
 
     </Page.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
-        <RelativePanel Grid.Row="0" Background="{StaticResource CoinBase_Blue}"
-					   Padding="0, 30, 0 ,0">
+    <Pivot x:Name="rootPivot" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+           Padding="0, 30, 0, 0"
+           IsHeaderItemsCarouselEnabled="False" HeaderTemplate="{StaticResource pivotHeader}"
+           HeaderFocusVisualPlacement="SelectedItemHeader">
 
-            <Button Background="Transparent" BorderBrush="Transparent" Click="HamburgerLogo_Click">
-                <Image Name="Logo" Source="Assets/CoinBase Transparent.png"
-				   Height="50" Width="70" Margin="-20,-10"
-				   RelativePanel.AlignVerticalCenterWithPanel="True" />
-            </Button>
+        <PivotItem Header="Home">
+            <Frame x:Name="Frame0" Margin="-15, 0"/>
+        </PivotItem>
 
-            <Button Name="SyncAllButton" Click="UpdateButton_Click"
-					Background="Transparent" BorderBrush="Transparent"
-					RelativePanel.AlignVerticalCenterWithPanel="True"
-					RelativePanel.AlignRightWithPanel="True">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="UpdateIcon" VerticalAlignment="Center" Margin="0,5"
-							   FontFamily="Segoe MDL2 Assets" Text="&#xE117;" Foreground="White" FontSize="18"/>
-                    <TextBlock Text="Update"
-							   Foreground="White" Margin="5,0"
-							   FontWeight="Light" FontSize="18" />
-                </StackPanel>
-            </Button>
-        </RelativePanel>
+        <PivotItem Header="BTC">
+            <Frame x:Name="Frame1" Margin="-15, 0"/>
+        </PivotItem>
 
-        <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <SplitView Name="MySplitView" Grid.Row="1"
-				   CompactPaneLength="50" OpenPaneLength="260"
-				   DisplayMode="CompactOverlay" Grid.ColumnSpan="2">
+        <PivotItem Header="ETH">
+            <Frame x:Name="Frame2" Margin="-15, 0"/>
+        </PivotItem>
 
-            <SplitView.Pane>
-                <RelativePanel Background="{StaticResource CoinBase_Blue}">
+        <PivotItem Header="LTC">
+            <Frame x:Name="Frame3" Margin="-15, 0"/>
+        </PivotItem>
 
-                    <Button Name="MenuHome" Background="Transparent" Click="MenuHome_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE10F;" Foreground="White" FontSize="22" FontFamily="Segoe MDL2 Assets"
-									   VerticalAlignment="Center"
-                                       Margin="4, 0, 0, 0"/>
+        <PivotItem Header="Settings">
+            <Frame x:Name="FrameSettings" Margin="-15, 0"/>
+        </PivotItem>
 
-                            <TextBlock Text="Home" Style="{StaticResource RelativePanelMenus}" />
-                        </StackPanel>
-                    </Button>
+        <Pivot.RightHeader>
+            <CommandBar OverflowButtonVisibility="Collapsed" Background="Transparent">
+                <AppBarSeparator/>
 
-                    <Button Name="MenuBTC" Background="Transparent" RelativePanel.Below="MenuHome" Click="MenuBTC_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/iconBTC.png"  Width="30"/>
+                <AppBarButton Icon="Shop" Click="SettingsButton_Click"/>
+                <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
+            </CommandBar>
+        </Pivot.RightHeader>
 
-                            <TextBlock Text="Bitcoin (BTC)" Style="{StaticResource RelativePanelMenus}" />
-                        </StackPanel>
-                    </Button>
-                    
-                    <Button Name="MenuETH" Background="Transparent" RelativePanel.Below="MenuBTC" Click="MenuETH_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/iconETH.png"  Width="30"/>
+    </Pivot>
 
-                            <TextBlock Text="Ethereum (ETH)" Style="{StaticResource RelativePanelMenus}" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Name="MenuLTC" Background="Transparent" RelativePanel.Below="MenuETH" Click="MenuLTC_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/iconLTC.png"  Width="30"/>
-
-                            <TextBlock Text="Litecoin (LTC)" Style="{StaticResource RelativePanelMenus}" />
-                        </StackPanel>
-                    </Button>
-
-                    <!-- ############################################################################################################ -->
-                    <Button Name="MenuPortfolio" Background="Transparent" RelativePanel.Above="MenuSettings" Click="MenuPortfolio_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE14D;" Foreground="White" FontSize="20" FontFamily="Segoe MDL2 Assets"
-									   VerticalAlignment="Center"
-                                       Margin="5, 0, 0, 0"/>
-
-                            <TextBlock Text="Portfolio" Style="{StaticResource RelativePanelMenus}" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Name="MenuSettings" Background="Transparent" RelativePanel.AlignBottomWithPanel="True" Click="MenuSettings_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE115;" Foreground="White" FontSize="20" FontFamily="Segoe MDL2 Assets"
-									   VerticalAlignment="Center"
-                                       Margin="5, 0, 0, 0"/>
-
-                            <TextBlock Text="Settings" Style="{StaticResource RelativePanelMenus}" />
-                        </StackPanel>
-                    </Button>
-                </RelativePanel>
-            </SplitView.Pane>
-
-            <SplitView.Content>
-                <Frame Name="MainFrame" Background="Gray">
-                </Frame>
-            </SplitView.Content>
-        </SplitView>
-    </Grid>
-    
-    
-    
-    
-    
 </Page>
