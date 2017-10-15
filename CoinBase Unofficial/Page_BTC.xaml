@@ -25,6 +25,10 @@
                     <VisualState.Setters>
                         <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="*"/>
                         <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="0"/>
+                        <Setter Target="MainGrid.RowDefinitions[0].Height" Value="auto"/>
+                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="4*"/>
+                        <Setter Target="MainGrid.RowDefinitions[2].Height" Value="auto"/>
+                        <Setter Target="MainGrid.RowDefinitions[3].Height" Value="2*"/>
                         <Setter Target="Info.(Grid.Column)" Value="0"/>
                         <Setter Target="Info.(Grid.Row)" Value="2"/>
                     </VisualState.Setters>
@@ -36,10 +40,14 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="5*"/>
-                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="2*"/>
-                        <Setter Target="Info.(Grid.Column)" Value="1"/>
-                        <Setter Target="Info.(Grid.Row)" Value="1"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="*"/>
+                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="0"/>
+                        <Setter Target="MainGrid.RowDefinitions[0].Height" Value="auto"/>
+                        <Setter Target="MainGrid.RowDefinitions[1].Height" Value="4*"/>
+                        <Setter Target="MainGrid.RowDefinitions[2].Height" Value="auto"/>
+                        <Setter Target="MainGrid.RowDefinitions[3].Height" Value="2*"/>
+                        <Setter Target="Info.(Grid.Column)" Value="0"/>
+                        <Setter Target="Info.(Grid.Row)" Value="2"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -49,17 +57,18 @@
 
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <RelativePanel Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
+        <RelativePanel Grid.Row="0" Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
                        BorderThickness="0, 0, 0, 0.5" 
                        BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Margin="-10, 5" Padding="0, -10, 0, 5">
@@ -198,7 +207,7 @@
 
         <!-- 
         ###################################################################################################################-->
-        <StackPanel x:Name="Info" Grid.Column="1" Grid.Row="1" Margin="10, 0">
+        <StackPanel x:Name="Info" Grid.Column="1" Grid.Row="1" Margin="40, 0">
             <TextBlock Text="Stats 24h:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="28"/>
 
             <Grid>
@@ -223,27 +232,28 @@
                 <TextBlock Name="BTC_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
                 <TextBlock Name="BTC_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
             </Grid>
+        </StackPanel>
 
-            <telerik:RadCartesianChart Height="250" Margin="0, 20">
-                <telerik:BarSeries 
+        <telerik:RadCartesianChart Grid.Row="3" Margin="60, 10" >
+            <telerik:BarSeries 
                     x:Name="VolumeChart"
                     x:FieldModifier="internal"
                     ItemsSource="{Binding}">
 
-                    <telerik:BarSeries.PointTemplate>
-                        <DataTemplate>
-                            <Border Background="{StaticResource BTC_color}"/>
-                        </DataTemplate>
-                    </telerik:BarSeries.PointTemplate>
+                <telerik:BarSeries.PointTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource BTC_color}"/>
+                    </DataTemplate>
+                </telerik:BarSeries.PointTemplate>
 
-                    <telerik:BarSeries.VerticalAxis>
-                        <telerik:LinearAxis 
+                <telerik:BarSeries.VerticalAxis>
+                    <telerik:LinearAxis 
                             Visibility="Collapsed"
                             HorizontalLocation="Right"/>
-                    </telerik:BarSeries.VerticalAxis>
+                </telerik:BarSeries.VerticalAxis>
 
-                    <telerik:BarSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis 
+                <telerik:BarSeries.HorizontalAxis>
+                    <telerik:DateTimeCategoricalAxis 
                             MajorTickTemplate="{StaticResource TransparentRect}"
                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                             FontWeight="Light"
@@ -251,26 +261,24 @@
                             VerticalLocation="Bottom"
                             LabelInterval="3"
                             LabelFormat="{}{0,0:HH}">
-                            <telerik:DateTimeCategoricalAxis.LabelStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="0, -5, 0, 0"/>
-                                </Style>
-                            </telerik:DateTimeCategoricalAxis.LabelStyle>
-                        </telerik:DateTimeCategoricalAxis>
-                    </telerik:BarSeries.HorizontalAxis>
+                        <telerik:DateTimeCategoricalAxis.LabelStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="0, -5, 0, 0"/>
+                            </Style>
+                        </telerik:DateTimeCategoricalAxis.LabelStyle>
+                    </telerik:DateTimeCategoricalAxis>
+                </telerik:BarSeries.HorizontalAxis>
 
-                    <telerik:BarSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:BarSeries.CategoryBinding>
+                <telerik:BarSeries.CategoryBinding>
+                    <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                </telerik:BarSeries.CategoryBinding>
 
-                    <telerik:BarSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                    </telerik:BarSeries.ValueBinding>
+                <telerik:BarSeries.ValueBinding>
+                    <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                </telerik:BarSeries.ValueBinding>
 
-                </telerik:BarSeries>
-            </telerik:RadCartesianChart>
-
-        </StackPanel>
+            </telerik:BarSeries>
+        </telerik:RadCartesianChart>
 
 
 

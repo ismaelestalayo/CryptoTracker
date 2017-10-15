@@ -21,7 +21,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <RelativePanel>
+        <RelativePanel Grid.Row="0">
             <GridViewHeaderItem Width="500" Margin="-10, 5" Padding="0, -5">
 
                 <StackPanel Orientation="Horizontal">
