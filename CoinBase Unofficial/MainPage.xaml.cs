@@ -1,4 +1,5 @@
 ﻿using CoinBase.Helpers;
+using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
@@ -15,6 +16,8 @@ namespace CoinBase
         private SolidColorBrush Color_CoinBase = new SolidColorBrush(Color.FromArgb(255, 0, 91, 148));
         private SolidColorBrush Color_CoinBaseButton = new SolidColorBrush(Color.FromArgb(255, 33, 132, 215));
         private SolidColorBrush Color_CoinBaseDark = new SolidColorBrush(Color.FromArgb(255, 0, 49, 80));
+
+        private bool isInSettings = false;
 
         public MainPage() {
             this.InitializeComponent();
@@ -54,7 +57,6 @@ namespace CoinBase
             Frame1.Navigate(typeof(Page_BTC));
             Frame2.Navigate(typeof(Page_ETH));
             Frame3.Navigate(typeof(Page_LTC));
-            FrameSettings.Navigate(typeof(Page_Settings));
             //SyncAll();
         }
 
@@ -67,6 +69,42 @@ namespace CoinBase
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e){
+
+            if (!isInSettings){
+                switch (rootPivot.SelectedIndex){
+                    case 0:
+                        Frame0.Navigate(typeof(Page_Settings));
+                        break;
+                    case 1:
+                        Frame1.Navigate(typeof(Page_Settings));
+                        break;
+                    case 2:
+                        Frame2.Navigate(typeof(Page_Settings));
+                        break;
+                    case 3:
+                        Frame3.Navigate(typeof(Page_Settings));
+                        break;
+                }
+                isInSettings = true;
+            }
+            else{
+                switch (rootPivot.SelectedIndex){
+                    case 0:
+                        Frame0.Navigate(typeof(Page_Home));
+                        break;
+                    case 1:
+                        Frame1.Navigate(typeof(Page_BTC));
+                        break;
+                    case 2:
+                        Frame2.Navigate(typeof(Page_ETH));
+                        break;
+                    case 3:
+                        Frame3.Navigate(typeof(Page_LTC));
+                        break;
+                }
+                isInSettings = false;
+            }
+
             
         }
 
@@ -97,8 +135,11 @@ namespace CoinBase
             l.UpdateLiveTile();
         }
 
-
-        
-
+        private void rootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e){
+            Frame0.Navigate(typeof(Page_Home));
+            Frame1.Navigate(typeof(Page_BTC));
+            Frame2.Navigate(typeof(Page_ETH));
+            Frame3.Navigate(typeof(Page_LTC));
+        }
     }
 }

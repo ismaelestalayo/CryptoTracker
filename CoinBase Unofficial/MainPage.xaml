@@ -23,26 +23,23 @@
     <Pivot x:Name="rootPivot" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
            Padding="0, 30, 0, 0"
            IsHeaderItemsCarouselEnabled="False" HeaderTemplate="{StaticResource pivotHeader}"
-           HeaderFocusVisualPlacement="SelectedItemHeader">
-
-        <PivotItem Header="Home">
+           HeaderFocusVisualPlacement="SelectedItemHeader"
+           SelectionChanged="rootPivot_SelectionChanged">
+        
+        <PivotItem Header="Home" Name="Home">
             <Frame x:Name="Frame0" Margin="-15, 0"/>
         </PivotItem>
 
-        <PivotItem Header="BTC">
+        <PivotItem Header="BTC" Name="Pivot1">
             <Frame x:Name="Frame1" Margin="-15, 0"/>
         </PivotItem>
 
-        <PivotItem Header="ETH">
+        <PivotItem Header="ETH" Name="Pivot2">
             <Frame x:Name="Frame2" Margin="-15, 0"/>
         </PivotItem>
 
-        <PivotItem Header="LTC">
+        <PivotItem Header="LTC" Name="Pivot3">
             <Frame x:Name="Frame3" Margin="-15, 0"/>
-        </PivotItem>
-
-        <PivotItem Header="Settings">
-            <Frame x:Name="FrameSettings" Margin="-15, 0"/>
         </PivotItem>
 
         <Pivot.RightHeader>
