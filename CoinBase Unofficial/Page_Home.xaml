@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-    NavigationCacheMode="Disabled"
+    NavigationCacheMode="Required"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" x:Name="MainGrid" Padding="0, 0, 0, 10">
@@ -518,12 +518,12 @@
         ################################################################################################################################
         ############################################################################################################################ -->
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" Margin="0, 0, 0, -20">
-            <RadioButton Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click"/>
-            <RadioButton Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
-            <RadioButton Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click"/>
-            <RadioButton Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click"/>
-            <RadioButton Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click"/>
-            <RadioButton Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click"/>
+            <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+            <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
+            <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+            <RadioButton GroupName="Home" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+            <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+            <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
         </StackPanel>
 
     </Grid>

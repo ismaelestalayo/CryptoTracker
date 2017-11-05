@@ -25,10 +25,14 @@
                 <LineBreak/>
                 
                 <Run>New in this version:</Run><LineBreak/>
-                <Run Text=" - WorkInProgress Live Tile (only updates when clicking Update button)" FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Added Portfolio section" FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Changed sliders for buttons (faster and less bugs)" FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Added support for Chinese Renminbi (CNY) ¥" FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - New fluent UI" 
+                     FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - Pages auto-update each 30 seconds." 
+                     FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - Added Portfolio section" 
+                     FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - Changed sliders for buttons (faster and less bugs)" 
+                     FontWeight="ExtraLight"/><LineBreak/>
                 
                 <LineBreak/>
                 <Run>If you expereience any kind of bug or have any suggestion, be sure to reach me through 

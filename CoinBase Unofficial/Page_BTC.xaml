@@ -36,7 +36,7 @@
 
                 <VisualState x:Name="WideState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" />
+                        <AdaptiveTrigger MinWindowWidth="700" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
@@ -196,12 +196,12 @@
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                <RadioButton Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
-                <RadioButton Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" IsChecked="True"/>
-                <RadioButton Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
-                <RadioButton Content="month" Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
-                <RadioButton Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
-                <RadioButton Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton GroupName="BTC" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton GroupName="BTC" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click" IsChecked="True"/>
+                <RadioButton GroupName="BTC" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton GroupName="BTC" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton GroupName="BTC" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
+                <RadioButton GroupName="BTC" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="BTC_TimerangeButton_Click"/>
             </StackPanel>
         </Grid>
 
@@ -234,7 +234,7 @@
             </Grid>
         </StackPanel>
 
-        <telerik:RadCartesianChart Grid.Row="3" Margin="60, 10" >
+        <telerik:RadCartesianChart Grid.Row="3" Margin="60, 10">
             <telerik:BarSeries 
                     x:Name="VolumeChart"
                     x:FieldModifier="internal"
@@ -279,7 +279,6 @@
 
             </telerik:BarSeries>
         </telerik:RadCartesianChart>
-
 
 
 

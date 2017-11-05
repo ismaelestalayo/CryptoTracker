@@ -1,15 +1,18 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
+using Windows.System.Threading;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase {
+namespace CoinBase
+{
     public sealed partial class Page_BTC : Page {
 
         internal static int limit = 60;
@@ -18,18 +21,24 @@ namespace CoinBase {
         public Page_BTC() {
             this.InitializeComponent();
             InitValues();
+
+            TimeSpan period = TimeSpan.FromSeconds(30);
+            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                    RadioButton r = new RadioButton { Content = timeSpan };
+                    BTC_TimerangeButton_Click(r, null);
+                });
+            }, period);
         }
 
         async private void InitValues() {
             try {
                 BTC_Update_click();
-                //await GetStats();
-                //await Get24Volume();
 
             } catch (Exception ex) {
                 LoadingControl.IsLoading = false;
                 BTC_curr.Text = "Error!";
-                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
+                //var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 
@@ -104,7 +113,9 @@ namespace CoinBase {
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
-            LoadingControl.IsLoading = false;
+
+            if(LoadingControl != null)
+                LoadingControl.IsLoading = false;
         }
 
         async public Task GetStats() {
