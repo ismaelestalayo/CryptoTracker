@@ -11,8 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase
-{
+namespace CoinBase{
     public sealed partial class Page_LTC : Page {
 
         internal static int limit = 60;
@@ -22,13 +21,16 @@ namespace CoinBase
             this.InitializeComponent();
             InitValues();
 
-            TimeSpan period = TimeSpan.FromSeconds(30);
-            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
-                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
-                    RadioButton r = new RadioButton { Content = timeSpan };
-                    LTC_TimerangeButton_Click(r, null);
-                });
-            }, period);
+            // Windows.Desktop      Windows.Mobile      
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
+                TimeSpan period = TimeSpan.FromSeconds(30);
+                ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+                    Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                        RadioButton r = new RadioButton { Content = timeSpan };
+                        LTC_TimerangeButton_Click(r, null);
+                    });
+                }, period);
+            }
         }
 
         async private void InitValues() {

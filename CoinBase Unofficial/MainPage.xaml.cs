@@ -24,39 +24,35 @@ namespace CoinBase{
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
 
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            ApplicationView view = ApplicationView.GetForCurrentView();
-            ApplicationViewTitleBar titleBar = view.TitleBar;
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
+                CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+                rootPivot.Padding = new Thickness(0, 30, 0, 0);
+            }
+            
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-            /// Alpha channel does nothing 
-            /// (guess it's not supported on TitleBars
-            titleBar.BackgroundColor = Color.FromArgb(0, 0, 91, 148);
-            titleBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
-            titleBar.ButtonBackgroundColor = Color.FromArgb(0, 34, 34, 34);  //New minimal gray
-            titleBar.ButtonForegroundColor = Color.FromArgb(255, 0, 0, 0);
+            //titleBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242);
+            //titleBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
+            titleBar.ButtonBackgroundColor = Color.FromArgb(0, 242, 0, 242);
+            titleBar.ButtonForegroundColor = Color.FromArgb(255, 150, 150, 150);
 
-            titleBar.InactiveBackgroundColor = Color.FromArgb(0, 0, 91, 148);
-            titleBar.InactiveForegroundColor = Color.FromArgb(255, 0, 0, 0);
-
-            //titleBar.ButtonHoverBackgroundColor = Color.FromArgb(0, 20, 20, 20);
-            //titleBar.ButtonPressedBackgroundColor = Color.FromArgb(0, 50, 50, 50);
-            titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(0, 0, 0, 0);
-            //titleBar.ButtonInactiveForegroundColor = Color.FromArgb(0, 255, 255, 255);
-
+            titleBar.InactiveBackgroundColor = Color.FromArgb(0, 242, 242, 242);
+            titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(255, 242, 242, 242);
+            
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
                 statusBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242);
                 statusBar.BackgroundOpacity = 1;
+                statusBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
 
-            Frame0.Navigate(typeof(Page_Home));
-            Frame1.Navigate(typeof(Page_BTC));
-            Frame2.Navigate(typeof(Page_ETH));
-            Frame3.Navigate(typeof(Page_LTC));
-            //SyncAll();
+            //Frame0.Navigate(typeof(Page_Home));
+            //Frame1.Navigate(typeof(Page_BTC));
+            //Frame2.Navigate(typeof(Page_ETH));
+            //Frame3.Navigate(typeof(Page_LTC));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////

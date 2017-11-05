@@ -20,29 +20,28 @@
     </Page.Resources>
 
 
-    <Pivot x:Name="rootPivot" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-           Padding="0, 30, 0, 0"
+    <Pivot x:Name="rootPivot" 
+           Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
            IsHeaderItemsCarouselEnabled="False" HeaderTemplate="{StaticResource pivotHeader}"
            HeaderFocusVisualPlacement="SelectedItemHeader"
-           SelectionChanged="rootPivot_SelectionChanged"
-           Style="{StaticResource PivotStylee}">
-        
+           SelectionChanged="rootPivot_SelectionChanged">
+
         <Pivot.Resources>
-        <Style TargetType="PivotHeaderItem">
-            <Setter Property="FontSize" Value="{ThemeResource PivotHeaderItemFontSize}" />
-            <Setter Property="FontFamily" Value="{ThemeResource PivotHeaderItemFontFamily}" />
-            <Setter Property="FontWeight" Value="{ThemeResource PivotHeaderItemThemeFontWeight}" />
-            <Setter Property="CharacterSpacing" Value="{ThemeResource PivotHeaderItemCharacterSpacing}" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
-            <Setter Property="Padding" Value="{ThemeResource PivotHeaderItemMargin}" />
-            <Setter Property="Height" Value="48" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="PivotHeaderItem">
-                        <Grid
+            <Style TargetType="PivotHeaderItem">
+                <Setter Property="FontSize" Value="{ThemeResource PivotHeaderItemFontSize}" />
+                <Setter Property="FontFamily" Value="{ThemeResource PivotHeaderItemFontFamily}" />
+                <Setter Property="FontWeight" Value="{ThemeResource PivotHeaderItemThemeFontWeight}" />
+                <Setter Property="CharacterSpacing" Value="{ThemeResource PivotHeaderItemCharacterSpacing}" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                <Setter Property="Padding" Value="{ThemeResource PivotHeaderItemMargin}" />
+                <Setter Property="Height" Value="48" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="PivotHeaderItem">
+                            <Grid
                         x:Name="Grid"
                         Background="{TemplateBinding Background}">
                                 <Grid.Resources>
@@ -67,12 +66,16 @@
                                             <VisualTransition From="Unselected" To="UnselectedLocked" GeneratedDuration="0:0:0.33" />
                                             <VisualTransition From="UnselectedLocked" To="Unselected" GeneratedDuration="0:0:0.33" />
                                         </VisualStateGroup.Transitions>
-                                        
+
                                         <VisualState x:Name="Unselected">
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                    Storyboard.TargetProperty="FontWeight" >
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="Light" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground" >
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Gray" />
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
@@ -83,25 +86,29 @@
                                                                    Storyboard.TargetProperty="FontWeight" >
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="SemiBold" />
                                                 </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground" >
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotForegroundThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
                                                                    Storyboard.TargetProperty="Background" >
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
-                                        
+
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <ContentPresenter
-                        x:Name="ContentPresenter"
-                        Content="{TemplateBinding Content}"
-                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                        Margin="{TemplateBinding Padding}"
-                        FontSize="{TemplateBinding FontSize}"
-                        FontFamily="{TemplateBinding FontFamily}"
-                        FontWeight="{TemplateBinding FontWeight}"
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    x:Name="ContentPresenter"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    Margin="{TemplateBinding Padding}"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    FontFamily="{TemplateBinding FontFamily}"
+                                    FontWeight="{TemplateBinding FontWeight}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                     <ContentPresenter.RenderTransform>
                                         <TranslateTransform x:Name="ContentPresenterTranslateTransform" />
                                     </ContentPresenter.RenderTransform>
@@ -112,7 +119,7 @@
                 </Setter>
             </Style>
         </Pivot.Resources>
-        
+
         <PivotItem Header="Home" Name="Home">
             <Frame x:Name="Frame0" Margin="-15, 0"/>
         </PivotItem>
@@ -128,12 +135,13 @@
         <PivotItem Header="LTC" Name="Pivot3">
             <Frame x:Name="Frame3" Margin="-15, 0"/>
         </PivotItem>
-
+        
         <Pivot.RightHeader>
             <CommandBar OverflowButtonVisibility="Collapsed" Background="Transparent">
                 <AppBarSeparator/>
 
-                <AppBarButton Icon="Shop" Click="SettingsButton_Click"/>
+                <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
+                <AppBarButton Icon="Shop" Click="SettingsButton_Click" />
                 <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
             </CommandBar>
         </Pivot.RightHeader>

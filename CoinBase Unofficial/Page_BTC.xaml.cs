@@ -11,8 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase
-{
+namespace CoinBase {
     public sealed partial class Page_BTC : Page {
 
         internal static int limit = 60;
@@ -22,13 +21,16 @@ namespace CoinBase
             this.InitializeComponent();
             InitValues();
 
-            TimeSpan period = TimeSpan.FromSeconds(30);
-            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
-                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
-                    RadioButton r = new RadioButton { Content = timeSpan };
-                    BTC_TimerangeButton_Click(r, null);
-                });
-            }, period);
+            // Windows.Desktop      Windows.Mobile      
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
+                TimeSpan period = TimeSpan.FromSeconds(30);
+                ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+                    Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                        RadioButton r = new RadioButton { Content = timeSpan };
+                        BTC_TimerangeButton_Click(r, null);
+                    });
+                }, period);
+            }
         }
 
         async private void InitValues() {
@@ -49,7 +51,7 @@ namespace CoinBase
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
-            
+
             RadioButton r = new RadioButton { Content = timeSpan };
             BTC_TimerangeButton_Click(r, null);
             GetStats();
@@ -83,13 +85,14 @@ namespace CoinBase
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
-                App.ChartDataObject obj = new App.ChartDataObject { Date   = App.ppBTC[i].DateTime,
-                                                            Value  =(App.ppBTC[i].Low + App.ppBTC[i].High) / 2,
-                                                            Low    = App.ppBTC[i].Low,
-                                                            High   = App.ppBTC[i].High,
-                                                            Open   = App.ppBTC[i].Open,
-                                                            Close  = App.ppBTC[i].Close,
-                                                            Volume = App.ppBTC[i].Volumefrom
+                App.ChartDataObject obj = new App.ChartDataObject {
+                    Date = App.ppBTC[i].DateTime,
+                    Value = (App.ppBTC[i].Low + App.ppBTC[i].High) / 2,
+                    Low = App.ppBTC[i].Low,
+                    High = App.ppBTC[i].High,
+                    Open = App.ppBTC[i].Open,
+                    Close = App.ppBTC[i].Close,
+                    Volume = App.ppBTC[i].Volumefrom
                 };
                 data.Add(obj);
 
@@ -114,7 +117,7 @@ namespace CoinBase
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
 
-            if(LoadingControl != null)
+            if (LoadingControl != null)
                 LoadingControl.IsLoading = false;
         }
 
@@ -122,9 +125,9 @@ namespace CoinBase
 
             await App.GetStats("BTC");
 
-            BTC_Open.Text  = App.stats.Open24 + App.coinSymbol;
-            BTC_High.Text  = App.stats.High24 + App.coinSymbol;
-            BTC_Low.Text   = App.stats.Low24 + App.coinSymbol;
+            BTC_Open.Text = App.stats.Open24 + App.coinSymbol;
+            BTC_High.Text = App.stats.High24 + App.coinSymbol;
+            BTC_Low.Text = App.stats.Low24 + App.coinSymbol;
             BTC_Vol24.Text = App.stats.Volume24 + "BTC";
         }
         async private Task Get24Volume() {
@@ -132,7 +135,7 @@ namespace CoinBase
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < 24; i++) {
-                data.Add( new App.ChartDataObject() {
+                data.Add(new App.ChartDataObject() {
                     Date = App.ppBTC[i].DateTime,
                     Volume = App.ppBTC[i].Volumefrom
                 });
