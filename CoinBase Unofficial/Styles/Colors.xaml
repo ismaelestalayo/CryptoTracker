@@ -18,4 +18,7 @@
     <SolidColorBrush x:Key="MinimalRed"     Color="#eb4d5c"/>
     <SolidColorBrush x:Key="MinimalGreen"   Color="#00cc6a"/>
 
+    <SolidColorBrush x:Key="MainBackground"   Color="#00cc6a"/>
+    <SolidColorBrush x:Key="SecondBackground" Color="#00cc6a"/>
+
 </ResourceDictionary>

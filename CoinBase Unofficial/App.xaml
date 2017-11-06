@@ -6,7 +6,6 @@
     <!-- RequestedTheme="Light"> -->
 
     <Application.Resources>
-
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Buttons.xaml" />

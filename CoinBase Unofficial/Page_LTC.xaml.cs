@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using Telerik.UI.Xaml.Controls.Chart;
+using Windows.System.Threading;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase {
+namespace CoinBase{
     public sealed partial class Page_LTC : Page {
 
         internal static int limit = 60;
@@ -18,18 +20,27 @@ namespace CoinBase {
         public Page_LTC() {
             this.InitializeComponent();
             InitValues();
+
+            // Windows.Desktop      Windows.Mobile      
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
+                TimeSpan period = TimeSpan.FromSeconds(30);
+                ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+                    Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                        RadioButton r = new RadioButton { Content = timeSpan };
+                        LTC_TimerangeButton_Click(r, null);
+                    });
+                }, period);
+            }
         }
 
         async private void InitValues() {
             try {
                 LTC_Update_click();
-                await GetStats();
-                await Get24Volume();
 
             } catch (Exception ex) {
                 LoadingControl.IsLoading = false;
                 LTC_curr.Text = "Error!";
-                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
+                //var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 
@@ -50,7 +61,7 @@ namespace CoinBase {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateLTC() {
             await App.GetCurrentPrice("LTC");
-            LTC_curr.Text = (App.coin.Equals("EUR")) ? App.LTC_now.ToString() + "€" : App.LTC_now.ToString() + "$";
+            LTC_curr.Text = App.LTC_now.ToString() + App.coinSymbol;
 
             switch (timeSpan) {
                 case "hour":
@@ -104,7 +115,9 @@ namespace CoinBase {
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
-            LoadingControl.IsLoading = false;
+
+            if (LoadingControl != null)
+                LoadingControl.IsLoading = false;
         }
 
         async private Task GetStats() {

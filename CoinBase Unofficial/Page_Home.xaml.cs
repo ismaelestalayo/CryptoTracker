@@ -11,8 +11,8 @@ using Windows.UI.Xaml;
 namespace CoinBase {
     public sealed partial class Page_Home : Page {
 
-        private int limit = 1500;
-        private string timeSpan = "day";
+        private int limit = 60;
+        private string timeSpan = "hour";
 
         public class ChartDataObject {
             public DateTime Date { get; set; }
