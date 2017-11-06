@@ -270,7 +270,7 @@
         <!-- ###########################################################################################################################
         ################################################################################################################################
         ############################################################################################################################ -->
-        <Grid Grid.Row="0" Grid.Column="1" Margin="10" BorderBrush="{StaticResource BTC_color}" BorderThickness="1" 
+        <Grid Grid.Row="0" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
 
             <Grid.RowDefinitions>
@@ -328,7 +328,7 @@
                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                             FontWeight="Light"
                             LineStyle="{StaticResource TransparentLine}"
-                            VerticalLocation="Bottom"
+                            VerticalLocation="Top"
                             LabelInterval="3"
                             LabelFormat="{}{0,0:HH}">
                             <telerik:DateTimeCategoricalAxis.LabelStyle>
@@ -355,7 +355,7 @@
 
 
         <!-- ############################################################################################################### -->
-        <Grid Grid.Row="1" Grid.Column="1" Margin="10" BorderBrush="{StaticResource ETH_color}" BorderThickness="1" 
+        <Grid Grid.Row="1" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
 
             <Grid.RowDefinitions>
@@ -413,7 +413,7 @@
                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                             FontWeight="Light"
                             LineStyle="{StaticResource TransparentLine}"
-                            VerticalLocation="Bottom"
+                            VerticalLocation="Top"
                             LabelInterval="3"
                             LabelFormat="{}{0,0:HH}">
                             <telerik:DateTimeCategoricalAxis.LabelStyle>
@@ -439,7 +439,7 @@
         </Grid>
 
         <!-- ############################################################################################################### -->
-        <Grid Grid.Row="2" Grid.Column="1" Margin="10" BorderBrush="{StaticResource LTC_color}" BorderThickness="1" 
+        <Grid Grid.Row="2" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
 
             <Grid.RowDefinitions>
@@ -497,7 +497,7 @@
                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                             FontWeight="Light"
                             LineStyle="{StaticResource TransparentLine}"
-                            VerticalLocation="Bottom"
+                            VerticalLocation="Top"
                             LabelInterval="3"
                             LabelFormat="{}{0,0:HH}">
                             <telerik:DateTimeCategoricalAxis.LabelStyle>

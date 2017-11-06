@@ -27,7 +27,8 @@ namespace CoinBase{
                 ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
                     Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
                         RadioButton r = new RadioButton { Content = timeSpan };
-                        LTC_TimerangeButton_Click(r, null);
+                        if (timeSpan == "hour")
+                            LTC_TimerangeButton_Click(r, null);
                     });
                 }, period);
             }

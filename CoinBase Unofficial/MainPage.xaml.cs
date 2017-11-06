@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,6 +18,7 @@ namespace CoinBase{
         private SolidColorBrush Color_CoinBaseDark = new SolidColorBrush(Color.FromArgb(255, 0, 49, 80));
 
         private bool isInSettings = false;
+        private bool isInPortfolio = false;
 
         public MainPage() {
             this.InitializeComponent();
@@ -24,12 +26,16 @@ namespace CoinBase{
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
 
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
                 rootPivot.Padding = new Thickness(0, 30, 0, 0);
             }
             
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
 
             //titleBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242);
             //titleBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
@@ -63,23 +69,49 @@ namespace CoinBase{
             l.UpdateLiveTile();
         }
 
+        private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e) {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+                return;
+
+            // Navigate back if possible, and if the event has not 
+            // already been handled .
+            if (rootFrame.CanGoBack && e.Handled == false) {
+                e.Handled = true;
+                rootFrame.GoBack();
+            }
+        }
+
+        private void PortfolioButton_Click(object sender, RoutedEventArgs e) {
+
+            if(!isInPortfolio) {
+                rootPivot.SelectedIndex = 0;
+                Frame0.Navigate(typeof(Page_Portfolio));
+                isInPortfolio = true;
+            } else {
+                switch (rootPivot.SelectedIndex) {
+                    case 0:
+                        Frame0.Navigate(typeof(Page_Home));
+                        break;
+                    case 1:
+                        Frame1.Navigate(typeof(Page_BTC));
+                        break;
+                    case 2:
+                        Frame2.Navigate(typeof(Page_ETH));
+                        break;
+                    case 3:
+                        Frame3.Navigate(typeof(Page_LTC));
+                        break;
+                }
+                isInPortfolio = false;
+            }
+        }
+
         private void SettingsButton_Click(object sender, RoutedEventArgs e){
 
             if (!isInSettings){
-                switch (rootPivot.SelectedIndex){
-                    case 0:
-                        Frame0.Navigate(typeof(Page_Settings));
-                        break;
-                    case 1:
-                        Frame1.Navigate(typeof(Page_Settings));
-                        break;
-                    case 2:
-                        Frame2.Navigate(typeof(Page_Settings));
-                        break;
-                    case 3:
-                        Frame3.Navigate(typeof(Page_Settings));
-                        break;
-                }
+                rootPivot.SelectedIndex = 0;
+                Frame0.Navigate(typeof(Page_Settings));
                 isInSettings = true;
             }
             else{
@@ -104,6 +136,30 @@ namespace CoinBase{
         }
 
         private async Task SyncAll() {
+            var r = rootPivot;
+            switch (rootPivot.SelectedIndex) {
+                //Home
+                case 0:
+                    var p0 = (Page_Home)Frame0.Content;
+                    p0.UpdateHome();
+                    break;
+                //BTC
+                case 1:
+                    var p1 = (Page_BTC)Frame1.Content;
+                    p1.BTC_Update_click();
+                    break;
+                //ETH
+                case 2:
+                    var p2 = (Page_ETH)Frame2.Content;
+                    p2.ETH_Update_click();
+                    break;
+                //LTC
+                case 3:
+                    var p3 = (Page_LTC)Frame3.Content;
+                    p3.LTC_Update_click();
+                    break;
+            }
+
             //string x = MainFrame.Content.ToString();
 
             //if (x.Equals("CoinBase.Page_Home")) {
@@ -131,10 +187,14 @@ namespace CoinBase{
         }
 
         private void rootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e){
+            isInPortfolio = false;
+            isInSettings = false;
+
             Frame0.Navigate(typeof(Page_Home));
             Frame1.Navigate(typeof(Page_BTC));
             Frame2.Navigate(typeof(Page_ETH));
             Frame3.Navigate(typeof(Page_LTC));
         }
+
     }
 }

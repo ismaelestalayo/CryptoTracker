@@ -22,6 +22,8 @@ namespace CoinBase {
         internal static string coin       = "EUR";
         internal static string coinSymbol = "€";
 
+        internal static int pivotIndex = 0;
+
         internal static float BTC_old;
         internal static float ETH_old;
         internal static float LTC_old;
@@ -100,7 +102,6 @@ namespace CoinBase {
                     //TODO: Cargar el estado de la aplicación suspendida previamente
                 }
 
-                // Poner el marco en la ventana actual.
                 Window.Current.Content = rootFrame;
             }
 
