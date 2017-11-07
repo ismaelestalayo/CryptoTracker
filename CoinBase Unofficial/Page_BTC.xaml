@@ -104,7 +104,7 @@
                 <TextBlock Name="BTC_diff" 
                            Text="0%"
                            VerticalAlignment="Bottom"
-                           Margin="5, 0, 0, 1"
+                           Margin="5, 0, 5, 1"
                            FontSize="19"
                            FontWeight="Light"/>
             </StackPanel>

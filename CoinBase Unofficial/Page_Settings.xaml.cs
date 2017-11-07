@@ -108,8 +108,9 @@ namespace CoinBase {
                     App.coin       = "CNY";
                     App.coinSymbol = "¥";
                     break;
-
             }
+            MainPage p = new MainPage();
+            p.SyncAllTEST();
         }
     }
 }

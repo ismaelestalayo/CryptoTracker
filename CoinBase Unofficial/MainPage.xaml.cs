@@ -55,14 +55,14 @@ namespace CoinBase{
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
 
-            //Frame0.Navigate(typeof(Page_Home));
-            //Frame1.Navigate(typeof(Page_BTC));
-            //Frame2.Navigate(typeof(Page_ETH));
-            //Frame3.Navigate(typeof(Page_LTC));
+            Frame0.Navigate(typeof(Page_Home));
+            Frame1.Navigate(typeof(Page_BTC));
+            Frame2.Navigate(typeof(Page_ETH));
+            Frame3.Navigate(typeof(Page_LTC));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        private void UpdateButton_Click(object sender, RoutedEventArgs e) {
+        internal void UpdateButton_Click(object sender, RoutedEventArgs e) {
             SyncAll();
 
             LiveTile l = new LiveTile();
@@ -135,55 +135,50 @@ namespace CoinBase{
             
         }
 
-        private async Task SyncAll() {
+        internal async Task SyncAll() {
             var r = rootPivot;
+
             switch (rootPivot.SelectedIndex) {
-                //Home
                 case 0:
                     var p0 = (Page_Home)Frame0.Content;
                     p0.UpdateHome();
                     break;
-                //BTC
+                
                 case 1:
                     var p1 = (Page_BTC)Frame1.Content;
                     p1.BTC_Update_click();
                     break;
-                //ETH
+
                 case 2:
                     var p2 = (Page_ETH)Frame2.Content;
                     p2.ETH_Update_click();
                     break;
-                //LTC
+
                 case 3:
                     var p3 = (Page_LTC)Frame3.Content;
                     p3.LTC_Update_click();
                     break;
             }
 
-            //string x = MainFrame.Content.ToString();
-
-            //if (x.Equals("CoinBase.Page_Home")) {
-            //    var p = (Page_Home)MainFrame.Content;
-            //    p.UpdateHome();
-
-            //} else if (x.Equals("CoinBase.Page_BTC")) {
-            //    var p = (Page_BTC)MainFrame.Content;
-            //    p.BTC_Update_click();
-
-            //} else if (x.Equals("CoinBase.Page_ETH")) {
-            //    var p = (Page_ETH)MainFrame.Content;
-            //    p.ETH_Update_click();
-
-            //} else if (x.Equals("CoinBase.Page_LTC")) {
-            //    var p = (Page_LTC)MainFrame.Content;
-            //    p.LTC_Update_click();
-            //} else if (x.Equals("CoinBase.Page_Portfolio")) {
-            //    var p = (Page_Portfolio)MainFrame.Content;
-            //    p.UpdatePortfolio();
-            //}
-
             LiveTile l = new LiveTile();
             l.UpdateLiveTile();
+        }
+
+        internal async Task SyncAllTEST() {
+            var r = rootPivot;
+
+            var p0 = (Page_Home)Frame0.Content;
+            p0.UpdateHome();
+
+
+            var p1 = (Page_BTC)Frame1.Content;
+            p1.BTC_Update_click();
+
+            var p2 = (Page_ETH)Frame2.Content;
+            p2.ETH_Update_click();
+
+            var p3 = (Page_LTC)Frame3.Content;
+            p3.LTC_Update_click();
         }
 
         private void rootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e){
@@ -191,10 +186,10 @@ namespace CoinBase{
             isInSettings = false;
 
             Frame0.Navigate(typeof(Page_Home));
-            Frame1.Navigate(typeof(Page_BTC));
-            Frame2.Navigate(typeof(Page_ETH));
-            Frame3.Navigate(typeof(Page_LTC));
         }
 
+        private void AppBarButton_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e) {
+
+        }
     }
 }
