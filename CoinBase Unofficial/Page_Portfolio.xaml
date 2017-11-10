@@ -8,26 +8,51 @@
     mc:Ignorable="d">
 
 
-    <StackPanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+    <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" x:Name="MainGrid">
 
-        <GridViewHeaderItem Margin="0, 5" Padding="0, -5">
-            <StackPanel Orientation="Horizontal" Margin="10, 0">
-                <RelativePanel VerticalAlignment="Center" Margin="0, 10, 10, 5">
-                    <Ellipse Fill="#222222" Width="32" Height="32"/>
-                    <TextBlock Text="&#xE14D;" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="7" 
-                                   Foreground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
-                </RelativePanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-                <TextBlock Text="Portfolio"
-                               VerticalAlignment="Center"
-					           Style="{ThemeResource SubheaderTextBlockStyle}"
-                               FontSize="28"/>
+
+        <RelativePanel Grid.Row="0" Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
+                       BorderThickness="0, 0, 0, 0.5" 
+                       BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+            <StackPanel Margin="-10, 5" Padding="0, -10, 0, 5">
+
+                <StackPanel Orientation="Horizontal">
+                    <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
+                        <Ellipse Fill="#3F3F3F" Width="32" Height="32"/>
+                        <TextBlock Text="&#xE14D;" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="7" 
+                                   Foreground="White"/>
+                    </RelativePanel>
+
+                    <TextBlock 
+                        Text="Portfolio"
+                        VerticalAlignment="Center"
+						Style="{ThemeResource SubheaderTextBlockStyle}"
+                        FontSize="28"/>
+                </StackPanel>
             </StackPanel>
 
-        </GridViewHeaderItem>
+            <StackPanel Orientation="Horizontal" Margin="5"
+                        RelativePanel.AlignRightWithPanel="True">
 
+                <TextBlock Name="Portfolio_total" 
+                           Text="1M"
+                           Visibility="Collapsed"
+                           FontSize="24"
+                           FontWeight="Light"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10, 0, 0, 0" >
+        </RelativePanel>
+
+        <!-- 
+        ############################################################################################################### -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15, 20, 15, 10">
             <ComboBox x:Name="CryptoComboBox" PlaceholderText="BTC" Header="Crypto">
                 <ComboBoxItem Content="BTC" Name="BTC" IsSelected="True"/>
                 <ComboBoxItem Content="ETH" Name="ETH" />
@@ -35,112 +60,127 @@
             </ComboBox>
 
             <TextBox 
-                x:Name="cryptoQtyTextBox" Header="Amount"
-                Margin="10, 0" PlaceholderText="0.3814" Width="100"/>
+                x:Name="cryptoQtyTextBox" Header="Amount" InputScope="Number"
+                Margin="5, 0" PlaceholderText="0.2718" Width="90"/>
             <TextBox 
-                x:Name="investedQtyTextBox" Header="Money €/$"
-                Margin="10, 0" PlaceholderText="41" Width="100"/>
-            <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10, 0">
+                x:Name="investedQtyTextBox" Header="Invested €/$" InputScope="Number"
+                Margin="5, 0" PlaceholderText="27" Width="90"/>
+            <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10, 0" Background="#3F3F3F" Foreground="White">
                 <SymbolIcon Symbol="Add"/>
             </Button>
-            <Button Click="RemovePortfolio_Click" VerticalAlignment="Bottom" Margin="10, 0">
+            <Button Click="RemovePortfolio_Click" VerticalAlignment="Bottom" Margin="0, 0" Background="#3F3F3F" Foreground="White">
                 <SymbolIcon Symbol="Delete"/>
             </Button>
         </StackPanel>
 
+        <!-- 
+        ############################################################################################################### -->
+        <Grid Grid.Row="2" Margin="15, 10, 10, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <Border Grid.Column="0" BorderThickness="0" Background="#3F3F3F">
+                <TextBlock Text="Crypto" Style="{StaticResource ListViewTextBlockTitle}"/>
+            </Border>
 
-        <Grid Grid.Row="2" Margin="10, 20">
+            <Border Grid.Column="1" BorderThickness="2, 0, 2, 0" Background="#3F3F3F"
+                BorderBrush="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+                <TextBlock Text="Invested" Style="{StaticResource ListViewTextBlockTitle}"/>
+            </Border>
 
+            <Border Grid.Column="2" BorderThickness="0, 0, 2, 0" Background="#3F3F3F" 
+                BorderBrush="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+                <TextBlock Text="Bought at" Style="{StaticResource ListViewTextBlockTitle}"/>
+            </Border>
+
+            <Border Grid.Column="3" BorderThickness="0, 0, 2, 0" Background="#3F3F3F">
+                <TextBlock Text="Currently" Style="{StaticResource ListViewTextBlockTitle}"/>
+            </Border>
+
+            <Border Grid.Column="4" BorderThickness="0" Background="#3F3F3F">
+                <TextBlock Text="Earnings" Style="{StaticResource ListViewTextBlockTitle}"/>
+            </Border>
+        </Grid>
+
+        <!-- 
+        ###############################################################################################################
+        ###############################################################################################################
+        ############################################################################################################### -->
+        <StackPanel Grid.Row="3" Margin="15, 0">
             <ListView x:Name="MyListView" 
                       ItemsSource="{Binding dataListm, Mode=OneWay}" 
                       Background="Transparent"
-                      SelectionMode="Single"
-                      HorizontalAlignment="Left">
+                      SelectionMode="Single">
 
-                <ListView.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                            </Grid.ColumnDefinitions>
-
-
-                            <Border Grid.Column="0" BorderThickness="0" 
-                                    Background="{ThemeResource ListViewHeaderItemDividerStroke}">
-                                <TextBlock Grid.Column="0" Text="Crypto" Style="{StaticResource ListViewTextBlockTitle}"/>
-                            </Border>
-
-                            <Border Grid.Column="1" BorderThickness="2, 0, 2, 0" BorderBrush="{ThemeResource SystemControlBackgroundAltHighBrush}"
-                                    Background="{ThemeResource ListViewHeaderItemDividerStroke}">
-                                <TextBlock Grid.Column="0" Text="Invested" Style="{StaticResource ListViewTextBlockTitle}"/>
-                            </Border>
-
-                            <Border Grid.Column="2" BorderThickness="0, 0, 2, 0" BorderBrush="{ThemeResource SystemControlBackgroundAltHighBrush}"
-                                    Background="{ThemeResource ListViewHeaderItemDividerStroke}">
-                                <TextBlock Grid.Column="0" Text="Bought at" Style="{StaticResource ListViewTextBlockTitle}"/>
-                            </Border>
-
-                            <Border Grid.Column="3" BorderThickness="0" 
-                                    Background="{ThemeResource ListViewHeaderItemDividerStroke}">
-                                <TextBlock Grid.Column="0" Text="Current" Style="{StaticResource ListViewTextBlockTitle}"/>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewItem">
-                                    <ListViewItemPresenter ContentMargin="0" Padding="0"/>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}" 
-                              BorderBrush="Gray" BorderThickness="0, 0, 0, 2">
+                        <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" 
+                              Margin="-10, -20"
+                              BorderBrush="#3F3F3F" BorderThickness="0, 0, 0, 1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="1.2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource ListViewTextBlock}">
+                            <TextBlock 
+                                Grid.Column="0" 
+                                HorizontalAlignment="Center" 
+                                Style="{StaticResource ListViewTextBlock}"
+                                FontWeight="Medium">
                                 <Run Text="{Binding _CryptoQty}"/><Run Text="{Binding _Crypto}"/>
                             </TextBlock>
 
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource ListViewTextBlock}">
+                            <TextBlock 
+                                Grid.Column="1" 
+                                HorizontalAlignment="Center" 
+                                Style="{StaticResource ListViewTextBlock}">
                                 <Run Text="{Binding _InvestedQty}"/><Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
-                            <TextBlock Grid.Column="2" HorizontalAlignment="Center" Style="{StaticResource ListViewTextBlock}">
+                            <TextBlock 
+                                Grid.Column="2" 
+                                HorizontalAlignment="Center" 
+                                Style="{StaticResource ListViewTextBlock}">
                                 <Run Text="{Binding _BoughtAt}"/><Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
-
-                            <TextBlock Grid.Column="3" HorizontalAlignment="Center" Style="{StaticResource ListViewTextBlock}">
+                            <TextBlock 
+                                Grid.Column="3" 
+                                HorizontalAlignment="Center" 
+                                Style="{StaticResource ListViewTextBlock}">
                                 <Run Text="{Binding Current, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
                                 <Run Text=" "/>
-                                <Run Text="{Binding upDown, Mode=OneWay}"/><Run Text="{Binding Earnings, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
+                                <Run Text="{Binding upDown, Mode=OneWay}"/>
+                            </TextBlock>
+
+                            <TextBlock 
+                                Grid.Column="4" 
+                                HorizontalAlignment="Center" 
+                                Style="{StaticResource ListViewTextBlock}">
+                                <Run Text="{Binding Earnings, Mode=OneWay}"/>
+                                <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
                         </Grid>
                     </DataTemplate>
-
                 </ListView.ItemTemplate>
 
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
-        </Grid>
-    </StackPanel>
+        </StackPanel>
+    </Grid>
 
 </Page>

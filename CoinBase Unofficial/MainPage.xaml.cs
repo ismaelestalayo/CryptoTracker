@@ -1,5 +1,4 @@
 ﻿using CoinBase.Helpers;
-using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
@@ -10,7 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase{
+namespace CoinBase {
     public sealed partial class MainPage : Page {
 
         private SolidColorBrush Color_CoinBase = new SolidColorBrush(Color.FromArgb(255, 0, 91, 148));
@@ -26,7 +25,7 @@ namespace CoinBase{
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
 
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
@@ -43,14 +42,25 @@ namespace CoinBase{
             titleBar.ButtonForegroundColor = Color.FromArgb(255, 150, 150, 150);
 
             titleBar.InactiveBackgroundColor = Color.FromArgb(0, 242, 242, 242);
-            titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(255, 242, 242, 242);
+            titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(0, 242, 242, 242);
             
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
-                statusBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242);
-                statusBar.BackgroundOpacity = 1;
-                statusBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
+
+                if(App.localSettings.Values["Theme"].Equals("Dark") ) {
+                    statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23);
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
+                } else {
+                    statusBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242);
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
+                }
+
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
+
+                TopCommandBar.Visibility = Visibility.Collapsed;
+                BottomCommandBar.Visibility = Visibility.Visible;
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
@@ -88,6 +98,7 @@ namespace CoinBase{
                 rootPivot.SelectedIndex = 0;
                 Frame0.Navigate(typeof(Page_Portfolio));
                 isInPortfolio = true;
+                isInSettings = false;
             } else {
                 switch (rootPivot.SelectedIndex) {
                     case 0:
@@ -113,6 +124,7 @@ namespace CoinBase{
                 rootPivot.SelectedIndex = 0;
                 Frame0.Navigate(typeof(Page_Settings));
                 isInSettings = true;
+                isInPortfolio = false;
             }
             else{
                 switch (rootPivot.SelectedIndex){
@@ -132,7 +144,7 @@ namespace CoinBase{
                 isInSettings = false;
             }
 
-            
+
         }
 
         internal async Task SyncAll() {
@@ -140,10 +152,15 @@ namespace CoinBase{
 
             switch (rootPivot.SelectedIndex) {
                 case 0:
-                    var p0 = (Page_Home)Frame0.Content;
-                    p0.UpdateHome();
+                    if (!isInPortfolio) {
+                        var p0 = (Page_Home)Frame0.Content;
+                        p0.UpdateHome();
+                    } else {
+                        var p0 = (Page_Portfolio)Frame0.Content;
+                        p0.UpdatePortfolio();
+                    }
                     break;
-                
+
                 case 1:
                     var p1 = (Page_BTC)Frame1.Content;
                     p1.BTC_Update_click();
@@ -164,32 +181,11 @@ namespace CoinBase{
             l.UpdateLiveTile();
         }
 
-        internal async Task SyncAllTEST() {
-            var r = rootPivot;
-
-            var p0 = (Page_Home)Frame0.Content;
-            p0.UpdateHome();
-
-
-            var p1 = (Page_BTC)Frame1.Content;
-            p1.BTC_Update_click();
-
-            var p2 = (Page_ETH)Frame2.Content;
-            p2.ETH_Update_click();
-
-            var p3 = (Page_LTC)Frame3.Content;
-            p3.LTC_Update_click();
-        }
-
         private void rootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e){
             isInPortfolio = false;
             isInSettings = false;
 
             Frame0.Navigate(typeof(Page_Home));
-        }
-
-        private void AppBarButton_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e) {
-
         }
     }
 }

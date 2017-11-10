@@ -43,9 +43,9 @@ namespace CoinBase {
 
             //Show feedback button
             if (Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.IsSupported()) {
-                this.feedbackButton.Visibility = Visibility.Visible;
+                this.feedbackButton.IsEnabled = true;
             } else {
-                this.feedbackButton.Visibility = Visibility.Collapsed;
+                this.feedbackButton.IsEnabled = false;
             }
 
         }
@@ -109,8 +109,6 @@ namespace CoinBase {
                     App.coinSymbol = "¥";
                     break;
             }
-            MainPage p = new MainPage();
-            p.SyncAllTEST();
         }
     }
 }

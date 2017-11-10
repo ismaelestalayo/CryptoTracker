@@ -8,63 +8,102 @@
     mc:Ignorable="d"
 	NavigationCacheMode="Required">
 
-    <RelativePanel Padding="10" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+    <Page.Resources>
+        <Style TargetType="Button" x:Key="SettingsButtonsStyle">
+            <Setter Property="Background" Value="#3F3F3F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="20, 5"/>
+            <Setter Property="Margin" Value="0, 15, 0, 0"/>
+            <Setter Property="FontWeight" Value="SemiLight"/>
+        </Style>
+    </Page.Resources>
 
-        <StackPanel Margin="10" RelativePanel.AlignTopWithPanel="True">
+    <RelativePanel Padding="10" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
 
-            <StackPanel Orientation="Horizontal">
-                <ToggleSwitch Name="ThemeSwitcher" Header="Theme"
-                          OffContent="Light" OnContent="Dark" 
-                          Toggled="ThemeToogled"/>
+        <StackPanel x:Name="SettingsToogles" Margin="10" RelativePanel.AlignTopWithPanel="True">
 
-                <ComboBox x:Name="CoinComboBox" 
-                          VerticalAlignment="Center"
-                          Header="Currency"
-                          Width="120" 
-                          PlaceholderText="Coin" 
-                          Margin="0, 0, 0, 0" 
-                          SelectionChanged="CoinBox_changed">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ToggleSwitch Grid.Column="0"
+                    Name="ThemeSwitcher" Header="Theme"
+                    OffContent="Light" OnContent="Dark" 
+                    Toggled="ThemeToogled"/>
+                <TextBlock Grid.Row="1"
+                    Text="A restart is required to  &#x0d;change the status bar color."
+                    TextWrapping="WrapWholeWords"
+                    FontSize="14"
+                    FontWeight="ExtraLight"
+                    Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+                
+                
+                <ComboBox Grid.Column="1"
+                    x:Name="CoinComboBox" 
+                    VerticalAlignment="Center"
+                    Header="Currency"
+                    PlaceholderText="Coin" 
+                    Margin="30, 0, 0, 0" 
+                    SelectionChanged="CoinBox_changed">
                     <ComboBoxItem Content="EUR (€)" Name="EUR"/>
                     <ComboBoxItem Content="USD ($)" Name="USD"/>
                     <ComboBoxItem Content="CAD ($)" Name="CAD"/>
                     <ComboBoxItem Content="MXN ($)" Name="MXN"/>
                     <ComboBoxItem Content="CNY (¥)" Name="CNY"/>
                 </ComboBox>
-            </StackPanel>
-            
-            <Button Background="Transparent" x:Name="reviewButton" Click="reviewButton_Click" Margin="-20, 30,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="&#xE1CE;" FontFamily="Segoe MDL2 Assets" Margin="10,0" FontSize="24"/>
-                    <TextBlock Text="Review" FontFamily="Segoe UI Light" FontWeight="Light" FontSize="24"/>
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                    Text="Pages need to be updated manually."
+                    TextWrapping="WrapWholeWords"
+                    Margin="30, 0, 0, 0"
+                    FontSize="14"
+                    FontWeight="ExtraLight"
+                    Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+            </Grid>
 
-                </StackPanel>
-            </Button>
-
-            <Button Background="Transparent" x:Name="feedbackButton" Click="feedbackButton_Click" Margin="-20,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="&#xE939;" FontFamily="Segoe MDL2 Assets" Margin="10,0"   FontSize="24"/>
-                    <TextBlock Text="Feedback" FontFamily="Segoe UI Light" FontWeight="Light" FontSize="24"/>
-
-                </StackPanel>
-            </Button>
-
-            <Button Background="Transparent" x:Name="mailButton" Click="mailButton_Click" Margin="-20,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="&#xE119;" FontFamily="Segoe MDL2 Assets" Margin="10,0" FontSize="24"/>
-                    <TextBlock Text="Mail" FontFamily="Segoe UI Light" FontWeight="Light"   FontSize="24"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
-        
-        <StackPanel Margin="10" RelativePanel.AlignVerticalCenterWithPanel="True">
 
         </StackPanel>
 
+        <StackPanel Margin="10, 20" RelativePanel.Below="SettingsToogles">
+            <Button Content="Review" Style="{StaticResource SettingsButtonsStyle}"
+                    Click="reviewButton_Click"/>
+            <TextBlock 
+                Text="Take a minute and leave a review on the Store."
+                FontSize="14"
+                FontWeight="ExtraLight"
+                Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+
+            <Button Content="Feedback" Style="{StaticResource SettingsButtonsStyle}" x:Name="feedbackButton"
+                    Click="feedbackButton_Click"/>
+            <TextBlock 
+                Text="I'd like to hear your thoughts on the app."
+                TextWrapping="WrapWholeWords"
+                FontSize="14"
+                FontWeight="ExtraLight"
+                Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+
+            <Button Content="Mail" Style="{StaticResource SettingsButtonsStyle}"
+                    Click="mailButton_Click"/>
+            <TextBlock 
+                Text="You can also contact through email, for more direct feedback."
+                TextWrapping="WrapWholeWords"
+                FontSize="14"
+                FontWeight="ExtraLight"
+                Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+        </StackPanel>
+
+        <!-- 
+        ############################################################################################################### -->
         <StackPanel Margin="10" RelativePanel.AlignBottomWithPanel="True">
             <Image Source="Assets/coinbase.png" Width="50" HorizontalAlignment="Left" Margin="0, 10"/>
-            <TextBlock Text="CoinBase Unnoficial" Style="{ThemeResource FlyoutPickerTitleTextBlockStyle}"/>
-            <TextBlock Text="By Ismael Estalayo" Style="{ThemeResource BodyTextBlockStyle}"/>
-            <TextBlock Name="VersionTextBlock" Text="Version: 1.X.0" />
+            <TextBlock Text="CoinBase Unnoficial" FontSize="18" FontWeight="Bold"/>
+            <TextBlock Text="Made with 🖤 as a University side-project." FontWeight="Light"/>
+            <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
             <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
                              Content    ="http://ismaelestalayo.github.io/" 
                              Margin="0, -6, 0, 0"

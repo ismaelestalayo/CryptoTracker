@@ -7,6 +7,8 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.System.Threading;
+using Windows.UI.Core;
 
 namespace CoinBase {
     public sealed partial class Page_Home : Page {
@@ -23,6 +25,15 @@ namespace CoinBase {
             this.InitializeComponent();
 
             UpdateHome();
+
+            TimeSpan period = TimeSpan.FromSeconds(60);
+            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                    RadioButton r = new RadioButton { Content = timeSpan };
+                    if (timeSpan == "hour")
+                        ALL_TimerangeButton_Click(r, null);
+                });
+            }, period);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

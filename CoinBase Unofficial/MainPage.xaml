@@ -20,40 +20,58 @@
 
     </Page.Resources>
 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-    <Pivot x:Name="rootPivot"
+        <Pivot x:Name="rootPivot"
            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
            IsHeaderItemsCarouselEnabled="False" HeaderTemplate="{StaticResource pivotHeader}"
            HeaderFocusVisualPlacement="SelectedItemHeader"
            
            SelectionChanged="rootPivot_SelectionChanged">
 
-        <PivotItem Header="Home" Name="Home">
-            <Frame x:Name="Frame0" Margin="-15, 0"/>
-        </PivotItem>
+            <PivotItem Header="Home" Name="Home">
+                <Frame x:Name="Frame0" Margin="-15, 0"/>
+            </PivotItem>
 
-        <PivotItem Header="BTC" Name="Pivot1">
-            <Frame x:Name="Frame1" Margin="-15, 0"/>
-        </PivotItem>
+            <PivotItem Header="BTC" Name="Pivot1">
+                <Frame x:Name="Frame1" Margin="-15, 0"/>
+            </PivotItem>
 
-        <PivotItem Header="ETH" Name="Pivot2">
-            <Frame x:Name="Frame2" Margin="-15, 0"/>
-        </PivotItem>
+            <PivotItem Header="ETH" Name="Pivot2">
+                <Frame x:Name="Frame2" Margin="-15, 0"/>
+            </PivotItem>
 
-        <PivotItem Header="LTC" Name="Pivot3">
-            <Frame x:Name="Frame3" Margin="-15, 0"/>
-        </PivotItem>
-        
-        <Pivot.RightHeader>
-            <CommandBar OverflowButtonVisibility="Collapsed" Background="Transparent">
-                <AppBarSeparator/>
+            <PivotItem Header="LTC" Name="Pivot3">
+                <Frame x:Name="Frame3" Margin="-15, 0"/>
+            </PivotItem>
 
-                <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
-                <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
-                <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
-            </CommandBar>
-        </Pivot.RightHeader>
+            <Pivot.RightHeader>
+                <CommandBar x:Name="TopCommandBar" OverflowButtonVisibility="Collapsed" Background="Transparent">
+                    <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
+                    <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
+                    <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
+                </CommandBar>
+            </Pivot.RightHeader>
 
-    </Pivot>
+        </Pivot>
+
+        <CommandBar 
+            x:Name="BottomCommandBar" Grid.Row="1" OverflowButtonVisibility="Collapsed" 
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+            Visibility="Collapsed">
+
+            <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
+            <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
+            <AppBarSeparator/>
+            <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
+        </CommandBar>
+
+    </Grid>
+
+
 
 </Page>

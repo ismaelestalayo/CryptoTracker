@@ -21,17 +21,15 @@ namespace CoinBase{
             this.InitializeComponent();
             InitValues();
 
-            // Windows.Desktop      Windows.Mobile      
-            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
-                TimeSpan period = TimeSpan.FromSeconds(30);
-                ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
-                    Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
-                        RadioButton r = new RadioButton { Content = timeSpan };
-                        if (timeSpan == "hour")
-                            ETH_TimerangeButton_Click(r, null);
-                    });
-                }, period);
-            }
+            TimeSpan period = TimeSpan.FromSeconds(30);
+            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                    RadioButton r = new RadioButton { Content = timeSpan };
+                    if (timeSpan == "hour")
+                        ETH_TimerangeButton_Click(r, null);
+                });
+            }, period);
+
         }
 
         async private void InitValues() {

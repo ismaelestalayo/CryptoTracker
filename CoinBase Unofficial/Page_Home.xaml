@@ -59,9 +59,10 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <!-- ###########################################################################################################################
-        ################################################################################################################################
-        ############################################################################################################################ -->
+        <!-- 
+        ###############################################################################################################
+        ###############################################################################################################
+        ############################################################################################################### -->
         <Grid Margin="15, 15, 15, 0" Grid.Row="0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
@@ -305,7 +306,7 @@
             </Grid>
 
 
-            <telerik:RadCartesianChart Grid.Row="2" Margin="0,0,0,-21">
+            <telerik:RadCartesianChart Grid.Row="2">
                 <telerik:BarSeries 
                     x:Name="BTC_VolumeChart"
                     ItemsSource="{Binding}">
@@ -326,14 +327,15 @@
                         <telerik:DateTimeCategoricalAxis 
                             MajorTickTemplate="{StaticResource TransparentRect}"
                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                            FontWeight="Light"
+                            FontWeight="ExtraLight"
                             LineStyle="{StaticResource TransparentLine}"
                             VerticalLocation="Top"
+                            Margin="0, 10"
                             LabelInterval="3"
                             LabelFormat="{}{0,0:HH}">
                             <telerik:DateTimeCategoricalAxis.LabelStyle>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="0, -5, 0, 0"/>
+                                    <Setter Property="Margin" Value="0, 0, 0, 00"/>
                                 </Style>
                             </telerik:DateTimeCategoricalAxis.LabelStyle>
                         </telerik:DateTimeCategoricalAxis>
@@ -353,8 +355,8 @@
 
         </Grid>
 
-
-        <!-- ############################################################################################################### -->
+        <!-- 
+        ############################################################################################################### -->
         <Grid Grid.Row="1" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
 
@@ -390,7 +392,7 @@
             </Grid>
 
 
-            <telerik:RadCartesianChart Grid.Row="2" Margin="0,0,0,-21">
+            <telerik:RadCartesianChart Grid.Row="2">
                 <telerik:BarSeries 
                     x:Name="ETH_VolumeChart"
                     ItemsSource="{Binding}">
@@ -414,6 +416,7 @@
                             FontWeight="Light"
                             LineStyle="{StaticResource TransparentLine}"
                             VerticalLocation="Top"
+                            Margin="0, 10"
                             LabelInterval="3"
                             LabelFormat="{}{0,0:HH}">
                             <telerik:DateTimeCategoricalAxis.LabelStyle>
@@ -437,8 +440,9 @@
 
 
         </Grid>
-
-        <!-- ############################################################################################################### -->
+        
+        <!-- 
+        ############################################################################################################### -->
         <Grid Grid.Row="2" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
 
@@ -474,7 +478,7 @@
             </Grid>
 
 
-            <telerik:RadCartesianChart Grid.Row="2" Margin="0,0,0,-21">
+            <telerik:RadCartesianChart Grid.Row="2">
                 <telerik:BarSeries 
                     x:Name="LTC_VolumeChart"
                     ItemsSource="{Binding}">
@@ -497,7 +501,9 @@
                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                             FontWeight="Light"
                             LineStyle="{StaticResource TransparentLine}"
+                            BorderThickness="0"
                             VerticalLocation="Top"
+                            Margin="0, 10"
                             LabelInterval="3"
                             LabelFormat="{}{0,0:HH}">
                             <telerik:DateTimeCategoricalAxis.LabelStyle>

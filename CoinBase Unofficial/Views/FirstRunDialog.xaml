@@ -27,9 +27,9 @@
                 <Run>New in this version:</Run><LineBreak/>
                 <Run Text=" - New fluent UI." 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Pages auto-update each 30 seconds." 
+                <Run Text=" - Last hour charts refresh each 30 seconds." 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Fixed Portfolio section." 
+                <Run Text=" - Fixed bugs..." 
                      FontWeight="ExtraLight"/><LineBreak/>
                 
                 <LineBreak/>
