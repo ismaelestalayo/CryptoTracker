@@ -31,9 +31,9 @@
                         <Setter Target="MainGrid.RowDefinitions[3].Height" Value="2*"/>
                         <Setter Target="StatsStack.(Grid.Column)" Value="0"/>
                         <Setter Target="StatsStack.(Grid.Row)" Value="2"/>
-                        <Setter Target="StatsStack.Margin" Value="40, 0"/>
+                        <Setter Target="StatsStack.Margin" Value="20, 0"/>
                         <Setter Target="Stats.Orientation" Value="Horizontal"/>
-                        <Setter Target="Stats.Margin" Value="10, 10"/>
+                        <Setter Target="Stats.Margin" Value="0, 10"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -59,7 +59,7 @@
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
 
 
         <Grid.RowDefinitions>
@@ -213,7 +213,7 @@
 
         <!-- 
         ###################################################################################################################-->
-        <StackPanel x:Name="StatsStack" Grid.Column="1" Grid.Row="1" Margin="0, 0">
+        <StackPanel x:Name="StatsStack" Grid.Column="1" Grid.Row="1">
             <TextBlock Text="Stats 24h:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="28"/>
 
             <StackPanel x:Name="Stats" Orientation="Vertical">
@@ -223,15 +223,14 @@
                     <TextBlock Name="BTC_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical" Margin="0, 0">
+                <StackPanel Orientation="Vertical" Margin="20, 0">
                     <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
                     <TextBlock Name="BTC_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="20, 0">
                     <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
-                    <TextBlock Name="BTC_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"
-                               HorizontalAlignment="Stretch"/>
+                    <TextBlock Name="BTC_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="20, 0">

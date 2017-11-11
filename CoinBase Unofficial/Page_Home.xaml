@@ -35,7 +35,7 @@
 
                 <VisualState x:Name="WideState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1000" />
+                        <AdaptiveTrigger MinWindowWidth="900" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
@@ -280,7 +280,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight"/>
+            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
 
             <Grid Grid.Row="1" Margin="5, 0">
                 <Grid.RowDefinitions>
@@ -306,7 +306,7 @@
             </Grid>
 
 
-            <telerik:RadCartesianChart Grid.Row="2">
+            <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
                 <telerik:BarSeries 
                     x:Name="BTC_VolumeChart"
                     ItemsSource="{Binding}">
@@ -366,7 +366,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight"/>
+            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
 
             <Grid Grid.Row="1" Margin="5, 0">
                 <Grid.RowDefinitions>
@@ -392,7 +392,7 @@
             </Grid>
 
 
-            <telerik:RadCartesianChart Grid.Row="2">
+            <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
                 <telerik:BarSeries 
                     x:Name="ETH_VolumeChart"
                     ItemsSource="{Binding}">
@@ -452,7 +452,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight"/>
+            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
 
             <Grid Grid.Row="1" Margin="5, 0">
                 <Grid.RowDefinitions>
@@ -478,7 +478,7 @@
             </Grid>
 
 
-            <telerik:RadCartesianChart Grid.Row="2">
+            <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
                 <telerik:BarSeries 
                     x:Name="LTC_VolumeChart"
                     ItemsSource="{Binding}">

@@ -207,7 +207,7 @@
 
         <!-- 
         ###################################################################################################################-->
-        <StackPanel x:Name="Info" Grid.Column="1" Grid.Row="1" Margin="40, 0">
+        <StackPanel x:Name="Info" Grid.Column="1" Grid.Row="1" Margin="20, 0">
             <TextBlock Text="Stats 24h:" Style="{ThemeResource HeaderTextBlockStyle}" FontSize="28"/>
 
             <Grid>
@@ -234,26 +234,26 @@
             </Grid>
         </StackPanel>
 
-            <telerik:RadCartesianChart Grid.Row="3" Margin="60, 10">
-                <telerik:BarSeries 
+        <telerik:RadCartesianChart Grid.Row="3" Margin="60, 10">
+            <telerik:BarSeries 
                     x:Name="VolumeChart"
                     x:FieldModifier="internal"
                     ItemsSource="{Binding}">
-                    
-                    <telerik:BarSeries.PointTemplate>
-                        <DataTemplate>
-                            <Border Background="{StaticResource ETH_color}"/>
-                        </DataTemplate>
-                    </telerik:BarSeries.PointTemplate>
 
-                    <telerik:BarSeries.VerticalAxis>
-                        <telerik:LinearAxis
+                <telerik:BarSeries.PointTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource ETH_color}"/>
+                    </DataTemplate>
+                </telerik:BarSeries.PointTemplate>
+
+                <telerik:BarSeries.VerticalAxis>
+                    <telerik:LinearAxis
                             Visibility="Collapsed"
                             HorizontalLocation="Right"/>
-                    </telerik:BarSeries.VerticalAxis>
+                </telerik:BarSeries.VerticalAxis>
 
-                    <telerik:BarSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis 
+                <telerik:BarSeries.HorizontalAxis>
+                    <telerik:DateTimeCategoricalAxis 
                             MajorTickTemplate="{StaticResource TransparentRect}"
                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                             FontWeight="Light"
@@ -261,24 +261,24 @@
                             VerticalLocation="Bottom"
                             LabelInterval="3"
                             LabelFormat="{}{0,0:HH}">
-                            <telerik:DateTimeCategoricalAxis.LabelStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="0, -5, 0, 0"/>
-                                </Style>
-                            </telerik:DateTimeCategoricalAxis.LabelStyle>
-                        </telerik:DateTimeCategoricalAxis>
-                    </telerik:BarSeries.HorizontalAxis>
+                        <telerik:DateTimeCategoricalAxis.LabelStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="0, -5, 0, 0"/>
+                            </Style>
+                        </telerik:DateTimeCategoricalAxis.LabelStyle>
+                    </telerik:DateTimeCategoricalAxis>
+                </telerik:BarSeries.HorizontalAxis>
 
-                    <telerik:BarSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:BarSeries.CategoryBinding>
+                <telerik:BarSeries.CategoryBinding>
+                    <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                </telerik:BarSeries.CategoryBinding>
 
-                    <telerik:BarSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                    </telerik:BarSeries.ValueBinding>
+                <telerik:BarSeries.ValueBinding>
+                    <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                </telerik:BarSeries.ValueBinding>
 
-                </telerik:BarSeries>
-            </telerik:RadCartesianChart>
+            </telerik:BarSeries>
+        </telerik:RadCartesianChart>
 
 
 
