@@ -163,17 +163,17 @@ namespace CoinBase {
 
                 case 1:
                     var p1 = (Page_BTC)Frame1.Content;
-                    p1.BTC_Update_click();
+                    p1.UpdatePage();
                     break;
 
                 case 2:
                     var p2 = (Page_ETH)Frame2.Content;
-                    p2.ETH_Update_click();
+                    p2.UpdatePage();
                     break;
 
                 case 3:
                     var p3 = (Page_LTC)Frame3.Content;
-                    p3.LTC_Update_click();
+                    p3.UpdatePage();
                     break;
             }
 

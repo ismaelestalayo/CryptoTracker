@@ -6,16 +6,15 @@ using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
 using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase{
+namespace CoinBase {
     public sealed partial class Page_ETH : Page {
         
-        internal static int limit = 60;
-        internal static string timeSpan = "day";
+        private static int limit = 60;
+        private static string timeSpan = "day";
 
         public Page_ETH() {
             this.InitializeComponent();
@@ -34,9 +33,10 @@ namespace CoinBase{
 
         async private void InitValues() {
             try {
-                ETH_Update_click();
+                RadioButton r = new RadioButton { Content = timeSpan };
+                ETH_TimerangeButton_Click(r, null);
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 LoadingControl.IsLoading = false;
                 ETH_curr.Text = "Error!";
                 //var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
@@ -44,17 +44,42 @@ namespace CoinBase{
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        //For SyncAll button
-        public void ETH_Update_click() {
+        //For Sync button //////////////////////////////////////////////////////////////////////////////////
+        internal async void UpdatePage() {
             if (LoadingControl == null)
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
-            
-            RadioButton r = new RadioButton { Content = timeSpan };
-            ETH_TimerangeButton_Click(r, null);
-            GetStats();
-            Get24Volume();
+
+            await UpdateETH();
+            ETH_verticalAxis.Minimum = getMinimum(App.ppETH);
+            ETH_verticalAxis.Maximum = getMaximum(App.ppETH);
+            ETH_DateTimeAxis = App.AdjustAxis(ETH_DateTimeAxis, timeSpan);
+            await GetStats();
+            await Get24Volume();
+        }
+
+        private float getMaximum(List<App.PricePoint> a) {
+            int i = 0;
+            float max = 0;
+
+            foreach (App.PricePoint type in a) {
+                if (a[i].High > max)
+                    max = a[i].High;
+                i++;
+            }
+            return max;
+        }
+        private float getMinimum(List<App.PricePoint> a) {
+            int i = 0;
+            float min = 15000;
+
+            foreach (App.PricePoint type in a) {
+                if (a[i].High < min)
+                    min = a[i].High;
+                i++;
+            }
+            return min * (float)0.99;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +159,7 @@ namespace CoinBase{
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < 24; i++) {
-                data.Add(new App.ChartDataObject() {
+                data.Add( new App.ChartDataObject() {
                     Date = App.ppETH[i].DateTime,
                     Volume = App.ppETH[i].Volumefrom
                 });
@@ -147,62 +172,41 @@ namespace CoinBase{
             LoadingControl.IsLoading = true;
             RadioButton btn = sender as RadioButton;
 
+            
+
             switch (btn.Content) {
-                case "hour":
-                    ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
-                    ETH_DateTimeAxis.MajorStep = 10;
-                    ETH_DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
+                case "hour":                    
                     timeSpan = "hour";
                     limit = 60;
                     break;
 
                 case "day":
-                    ETH_DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    ETH_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
-                    ETH_DateTimeAxis.MajorStep = 6;
                     timeSpan = "day";
                     limit = 1500;
                     break;
 
                 case "week":
-                    ETH_DateTimeAxis.LabelFormat = "{0:ddd d}";
-                    ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
-                    ETH_DateTimeAxis.MajorStep = 1;
-                    ETH_DateTimeAxis.Minimum = DateTime.Now.AddDays(-7);
                     timeSpan = "week";
                     limit = 168;
                     break;
 
                 case "month":
-                    ETH_DateTimeAxis.LabelFormat = "{0:d/M}";
-                    ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
-                    ETH_DateTimeAxis.MajorStep = 1;
-                    ETH_DateTimeAxis.Minimum = DateTime.Now.AddMonths(-1);
                     timeSpan = "month";
                     limit = 744;
                     break;
+
                 case "year":
-                    ETH_DateTimeAxis.LabelFormat = "{0:MMM}";
-                    ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    ETH_DateTimeAxis.MajorStep = 1;
-                    ETH_DateTimeAxis.Minimum = DateTime.MinValue;
-                    timeSpan = "year";
+                    timeSpan = "year"; 
                     limit = 365;
                     break;
 
                 case "all":
-                    ETH_DateTimeAxis.LabelFormat = "{0:MMM}";
-                    ETH_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    ETH_DateTimeAxis.MajorStep = 1;
-                    ETH_DateTimeAxis.Minimum = DateTime.Today.AddMonths(-4);
                     timeSpan = "all";
                     limit = 0;
                     break;
 
             }
-            UpdateETH();
+            UpdatePage();
         }
     }
 }

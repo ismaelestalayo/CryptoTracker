@@ -10,31 +10,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI;
 using Windows.UI.Xaml.Data;
 
-public sealed class BackgroundConverter : IValueConverter {
-    public object myConverter(object value, Type targetType, object parameter) {
-        ListViewItem item = (ListViewItem)value;
-        ListView listView =
-            ItemsControl.ItemsControlFromItemContainer(item) as ListView;
-        // Get the index of a ListViewItem
-        int index =
-            listView.ItemContainerGenerator.IndexFromContainer(item);
-
-        if (index % 2 == 0) {
-            return Colors.LightBlue;
-        } else {
-            return Colors.Beige;
-        }
-    }
-
-    public object Convert(object value, Type targetType, object parameter, string language) {
-        throw new NotImplementedException();
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, string language) {
-        throw new NotImplementedException();
-    }
-}
-
 namespace CoinBase {
 
     public partial class Page_Portfolio : Page {
@@ -48,10 +23,12 @@ namespace CoinBase {
             try {
                 dataList = new ObservableCollection<PurchaseClass>(ReadPortfolio().Result);
 
-            } catch {
+            } catch(Exception) {
                 dataList = new ObservableCollection<PurchaseClass>();
             }
             MyListView.ItemsSource = dataList;
+
+            UpdatePortfolio();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +49,7 @@ namespace CoinBase {
             try {
                 double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
                 priceBought = Math.Round(priceBought, 2);
-                double earningz = Math.Round((curr - priceBought) * double.Parse(cryptoQtyTextBox.Text), 4);
+                double earningz = Math.Round((curr - priceBought) * double.Parse(cryptoQtyTextBox.Text), 5);
 
                 dataList.Add(new PurchaseClass {
                     _Crypto = crypto,
@@ -95,13 +72,6 @@ namespace CoinBase {
                 cryptoQtyTextBox.Text = String.Empty;
                 investedQtyTextBox.Text = String.Empty;
             }
-        }
-
-        public object Convert(object value) {
-            var val = (double)value;
-            return val >= 0
-                ? Colors.Green
-                : Colors.Red;
         }
 
         //For Sync all

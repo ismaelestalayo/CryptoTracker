@@ -6,7 +6,6 @@ using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
 using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -14,8 +13,8 @@ using Windows.UI.Xaml.Media;
 namespace CoinBase {
     public sealed partial class Page_BTC : Page {
 
-        internal static int limit = 60;
-        internal static string timeSpan = "day";
+        private static int limit = 60;
+        private static string timeSpan = "day";
 
         public Page_BTC() {
             this.InitializeComponent();
@@ -34,9 +33,10 @@ namespace CoinBase {
 
         async private void InitValues() {
             try {
-                BTC_Update_click();
+                RadioButton r = new RadioButton { Content = timeSpan };
+                BTC_TimerangeButton_Click(r, null);
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 LoadingControl.IsLoading = false;
                 BTC_curr.Text = "Error!";
                 //var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
@@ -44,19 +44,43 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        //For SyncAll button
-        public void BTC_Update_click() {
+        //For Sync button //////////////////////////////////////////////////////////////////////////////////
+        internal async void UpdatePage() {
             if (LoadingControl == null)
                 LoadingControl = new Loading();
 
             LoadingControl.IsLoading = true;
 
-            RadioButton r = new RadioButton { Content = timeSpan };
-            BTC_TimerangeButton_Click(r, null);
-            GetStats();
-            Get24Volume();
+            await UpdateBTC();
+            BTC_verticalAxis.Minimum = getMinimum(App.ppBTC);
+            BTC_verticalAxis.Maximum = getMaximum(App.ppBTC);
+            BTC_DateTimeAxis = App.AdjustAxis(BTC_DateTimeAxis, timeSpan);
+            await GetStats();
+            await Get24Volume();
         }
 
+        private float getMaximum(List<App.PricePoint> a) {
+            int i = 0;
+            float max = 0;
+
+            foreach (App.PricePoint type in a) {
+                if (a[i].High > max)
+                    max = a[i].High;
+                i++;
+            }
+            return max;
+        }
+        private float getMinimum(List<App.PricePoint> a) {
+            int i = 0;
+            float min = 15000;
+
+            foreach (App.PricePoint type in a) {
+                if (a[i].High < min)
+                    min = a[i].High;
+                i++;
+            }
+            return min * (float)0.99;
+        }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async public Task UpdateBTC() {
             await App.GetCurrentPrice("BTC");
@@ -142,67 +166,45 @@ namespace CoinBase {
             this.VolumeChart.DataContext = data;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void BTC_TimerangeButton_Click(object sender, RoutedEventArgs e) {
             LoadingControl.IsLoading = true;
             RadioButton btn = sender as RadioButton;
 
             switch (btn.Content) {
                 case "hour":
-                    BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
-                    BTC_DateTimeAxis.MajorStep = 10;
-                    BTC_DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
                     timeSpan = "hour";
                     limit = 60;
                     break;
 
                 case "day":
-                    BTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    BTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
-                    BTC_DateTimeAxis.MajorStep = 6;
                     timeSpan = "day";
                     limit = 1500;
                     break;
 
                 case "week":
-                    BTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
-                    BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
-                    BTC_DateTimeAxis.MajorStep = 1;
-                    BTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-7);
                     timeSpan = "week";
                     limit = 168;
                     break;
 
                 case "month":
-                    BTC_DateTimeAxis.LabelFormat = "{0:d/M}";
-                    BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
-                    BTC_DateTimeAxis.MajorStep = 1;
-                    BTC_DateTimeAxis.Minimum = DateTime.Now.AddMonths(-1);
                     timeSpan = "month";
                     limit = 744;
                     break;
                 case "year":
-                    BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
-                    BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    BTC_DateTimeAxis.MajorStep = 1;
-                    BTC_DateTimeAxis.Minimum = DateTime.MinValue;
                     timeSpan = "year";
                     limit = 365;
                     break;
 
                 case "all":
-                    BTC_DateTimeAxis.LabelFormat = "{0:MMM}";
-                    BTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    BTC_DateTimeAxis.MajorStep = 1;
-                    BTC_DateTimeAxis.Minimum = DateTime.Today.AddMonths(-4);
                     timeSpan = "all";
                     limit = 0;
                     break;
 
             }
-            UpdateBTC();
+            UpdatePage();
         }
     }
 }

@@ -18,98 +18,134 @@
         </Style>
     </Page.Resources>
 
-    <RelativePanel Padding="10" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+    <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel x:Name="SettingsToogles" Margin="10" RelativePanel.AlignTopWithPanel="True">
+        <RelativePanel Grid.Row="0" Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
+                       BorderThickness="0, 0, 0, 0.5" 
+                       BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+            <StackPanel Margin="0, 5" Padding="0, -10, 0, 5">
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock 
+                        Text="Settings"
+                        Margin="15, 0"
+                        VerticalAlignment="Center"
+						Style="{ThemeResource SubheaderTextBlockStyle}"/>
+                </StackPanel>
+            </StackPanel>
 
-                <ToggleSwitch Grid.Column="0"
+            <StackPanel Orientation="Horizontal" Margin="5"
+                        RelativePanel.AlignRightWithPanel="True">
+
+                <TextBlock Name="Portfolio_total" 
+                           Text="1M"
+                           Visibility="Collapsed"
+                           FontSize="24"
+                           FontWeight="Light"/>
+            </StackPanel>
+
+        </RelativePanel>
+
+        <!-- 
+        ###############################################################################################################
+        ###############################################################################################################-->
+        <RelativePanel Grid.Row="1" Padding="10" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+
+            <StackPanel x:Name="SettingsToogles" Margin="10" RelativePanel.AlignTopWithPanel="True">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ToggleSwitch Grid.Column="0"
                     Name="ThemeSwitcher" Header="Theme"
                     OffContent="Light" OnContent="Dark" 
                     Toggled="ThemeToogled"/>
-                <TextBlock Grid.Row="1"
+                    <TextBlock Grid.Row="1"
                     Text="A restart is required to  &#x0d;change the status bar color."
                     TextWrapping="WrapWholeWords"
                     FontSize="14"
                     FontWeight="ExtraLight"
                     Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
-                
-                
-                <ComboBox Grid.Column="1"
+
+
+                    <ComboBox Grid.Column="1"
                     x:Name="CoinComboBox" 
                     VerticalAlignment="Center"
                     Header="Currency"
                     PlaceholderText="Coin" 
                     Margin="30, 0, 0, 0" 
                     SelectionChanged="CoinBox_changed">
-                    <ComboBoxItem Content="EUR (€)" Name="EUR"/>
-                    <ComboBoxItem Content="USD ($)" Name="USD"/>
-                    <ComboBoxItem Content="CAD ($)" Name="CAD"/>
-                    <ComboBoxItem Content="MXN ($)" Name="MXN"/>
-                    <ComboBoxItem Content="CNY (¥)" Name="CNY"/>
-                </ComboBox>
-                <TextBlock Grid.Row="1" Grid.Column="1"
+                        <ComboBoxItem Content="EUR (€)" Name="EUR"/>
+                        <ComboBoxItem Content="USD ($)" Name="USD"/>
+                        <ComboBoxItem Content="CAD ($)" Name="CAD"/>
+                        <ComboBoxItem Content="MXN ($)" Name="MXN"/>
+                        <ComboBoxItem Content="CNY (¥)" Name="CNY"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="1" Grid.Column="1"
                     Text="Pages need to be updated manually."
                     TextWrapping="WrapWholeWords"
                     Margin="30, 0, 0, 0"
                     FontSize="14"
                     FontWeight="ExtraLight"
                     Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
-            </Grid>
+                </Grid>
 
 
-        </StackPanel>
+            </StackPanel>
 
-        <StackPanel Margin="10, 20" RelativePanel.Below="SettingsToogles">
-            <Button Content="Review" Style="{StaticResource SettingsButtonsStyle}"
+            <StackPanel Margin="10, 20" RelativePanel.Below="SettingsToogles">
+                <Button Content="Review" Style="{StaticResource SettingsButtonsStyle}"
                     Click="reviewButton_Click"/>
-            <TextBlock 
+                <TextBlock 
                 Text="Take a minute and leave a review on the Store."
                 FontSize="14"
                 FontWeight="ExtraLight"
                 Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
 
-            <Button Content="Feedback" Style="{StaticResource SettingsButtonsStyle}" x:Name="feedbackButton"
+                <Button Content="Feedback" Style="{StaticResource SettingsButtonsStyle}" x:Name="feedbackButton"
                     Click="feedbackButton_Click"/>
-            <TextBlock 
+                <TextBlock 
                 Text="I'd like to hear your thoughts on the app."
                 TextWrapping="WrapWholeWords"
                 FontSize="14"
                 FontWeight="ExtraLight"
                 Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
 
-            <Button Content="Mail" Style="{StaticResource SettingsButtonsStyle}"
+                <Button Content="Mail" Style="{StaticResource SettingsButtonsStyle}"
                     Click="mailButton_Click"/>
-            <TextBlock 
+                <TextBlock 
                 Text="You can also contact through email, for more direct feedback."
                 TextWrapping="WrapWholeWords"
                 FontSize="14"
                 FontWeight="ExtraLight"
                 Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
-        </StackPanel>
+            </StackPanel>
 
-        <!-- 
-        ############################################################################################################### -->
-        <StackPanel Margin="10" RelativePanel.AlignBottomWithPanel="True">
-            <Image Source="Assets/coinbase.png" Width="50" HorizontalAlignment="Left" Margin="0, 10"/>
-            <TextBlock Text="CoinBase Unnoficial" FontSize="18" FontWeight="Bold"/>
-            <TextBlock Text="Made with 🖤 as a University side-project." FontWeight="Light"/>
-            <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
-            <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
+            <!-- 
+            ############################################################################################################### -->
+            <StackPanel Margin="10" RelativePanel.AlignBottomWithPanel="True">
+                <Image Source="Assets/coinbase.png" Width="50" HorizontalAlignment="Left" Margin="0, 10"/>
+                <TextBlock Text="CoinBase Unnoficial" FontSize="18" FontWeight="Bold"/>
+                <TextBlock Text="Made with 🖤 as a University side-project." FontWeight="Light"/>
+                <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
+                <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
                              Content    ="http://ismaelestalayo.github.io/" 
                              Margin="0, -6, 0, 0"
                              Foreground="{ThemeResource HyperlinkButtonForeground}"
                              FontWeight="Light"/>
-        </StackPanel>
+            </StackPanel>
 
-    </RelativePanel>
+        </RelativePanel>
+    </Grid>
 </Page>

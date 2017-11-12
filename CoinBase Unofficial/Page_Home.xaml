@@ -272,7 +272,7 @@
         ################################################################################################################################
         ############################################################################################################################ -->
         <Grid Grid.Row="0" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
-              Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -358,7 +358,7 @@
         <!-- 
         ############################################################################################################### -->
         <Grid Grid.Row="1" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
-              Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -444,7 +444,7 @@
         <!-- 
         ############################################################################################################### -->
         <Grid Grid.Row="2" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
-              Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

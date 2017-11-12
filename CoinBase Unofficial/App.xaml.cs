@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Telerik.UI.Xaml.Controls.Chart;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -138,8 +139,9 @@ namespace CoinBase {
 
             try {
                 //Send the GET request
-                response = await httpClient.GetStringAsync(uri);
-                var data = JToken.Parse(response);
+                var data = await GetJSONAsync(uri);
+                //response = await httpClient.GetStringAsync(uri);
+                //var data = JToken.Parse(response);
 
                 switch (crypto) {
                     case "BTC":
@@ -259,6 +261,52 @@ namespace CoinBase {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
+        internal static DateTimeContinuousAxis AdjustAxis(DateTimeContinuousAxis DateTimeAxis, string timeSpan) {
+            switch (timeSpan) {
+                case "hour":
+                    DateTimeAxis.LabelFormat = "{0:HH:mm}";
+                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
+                    DateTimeAxis.MajorStep = 10;
+                    DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
+                    break;
+
+                case "day":
+                    DateTimeAxis.LabelFormat = "{0:HH:mm}";
+                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
+                    DateTimeAxis.MajorStep = 6;
+                    DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
+                    break;
+
+                case "week":
+                    DateTimeAxis.LabelFormat = "{0:ddd d}";
+                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
+                    DateTimeAxis.MajorStep = 1;
+                    DateTimeAxis.Minimum = DateTime.Now.AddDays(-7);
+                    break;
+
+                case "month":
+                    DateTimeAxis.LabelFormat = "{0:d/M}";
+                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
+                    DateTimeAxis.MajorStep = 1;
+                    DateTimeAxis.Minimum = DateTime.Now.AddMonths(-1);
+                    break;
+                case "year":
+                    DateTimeAxis.LabelFormat = "{0:MMM}";
+                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
+                    DateTimeAxis.MajorStep = 1;
+                    DateTimeAxis.Minimum = DateTime.MinValue;
+                    break;
+
+                case "all":
+                    DateTimeAxis.LabelFormat = "{0:MMM}";
+                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
+                    DateTimeAxis.MajorStep = 1;
+                    DateTimeAxis.Minimum = DateTime.Today.AddMonths(-4);
+                    break;
+            }
+            return DateTimeAxis;
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
         public class PricePoint {

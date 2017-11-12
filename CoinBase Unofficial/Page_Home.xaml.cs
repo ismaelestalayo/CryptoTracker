@@ -53,18 +53,21 @@ namespace CoinBase {
             await UpdateBTC();
             BTC_verticalAxis.Minimum = getMinimum(App.ppBTC);
             BTC_verticalAxis.Maximum = getMaximum(App.ppBTC);
+            BTC_DateTimeAxis = App.AdjustAxis(BTC_DateTimeAxis, timeSpan);
             await GetStats("BTC");
             await Get24hVolume("BTC");
 
             await UpdateETH();
             ETH_verticalAxis.Minimum = getMinimum(App.ppETH);
             ETH_verticalAxis.Maximum = getMaximum(App.ppETH);
+            ETH_DateTimeAxis = App.AdjustAxis(ETH_DateTimeAxis, timeSpan);
             await GetStats("ETH");
             await Get24hVolume("ETH");
 
             await UpdateLTC();
             LTC_verticalAxis.Minimum = getMinimum(App.ppLTC);
             LTC_verticalAxis.Maximum = getMaximum(App.ppLTC);
+            LTC_DateTimeAxis = App.AdjustAxis(LTC_DateTimeAxis, timeSpan);
             await GetStats("LTC");
             await Get24hVolume("LTC");
         }
@@ -84,7 +87,7 @@ namespace CoinBase {
         }
         private float getMinimum(List<App.PricePoint> a) {
             int i = 0;
-            float min = 9000;
+            float min = 15000;
 
             foreach (App.PricePoint type in a) {
                 if (a[i].High < min)
@@ -329,54 +332,30 @@ namespace CoinBase {
 
             switch (btn.Content) {
                 case "hour":
-                    BTC_DateTimeAxis.LabelFormat = ETH_DateTimeAxis.LabelFormat = LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    BTC_DateTimeAxis.MajorStepUnit = ETH_DateTimeAxis.MajorStepUnit = LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
-                    BTC_DateTimeAxis.MajorStep = ETH_DateTimeAxis.MajorStep = LTC_DateTimeAxis.MajorStep = 10;
-                    BTC_DateTimeAxis.Minimum = ETH_DateTimeAxis.Minimum = LTC_DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
                     timeSpan = "hour";
                     limit = 60;
                     break;
 
                 case "day":
-                    BTC_DateTimeAxis.LabelFormat = ETH_DateTimeAxis.LabelFormat = LTC_DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    BTC_DateTimeAxis.MajorStepUnit = ETH_DateTimeAxis.MajorStepUnit = LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    BTC_DateTimeAxis.Minimum = ETH_DateTimeAxis.Minimum = LTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
-                    BTC_DateTimeAxis.MajorStep = ETH_DateTimeAxis.MajorStep = LTC_DateTimeAxis.MajorStep = 6;
                     timeSpan = "day";
                     limit = 1500;
                     break;
 
                 case "week":
-                    BTC_DateTimeAxis.LabelFormat = ETH_DateTimeAxis.LabelFormat = LTC_DateTimeAxis.LabelFormat = "{0:ddd d}";
-                    BTC_DateTimeAxis.MajorStepUnit = ETH_DateTimeAxis.MajorStepUnit = LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
-                    BTC_DateTimeAxis.MajorStep = ETH_DateTimeAxis.MajorStep = LTC_DateTimeAxis.MajorStep = 1;
-                    BTC_DateTimeAxis.Minimum = ETH_DateTimeAxis.Minimum = LTC_DateTimeAxis.Minimum = DateTime.Now.AddDays(-7);
                     timeSpan = "week";
                     limit = 168;
                     break;
 
                 case "month":
-                    BTC_DateTimeAxis.LabelFormat = ETH_DateTimeAxis.LabelFormat = LTC_DateTimeAxis.LabelFormat = "{0:d/M}";
-                    BTC_DateTimeAxis.MajorStepUnit = ETH_DateTimeAxis.MajorStepUnit = LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
-                    BTC_DateTimeAxis.MajorStep = ETH_DateTimeAxis.MajorStep = LTC_DateTimeAxis.MajorStep = 1;
-                    BTC_DateTimeAxis.Minimum = ETH_DateTimeAxis.Minimum = LTC_DateTimeAxis.Minimum = DateTime.Now.AddMonths(-1);
                     timeSpan = "month";
                     limit = 744;
                     break;
                 case "year":
-                    BTC_DateTimeAxis.LabelFormat = ETH_DateTimeAxis.LabelFormat = LTC_DateTimeAxis.LabelFormat = "{0:MMM}";
-                    BTC_DateTimeAxis.MajorStepUnit = ETH_DateTimeAxis.MajorStepUnit = LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    BTC_DateTimeAxis.MajorStep = ETH_DateTimeAxis.MajorStep = LTC_DateTimeAxis.MajorStep = 1;
-                    BTC_DateTimeAxis.Minimum = ETH_DateTimeAxis.Minimum = LTC_DateTimeAxis.Minimum = DateTime.MinValue;
                     timeSpan = "year";
                     limit = 365;
                     break;
 
                 case "all":
-                    BTC_DateTimeAxis.LabelFormat = ETH_DateTimeAxis.LabelFormat = LTC_DateTimeAxis.LabelFormat = "{0:MMM}";
-                    BTC_DateTimeAxis.MajorStepUnit = ETH_DateTimeAxis.MajorStepUnit = LTC_DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    BTC_DateTimeAxis.MajorStep = ETH_DateTimeAxis.MajorStep = LTC_DateTimeAxis.MajorStep = 1;
-                    BTC_DateTimeAxis.Minimum = ETH_DateTimeAxis.Minimum = LTC_DateTimeAxis.Minimum = DateTime.Today.AddMonths(-4);
                     timeSpan = "all";
                     limit = 0;
                     break;

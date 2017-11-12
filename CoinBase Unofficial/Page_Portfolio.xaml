@@ -21,20 +21,14 @@
         <RelativePanel Grid.Row="0" Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
                        BorderThickness="0, 0, 0, 0.5" 
                        BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
-            <StackPanel Margin="-10, 5" Padding="0, -10, 0, 5">
+            <StackPanel Margin="0, 5" Padding="0, -10, 0, 5">
 
                 <StackPanel Orientation="Horizontal">
-                    <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
-                        <Ellipse Fill="#3F3F3F" Width="32" Height="32"/>
-                        <TextBlock Text="&#xE14D;" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="7" 
-                                   Foreground="White"/>
-                    </RelativePanel>
-
                     <TextBlock 
                         Text="Portfolio"
+                        Margin="15, 0"
                         VerticalAlignment="Center"
-						Style="{ThemeResource SubheaderTextBlockStyle}"
-                        FontSize="28"/>
+						Style="{ThemeResource SubheaderTextBlockStyle}"/>
                 </StackPanel>
             </StackPanel>
 
@@ -125,8 +119,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1.2*"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1.2*"/>
+                                <ColumnDefinition Width="1.5*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
@@ -156,9 +150,9 @@
                                 Grid.Column="3" 
                                 HorizontalAlignment="Center" 
                                 Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding Current, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
-                                <Run Text=" "/>
                                 <Run Text="{Binding upDown, Mode=OneWay}"/>
+                                <Run Text="{Binding Current, Mode=OneWay}"/>
+                                <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
                             <TextBlock 

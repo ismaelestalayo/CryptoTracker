@@ -29,7 +29,9 @@
                      FontWeight="ExtraLight"/><LineBreak/>
                 <Run Text=" - Last hour charts refresh each 30 seconds." 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Fixed bugs..." 
+                <Run Text=" - Fixed several bugs." 
+                     FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - LiveTile is still WIP (only updates by clicking the Sync button inside the app)." 
                      FontWeight="ExtraLight"/><LineBreak/>
                 
                 <LineBreak/>
