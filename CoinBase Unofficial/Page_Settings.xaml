@@ -134,7 +134,8 @@
             <!-- 
             ############################################################################################################### -->
             <StackPanel Margin="10" RelativePanel.AlignBottomWithPanel="True">
-                <Image Source="Assets/coinbase.png" Width="50" HorizontalAlignment="Left" Margin="0, 10"/>
+                <Image Source="Assets/CryptoTracker 400.png" Width="75" HorizontalAlignment="Left"/>
+                
                 <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
                 <TextBlock Text="Made with 🖤 as a University side-project." FontWeight="Light"/>
                 <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
