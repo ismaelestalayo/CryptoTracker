@@ -17,7 +17,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace CoinBase {
+namespace CryptoTracker {
     sealed partial class App : Application {
         
         internal static string coin       = "EUR";

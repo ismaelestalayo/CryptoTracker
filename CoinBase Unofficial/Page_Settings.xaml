@@ -1,9 +1,8 @@
 ﻿<Page
-    x:Class="CoinBase.Page_Settings"
+    x:Class="CryptoTracker.Page_Settings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CoinBase"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 	NavigationCacheMode="Required">
@@ -136,7 +135,7 @@
             ############################################################################################################### -->
             <StackPanel Margin="10" RelativePanel.AlignBottomWithPanel="True">
                 <Image Source="Assets/coinbase.png" Width="50" HorizontalAlignment="Left" Margin="0, 10"/>
-                <TextBlock Text="CoinBase Unnoficial" FontSize="18" FontWeight="Bold"/>
+                <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
                 <TextBlock Text="Made with 🖤 as a University side-project." FontWeight="Light"/>
                 <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
                 <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 

@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using Windows.UI.Xaml.Controls;
-using Telerik.UI.Xaml.Controls.Chart;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Toolkit.Uwp.UI.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI;
-using Windows.UI.Xaml;
+using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
-namespace CoinBase {
+namespace CryptoTracker {
     public sealed partial class Page_Home : Page {
 
         private int limit = 60;
@@ -204,13 +203,13 @@ namespace CoinBase {
             if (timeSpan.Equals("hour"))
                 App.BTC_change1h = dBTC;
 
-            if (dBTC < 0) {
-                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
+            if (dBTC < 0) { 
+                BTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 dBTC = Math.Abs(dBTC);
-                BTC_diff.Text = "▼" + dBTC.ToString() + "% ";
+                BTC_diff.Text = "▼" + dBTC.ToString() + "%";
             } else {
-                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                BTC_diff.Text = "▲" + dBTC.ToString() + "% ";
+                BTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                BTC_diff.Text = "▲" + dBTC.ToString() + "%";
             }
 
             SplineAreaSeries series = (SplineAreaSeries)BTC_Chart.Series[0];
@@ -255,12 +254,12 @@ namespace CoinBase {
                 App.ETH_change1h = dETH;
 
             if (dETH < 0) {
-                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
+                ETH_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 dETH = Math.Abs(dETH);
-                ETH_diff.Text = "▼" + dETH.ToString() + "% ";
+                ETH_diff.Text = "▼" + dETH.ToString() + "%";
             } else {
-                ETH_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                ETH_diff.Text = "▲" + dETH.ToString() + "% ";
+                ETH_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                ETH_diff.Text = "▲" + dETH.ToString() + "%";
             }
 
             SplineAreaSeries series = (SplineAreaSeries)ETH_Chart.Series[0];
@@ -308,12 +307,12 @@ namespace CoinBase {
                 App.LTC_change1h = dLTC;
 
             if (dLTC < 0) {
-                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
+                LTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 dLTC = Math.Abs(dLTC);
-                LTC_diff.Text = "▼" + dLTC.ToString() + "% ";
+                LTC_diff.Text = "▼" + dLTC.ToString() + "%";
             } else {
-                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
-                LTC_diff.Text = "▲" + dLTC.ToString() + "% ";
+                LTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                LTC_diff.Text = "▲" + dLTC.ToString() + "%";
             }
 
             SplineAreaSeries series = (SplineAreaSeries)LTC_Chart.Series[0];

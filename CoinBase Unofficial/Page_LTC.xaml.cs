@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase {
+namespace CryptoTracker {
     public sealed partial class Page_LTC : Page {
 
         private static int limit = 60;
@@ -127,11 +126,11 @@ namespace CoinBase {
                 App.LTC_change1h = dLTC;
 
             if (dLTC < 0) {
-                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
+                LTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 dLTC = Math.Abs(dLTC);
                 LTC_diff.Text = "▼" + dLTC.ToString() + "%";
             } else {
-                LTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                LTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
                 LTC_diff.Text = "▲" + dLTC.ToString() + "%";
             }
 

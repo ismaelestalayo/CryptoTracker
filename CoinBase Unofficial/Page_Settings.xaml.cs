@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Email;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 
-namespace CoinBase {
+namespace CryptoTracker {
     public sealed partial class Page_Settings : Page {
 
         private string v;

@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.Toolkit.Uwp.Notifications;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
-using Windows.UI.Xaml;
 
-namespace CoinBase {
+namespace CryptoTracker {
     class LiveTile {
 
         public void UpdateLiveTile() {

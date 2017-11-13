@@ -1,11 +1,8 @@
-﻿using System;
+﻿using CryptoTracker.Views;
+using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 
-using CoinBase.Helpers;
-using CoinBase.Views;
-
-namespace CoinBase.Helpers {
+namespace CryptoTracker.Helpers {
     class FirstRunDialogHelper {
 
         internal static async Task ShowIfAppropriateAsync() {

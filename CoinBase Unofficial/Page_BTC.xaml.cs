@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase {
+namespace CryptoTracker {
     public sealed partial class Page_BTC : Page {
 
         private static int limit = 60;
@@ -127,11 +126,11 @@ namespace CoinBase {
                 App.BTC_change1h = dBTC;
 
             if (dBTC < 0) {
-                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 180, 0, 0));
+                BTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 dBTC = Math.Abs(dBTC);
                 BTC_diff.Text = "▼" + dBTC.ToString() + "%";
             } else {
-                BTC_diff.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 120, 0));
+                BTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
                 BTC_diff.Text = "▲" + dBTC.ToString() + "%";
             }
 

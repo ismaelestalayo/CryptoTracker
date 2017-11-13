@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml.Media;
 
-namespace CoinBase.Helpers {
+namespace CryptoTracker.Helpers {
     [DataContractAttribute()]
     internal class PurchaseClass : INotifyPropertyChanged {
 

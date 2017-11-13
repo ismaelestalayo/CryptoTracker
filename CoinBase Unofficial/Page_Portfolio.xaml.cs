@@ -1,16 +1,14 @@
-﻿using System;
+﻿using CryptoTracker.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using CoinBase.Helpers;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
-using Windows.UI;
-using Windows.UI.Xaml.Data;
 
-namespace CoinBase {
+namespace CryptoTracker {
 
     public partial class Page_Portfolio : Page {
 
@@ -20,12 +18,7 @@ namespace CoinBase {
         public Page_Portfolio() {
             this.InitializeComponent();
 
-            try {
-                dataList = new ObservableCollection<PurchaseClass>(ReadPortfolio().Result);
-
-            } catch(Exception) {
-                dataList = new ObservableCollection<PurchaseClass>();
-            }
+            dataList = ReadPortfolio().Result;
             MyListView.ItemsSource = dataList;
 
             UpdatePortfolio();
@@ -131,18 +124,21 @@ namespace CoinBase {
             }
         }
 
-        private static async Task<List<PurchaseClass>> ReadPortfolio() {
-            var readStream =
-                await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("portfolio");
+        private static async Task<ObservableCollection<PurchaseClass>> ReadPortfolio() {
 
-            if (readStream == null)
-                return new List<PurchaseClass>();
+            try {
+                var readStream =
+                    await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("portfolio").ConfigureAwait(false);
 
-            DataContractSerializer stuffSerializer =
-                new DataContractSerializer(typeof(List<PurchaseClass>));
+                DataContractSerializer stuffSerializer =
+                    new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
 
-            var setResult = (List<PurchaseClass>)stuffSerializer.ReadObject(readStream);
-            return setResult;
+                var setResult = (ObservableCollection<PurchaseClass>)stuffSerializer.ReadObject(readStream);
+
+                return setResult;
+            } catch (Exception) {
+                return new ObservableCollection<PurchaseClass>();
+            }
         }
 
     }

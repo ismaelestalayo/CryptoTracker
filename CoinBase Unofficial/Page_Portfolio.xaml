@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="CoinBase.Page_Portfolio"
+    x:Class="CryptoTracker.Page_Portfolio"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -54,10 +54,10 @@
             </ComboBox>
 
             <TextBox 
-                x:Name="cryptoQtyTextBox" Header="Amount" InputScope="Number"
+                x:Name="cryptoQtyTextBox" Header="Amount"
                 Margin="5, 0" PlaceholderText="0.2718" Width="90"/>
             <TextBox 
-                x:Name="investedQtyTextBox" Header="Invested €/$" InputScope="Number"
+                x:Name="investedQtyTextBox" Header="Invested €/$"
                 Margin="5, 0" PlaceholderText="27" Width="90"/>
             <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10, 0" Background="#3F3F3F" Foreground="White">
                 <SymbolIcon Symbol="Add"/>
