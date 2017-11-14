@@ -75,8 +75,22 @@ namespace CryptoTracker {
                             break;
                     }
                 }
-                if (y != null)
+                if (y != null) {
                     coin = y;
+                    switch (coin) {
+                        case "EUR":
+                            coinSymbol = "€";
+                            break;
+                        case "USD":
+                        case "CAD":
+                        case "MXN":
+                            coinSymbol = "$";
+                            break;
+                        case "CNY":
+                            coinSymbol = "¥";
+                            break;
+                    }
+                }
                 
             } catch (Exception ex){
                 // Light theme and EUR by default (first time on the app)
@@ -85,7 +99,6 @@ namespace CryptoTracker {
                 localSettings.Values["Coin"] = "EUR";
                 this.RequestedTheme = ApplicationTheme.Light;
             }
-
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;

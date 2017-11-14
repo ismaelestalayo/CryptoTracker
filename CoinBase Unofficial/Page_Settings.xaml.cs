@@ -94,12 +94,12 @@ namespace CryptoTracker {
                 case "CAD":
                     App.localSettings.Values["Coin"] = "CAD";
                     App.coin       = "CAD";
-                    App.coinSymbol = "€";
+                    App.coinSymbol = "$";
                     break;
                 case "MXN":
                     App.localSettings.Values["Coin"] = "MXN";
                     App.coin       = "MXN";
-                    App.coinSymbol = "€";
+                    App.coinSymbol = "$";
                     break;
                 case "CNY":
                     App.localSettings.Values["Coin"] = "CNY";

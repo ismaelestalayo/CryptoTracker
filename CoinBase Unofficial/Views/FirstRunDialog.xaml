@@ -31,6 +31,8 @@
                      FontWeight="ExtraLight"/><LineBreak/>
                 <Run Text=" - Fixed several bugs." 
                      FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - Fixed coin symbol reseting to € on startup." 
+                     FontWeight="ExtraLight"/><LineBreak/>
                 <Run Text=" - LiveTile is still WIP (only updates by clicking the Sync button inside the app)." 
                      FontWeight="ExtraLight"/><LineBreak/>
                 
