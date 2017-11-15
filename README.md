@@ -1,13 +1,11 @@
-# [CoinBase](https://www.microsoft.com/store/apps/9n3b47hbvblc)
-CoinBase Unofficial UWP app made with GDAX C# API on VisualStudio 2017.
-
-Unofficial CoinBase client to keep up with the three most used crypto-currencies: Bitcoin, Ethereum and Litecoin. 
+# [CryptoTracker](https://www.microsoft.com/store/apps/9n3b47hbvblc)
+A crypto currency tracker UWP app made with C# and XAML on VisualStudio to keep up with the three most used crypto-currencies: Bitcoin, Ethereum and Litecoin. 
 
 Charts of each coin for the last hourt, day, week, month, year and for all the time the coin has been on the market. Supports EUR, USD, CAD and MXN at the moment, and has also light and dark theme for you to choose!
 
-Near future plans: ability to add bought crypto-coins to keep track of your earnings/loses, and log in to CoinBase account.
+Near future plans: Ability to log in to CoinBase account.
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Promotion/All.png?raw=true" width = "130%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/All.png?raw=true" width = "130%"/>
 
 ## PC Version
 
@@ -27,10 +25,18 @@ Near future plans: ability to add bought crypto-coins to keep track of your earn
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/>
 
 # Changelog:
+#### 2.0:
+- New logo, name and fluent UI
+- Last hour chart refresh automatically
+- Fixed portfolio bug
+- WIP Live tile
+
 #### 1.5:
 - Improved the whole UI (tons of details)
+- New Portfolio section
 - Changed sliders to buttons (for less bugs)
-- Added animations while loading a chart
+- Added animations when loading a chart
+- Added support for CNY ¥
 
 #### 1.4:
 - New minimal UI for both PC and mobile.
@@ -62,11 +68,12 @@ Near future plans: ability to add bought crypto-coins to keep track of your earn
 - [x] Support for EUR, USD, CAD, MXN
 - [x] Mobile friendly UI
 - [x] Stats about each coin on their pages
+- [x] Portfolio to keep track of earnings
+- [~] Live tile
 - [ ] More cryptocurrencies
-- [ ] Live tile
 - [ ] More languages
 - [ ] Log in to CoinBase account
-- [ ] Port to Android (maybe iOS but not cheap)
+- [ ] Port to Android (maybe iOS but developer account is 100€/year)
 
 # Suggest anything at:
 
