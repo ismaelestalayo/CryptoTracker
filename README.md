@@ -12,7 +12,7 @@ Near future plans: Ability to log in to CoinBase account.
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_HomeL.png?raw=true" width = "80%"/>
 
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ethL.png?raw=true" width = "80%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ethLL.png?raw=true" width = "80%"/>
 
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ltcD.png?raw=true" width = "80%"/>
 
@@ -22,7 +22,7 @@ Near future plans: Ability to log in to CoinBase account.
 
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_btcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ltcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ethD.png?raw=true" width = "30%"/>
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_portfolioL.png?raw=true" width = "30%"/>
 
 # Changelog:
 #### 2.0:
