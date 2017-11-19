@@ -59,6 +59,7 @@ namespace CryptoTracker {
                 cryptoQtyTextBox.Text = String.Empty;
                 investedQtyTextBox.Text = String.Empty;
 
+                UpdateEarnings();
                 SavePortfolio();
 
             } catch(Exception) {
@@ -91,9 +92,19 @@ namespace CryptoTracker {
                 priceBought = Math.Round(priceBought, 2);
                 dataList[i].Earnings = Math.Round((curr - priceBought) * dataList[i]._CryptoQty, 2).ToString();
             }
+            UpdateEarnings();
             SavePortfolio();
 
         }
+
+        private void UpdateEarnings() {
+            float total = 0;
+            for (int i = 0; i < MyListView.Items.Count; i++) {
+                total += float.Parse(dataList[i].Earnings);
+                Portfolio_total.Text = total.ToString() + "€";
+            }
+        }
+
         private void RemovePortfolio_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             if (MyListView.SelectedIndex != -1) {
                 dataList.RemoveAt(MyListView.SelectedIndex);

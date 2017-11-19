@@ -152,7 +152,7 @@
 
                 <telerik:RadCartesianChart.Grid>
                     <telerik:CartesianChartGrid MajorYLinesRenderMode="Inner"
-                        MajorLinesVisibility="Y" MajorYLineStyle="{StaticResource ChartGridColor}"/>
+                        MajorLinesVisibility="X" MajorYLineStyle="{StaticResource ChartGridColor}"/>
                 </telerik:RadCartesianChart.Grid>
 
                 <telerik:RadCartesianChart.HorizontalAxis>

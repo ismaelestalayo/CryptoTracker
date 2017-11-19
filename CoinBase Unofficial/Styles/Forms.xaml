@@ -4,7 +4,7 @@
 
     <Style TargetType="Line" x:Key="ChartGridColor">
         <Setter Property="Stroke"		   Value="{ThemeResource TextBoxForegroundHeaderThemeBrush}"/>
-        <Setter Property="StrokeDashArray" Value="3,7"/>
+        <Setter Property="StrokeDashArray" Value="5, 0"/>
         <Setter Property="StrokeThickness" Value="0.2"/>
     </Style>
 

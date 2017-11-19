@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -14,6 +15,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -36,8 +38,7 @@
                         RelativePanel.AlignRightWithPanel="True">
 
                 <TextBlock Name="Portfolio_total" 
-                           Text="1M"
-                           Visibility="Collapsed"
+                           Text="0€"
                            FontSize="24"
                            FontWeight="Light"/>
             </StackPanel>
@@ -175,6 +176,13 @@
                 </ListView.ItemContainerStyle>
             </ListView>
         </StackPanel>
+
+        <!-- 
+        ###############################################################################################################
+        ###############################################################################################################
+        ############################################################################################################### -->
+        
+        
     </Grid>
 
 </Page>
