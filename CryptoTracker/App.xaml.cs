@@ -1,5 +1,5 @@
-﻿using Microsoft.Azure.Mobile;
-using Microsoft.Azure.Mobile.Analytics;
+﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -81,13 +81,21 @@ namespace CryptoTracker {
                         case "EUR":
                             coinSymbol = "€";
                             break;
+                        case "GBP":
+                            coinSymbol = "£";
+                            break;
                         case "USD":
                         case "CAD":
+                        case "AUD":
                         case "MXN":
                             coinSymbol = "$";
                             break;
                         case "CNY":
+                        case "JPY":
                             coinSymbol = "¥";
+                            break;
+                        case "INR":
+                            coinSymbol = "₹";
                             break;
                     }
                 }
@@ -128,7 +136,7 @@ namespace CryptoTracker {
                 Window.Current.Activate();
             }
 
-            MobileCenter.Start("1385f8f2-22f5-4493-9409-38f9ba1a5461", typeof(Analytics));
+            AppCenter.Start("37e61258-8639-47d6-9f6a-d47d54cd8ad5", typeof(Analytics));
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
@@ -146,7 +154,7 @@ namespace CryptoTracker {
         ////////////////////////////////////////////////////////////////////////////////////////
         async internal static Task GetCurrentPrice(string crypto) {
             
-            var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,CAD,MXN,CNY");
+            var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,GBP,CAD,AUD,MXN,CNY,JPY,INR");
             HttpClient httpClient = new HttpClient();
             String response = "";
 

@@ -87,9 +87,13 @@
                     SelectionChanged="CoinBox_changed">
                         <ComboBoxItem Content="EUR (€)" Name="EUR"/>
                         <ComboBoxItem Content="USD ($)" Name="USD"/>
+                        <ComboBoxItem Content="GBP (£)" Name="GBP"/>
                         <ComboBoxItem Content="CAD ($)" Name="CAD"/>
+                        <ComboBoxItem Content="AUD ($)" Name="AUD"/>
                         <ComboBoxItem Content="MXN ($)" Name="MXN"/>
                         <ComboBoxItem Content="CNY (¥)" Name="CNY"/>
+                        <ComboBoxItem Content="JPY (¥)" Name="JPY"/>
+                        <ComboBoxItem Content="INR (₹)" Name="INR"/>
                     </ComboBox>
                     <TextBlock Grid.Row="1" Grid.Column="1"
                     Text="Pages need to be updated manually."
@@ -137,7 +141,7 @@
                 <Image Source="Assets/CryptoTracker 400.png" Width="75" HorizontalAlignment="Left"/>
                 
                 <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
-                <TextBlock Text="Made with 🖤 as a University side-project." FontWeight="Light"/>
+                <TextBlock Text="Made with ❤ by an engineering student." FontWeight="Light"/>
                 <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
                 <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
                              Content    ="http://ismaelestalayo.github.io/" 

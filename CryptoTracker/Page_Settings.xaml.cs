@@ -27,14 +27,26 @@ namespace CryptoTracker {
                 case "USD":
                     USD.IsSelected = true;
                     break;
+                case "GBP":
+                    GBP.IsSelected = true;
+                    break;
                 case "CAD":
                     CAD.IsSelected = true;
+                    break;
+                case "AUD":
+                    AUD.IsSelected = true;
                     break;
                 case "MXN":
                     MXN.IsSelected = true;
                     break;
                 case "CNY":
                     CNY.IsSelected = true;
+                    break;
+                case "JPY":
+                    JPY.IsSelected = true;
+                    break;
+                case "INR":
+                    INR.IsSelected = true;
                     break;
             }
             CoinComboBox.PlaceholderText = App.localSettings.Values["Coin"].ToString();
@@ -88,12 +100,22 @@ namespace CryptoTracker {
                     break;
                 case "USD":
                     App.localSettings.Values["Coin"] = "USD";
-                    App.coin       = "USD";
+                    App.coin = "USD";
                     App.coinSymbol = "$";
+                    break;
+                case "GBP":
+                    App.localSettings.Values["Coin"] = "GBP";
+                    App.coin = "GBP";
+                    App.coinSymbol = "£";
                     break;
                 case "CAD":
                     App.localSettings.Values["Coin"] = "CAD";
-                    App.coin       = "CAD";
+                    App.coin = "CAD";
+                    App.coinSymbol = "$";
+                    break;
+                case "AUD":
+                    App.localSettings.Values["Coin"] = "AUD";
+                    App.coin = "AUD";
                     App.coinSymbol = "$";
                     break;
                 case "MXN":
@@ -103,8 +125,18 @@ namespace CryptoTracker {
                     break;
                 case "CNY":
                     App.localSettings.Values["Coin"] = "CNY";
-                    App.coin       = "CNY";
+                    App.coin = "CNY";
                     App.coinSymbol = "¥";
+                    break;
+                case "JPY":
+                    App.localSettings.Values["Coin"] = "JPY";
+                    App.coin = "JPY";
+                    App.coinSymbol = "¥";
+                    break;
+                case "INR":
+                    App.localSettings.Values["Coin"] = "INR";
+                    App.coin = "INR";
+                    App.coinSymbol = "₹";
                     break;
             }
         }

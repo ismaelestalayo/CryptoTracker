@@ -25,15 +25,11 @@
                 <LineBreak/>
                 
                 <Run>New in this version:</Run><LineBreak/>
-                <Run Text=" - New fluent UI." 
+                <Run Text=" - Added GBP, AUD, JPY and INR currencies." 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Last hour charts refresh each 30 seconds." 
+                <Run Text="   (Thanks for the feedback)" 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Fixed several bugs." 
-                     FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Fixed coin symbol reseting to € on startup." 
-                     FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - LiveTile is still WIP (only updates by clicking the Sync button inside the app)." 
+                <Run Text=" - I'll resume doing mayor changes in mid January after exams are done." 
                      FontWeight="ExtraLight"/><LineBreak/>
                 
                 <LineBreak/>
