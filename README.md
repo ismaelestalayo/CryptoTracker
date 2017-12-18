@@ -1,7 +1,11 @@
 # [CryptoTracker](https://www.microsoft.com/store/apps/9n3b47hbvblc)
-A crypto currency tracker UWP app made with C# and XAML on VisualStudio to keep up with the three most used crypto-currencies: Bitcoin, Ethereum and Litecoin. 
+A crypto currency tracker UWP to keep up with the three most used crypto-currencies: Bitcoin, Ethereum and Litecoin. 
 
-Charts of each coin for the last hourt, day, week, month, year and for all the time the coin has been on the market. Supports EUR, USD, CAD and MXN at the moment, and has also light and dark theme for you to choose!
+Charts of each coin for the last hourt/day/week/month/year and for all the time the coin has been on the market. 
+
+(Supports EUR, USD, GBP, AUD, CAD, MXn, CNY, JPY and INR at the moment) 
+
+(Beautiful light and dark theme for you to choose!)
 
 Near future plans: Ability to log in to CoinBase account.
 
@@ -25,6 +29,9 @@ Near future plans: Ability to log in to CoinBase account.
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_portfolioL.png?raw=true" width = "30%"/>
 
 # Changelog:
+#### 2.0.2:
+- Added GBP, AUD, JPY and INR
+
 #### 2.0:
 - New logo, name and fluent UI
 - Last hour chart refresh automatically
