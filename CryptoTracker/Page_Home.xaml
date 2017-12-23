@@ -56,6 +56,7 @@
         ###############################################################################################################
         ############################################################################################################### -->
         <Grid Margin="15, 15, 15, 0" Grid.Row="0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
+              PointerPressed="BTC_PointerPressed"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>
@@ -125,6 +126,7 @@
 
         <!-- ############################################################################################################### -->
         <Grid Margin="15, 15, 15, 0" Grid.Row="1" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
+              PointerPressed="ETH_PointerPressed"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>
@@ -195,6 +197,7 @@
 
         <!-- ############################################################################################################### -->
         <Grid Margin="15, 15, 15, 0" Grid.Row="2" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
+              PointerPressed="LTC_PointerPressed"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>

@@ -25,14 +25,14 @@ namespace CryptoTracker {
 
             UpdateHome();
 
-            TimeSpan period = TimeSpan.FromSeconds(60);
-            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
-                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
-                    RadioButton r = new RadioButton { Content = timeSpan };
-                    if (timeSpan == "hour")
-                        ALL_TimerangeButton_Click(r, null);
-                });
-            }, period);
+            //TimeSpan period = TimeSpan.FromSeconds(60);
+            //ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+            //    Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+            //        RadioButton r = new RadioButton { Content = timeSpan };
+            //        if (timeSpan == "hour")
+            //            ALL_TimerangeButton_Click(r, null);
+            //    });
+            //}, period);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,15 +57,15 @@ namespace CryptoTracker {
             await Get24hVolume("BTC");
 
             await UpdateETH();
-            ETH_verticalAxis.Minimum = getMinimum(App.ppETH);
-            ETH_verticalAxis.Maximum = getMaximum(App.ppETH);
+            ETH_verticalAxis.Minimum = getMinimum(App.historic);
+            ETH_verticalAxis.Maximum = getMaximum(App.historic);
             ETH_DateTimeAxis = App.AdjustAxis(ETH_DateTimeAxis, timeSpan);
             await GetStats("ETH");
             await Get24hVolume("ETH");
 
             await UpdateLTC();
-            LTC_verticalAxis.Minimum = getMinimum(App.ppLTC);
-            LTC_verticalAxis.Maximum = getMaximum(App.ppLTC);
+            LTC_verticalAxis.Minimum = getMinimum(App.historic);
+            LTC_verticalAxis.Maximum = getMaximum(App.historic);
             LTC_DateTimeAxis = App.AdjustAxis(LTC_DateTimeAxis, timeSpan);
             await GetStats("LTC");
             await Get24hVolume("LTC");
@@ -145,8 +145,8 @@ namespace CryptoTracker {
                 case "ETH":
                     for (int i = 0; i < 24; i++) {
                         data.Add(new App.ChartDataObject() {
-                            Date   = App.ppETH[i].DateTime,
-                            Volume = App.ppETH[i].Volumefrom
+                            Date   = App.historic[i].DateTime,
+                            Volume = App.historic[i].Volumefrom
                         });
                     }
                     this.ETH_VolumeChart.DataContext = data;
@@ -155,8 +155,8 @@ namespace CryptoTracker {
                 case "LTC":
                     for (int i = 0; i < 24; i++) {
                         data.Add(new App.ChartDataObject() {
-                            Date   = App.ppLTC[i].DateTime,
-                            Volume = App.ppLTC[i].Volumefrom
+                            Date   = App.historic[i].DateTime,
+                            Volume = App.historic[i].Volumefrom
                         });
                     }
                     this.LTC_VolumeChart.DataContext = data;
@@ -244,7 +244,9 @@ namespace CryptoTracker {
 
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject { Date = App.ppETH[i].DateTime, Value = App.ppETH[i].Low };
+                ChartDataObject obj = new ChartDataObject {
+                    Date  = App.historic[i].DateTime,
+                    Value = App.historic[i].Low };
                 data.Add(obj);
             }
 
@@ -295,8 +297,8 @@ namespace CryptoTracker {
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
                 ChartDataObject obj = new ChartDataObject {
-                    Date = App.ppLTC[i].DateTime,
-                    Value = App.ppLTC[i].Low
+                    Date  = App.historic[i].DateTime,
+                    Value = App.historic[i].Low
                 };
                 data.Add(obj);
             }
@@ -362,5 +364,16 @@ namespace CryptoTracker {
             }
             UpdateHome();
         }
+
+        private void BTC_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Page_BTC));
+        }
+        private void ETH_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Page_CoinTemplate), "ETH");
+        }
+        private void LTC_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Page_CoinTemplate), "LTC");
+        }
+
     }
 }

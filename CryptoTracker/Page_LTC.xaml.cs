@@ -19,14 +19,14 @@ namespace CryptoTracker {
             this.InitializeComponent();
             InitValues();
 
-            TimeSpan period = TimeSpan.FromSeconds(30);
-            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
-                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
-                    RadioButton r = new RadioButton { Content = timeSpan };
-                    if (timeSpan == "hour")
-                        LTC_TimerangeButton_Click(r, null);
-                });
-            }, period);
+            //TimeSpan period = TimeSpan.FromSeconds(30);
+            //ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+            //    Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+            //        RadioButton r = new RadioButton { Content = timeSpan };
+            //        if (timeSpan == "hour")
+            //            LTC_TimerangeButton_Click(r, null);
+            //    });
+            //}, period);
 
         }
 

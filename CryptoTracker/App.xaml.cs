@@ -37,6 +37,7 @@ namespace CryptoTracker {
         internal static float ETH_change1h = 0;
         internal static float LTC_change1h = 0;
 
+        internal static List<PricePoint> historic = new List<PricePoint>();
         internal static List<PricePoint> ppBTC = new List<PricePoint>();
         internal static List<PricePoint> ppETH = new List<PricePoint>();
         internal static List<PricePoint> ppLTC = new List<PricePoint>();
@@ -159,10 +160,7 @@ namespace CryptoTracker {
             String response = "";
 
             try {
-                //Send the GET request
                 var data = await GetJSONAsync(uri);
-                //response = await httpClient.GetStringAsync(uri);
-                //var data = JToken.Parse(response);
 
                 switch (crypto) {
                     case "BTC":
@@ -198,7 +196,6 @@ namespace CryptoTracker {
             string response = "";
 
             try {
-                //Send the GET request
                 response = await httpClient.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
@@ -215,20 +212,20 @@ namespace CryptoTracker {
 
 
                     case "ETH":
-                        ppETH.Clear();
+                        historic.Clear();
 
                         for (int i = 0; i < limit; i++) {
-                            ppETH.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
+                            historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
                         }
                         ETH_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
                         ETH_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
 
                     case "LTC":
-                        ppLTC.Clear();
+                        historic.Clear();
 
                         for (int i = 0; i < limit; i++) {
-                            ppLTC.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
+                            historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
                         }
                         LTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
                         LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
@@ -251,7 +248,6 @@ namespace CryptoTracker {
             string response = "";
 
             try {
-                //Send the GET request
                 httpResponse = await httpClient.GetAsync(requestUri);
                 httpResponse.EnsureSuccessStatusCode();
 

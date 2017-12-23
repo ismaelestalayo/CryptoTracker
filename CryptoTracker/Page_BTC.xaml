@@ -192,7 +192,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding DataPoint.Value}"/>
-                                    <TextBlock Text="€"/>
+                                    <TextBlock Text=""/>
                                 </StackPanel>
                                 <TextBlock Text="{Binding DataPoint.Category}"/>
                             </StackPanel>

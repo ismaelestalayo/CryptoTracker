@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,13 +25,14 @@ namespace CryptoTracker {
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
 
-            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-                rootPivot.Padding = new Thickness(0, 30, 0, 0);
+                rootFrame.Padding = new Thickness(0, 30, 0, 0);
+                TopCommandBar.Visibility = Visibility.Visible;
             }
-            
+
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
@@ -42,11 +44,11 @@ namespace CryptoTracker {
 
             titleBar.InactiveBackgroundColor = Color.FromArgb(0, 242, 242, 242);
             titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(0, 242, 242, 242);
-            
+
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
 
-                if(App.localSettings.Values["Theme"].Equals("Dark") ) {
+                if (App.localSettings.Values["Theme"].Equals("Dark")) {
                     statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23);
                     statusBar.BackgroundOpacity = 1;
                     statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
@@ -57,17 +59,13 @@ namespace CryptoTracker {
                 }
 
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
-
-                TopCommandBar.Visibility = Visibility.Collapsed;
                 BottomCommandBar.Visibility = Visibility.Visible;
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
 
-            Frame0.Navigate(typeof(Page_Home));
-            Frame1.Navigate(typeof(Page_BTC));
-            Frame2.Navigate(typeof(Page_ETH));
-            Frame3.Navigate(typeof(Page_LTC));
+
+            rootFrame.Navigate(typeof(Page_Home));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +77,6 @@ namespace CryptoTracker {
         }
 
         private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e) {
-            Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
                 return;
 
@@ -91,100 +88,45 @@ namespace CryptoTracker {
             }
         }
 
+
         private void PortfolioButton_Click(object sender, RoutedEventArgs e) {
-
-            if(!isInPortfolio) {
-                rootPivot.SelectedIndex = 0;
-                Frame0.Navigate(typeof(Page_Portfolio));
-                isInPortfolio = true;
-                isInSettings = false;
+            if(rootFrame.SourcePageType.Name != "Page_Portfolio") {
+                rootFrame.Navigate(typeof(Page_Portfolio));
             } else {
-                switch (rootPivot.SelectedIndex) {
-                    case 0:
-                        Frame0.Navigate(typeof(Page_Home));
-                        break;
-                    case 1:
-                        Frame1.Navigate(typeof(Page_BTC));
-                        break;
-                    case 2:
-                        Frame2.Navigate(typeof(Page_ETH));
-                        break;
-                    case 3:
-                        Frame3.Navigate(typeof(Page_LTC));
-                        break;
-                }
-                isInPortfolio = false;
+                rootFrame.Navigate(typeof(Page_Home));
             }
         }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e){
-
-            if (!isInSettings){
-                rootPivot.SelectedIndex = 0;
-                Frame0.Navigate(typeof(Page_Settings));
-                isInSettings = true;
-                isInPortfolio = false;
+        private void SettingsButton_Click(object sender, RoutedEventArgs e) {
+            if (rootFrame.SourcePageType.Name != "Page_Settings") {
+                rootFrame.Navigate(typeof(Page_Settings));
+            } else {
+                rootFrame.Navigate(typeof(Page_Home));
             }
-            else{
-                switch (rootPivot.SelectedIndex){
-                    case 0:
-                        Frame0.Navigate(typeof(Page_Home));
-                        break;
-                    case 1:
-                        Frame1.Navigate(typeof(Page_BTC));
-                        break;
-                    case 2:
-                        Frame2.Navigate(typeof(Page_ETH));
-                        break;
-                    case 3:
-                        Frame3.Navigate(typeof(Page_LTC));
-                        break;
-                }
-                isInSettings = false;
-            }
-
+        }
+        private void News_Click(object sender, RoutedEventArgs e) {
 
         }
+
 
         internal async Task SyncAll() {
-            var r = rootPivot;
 
-            switch (rootPivot.SelectedIndex) {
-                case 0:
-                    if (!isInPortfolio) {
-                        var p0 = (Page_Home)Frame0.Content;
-                        p0.UpdateHome();
-                    } else {
-                        var p0 = (Page_Portfolio)Frame0.Content;
-                        p0.UpdatePortfolio();
-                    }
+            switch (rootFrame.SourcePageType.Name) {
+                case "Page_CoinTemplate":
+                    var p0 = (Page_CoinTemplate)rootFrame.Content;
+                    p0.UpdatePage();
                     break;
-
-                case 1:
-                    var p1 = (Page_BTC)Frame1.Content;
-                    p1.UpdatePage();
-                    break;
-
-                case 2:
-                    var p2 = (Page_ETH)Frame2.Content;
+                case "Page_BTC":
+                    var p2 = (Page_BTC)rootFrame.Content;
                     p2.UpdatePage();
                     break;
-
-                case 3:
-                    var p3 = (Page_LTC)Frame3.Content;
-                    p3.UpdatePage();
+                case "Page_Portfolio":
+                    var p1 = (Page_Portfolio)rootFrame.Content;
+                    p1.UpdatePortfolio();
                     break;
             }
 
             LiveTile l = new LiveTile();
             l.UpdateLiveTile();
-        }
-
-        private void rootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e){
-            isInPortfolio = false;
-            isInSettings = false;
-
-            Frame0.Navigate(typeof(Page_Home));
         }
     }
 }

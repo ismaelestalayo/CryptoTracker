@@ -11,62 +11,45 @@
         <SolidColorBrush x:Key="CoinBase_Blue" Color="#222222" />
         <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
-
-        <DataTemplate x:Key="pivotHeader">
-            <TextBlock Text="{Binding}" FontSize="20" FontWeight="ExtraLight"
-                       HorizontalAlignment="Right"/>
-        </DataTemplate>
-
-
     </Page.Resources>
+    
 
-    <Grid>
+    <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        
+        
+        
+        <Frame Grid.Row="1" Name="rootFrame" 
+            Background="Transparent">
 
-        <Pivot x:Name="rootPivot"
-           Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-           IsHeaderItemsCarouselEnabled="False" HeaderTemplate="{StaticResource pivotHeader}"
-           HeaderFocusVisualPlacement="SelectedItemHeader"
-           
-           SelectionChanged="rootPivot_SelectionChanged">
-
-            <PivotItem Header="Home" Name="Home">
-                <Frame x:Name="Frame0" Margin="-15, 0"/>
-            </PivotItem>
-
-            <PivotItem Header="BTC" Name="Pivot1">
-                <Frame x:Name="Frame1" Margin="-15, 0"/>
-            </PivotItem>
-
-            <PivotItem Header="ETH" Name="Pivot2">
-                <Frame x:Name="Frame2" Margin="-15, 0"/>
-            </PivotItem>
-
-            <PivotItem Header="LTC" Name="Pivot3">
-                <Frame x:Name="Frame3" Margin="-15, 0"/>
-            </PivotItem>
-
-            <Pivot.RightHeader>
-                <CommandBar x:Name="TopCommandBar" OverflowButtonVisibility="Collapsed" Background="Transparent">
-                    <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
-                    <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
-                    <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
-                </CommandBar>
-            </Pivot.RightHeader>
-
-        </Pivot>
+        </Frame>
 
         <CommandBar 
-            x:Name="BottomCommandBar" Grid.Row="1" OverflowButtonVisibility="Collapsed" 
+            x:Name="TopCommandBar" Grid.Row="0" OverflowButtonVisibility="Collapsed" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+            Margin="0, 30, 0, -30"
             Visibility="Collapsed">
 
             <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
-            <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
             <AppBarSeparator/>
+            <AppBarButton Icon="PreviewLink" Click="News_Click" />
+            <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
+            <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
+        </CommandBar>
+
+        <CommandBar 
+            x:Name="BottomCommandBar" Grid.Row="2" OverflowButtonVisibility="Collapsed" 
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+            Visibility="Collapsed">
+
+            
+            <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
+            <AppBarButton Icon="PreviewLink" Click="News_Click" />
+            <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
             <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
         </CommandBar>
 
