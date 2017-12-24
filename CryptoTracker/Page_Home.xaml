@@ -13,12 +13,10 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-
                 <VisualState x:Name="NarrowState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
-
                     <VisualState.Setters>
                         <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="*"/>
                         <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="0"/>
@@ -29,33 +27,41 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="900" />
                     </VisualState.StateTriggers>
-
                     <VisualState.Setters>
                         <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="5*"/>
                         <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="3*"/>
                     </VisualState.Setters>
                 </VisualState>
-
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <!--Starts the Grid itself -->
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="0"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 0, 0, -25">
+            <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
+            <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+            <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+            <RadioButton GroupName="Home" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+            <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+            <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+        </StackPanel>
 
         <!-- 
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <Grid Margin="15, 15, 15, 0" Grid.Row="0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
+        <Grid Margin="15, 15, 15, 0" Grid.Row="1" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
               PointerPressed="BTC_PointerPressed"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
@@ -124,8 +130,11 @@
 
         </Grid>
 
-        <!-- ############################################################################################################### -->
-        <Grid Margin="15, 15, 15, 0" Grid.Row="1" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
+        <!-- 
+        ###############################################################################################################
+        ###############################################################################################################
+        ############################################################################################################### -->
+        <Grid Margin="15, 15, 15, 0" Grid.Row="2" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
               PointerPressed="ETH_PointerPressed"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
@@ -195,8 +204,11 @@
         </Grid>
 
 
-        <!-- ############################################################################################################### -->
-        <Grid Margin="15, 15, 15, 0" Grid.Row="2" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
+        <!-- 
+        ###############################################################################################################
+        ###############################################################################################################
+        ############################################################################################################### -->
+        <Grid Margin="15, 15, 15, 0" Grid.Row="3" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
               PointerPressed="LTC_PointerPressed"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
@@ -263,10 +275,15 @@
             </telerik:RadCartesianChart>
         </Grid>
 
-        <!-- ###########################################################################################################################
-        ################################################################################################################################
-        ############################################################################################################################ -->
-        <Grid Grid.Row="0" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
+        <!-- ##########################################################################################################
+        ###############################################################################################################
+        ###############################################################################################################
+        ###############################################################################################################
+        ###############################################################################################################
+        ###############################################################################################################
+        ###############################################################################################################
+        ############################################################################################################### -->
+        <Grid Grid.Row="1" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>
@@ -351,8 +368,10 @@
         </Grid>
 
         <!-- 
+        ###############################################################################################################
+        ###############################################################################################################
         ############################################################################################################### -->
-        <Grid Grid.Row="1" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
+        <Grid Grid.Row="2" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>
@@ -435,10 +454,12 @@
 
 
         </Grid>
-        
+
         <!-- 
+        ###############################################################################################################
+        ###############################################################################################################
         ############################################################################################################### -->
-        <Grid Grid.Row="2" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
+        <Grid Grid.Row="3" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
             <Grid.RowDefinitions>
@@ -522,18 +543,6 @@
 
 
         </Grid>
-
-        <!-- ###########################################################################################################################
-        ################################################################################################################################
-        ############################################################################################################################ -->
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" Margin="0, 0, 0, -20">
-            <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
-            <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            <RadioButton GroupName="Home" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-        </StackPanel>
 
     </Grid>
 </Page>
