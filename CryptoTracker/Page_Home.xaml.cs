@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Media;
 namespace CryptoTracker {
     public sealed partial class Page_Home : Page {
 
-        private int limit = 60;
+        private int    limit = 60;
         private string timeSpan = "hour";
 
         public class ChartDataObject {
@@ -22,17 +22,16 @@ namespace CryptoTracker {
 
         public Page_Home() {
             this.InitializeComponent();
-
             UpdateHome();
 
-            //TimeSpan period = TimeSpan.FromSeconds(60);
-            //ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
-            //    Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
-            //        RadioButton r = new RadioButton { Content = timeSpan };
-            //        if (timeSpan == "hour")
-            //            ALL_TimerangeButton_Click(r, null);
-            //    });
-            //}, period);
+            TimeSpan period = TimeSpan.FromSeconds(60);
+            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
+                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                    RadioButton r = new RadioButton { Content = timeSpan };
+                    if (timeSpan == "hour")
+                        ALL_TimerangeButton_Click(r, null);
+                });
+            }, period);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,8 +49,8 @@ namespace CryptoTracker {
             LoadingControl_LTC.IsLoading = true;
 
             await UpdateBTC();
-            BTC_verticalAxis.Minimum = getMinimum(App.ppBTC);
-            BTC_verticalAxis.Maximum = getMaximum(App.ppBTC);
+            BTC_verticalAxis.Minimum = getMinimum(App.historic);
+            BTC_verticalAxis.Maximum = getMaximum(App.historic);
             BTC_DateTimeAxis = App.AdjustAxis(BTC_DateTimeAxis, timeSpan);
             await GetStats("BTC");
             await Get24hVolume("BTC");
@@ -135,8 +134,8 @@ namespace CryptoTracker {
                 case "BTC":
                     for (int i = 0; i < 24; i++) {
                         data.Add(new App.ChartDataObject() {
-                            Date   = App.ppBTC[i].DateTime,
-                            Volume = App.ppBTC[i].Volumefrom
+                            Date   = App.historic[i].DateTime,
+                            Volume = App.historic[i].Volumefrom
                         });
                     }
                     this.BTC_VolumeChart.DataContext = data;
@@ -192,8 +191,8 @@ namespace CryptoTracker {
             List<ChartDataObject> data = new List<ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
                 ChartDataObject obj = new ChartDataObject {
-                    Date = App.ppBTC[i].DateTime,
-                    Value = App.ppBTC[i].Low
+                    Date  = App.historic[i].DateTime,
+                    Value = App.historic[i].Low
                 };
                 data.Add(obj);
             }
@@ -366,7 +365,7 @@ namespace CryptoTracker {
         }
 
         private void BTC_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Page_BTC));
+            this.Frame.Navigate(typeof(Page_CoinTemplate), "BTC");
         }
         private void ETH_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
             this.Frame.Navigate(typeof(Page_CoinTemplate), "ETH");

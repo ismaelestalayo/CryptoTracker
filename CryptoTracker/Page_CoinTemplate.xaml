@@ -10,7 +10,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     NavigationCacheMode="Disabled">
-    
+
     <!-- 
     ########################################################################################### -->
     <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" x:Name="MainGrid">
@@ -60,12 +60,13 @@
 
                 <StackPanel Orientation="Horizontal">
                     <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
-                        <Ellipse Fill="#B5B5B5" Width="32" Height="32"/>
-                        <Path Fill="White" Margin="-3" Data="M12.29 28.04l1.29-5.52-1.58.67.63-2.85 1.64-.68L16.52 10h5.23l-1.52 7.14 2.09-.74-.58 2.7-2.05.8-.9 4.34h8.1l-.99 3.8z" />
+                        <Ellipse x:Name="CoinLogoColor" Fill="#B5B5B5" Width="32" Height="32"/>
+                        <Path x:Name="CoinLogo" Fill="White" Margin="0"/>
                     </RelativePanel>
 
                     <TextBlock 
-                        Text="Template" 
+                        x:Name="CoinName"
+                        Text="Coin" 
                         VerticalAlignment="Center"
 						Style="{ThemeResource SubheaderTextBlockStyle}"
                         FontSize="28"/>
@@ -115,15 +116,15 @@
                     <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
                         <telerik:ChartTrackBallBehavior.LineStyle>
                             <Style TargetType="Polyline">
-                                <Setter Property="Stroke" Value="{StaticResource LTC_color}"/>
+                                <Setter Property="Stroke" Value="{StaticResource coinColor}"/>
                                 <Setter Property="StrokeThickness" Value="2"/>
                             </Style>
                         </telerik:ChartTrackBallBehavior.LineStyle>
                         <telerik:ChartTrackBallBehavior.InfoStyle>
                             <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                                <Setter Property="Background" Value="{StaticResource LTC_colorLight}"/>
+                                <Setter Property="Background" Value="{StaticResource coinColorL}"/>
                                 <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource LTC_color}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource coinColor}"/>
                             </Style>
                         </telerik:ChartTrackBallBehavior.InfoStyle>
                     </telerik:ChartTrackBallBehavior>
@@ -164,9 +165,9 @@
                 </telerik:RadCartesianChart.VerticalAxis>
 
                 <telerik:SplineAreaSeries
-                    Stroke="{StaticResource LTC_color}" 
+                    Stroke="{StaticResource coinColor}" 
 					StrokeThickness="1" 
-					Fill="{StaticResource LTC_colorT}">
+					Fill="{StaticResource coinColorT}">
                     <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -182,12 +183,12 @@
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                <RadioButton GroupName="LTC" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-                <RadioButton GroupName="LTC" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click" IsChecked="True"/>
-                <RadioButton GroupName="LTC" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-                <RadioButton GroupName="LTC" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-                <RadioButton GroupName="LTC" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-                <RadioButton GroupName="LTC" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
+                <RadioButton GroupName="coin" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
+                <RadioButton GroupName="coin" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click" IsChecked="True"/>
+                <RadioButton GroupName="coin" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
+                <RadioButton GroupName="coin" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
+                <RadioButton GroupName="coin" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
+                <RadioButton GroupName="coin" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
             </StackPanel>
         </Grid>
 
@@ -229,7 +230,7 @@
 
                 <telerik:BarSeries.PointTemplate>
                     <DataTemplate>
-                        <Border Background="{StaticResource LTC_color}"/>
+                        <Border Background="{StaticResource coinColor}"/>
                     </DataTemplate>
                 </telerik:BarSeries.PointTemplate>
 

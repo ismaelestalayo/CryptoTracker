@@ -2,23 +2,23 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="CoinBase_Blue" Color="#005b94" />
+    <SolidColorBrush x:Key="CoinBase_Blue"      Color="#005b94" />
     <SolidColorBrush x:Key="CoinBase_BlueButton" Color="#2184d7" />
-    <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
-    <SolidColorBrush x:Key="BTC_color"		Color="#FFB119" />
-    <SolidColorBrush x:Key="BTC_colorT"     Color="#FFB119" Opacity="0.4" />
-    <SolidColorBrush x:Key="BTC_colorLight"	Color="#f6dfb1" />
-    <SolidColorBrush x:Key="ETH_color"		Color="#6F7CBA" />
-    <SolidColorBrush x:Key="ETH_colorT"     Color="#6F7CBA" Opacity="0.4" />
-    <SolidColorBrush x:Key="ETH_colorLight" Color="#cbcfe1" />
-    <SolidColorBrush x:Key="LTC_color"		Color="#B5B5B5" />
-    <SolidColorBrush x:Key="LTC_colorT"		Color="#B5B5B5" Opacity="0.4"/>
-    <SolidColorBrush x:Key="LTC_colorLight" Color="#e0e0e0"/>
+    <SolidColorBrush x:Key="CoinBase_BlueDark"  Color="#003150" />
+    <SolidColorBrush x:Key="BTC_color"		    Color="#FFB119" />
+    <SolidColorBrush x:Key="BTC_colorT"         Color="#FFB119" Opacity="0.4" />
+    <SolidColorBrush x:Key="BTC_colorL" 	    Color="#f6dfb1" />
+    <SolidColorBrush x:Key="ETH_color"		    Color="#6F7CBA" />
+    <SolidColorBrush x:Key="ETH_colorT"         Color="#6F7CBA" Opacity="0.4" />
+    <SolidColorBrush x:Key="ETH_colorL"         Color="#cbcfe1" />
+    <SolidColorBrush x:Key="LTC_color"		    Color="#B5B5B5" />
+    <SolidColorBrush x:Key="LTC_colorT"		    Color="#B5B5B5" Opacity="0.4"/>
+    <SolidColorBrush x:Key="LTC_colorL"         Color="#e0e0e0"/>
 
-    <SolidColorBrush x:Key="pastelRed"     Color="#FF4040"/> <!-- 255, 65, 65 -->
-    <SolidColorBrush x:Key="pastelGreen"   Color="#00C060"/> <!--  0, 192, 96 -->
+    <SolidColorBrush x:Key="pastelRed"          Color="#FF4040"/> <!-- 255, 65, 65 -->
+    <SolidColorBrush x:Key="pastelGreen"        Color="#00C060"/> <!--  0, 192, 96 -->
 
-    <SolidColorBrush x:Key="MainBackground"   Color="#00cc6a"/>
-    <SolidColorBrush x:Key="SecondBackground" Color="#00cc6a"/>
+    <SolidColorBrush x:Key="MainBackground"     Color="#00cc6a"/>
+    <SolidColorBrush x:Key="SecondBackground"   Color="#00cc6a"/>
 
 </ResourceDictionary>

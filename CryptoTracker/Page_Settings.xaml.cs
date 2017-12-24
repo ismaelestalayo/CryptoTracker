@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Analytics;
+using System;
 using System.Reflection;
 using Windows.ApplicationModel.Email;
 using Windows.System;
@@ -64,6 +65,7 @@ namespace CryptoTracker {
         private void ThemeToogled(object sender, RoutedEventArgs e) {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
 
+            Analytics.TrackEvent("ThemeToogled");
             if (toggleSwitch != null) {
                 if (toggleSwitch.IsOn == true) {
                     App.localSettings.Values["Theme"] = "Dark";
@@ -76,13 +78,16 @@ namespace CryptoTracker {
         }
 
         private async void feedbackButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("feedbackButton_Click");
             var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
             await launcher.LaunchAsync();
         }
         private async void reviewButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("reviewButton_Click");
             await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store:reviewapp?appid=" + Windows.ApplicationModel.Store.CurrentApp.AppId));
         }
         private async void mailButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("mailButton_Click");
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));
             emailMessage.Subject = "Feedback for CoinBase Unofficial v" + v;

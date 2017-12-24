@@ -13,44 +13,43 @@
         <SolidColorBrush x:Key="CoinBase_BlueDark" Color="#003150" />
     </Page.Resources>
     
-
+    <!-- 
+    ###################################################################################################
+    ################################################################################################### -->
     <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-        
+
+        <CommandBar x:Name="TopCommandBar" Grid.Row="0" OverflowButtonVisibility="Collapsed" 
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+            Margin="0, 30, 0, 0"
+            Visibility="Collapsed">
+
+            <AppBarButton Icon="Sync"        Click="UpdateButton_Click" />
+            <AppBarSeparator/>
+            <AppBarButton Icon="PreviewLink" Click="News_Click" />
+            <AppBarButton Icon="Shop"        Click="PortfolioButton_Click" />
+            <AppBarButton Icon="Setting"     Click="SettingsButton_Click"/>
+        </CommandBar>
         
         <Frame Grid.Row="1" Name="rootFrame" 
             Background="Transparent">
 
         </Frame>
 
-        <CommandBar 
-            x:Name="TopCommandBar" Grid.Row="0" OverflowButtonVisibility="Collapsed" 
+        <CommandBar x:Name="BottomCommandBar" Grid.Row="2" OverflowButtonVisibility="Collapsed" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Margin="0, 30, 0, -30"
             Visibility="Collapsed">
 
-            <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
+
+            <AppBarButton Icon="Sync"        Click="UpdateButton_Click" />
             <AppBarSeparator/>
             <AppBarButton Icon="PreviewLink" Click="News_Click" />
-            <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
-            <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
-        </CommandBar>
-
-        <CommandBar 
-            x:Name="BottomCommandBar" Grid.Row="2" OverflowButtonVisibility="Collapsed" 
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Visibility="Collapsed">
-
-            
-            <AppBarButton Icon="Sync" Click="UpdateButton_Click" />
-            <AppBarButton Icon="PreviewLink" Click="News_Click" />
-            <AppBarButton Icon="Shop" Click="PortfolioButton_Click" />
-            <AppBarButton Icon="Setting" Click="SettingsButton_Click"/>
+            <AppBarButton Icon="Shop"        Click="PortfolioButton_Click" />
+            <AppBarButton Icon="Setting"     Click="SettingsButton_Click"/>
         </CommandBar>
 
     </Grid>

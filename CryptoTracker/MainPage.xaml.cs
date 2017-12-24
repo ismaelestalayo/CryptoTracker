@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Helpers;
+using Microsoft.AppCenter.Analytics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
@@ -11,10 +12,6 @@ using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
     public sealed partial class MainPage : Page {
-
-        private SolidColorBrush Color_CoinBase = new SolidColorBrush(Color.FromArgb(255, 0, 91, 148));
-        private SolidColorBrush Color_CoinBaseButton = new SolidColorBrush(Color.FromArgb(255, 33, 132, 215));
-        private SolidColorBrush Color_CoinBaseDark = new SolidColorBrush(Color.FromArgb(255, 0, 49, 80));
 
         private bool isInSettings = false;
         private bool isInPortfolio = false;
@@ -29,21 +26,18 @@ namespace CryptoTracker {
 
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-                rootFrame.Padding = new Thickness(0, 30, 0, 0);
                 TopCommandBar.Visibility = Visibility.Visible;
             }
 
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
 
-            //titleBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242);
-            //titleBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
-            titleBar.ButtonBackgroundColor = Color.FromArgb(0, 242, 0, 242);
-            titleBar.ButtonForegroundColor = Color.FromArgb(255, 150, 150, 150);
-
-            titleBar.InactiveBackgroundColor = Color.FromArgb(0, 242, 242, 242);
-            titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(0, 242, 242, 242);
+            //Transparent buttons, with gray foreground
+            titleBar.ButtonBackgroundColor         = Color.FromArgb(0, 242, 0, 242);
+            titleBar.ButtonForegroundColor         = Color.FromArgb(255, 150, 150, 150);
+            titleBar.InactiveBackgroundColor       = Color.FromArgb(0, 242, 0, 242);
+            titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(0, 242, 0, 242);
 
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
@@ -63,8 +57,6 @@ namespace CryptoTracker {
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
-
-
             rootFrame.Navigate(typeof(Page_Home));
         }
 
@@ -80,8 +72,7 @@ namespace CryptoTracker {
             if (rootFrame == null)
                 return;
 
-            // Navigate back if possible, and if the event has not 
-            // already been handled .
+            // Navigate back if possible, and if the event has not already been handled .
             if (rootFrame.CanGoBack && e.Handled == false) {
                 e.Handled = true;
                 rootFrame.GoBack();
@@ -92,6 +83,7 @@ namespace CryptoTracker {
         private void PortfolioButton_Click(object sender, RoutedEventArgs e) {
             if(rootFrame.SourcePageType.Name != "Page_Portfolio") {
                 rootFrame.Navigate(typeof(Page_Portfolio));
+                Analytics.TrackEvent("Section_Portflio");
             } else {
                 rootFrame.Navigate(typeof(Page_Home));
             }
@@ -99,6 +91,7 @@ namespace CryptoTracker {
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
             if (rootFrame.SourcePageType.Name != "Page_Settings") {
                 rootFrame.Navigate(typeof(Page_Settings));
+                Analytics.TrackEvent("Section_Settings");
             } else {
                 rootFrame.Navigate(typeof(Page_Home));
             }
@@ -116,7 +109,7 @@ namespace CryptoTracker {
                     p0.UpdatePage();
                     break;
                 case "Page_BTC":
-                    var p2 = (Page_BTC)rootFrame.Content;
+                    var p2 = (Page_CoinTemplate)rootFrame.Content;
                     p2.UpdatePage();
                     break;
                 case "Page_Portfolio":

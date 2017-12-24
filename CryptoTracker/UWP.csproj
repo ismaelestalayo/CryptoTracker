@@ -105,6 +105,7 @@
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
     <Compile Include="Helpers\LiveTile.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
+    <Compile Include="Helpers\StringToPathGeometryConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -113,15 +114,6 @@
     </Compile>
     <Compile Include="Page_Home.xaml.cs">
       <DependentUpon>Page_Home.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Page_BTC.xaml.cs">
-      <DependentUpon>Page_BTC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Page_ETH.xaml.cs">
-      <DependentUpon>Page_ETH.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Page_LTC.xaml.cs">
-      <DependentUpon>Page_LTC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Page_Portfolio.xaml.cs">
       <DependentUpon>Page_Portfolio.xaml</DependentUpon>
@@ -225,18 +217,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Page_Home.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Page_BTC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Page_ETH.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Page_LTC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

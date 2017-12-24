@@ -15,6 +15,7 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
@@ -37,10 +38,9 @@ namespace CryptoTracker {
         internal static float ETH_change1h = 0;
         internal static float LTC_change1h = 0;
 
+        
+
         internal static List<PricePoint> historic = new List<PricePoint>();
-        internal static List<PricePoint> ppBTC = new List<PricePoint>();
-        internal static List<PricePoint> ppETH = new List<PricePoint>();
-        internal static List<PricePoint> ppLTC = new List<PricePoint>();
         internal static PricePoint stats = new PricePoint();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -201,10 +201,10 @@ namespace CryptoTracker {
 
                 switch (crypto) {
                     case "BTC":
-                        ppBTC.Clear();
+                        historic.Clear();
 
                         for (int i = 0; i < limit; i++) {
-                            ppBTC.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
+                            historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
                         }
                         BTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
                         BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
