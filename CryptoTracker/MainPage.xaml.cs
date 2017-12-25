@@ -62,7 +62,21 @@ namespace CryptoTracker {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         internal void UpdateButton_Click(object sender, RoutedEventArgs e) {
-            SyncAll();
+
+            switch (rootFrame.SourcePageType.Name) {
+                case "Page_CoinTemplate":
+                    var p0 = (Page_CoinTemplate)rootFrame.Content;
+                    p0.UpdatePage();
+                    break;
+                case "Page_Home":
+                    var p2 = (Page_Home)rootFrame.Content;
+                    p2.UpdateHome();
+                    break;
+                case "Page_Portfolio":
+                    var p1 = (Page_Portfolio)rootFrame.Content;
+                    p1.UpdatePortfolio();
+                    break;
+            }
 
             LiveTile l = new LiveTile();
             l.UpdateLiveTile();
@@ -101,25 +115,6 @@ namespace CryptoTracker {
         }
 
 
-        internal async Task SyncAll() {
-
-            switch (rootFrame.SourcePageType.Name) {
-                case "Page_CoinTemplate":
-                    var p0 = (Page_CoinTemplate)rootFrame.Content;
-                    p0.UpdatePage();
-                    break;
-                case "Page_BTC":
-                    var p2 = (Page_CoinTemplate)rootFrame.Content;
-                    p2.UpdatePage();
-                    break;
-                case "Page_Portfolio":
-                    var p1 = (Page_Portfolio)rootFrame.Content;
-                    p1.UpdatePortfolio();
-                    break;
-            }
-
-            LiveTile l = new LiveTile();
-            l.UpdateLiveTile();
-        }
+        
     }
 }

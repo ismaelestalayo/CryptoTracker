@@ -29,14 +29,17 @@ namespace CryptoTracker {
         internal static float BTC_old;
         internal static float ETH_old;
         internal static float LTC_old;
+        internal static float XRP_old;
 
         internal static float BTC_now;
         internal static float ETH_now;
         internal static float LTC_now;
+        internal static float XRP_now;
 
         internal static float BTC_change1h = 0;
         internal static float ETH_change1h = 0;
         internal static float LTC_change1h = 0;
+        internal static float XRP_change1h = 0;
 
         
 
@@ -143,7 +146,6 @@ namespace CryptoTracker {
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
-
         private void OnSuspending(object sender, SuspendingEventArgs e) {
             var deferral = e.SuspendingOperation.GetDeferral();
 
@@ -174,6 +176,10 @@ namespace CryptoTracker {
                     case "LTC":
                         LTC_now = (float)data[coin];
                         break;
+
+                    case "XRP":
+                        XRP_now = (float)data[coin];
+                        break;
                 }
 
             } catch (Exception ex) {
@@ -183,6 +189,7 @@ namespace CryptoTracker {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         internal async static Task GetHisto(string crypto, string time, int limit) {
+            //CCCAGG Kraken Coinbase 
             String URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
                 + crypto + "&tsym=" + coin + "&limit=" + limit;
 
@@ -229,6 +236,16 @@ namespace CryptoTracker {
                         }
                         LTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
                         LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
+                        break;
+
+                    case "XRP":
+                        historic.Clear();
+
+                        for (int i = 0; i < limit; i++) {
+                            historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
+                        }
+                        XRP_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                        XRP_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
                 }
 
@@ -368,10 +385,10 @@ namespace CryptoTracker {
             public static PricePoint GetPricePointStats(JToken data) {
                 PricePoint p = new PricePoint();
 
-                p.Low24 = (float)Math.Round((float)data["LOW24HOUR"], 2);
-                p.High24 = (float)Math.Round((float)data["HIGH24HOUR"], 2);
-                p.Open24 = (float)Math.Round((float)data["OPEN24HOUR"], 2);
-                p.Volume24 = (float)Math.Round((float)data["VOLUME24HOUR"], 2);
+                p.Low24      = (float)Math.Round((float)data["LOW24HOUR"], 2);
+                p.High24     = (float)Math.Round((float)data["HIGH24HOUR"], 2);
+                p.Open24     = (float)Math.Round((float)data["OPEN24HOUR"], 2);
+                p.Volume24   = (float)Math.Round((float)data["VOLUME24HOUR"], 2);
                 p.Volume24To = (float)Math.Round((float)data["VOLUME24HOURTO"], 2);
 
                 return p;

@@ -9,8 +9,27 @@
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" x:Name="MainGrid" Padding="0, 0, 0, 10">
+    <Page.Resources>
+        <Style x:Key="mainGrid" TargetType="Grid">
+            <Setter Property="Margin" Value="15, 15, 15, 0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
+        </Style>
+        <Style x:Key="currTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
+            <Setter Property="Text" Value="val€"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Padding" Value="5, 0"/>
+        </Style>
+        <Style x:Key="diffTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="Text" Value="▲0%"/>
+            <Setter Property="FontWeight" Value="ExtraLight"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0, 2"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+    </Page.Resources>
 
+    <ScrollViewer Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="0, 0, 0, 10" VerticalScrollBarVisibility="Hidden">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
@@ -34,515 +53,587 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 0, 0, -25">
-            <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
-            <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            <RadioButton GroupName="Home" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-        </StackPanel>
-
-        <!-- 
-        ###############################################################################################################
-        ###############################################################################################################
-        ############################################################################################################### -->
-        <Grid Margin="15, 15, 15, 0" Grid.Row="1" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
-              PointerPressed="BTC_PointerPressed"
-              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-
+        <Grid x:Name="MainGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="225"/>
+                <RowDefinition Height="225"/>
+                <RowDefinition Height="225"/>
+                <RowDefinition Height="225"/>
             </Grid.RowDefinitions>
 
-            <controls:Loading x:Name="LoadingControl_BTC" Background="Transparent" Opacity="0.4">
-                <ContentControl x:Name="LoadingContentControl">
-                    <ProgressBar IsIndeterminate="True" Width="300"
-                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
-                                 Background="Transparent"/>
-                </ContentControl>
-            </controls:Loading>
-
-            <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
-                <RelativePanel VerticalAlignment="Center" Visibility="Collapsed">
-                    <Ellipse 
-                            Fill="#FFB119"
-							Width="32" Height="32" />
-                    <Path 
-                            Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-                            Data="M21.78 15.37c.51-.61.83-1.4.83-2.26 0-2.74-1.6-4.38-4.24-4.38V5.45c0-.12-.1-.22-.22-.22h-1.27c-.11 0-.2.1-.2.21v3.3h-1.7V5.44c0-.12-.1-.22-.22-.22H13.5c-.12 0-.2.1-.21.21v3.3H9.67c-.12 0-.21.09-.21.21v1.31c0 .12.1.22.21.22h.21c.94 0 1.7.79 1.7 1.75v7c0 .92-.68 1.67-1.55 1.75a.21.21 0 0 0-.18.16l-.33 1.32c-.01.06 0 .13.04.19.04.05.1.08.17.08h3.55v3.3c0 .1.1.2.2.2h1.28c.12 0 .21-.1.21-.22v-3.28h1.7v3.3c0 .1.1.2.21.2h1.27c.12 0 .22-.1.22-.22v-3.28h.85c2.65 0 4.24-1.64 4.24-4.37 0-1.28-.68-2.39-1.68-3zm-6.8-4.01h2.54c.94 0 1.7.78 1.7 1.75 0 .96-.76 1.75-1.7 1.75h-2.55v-3.5zm3.39 8.75h-3.4v-3.5h3.4c.93 0 1.7.78 1.7 1.75 0 .96-.77 1.75-1.7 1.75z" />
-                </RelativePanel>
-
-                <TextBlock Text="Bitcoin" Style="{ThemeResource TitleTextBlockStyle}"
-                           FontWeight="ExtraLight" Margin="5, -2"/>
-            </StackPanel>
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-                <TextBlock Name="BTC_curr" Text="val€"
-                           Style="{ThemeResource TitleTextBlockStyle}" 
-                           FontWeight="ExtraLight" Padding="5, 0"/>
-                <TextBlock Name="BTC_diff" Text="▲0%"
-                           Style="{ThemeResource BaseTextBlockStyle}" FontSize="16"
-                           VerticalAlignment="Bottom" Margin="0, 2"
-                           FontWeight="ExtraLight" />
+            <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 0, 0, -30" VerticalAlignment="Bottom">
+                <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
+                <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+                <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+                <RadioButton GroupName="Home" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+                <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+                <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
             </StackPanel>
 
-            <telerik:RadCartesianChart x:Name="BTC_Chart" Grid.Row="1" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
-                <telerik:RadCartesianChart.Grid>
-                    <telerik:CartesianChartGrid MajorLinesVisibility="None" />
-                </telerik:RadCartesianChart.Grid>
-
-                <telerik:RadCartesianChart.HorizontalAxis>
-                    <telerik:DateTimeContinuousAxis
-						    x:Name="BTC_DateTimeAxis"
-                            Visibility="Collapsed"/>
-                </telerik:RadCartesianChart.HorizontalAxis>
-
-                <telerik:RadCartesianChart.VerticalAxis>
-                    <telerik:LinearAxis 
-                        x:Name="BTC_verticalAxis"
-                        Visibility="Collapsed"
-                        DesiredTickCount="5"
-                        HorizontalLocation="Left">
-                    </telerik:LinearAxis>
-                </telerik:RadCartesianChart.VerticalAxis>
-
-                <telerik:SplineAreaSeries
-					    Stroke="{StaticResource BTC_color}"
-					    StrokeThickness="1"
-					    Fill="{StaticResource BTC_colorT}">
-                </telerik:SplineAreaSeries>
-            </telerik:RadCartesianChart>
-
-        </Grid>
-
-        <!-- 
-        ###############################################################################################################
-        ###############################################################################################################
-        ############################################################################################################### -->
-        <Grid Margin="15, 15, 15, 0" Grid.Row="2" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
-              PointerPressed="ETH_PointerPressed"
-              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <controls:Loading x:Name="LoadingControl_ETH" Background="Transparent" Opacity="0.4">
-                <ContentControl>
-                    <ProgressBar IsIndeterminate="True" Width="300"
-                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
-                                 Background="Transparent"/>
-                </ContentControl>
-            </controls:Loading>
-
-            <StackPanel Orientation="Horizontal">
-                <RelativePanel VerticalAlignment="Center" Visibility="Collapsed">
-                    <Ellipse 
-                            Fill="#6F7CBA" 
-                            Width="32" Height="32"/>
-                    <Path 
-                            Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-                            Data="M10.13 17.76c-.1-.15-.06-.2.09-.12l5.49 3.09c.15.08.4.08.56 0l5.58-3.08c.16-.08.2-.03.1.11L16.2 25.9c-.1.15-.28.15-.38 0l-5.7-8.13zm.04-2.03a.3.3 0 0 1-.13-.42l5.74-9.2c.1-.15.25-.15.34 0l5.77 9.19c.1.14.05.33-.12.41l-5.5 2.78a.73.73 0 0 1-.6 0l-5.5-2.76z" />
-                </RelativePanel>
-
-                <TextBlock Text="Ethereum" Style="{ThemeResource TitleTextBlockStyle}"
-                           FontWeight="ExtraLight" Margin="5, -2"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-                <TextBlock Name="ETH_curr" Text="val€"
-                           Style="{ThemeResource TitleTextBlockStyle}" 
-                           FontWeight="ExtraLight" Padding="5, 0"/>
-                <TextBlock Name="ETH_diff" Text="▲0%" 
-                           Style="{ThemeResource BaseTextBlockStyle}" FontSize="16"
-                           VerticalAlignment="Bottom" Margin="0, 2"
-                           FontWeight="ExtraLight" />
-            </StackPanel>
-
-
-            <telerik:RadCartesianChart x:Name="ETH_Chart" Grid.Row="1" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
-                <telerik:RadCartesianChart.Grid>
-                    <telerik:CartesianChartGrid MajorLinesVisibility="None" />
-                </telerik:RadCartesianChart.Grid>
-
-                <telerik:RadCartesianChart.HorizontalAxis>
-                    <telerik:DateTimeContinuousAxis
-						x:Name="ETH_DateTimeAxis"
-                        Visibility="Collapsed"/>
-                </telerik:RadCartesianChart.HorizontalAxis>
-
-                <telerik:RadCartesianChart.VerticalAxis>
-                    <telerik:LinearAxis 
-                        x:Name="ETH_verticalAxis"
-                        Visibility="Collapsed"
-                        DesiredTickCount="5"
-                        HorizontalLocation="Left">
-                    </telerik:LinearAxis>
-                </telerik:RadCartesianChart.VerticalAxis>
-
-                <telerik:SplineAreaSeries
-					Stroke="{StaticResource ETH_color}"
-					StrokeThickness="1"
-					Fill="{StaticResource ETH_colorT}">
-                </telerik:SplineAreaSeries>
-            </telerik:RadCartesianChart>
-        </Grid>
-
-
-        <!-- 
-        ###############################################################################################################
-        ###############################################################################################################
-        ############################################################################################################### -->
-        <Grid Margin="15, 15, 15, 0" Grid.Row="3" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
-              PointerPressed="LTC_PointerPressed"
-              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <controls:Loading x:Name="LoadingControl_LTC" Background="Transparent" Opacity="0.4">
-                <ContentControl>
-                    <ProgressBar IsIndeterminate="True" Width="300"
-                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
-                                 Background="Transparent"/>
-                </ContentControl>
-            </controls:Loading>
-
-            <StackPanel Orientation="Horizontal">
-                <RelativePanel VerticalAlignment="Center" Visibility="Collapsed">
-                    <Ellipse Fill="#B5B5B5" 
-                             Width="32" Height="32" />
-                    <Path Fill="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="-3"
-                          Data="M12.29 28.04l1.29-5.52-1.58.67.63-2.85 1.64-.68L16.52 10h5.23l-1.52 7.14 2.09-.74-.58 2.7-2.05.8-.9 4.34h8.1l-.99 3.8z" />
-                </RelativePanel>
-
-                <TextBlock Text="Litecoin" Style="{ThemeResource TitleTextBlockStyle}"
-                           FontWeight="ExtraLight" Margin="5, -2"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-                <TextBlock Name="LTC_curr" Text="val€" 
-                           Style="{ThemeResource TitleTextBlockStyle}" 
-                           FontWeight="Light" Padding="5, 0"/>
-                <TextBlock Name="LTC_diff" Text="▲0%" 
-                           Style="{ThemeResource BaseTextBlockStyle}" FontSize="16"
-                           VerticalAlignment="Bottom" Margin="0, 2"
-                           FontWeight="ExtraLight" />
-            </StackPanel>
-
-
-            <telerik:RadCartesianChart x:Name="LTC_Chart" Grid.Row="1" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
-                <telerik:RadCartesianChart.Grid>
-                    <telerik:CartesianChartGrid MajorLinesVisibility="None" />
-                </telerik:RadCartesianChart.Grid>
-
-                <telerik:RadCartesianChart.HorizontalAxis>
-                    <telerik:DateTimeContinuousAxis
-						x:Name="LTC_DateTimeAxis"
-                        Visibility="Collapsed"/>
-                </telerik:RadCartesianChart.HorizontalAxis>
-
-                <telerik:RadCartesianChart.VerticalAxis>
-                    <telerik:LinearAxis 
-                        x:Name="LTC_verticalAxis"
-                        DesiredTickCount="5"
-                        Visibility="Collapsed"
-                        HorizontalLocation="Left">
-                    </telerik:LinearAxis>
-                </telerik:RadCartesianChart.VerticalAxis>
-
-                <telerik:SplineAreaSeries
-					Stroke="{StaticResource LTC_color}"
-					StrokeThickness="1"
-					Fill="{StaticResource LTC_colorT}">
-                </telerik:SplineAreaSeries>
-            </telerik:RadCartesianChart>
-        </Grid>
-
-        <!-- ##########################################################################################################
-        ###############################################################################################################
-        ###############################################################################################################
-        ###############################################################################################################
-        ###############################################################################################################
-        ###############################################################################################################
-        ###############################################################################################################
-        ############################################################################################################### -->
-        <Grid Grid.Row="1" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
-              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
-
-            <Grid Grid.Row="1" Margin="5, 0">
+            <!-- ###################################################################################################################
+                ##### mainGrid BTC ##################################################################################################### -->
+            <Grid Grid.Row="1" BorderBrush="{StaticResource BTC_color}" PointerPressed="BTC_PointerPressed" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
-                <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <controls:Loading x:Name="LoadingControl_BTC" Background="Transparent" Opacity="0.4">
+                    <ContentControl>
+                        <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                    </ContentControl>
+                </controls:Loading>
 
-                <TextBlock Name="BTC_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
-                <TextBlock Name="BTC_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
-                <TextBlock Name="BTC_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
-                <TextBlock Name="BTC_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
+                    <Image Source="Assets/iconBTCc.png" Width="25" Margin="2"/>
+                    <TextBlock Text="Bitcoin" Style="{ThemeResource TitleTextBlockStyle}"
+                           FontWeight="ExtraLight" Margin="5, -2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
+                    <TextBlock Name="BTC_curr" Style="{StaticResource currTextStyle}"/>
+                    <TextBlock Name="BTC_diff" Style="{StaticResource diffTextStyle}"/>
+                </StackPanel>
+
+                <telerik:RadCartesianChart x:Name="BTC_Chart" Grid.Row="1" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+                    <telerik:RadCartesianChart.Grid>
+                        <telerik:CartesianChartGrid MajorLinesVisibility="None" />
+                    </telerik:RadCartesianChart.Grid>
+
+                    <telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:DateTimeContinuousAxis
+						        x:Name="BTC_DateTimeAxis"
+                                Visibility="Collapsed"/>
+                    </telerik:RadCartesianChart.HorizontalAxis>
+
+                    <telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:LinearAxis 
+                                x:Name="BTC_verticalAxis"
+                                Visibility="Collapsed"
+                                DesiredTickCount="5"
+                                HorizontalLocation="Left">
+                        </telerik:LinearAxis>
+                    </telerik:RadCartesianChart.VerticalAxis>
+
+                    <telerik:SplineAreaSeries
+					        Stroke="{StaticResource BTC_color}"
+					        StrokeThickness="1"
+					        Fill="{StaticResource BTC_colorT}">
+                    </telerik:SplineAreaSeries>
+                </telerik:RadCartesianChart>
+
+            </Grid>
+
+            <!-- ###################################################################################################################
+                ##### mainGrid ETH ##################################################################################################### -->
+            <Grid Grid.Row="2" BorderBrush="{StaticResource ETH_color}" PointerPressed="ETH_PointerPressed" Style="{StaticResource mainGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <controls:Loading x:Name="LoadingControl_ETH" Background="Transparent" Opacity="0.4">
+                    <ContentControl>
+                        <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                    </ContentControl>
+                </controls:Loading>
+
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Assets/iconETHc.png" Width="25" Margin="2"/>
+                    <TextBlock Text="Ethereum" Style="{ThemeResource TitleTextBlockStyle}"
+                           FontWeight="ExtraLight" Margin="5, -2"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
+                    <TextBlock Name="ETH_curr" Style="{StaticResource currTextStyle}"/>
+                    <TextBlock Name="ETH_diff" Style="{StaticResource diffTextStyle}"/>
+                </StackPanel>
+
+
+                <telerik:RadCartesianChart x:Name="ETH_Chart" Grid.Row="1" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+                    <telerik:RadCartesianChart.Grid>
+                        <telerik:CartesianChartGrid MajorLinesVisibility="None" />
+                    </telerik:RadCartesianChart.Grid>
+
+                    <telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:DateTimeContinuousAxis
+						        x:Name="ETH_DateTimeAxis"
+                                Visibility="Collapsed"/>
+                    </telerik:RadCartesianChart.HorizontalAxis>
+
+                    <telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:LinearAxis 
+                                x:Name="ETH_verticalAxis"
+                                Visibility="Collapsed"
+                                DesiredTickCount="5"
+                                HorizontalLocation="Left">
+                        </telerik:LinearAxis>
+                    </telerik:RadCartesianChart.VerticalAxis>
+
+                    <telerik:SplineAreaSeries
+                            Stroke="{StaticResource ETH_color}"
+                            StrokeThickness="1"
+                            Fill="{StaticResource ETH_colorT}">
+                    </telerik:SplineAreaSeries>
+                </telerik:RadCartesianChart>
             </Grid>
 
 
-            <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
-                <telerik:BarSeries 
-                    x:Name="BTC_VolumeChart"
-                    ItemsSource="{Binding}">
-
-                    <telerik:BarSeries.PointTemplate>
-                        <DataTemplate>
-                            <Border Background="{StaticResource BTC_color}"/>
-                        </DataTemplate>
-                    </telerik:BarSeries.PointTemplate>
-
-                    <telerik:BarSeries.VerticalAxis>
-                        <telerik:LinearAxis 
-                            Visibility="Collapsed"
-                            HorizontalLocation="Right"/>
-                    </telerik:BarSeries.VerticalAxis>
-
-                    <telerik:BarSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis 
-                            MajorTickTemplate="{StaticResource TransparentRect}"
-                            Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                            FontWeight="ExtraLight"
-                            LineStyle="{StaticResource TransparentLine}"
-                            VerticalLocation="Top"
-                            Margin="0, 10"
-                            LabelInterval="3"
-                            LabelFormat="{}{0,0:HH}">
-                            <telerik:DateTimeCategoricalAxis.LabelStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="0, 0, 0, 00"/>
-                                </Style>
-                            </telerik:DateTimeCategoricalAxis.LabelStyle>
-                        </telerik:DateTimeCategoricalAxis>
-                    </telerik:BarSeries.HorizontalAxis>
-
-                    <telerik:BarSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:BarSeries.CategoryBinding>
-
-                    <telerik:BarSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                    </telerik:BarSeries.ValueBinding>
-
-                </telerik:BarSeries>
-            </telerik:RadCartesianChart>
-
-
-        </Grid>
-
-        <!-- 
-        ###############################################################################################################
-        ###############################################################################################################
-        ############################################################################################################### -->
-        <Grid Grid.Row="2" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
-              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
-
-            <Grid Grid.Row="1" Margin="5, 0">
+            <!-- ###################################################################################################################
+                ##### mainGrid LTC ##################################################################################################### -->
+            <Grid Grid.Row="3" BorderBrush="{StaticResource LTC_color}" PointerPressed="LTC_PointerPressed" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
-                <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <controls:Loading x:Name="LoadingControl_LTC" Background="Transparent" Opacity="0.4">
+                    <ContentControl>
+                        <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                    </ContentControl>
+                </controls:Loading>
 
-                <TextBlock Name="ETH_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
-                <TextBlock Name="ETH_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
-                <TextBlock Name="ETH_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
-                <TextBlock Name="ETH_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Assets/iconLTCc.png" Width="25" Margin="2"/>
+                    <TextBlock Text="Litecoin" Style="{ThemeResource TitleTextBlockStyle}"
+                            FontWeight="ExtraLight" Margin="5, -2"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
+                    <TextBlock Name="LTC_curr" Style="{StaticResource currTextStyle}"/>
+                    <TextBlock Name="LTC_diff" Style="{StaticResource diffTextStyle}"/>
+                </StackPanel>
+
+
+                <telerik:RadCartesianChart x:Name="LTC_Chart" Grid.Row="1" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+                    <telerik:RadCartesianChart.Grid>
+                        <telerik:CartesianChartGrid MajorLinesVisibility="None" />
+                    </telerik:RadCartesianChart.Grid>
+
+                    <telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:DateTimeContinuousAxis
+						        x:Name="LTC_DateTimeAxis"
+                                Visibility="Collapsed"/>
+                    </telerik:RadCartesianChart.HorizontalAxis>
+
+                    <telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:LinearAxis 
+                                x:Name="LTC_verticalAxis"
+                                DesiredTickCount="5"
+                                Visibility="Collapsed"
+                                HorizontalLocation="Left">
+                        </telerik:LinearAxis>
+                    </telerik:RadCartesianChart.VerticalAxis>
+
+                    <telerik:SplineAreaSeries
+					        Stroke="{StaticResource LTC_color}"
+					        StrokeThickness="1"
+					        Fill="{StaticResource LTC_colorT}">
+                    </telerik:SplineAreaSeries>
+                </telerik:RadCartesianChart>
             </Grid>
 
 
-            <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
-                <telerik:BarSeries 
-                    x:Name="ETH_VolumeChart"
-                    ItemsSource="{Binding}">
-
-                    <telerik:BarSeries.PointTemplate>
-                        <DataTemplate>
-                            <Border Background="{StaticResource ETH_color}"/>
-                        </DataTemplate>
-                    </telerik:BarSeries.PointTemplate>
-
-                    <telerik:BarSeries.VerticalAxis>
-                        <telerik:LinearAxis 
-                            Visibility="Collapsed"
-                            HorizontalLocation="Right"/>
-                    </telerik:BarSeries.VerticalAxis>
-
-                    <telerik:BarSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis 
-                            MajorTickTemplate="{StaticResource TransparentRect}"
-                            Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                            FontWeight="Light"
-                            LineStyle="{StaticResource TransparentLine}"
-                            VerticalLocation="Top"
-                            Margin="0, 10"
-                            LabelInterval="3"
-                            LabelFormat="{}{0,0:HH}">
-                            <telerik:DateTimeCategoricalAxis.LabelStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="0, -5, 0, 0"/>
-                                </Style>
-                            </telerik:DateTimeCategoricalAxis.LabelStyle>
-                        </telerik:DateTimeCategoricalAxis>
-                    </telerik:BarSeries.HorizontalAxis>
-
-                    <telerik:BarSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:BarSeries.CategoryBinding>
-
-                    <telerik:BarSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                    </telerik:BarSeries.ValueBinding>
-
-                </telerik:BarSeries>
-            </telerik:RadCartesianChart>
-
-
-        </Grid>
-
-        <!-- 
-        ###############################################################################################################
-        ###############################################################################################################
-        ############################################################################################################### -->
-        <Grid Grid.Row="3" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
-              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
-
-            <Grid Grid.Row="1" Margin="5, 0">
+            <!-- ###################################################################################################################
+                ##### mainGrid XRP ##################################################################################################### -->
+            <Grid Grid.Row="4" BorderBrush="{StaticResource XRP_color}" PointerPressed="XRP_PointerPressed" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
-                <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <controls:Loading x:Name="LoadingControl_XRP" Background="Transparent" Opacity="0.4">
+                    <ContentControl>
+                        <ProgressBar IsIndeterminate="True" Width="300"
+                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                 Background="Transparent"/>
+                    </ContentControl>
+                </controls:Loading>
 
-                <TextBlock Name="LTC_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
-                <TextBlock Name="LTC_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
-                <TextBlock Name="LTC_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
-                <TextBlock Name="LTC_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Assets/iconXRPc.png" Width="25" Margin="2"/>
+                    <TextBlock Text="Ripple" Style="{ThemeResource TitleTextBlockStyle}"
+                            FontWeight="ExtraLight" Margin="5, -2"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
+                    <TextBlock Name="XRP_curr" Style="{StaticResource currTextStyle}"/>
+                    <TextBlock Name="XRP_diff" Style="{StaticResource diffTextStyle}"/>
+                </StackPanel>
+
+
+                <telerik:RadCartesianChart x:Name="XRP_Chart" Grid.Row="1" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
+                    <telerik:RadCartesianChart.Grid>
+                        <telerik:CartesianChartGrid MajorLinesVisibility="None" />
+                    </telerik:RadCartesianChart.Grid>
+
+                    <telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:DateTimeContinuousAxis
+						        x:Name="XRP_DateTimeAxis"
+                                Visibility="Collapsed"/>
+                    </telerik:RadCartesianChart.HorizontalAxis>
+
+                    <telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:LinearAxis 
+                                x:Name="XRP_verticalAxis"
+                                DesiredTickCount="5"
+                                Visibility="Collapsed"
+                                HorizontalLocation="Left">
+                        </telerik:LinearAxis>
+                    </telerik:RadCartesianChart.VerticalAxis>
+
+                    <telerik:SplineAreaSeries
+					        Stroke="{StaticResource XRP_color}"
+					        StrokeThickness="1"
+					        Fill="{StaticResource XRP_colorT}">
+                    </telerik:SplineAreaSeries>
+                </telerik:RadCartesianChart>
             </Grid>
 
+            <!-- ##########################################################################################################
+            ###############################################################################################################
+            ###############################################################################################################
+            ###############################################################################################################
+            ###############################################################################################################
+            ###############################################################################################################
+            ###############################################################################################################
+            ############################################################################################################### -->
+            <Grid Grid.Row="1" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource BTC_color}" BorderThickness="0" 
+                    Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
-            <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
-                <telerik:BarSeries 
-                    x:Name="LTC_VolumeChart"
-                    ItemsSource="{Binding}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                    <telerik:BarSeries.PointTemplate>
-                        <DataTemplate>
-                            <Border Background="{StaticResource LTC_color}"/>
-                        </DataTemplate>
-                    </telerik:BarSeries.PointTemplate>
+                <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
 
-                    <telerik:BarSeries.VerticalAxis>
-                        <telerik:LinearAxis 
-                            Visibility="Collapsed"
-                            HorizontalLocation="Right"/>
-                    </telerik:BarSeries.VerticalAxis>
+                <Grid Grid.Row="1" Margin="5, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                    <telerik:BarSeries.HorizontalAxis>
-                        <telerik:DateTimeCategoricalAxis 
-                            MajorTickTemplate="{StaticResource TransparentRect}"
-                            Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                            FontWeight="Light"
-                            LineStyle="{StaticResource TransparentLine}"
-                            BorderThickness="0"
-                            VerticalLocation="Top"
-                            Margin="0, 10"
-                            LabelInterval="3"
-                            LabelFormat="{}{0,0:HH}">
-                            <telerik:DateTimeCategoricalAxis.LabelStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="0, -5, 0, 0"/>
-                                </Style>
-                            </telerik:DateTimeCategoricalAxis.LabelStyle>
-                        </telerik:DateTimeCategoricalAxis>
-                    </telerik:BarSeries.HorizontalAxis>
+                    <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
 
-                    <telerik:BarSeries.CategoryBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                    </telerik:BarSeries.CategoryBinding>
-
-                    <telerik:BarSeries.ValueBinding>
-                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                    </telerik:BarSeries.ValueBinding>
-
-                </telerik:BarSeries>
-            </telerik:RadCartesianChart>
+                    <TextBlock Name="BTC_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
+                    <TextBlock Name="BTC_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
+                    <TextBlock Name="BTC_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
+                    <TextBlock Name="BTC_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                </Grid>
 
 
+                <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
+                    <telerik:BarSeries x:Name="BTC_VolumeChart" ItemsSource="{Binding}">
+
+                        <telerik:BarSeries.PointTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource BTC_color}"/>
+                            </DataTemplate>
+                        </telerik:BarSeries.PointTemplate>
+
+                        <telerik:BarSeries.VerticalAxis>
+                            <telerik:LinearAxis Visibility="Collapsed"/>
+                        </telerik:BarSeries.VerticalAxis>
+
+                        <telerik:BarSeries.HorizontalAxis>
+                            <telerik:DateTimeCategoricalAxis 
+                                MajorTickTemplate="{StaticResource TransparentRect}"
+                                Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                                FontWeight="ExtraLight"
+                                LineStyle="{StaticResource TransparentLine}"
+                                VerticalLocation="Top"
+                                Margin="0, 10"
+                                LabelInterval="3"
+                                LabelFormat="{}{0,0:HH}">
+                                <telerik:DateTimeCategoricalAxis.LabelStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="0, 0, 0, 00"/>
+                                    </Style>
+                                </telerik:DateTimeCategoricalAxis.LabelStyle>
+                            </telerik:DateTimeCategoricalAxis>
+                        </telerik:BarSeries.HorizontalAxis>
+
+                        <telerik:BarSeries.CategoryBinding>
+                            <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                        </telerik:BarSeries.CategoryBinding>
+
+                        <telerik:BarSeries.ValueBinding>
+                            <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                        </telerik:BarSeries.ValueBinding>
+
+                    </telerik:BarSeries>
+                </telerik:RadCartesianChart>
+
+
+            </Grid>
+
+            <!-- 
+                ############################################################################################################### -->
+            <Grid Grid.Row="2" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource ETH_color}" BorderThickness="0" 
+                    Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
+
+                <Grid Grid.Row="1" Margin="5, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+
+                    <TextBlock Name="ETH_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
+                    <TextBlock Name="ETH_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
+                    <TextBlock Name="ETH_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
+                    <TextBlock Name="ETH_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                </Grid>
+
+
+                <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
+                    <telerik:BarSeries x:Name="ETH_VolumeChart" ItemsSource="{Binding}">
+
+                        <telerik:BarSeries.PointTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource ETH_color}"/>
+                            </DataTemplate>
+                        </telerik:BarSeries.PointTemplate>
+
+                        <telerik:BarSeries.VerticalAxis>
+                            <telerik:LinearAxis Visibility="Collapsed"/>
+                        </telerik:BarSeries.VerticalAxis>
+
+                        <telerik:BarSeries.HorizontalAxis>
+                            <telerik:DateTimeCategoricalAxis 
+                                MajorTickTemplate="{StaticResource TransparentRect}"
+                                Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                                FontWeight="Light"
+                                LineStyle="{StaticResource TransparentLine}"
+                                VerticalLocation="Top"
+                                Margin="0, 10"
+                                LabelInterval="3"
+                                LabelFormat="{}{0,0:HH}">
+                                <telerik:DateTimeCategoricalAxis.LabelStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="0, -5, 0, 0"/>
+                                    </Style>
+                                </telerik:DateTimeCategoricalAxis.LabelStyle>
+                            </telerik:DateTimeCategoricalAxis>
+                        </telerik:BarSeries.HorizontalAxis>
+
+                        <telerik:BarSeries.CategoryBinding>
+                            <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                        </telerik:BarSeries.CategoryBinding>
+
+                        <telerik:BarSeries.ValueBinding>
+                            <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                        </telerik:BarSeries.ValueBinding>
+
+                    </telerik:BarSeries>
+                </telerik:RadCartesianChart>
+            </Grid>
+
+            <!-- 
+                ############################################################################################################### -->
+            <Grid Grid.Row="3" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource LTC_color}" BorderThickness="0" 
+                    Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
+
+                <Grid Grid.Row="1" Margin="5, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+
+                    <TextBlock Name="LTC_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
+                    <TextBlock Name="LTC_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
+                    <TextBlock Name="LTC_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
+                    <TextBlock Name="LTC_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                </Grid>
+
+
+                <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
+                    <telerik:BarSeries x:Name="LTC_VolumeChart" ItemsSource="{Binding}">
+
+                        <telerik:BarSeries.PointTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource LTC_color}"/>
+                            </DataTemplate>
+                        </telerik:BarSeries.PointTemplate>
+
+                        <telerik:BarSeries.VerticalAxis>
+                            <telerik:LinearAxis Visibility="Collapsed"/>
+                        </telerik:BarSeries.VerticalAxis>
+
+                        <telerik:BarSeries.HorizontalAxis>
+                            <telerik:DateTimeCategoricalAxis 
+                                MajorTickTemplate="{StaticResource TransparentRect}"
+                                Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                                FontWeight="Light"
+                                LineStyle="{StaticResource TransparentLine}"
+                                BorderThickness="0"
+                                VerticalLocation="Top"
+                                Margin="0, 10"
+                                LabelInterval="3"
+                                LabelFormat="{}{0,0:HH}">
+                                <telerik:DateTimeCategoricalAxis.LabelStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="0, -5, 0, 0"/>
+                                    </Style>
+                                </telerik:DateTimeCategoricalAxis.LabelStyle>
+                            </telerik:DateTimeCategoricalAxis>
+                        </telerik:BarSeries.HorizontalAxis>
+
+                        <telerik:BarSeries.CategoryBinding>
+                            <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                        </telerik:BarSeries.CategoryBinding>
+
+                        <telerik:BarSeries.ValueBinding>
+                            <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                        </telerik:BarSeries.ValueBinding>
+
+                    </telerik:BarSeries>
+                </telerik:RadCartesianChart>
+
+
+            </Grid>
+
+            <!-- 
+                ############################################################################################################### -->
+            <Grid Grid.Row="4" Grid.Column="1" Margin="5, 15, 15, 0" BorderBrush="{StaticResource XRP_color}" BorderThickness="0" 
+                    Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Stats 24h:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, 0"/>
+
+                <Grid Grid.Row="1" Margin="5, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+
+                    <TextBlock Name="XRP_High"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
+                    <TextBlock Name="XRP_Low"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
+                    <TextBlock Name="XRP_Open"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
+                    <TextBlock Name="XRP_Vol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                </Grid>
+
+
+                <telerik:RadCartesianChart Grid.Row="2" Margin="5, 0">
+                    <telerik:BarSeries x:Name="XRP_VolumeChart" ItemsSource="{Binding}">
+
+                        <telerik:BarSeries.PointTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource XRP_color}"/>
+                            </DataTemplate>
+                        </telerik:BarSeries.PointTemplate>
+
+                        <telerik:BarSeries.VerticalAxis>
+                            <telerik:LinearAxis Visibility="Collapsed"/>
+                        </telerik:BarSeries.VerticalAxis>
+
+                        <telerik:BarSeries.HorizontalAxis>
+                            <telerik:DateTimeCategoricalAxis 
+                                MajorTickTemplate="{StaticResource TransparentRect}"
+                                Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                                FontWeight="Light"
+                                LineStyle="{StaticResource TransparentLine}"
+                                BorderThickness="0"
+                                VerticalLocation="Top"
+                                Margin="0, 10"
+                                LabelInterval="3"
+                                LabelFormat="{}{0,0:HH}">
+                                <telerik:DateTimeCategoricalAxis.LabelStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="0, -5, 0, 0"/>
+                                    </Style>
+                                </telerik:DateTimeCategoricalAxis.LabelStyle>
+                            </telerik:DateTimeCategoricalAxis>
+                        </telerik:BarSeries.HorizontalAxis>
+
+                        <telerik:BarSeries.CategoryBinding>
+                            <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                        </telerik:BarSeries.CategoryBinding>
+
+                        <telerik:BarSeries.ValueBinding>
+                            <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                        </telerik:BarSeries.ValueBinding>
+
+                    </telerik:BarSeries>
+                </telerik:RadCartesianChart>
+
+
+            </Grid>
         </Grid>
 
-    </Grid>
+
+
+    </ScrollViewer>
 </Page>

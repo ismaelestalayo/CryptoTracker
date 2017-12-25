@@ -23,19 +23,19 @@ namespace CryptoTracker {
         public Page_Home() {
             this.InitializeComponent();
             UpdateHome();
+        }
 
-            TimeSpan period = TimeSpan.FromSeconds(60);
-            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) => {
-                Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        internal async void UpdateHome() {
+
+            TimeSpan period = TimeSpan.FromSeconds(45);
+            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
                     RadioButton r = new RadioButton { Content = timeSpan };
                     if (timeSpan == "hour")
                         ALL_TimerangeButton_Click(r, null);
                 });
             }, period);
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        internal async void UpdateHome() {
 
             if (LoadingControl_BTC == null)
                 LoadingControl_BTC = new Loading();
@@ -48,26 +48,33 @@ namespace CryptoTracker {
             LoadingControl_ETH.IsLoading = true;
             LoadingControl_LTC.IsLoading = true;
 
-            await UpdateBTC();
+            await UpdateCoin("BTC");
             BTC_verticalAxis.Minimum = getMinimum(App.historic);
             BTC_verticalAxis.Maximum = getMaximum(App.historic);
             BTC_DateTimeAxis = App.AdjustAxis(BTC_DateTimeAxis, timeSpan);
             await GetStats("BTC");
             await Get24hVolume("BTC");
 
-            await UpdateETH();
+            await UpdateCoin("ETH");
             ETH_verticalAxis.Minimum = getMinimum(App.historic);
             ETH_verticalAxis.Maximum = getMaximum(App.historic);
             ETH_DateTimeAxis = App.AdjustAxis(ETH_DateTimeAxis, timeSpan);
             await GetStats("ETH");
             await Get24hVolume("ETH");
 
-            await UpdateLTC();
+            await UpdateCoin("LTC");
             LTC_verticalAxis.Minimum = getMinimum(App.historic);
             LTC_verticalAxis.Maximum = getMaximum(App.historic);
             LTC_DateTimeAxis = App.AdjustAxis(LTC_DateTimeAxis, timeSpan);
             await GetStats("LTC");
             await Get24hVolume("LTC");
+
+            await UpdateCoin("XRP");
+            XRP_verticalAxis.Minimum = getMinimum(App.historic);
+            XRP_verticalAxis.Maximum = getMaximum(App.historic);
+            XRP_DateTimeAxis = App.AdjustAxis(XRP_DateTimeAxis, timeSpan);
+            await GetStats("XRP");
+            await Get24hVolume("XRP");
         }
 
         private float getMaximum(List<App.PricePoint> a) {
@@ -98,7 +105,6 @@ namespace CryptoTracker {
         }
 
         async public Task GetStats(String crypto) {
-
             await App.GetStats(crypto);
 
             switch (crypto) {
@@ -121,6 +127,13 @@ namespace CryptoTracker {
                     LTC_High.Text  = App.stats.High24   + App.coinSymbol;
                     LTC_Low.Text   = App.stats.Low24    + App.coinSymbol;
                     LTC_Vol24.Text = App.stats.Volume24 + "LTC";
+                    break;
+
+                case "XRP":
+                    XRP_Open.Text  = App.stats.Open24   + App.coinSymbol;
+                    XRP_High.Text  = App.stats.High24   + App.coinSymbol;
+                    XRP_Low.Text   = App.stats.Low24    + App.coinSymbol;
+                    XRP_Vol24.Text = App.stats.Volume24 + "XRP";
                     break;
 
             }
@@ -160,167 +173,171 @@ namespace CryptoTracker {
                     }
                     this.LTC_VolumeChart.DataContext = data;
                     break;
+                case "XRP":
+                    for (int i = 0; i < 24; i++) {
+                        data.Add(new App.ChartDataObject() {
+                            Date   = App.historic[i].DateTime,
+                            Volume = App.historic[i].Volumefrom
+                        });
+                    }
+                    this.XRP_VolumeChart.DataContext = data;
+                    break;
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        async public Task UpdateBTC() {
-            await App.GetCurrentPrice("BTC");
-            BTC_curr.Text = App.BTC_now.ToString() + App.coinSymbol;
+        async private Task UpdateCoin(string crypto) {
+            await App.GetCurrentPrice(crypto);
+            switch (crypto) {
+                case "BTC":
+                    BTC_curr.Text = App.BTC_now.ToString() + App.coinSymbol;
+                    break;
+                case "ETH":
+                    ETH_curr.Text = App.ETH_now.ToString() + App.coinSymbol;
+                    break;
+                case "LTC":
+                    LTC_curr.Text = App.LTC_now.ToString() + App.coinSymbol;
+                    break;
+                case "XRP":
+                    XRP_curr.Text = App.XRP_now.ToString() + App.coinSymbol;
+                    break;
+            }
 
             switch (timeSpan) {
                 case "hour":
                 case "day":
-                    await App.GetHisto("BTC", "minute", limit);
+                    await App.GetHisto(crypto, "minute", limit);
                     break;
 
                 case "week":
                 case "month":
-                    await App.GetHisto("BTC", "hour", limit);
+                    await App.GetHisto(crypto, "hour", limit);
                     break;
 
                 case "year":
-                    await App.GetHisto("BTC", "day", limit);
+                    await App.GetHisto(crypto, "day", limit);
                     break;
 
                 case "all":
-                    await App.GetHisto("BTC", "day", 0);
+                    await App.GetHisto(crypto, "day", 0);
                     break;
             }
 
-            List<ChartDataObject> data = new List<ChartDataObject>();
+            List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject {
-                    Date  = App.historic[i].DateTime,
-                    Value = App.historic[i].Low
+                App.ChartDataObject obj = new App.ChartDataObject {
+                    Date   = App.historic[i].DateTime,
+                    Value  = (App.historic[i].Low + App.historic[i].High) / 2,
+                    Low    = App.historic[i].Low,
+                    High   = App.historic[i].High,
+                    Open   = App.historic[i].Open,
+                    Close  = App.historic[i].Close,
+                    Volume = App.historic[i].Volumefrom
                 };
                 data.Add(obj);
+
             }
 
-            float dBTC = ((App.BTC_now / App.BTC_old) - 1) * 100;
-            dBTC = (float)Math.Round(dBTC, 2);
-            if (timeSpan.Equals("hour"))
-                App.BTC_change1h = dBTC;
+            float d = 0;
+            switch (crypto) {
+                case "BTC":
+                    d = (float)Math.Round(((App.BTC_now / App.BTC_old) - 1) * 100, 2);
+                    if (timeSpan.Equals("hour"))
+                        App.BTC_change1h = d;
 
-            if (dBTC < 0) { 
-                BTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
-                dBTC = Math.Abs(dBTC);
-                BTC_diff.Text = "▼" + dBTC.ToString() + "%";
-            } else {
-                BTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
-                BTC_diff.Text = "▲" + dBTC.ToString() + "%";
+                    if (d < 0) {
+                        BTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
+                        d = Math.Abs(d);
+                        BTC_diff.Text = "▼" + d.ToString() + "%";
+                    } else {
+                        BTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                        BTC_diff.Text = "▲" + d.ToString() + "%";
+                    }
+                    break;
+                case "ETH":
+                    d = (float)Math.Round(((App.ETH_now / App.ETH_old) - 1) * 100, 2);
+                    if (timeSpan.Equals("hour"))
+                        App.ETH_change1h = d;
+
+                    if (d < 0) {
+                        ETH_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
+                        d = Math.Abs(d);
+                        ETH_diff.Text = "▼" + d.ToString() + "%";
+                    } else {
+                        ETH_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                        ETH_diff.Text = "▲" + d.ToString() + "%";
+                    }
+                    break;
+                case "LTC":
+                    d = (float)Math.Round(((App.LTC_now / App.LTC_old) - 1) * 100, 2);
+                    if (timeSpan.Equals("hour"))
+                        App.LTC_change1h = d;
+
+                    if (d < 0) {
+                        LTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
+                        d = Math.Abs(d);
+                        LTC_diff.Text = "▼" + d.ToString() + "%";
+                    } else {
+                        LTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                        LTC_diff.Text = "▲" + d.ToString() + "%";
+                    }
+                    break;
+                case "XRP":
+                    d = (float)Math.Round(((App.XRP_now / App.XRP_old) - 1) * 100, 2);
+                    if (timeSpan.Equals("hour"))
+                        App.XRP_change1h = d;
+
+                    if (d < 0) {
+                        XRP_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
+                        d = Math.Abs(d);
+                        XRP_diff.Text = "▼" + d.ToString() + "%";
+                    } else {
+                        XRP_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                        XRP_diff.Text = "▲" + d.ToString() + "%";
+                    }
+                    break;
             }
 
-            SplineAreaSeries series = (SplineAreaSeries)BTC_Chart.Series[0];
+            SplineAreaSeries series = null;
+            switch (crypto) {
+                case "BTC":
+                    series = (SplineAreaSeries)BTC_Chart.Series[0];
+                    break;
+                case "ETH":
+                    series = (SplineAreaSeries)ETH_Chart.Series[0];
+                    break;
+                case "LTC":
+                    series = (SplineAreaSeries)LTC_Chart.Series[0];
+                    break;
+                case "XRP":
+                    series = (SplineAreaSeries)XRP_Chart.Series[0];
+                    break;
+            }
+
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
-            LoadingControl_BTC.IsLoading = false;
-        }
-        async public Task UpdateETH() {
-            await App.GetCurrentPrice("ETH");
-            ETH_curr.Text = App.ETH_now.ToString() + App.coinSymbol;
 
-            switch (timeSpan) {
-                case "hour":
-                case "day":
-                    await App.GetHisto("ETH", "minute", limit);
+            switch (crypto) {
+                case "BTC":
+                    if (LoadingControl_BTC != null)
+                        LoadingControl_BTC.IsLoading = false;
+                    break;
+                case "ETH":
+                    if (LoadingControl_ETH != null)
+                        LoadingControl_ETH.IsLoading = false;
+                    break;
+                case "LTC":
+                    if (LoadingControl_LTC != null)
+                        LoadingControl_LTC.IsLoading = false;
+                    break;
+                case "XRP":
+                    if (LoadingControl_XRP != null)
+                        LoadingControl_XRP.IsLoading = false;
                     break;
 
-                case "week":
-                case "month":
-                    await App.GetHisto("ETH", "hour", limit);
-                    break;
-
-                case "year":
-                    await App.GetHisto("ETH", "day", limit);
-                    break;
-
-                case "all":
-                    await App.GetHisto("ETH", "day", 0);
-                    break;
             }
 
-            List<ChartDataObject> data = new List<ChartDataObject>();
-            for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject {
-                    Date  = App.historic[i].DateTime,
-                    Value = App.historic[i].Low };
-                data.Add(obj);
-            }
-
-            float dETH = ((App.ETH_now / App.ETH_old) - 1) * 100;
-            dETH = (float)Math.Round(dETH, 2);
-            if (timeSpan.Equals("hour"))
-                App.ETH_change1h = dETH;
-
-            if (dETH < 0) {
-                ETH_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
-                dETH = Math.Abs(dETH);
-                ETH_diff.Text = "▼" + dETH.ToString() + "%";
-            } else {
-                ETH_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
-                ETH_diff.Text = "▲" + dETH.ToString() + "%";
-            }
-
-            SplineAreaSeries series = (SplineAreaSeries)ETH_Chart.Series[0];
-            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            series.ItemsSource = data;
-            LoadingControl_ETH.IsLoading = false;
-        }
-        async public Task UpdateLTC() {
-            await App.GetCurrentPrice("LTC");
-            LTC_curr.Text = App.LTC_now.ToString() + App.coinSymbol;
-
-            switch (timeSpan) {
-                case "hour":
-                case "day":
-                    await App.GetHisto("LTC", "minute", limit);
-                    break;
-
-                case "week":
-                case "month":
-                    await App.GetHisto("LTC", "hour", limit);
-                    break;
-
-                case "year":
-                    await App.GetHisto("LTC", "day", limit);
-                    break;
-
-                case "all":
-                    await App.GetHisto("LTC", "day", 0);
-                    break;
-            }
-
-            List<ChartDataObject> data = new List<ChartDataObject>();
-            for (int i = 0; i < limit; ++i) {
-                ChartDataObject obj = new ChartDataObject {
-                    Date  = App.historic[i].DateTime,
-                    Value = App.historic[i].Low
-                };
-                data.Add(obj);
-            }
-
-            float dLTC = ((App.LTC_now / App.LTC_old) - 1) * 100;
-            dLTC = (float)Math.Round(dLTC, 2);
-            if (timeSpan.Equals("hour"))
-                App.LTC_change1h = dLTC;
-
-            if (dLTC < 0) {
-                LTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
-                dLTC = Math.Abs(dLTC);
-                LTC_diff.Text = "▼" + dLTC.ToString() + "%";
-            } else {
-                LTC_diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
-                LTC_diff.Text = "▲" + dLTC.ToString() + "%";
-            }
-
-            SplineAreaSeries series = (SplineAreaSeries)LTC_Chart.Series[0];
-            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            series.ItemsSource = data;
-            LoadingControl_LTC.IsLoading = false;
         }
 
 
@@ -373,6 +390,8 @@ namespace CryptoTracker {
         private void LTC_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
             this.Frame.Navigate(typeof(Page_CoinTemplate), "LTC");
         }
-
+        private void XRP_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Page_CoinTemplate), "XRP");
+        }
     }
 }

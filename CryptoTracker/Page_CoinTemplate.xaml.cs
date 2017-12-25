@@ -61,6 +61,16 @@ namespace CryptoTracker {
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["LTC_colorT"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["LTC_colorL"]).Color;
                     break;
+
+                case "XRP":
+                    CoinName.Text = "Ripple";
+                    CoinLogoColor.Fill = ((SolidColorBrush)App.Current.Resources["XRP_color"]);
+                    CoinLogo.Data = stringToPathGeometryConverter.Convert("M12.29 28.04l1.29-5.52-1.58.67.63-2.85 1.64-.68L16.52 10h5.23l-1.52 7.14 2.09-.74-.58 2.7-2.05.8-.9 4.34h8.1l-.99 3.8z");
+                    CoinLogo.Margin = new Thickness(-3);
+                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["XRP_color"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorT"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorL"]).Color;
+                    break;
             }
 
         }
@@ -140,6 +150,9 @@ namespace CryptoTracker {
                 case "LTC":
                     curr.Text = App.LTC_now.ToString() + App.coinSymbol;
                     break;
+                case "XRP":
+                    curr.Text = App.XRP_now.ToString() + App.coinSymbol;
+                    break;
             }
 
             switch (timeSpan) {
@@ -194,6 +207,11 @@ namespace CryptoTracker {
                     if (timeSpan.Equals("hour"))
                         App.LTC_change1h = d;
                     break;
+                case "XRP":
+                    d = (float)Math.Round(((App.XRP_now / App.XRP_old) - 1) * 100, 2);
+                    if (timeSpan.Equals("hour"))
+                        App.XRP_change1h = d;
+                    break;
             }
 
             if (d < 0) {
@@ -223,7 +241,6 @@ namespace CryptoTracker {
             statsLow.Text   = App.stats.Low24    + App.coinSymbol;
             statsVol24.Text = App.stats.Volume24 + crypto;
         }
-
         async private Task Get24Volume() {
             await App.GetHisto(crypto, "hour", 24);
 
