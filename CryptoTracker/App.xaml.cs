@@ -159,7 +159,6 @@ namespace CryptoTracker {
             
             var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,GBP,CAD,AUD,MXN,CNY,JPY,INR");
             HttpClient httpClient = new HttpClient();
-            String response = "";
 
             try {
                 var data = await GetJSONAsync(uri);
@@ -207,45 +206,30 @@ namespace CryptoTracker {
                 response = await httpClient.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
+                historic.Clear();
+                int lastIndex = ((JContainer)data["Data"]).Count;
+                for (int i = 0; i < lastIndex; i++) {
+                    historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
+                }
                 switch (crypto) {
                     case "BTC":
-                        historic.Clear();
-
-                        for (int i = 0; i < limit; i++) {
-                            historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
-                        }
-                        BTC_now = (float)Math.Round((float)data["Data"][limit-1]["close"], 2);
+                        BTC_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
                         BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
 
 
                     case "ETH":
-                        historic.Clear();
-
-                        for (int i = 0; i < limit; i++) {
-                            historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
-                        }
-                        ETH_now = (float)Math.Round((float)data["Data"][limit-1]["close"], 2);
+                        ETH_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
                         ETH_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
 
                     case "LTC":
-                        historic.Clear();
-
-                        for (int i = 0; i < limit; i++) {
-                            historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
-                        }
-                        LTC_now = (float)Math.Round((float)data["Data"][limit-1]["close"], 2);
+                        LTC_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
                         LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
 
                     case "XRP":
-                        historic.Clear();
-
-                        for (int i = 0; i < limit; i++) {
-                            historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
-                        }
-                        XRP_now = (float)Math.Round((float)data["Data"][limit-1]["close"], 2);
+                        XRP_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
                         XRP_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
                 }
@@ -333,10 +317,10 @@ namespace CryptoTracker {
                     break;
 
                 case "all":
-                    DateTimeAxis.LabelFormat = "{0:MMM}";
+                    DateTimeAxis.LabelFormat = "{0:MMM/yy}";
                     DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    DateTimeAxis.MajorStep = 1;
-                    DateTimeAxis.Minimum = DateTime.Today.AddMonths(-4);
+                    DateTimeAxis.MajorStep = 4;
+                    DateTimeAxis.Minimum = DateTime.MinValue;
                     break;
             }
             return DateTimeAxis;

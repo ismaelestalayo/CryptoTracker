@@ -143,44 +143,24 @@ namespace CryptoTracker {
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
 
+            for (int i = 0; i < App.historic.Count; i++) {
+                data.Add(new App.ChartDataObject() {
+                    Date   = App.historic[i].DateTime,
+                    Volume = App.historic[i].Volumefrom
+                });
+            }
+
             switch (crypto) {
                 case "BTC":
-                    int z = App.historic.Count;
-                    for (int i = 0; i < 24; i++) {
-                        data.Add(new App.ChartDataObject() {
-                            Date   = App.historic[i].DateTime,
-                            Volume = App.historic[i].Volumefrom
-                        });
-                    }
                     this.BTC_VolumeChart.DataContext = data;
                     break;
-
                 case "ETH":
-                    for (int i = 0; i < 24; i++) {
-                        data.Add(new App.ChartDataObject() {
-                            Date   = App.historic[i].DateTime,
-                            Volume = App.historic[i].Volumefrom
-                        });
-                    }
                     this.ETH_VolumeChart.DataContext = data;
                     break;
-
                 case "LTC":
-                    for (int i = 0; i < 24; i++) {
-                        data.Add(new App.ChartDataObject() {
-                            Date   = App.historic[i].DateTime,
-                            Volume = App.historic[i].Volumefrom
-                        });
-                    }
                     this.LTC_VolumeChart.DataContext = data;
                     break;
                 case "XRP":
-                    for (int i = 0; i < 24; i++) {
-                        data.Add(new App.ChartDataObject() {
-                            Date   = App.historic[i].DateTime,
-                            Volume = App.historic[i].Volumefrom
-                        });
-                    }
                     this.XRP_VolumeChart.DataContext = data;
                     break;
             }
@@ -225,7 +205,7 @@ namespace CryptoTracker {
             }
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
-            for (int i = 0; i < limit; ++i) {
+            for (int i = 0; i < App.historic.Count; ++i) {
                 App.ChartDataObject obj = new App.ChartDataObject {
                     Date   = App.historic[i].DateTime,
                     Value  = (App.historic[i].Low + App.historic[i].High) / 2,

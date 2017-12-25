@@ -176,7 +176,7 @@ namespace CryptoTracker {
             }
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
-            for (int i = 0; i < limit; ++i) {
+            for (int i = 0; i < App.historic.Count; ++i) {
                 App.ChartDataObject obj = new App.ChartDataObject {
                     Date   =  App.historic[i].DateTime,
                     Value  = (App.historic[i].Low + App.historic[i].High) / 2,
