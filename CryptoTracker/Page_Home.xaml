@@ -11,7 +11,7 @@
 
     <Page.Resources>
         <Style x:Key="mainGrid" TargetType="Grid">
-            <Setter Property="Margin" Value="15, 15, 15, 0"/>
+            <Setter Property="Margin" Value="15, 0, 15, 15"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
         </Style>
@@ -29,7 +29,9 @@
         </Style>
     </Page.Resources>
 
-    <ScrollViewer Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="0, 0, 0, 10" VerticalScrollBarVisibility="Hidden">
+    <!-- 
+    ################################################################################################### -->
+    <ScrollViewer Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" VerticalScrollBarVisibility="Hidden">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
@@ -67,7 +69,7 @@
                 <RowDefinition Height="225"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 0, 0, -30" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 0, 0, -15" VerticalAlignment="Bottom">
                 <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
                 <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
                 <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
@@ -77,8 +79,8 @@
             </StackPanel>
 
             <!-- ###################################################################################################################
-                ##### mainGrid BTC ##################################################################################################### -->
-            <Grid Grid.Row="1" BorderBrush="{StaticResource BTC_color}" PointerPressed="BTC_PointerPressed" Style="{StaticResource mainGrid}">
+            ##### mainGrid BTC ##################################################################################################### -->
+            <Grid Grid.Row="1" BorderBrush="{StaticResource BTC_color}" Tapped="Tapped_BTC" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -132,8 +134,8 @@
             </Grid>
 
             <!-- ###################################################################################################################
-                ##### mainGrid ETH ##################################################################################################### -->
-            <Grid Grid.Row="2" BorderBrush="{StaticResource ETH_color}" PointerPressed="ETH_PointerPressed" Style="{StaticResource mainGrid}">
+            ##### mainGrid ETH ##################################################################################################### -->
+            <Grid Grid.Row="2" BorderBrush="{StaticResource ETH_color}" Tapped="Tapped_ETH" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -188,8 +190,8 @@
 
 
             <!-- ###################################################################################################################
-                ##### mainGrid LTC ##################################################################################################### -->
-            <Grid Grid.Row="3" BorderBrush="{StaticResource LTC_color}" PointerPressed="LTC_PointerPressed" Style="{StaticResource mainGrid}">
+            ##### mainGrid LTC ##################################################################################################### -->
+            <Grid Grid.Row="3" BorderBrush="{StaticResource LTC_color}" Tapped="Tapped_LTC" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -244,8 +246,8 @@
 
 
             <!-- ###################################################################################################################
-                ##### mainGrid XRP ##################################################################################################### -->
-            <Grid Grid.Row="4" BorderBrush="{StaticResource XRP_color}" PointerPressed="XRP_PointerPressed" Style="{StaticResource mainGrid}">
+            ##### mainGrid XRP ##################################################################################################### -->
+            <Grid Grid.Row="4" BorderBrush="{StaticResource XRP_color}" Tapped="Tapped_XRP" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>

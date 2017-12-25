@@ -15,7 +15,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -106,7 +106,7 @@
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <StackPanel Grid.Row="3" Margin="15, 0">
+        <ScrollViewer Grid.Row="3" Margin="15, 0">
             <ListView x:Name="MyListView" 
                       ItemsSource="{Binding dataListm, Mode=OneWay}" 
                       Background="Transparent"
@@ -171,11 +171,11 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        
+
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-        </StackPanel>
+        </ScrollViewer>
 
         <!-- 
         ###############################################################################################################

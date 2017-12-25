@@ -12,7 +12,7 @@
     <ContentDialog.TitleTemplate>
         <DataTemplate>
             <StackPanel Orientation="Horizontal">
-                <Image Source="Assets/coinbase.png" Width="30" Height="30" Margin="0"/>
+                <Image Source="/Assets/CryptoTracker 400.png" Width="35" Height="35" Margin="0"/>
                 <TextBlock VerticalAlignment="Center" Text="Welcome" FontSize="22" Margin="10,0,0,0"/>
             </StackPanel>
         </DataTemplate>
@@ -21,13 +21,16 @@
     <ScrollViewer>
         <StackPanel>
             <TextBlock TextWrapping="WrapWholeWords">
-                <Run>Thanks for installing CoinBase Unofficial!</Run><LineBreak/>
+                
+                <Run>Thanks for installing CryptoTracker!</Run><LineBreak/>
                 <LineBreak/>
                 
                 <Run>New in this version:</Run><LineBreak/>
-                <Run Text=" - Added GBP, AUD, JPY and INR currencies." 
+                <Run Text=" - Added Ripple (XRP) support." 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text="   (Thanks for the feedback)" 
+                <Run Text=" - Fixed portfolio section not scrolling." 
+                     FontWeight="ExtraLight"/><LineBreak/>
+                <Run Text=" - Refined UI." 
                      FontWeight="ExtraLight"/><LineBreak/>
                 <Run Text=" - I'll resume doing mayor changes in mid January after exams are done." 
                      FontWeight="ExtraLight"/><LineBreak/>

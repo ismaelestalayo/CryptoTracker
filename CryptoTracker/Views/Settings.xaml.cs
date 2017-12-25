@@ -8,11 +8,11 @@ using Windows.UI.Xaml.Controls;
 
 
 namespace CryptoTracker {
-    public sealed partial class Page_Settings : Page {
+    public sealed partial class Settings : Page {
 
         private string v;
 
-        public Page_Settings() {
+        public Settings() {
             this.InitializeComponent();
 
             var assembly = typeof(App).GetTypeInfo().Assembly;

@@ -183,13 +183,14 @@ namespace CryptoTracker {
                 }
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
+                //var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
+                var dontWait = await new MessageDialog("Error getting current coin price.").ShowAsync();
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         internal async static Task GetHisto(string crypto, string time, int limit) {
-            //CCCAGG Kraken Coinbase 
+            //CCCAGG    Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
             String URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
                 + crypto + "&tsym=" + coin + "&limit=" + limit;
 
@@ -213,7 +214,7 @@ namespace CryptoTracker {
                         for (int i = 0; i < limit; i++) {
                             historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
                         }
-                        BTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                        BTC_now = (float)Math.Round((float)data["Data"][limit-1]["close"], 2);
                         BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
 
@@ -224,7 +225,7 @@ namespace CryptoTracker {
                         for (int i = 0; i < limit; i++) {
                             historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
                         }
-                        ETH_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                        ETH_now = (float)Math.Round((float)data["Data"][limit-1]["close"], 2);
                         ETH_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
 
@@ -234,7 +235,7 @@ namespace CryptoTracker {
                         for (int i = 0; i < limit; i++) {
                             historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
                         }
-                        LTC_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                        LTC_now = (float)Math.Round((float)data["Data"][limit-1]["close"], 2);
                         LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
 
@@ -244,7 +245,7 @@ namespace CryptoTracker {
                         for (int i = 0; i < limit; i++) {
                             historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
                         }
-                        XRP_now = (float)Math.Round((float)data["Data"][limit]["close"], 2);
+                        XRP_now = (float)Math.Round((float)data["Data"][limit-1]["close"], 2);
                         XRP_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
                 }

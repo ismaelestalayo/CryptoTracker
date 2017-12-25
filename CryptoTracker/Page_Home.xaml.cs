@@ -92,7 +92,7 @@ namespace CryptoTracker {
         }
         private float getMinimum(List<App.PricePoint> a) {
             int i = 0;
-            float min = 15000;
+            float min = 50000;
 
             foreach (App.PricePoint type in a) {
                 if (a[i].High < min)
@@ -145,6 +145,7 @@ namespace CryptoTracker {
 
             switch (crypto) {
                 case "BTC":
+                    int z = App.historic.Count;
                     for (int i = 0; i < 24; i++) {
                         data.Add(new App.ChartDataObject() {
                             Date   = App.historic[i].DateTime,
@@ -379,18 +380,18 @@ namespace CryptoTracker {
 
             }
             UpdateHome();
-        }
+        }        
 
-        private void BTC_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+        private void Tapped_BTC(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             this.Frame.Navigate(typeof(Page_CoinTemplate), "BTC");
         }
-        private void ETH_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+        private void Tapped_ETH(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             this.Frame.Navigate(typeof(Page_CoinTemplate), "ETH");
         }
-        private void LTC_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+        private void Tapped_LTC(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             this.Frame.Navigate(typeof(Page_CoinTemplate), "LTC");
         }
-        private void XRP_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+        private void Tapped_XRP(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             this.Frame.Navigate(typeof(Page_CoinTemplate), "XRP");
         }
     }

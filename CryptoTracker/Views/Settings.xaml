@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="CryptoTracker.Page_Settings"
+    x:Class="CryptoTracker.Settings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -24,27 +24,15 @@
         </Grid.RowDefinitions>
 
         <RelativePanel Grid.Row="0" Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
-                       BorderThickness="0, 0, 0, 0.5" 
-                       BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+            BorderThickness="0, 0, 0, 0.5" 
+            BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Margin="0, 5" Padding="0, -10, 0, 5">
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock 
-                        Text="Settings"
-                        Margin="15, 0"
-                        VerticalAlignment="Center"
-						Style="{ThemeResource SubheaderTextBlockStyle}"/>
-                </StackPanel>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="5"
-                        RelativePanel.AlignRightWithPanel="True">
-
-                <TextBlock Name="Portfolio_total" 
-                           Text="1M"
-                           Visibility="Collapsed"
-                           FontSize="24"
-                           FontWeight="Light"/>
+                <TextBlock
+                    Text="Settings"
+                    Margin="15, 0"
+                    VerticalAlignment="Center"
+                    Style="{ThemeResource SubheaderTextBlockStyle}"/>
             </StackPanel>
 
         </RelativePanel>
@@ -138,7 +126,7 @@
             <!-- 
             ############################################################################################################### -->
             <StackPanel Margin="10" RelativePanel.AlignBottomWithPanel="True">
-                <Image Source="Assets/CryptoTracker 400.png" Width="75" HorizontalAlignment="Left"/>
+                <Image Source="/Assets/CryptoTracker 400.png" Width="75" HorizontalAlignment="Left"/>
                 
                 <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
                 <TextBlock Text="Made with ❤ by an engineering student." FontWeight="Light"/>

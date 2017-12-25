@@ -8,13 +8,11 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using CryptoTracker.Views;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
     public sealed partial class MainPage : Page {
-
-        private bool isInSettings = false;
-        private bool isInPortfolio = false;
 
         public MainPage() {
             this.InitializeComponent();
@@ -43,11 +41,11 @@ namespace CryptoTracker {
                 var statusBar = StatusBar.GetForCurrentView();
 
                 if (App.localSettings.Values["Theme"].Equals("Dark")) {
-                    statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23);
+                    statusBar.BackgroundColor = Color.FromArgb(255, 31, 31, 31);
                     statusBar.BackgroundOpacity = 1;
                     statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
                 } else {
-                    statusBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242);
+                    statusBar.BackgroundColor = Color.FromArgb(255, 230, 230, 230);
                     statusBar.BackgroundOpacity = 1;
                     statusBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
                 }
@@ -103,15 +101,20 @@ namespace CryptoTracker {
             }
         }
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
-            if (rootFrame.SourcePageType.Name != "Page_Settings") {
-                rootFrame.Navigate(typeof(Page_Settings));
+            if (rootFrame.SourcePageType.Name != "Settings") {
+                rootFrame.Navigate(typeof(Settings));
                 Analytics.TrackEvent("Section_Settings");
             } else {
                 rootFrame.Navigate(typeof(Page_Home));
             }
         }
         private void News_Click(object sender, RoutedEventArgs e) {
-
+            if (rootFrame.SourcePageType.Name != "News") {
+                rootFrame.Navigate(typeof(News));
+                Analytics.TrackEvent("Section_News");
+            } else {
+                rootFrame.Navigate(typeof(Page_Home));
+            }
         }
 
 
