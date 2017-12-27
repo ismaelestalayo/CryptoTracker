@@ -1,6 +1,6 @@
 ﻿using CryptoTracker.Helpers;
+using CryptoTracker.Views;
 using Microsoft.AppCenter.Analytics;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI;
@@ -8,8 +8,6 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using CryptoTracker.Views;
-using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
     public sealed partial class MainPage : Page {
@@ -115,6 +113,9 @@ namespace CryptoTracker {
             } else {
                 rootFrame.Navigate(typeof(Home));
             }
+        }
+        public void WebView_Click() {
+            rootFrame.Navigate(typeof(WebVieww));            
         }
 
 

@@ -36,7 +36,6 @@ namespace CryptoTracker.Helpers {
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged([CallerMemberName]string propertyName = "") {
-            System.Diagnostics.Debug.WriteLine("Shortly before update. PropertyName = " + propertyName);
             if (PropertyChanged != null) {
                 System.Diagnostics.Debug.WriteLine("Update now");
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));

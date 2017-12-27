@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+﻿using CryptoTracker.Helpers;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace CryptoTracker {
             ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
                     RadioButton r = new RadioButton { Content = timeSpan };
-                    if (timeSpan == "hour")
+                    if (timeSpan == "hour" && this.Frame.SourcePageType.Name == "Home")
                         ALL_TimerangeButton_Click(r, null);
                 });
             }, period);
@@ -77,11 +78,11 @@ namespace CryptoTracker {
             await Get24hVolume("XRP");
         }
 
-        private float GetMaximum(List<App.PricePoint> a) {
+        private float GetMaximum(List<PricePoint> a) {
             int i = 0;
             float max = 0;
 
-            foreach (App.PricePoint type in a) {
+            foreach (PricePoint type in a) {
                 if (a[i].High > max)
                     max = a[i].High;
 
@@ -90,11 +91,11 @@ namespace CryptoTracker {
 
             return max;
         }
-        private float GetMinimum(List<App.PricePoint> a) {
+        private float GetMinimum(List<PricePoint> a) {
             int i = 0;
             float min = 50000;
 
-            foreach (App.PricePoint type in a) {
+            foreach (PricePoint type in a) {
                 if (a[i].High < min)
                     min = a[i].High;
 

@@ -13,9 +13,10 @@
 
     <Page.Resources>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
-            <Setter Property="Margin" Value="0, 7"/>
+            <Setter Property="Margin" Value="0, 8"/>
             <Setter Property="BorderBrush" Value="LightGray"/>
             <Setter Property="BorderThickness" Value="0, 0.5, 0, 0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
         </Style>
     </Page.Resources>
 
@@ -58,24 +59,23 @@
         <RelativePanel Grid.Row="0" Padding="0, 0, 0, -10"
                        BorderThickness="0, 0, 0, 0.5" 
                        BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
-            <StackPanel Margin="-10, 5" Padding="0, -10, 0, 5">
+            <StackPanel Margin="0, 5" Padding="0, -5, 0, 5">
 
-                <StackPanel Orientation="Horizontal">
-                    <RelativePanel VerticalAlignment="Center" Margin="20, 10, 10, 5">
-                        <Ellipse x:Name="CoinLogoColor" Fill="#2A2A2A" Width="32" Height="32"/>
-                        <Path x:Name="CoinLogo" Fill="White" Margin="0"/>
-                    </RelativePanel>
-
+                <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
+                    <Image 
+                        x:Name="cryptoLogo" 
+                        Source="/Assets/iconBTCc.png" 
+                        Width="25" Margin="2"/>
                     <TextBlock 
-                        x:Name="CoinName"
+                        x:Name="cryptoName" 
                         Text="Crypto" 
-                        VerticalAlignment="Center"
-						Style="{ThemeResource SubheaderTextBlockStyle}"
-                        FontSize="28"/>
+                        Style="{ThemeResource TitleTextBlockStyle}"
+                        FontWeight="ExtraLight" Margin="5, -2"/>
                 </StackPanel>
+
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="5"
+            <StackPanel Orientation="Horizontal" Margin="5, 0"
                         RelativePanel.AlignRightWithPanel="True">
 
                 <TextBlock Name="curr" 
@@ -199,7 +199,7 @@
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
         <Pivot Grid.Row="2" Grid.Column="0" Margin="20, -10, 20, 0">
-            
+
             <PivotItem Header="Stats">
                 <StackPanel x:Name="stats" Margin="0, 10" Orientation="Horizontal">
 
@@ -227,7 +227,11 @@
             </PivotItem>
 
             <PivotItem Header="Markets">
-                <TextBlock Text="Kraken"/>
+                <StackPanel>
+                    <TextBlock Text="Kraken"/>
+                    <TextBlock Text="CoinBase"/>
+                    <TextBlock Text="Kraken"/>
+                </StackPanel>
             </PivotItem>
 
             <PivotItem Header="Volume">
@@ -280,29 +284,27 @@
 
             <PivotItem Header="About">
                 <StackPanel>
-                    <TextBlock Text="Description:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                    <TextBlock x:Name="Description" Text="Description..." FontWeight="ExtraLight" Margin="0, 0, 0, 5" TextWrapping="WrapWholeWords"/>
+                    <TextBlock Text="Description:" Style="{ThemeResource BaseTextBlockStyle}" FontWeight="Light"/>
+                    <TextBlock x:Name="Description" Text="Description..." FontWeight="ExtraLight" Foreground="Gray" Margin="0, 0, 0, 5" TextWrapping="WrapWholeWords"/>
 
                     <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Website">
-                        <TextBlock Text="Website:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock x:Name="Website" Text="exampleURL.com" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True"/>
+                        <TextBlock Text="Website:" Style="{ThemeResource BaseTextBlockStyle}" FontWeight="Light"/>
+                        <TextBlock x:Name="Website" Text="exampleURL.com" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
                     </RelativePanel>
 
                     <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Twitter">
-                        <TextBlock Text="Twitter:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock x:Name="Twitter" Text="@example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True"/>
+                        <TextBlock Text="Twitter:" Style="{ThemeResource BaseTextBlockStyle}" FontWeight="Light"/>
+                        <TextBlock x:Name="Twitter" Text="@example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
                     </RelativePanel>
 
                     <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Reddit">
-                        <TextBlock Text="Reddit:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock x:Name="Reddit" Text="r/example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True"/>
+                        <TextBlock Text="Reddit:" Style="{ThemeResource BaseTextBlockStyle}" FontWeight="Light"/>
+                        <TextBlock x:Name="Reddit" Text="r/example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
                     </RelativePanel>
 
-                </StackPanel>                
+                </StackPanel>
             </PivotItem>
         </Pivot>
-
-
 
     </Grid>
 </Page>

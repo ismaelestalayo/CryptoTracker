@@ -104,8 +104,8 @@
     </Compile>
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
     <Compile Include="Helpers\LiveTile.cs" />
+    <Compile Include="Helpers\PricePoint.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
-    <Compile Include="Helpers\StringToPathGeometryConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -128,6 +128,9 @@
     <Compile Include="Views\News.xaml.cs">
       <DependentUpon>News.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WebVieww.xaml.cs">
+      <DependentUpon>WebVieww.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -135,8 +138,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\CoinBase Transparent.png" />
-    <Content Include="Assets\coinbase.png" />
     <Content Include="Assets\CryptoTracker 1300.png" />
     <Content Include="Assets\CryptoTracker 400.png" />
     <Content Include="Assets\CryptoTracker Wide.png" />
@@ -248,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\News.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WebVieww.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
