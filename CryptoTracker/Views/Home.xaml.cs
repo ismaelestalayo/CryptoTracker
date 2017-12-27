@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
-    public sealed partial class Page_Home : Page {
+    public sealed partial class Home : Page {
 
         private int    limit = 60;
         private string timeSpan = "hour";
@@ -20,7 +20,7 @@ namespace CryptoTracker {
             public float Value { get; set; }
         }
 
-        public Page_Home() {
+        public Home() {
             this.InitializeComponent();
             UpdateHome();
         }
@@ -49,35 +49,35 @@ namespace CryptoTracker {
             LoadingControl_LTC.IsLoading = true;
 
             await UpdateCoin("BTC");
-            BTC_verticalAxis.Minimum = getMinimum(App.historic);
-            BTC_verticalAxis.Maximum = getMaximum(App.historic);
+            BTC_verticalAxis.Minimum = GetMinimum(App.historic);
+            BTC_verticalAxis.Maximum = GetMaximum(App.historic);
             BTC_DateTimeAxis = App.AdjustAxis(BTC_DateTimeAxis, timeSpan);
             await GetStats("BTC");
             await Get24hVolume("BTC");
 
             await UpdateCoin("ETH");
-            ETH_verticalAxis.Minimum = getMinimum(App.historic);
-            ETH_verticalAxis.Maximum = getMaximum(App.historic);
+            ETH_verticalAxis.Minimum = GetMinimum(App.historic);
+            ETH_verticalAxis.Maximum = GetMaximum(App.historic);
             ETH_DateTimeAxis = App.AdjustAxis(ETH_DateTimeAxis, timeSpan);
             await GetStats("ETH");
             await Get24hVolume("ETH");
 
             await UpdateCoin("LTC");
-            LTC_verticalAxis.Minimum = getMinimum(App.historic);
-            LTC_verticalAxis.Maximum = getMaximum(App.historic);
+            LTC_verticalAxis.Minimum = GetMinimum(App.historic);
+            LTC_verticalAxis.Maximum = GetMaximum(App.historic);
             LTC_DateTimeAxis = App.AdjustAxis(LTC_DateTimeAxis, timeSpan);
             await GetStats("LTC");
             await Get24hVolume("LTC");
 
             await UpdateCoin("XRP");
-            XRP_verticalAxis.Minimum = getMinimum(App.historic);
-            XRP_verticalAxis.Maximum = getMaximum(App.historic);
+            XRP_verticalAxis.Minimum = GetMinimum(App.historic);
+            XRP_verticalAxis.Maximum = GetMaximum(App.historic);
             XRP_DateTimeAxis = App.AdjustAxis(XRP_DateTimeAxis, timeSpan);
             await GetStats("XRP");
             await Get24hVolume("XRP");
         }
 
-        private float getMaximum(List<App.PricePoint> a) {
+        private float GetMaximum(List<App.PricePoint> a) {
             int i = 0;
             float max = 0;
 
@@ -90,7 +90,7 @@ namespace CryptoTracker {
 
             return max;
         }
-        private float getMinimum(List<App.PricePoint> a) {
+        private float GetMinimum(List<App.PricePoint> a) {
             int i = 0;
             float min = 50000;
 
@@ -363,16 +363,16 @@ namespace CryptoTracker {
         }        
 
         private void Tapped_BTC(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Page_CoinTemplate), "BTC");
+            this.Frame.Navigate(typeof(CoinDetails), "BTC");
         }
         private void Tapped_ETH(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Page_CoinTemplate), "ETH");
+            this.Frame.Navigate(typeof(CoinDetails), "ETH");
         }
         private void Tapped_LTC(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Page_CoinTemplate), "LTC");
+            this.Frame.Navigate(typeof(CoinDetails), "LTC");
         }
         private void Tapped_XRP(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Page_CoinTemplate), "XRP");
+            this.Frame.Navigate(typeof(CoinDetails), "XRP");
         }
     }
 }

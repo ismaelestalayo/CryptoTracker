@@ -55,23 +55,23 @@ namespace CryptoTracker {
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
-            rootFrame.Navigate(typeof(Page_Home));
+            rootFrame.Navigate(typeof(Home));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         internal void UpdateButton_Click(object sender, RoutedEventArgs e) {
 
             switch (rootFrame.SourcePageType.Name) {
-                case "Page_CoinTemplate":
-                    var p0 = (Page_CoinTemplate)rootFrame.Content;
+                case "CoinDetails":
+                    var p0 = (CoinDetails)rootFrame.Content;
                     p0.UpdatePage();
                     break;
-                case "Page_Home":
-                    var p2 = (Page_Home)rootFrame.Content;
+                case "Home":
+                    var p2 = (Home)rootFrame.Content;
                     p2.UpdateHome();
                     break;
-                case "Page_Portfolio":
-                    var p1 = (Page_Portfolio)rootFrame.Content;
+                case "Portfolio":
+                    var p1 = (Portfolio)rootFrame.Content;
                     p1.UpdatePortfolio();
                     break;
             }
@@ -93,11 +93,11 @@ namespace CryptoTracker {
 
 
         private void PortfolioButton_Click(object sender, RoutedEventArgs e) {
-            if(rootFrame.SourcePageType.Name != "Page_Portfolio") {
-                rootFrame.Navigate(typeof(Page_Portfolio));
+            if(rootFrame.SourcePageType.Name != "Portfolio") {
+                rootFrame.Navigate(typeof(Portfolio));
                 Analytics.TrackEvent("Section_Portflio");
             } else {
-                rootFrame.Navigate(typeof(Page_Home));
+                rootFrame.Navigate(typeof(Home));
             }
         }
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
@@ -105,7 +105,7 @@ namespace CryptoTracker {
                 rootFrame.Navigate(typeof(Settings));
                 Analytics.TrackEvent("Section_Settings");
             } else {
-                rootFrame.Navigate(typeof(Page_Home));
+                rootFrame.Navigate(typeof(Home));
             }
         }
         private void News_Click(object sender, RoutedEventArgs e) {
@@ -113,7 +113,7 @@ namespace CryptoTracker {
                 rootFrame.Navigate(typeof(News));
                 Analytics.TrackEvent("Section_News");
             } else {
-                rootFrame.Navigate(typeof(Page_Home));
+                rootFrame.Navigate(typeof(Home));
             }
         }
 

@@ -181,7 +181,7 @@ namespace CryptoTracker {
                         break;
                 }
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 //var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
                 var dontWait = await new MessageDialog("Error getting current coin price.").ShowAsync();
             }
@@ -217,7 +217,6 @@ namespace CryptoTracker {
                         BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
                         break;
 
-
                     case "ETH":
                         ETH_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
                         ETH_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
@@ -235,7 +234,7 @@ namespace CryptoTracker {
                 }
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
+                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 
@@ -259,7 +258,7 @@ namespace CryptoTracker {
                 stats = PricePoint.GetPricePointStats(data["Data"]["AggregatedData"]);
 
             } catch (Exception ex) {
-                response = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 

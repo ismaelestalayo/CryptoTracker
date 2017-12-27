@@ -10,12 +10,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace CryptoTracker {
 
-    public partial class Page_Portfolio : Page {
+    public partial class Portfolio : Page {
 
         static ObservableCollection<PurchaseClass> dataList { get; set; }
         private double curr = 0;
 
-        public Page_Portfolio() {
+        public Portfolio() {
             this.InitializeComponent();
 
             dataList = ReadPortfolio().Result;
@@ -36,6 +36,9 @@ namespace CryptoTracker {
                     break;
                 case "LTC":
                     curr = Math.Round(App.LTC_now, 3);
+                    break;
+                case "XRP":
+                    curr = Math.Round(App.XRP_now, 3);
                     break;
             }
 
@@ -74,6 +77,7 @@ namespace CryptoTracker {
             await App.GetCurrentPrice("BTC");
             await App.GetCurrentPrice("ETH");
             await App.GetCurrentPrice("LTC");
+            await App.GetCurrentPrice("XRP");
 
             for (int i = 0; i < MyListView.Items.Count; i++) {
                 switch (dataList[i]._Crypto) {
@@ -85,6 +89,9 @@ namespace CryptoTracker {
                         break;
                     case "LTC":
                         curr = Math.Round(App.LTC_now, 3);
+                        break;
+                    case "XRP":
+                        curr = Math.Round(App.XRP_now, 3);
                         break;
                 }
                 dataList[i].Current = curr;
@@ -100,8 +107,8 @@ namespace CryptoTracker {
         private void UpdateEarnings() {
             float total = 0;
             for (int i = 0; i < MyListView.Items.Count; i++) {
-                total += float.Parse(dataList[i].Earnings);
-                Portfolio_total.Text = total.ToString() + "€";
+                total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i]._CryptoQty;
+                Portfolio_total.Text = total.ToString() + App.coinSymbol;
             }
         }
 

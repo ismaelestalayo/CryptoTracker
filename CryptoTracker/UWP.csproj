@@ -109,14 +109,14 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page_CoinTemplate.xaml.cs">
-      <DependentUpon>Page_CoinTemplate.xaml</DependentUpon>
+    <Compile Include="Views\CoinDetails.xaml.cs">
+      <DependentUpon>CoinDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page_Home.xaml.cs">
-      <DependentUpon>Page_Home.xaml</DependentUpon>
+    <Compile Include="Views\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page_Portfolio.xaml.cs">
-      <DependentUpon>Page_Portfolio.xaml</DependentUpon>
+    <Compile Include="Views\Portfolio.xaml.cs">
+      <DependentUpon>Portfolio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Settings.xaml.cs">
@@ -207,15 +207,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Page_CoinTemplate.xaml">
+    <Page Include="Views\CoinDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page_Home.xaml">
+    <Page Include="Views\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page_Portfolio.xaml">
+    <Page Include="Views\Portfolio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
