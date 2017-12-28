@@ -43,8 +43,7 @@ namespace CryptoTracker {
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["BTC_colorL"]).Color;
 
                     Description.Text = "Bitcoin uses peer-to-peer technology to operate with no central authority or banks; managing transactions and the issuing of bitcoins is carried out collectively by "  +
-                                       "the network. Bitcoin is open-source; its design is public, nobody owns or controls Bitcoin and everyone can take part. Through many of its unique properties, Bitcoin " +
-                                       "allows exciting uses that could not be covered by any previous payment system.";
+                                       "the network. Bitcoin is open-source; its design is public, nobody owns or controls Bitcoin and everyone can take part.";
                     Website.Text = "bitcoin.org/";
                     Twitter.Text = "#Bitcoin";
                     Reddit.Text = "r/bitcoin";
@@ -74,8 +73,7 @@ namespace CryptoTracker {
 
                     Description.Text = "Litecoin is a peer-to-peer Internet currency that enables instant, near-zero cost payments to anyone in the world. Litecoin is an open source, global payment network " +
                                        "that is fully decentralized without any central authorities. Mathematics secures the network and empowers individuals to control their own finances. Litecoin features faster " +
-                                       "transaction confirmation times and improved storage efficiency than the leading math-based currency. With substantial industry support, trade volume and liquidity, Litecoin is a " +
-                                       "proven medium of commerce complementary to Bitcoin.";
+                                       "transaction confirmation times and improved storage efficiency.";
                     Website.Text = "litecoin.org/";
                     Twitter.Text = "@litecoinproject";
                     Reddit.Text = "r/litecoin";
@@ -89,9 +87,8 @@ namespace CryptoTracker {
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorL"]).Color;
 
                     Description.Text = "Also called the Ripple Transaction Protocol (RTXP), it is built upon a distributed open source Internet protocol, consensus ledger and native cryptocurrency called XRP (ripples). " +
-                                       "Released in 2012, Ripple purports to enable 'secure, instantly and nearly free global financial transactions of any size with no chargebacks.' It supports tokens representing fiat" +
-                                       " currency, cryptocurrency, commodity or any other unit of value such as frequent flier miles or mobile minutes. At its core, Ripple is based around a shared, public database or " +
-                                       "ledger, which uses a consensus process that allows for payments, exchanges and remittance in a distributed process.";
+                                       "Released in 2012, Ripple purports to enable 'secure, instantly and nearly free global financial transactions of any size with no chargebacks.' At its core, Ripple is based around a" +
+                                       " shared, public database or ledger, which uses a consensus process that allows for payments, exchanges and remittance in a distributed process.";
                     Website.Text = "ripple.com/";
                     Twitter.Text = "@ripple";
                     Reddit.Text = "r/ripple";

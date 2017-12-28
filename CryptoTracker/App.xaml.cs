@@ -16,7 +16,6 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
@@ -73,10 +72,10 @@ namespace CryptoTracker {
                 if (x != null) {
                     switch (x) {
                         case "Light":
-                            this.RequestedTheme = ApplicationTheme.Light;
+                            RequestedTheme = ApplicationTheme.Light;
                             break;
                         case "Dark":
-                            this.RequestedTheme = ApplicationTheme.Dark;
+                            RequestedTheme = ApplicationTheme.Dark;
                             break;
                     }
                 }
@@ -184,7 +183,7 @@ namespace CryptoTracker {
 
             } catch (Exception) {
                 //var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
-                var dontWait = await new MessageDialog("Error getting current coin price.").ShowAsync();
+                //var dontWait = await new MessageDialog("Error getting current coin price.").ShowAsync();
             }
         }
 
@@ -235,13 +234,37 @@ namespace CryptoTracker {
                 }
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 
         internal async static Task GetStats(string crypto) {
 
             String URL = "https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=" +crypto+ "&tsym=" + coin;
+
+            Uri requestUri = new Uri(URL);
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+
+            string response = "";
+
+            try {
+                httpResponse = await httpClient.GetAsync(requestUri);
+                httpResponse.EnsureSuccessStatusCode();
+
+                response = await httpResponse.Content.ReadAsStringAsync();
+                var data = JToken.Parse(response);
+
+                stats = PricePoint.GetPricePointStats(data["Data"]["AggregatedData"]);
+
+            } catch (Exception ex) {
+                //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+            }
+        }
+
+        internal async static Task GetCoinStats(String crypto) {
+
+            String URL = "https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=" + crypto + "&tsym=" + coin;
 
             Uri requestUri = new Uri(URL);
             HttpClient httpClient = new HttpClient();

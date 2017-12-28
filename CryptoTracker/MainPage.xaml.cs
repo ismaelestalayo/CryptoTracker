@@ -39,14 +39,16 @@ namespace CryptoTracker {
                 var statusBar = StatusBar.GetForCurrentView();
 
                 if (App.localSettings.Values["Theme"].Equals("Dark")) {
-                    statusBar.BackgroundColor = Color.FromArgb(255, 31, 31, 31);
+                    statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23); //31 31 31
                     statusBar.BackgroundOpacity = 1;
                     statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
                 } else {
-                    statusBar.BackgroundColor = Color.FromArgb(255, 230, 230, 230);
+                    statusBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242); // 230
                     statusBar.BackgroundOpacity = 1;
                     statusBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
                 }
+
+                //statusBar.HideAsync();
 
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
                 BottomCommandBar.Visibility = Visibility.Visible;
