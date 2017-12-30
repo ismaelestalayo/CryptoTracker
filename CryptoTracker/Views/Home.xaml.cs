@@ -23,11 +23,6 @@ namespace CryptoTracker {
 
         public Home() {
             this.InitializeComponent();
-            UpdateHome();
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        internal async void UpdateHome() {
 
             TimeSpan period = TimeSpan.FromSeconds(45);
             ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
@@ -37,6 +32,12 @@ namespace CryptoTracker {
                         ALL_TimerangeButton_Click(r, null);
                 });
             }, period);
+
+            UpdateHome();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        internal async void UpdateHome() {
 
             if (LoadingControl_BTC == null)
                 LoadingControl_BTC = new Loading();
