@@ -2,23 +2,24 @@
 using System;
 
 namespace CryptoTracker.Helpers {
-    internal class PricePoint {
-        public int LinuxTime;
-        public string Date { get; set; }
-        public DateTime DateTime { get; set; }
-        public float Low { get; set; }
-        public float High { get; set; }
-        public float Open { get; set; }
-        public float Close { get; set; }
-        public float Volumefrom { get; set; }
-        public float Volumeto { get; set; }
+
+    internal class PricePoint{
+        internal int LinuxTime;
+        internal string Date { get; set; }
+        internal DateTime DateTime { get; set; }
+        internal float Low { get; set; }
+        internal float High { get; set; }
+        internal float Open { get; set; }
+        internal float Close { get; set; }
+        internal float Volumefrom { get; set; }
+        internal float Volumeto { get; set; }
 
         // For stats only
-        public float Low24 { get; set; }
-        public float High24 { get; set; }
-        public float Open24 { get; set; }
-        public float Volume24 { get; set; }
-        public float Volume24To { get; set; }
+        internal float Low24 { get; set; }
+        internal float High24 { get; set; }
+        internal float Open24 { get; set; }
+        internal float Volume24 { get; set; }
+        internal float Volume24To { get; set; }
 
         public static PricePoint GetPricePointHisto(JToken data) {
             PricePoint p = new PricePoint();

@@ -45,6 +45,7 @@ namespace CryptoTracker {
 
         internal static List<PricePoint> historic = new List<PricePoint>();
         internal static PricePoint stats = new PricePoint();
+        internal static List<TopExchanges> exchanges = new List<TopExchanges>();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -155,7 +156,20 @@ namespace CryptoTracker {
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
-        async internal static Task GetCurrentPrice(string crypto) {
+        internal static double GetPrice(string crypto, string coin, string market) {
+            var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" +coin+ "&e=" +market);
+            HttpClient httpClient = new HttpClient();
+
+            try {
+                var data = GetJSONAsync(uri).Result;
+                return (float)data[coin];
+                
+            } catch (Exception) {
+                return 0;
+            }
+        }
+
+        internal static async Task GetCurrentPrice(string crypto) {
             
             var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,GBP,CAD,AUD,MXN,CNY,JPY,INR");
             HttpClient httpClient = new HttpClient();
@@ -280,6 +294,34 @@ namespace CryptoTracker {
                 var data = JToken.Parse(response);
 
                 stats = PricePoint.GetPricePointStats(data["Data"]["AggregatedData"]);
+
+            } catch (Exception ex) {
+                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+            }
+        }
+
+        internal async static Task GetTopExchanges(String crypto, String toSym) {
+
+            String URL = "https://min-api.cryptocompare.com/data/top/exchanges?fsym=" + crypto  +"&tsym="+ toSym + "&limit=10";
+
+            Uri requestUri = new Uri(URL);
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+
+            String response = "";
+
+            try {
+                httpResponse = await httpClient.GetAsync(requestUri);
+                httpResponse.EnsureSuccessStatusCode();
+
+                response = await httpResponse.Content.ReadAsStringAsync();
+                var data = JToken.Parse(response);
+
+                exchanges.Clear();
+                int lastIndex = ((JContainer)data["Data"]).Count;
+                for (int i = 0; i < lastIndex; i++) {
+                    exchanges.Add(TopExchanges.GetExchanges(data["Data"][i]));
+                }
 
             } catch (Exception ex) {
                 var dontWait = await new MessageDialog(ex.Message).ShowAsync();

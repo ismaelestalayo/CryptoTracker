@@ -9,7 +9,7 @@
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    NavigationCacheMode="Enabled">
+    NavigationCacheMode="Disabled">
 
     <Page.Resources>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
@@ -231,13 +231,30 @@
             </PivotItem>
 
             <PivotItem Header="Markets">
-                <ScrollViewer>
-                    <StackPanel>
-                        <TextBlock Text="Kraken"/>
-                        <TextBlock Text="CoinBase"/>
-                        <TextBlock Text="Kraken"/>
-                    </StackPanel>
-                </ScrollViewer>
+                <ListView x:Name="MarketList" SelectionMode="None" Margin="0, 0, 0, 10">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Exchange}" x:Name="Market" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding T_Volume24}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding T_Volume24To}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="1" Text="{Binding Price}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
             </PivotItem>
 
             <PivotItem Header="Volume">
@@ -310,7 +327,7 @@
                         </RelativePanel>
                     </StackPanel>
                 </ScrollViewer>
-                
+
             </PivotItem>
         </Pivot>
 

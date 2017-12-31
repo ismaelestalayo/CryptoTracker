@@ -3,6 +3,7 @@ using CryptoTracker.Views;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
@@ -22,6 +23,7 @@ namespace CryptoTracker {
 
         public CoinDetails() {
             this.InitializeComponent();
+
             InitValues();
         }
 
@@ -112,6 +114,8 @@ namespace CryptoTracker {
                 RadioButton r = new RadioButton { Content = timeSpan };
                 TimerangeButton_Click(r, null);
 
+
+
             } catch (Exception) {
                 LoadingControl.IsLoading = false;
                 curr.Text = "Error!";
@@ -134,6 +138,7 @@ namespace CryptoTracker {
             dateTimeAxis = App.AdjustAxis(dateTimeAxis, timeSpan);
             await GetStats();
             await Get24Volume();
+            await GetExchanges();
         }
 
         private float GetMaximum(List<PricePoint> a) {
@@ -274,6 +279,10 @@ namespace CryptoTracker {
                 });
             }
             this.volumeChart.DataContext = data;
+        }
+        async private Task GetExchanges() {
+            await App.GetTopExchanges(crypto, App.coin);
+            MarketList.ItemsSource = App.exchanges;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////

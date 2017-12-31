@@ -110,7 +110,6 @@
         ############################################################################################################### -->
         <ScrollViewer Grid.Row="3" Margin="15, 0">
             <ListView x:Name="MyListView" 
-                      ItemsSource="{Binding dataListm, Mode=OneWay}" 
                       Background="Transparent"
                       SelectionMode="Single">
 
