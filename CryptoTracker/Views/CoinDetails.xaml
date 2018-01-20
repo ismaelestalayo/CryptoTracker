@@ -245,7 +245,11 @@
                                     <TextBlock Text="{Binding T_Volume24}" Style="{ThemeResource CaptionTextBlockStyle}"/>
                                     <TextBlock Text="{Binding T_Volume24To}" Style="{ThemeResource CaptionTextBlockStyle}"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="1" Text="{Binding Price}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Price}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding TSym}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                </StackPanel>
+                                
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
