@@ -1,15 +1,13 @@
-# [CryptoTracker](https://www.microsoft.com/store/apps/9n3b47hbvblc)
-A crypto currency tracker UWP to keep up with the three most used crypto-currencies: Bitcoin, Ethereum and Litecoin. 
+# CryptoTracker
+A simple yet powerful crypto-currency tracker UWP. Keep track of cryptocoins 
 
-Charts of each coin for the last hourt/day/week/month/year and for all the time the coin has been on the market. 
+- Adjustable charts to show last hour/day/week/month... 
+- Supports Bitcoin, Ethereum and Litecoin (with more to come)
+- Currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
+- Beautiful light and dark theme for you to choose!
 
-(Supports EUR, USD, GBP, AUD, CAD, MXn, CNY, JPY and INR at the moment) 
 
-(Beautiful light and dark theme for you to choose!)
-
-Near future plans: Ability to log in to CoinBase account.
-
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/All.png?raw=true" width = "130%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/promo_transparent.png?raw=true" width = "130%"/>
 
 ## PC Version
 
@@ -20,7 +18,7 @@ Near future plans: Ability to log in to CoinBase account.
 
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ltcD.png?raw=true" width = "80%"/>
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_settingsL.png?raw=true" width = "80%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_portfolioL.png?raw=true" width = "80%"/>
 
 ## Mobile version:
 
@@ -76,13 +74,16 @@ Near future plans: Ability to log in to CoinBase account.
 - [x] Mobile friendly UI
 - [x] Stats about each coin on their pages
 - [x] Portfolio to keep track of earnings
-- [~] Live tile
+- [ ] Live tile
 - [ ] More cryptocurrencies
 - [ ] More languages
-- [ ] Log in to CoinBase account
+- [ ] Log in to CoinBase/Kraken account
 - [ ] Port to Android (maybe iOS but developer account is 100€/year)
 
 # Suggest anything at:
 
- * Email: ismael.em@outlook.com
- * Twitter: [@isma_estalayo](https://twitter.com/isma_estalayo)
+ Mail: ismael.em@outlook.com
+
+ Twitter: [@isma_estalayo](https://twitter.com/isma_estalayo)
+
+
