@@ -3,6 +3,7 @@ using System;
 using System.Reflection;
 using Windows.ApplicationModel.Email;
 using Windows.System;
+using CryptoTracker.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -77,16 +78,16 @@ namespace CryptoTracker {
             }
         }
 
-        private async void feedbackButton_Click(object sender, RoutedEventArgs e) {
+        private async void FeedbackButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("feedbackButton_Click");
             var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
             await launcher.LaunchAsync();
         }
-        private async void reviewButton_Click(object sender, RoutedEventArgs e) {
+        private async void ReviewButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("reviewButton_Click");
             await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store:reviewapp?appid=" + Windows.ApplicationModel.Store.CurrentApp.AppId));
         }
-        private async void mailButton_Click(object sender, RoutedEventArgs e) {
+        private async void MailButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("mailButton_Click");
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));
@@ -97,53 +98,11 @@ namespace CryptoTracker {
 
         private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
             ComboBox c = sender as ComboBox;
-            switch (((ComboBoxItem)c.SelectedItem).Name.ToString()) {
-                case "EUR":
-                    App.localSettings.Values["Coin"] = "EUR";
-                    App.coin       = "EUR";
-                    App.coinSymbol = "€";
-                    break;
-                case "USD":
-                    App.localSettings.Values["Coin"] = "USD";
-                    App.coin = "USD";
-                    App.coinSymbol = "$";
-                    break;
-                case "GBP":
-                    App.localSettings.Values["Coin"] = "GBP";
-                    App.coin = "GBP";
-                    App.coinSymbol = "£";
-                    break;
-                case "CAD":
-                    App.localSettings.Values["Coin"] = "CAD";
-                    App.coin = "CAD";
-                    App.coinSymbol = "$";
-                    break;
-                case "AUD":
-                    App.localSettings.Values["Coin"] = "AUD";
-                    App.coin = "AUD";
-                    App.coinSymbol = "$";
-                    break;
-                case "MXN":
-                    App.localSettings.Values["Coin"] = "MXN";
-                    App.coin       = "MXN";
-                    App.coinSymbol = "$";
-                    break;
-                case "CNY":
-                    App.localSettings.Values["Coin"] = "CNY";
-                    App.coin = "CNY";
-                    App.coinSymbol = "¥";
-                    break;
-                case "JPY":
-                    App.localSettings.Values["Coin"] = "JPY";
-                    App.coin = "JPY";
-                    App.coinSymbol = "¥";
-                    break;
-                case "INR":
-                    App.localSettings.Values["Coin"] = "INR";
-                    App.coin = "INR";
-                    App.coinSymbol = "₹";
-                    break;
-            }
+            String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
+
+            App.localSettings.Values["Coin"] = currency;
+            App.coin = currency;
+            App.coinSymbol = CurrencyHelper.CurrencyToSymbol(currency);
         }
     }
 }

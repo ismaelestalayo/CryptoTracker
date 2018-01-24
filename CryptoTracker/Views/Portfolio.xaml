@@ -29,7 +29,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock 
                         Text="Portfolio"
-                        Margin="15, 0"
+                        Margin="10, 0"
                         VerticalAlignment="Center"
 						Style="{ThemeResource SubheaderTextBlockStyle}"/>
                 </StackPanel>
@@ -48,7 +48,7 @@
 
         <!-- 
         ############################################################################################################### -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15, 20, 15, 10">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10, 20, 15, 10">
             <ComboBox x:Name="CryptoComboBox" PlaceholderText="BTC" Header="Crypto">
                 <ComboBoxItem Content="BTC" Name="BTC" IsSelected="True"/>
                 <ComboBoxItem Content="ETH" Name="ETH" />
@@ -58,21 +58,27 @@
 
             <TextBox 
                 x:Name="cryptoQtyTextBox" Header="Amount"
-                Margin="5, 0" PlaceholderText="0.2718" Width="90"/>
+                Margin="5, 0" PlaceholderText="0.2718" Width="70"/>
             <TextBox 
-                x:Name="investedQtyTextBox" Header="Invested €/$"
-                Margin="5, 0" PlaceholderText="27" Width="90"/>
-            <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10, 0" Background="#3F3F3F" Foreground="White">
+                x:Name="investedQtyTextBox" Header="Invested"
+                Margin="5, 0" PlaceholderText="27" Width="70"/>
+            
+            <Button Click="AddButton_Click" VerticalAlignment="Bottom" 
+                Margin="5, 0" 
+                Background="#3F3F3F" 
+                Foreground="White">
                 <SymbolIcon Symbol="Add"/>
             </Button>
-            <Button Click="RemovePortfolio_Click" VerticalAlignment="Bottom" Margin="0, 0" Background="#3F3F3F" Foreground="White">
+            <Button Click="RemovePortfolio_Click" VerticalAlignment="Bottom" 
+                Background="#3F3F3F" 
+                Foreground="White">
                 <SymbolIcon Symbol="Delete"/>
             </Button>
         </StackPanel>
 
         <!-- 
         ############################################################################################################### -->
-        <Grid Grid.Row="2" Margin="15, 10, 10, 0">
+        <Grid Grid.Row="2" Margin="10, 10, 10, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.2*"/>
                 <ColumnDefinition Width="*"/>

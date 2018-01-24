@@ -79,18 +79,18 @@
                 <TextBlock Text="Take a minute and leave a review on the Store." FontWeight="ExtraLight"/>
                 <Button Content="Review"
                     Style="{StaticResource SettingsButtonsStyle}" 
-                    Click="reviewButton_Click" />
+                    Click="ReviewButton_Click" />
 
                 <TextBlock Text="I'd love to hear your thoughts about the app." FontWeight="ExtraLight"/>
                 <Button Content="Feedback" 
                     x:Name="feedbackButton"
                     Style="{StaticResource SettingsButtonsStyle}" 
-                    Click="feedbackButton_Click"/>
+                    Click="FeedbackButton_Click"/>
 
                 <TextBlock Text="Or send me an email for more direct feedback." FontWeight="ExtraLight"/>
                 <Button Content="Mail" 
                     Style="{StaticResource SettingsButtonsStyle}" 
-                    Click="mailButton_Click"/>
+                    Click="MailButton_Click"/>
 
                 <!-- 
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
