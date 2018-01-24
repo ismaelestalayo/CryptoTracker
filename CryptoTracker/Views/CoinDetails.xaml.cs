@@ -142,22 +142,22 @@ namespace CryptoTracker {
             await GetExchanges();
         }
 
-        private float GetMaximum(List<PricePoint> a) {
+        private float GetMaximum(List<JSONhistoric> a) {
             int i = 0;
             float max = 0;
 
-            foreach (PricePoint type in a) {
+            foreach (JSONhistoric type in a) {
                 if (a[i].High > max)
                     max = a[i].High;
                 i++;
             }
             return max;
         }
-        private float GetMinimum(List<PricePoint> a) {
+        private float GetMinimum(List<JSONhistoric> a) {
             int i = 0;
             float min = 15000;
 
-            foreach (PricePoint type in a) {
+            foreach (JSONhistoric type in a) {
                 if (a[i].High < min)
                     min = a[i].High;
                 i++;
@@ -263,6 +263,7 @@ namespace CryptoTracker {
         async private Task GetStats() {
 
             await App.GetStats(crypto);
+            await App.GetCoinStats(crypto, "");
 
             statsOpen.Text  = App.stats.Open24   + App.coinSymbol;
             statsHigh.Text  = App.stats.High24   + App.coinSymbol;
@@ -286,7 +287,7 @@ namespace CryptoTracker {
             MarketList.ItemsSource = App.exchanges;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         private void TimerangeButton_Click(object sender, RoutedEventArgs e) {
             LoadingControl.IsLoading = true;
             RadioButton btn = sender as RadioButton;

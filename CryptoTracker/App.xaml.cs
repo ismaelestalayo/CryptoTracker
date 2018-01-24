@@ -43,9 +43,9 @@ namespace CryptoTracker {
 
         
 
-        internal static List<PricePoint> historic = new List<PricePoint>();
-        internal static PricePoint stats = new PricePoint();
-        internal static List<TopExchanges> exchanges = new List<TopExchanges>();
+        internal static List<JSONhistoric> historic = new List<JSONhistoric>();
+        internal static JSONstats stats = new JSONstats();
+        internal static List<JSONexchanges> exchanges = new List<JSONexchanges>();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -153,9 +153,9 @@ namespace CryptoTracker {
             deferral.Complete();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         internal static double GetPrice(string crypto, string coin, string market) {
             var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" +coin+ "&e=" +market);
             HttpClient httpClient = new HttpClient();
@@ -201,9 +201,9 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         internal async static Task GetHisto(string crypto, string time, int limit) {
-            //CCCAGG    Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
+            //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
             String URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
                 + crypto + "&tsym=" + coin + "&limit=" + limit;
 
@@ -212,40 +212,13 @@ namespace CryptoTracker {
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
-
-            string response = "";
 
             try {
-                response = await httpClient.GetStringAsync(uri);
+                string response = await httpClient.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
-                historic.Clear();
-                int lastIndex = ((JContainer)data["Data"]).Count;
-                for (int i = 0; i < lastIndex; i++) {
-                    historic.Add(PricePoint.GetPricePointHisto(data["Data"][i]));
-                }
-                switch (crypto) {
-                    case "BTC":
-                        BTC_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
-                        BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                        break;
-
-                    case "ETH":
-                        ETH_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
-                        ETH_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                        break;
-
-                    case "LTC":
-                        LTC_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
-                        LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                        break;
-
-                    case "XRP":
-                        XRP_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
-                        XRP_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                        break;
-                }
+                JSONhistoric.HandleHistoricJSON(data, crypto);                
+                
 
             } catch (Exception ex) {
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
@@ -269,31 +242,28 @@ namespace CryptoTracker {
                 response = await httpResponse.Content.ReadAsStringAsync();
                 var data = JToken.Parse(response);
 
-                stats = PricePoint.GetPricePointStats(data["Data"]["AggregatedData"]);
+                stats = JSONstats.HandleStatsJSON(data["Data"]["AggregatedData"]);
 
             } catch (Exception ex) {
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
+        internal async static Task GetCoinStats(string crypto, string market) {
 
-        internal async static Task GetCoinStats(String crypto) {
+            String URL = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + crypto + "&tsyms=" + coin;
+            
+            if(market != "") {
+                URL += "&e=" + market;
+            }
 
-            String URL = "https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=" + crypto + "&tsym=" + coin;
-
-            Uri requestUri = new Uri(URL);
+            Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
-
-            string response = "";
 
             try {
-                httpResponse = await httpClient.GetAsync(requestUri);
-                httpResponse.EnsureSuccessStatusCode();
-
-                response = await httpResponse.Content.ReadAsStringAsync();
+                string response = await httpClient.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
-                stats = PricePoint.GetPricePointStats(data["Data"]["AggregatedData"]);
+                stats = JSONstats.HandleStatsJSON(data["DISPLAY"]);
 
             } catch (Exception ex) {
                 var dontWait = await new MessageDialog(ex.Message).ShowAsync();
@@ -320,7 +290,7 @@ namespace CryptoTracker {
                 exchanges.Clear();
                 int lastIndex = ((JContainer)data["Data"]).Count;
                 for (int i = 0; i < lastIndex; i++) {
-                    exchanges.Add(TopExchanges.GetExchanges(data["Data"][i]));
+                    exchanges.Add(JSONexchanges.GetExchanges(data["Data"][i]));
                 }
 
             } catch (Exception ex) {
@@ -344,7 +314,7 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         internal static DateTimeContinuousAxis AdjustAxis(DateTimeContinuousAxis DateTimeAxis, string timeSpan) {
             switch (timeSpan) {
                 case "hour":

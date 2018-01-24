@@ -79,11 +79,11 @@ namespace CryptoTracker {
             await Get24hVolume("XRP");
         }
 
-        private float GetMaximum(List<PricePoint> a) {
+        private float GetMaximum(List<JSONhistoric> a) {
             int i = 0;
             float max = 0;
 
-            foreach (PricePoint type in a) {
+            foreach (JSONhistoric type in a) {
                 if (a[i].High > max)
                     max = a[i].High;
 
@@ -92,11 +92,11 @@ namespace CryptoTracker {
 
             return max;
         }
-        private float GetMinimum(List<PricePoint> a) {
+        private float GetMinimum(List<JSONhistoric> a) {
             int i = 0;
             float min = 50000;
 
-            foreach (PricePoint type in a) {
+            foreach (JSONhistoric type in a) {
                 if (a[i].High < min)
                     min = a[i].High;
 

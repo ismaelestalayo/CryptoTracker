@@ -3,7 +3,7 @@ using System;
 
 namespace CryptoTracker.Helpers {
 
-    class TopExchanges {
+    class JSONexchanges {
         // Must be public to work ¿because they are in another folder?
         public String Exchange { get; set; }
         public double Price { get; set; }
@@ -13,13 +13,13 @@ namespace CryptoTracker.Helpers {
         public String T_Volume24 { get; set; }
         public String T_Volume24To { get; set; }
 
-        public static TopExchanges GetExchanges(JToken data) {
-            TopExchanges p = new TopExchanges();
+        public static JSONexchanges GetExchanges(JToken data) {
+            JSONexchanges p = new JSONexchanges();
 
             p.Exchange     = data["exchange"].ToString();
-            p.FSym         = data["fromSymbol"].ToString();
-            p.TSym         = data["toSymbol"].ToString();
-            p.TSymbol      = CurrencyHelper.CurrencyToSymbol(p.TSym);
+            p.FSym         = data["fromSymbol"].ToString();           //ETH
+            p.TSym         = data["toSymbol"].ToString();             //EUR
+            p.TSymbol      = CurrencyHelper.CurrencyToSymbol(p.TSym); //€
             p.T_Volume24   = "Vol. 24h: " + (Math.Round((double)data["volume24h"], 2)).ToString() + p.FSym;
             p.T_Volume24To = "Vol. To 24h: " + (Math.Round((double)data["volume24hTo"], 2)).ToString() + App.coinSymbol;
 
