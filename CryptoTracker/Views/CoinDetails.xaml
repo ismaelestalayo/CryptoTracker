@@ -53,13 +53,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
         <RelativePanel Grid.Row="0" Padding="0, 0, 0, -5"
                        BorderThickness="0, 0, 0, 0.5" 
                        BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
@@ -205,110 +205,134 @@
         <Pivot Grid.Row="2" Grid.Column="0" Margin="10, -10, 10, 0">
 
             <PivotItem Header="Stats">
-                <StackPanel x:Name="stats" Margin="0, 10" Orientation="Horizontal">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel x:Name="stats" Margin="0, 10" Orientation="Horizontal">
 
-                    <StackPanel Orientation="Vertical" Margin="0, 0">
-                        <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Name="statsHigh"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
+                        <StackPanel Orientation="Vertical" Margin="0, 0">
+                            <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Name="statsHigh"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="20, 0">
+                            <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Name="statsLow"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="20, 0">
+                            <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Name="statsOpen"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="20, 0">
+                            <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Name="statsVol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                        </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical" Margin="20, 0">
-                        <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Name="statsLow"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
-                    </StackPanel>
+                    <TextBlock Grid.Row="1" Text="Markets:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Light"/>
 
-                    <StackPanel Orientation="Vertical" Margin="20, 0">
-                        <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Name="statsOpen"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
-                    </StackPanel>
 
-                    <StackPanel Orientation="Vertical" Margin="20, 0">
-                        <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Name="statsVol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
+                    <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="0, 0, 0, 10">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid BorderBrush="LightGray" BorderThickness="0, 0, 0, 1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Exchange    }" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                        <TextBlock Text="{Binding T_Volume24  }" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                        <TextBlock Text="{Binding T_Volume24To}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Price  }" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                        <TextBlock Text="{Binding TSymbol}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                    </StackPanel>
+
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+
+
+                </Grid>
+
+            </PivotItem>
+
+            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <PivotItem Header="Volume">
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>
+                            <Run Text="Supply: "/>
+                            <Run Text="{Binding Supply}"/>
+                        </TextBlock>
                     </StackPanel>
+                    
+                    <telerik:RadCartesianChart Grid.Row="3" Margin="0, 20">
+                        <telerik:BarSeries 
+                            x:Name="volumeChart"
+                            x:FieldModifier="internal"
+                            ItemsSource="{Binding}">
+
+                            <telerik:BarSeries.PointTemplate>
+                                <DataTemplate>
+                                    <Border Background="{StaticResource coinColor}"/>
+                                </DataTemplate>
+                            </telerik:BarSeries.PointTemplate>
+
+                            <telerik:BarSeries.VerticalAxis>
+                                <telerik:LinearAxis 
+                                    Visibility="Collapsed"
+                                    HorizontalLocation="Right"/>
+                            </telerik:BarSeries.VerticalAxis>
+
+                            <telerik:BarSeries.HorizontalAxis>
+                                <telerik:DateTimeCategoricalAxis 
+                                    MajorTickTemplate="{StaticResource TransparentRect}"
+                                    Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                                    FontWeight="Light"
+                                    LineStyle="{StaticResource TransparentLine}"
+                                    VerticalLocation="Bottom"
+                                    LabelInterval="3"
+                                    LabelFormat="{}{0,0:HH}">
+                                    <telerik:DateTimeCategoricalAxis.LabelStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Margin" Value="0, -5, 0, 0"/>
+                                        </Style>
+                                    </telerik:DateTimeCategoricalAxis.LabelStyle>
+                                </telerik:DateTimeCategoricalAxis>
+                            </telerik:BarSeries.HorizontalAxis>
+
+                            <telerik:BarSeries.CategoryBinding>
+                                <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                            </telerik:BarSeries.CategoryBinding>
+
+                            <telerik:BarSeries.ValueBinding>
+                                <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                            </telerik:BarSeries.ValueBinding>
+
+                        </telerik:BarSeries>
+                    </telerik:RadCartesianChart>
 
                 </StackPanel>
             </PivotItem>
 
-            <PivotItem Header="Markets">
-                <ListView x:Name="MarketList" SelectionMode="None" Margin="0, 0, 0, 10">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Exchange}" x:Name="Market" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                    <TextBlock Text="{Binding T_Volume24}" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                                    <TextBlock Text="{Binding T_Volume24To}" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Price}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                    <TextBlock Text="{Binding TSym}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                </StackPanel>
-                                
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
-            </PivotItem>
-
-            <PivotItem Header="Volume">
-                <telerik:RadCartesianChart Grid.Row="3" Margin="0, 20">
-                    <telerik:BarSeries 
-                        x:Name="volumeChart"
-                        x:FieldModifier="internal"
-                        ItemsSource="{Binding}">
-
-                        <telerik:BarSeries.PointTemplate>
-                            <DataTemplate>
-                                <Border Background="{StaticResource coinColor}"/>
-                            </DataTemplate>
-                        </telerik:BarSeries.PointTemplate>
-
-                        <telerik:BarSeries.VerticalAxis>
-                            <telerik:LinearAxis 
-                                Visibility="Collapsed"
-                                HorizontalLocation="Right"/>
-                        </telerik:BarSeries.VerticalAxis>
-
-                        <telerik:BarSeries.HorizontalAxis>
-                            <telerik:DateTimeCategoricalAxis 
-                                MajorTickTemplate="{StaticResource TransparentRect}"
-                                Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                                FontWeight="Light"
-                                LineStyle="{StaticResource TransparentLine}"
-                                VerticalLocation="Bottom"
-                                LabelInterval="3"
-                                LabelFormat="{}{0,0:HH}">
-                                <telerik:DateTimeCategoricalAxis.LabelStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Margin" Value="0, -5, 0, 0"/>
-                                    </Style>
-                                </telerik:DateTimeCategoricalAxis.LabelStyle>
-                            </telerik:DateTimeCategoricalAxis>
-                        </telerik:BarSeries.HorizontalAxis>
-
-                        <telerik:BarSeries.CategoryBinding>
-                            <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                        </telerik:BarSeries.CategoryBinding>
-
-                        <telerik:BarSeries.ValueBinding>
-                            <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                        </telerik:BarSeries.ValueBinding>
-
-                    </telerik:BarSeries>
-                </telerik:RadCartesianChart>
-            </PivotItem>
-
+            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
             <PivotItem Header="About">
                 <ScrollViewer>
                     <StackPanel>
