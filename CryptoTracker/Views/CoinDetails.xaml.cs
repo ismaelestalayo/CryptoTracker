@@ -21,6 +21,7 @@ namespace CryptoTracker {
         private static string crypto;
         private static int    limit = 60;
         private static string timeSpan = "day";
+        private string Supply = App.stats.Supply;
 
         public CoinDetails() {
             this.InitializeComponent();
@@ -115,8 +116,6 @@ namespace CryptoTracker {
                 RadioButton r = new RadioButton { Content = timeSpan };
                 TimerangeButton_Click(r, null);
 
-
-
             } catch (Exception) {
                 LoadingControl.IsLoading = false;
                 curr.Text = "Error!";
@@ -164,7 +163,6 @@ namespace CryptoTracker {
             }
             return min * (float)0.99;
         }
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async private Task UpdateCoin() {
             await App.GetCurrentPrice(crypto);
@@ -262,13 +260,12 @@ namespace CryptoTracker {
 
         async private Task GetStats() {
 
-            await App.GetStats(crypto);
-            await App.GetCoinStats(crypto, "");
+            await App.GetCoinStats(crypto, "defaultMarket");
 
-            statsOpen.Text  = App.stats.Open24   + App.coinSymbol;
-            statsHigh.Text  = App.stats.High24   + App.coinSymbol;
-            statsLow.Text   = App.stats.Low24    + App.coinSymbol;
-            statsVol24.Text = App.stats.Volume24 + crypto;
+            statsOpen.Text  = App.stats.Open24;
+            statsHigh.Text  = App.stats.High24;
+            statsLow.Text   = App.stats.Low24;
+            statsVol24.Text = App.stats.Volume24;
         }
         async private Task Get24Volume() {
             await App.GetHisto(crypto, "hour", 24);

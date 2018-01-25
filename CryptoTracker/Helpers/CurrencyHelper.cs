@@ -20,6 +20,15 @@ namespace CryptoTracker.Helpers {
                     return "¥";
                 case "INR":
                     return "₹";
+
+                case "BTC":
+                    return "Ƀ";
+                case "ETH":
+                    return "Ξ";
+                case "LTC":
+                    return "Ł";
+
+
                 default:
                     return "ERR";
             }

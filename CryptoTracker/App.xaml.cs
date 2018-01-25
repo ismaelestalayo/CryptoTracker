@@ -225,34 +225,11 @@ namespace CryptoTracker {
             }
         }
 
-        internal async static Task GetStats(string crypto) {
-
-            String URL = "https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=" +crypto+ "&tsym=" + coin;
-
-            Uri requestUri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
-
-            string response = "";
-
-            try {
-                httpResponse = await httpClient.GetAsync(requestUri);
-                httpResponse.EnsureSuccessStatusCode();
-
-                response = await httpResponse.Content.ReadAsStringAsync();
-                var data = JToken.Parse(response);
-
-                stats = JSONstats.HandleStatsJSON(data["Data"]["AggregatedData"]);
-
-            } catch (Exception ex) {
-                //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
-            }
-        }
         internal async static Task GetCoinStats(string crypto, string market) {
 
             String URL = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + crypto + "&tsyms=" + coin;
             
-            if(market != "") {
+            if(market != "defaultMarket") {
                 URL += "&e=" + market;
             }
 
@@ -263,7 +240,7 @@ namespace CryptoTracker {
                 string response = await httpClient.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
-                stats = JSONstats.HandleStatsJSON(data["DISPLAY"]);
+                stats = JSONstats.HandleStatsJSON(data, crypto, coin);
 
             } catch (Exception ex) {
                 var dontWait = await new MessageDialog(ex.Message).ShowAsync();
@@ -272,7 +249,7 @@ namespace CryptoTracker {
 
         internal async static Task GetTopExchanges(String crypto, String toSym) {
 
-            String URL = "https://min-api.cryptocompare.com/data/top/exchanges?fsym=" + crypto  +"&tsym="+ toSym + "&limit=10";
+            String URL = "https://min-api.cryptocompare.com/data/top/exchanges?fsym=" + crypto  +"&tsym="+ toSym + "&limit=8";
 
             Uri requestUri = new Uri(URL);
             HttpClient httpClient = new HttpClient();

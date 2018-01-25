@@ -107,35 +107,35 @@ namespace CryptoTracker {
         }
 
         async public Task GetStats(String crypto) {
-            await App.GetStats(crypto);
+            await App.GetCoinStats(crypto, "defaultMarket");
 
             switch (crypto) {
                 case "BTC":
-                    BTC_Open.Text  = App.stats.Open24   + App.coinSymbol;
-                    BTC_High.Text  = App.stats.High24   + App.coinSymbol;
-                    BTC_Low.Text   = App.stats.Low24    + App.coinSymbol;
-                    BTC_Vol24.Text = App.stats.Volume24 + "BTC";
+                    BTC_Open.Text  = App.stats.Open24;
+                    BTC_High.Text  = App.stats.High24;
+                    BTC_Low.Text   = App.stats.Low24;
+                    BTC_Vol24.Text = App.stats.Volume24;
                     break;
 
                 case "ETH":
-                    ETH_Open.Text  = App.stats.Open24   + App.coinSymbol;
-                    ETH_High.Text  = App.stats.High24   + App.coinSymbol;
-                    ETH_Low.Text   = App.stats.Low24    + App.coinSymbol;
-                    ETH_Vol24.Text = App.stats.Volume24 + "ETH";
+                    ETH_Open.Text  = App.stats.Open24;
+                    ETH_High.Text  = App.stats.High24;
+                    ETH_Low.Text   = App.stats.Low24;
+                    ETH_Vol24.Text = App.stats.Volume24;
                     break;
 
                 case "LTC":
-                    LTC_Open.Text  = App.stats.Open24   + App.coinSymbol;
-                    LTC_High.Text  = App.stats.High24   + App.coinSymbol;
-                    LTC_Low.Text   = App.stats.Low24    + App.coinSymbol;
-                    LTC_Vol24.Text = App.stats.Volume24 + "LTC";
+                    LTC_Open.Text  = App.stats.Open24;
+                    LTC_High.Text  = App.stats.High24;
+                    LTC_Low.Text   = App.stats.Low24;
+                    LTC_Vol24.Text = App.stats.Volume24;
                     break;
 
                 case "XRP":
-                    XRP_Open.Text  = App.stats.Open24   + App.coinSymbol;
-                    XRP_High.Text  = App.stats.High24   + App.coinSymbol;
-                    XRP_Low.Text   = App.stats.Low24    + App.coinSymbol;
-                    XRP_Vol24.Text = App.stats.Volume24 + "XRP";
+                    XRP_Open.Text  = App.stats.Open24;
+                    XRP_High.Text  = App.stats.High24;
+                    XRP_Low.Text   = App.stats.Low24;
+                    XRP_Vol24.Text = App.stats.Volume24;
                     break;
 
             }

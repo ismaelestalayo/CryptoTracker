@@ -252,10 +252,8 @@
                                         <TextBlock Text="{Binding T_Volume24  }" Style="{ThemeResource CaptionTextBlockStyle}"/>
                                         <TextBlock Text="{Binding T_Volume24To}" Style="{ThemeResource CaptionTextBlockStyle}"/>
                                     </StackPanel>
-                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Price  }" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                        <TextBlock Text="{Binding TSymbol}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                    </StackPanel>
+                                    
+                                    <TextBlock     Text="{Binding Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1"/>
 
                                 </Grid>
                             </DataTemplate>
@@ -274,16 +272,21 @@
 
             <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
             <PivotItem Header="Volume">
-                <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock>
+                        <TextBlock x:Name="testt">
                             <Run Text="Supply: "/>
-                            <Run Text="{Binding Supply}"/>
+                            <Run Text="{x:Bind Supply}"/>
+                            <Run Text=" --"/>
                         </TextBlock>
                     </StackPanel>
                     
-                    <telerik:RadCartesianChart Grid.Row="3" Margin="0, 20">
+                    <telerik:RadCartesianChart Grid.Row="1" Margin="0, 20">
                         <telerik:BarSeries 
                             x:Name="volumeChart"
                             x:FieldModifier="internal"
@@ -329,7 +332,7 @@
                         </telerik:BarSeries>
                     </telerik:RadCartesianChart>
 
-                </StackPanel>
+                </Grid>
             </PivotItem>
 
             <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->

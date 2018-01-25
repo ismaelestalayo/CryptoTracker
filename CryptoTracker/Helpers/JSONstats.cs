@@ -3,22 +3,34 @@ using System;
 
 namespace CryptoTracker.Helpers {
     class JSONstats {
-        internal float Low24 { get; set; }
-        internal float High24 { get; set; }
-        internal float Open24 { get; set; }
-        internal float Volume24 { get; set; }
-        internal float Volume24To { get; set; }
+        internal string Low24       { get; set; }
+        internal string High24      { get; set; }
+        internal string Open24      { get; set; }
+        internal string Volume24    { get; set; }
+        internal string Volume24To  { get; set; }
+        internal string Change24    { get; set; }
+        internal string Change24pct { get; set; }
+        internal string Supply      { get; set; }
+        internal string Marketcap   { get; set; }
 
-        public static JSONstats HandleStatsJSON(JToken data) {
+        public static JSONstats HandleStatsJSON(JToken data, string crypto, string coin) {
             JSONstats a = new JSONstats();
 
-            a.Low24      = (float)Math.Round((float)data["LOW24HOUR"],      2);
-            a.High24     = (float)Math.Round((float)data["HIGH24HOUR"],     2);
-            a.Open24     = (float)Math.Round((float)data["OPEN24HOUR"],     2);
-            a.Volume24   = (float)Math.Round((float)data["VOLUME24HOUR"],   2);
-            a.Volume24To = (float)Math.Round((float)data["VOLUME24HOURTO"], 2);
+            string fromSymbol = data["DISPLAY"][crypto][coin]["FROMSYMBOL"].ToString();
+            string toSymbol = data["DISPLAY"][crypto][coin]["TOSYMBOL"].ToString();
 
+            a.Open24      = ((double)data["RAW"][crypto][coin]["OPEN24HOUR"      ]).ToString("N2") + toSymbol;
+            a.High24      = ((double)data["RAW"][crypto][coin]["HIGH24HOUR"      ]).ToString("N2") + toSymbol;
+            a.Low24       = ((double)data["RAW"][crypto][coin]["LOW24HOUR"       ]).ToString("N2") + toSymbol;
+            a.Change24    = ((double)data["RAW"][crypto][coin]["CHANGE24HOUR"    ]).ToString("N2") + toSymbol;
+            a.Change24pct = ((double)data["RAW"][crypto][coin]["CHANGEPCT24HOUR" ]).ToString() + "%";
+            a.Supply      = ((double)data["RAW"][crypto][coin]["SUPPLY"          ]).ToString("N0") + fromSymbol;
+            a.Marketcap   = ((double)data["RAW"][crypto][coin]["MKTCAP"          ]).ToString("N2") + toSymbol;
+            a.Volume24    = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24H"  ]).ToString("N2") + fromSymbol;
+            a.Volume24To  = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24HTO"]).ToString("N2") + toSymbol;
+                                                                                             
             return a;
         }
     }
+
 }
