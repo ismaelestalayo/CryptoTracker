@@ -1,9 +1,8 @@
 ﻿<Page
     x:Class="CryptoTracker.Views.WebVieww"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CryptoTracker.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -29,7 +28,7 @@
             <TextBox x:Name="urlBar" Text="www.exampleURL.com" Background="Transparent" BorderThickness="0"
                      Foreground="White"/>
             
-            <SymbolIcon Grid.Column="1" Symbol="Globe" Width="30" 
+            <SymbolIcon Grid.Column="1" Symbol="Globe" Width="30" Visibility="Collapsed"
                         RelativePanel.AlignRightWithPanel="True"/>
         </Grid>
 

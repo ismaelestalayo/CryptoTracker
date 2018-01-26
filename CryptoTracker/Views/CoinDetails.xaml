@@ -1,16 +1,15 @@
 ﻿<Page
     x:Class="CryptoTracker.CoinDetails"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CryptoTracker"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     NavigationCacheMode="Disabled">
-
+    
     <Page.Resources>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
             <Setter Property="Margin" Value="0, 8"/>
@@ -202,7 +201,7 @@
         <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <Pivot Grid.Row="2" Grid.Column="0" Margin="10, -10, 10, 0">
+        <Pivot Grid.Row="2" Grid.Column="0" Margin="0, -15, 0, 0">
 
             <PivotItem Header="Stats">
                 <Grid>
@@ -211,7 +210,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel x:Name="stats" Margin="0, 10" Orientation="Horizontal">
+                    <StackPanel x:Name="stats" Margin="0, 0, 0, 10" Orientation="Horizontal">
 
                         <StackPanel Orientation="Vertical" Margin="0, 0">
                             <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
@@ -234,26 +233,24 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <TextBlock Grid.Row="1" Text="Markets:" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Light"/>
 
-
-                    <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="0, 0, 0, 10">
+                    <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="-10, 0, 0, 0">
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid BorderBrush="LightGray" BorderThickness="0, 0, 0, 1">
+                                <Grid BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}" BorderThickness="0, 0, 0, 1" Padding="0, 0, 0, 5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel>
-                                        <TextBlock Text="{Binding Exchange    }" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                        <TextBlock Text="{Binding T_Volume24  }" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                                        <TextBlock Text="{Binding T_Volume24To}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                        <TextBlock Text="{Binding Exchange    }" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiLight"/>
+                                        <TextBlock Text="{Binding T_Volume24  }" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="Light"/>
+                                        <TextBlock Text="{Binding T_Volume24To}" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="Light"/>
                                     </StackPanel>
                                     
-                                    <TextBlock     Text="{Binding Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>
 
                                 </Grid>
                             </DataTemplate>
@@ -278,12 +275,11 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="testt">
-                            <Run Text="Supply: "/>
-                            <Run Text="{x:Bind Supply}"/>
-                            <Run Text=" --"/>
-                        </TextBlock>
+                    <StackPanel>
+                        <TextBlock x:Name="supply" Text="Supply: "/>
+                        <TextBlock x:Name="marketcap" Text="Marketcap: "/>
+                        <TextBlock x:Name="totVol24" Text="Marketcap: "/>
+                        <TextBlock x:Name="totVol24to" Text="Marketcap: "/>
                     </StackPanel>
                     
                     <telerik:RadCartesianChart Grid.Row="1" Margin="0, 20">
@@ -339,21 +335,21 @@
             <PivotItem Header="About">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="Description:" Style="{ThemeResource BaseTextBlockStyle}" FontWeight="Light"/>
+                        <TextBlock Text="Description:" Style="{ThemeResource BaseTextBlockStyle}" />
                         <TextBlock x:Name="Description" Text="Description..." FontWeight="ExtraLight" Foreground="Gray" Margin="0, 0, 0, 5" TextWrapping="WrapWholeWords"/>
 
-                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Website">
-                            <TextBlock Text="Website:" Style="{ThemeResource BaseTextBlockStyle}" FontWeight="Light"/>
+                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Website" Padding="0, 3">
+                            <TextBlock Text="Website:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock x:Name="Website" Text="exampleURL.com" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
                         </RelativePanel>
 
-                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Twitter">
-                            <TextBlock Text="Twitter:" Style="{ThemeResource BaseTextBlockStyle}" FontWeight="Light"/>
+                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Twitter" Padding="0, 3">
+                            <TextBlock Text="Twitter:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock x:Name="Twitter" Text="@example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
                         </RelativePanel>
 
-                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Reddit">
-                            <TextBlock Text="Reddit:" Style="{ThemeResource BaseTextBlockStyle}" FontWeight="Light"/>
+                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Reddit" Padding="0, 3">
+                            <TextBlock Text="Reddit:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock x:Name="Reddit" Text="r/example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
                         </RelativePanel>
                     </StackPanel>

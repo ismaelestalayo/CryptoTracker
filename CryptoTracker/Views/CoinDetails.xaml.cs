@@ -3,14 +3,12 @@ using CryptoTracker.Views;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
@@ -266,6 +264,10 @@ namespace CryptoTracker {
             statsHigh.Text  = App.stats.High24;
             statsLow.Text   = App.stats.Low24;
             statsVol24.Text = App.stats.Volume24;
+            supply.Text     = "Supply: " + App.stats.Supply;
+            marketcap.Text  = "Marketcap: " + App.stats.Marketcap;
+            totVol24.Text   = "Total Vol 24h: " + App.stats.Volume24;
+            totVol24to.Text = "Total Vol 24h to: " + App.stats.Volume24To;
         }
         async private Task Get24Volume() {
             await App.GetHisto(crypto, "hour", 24);
