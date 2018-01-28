@@ -53,13 +53,6 @@
                     <ComboBoxItem Content="INR (₹)" Name="INR"/>
                 </ComboBox>
 
-
-                <ToggleSwitch Header="Use USD ($) market"/>
-                <TextBlock 
-                Text="Using USD markets will give better data and charts.
-                &#x0a;(Will still show price on your currency)."
-                TextWrapping="WrapWholeWords" FontSize="14" FontWeight="ExtraLight"/>
-
                 <!-- 
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <TextBlock Text="Appearance" Style="{ThemeResource TitleTextBlockStyle}" Margin="0, 30, 0, 0"/>

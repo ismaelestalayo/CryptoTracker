@@ -41,8 +41,8 @@ namespace CryptoTracker {
         internal static float LTC_change1h = 0;
         internal static float XRP_change1h = 0;
 
-        
 
+        internal static List<string> coinList = new List<string>();
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
         internal static List<JSONexchanges> exchanges = new List<JSONexchanges>();
@@ -198,6 +198,24 @@ namespace CryptoTracker {
             } catch (Exception) {
                 //var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
                 //var dontWait = await new MessageDialog("Error getting current coin price.").ShowAsync();
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        internal async static Task GetCoinList() {
+            String URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin;
+            Uri uri = new Uri(URL);
+            HttpClient httpClient = new HttpClient();
+
+            try {
+                var data = await GetJSONAsync(uri);
+
+                for (int i = 0; i < 100; i++) {
+                    coinList.Add( data["Data"][i]["CoinInfo"]["Name"].ToString() );
+                }
+
+            } catch (Exception ex) {
+                //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 

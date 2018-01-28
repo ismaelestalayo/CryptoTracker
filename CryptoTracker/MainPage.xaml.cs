@@ -120,7 +120,8 @@ namespace CryptoTracker {
             rootFrame.Navigate(typeof(WebVieww));            
         }
 
-
-        
+        private void EditButton_Click(object sender, RoutedEventArgs e) {
+            rootFrame.Navigate(typeof(EditWatchlist));
+        }
     }
 }

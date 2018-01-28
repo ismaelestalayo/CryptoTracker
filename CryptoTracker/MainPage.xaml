@@ -20,6 +20,7 @@
             Margin="0, 30, 0, 0"
             Visibility="Collapsed">
 
+            <AppBarButton Icon="Edit"        Click="EditButton_Click" />
             <AppBarButton Icon="Sync"        Click="UpdateButton_Click" />
             <AppBarSeparator/>
             <AppBarButton Icon="PreviewLink" Click="News_Click" />

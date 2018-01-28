@@ -63,10 +63,10 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="220"/>
-                <RowDefinition Height="220"/>
-                <RowDefinition Height="220"/>
-                <RowDefinition Height="220"/>
+                <RowDefinition Height="210"/>
+                <RowDefinition Height="210"/>
+                <RowDefinition Height="210"/>
+                <RowDefinition Height="210"/>
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 0, 0, -15" VerticalAlignment="Bottom">

@@ -33,6 +33,7 @@ namespace CryptoTracker {
                 });
             }, period);
 
+            App.GetCoinList();
             UpdateHome();
         }
 
