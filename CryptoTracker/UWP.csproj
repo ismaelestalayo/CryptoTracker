@@ -152,6 +152,8 @@
     <Content Include="Assets\iconETHc.png" />
     <Content Include="Assets\iconLTCc.png" />
     <Content Include="Assets\iconXRPc.png" />
+    <Content Include="Assets\Outlook.png" />
+    <Content Include="Assets\reddit.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-100.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-125.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-150.png" />
@@ -203,6 +205,7 @@
     <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-400.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\twitter.png" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>

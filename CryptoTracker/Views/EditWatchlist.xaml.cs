@@ -34,6 +34,7 @@ namespace CryptoTracker.Views {
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
             if (args.ChosenSuggestion != null)
                 this.Frame.Navigate(typeof(CoinDetails), CoinAutoSuggestBox.Text);
+            //delete
 
             else
                 CoinAutoSuggestBox.Text = sender.Text;

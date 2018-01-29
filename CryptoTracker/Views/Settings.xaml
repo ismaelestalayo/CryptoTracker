@@ -15,6 +15,10 @@
             <Setter Property="Margin" Value="0, 5"/>
             <Setter Property="FontWeight" Value="SemiLight"/>
         </Style>
+
+        <Style TargetType="TextBlock" x:Key="LabelTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
+            <Setter Property="Margin" Value="0, 15, 0, 0"/>
+        </Style>
     </Page.Resources>
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,18 +34,19 @@
                 <ColumnDefinition Width="0"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel>
+            <StackPanel Grid.Row="0">
 
-                <TextBlock Text="Currency" Style="{ThemeResource TitleTextBlockStyle}"/>
-                <TextBlock Text="Choose the currency in which to to show prices. 
-                             &#x0a;(Pages need to be updated manually.)"
-                FontWeight="ExtraLight"/>
+                <TextBlock Text="Currency" Style="{StaticResource LabelTitle}"/>
+                <TextBlock 
+                    Text="Choose the currency in which to to show prices. 
+                    &#x0a;(Pages need to be updated manually.)"
+                    FontWeight="ExtraLight"/>
                 <ComboBox 
-                x:Name="CoinComboBox" 
-                PlaceholderText="Coin" 
-                VerticalAlignment="Center"
-                Margin="0, 5, 0, 15"
-                SelectionChanged="CoinBox_changed">
+                    x:Name="CoinComboBox" 
+                    PlaceholderText="Coin" 
+                    VerticalAlignment="Center"
+                    Margin="0, 10, 0, 0"
+                    SelectionChanged="CoinBox_changed">
                     <ComboBoxItem Content="EUR (€)" Name="EUR"/>
                     <ComboBoxItem Content="USD ($)" Name="USD"/>
                     <ComboBoxItem Content="GBP (£)" Name="GBP"/>
@@ -55,41 +60,51 @@
 
                 <!-- 
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
-                <TextBlock Text="Appearance" Style="{ThemeResource TitleTextBlockStyle}" Margin="0, 30, 0, 0"/>
-                <ToggleSwitch Grid.Row="0" Grid.Column="1"
-                Name="ThemeSwitcher" Header="Theme"
-                OffContent="Light" OnContent="Dark" 
-                Toggled="ThemeToogled"/>
+                <TextBlock Text="Appearance" Style="{StaticResource LabelTitle}"/>
+                <ToggleSwitch 
+                    Grid.Row="0" Grid.Column="1"
+                    Name="ThemeSwitcher" Header="Theme"
+                    OffContent="Light" OnContent="Dark" 
+                    Toggled="ThemeToogled"/>
 
                 <TextBlock 
-                Text="A restart is required to  &#x0d;change the status bar color."
-                TextWrapping="WrapWholeWords" FontSize="14" FontWeight="ExtraLight"
-                Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+                    Text="A restart is required to  &#x0d;change the status bar color."
+                    TextWrapping="WrapWholeWords" FontSize="14" FontWeight="ExtraLight"
+                    Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
 
                 <!-- 
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
-                <TextBlock Text="Feedback" Style="{ThemeResource TitleTextBlockStyle}" Margin="0, 30, 0, 0"/>
+                <TextBlock Text="Feedback" Style="{StaticResource LabelTitle}"/>
                 <TextBlock Text="Take a minute and leave a review on the Store." FontWeight="ExtraLight"/>
                 <Button Content="Review"
                     Style="{StaticResource SettingsButtonsStyle}" 
                     Click="ReviewButton_Click" />
 
                 <TextBlock Text="I'd love to hear your thoughts about the app." FontWeight="ExtraLight"/>
-                <Button Content="Feedback" 
+                <Button Content="Feedback Hub" 
                     x:Name="feedbackButton"
                     Style="{StaticResource SettingsButtonsStyle}" 
                     Click="FeedbackButton_Click"/>
 
-                <TextBlock Text="Or send me an email for more direct feedback." FontWeight="ExtraLight"/>
-                <Button Content="Mail" 
-                    Style="{StaticResource SettingsButtonsStyle}" 
-                    Click="MailButton_Click"/>
+                <TextBlock Text="Or use one of this for a more direct feedback:" FontWeight="ExtraLight"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{StaticResource SettingsButtonsStyle}" Click="MailButton_Click" Padding="30, 5">
+                        <Image Source="/Assets/outlook.png" Height="20"/>
+                    </Button>
+                    <Button Style="{StaticResource SettingsButtonsStyle}" HorizontalAlignment="Right" Margin="5, 0" Padding="30, 5">
+                        <Image Source="/Assets/twitter.png" Height="20"/>
+                    </Button>
+                    <Button Style="{StaticResource SettingsButtonsStyle}" HorizontalAlignment="Right" Padding="30, 5">
+                        <Image Source="/Assets/reddit.png" Height="20"/>
+                    </Button>
+
+                </StackPanel>
 
                 <!-- 
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
             </StackPanel>
 
-            <StackPanel Margin="0, 30, 0, 0" x:Name="aboutPanel" Grid.Row="1">
+            <StackPanel Margin="0, 15, 0, 0" Grid.Row="1">
                 <Image Source="/Assets/CryptoTracker 400.png" Width="75" HorizontalAlignment="Left"/>
 
                 <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
