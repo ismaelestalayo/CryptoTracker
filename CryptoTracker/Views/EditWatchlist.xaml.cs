@@ -27,12 +27,13 @@ namespace CryptoTracker.Views {
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
             // Set sender.Text. You can use args.SelectedItem to build your text string.
-            CoinAutoSuggestBox.Text = "Choosen";
+            CoinAutoSuggestBox.Text = args.SelectedItem.ToString();
+            //this.Frame.Navigate(typeof(CoinDetails), CoinAutoSuggestBox.Text);
         }
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
             if (args.ChosenSuggestion != null)
-                CoinAutoSuggestBox.Text = args.ChosenSuggestion.ToString();
+                this.Frame.Navigate(typeof(CoinDetails), CoinAutoSuggestBox.Text);
 
             else
                 CoinAutoSuggestBox.Text = sender.Text;

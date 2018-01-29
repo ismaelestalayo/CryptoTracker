@@ -38,7 +38,6 @@ namespace CryptoTracker {
 
             switch (crypto) {
                 case "BTC":
-                    cryptoName.Text = "Bitcoin";
                     cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconBTCc.png"));
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["BTC_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["BTC_colorT"]).Color;
@@ -52,7 +51,6 @@ namespace CryptoTracker {
                     break;
 
                 case "ETH":
-                    cryptoName.Text = "Ethereum";
                     cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconETHc.png"));
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["ETH_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["ETH_colorT"]).Color;
@@ -67,7 +65,6 @@ namespace CryptoTracker {
                     break;
 
                 case "LTC":
-                    cryptoName.Text = "Litecoin";
                     cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconLTCc.png"));
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["LTC_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["LTC_colorT"]).Color;
@@ -82,9 +79,8 @@ namespace CryptoTracker {
                     break;
 
                 case "XRP":
-                    cryptoName.Text = "Ripple";
                     cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconXRPc.png"));
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["XRP_color"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorT"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorL"]).Color;
 
@@ -95,7 +91,20 @@ namespace CryptoTracker {
                     Twitter.Text = "@ripple";
                     Reddit.Text = "r/ripple";
                     break;
+
+                default:
+                    cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconBTCc.png"));
+                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = Windows.UI.Color.FromArgb(255, 43, 42, 42);
+                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = Windows.UI.Color.FromArgb(255, 43, 42, 42);
+                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = Windows.UI.Color.FromArgb(255, 43, 42, 42);
+
+                    Description.Text = "blip, blop... error getting coin...";
+                    Website.Text = "www.google.es";
+                    Twitter.Text = "";
+                    Reddit.Text = "";
+                    break;
             }
+            cryptoName.Text = crypto;
 
         }
 
