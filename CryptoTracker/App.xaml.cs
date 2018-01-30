@@ -156,8 +156,13 @@ namespace CryptoTracker {
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
-        internal static double GetPrice(string crypto, string coin, string market) {
-            var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" +coin+ "&e=" +market);
+        internal static double GetPrice(string crypto, string market) {
+            string URL = "https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" + App.coin;
+
+            if (market != "defaultMarket") 
+                URL += "&e=" + market;
+
+            Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
 
             try {
@@ -173,7 +178,7 @@ namespace CryptoTracker {
             
             var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,GBP,CAD,AUD,MXN,CNY,JPY,INR");
             HttpClient httpClient = new HttpClient();
-
+            
             try {
                 var data = await GetJSONAsync(uri);
 
@@ -222,7 +227,7 @@ namespace CryptoTracker {
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         internal async static Task GetHisto(string crypto, string time, int limit) {
             //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
-            String URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
+            string URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
                 + crypto + "&tsym=" + coin + "&limit=" + limit;
 
             if (limit == 0)
@@ -245,11 +250,10 @@ namespace CryptoTracker {
 
         internal async static Task GetCoinStats(string crypto, string market) {
 
-            String URL = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + crypto + "&tsyms=" + coin;
+            string URL = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + crypto + "&tsyms=" + coin;
             
-            if(market != "defaultMarket") {
+            if(market != "defaultMarket") 
                 URL += "&e=" + market;
-            }
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
