@@ -24,7 +24,7 @@ namespace CryptoTracker {
         public CoinDetails() {
             this.InitializeComponent();
 
-            InitValues();
+            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
@@ -105,7 +105,7 @@ namespace CryptoTracker {
                     break;
             }
             cryptoName.Text = crypto;
-
+            InitValues();
         }
 
         private void InitValues() {
@@ -172,21 +172,7 @@ namespace CryptoTracker {
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async private Task UpdateCoin() {
-            await App.GetCurrentPrice(crypto);
-            switch (crypto) {
-                case "BTC":
-                    curr.Text = App.BTC_now.ToString() + App.coinSymbol;
-                    break;
-                case "ETH":
-                    curr.Text = App.ETH_now.ToString() + App.coinSymbol;
-                    break;
-                case "LTC":
-                    curr.Text = App.LTC_now.ToString() + App.coinSymbol;
-                    break;
-                case "XRP":
-                    curr.Text = App.XRP_now.ToString() + App.coinSymbol;
-                    break;
-            }
+            curr.Text = App.GetCurrentPrice(crypto, "defaultMarket").ToString() + App.coinSymbol;
 
             switch (timeSpan) {
                 case "hour":
@@ -224,28 +210,9 @@ namespace CryptoTracker {
             }
 
             float d = 0;
-            switch (crypto) {
-                case "BTC":
-                    d = (float)Math.Round( ((App.BTC_now / App.BTC_old) - 1) * 100, 2);
-                    if (timeSpan.Equals("hour"))
-                        App.BTC_change1h = d;
-                    break;
-                case "ETH":
-                    d = (float)Math.Round(((App.ETH_now / App.ETH_old) - 1) * 100, 2);
-                    if (timeSpan.Equals("hour"))
-                        App.ETH_change1h = d;
-                    break;
-                case "LTC":
-                    d = (float)Math.Round(((App.LTC_now / App.LTC_old) - 1) * 100, 2);
-                    if (timeSpan.Equals("hour"))
-                        App.LTC_change1h = d;
-                    break;
-                case "XRP":
-                    d = (float)Math.Round(((App.XRP_now / App.XRP_old) - 1) * 100, 2);
-                    if (timeSpan.Equals("hour"))
-                        App.XRP_change1h = d;
-                    break;
-            }
+            float oldestPrice = App.historic[0].Close;
+            float newestPrice = App.historic[App.historic.Count - 1].Close;
+            d = (float)Math.Round( ((newestPrice / oldestPrice) - 1) * 100, 2);
 
             if (d < 0) {
                 diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];

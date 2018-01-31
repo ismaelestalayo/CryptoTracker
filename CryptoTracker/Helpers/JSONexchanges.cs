@@ -26,7 +26,7 @@ namespace CryptoTracker.Helpers {
             p.T_Volume24   = "Vol. 24h: " + ((double)data["volume24h"]).ToString("N0") + p.FSymbol;
             p.T_Volume24To = "Vol. To 24h: " + ((double)data["volume24hTo"]).ToString("N0") + App.coinSymbol;
 
-            p.Price = App.GetPrice(p.FSym, p.TSym, p.Exchange).ToString("N2") + App.coinSymbol;
+            p.Price = App.GetCurrentPrice(p.FSym, p.Exchange).ToString("N2") + App.coinSymbol;
 
             return p;
         }

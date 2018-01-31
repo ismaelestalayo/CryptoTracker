@@ -88,13 +88,13 @@
 
                 <TextBlock Text="Or use one of this for a more direct feedback:" FontWeight="ExtraLight"/>
                 <StackPanel Orientation="Horizontal">
-                    <Button Style="{StaticResource SettingsButtonsStyle}" Click="MailButton_Click" Padding="30, 5">
+                    <Button Style="{StaticResource SettingsButtonsStyle}" Click="MailButton_Click" Padding="40, 5">
                         <Image Source="/Assets/outlook.png" Height="20"/>
                     </Button>
-                    <Button Style="{StaticResource SettingsButtonsStyle}" HorizontalAlignment="Right" Margin="5, 0" Padding="30, 5">
+                    <Button Style="{StaticResource SettingsButtonsStyle}" Click="MailButton_Click" Margin="5, 0" Padding="40, 5">
                         <Image Source="/Assets/twitter.png" Height="20"/>
                     </Button>
-                    <Button Style="{StaticResource SettingsButtonsStyle}" HorizontalAlignment="Right" Padding="30, 5">
+                    <Button Style="{StaticResource SettingsButtonsStyle}" Padding="40, 5">
                         <Image Source="/Assets/reddit.png" Height="20"/>
                     </Button>
 

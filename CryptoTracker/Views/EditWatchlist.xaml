@@ -10,7 +10,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <AutoSuggestBox 
             x:Name="CoinAutoSuggestBox"
-            Margin="120, 0"
+            Margin="120, 20"
             PlaceholderText="Search a coin"
             QueryIcon="Find"
             

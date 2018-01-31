@@ -27,20 +27,8 @@ namespace CryptoTracker {
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             string crypto = ((ComboBoxItem)CryptoComboBox.SelectedItem).Content.ToString();
-            switch (crypto) {
-                case "BTC":
-                    curr = Math.Round(App.BTC_now, 3);
-                    break;
-                case "ETH":
-                    curr = Math.Round(App.ETH_now, 3);
-                    break;
-                case "LTC":
-                    curr = Math.Round(App.LTC_now, 3);
-                    break;
-                case "XRP":
-                    curr = Math.Round(App.XRP_now, 3);
-                    break;
-            }
+
+            curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
 
             try {
                 double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
@@ -74,24 +62,20 @@ namespace CryptoTracker {
         //For Sync all
         internal async void UpdatePortfolio() {
 
-            await App.GetCurrentPrice("BTC");
-            await App.GetCurrentPrice("ETH");
-            await App.GetCurrentPrice("LTC");
-            await App.GetCurrentPrice("XRP");
-
             for (int i = 0; i < MyListView.Items.Count; i++) {
-                switch (dataList[i]._Crypto) {
+                string crypto = dataList[i]._Crypto;
+                switch (crypto) {
                     case "BTC":
-                        curr = Math.Round(App.BTC_now, 3);
+                        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
                         break;
                     case "ETH":
-                        curr = Math.Round(App.ETH_now, 3);
+                        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
                         break;
                     case "LTC":
-                        curr = Math.Round(App.LTC_now, 3);
+                        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
                         break;
                     case "XRP":
-                        curr = Math.Round(App.XRP_now, 3);
+                        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
                         break;
                 }
                 dataList[i].Current = curr;

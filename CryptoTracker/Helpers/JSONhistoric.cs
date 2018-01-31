@@ -21,28 +21,6 @@ namespace CryptoTracker.Helpers {
             for (int i = 0; i < lastIndex; i++) {
                 App.historic.Add( GetHistoricPoint(data["Data"][i]) );
             }
-
-            switch (crypto) {
-                case "BTC":
-                    App.BTC_now= (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
-                    App.BTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                    break;
-
-                case "ETH":
-                    App.ETH_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
-                    App.ETH_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                    break;
-
-                case "LTC":
-                    App.LTC_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
-                    App.LTC_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                    break;
-
-                case "XRP":
-                    App.XRP_now = (float)Math.Round((float)data["Data"][lastIndex - 1]["close"], 2);
-                    App.XRP_old = (float)Math.Round((float)data["Data"][0]["close"], 2);
-                    break;
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####

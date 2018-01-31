@@ -11,9 +11,11 @@ namespace CryptoTracker {
 
             try {
                 LiveTile l = new LiveTile();
-                l.SendStockTileNotification("BTC", App.BTC_now, App.BTC_change1h, DateTime.Now);
-                l.SendStockTileNotification("ETH", App.ETH_now, App.ETH_change1h, DateTime.Now);
-                l.SendStockTileNotification("LTC", App.LTC_now, App.LTC_change1h, DateTime.Now);
+                //TO DO: I used to use App.BTC_change1h as the third param
+                //SendStockTileNotification("BTC", App.BTC_now, App.BTC_change1h, DateTime.Now);
+                //l.SendStockTileNotification("BTC", 0, 0, DateTime.Now);
+                //l.SendStockTileNotification("ETH", 0, 0, DateTime.Now);
+                //l.SendStockTileNotification("LTC", 0, 0, DateTime.Now);
 
             } catch (Exception ex) {
                 var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
@@ -37,9 +39,9 @@ namespace CryptoTracker {
             var content = new TileContent() {
                 Visual = new TileVisual() {
 
-                    LockDetailedStatus1 = "BTC: " + App.BTC_now.ToString() + App.coinSymbol,
-                    LockDetailedStatus2 = "ETH: " + App.ETH_now.ToString() + App.coinSymbol,
-                    LockDetailedStatus3 = "LTC: " + App.LTC_now.ToString() + App.coinSymbol,
+                    LockDetailedStatus1 = "BTC: " + "0" + App.coinSymbol,
+                    LockDetailedStatus2 = "ETH: " + "0" + App.coinSymbol,
+                    LockDetailedStatus3 = "LTC: " + "0" + App.coinSymbol,
 
                     TileMedium = new TileBinding() {
                         Content = new TileBindingContentAdaptive() {

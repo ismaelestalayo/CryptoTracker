@@ -26,22 +26,6 @@ namespace CryptoTracker {
 
         internal static int pivotIndex = 0;
 
-        internal static float BTC_old;
-        internal static float ETH_old;
-        internal static float LTC_old;
-        internal static float XRP_old;
-
-        internal static float BTC_now;
-        internal static float ETH_now;
-        internal static float LTC_now;
-        internal static float XRP_now;
-
-        internal static float BTC_change1h = 0;
-        internal static float ETH_change1h = 0;
-        internal static float LTC_change1h = 0;
-        internal static float XRP_change1h = 0;
-
-
         internal static List<string> coinList = new List<string>();
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
@@ -156,7 +140,7 @@ namespace CryptoTracker {
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
-        internal static double GetPrice(string crypto, string market) {
+        internal static double GetCurrentPrice(string crypto, string market) {
             string URL = "https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" + App.coin;
 
             if (market != "defaultMarket") 
@@ -167,42 +151,10 @@ namespace CryptoTracker {
 
             try {
                 var data = GetJSONAsync(uri).Result;
-                return (float)data[coin];
+                return Math.Round((float)data[coin], 2);
                 
-            } catch (Exception) {
+            } catch (Exception ex) {
                 return 0;
-            }
-        }
-
-        internal static async Task GetCurrentPrice(string crypto) {
-            
-            var uri = new Uri("https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=EUR,USD,GBP,CAD,AUD,MXN,CNY,JPY,INR");
-            HttpClient httpClient = new HttpClient();
-            
-            try {
-                var data = await GetJSONAsync(uri);
-
-                switch (crypto) {
-                    case "BTC":
-                        BTC_now = (float)data[coin];
-                        break;
-
-                    case "ETH":
-                        ETH_now = (float)data[coin];
-                        break;
-
-                    case "LTC":
-                        LTC_now = (float)data[coin];
-                        break;
-
-                    case "XRP":
-                        XRP_now = (float)data[coin];
-                        break;
-                }
-
-            } catch (Exception) {
-                //var dontWait = await new MessageDialog(ex.ToString()).ShowAsync();
-                //var dontWait = await new MessageDialog("Error getting current coin price.").ShowAsync();
             }
         }
 

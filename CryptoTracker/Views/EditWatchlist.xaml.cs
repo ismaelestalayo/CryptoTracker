@@ -20,21 +20,17 @@ namespace CryptoTracker.Views {
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
                 suggestions.Clear();
-
                 sender.ItemsSource = App.coinList.Where(x => x.StartsWith(sender.Text)).ToList();
             }
         }
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
-            // Set sender.Text. You can use args.SelectedItem to build your text string.
             CoinAutoSuggestBox.Text = args.SelectedItem.ToString();
-            //this.Frame.Navigate(typeof(CoinDetails), CoinAutoSuggestBox.Text);
         }
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
             if (args.ChosenSuggestion != null)
                 this.Frame.Navigate(typeof(CoinDetails), CoinAutoSuggestBox.Text);
-            //delete
 
             else
                 CoinAutoSuggestBox.Text = sender.Text;
