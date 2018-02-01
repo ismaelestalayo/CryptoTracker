@@ -54,11 +54,6 @@
         </Grid.ColumnDefinitions>
 
 
-
-
-
-
-
         <RelativePanel Grid.Row="0" Padding="0, 0, 0, -5"
                        BorderThickness="0, 0, 0, 0.5" 
                        BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
@@ -210,29 +205,41 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+
                     <StackPanel x:Name="stats" Margin="0, 0, 0, 10" Orientation="Horizontal">
 
                         <StackPanel Orientation="Vertical" Margin="0, 0">
-                            <TextBlock Text="High:"   Grid.Row="0" Grid.Column="0" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Text="High:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Name="statsHigh"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="20, 0">
-                            <TextBlock Text="Low:"    Grid.Row="0" Grid.Column="1" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Text="Low:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Name="statsLow"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="20, 0">
-                            <TextBlock Text="Open:"   Grid.Row="0" Grid.Column="2" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Text="Open:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Name="statsOpen"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="20, 0">
-                            <TextBlock Text="Volume:" Grid.Row="0" Grid.Column="3" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Text="Volume:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Name="statsVol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
                         </StackPanel>
                     </StackPanel>
 
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <StackPanel Orientation="Vertical" Margin="0, 0">
+                            <TextBlock Text="Supply: " Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock x:Name="supply"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="20, 0">
+                            <TextBlock Text="Marketcap:" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock x:Name="marketcap"/>
+                        </StackPanel>
+                    </StackPanel>
 
                     <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="-10, 0, 0, 0">
 
@@ -276,10 +283,8 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel>
-                        <TextBlock x:Name="supply" Text="Supply: "/>
-                        <TextBlock x:Name="marketcap" Text="Marketcap: "/>
-                        <TextBlock x:Name="totVol24" Text="Marketcap: "/>
-                        <TextBlock x:Name="totVol24to" Text="Marketcap: "/>
+                        <TextBlock x:Name="totVol24" Text="Tot. Vol. 24h: "/>
+                        <TextBlock x:Name="totVol24to" Text="Tot. Vol. 24h to: "/>
                     </StackPanel>
                     
                     <telerik:RadCartesianChart Grid.Row="1" Margin="0, 20">

@@ -24,7 +24,6 @@ namespace CryptoTracker {
         public CoinDetails() {
             this.InitializeComponent();
 
-            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
@@ -206,7 +205,6 @@ namespace CryptoTracker {
                     Volume =  App.historic[i].Volumefrom
                 };
                 data.Add(obj);
-
             }
 
             float d = 0;
@@ -240,8 +238,8 @@ namespace CryptoTracker {
             statsHigh.Text  = App.stats.High24;
             statsLow.Text   = App.stats.Low24;
             statsVol24.Text = App.stats.Volume24;
-            supply.Text     = "Supply: " + App.stats.Supply;
-            marketcap.Text  = "Marketcap: " + App.stats.Marketcap;
+            supply.Text     = App.stats.Supply;
+            marketcap.Text  = App.stats.Marketcap;
             totVol24.Text   = "Total Vol 24h: " + App.stats.Volume24;
             totVol24to.Text = "Total Vol 24h to: " + App.stats.Volume24To;
         }
