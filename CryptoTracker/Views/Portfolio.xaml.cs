@@ -60,24 +60,13 @@ namespace CryptoTracker {
         }
 
         //For Sync all
-        internal async void UpdatePortfolio() {
+        internal void UpdatePortfolio() {
 
             for (int i = 0; i < MyListView.Items.Count; i++) {
                 string crypto = dataList[i]._Crypto;
-                switch (crypto) {
-                    case "BTC":
-                        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
-                        break;
-                    case "ETH":
-                        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
-                        break;
-                    case "LTC":
-                        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
-                        break;
-                    case "XRP":
-                        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
-                        break;
-                }
+
+                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
+
                 dataList[i].Current = curr;
                 double priceBought = (1 / dataList[i]._CryptoQty) * dataList[i]._InvestedQty;
                 priceBought = Math.Round(priceBought, 2);

@@ -36,7 +36,6 @@
                         <!-- <Setter Target="statsStack.(Grid.Column)" Value="0"/>
                         <Setter Target="statsStack.(Grid.Row)" Value="2"/>
                         <Setter Target="statsStack.Margin" Value="55, 0"/> -->
-                        <Setter Target="stats.Orientation" Value="Horizontal"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -45,18 +44,19 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="370"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
 
-        <RelativePanel Grid.Row="0" Padding="0, 0, 0, -5"
-                       BorderThickness="0, 0, 0, 0.5" 
-                       BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+        <RelativePanel 
+            Grid.Row="0" Padding="0, 0, 0, -5"
+            BorderThickness="0, 0, 0, 0.5" 
+            BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Margin="0, 5" Padding="0, -5, 0, 5">
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
@@ -206,40 +206,50 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel x:Name="stats" Margin="0, 0, 0, 10" Orientation="Horizontal">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                        <StackPanel Orientation="Vertical" Margin="0, 0">
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
                             <TextBlock Text="High:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Name="statsHigh"  Text="val" Grid.Row="1" Grid.Column="0" FontWeight="Light"/>
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" Margin="20, 0">
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
                             <TextBlock Text="Low:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Name="statsLow"   Text="val" Grid.Row="1" Grid.Column="1" FontWeight="Light"/>
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" Margin="20, 0">
+                        <StackPanel Grid.Column="2" Orientation="Vertical">
                             <TextBlock Text="Open:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Name="statsOpen"  Text="val" Grid.Row="1" Grid.Column="2" FontWeight="Light"/>
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" Margin="20, 0">
+                        <StackPanel Grid.Column="3" Orientation="Vertical">
                             <TextBlock Text="Volume:" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Name="statsVol24" Text="val" Grid.Row="1" Grid.Column="3" FontWeight="Light"/>
                         </StackPanel>
-                    </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <StackPanel Orientation="Vertical" Margin="0, 0">
+
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
                             <TextBlock Text="Supply: " Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock x:Name="supply"/>
+                            <TextBlock x:Name="supply" Text="val"/>
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" Margin="20, 0">
+                        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Grid.ColumnSpan="2">
                             <TextBlock Text="Marketcap:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock x:Name="marketcap"/>
+                            <TextBlock x:Name="marketcap" Text="val"/>
                         </StackPanel>
-                    </StackPanel>
+                    </Grid>
 
                     <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="-10, 0, 0, 0">
 

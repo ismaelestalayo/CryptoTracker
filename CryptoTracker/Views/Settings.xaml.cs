@@ -1,5 +1,6 @@
 ﻿using Microsoft.AppCenter.Analytics;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using Windows.ApplicationModel.Email;
 using Windows.System;
@@ -94,6 +95,12 @@ namespace CryptoTracker {
             emailMessage.Subject = "Feedback for CoinBase Unofficial v" + v;
 
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
+        }
+        private async void TwitterButton_Click(object sender, RoutedEventArgs e) {
+            await Launcher.LaunchUriAsync(new Uri("https://twitter.com/isma_estalayo"));
+        }
+        private async void RedditButton_Click(object sender, RoutedEventArgs e) {
+            await Launcher.LaunchUriAsync(new Uri("https://www.reddit.com/r/CryptoTracker/"));
         }
 
         private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
