@@ -151,6 +151,7 @@
     <Content Include="Assets\iconBTCc.png" />
     <Content Include="Assets\iconETHc.png" />
     <Content Include="Assets\iconLTCc.png" />
+    <Content Include="Assets\iconNULLc.png" />
     <Content Include="Assets\iconXRPc.png" />
     <Content Include="Assets\Outlook.png" />
     <Content Include="Assets\reddit.png" />

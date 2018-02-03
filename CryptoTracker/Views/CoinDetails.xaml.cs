@@ -79,7 +79,7 @@ namespace CryptoTracker {
 
                 case "XRP":
                     cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconXRPc.png"));
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_color"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["XRP_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorT"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorL"]).Color;
 
@@ -92,10 +92,10 @@ namespace CryptoTracker {
                     break;
 
                 default:
-                    cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconBTCc.png"));
+                    cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconNULLc.png"));
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = Windows.UI.Color.FromArgb(255, 43, 42, 42);
-                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = Windows.UI.Color.FromArgb(255, 43, 42, 42);
-                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = Windows.UI.Color.FromArgb(255, 43, 42, 42);
+                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = Windows.UI.Color.FromArgb(120, 43, 42, 42);
+                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = Windows.UI.Color.FromArgb(255, 63, 62, 62);
 
                     Description.Text = "blip, blop... error getting coin...";
                     Website.Text = "www.google.es";
