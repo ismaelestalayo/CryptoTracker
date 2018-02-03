@@ -97,9 +97,11 @@ namespace CryptoTracker {
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
         }
         private async void TwitterButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("twitterButton_Click");
             await Launcher.LaunchUriAsync(new Uri("https://twitter.com/isma_estalayo"));
         }
         private async void RedditButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("redditButton_Click");
             await Launcher.LaunchUriAsync(new Uri("https://www.reddit.com/r/CryptoTracker/"));
         }
 
