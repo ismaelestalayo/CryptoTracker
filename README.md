@@ -22,7 +22,7 @@ A simple yet powerful crypto-currency tracker UWP.
 
 ## Mobile version:
 
-<img src="Screenshots/promo_phone.gif" width="50%">
+<img src="Screenshots/promo_phone.gif" width="40%">
 
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_btcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ethD.png?raw=true" width = "30%"/>
 
