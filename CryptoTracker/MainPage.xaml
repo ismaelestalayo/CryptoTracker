@@ -22,7 +22,10 @@
 
             <AppBarButton Icon="Find"        Click="EditButton_Click" />
             <AppBarButton Icon="Sync"        Click="UpdateButton_Click" />
+            
             <AppBarSeparator/>
+            
+            <AppBarButton Icon="Home"        Click="Home_Click" />
             <AppBarButton Icon="PreviewLink" Click="News_Click" />
             <AppBarButton Icon="Shop"        Click="PortfolioButton_Click" />
             <AppBarButton Icon="Setting"     Click="SettingsButton_Click"/>
@@ -33,17 +36,19 @@
 
         </Frame>
 
-        <CommandBar x:Name="BottomCommandBar" Grid.Row="2" OverflowButtonVisibility="Collapsed" 
+        <CommandBar x:Name="BottomCommandBar" Grid.Row="2" OverflowButtonVisibility="Auto" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Visibility="Collapsed">
+            Visibility="Collapsed" >
 
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Find"        Click="EditButton_Click"   Label="Search coin"/>
+                <AppBarButton Icon="Sync"        Click="UpdateButton_Click" Label="Update"/>
+            </CommandBar.SecondaryCommands>
 
-            <AppBarButton Icon="Find"        Click="EditButton_Click" />
-            <AppBarButton Icon="Sync"        Click="UpdateButton_Click" />
-            <AppBarSeparator/>
-            <AppBarButton Icon="PreviewLink" Click="News_Click" />
-            <AppBarButton Icon="Shop"        Click="PortfolioButton_Click" />
-            <AppBarButton Icon="Setting"     Click="SettingsButton_Click"/>
+            <AppBarButton Icon="Home"        Click="Home_Click"             Label="Home"/>
+            <AppBarButton Icon="PreviewLink" Click="News_Click"             Label="News"/>
+            <AppBarButton Icon="Shop"        Click="PortfolioButton_Click"  Label="Potfolio"/>
+            <AppBarButton Icon="Setting"     Click="SettingsButton_Click"   Label="Settings"/>
         </CommandBar>
 
     </Grid>

@@ -91,7 +91,9 @@ namespace CryptoTracker {
             }
         }
 
-
+        private void Home_Click(object sender, RoutedEventArgs e) {
+            rootFrame.Navigate(typeof(Home));
+        }
         private void PortfolioButton_Click(object sender, RoutedEventArgs e) {
             if(rootFrame.SourcePageType.Name != "Portfolio") {
                 rootFrame.Navigate(typeof(Portfolio));

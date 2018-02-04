@@ -7,13 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
         <AutoSuggestBox 
             x:Name="CoinAutoSuggestBox"
-            Margin="120, 20"
+            Margin="100, 20"
             PlaceholderText="Search a coin"
             QueryIcon="Find"
             
+            GotFocus="AutoSuggestBox_GotFocus"
             TextChanged="AutoSuggestBox_TextChanged"
             SuggestionChosen="AutoSuggestBox_SuggestionChosen"
             QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>

@@ -18,7 +18,7 @@ namespace CryptoTracker {
 
         private static string crypto;
         private static int    limit = 60;
-        private static string timeSpan = "day";
+        private static string timeSpan = "hour";
         private string Supply = App.stats.Supply;
 
         public CoinDetails() {
@@ -35,15 +35,15 @@ namespace CryptoTracker {
                 crypto = "BTC";
             }
 
+            Description.Text = App.GetCoinDescription(crypto);
+
             switch (crypto) {
                 case "BTC":
                     cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconBTCc.png"));
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["BTC_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["BTC_colorT"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["BTC_colorL"]).Color;
-
-                    Description.Text = "Bitcoin uses peer-to-peer technology to operate with no central authority or banks; managing transactions and the issuing of bitcoins is carried out collectively by "  +
-                                       "the network. Bitcoin is open-source; its design is public, nobody owns or controls Bitcoin and everyone can take part.";
+                    
                     Website.Text = "bitcoin.org/";
                     Twitter.Text = "#Bitcoin";
                     Reddit.Text = "r/bitcoin";
@@ -54,10 +54,7 @@ namespace CryptoTracker {
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["ETH_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["ETH_colorT"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["ETH_colorL"]).Color;
-
-                    Description.Text = "Ethereum is an open-source, public, blockchain-based distributed computing platform featuring smart contract (scripting) functionality. It provides a decentralized " +
-                                       "Turing-complete virtual machine, the Ethereum Virtual Machine (EVM), which can execute scripts using an international network of public nodes. Ethereum also provides" +
-                                       " a cryptocurrency token called 'ether', which can be transferred between accounts and used to compensate participant nodes for computations performed.";
+                    
                     Website.Text = "ethereum.org/";
                     Twitter.Text = "@ethereumproject";
                     Reddit.Text = "r/ethereum";
@@ -68,10 +65,7 @@ namespace CryptoTracker {
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["LTC_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["LTC_colorT"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["LTC_colorL"]).Color;
-
-                    Description.Text = "Litecoin is a peer-to-peer Internet currency that enables instant, near-zero cost payments to anyone in the world. Litecoin is an open source, global payment network " +
-                                       "that is fully decentralized without any central authorities. Mathematics secures the network and empowers individuals to control their own finances. Litecoin features faster " +
-                                       "transaction confirmation times and improved storage efficiency.";
+                    
                     Website.Text = "litecoin.org/";
                     Twitter.Text = "@litecoinproject";
                     Reddit.Text = "r/litecoin";
@@ -82,10 +76,7 @@ namespace CryptoTracker {
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["XRP_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorT"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorL"]).Color;
-
-                    Description.Text = "Also called the Ripple Transaction Protocol (RTXP), it is built upon a distributed open source Internet protocol, consensus ledger and native cryptocurrency called XRP (ripples). " +
-                                       "Released in 2012, Ripple purports to enable 'secure, instantly and nearly free global financial transactions of any size with no chargebacks.' At its core, Ripple is based around a" +
-                                       " shared, public database or ledger, which uses a consensus process that allows for payments, exchanges and remittance in a distributed process.";
+                    
                     Website.Text = "ripple.com/";
                     Twitter.Text = "@ripple";
                     Reddit.Text = "r/ripple";
@@ -96,9 +87,8 @@ namespace CryptoTracker {
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = Windows.UI.Color.FromArgb(255, 43, 42, 42);
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = Windows.UI.Color.FromArgb(120, 43, 42, 42);
                     ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = Windows.UI.Color.FromArgb(255, 63, 62, 62);
-
-                    Description.Text = "blip, blop... error getting coin...";
-                    Website.Text = "www.google.es";
+                    
+                    Website.Text = "";
                     Twitter.Text = "";
                     Reddit.Text = "";
                     break;
@@ -111,7 +101,7 @@ namespace CryptoTracker {
 
             TimeSpan period = TimeSpan.FromSeconds(30);
             ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                     RadioButton r = new RadioButton { Content = timeSpan };
                     if (timeSpan == "hour" && this.Frame.SourcePageType.Name == "CoinDetails")
                         TimerangeButton_Click(r, null);
@@ -257,7 +247,13 @@ namespace CryptoTracker {
         }
         async private Task GetExchanges() {
             await App.GetTopExchanges(crypto, App.coin);
-            MarketList.ItemsSource = App.exchanges;
+
+            if (App.exchanges.Count != 0) {
+                noMarketsWarning.Visibility = Visibility.Collapsed;
+                MarketList.ItemsSource = App.exchanges;
+            } else {
+                noMarketsWarning.Visibility = Visibility.Visible;
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####

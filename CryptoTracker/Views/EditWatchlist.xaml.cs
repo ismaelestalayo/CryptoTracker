@@ -19,6 +19,7 @@ namespace CryptoTracker.Views {
             // otherwise assume the value got filled in by TextMemberPath 
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
+                sender.Text = sender.Text.ToUpper();
                 suggestions.Clear();
                 sender.ItemsSource = App.coinList.Where(x => x.StartsWith(sender.Text)).ToList();
             }
@@ -34,6 +35,11 @@ namespace CryptoTracker.Views {
 
             else
                 CoinAutoSuggestBox.Text = sender.Text;
+        }
+
+        private void AutoSuggestBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            AutoSuggestBox a = sender as AutoSuggestBox;
+            a.ItemsSource = App.coinList.Where(x => x.StartsWith(a.Text)).ToList();
         }
     }
 }

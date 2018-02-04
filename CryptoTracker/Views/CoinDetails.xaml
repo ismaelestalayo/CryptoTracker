@@ -184,8 +184,8 @@
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                <RadioButton GroupName="coin" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-                <RadioButton GroupName="coin" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click" IsChecked="True"/>
+                <RadioButton GroupName="coin" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click" IsChecked="True"/>
+                <RadioButton GroupName="coin" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
                 <RadioButton GroupName="coin" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
                 <RadioButton GroupName="coin" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
                 <RadioButton GroupName="coin" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
@@ -206,7 +206,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid>
+                    <Grid Padding="0, 0, 0, 10" Margin="0, 0, 0, 0" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -240,16 +240,20 @@
 
 
 
-                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Grid.ColumnSpan="2">
                             <TextBlock Text="Supply: " Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock x:Name="supply" Text="val"/>
+                            <TextBlock x:Name="supply" Text="val" FontWeight="Light"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" Grid.ColumnSpan="2">
                             <TextBlock Text="Marketcap:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock x:Name="marketcap" Text="val"/>
+                            <TextBlock x:Name="marketcap" Text="val" FontWeight="Light"/>
                         </StackPanel>
                     </Grid>
+
+                    <StackPanel Grid.Row="2" x:Name="noMarketsWarning" Visibility="Collapsed">
+                        <TextBlock Text="No markets found..." FontWeight="Light"/>
+                    </StackPanel>
 
                     <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="-10, 0, 0, 0">
 
@@ -262,9 +266,9 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel>
-                                        <TextBlock Text="{Binding Exchange    }" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiLight"/>
-                                        <TextBlock Text="{Binding T_Volume24  }" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="Light"/>
-                                        <TextBlock Text="{Binding T_Volume24To}" Style="{ThemeResource CaptionTextBlockStyle}" FontWeight="Light"/>
+                                        <TextBlock Text="{Binding Exchange    , Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiLight"/>
+                                        <TextBlock Text="{Binding T_Volume24  , Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
+                                        <TextBlock Text="{Binding T_Volume24To, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
                                     </StackPanel>
                                     
                                     <TextBlock Text="{Binding Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>

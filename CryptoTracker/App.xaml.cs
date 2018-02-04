@@ -200,6 +200,7 @@ namespace CryptoTracker {
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         internal async static Task GetCoinStats(string crypto, string market) {
 
             string URL = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + crypto + "&tsyms=" + coin;
@@ -221,18 +222,19 @@ namespace CryptoTracker {
             }
         }
 
-        internal async static Task GetTopExchanges(String crypto, String toSym) {
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        internal async static Task GetTopExchanges(string crypto, string toSym) {
 
             String URL = "https://min-api.cryptocompare.com/data/top/exchanges?fsym=" + crypto  +"&tsym="+ toSym + "&limit=8";
 
-            Uri requestUri = new Uri(URL);
+            Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
 
             String response = "";
 
             try {
-                httpResponse = await httpClient.GetAsync(requestUri);
+                httpResponse = await httpClient.GetAsync(uri);
                 httpResponse.EnsureSuccessStatusCode();
 
                 response = await httpResponse.Content.ReadAsStringAsync();
@@ -249,6 +251,23 @@ namespace CryptoTracker {
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        internal static string GetCoinDescription(string crypto) {
+            String URL = "https://krausefx.github.io/crypto-summaries/coins/" +crypto.ToLower()+ "-5.txt";
+            Uri uri = new Uri(URL);
+
+            try {
+                string data = GetStringAsync(uri).Result;
+                
+
+                return data;
+
+            } catch (Exception ex) {
+                return "No description found for this coin.";
+            }
+        }
+
+
 
         /// <summary>
         /// do NOT mess with async methods...
@@ -262,6 +281,12 @@ namespace CryptoTracker {
             using (var client = new HttpClient()) {
                 var jsonString = await client.GetStringAsync(uri).ConfigureAwait(false);
                 return JToken.Parse(jsonString);
+            }
+        }
+        private static async Task<string> GetStringAsync(Uri uri) {
+            using (var client = new HttpClient()) {
+                var s = await client.GetStringAsync(uri).ConfigureAwait(false);
+                return s;
             }
         }
 

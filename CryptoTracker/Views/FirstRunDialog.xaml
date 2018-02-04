@@ -26,18 +26,18 @@
                 <LineBreak/>
                 
                 <Run>New in this version:</Run><LineBreak/>
-                <Run Text=" - Added Ripple (XRP) support." 
+                <Run Text=" • Added 100 altcoins! (try using the search icon)." 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Fixed portfolio section not scrolling." 
+                <Run Text=" • Richer settings page." 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - Refined UI." 
+                <Run Text=" • Be sure to check the new subreddit." 
                      FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" - I'll work on fixing bugs and making the app faster, and then I'll continue to add more alt-coins." 
+                <Run Text=" • Refined UI." 
                      FontWeight="ExtraLight"/><LineBreak/>
                 
                 <LineBreak/>
                 <Run>Any bug or suggestion, be sure to reach me through 
-                    email, Twitter or the Windows Store (contact info on the app settings).</Run>
+                    email, Reddit, Twitter or the Windows Store (contact info on settings).</Run>
             </TextBlock>
         </StackPanel>
     </ScrollViewer>

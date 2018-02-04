@@ -97,24 +97,39 @@
                     <Button Style="{StaticResource SettingsButtonsStyle}" Click="TwitterButton_Click" Padding="40, 5">
                         <Image Source="/Assets/twitter.png" Height="20"/>
                     </Button>
-
                 </StackPanel>
+
+                <!-- 
+                /////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <TextBlock Text="Mention" Style="{StaticResource LabelTitle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text=" • Data provided by" FontWeight="ExtraLight"/>
+                    <HyperlinkButton 
+                        NavigateUri="https://www.cryptocompare.com/api" 
+                        Content="CryptoCompare API"
+                        Margin="5, -10"
+                        FontWeight="ExtraLight"/>
+                </StackPanel>
+
+                
 
                 <!-- 
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
             </StackPanel>
 
-            <StackPanel Margin="0, 15, 0, 0" Grid.Row="1">
-                <Image Source="/Assets/CryptoTracker 400.png" Width="75" HorizontalAlignment="Left"/>
+            <StackPanel Margin="0, 15, 0, 0" Grid.Row="1" Orientation="Horizontal">
+                <Image Source="/Assets/CryptoTracker 400.png" Width="80" HorizontalAlignment="Left"/>
+                <StackPanel Margin="10, 0">
+                    <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
+                    <TextBlock Text="Made with ❤ by an engineering student." FontWeight="Light"/>
+                    <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
+                    <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
+                        Content    ="http://ismaelestalayo.github.io/" 
+                        Margin="0, -6, 0, 0"
+                        Foreground="{ThemeResource HyperlinkButtonForeground}"
+                        FontWeight="Light"/>
 
-                <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
-                <TextBlock Text="Made with ❤ by an engineering student." FontWeight="Light"/>
-                <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
-                <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
-                    Content    ="http://ismaelestalayo.github.io/" 
-                    Margin="0, -6, 0, 0"
-                    Foreground="{ThemeResource HyperlinkButtonForeground}"
-                    FontWeight="Light"/>
+                </StackPanel>
             </StackPanel>
 
         </Grid>
