@@ -1,8 +1,8 @@
 # CryptoTracker
-A simple yet powerful crypto-currency tracker UWP. Keep track of cryptocoins 
+A simple yet powerful crypto-currency tracker UWP.
 
 - Adjustable charts to show last hour/day/week/month... 
-- Supports Bitcoin, Ethereum and Litecoin (with more to come)
+- Supports Bitcoin, Ethereum, Litecoin and Ripple (with more to come)
 - Currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
 - Beautiful light and dark theme for you to choose!
 
@@ -22,19 +22,20 @@ A simple yet powerful crypto-currency tracker UWP. Keep track of cryptocoins
 
 ## Mobile version:
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_btcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ltcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ethD.png?raw=true" width = "30%"/>
+<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_btcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ethD.png?raw=true" width = "30%"/>
 
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_portfolioL.png?raw=true" width = "30%"/>
 
 # Changelog:
-#### 2.0.2:
-- Added GBP, AUD, JPY and INR
+#### 2.2:
+- Added Ripple (XRP) support
+- Fixed portfolio not scrolling
 
 #### 2.0:
 - New logo, name and fluent UI
 - Last hour chart refresh automatically
-- Fixed portfolio bug
 - WIP Live tile
+- Added GBP, AUD, JPY and INR
 
 #### 1.5:
 - Improved the whole UI (tons of details)
@@ -83,7 +84,10 @@ A simple yet powerful crypto-currency tracker UWP. Keep track of cryptocoins
 # Suggest anything at:
 
  Mail: ismael.em@outlook.com
+ 
+ Reddit: [r/CryptoTracker](https://www.reddit.com/r/CryptoTracker/)
 
  Twitter: [@isma_estalayo](https://twitter.com/isma_estalayo)
+
 
 
