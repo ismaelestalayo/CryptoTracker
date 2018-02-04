@@ -22,6 +22,8 @@ A simple yet powerful crypto-currency tracker UWP.
 
 ## Mobile version:
 
+<img src="Screenshots/promo_phone.gif" width="50%">
+
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_btcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ethD.png?raw=true" width = "30%"/>
 
 <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_portfolioL.png?raw=true" width = "30%"/>
@@ -88,6 +90,3 @@ A simple yet powerful crypto-currency tracker UWP.
  Reddit: [r/CryptoTracker](https://www.reddit.com/r/CryptoTracker/)
 
  Twitter: [@isma_estalayo](https://twitter.com/isma_estalayo)
-
-
-
