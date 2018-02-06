@@ -7,28 +7,34 @@ A simple yet powerful crypto-currency tracker UWP.
 - Beautiful light and dark theme for you to choose!
 
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/promo_transparent.png?raw=true" width = "130%"/>
+<img src="Screenshots/promo_transparent.png?raw=true" width = "130%"/>
 
 ## PC Version
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_HomeL.png?raw=true" width = "80%"/>
+<img src="Screenshots/PC_HomeL.png" width = "80%"/>
 
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ethLL.png?raw=true" width = "80%"/>
+<img src="Screenshots/PC_btcL.png" width = "80%"/>
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_ltcD.png?raw=true" width = "80%"/>
+<img src="Screenshots/PC_ethL.png" width = "80%"/>
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/PC_portfolioL.png?raw=true" width = "80%"/>
+<img src="Screenshots/PC_ltcL.png" width = "80%"/>
 
 ## Mobile version:
 
 <img src="Screenshots/promo_phone.gif" width="40%">
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_btcL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_ethD.png?raw=true" width = "30%"/>
+<img src="Screenshots/Phone_homeL.png" width = "30%"/> <img src="Screenshots/Phone_btcL.png" width = "30%"/> <img src="Screenshots/Phone_ethD.png" width = "30%"/>
 
-<img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_homeL.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_settingsD.png?raw=true" width = "30%"/> <img src="https://github.com/ismaelestalayo/CoinBase/blob/master/Screenshots/Phone_portfolioL.png?raw=true" width = "30%"/>
+<img src="Screenshots/Phone_homeL.png" width = "30%"/> <img src="Screenshots/Phone_settingsD.png" width = "30%"/> <img src="Screenshots/Phone_portfolioL.png" width = "30%"/>
 
 # Changelog:
+#### 2.2:
+- Added 100 altcoins! (try using the search icon)
+- Richer settings page
+- Be sure to check out the new subreddit
+- Refined UI
+
 #### 2.2:
 - Added Ripple (XRP) support
 - Fixed portfolio not scrolling
