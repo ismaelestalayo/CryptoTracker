@@ -75,6 +75,17 @@ namespace CryptoTracker {
             UpdateEarnings();
             SavePortfolio();
 
+            List<double> pie = new List<double>();
+
+            if (MyListView.Items.Count == 0)
+                pie.Add(100);
+
+            for (int i = 0; i < MyListView.Items.Count; i++) {
+                pie.Add( double.Parse(dataList[i].Earnings) );
+            }
+
+            portfolioPieChart.Series[0].ItemsSource = pie;
+
         }
 
         private void UpdateEarnings() {
