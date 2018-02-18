@@ -187,7 +187,7 @@
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <telerik:RadPieChart Grid.Row="4" x:Name="portfolioPieChart" PaletteName="DefaultDark">
+        <telerik:RadPieChart Grid.Row="4" x:Name="portfolioPieChart" PaletteName="DefaultDark" Visibility="Collapsed">
             <telerik:PieSeries ShowLabels="True">
                 <telerik:PieSeries.ValueBinding>
                     <telerik:PropertyNameDataPointBinding PropertyName="Value"/>

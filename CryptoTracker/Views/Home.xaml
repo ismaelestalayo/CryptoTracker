@@ -95,7 +95,7 @@
                 </controls:Loading>
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
-                    <Image Source="/Assets/iconBTCc.png" Width="25" Margin="2"/>
+                    <Image Source="/Assets/iconBTC.png" Width="25" Margin="2"/>
                     <TextBlock Text="Bitcoin" Style="{ThemeResource TitleTextBlockStyle}"
                            FontWeight="ExtraLight" Margin="5, -2"/>
                 </StackPanel>
@@ -150,7 +150,7 @@
                 </controls:Loading>
 
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Assets/iconETHc.png" Width="25" Margin="2"/>
+                    <Image Source="/Assets/iconETH.png" Width="25" Margin="2"/>
                     <TextBlock Text="Ethereum" Style="{ThemeResource TitleTextBlockStyle}"
                            FontWeight="ExtraLight" Margin="5, -2"/>
                 </StackPanel>
@@ -206,7 +206,7 @@
                 </controls:Loading>
 
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Assets/iconLTCc.png" Width="25" Margin="2"/>
+                    <Image Source="/Assets/iconLTC.png" Width="25" Margin="2"/>
                     <TextBlock Text="Litecoin" Style="{ThemeResource TitleTextBlockStyle}"
                             FontWeight="ExtraLight" Margin="5, -2"/>
                 </StackPanel>
@@ -262,7 +262,7 @@
                 </controls:Loading>
 
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Assets/iconXRPc.png" Width="25" Margin="2"/>
+                    <Image Source="/Assets/iconXRP.png" Width="25" Margin="2"/>
                     <TextBlock Text="Ripple" Style="{ThemeResource TitleTextBlockStyle}"
                             FontWeight="ExtraLight" Margin="5, -2"/>
                 </StackPanel>

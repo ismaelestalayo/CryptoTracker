@@ -7,7 +7,6 @@
         <ResourceDictionary>
             <SolidColorBrush x:Key="coinColor" Color="#2A2A2A"/>
             <SolidColorBrush x:Key="coinColorT" Color="#2A2A2A" Opacity="0.4"/>
-            <SolidColorBrush x:Key="coinColorL" Color="#2A2A2A"/>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Buttons.xaml" />

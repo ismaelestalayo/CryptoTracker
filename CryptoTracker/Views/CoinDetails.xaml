@@ -122,7 +122,7 @@
                         </telerik:ChartTrackBallBehavior.LineStyle>
                         <telerik:ChartTrackBallBehavior.InfoStyle>
                             <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                                <Setter Property="Background" Value="{StaticResource coinColorL}"/>
+                                <Setter Property="Background" Value="{StaticResource coinColorT}"/>
                                 <Setter Property="Foreground" Value="Black"/>
                                 <Setter Property="BorderBrush" Value="{StaticResource coinColor}"/>
                             </Style>

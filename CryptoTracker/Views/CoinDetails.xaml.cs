@@ -37,57 +37,46 @@ namespace CryptoTracker {
 
             Description.Text = App.GetCoinDescription(crypto);
 
+            try {
+                cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/icon" + crypto.ToUpper() + ".png"));
+            } catch {
+                cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconNULL.png"));
+            }
+
+            try {
+                ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[ crypto.ToUpper() + "_color"]).Color;
+                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_colorT"]).Color;
+            } catch {
+                ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = Windows.UI.Color.FromArgb(255, 43, 42, 42);
+                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = Windows.UI.Color.FromArgb(102, 43, 42, 42);
+            }
+
             switch (crypto) {
                 case "BTC":
-                    cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconBTCc.png"));
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["BTC_color"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["BTC_colorT"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["BTC_colorL"]).Color;
-                    
                     Website.Text = "bitcoin.org/";
                     Twitter.Text = "#Bitcoin";
                     Reddit.Text = "r/bitcoin";
                     break;
 
                 case "ETH":
-                    cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconETHc.png"));
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["ETH_color"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["ETH_colorT"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["ETH_colorL"]).Color;
-                    
                     Website.Text = "ethereum.org/";
                     Twitter.Text = "@ethereumproject";
                     Reddit.Text = "r/ethereum";
                     break;
 
                 case "LTC":
-                    cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconLTCc.png"));
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["LTC_color"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["LTC_colorT"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["LTC_colorL"]).Color;
-                    
                     Website.Text = "litecoin.org/";
                     Twitter.Text = "@litecoinproject";
                     Reddit.Text = "r/litecoin";
                     break;
 
                 case "XRP":
-                    cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconXRPc.png"));
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["XRP_color"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorT"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = ((SolidColorBrush)App.Current.Resources["XRP_colorL"]).Color;
-                    
                     Website.Text = "ripple.com/";
                     Twitter.Text = "@ripple";
                     Reddit.Text = "r/ripple";
                     break;
 
-                default:
-                    cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconNULLc.png"));
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = Windows.UI.Color.FromArgb(255, 43, 42, 42);
-                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = Windows.UI.Color.FromArgb(120, 43, 42, 42);
-                    ((SolidColorBrush)App.Current.Resources["coinColorL"]).Color = Windows.UI.Color.FromArgb(255, 63, 62, 62);
-                    
+                default:                    
                     Website.Text = "";
                     Twitter.Text = "";
                     Reddit.Text = "";
