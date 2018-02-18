@@ -148,9 +148,15 @@
     <Content Include="Assets\CryptoTracker 400.png" />
     <Content Include="Assets\CryptoTracker Wide.png" />
     <Content Include="Assets\CryptoTrackerT 400.png" />
+    <Content Include="Assets\iconBCH.png" />
     <Content Include="Assets\iconBTC.png" />
+    <Content Include="Assets\iconDASH.png" />
+    <Content Include="Assets\iconEOS.png" />
+    <Content Include="Assets\iconETC.png" />
     <Content Include="Assets\iconETH.png" />
+    <Content Include="Assets\iconIOT.png" />
     <Content Include="Assets\iconLTC.png" />
+    <Content Include="Assets\iconNEO.png" />
     <Content Include="Assets\iconNULL.png" />
     <Content Include="Assets\iconXRP.png" />
     <Content Include="Assets\Outlook.png" />

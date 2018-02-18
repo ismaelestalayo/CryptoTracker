@@ -4,26 +4,36 @@
     
     <SolidColorBrush x:Key="BTC_color"		    Color="#FFB119"/>
     <SolidColorBrush x:Key="BTC_colorT"         Color="#FFB119" Opacity="0.4" />
-    <SolidColorBrush x:Key="BTC_colorL" 	    Color="#f6dfb1"/>
     
     <SolidColorBrush x:Key="ETH_color"		    Color="#6F7CBA"/>
     <SolidColorBrush x:Key="ETH_colorT"         Color="#6F7CBA" Opacity="0.4" />
-    <SolidColorBrush x:Key="ETH_colorL"         Color="#cbcfe1"/>
     
     <SolidColorBrush x:Key="LTC_color"		    Color="#B5B5B5"/>
     <SolidColorBrush x:Key="LTC_colorT"		    Color="#B5B5B5" Opacity="0.4"/>
-    <SolidColorBrush x:Key="LTC_colorL"         Color="#e0e0e0"/>
     
     <SolidColorBrush x:Key="XRP_color"		    Color="#1277A8"/>
     <SolidColorBrush x:Key="XRP_colorT"		    Color="#1277A8" Opacity="0.4"/>
-    <SolidColorBrush x:Key="XRP_colorL"         Color="#36afea"/>
 
+    <SolidColorBrush x:Key="IOT_color"          Color="#04A997"/>
+    <SolidColorBrush x:Key="IOT_colorT"         Color="#04A997" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="BCH_color"          Color="#F08B16"/>
+    <SolidColorBrush x:Key="BCH_colorT"         Color="#F08B16" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="ETC_color"          Color="#4C9172"/>
+    <SolidColorBrush x:Key="ETC_colorT"         Color="#4C9172" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="NEO_color"          Color="#58BF00"/>
+    <SolidColorBrush x:Key="NEO_colorT"         Color="#58BF00" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="DASH_color"         Color="#0076C0"/>
+    <SolidColorBrush x:Key="DASH_colorT"        Color="#0076C0" Opacity="0.4"/>
     
     
+
+
     <SolidColorBrush x:Key="pastelRed"          Color="#FF4040"/> <!-- 255, 65, 65 -->
     <SolidColorBrush x:Key="pastelGreen"        Color="#00C060"/> <!--  0, 192, 96 -->
-
     <SolidColorBrush x:Key="MainBackground"     Color="#00cc6a"/>
     <SolidColorBrush x:Key="SecondBackground"   Color="#00cc6a"/>
-
 </ResourceDictionary>
