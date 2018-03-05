@@ -80,7 +80,7 @@
 
             <!-- ###################################################################################################################
             ##### mainGrid BTC ##################################################################################################### -->
-            <Grid Grid.Row="1" BorderBrush="{StaticResource BTC_color}" Tapped="Tapped_BTC" Style="{StaticResource mainGrid}">
+            <Grid Grid.Row="1" Tapped="Tapped_BTC" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -135,7 +135,7 @@
 
             <!-- ###################################################################################################################
             ##### mainGrid ETH ##################################################################################################### -->
-            <Grid Grid.Row="2" BorderBrush="{StaticResource ETH_color}" Tapped="Tapped_ETH" Style="{StaticResource mainGrid}">
+            <Grid Grid.Row="2" Tapped="Tapped_ETH" Style="{StaticResource mainGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>

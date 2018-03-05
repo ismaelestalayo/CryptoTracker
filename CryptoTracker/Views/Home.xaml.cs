@@ -170,7 +170,7 @@ namespace CryptoTracker {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        async private Task UpdateCoin(string crypto) {
+        private async Task UpdateCoin(string crypto) {
             switch (crypto) {
                 case "BTC":
                     BTC_curr.Text = App.GetCurrentPrice(crypto, "defaultMarket").ToString() + App.coinSymbol;

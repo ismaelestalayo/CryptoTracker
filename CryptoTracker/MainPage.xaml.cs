@@ -96,7 +96,7 @@ namespace CryptoTracker {
         }
         private void PortfolioButton_Click(object sender, RoutedEventArgs e) {
             if(rootFrame.SourcePageType.Name != "Portfolio") {
-                rootFrame.Navigate(typeof(Portfolio));
+                rootFrame.Navigate(typeof(test));
                 Analytics.TrackEvent("Section_Portflio");
             } else {
                 rootFrame.Navigate(typeof(Home));
