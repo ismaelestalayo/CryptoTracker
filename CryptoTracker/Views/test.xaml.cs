@@ -13,33 +13,29 @@ namespace CryptoTracker.Views {
     public sealed partial class test : Page {
 
         static ObservableCollection<homeCoinsClass> homeCoinList { get; set; }
-        public ObservableCollection<ChartPlotInfo> ChartPlotInfos { get; set; }
         private string diff;
-        private string crypto = "BTC";
+        public string crypto = "BTC";
 
         public test() {
             this.InitializeComponent();
 
             homeCoinList = new ObservableCollection<homeCoinsClass>();
 
-            updateChartAsync("BTC").ConfigureAwait(true);
-            
+
+            for (int i = 0; i < App.pinnedCoins.Count; i++) {
+                updateChartAsync(App.pinnedCoins[i] ).ConfigureAwait(true);
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        private async Task updateChartAsync(string crypto) {
-            await App.GetHisto(crypto, "minute", 60);
+        private async Task updateChartAsync(string c) {
+            await App.GetHisto(c, "minute", 60);
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
             for (int i = 0; i < App.historic.Count; ++i) {
                 App.ChartDataObject obj = new App.ChartDataObject {
                     Date = App.historic[i].DateTime,
                     Value = (App.historic[i].Low + App.historic[i].High) / 2,
-                    Low = App.historic[i].Low,
-                    High = App.historic[i].High,
-                    Open = App.historic[i].Open,
-                    Close = App.historic[i].Close,
-                    Volume = App.historic[i].Volumefrom
                 };
                 data.Add(obj);
             }
@@ -58,25 +54,11 @@ namespace CryptoTracker.Views {
                 diff = "▲" + d.ToString() + "%";
             }
 
-            SplineAreaSeries spline = new SplineAreaSeries();
-            spline.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-            spline.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            spline.ItemsSource = data;
-
-            //RadCartesianChart chart = new RadCartesianChart();
-            //chart.HorizontalAxis = new CategoricalAxis();
-            //chart.VerticalAxis = new LinearAxis();
-            //chart.Series.Add(spline);
-            
-
             homeCoinList.Add(new homeCoinsClass {
-                _cryptoName = crypto,
-                _priceCurr = App.GetCurrentPrice(crypto, "defaultMarket").ToString() + App.coinSymbol,
+                _cryptoName = c,
+                _priceCurr = App.GetCurrentPrice(c, "defaultMarket").ToString() + App.coinSymbol,
                 _priceDiff = diff,
-                _splineAreaSeries = spline
             });
-
-            
 
             homeListView.ItemsSource = homeCoinList;
         }
@@ -84,8 +66,5 @@ namespace CryptoTracker.Views {
 
     }
 
-    public class ChartPlotInfo {
-        public double Value { get; set; }
-        public string Category { get; set; }
-    }
 }
+

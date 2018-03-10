@@ -30,10 +30,7 @@
 
     <StackPanel Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" x:Name="mainStackPanel">
         <ScrollViewer Grid.Row="3">
-            <ListView x:Name="homeListView" 
-                      Background="Transparent" 
-                      SelectionMode="Single">
-
+            <ListView x:Name="homeListView" Background="Transparent" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
@@ -51,42 +48,10 @@
                                 <TextBlock Name="priceDiff" Text="{Binding _priceDiff}" Style="{StaticResource diffTextStyle}"/>
                             </StackPanel>
 
-                            <telerik:RadCartesianChart x:Name="testChart" Grid.Row="1" Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
-                                <telerik:RadCartesianChart.Grid>
-                                    <telerik:CartesianChartGrid MajorLinesVisibility="None" />
-                                </telerik:RadCartesianChart.Grid>
+                            <local:ChartUserControl x:Name="myUserControl" Grid.Row="1"/>
 
-                                <telerik:RadCartesianChart.HorizontalAxis>
-                                    <telerik:DateTimeContinuousAxis
-						                x:Name="chart_DateTimeAxis"
-                                        Visibility="Collapsed"/>
-                                </telerik:RadCartesianChart.HorizontalAxis>
-
-                                <telerik:RadCartesianChart.VerticalAxis>
-                                    <telerik:LinearAxis 
-                                        x:Name="chart_verticalAxis"
-                                        Visibility="Collapsed"
-                                        DesiredTickCount="5"
-                                        HorizontalLocation="Left">
-                                    </telerik:LinearAxis>
-                                </telerik:RadCartesianChart.VerticalAxis>
-
-                                <telerik:SplineAreaSeries
-					                Stroke="{StaticResource BTC_color}"
-                                    ItemsSource="{Binding _testSource}"
-					                StrokeThickness="1"
-					                Fill="{StaticResource BTC_colorT}">
-                                    <telerik:SplineAreaSeries.ValueBinding>
-                                        <telerik:PropertyNameDataPointBinding PropertyName="Value"/>
-                                    </telerik:SplineAreaSeries.ValueBinding>
-                                    <telerik:SplineAreaSeries.CategoryBinding>
-                                        <telerik:PropertyNameDataPointBinding PropertyName="Category"/>
-                                    </telerik:SplineAreaSeries.CategoryBinding>
-                                </telerik:SplineAreaSeries>
-
-
-                            </telerik:RadCartesianChart>
                         </Grid>
+                        
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
@@ -97,5 +62,6 @@
                 </ListView.ItemContainerStyle>
             </ListView>
         </ScrollViewer>
+
     </StackPanel>
 </Page>

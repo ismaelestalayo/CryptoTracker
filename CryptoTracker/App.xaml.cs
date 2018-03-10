@@ -27,6 +27,7 @@ namespace CryptoTracker {
         internal static int pivotIndex = 0;
 
         internal static List<string> coinList = new List<string>();
+        internal static List<string> pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC" });
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
         internal static List<JSONexchanges> exchanges = new List<JSONexchanges>();
@@ -95,6 +96,7 @@ namespace CryptoTracker {
                 localSettings.Values["Theme"] = "Light";
                 localSettings.Values["Coin"] = "EUR";
                 this.RequestedTheme = ApplicationTheme.Light;
+                pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC" });
             }
 
             this.InitializeComponent();
