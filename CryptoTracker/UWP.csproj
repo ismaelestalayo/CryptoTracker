@@ -122,8 +122,8 @@
     <Compile Include="Views\EditWatchlist.xaml.cs">
       <DependentUpon>EditWatchlist.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
+    <Compile Include="Views\HomeOLD.xaml.cs">
+      <DependentUpon>HomeOLD.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Portfolio.xaml.cs">
       <DependentUpon>Portfolio.xaml</DependentUpon>
@@ -138,8 +138,8 @@
     <Compile Include="Views\News.xaml.cs">
       <DependentUpon>News.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\test.xaml.cs">
-      <DependentUpon>test.xaml</DependentUpon>
+    <Compile Include="Views\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WebVieww.xaml.cs">
       <DependentUpon>WebVieww.xaml</DependentUpon>
@@ -243,7 +243,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Home.xaml">
+    <Page Include="Views\HomeOLD.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -283,7 +283,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\test.xaml">
+    <Page Include="Views\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

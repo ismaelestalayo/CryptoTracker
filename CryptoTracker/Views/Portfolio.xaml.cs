@@ -9,7 +9,6 @@ using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
 namespace CryptoTracker {
-
     public partial class Portfolio : Page {
 
         static ObservableCollection<PurchaseClass> dataList { get; set; }

@@ -27,7 +27,7 @@ namespace CryptoTracker {
         internal static int pivotIndex = 0;
 
         internal static List<string> coinList = new List<string>();
-        internal static List<string> pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC" });
+        internal static List<string> pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "ADA", "BCH", "XRP", "LTC"});
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
         internal static List<JSONexchanges> exchanges = new List<JSONexchanges>();
@@ -155,7 +155,7 @@ namespace CryptoTracker {
                 var data = GetJSONAsync(uri).Result;
                 return Math.Round((float)data[coin], 2);
                 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 return 0;
             }
         }
@@ -173,7 +173,7 @@ namespace CryptoTracker {
                     coinList.Add( data["Data"][i]["CoinInfo"]["Name"].ToString() );
                 }
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
@@ -197,7 +197,7 @@ namespace CryptoTracker {
                 JSONhistoric.HandleHistoricJSON(data, crypto);                
                 
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
@@ -264,7 +264,7 @@ namespace CryptoTracker {
 
                 return data;
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 return "No description found for this coin.";
             }
         }

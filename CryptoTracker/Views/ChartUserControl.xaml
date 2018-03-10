@@ -31,9 +31,8 @@
                 </telerikChart:RadCartesianChart.VerticalAxis>
 
                 <telerikChart:SplineAreaSeries
-                    Stroke="{StaticResource BTC_color}"
-                    StrokeThickness="1"
-                    Fill="{StaticResource BTC_colorT}">
+                    x:Name="splineAreaSerie"
+                    StrokeThickness="1">
                 </telerikChart:SplineAreaSeries>
             </telerikChart:RadCartesianChart>
         </Grid>

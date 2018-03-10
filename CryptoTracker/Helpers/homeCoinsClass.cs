@@ -1,22 +1,25 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using Telerik.UI.Xaml.Controls.Chart;
 
 namespace CryptoTracker.Helpers {
 
     [DataContractAttribute()]
-    internal class homeCoinsClass : INotifyPropertyChanged {
+    internal class HomeCoinsClass : INotifyPropertyChanged{
 
         public string _cryptoName { get; set; }
-        public string _priceCurr { get; set; }
         public string _priceDiff { get; set; }
-        public RadCartesianChart _chart { get; set; }
-        public SplineAreaSeries _splineAreaSeries { get; set; }
-        public SplineAreaSeries _testSource { get; set; }
+        public string _crypto { get; set; }
+        public string _iconSrc { get; set; }
+        public string curr;
+        public string _priceCurr {
+            get { return curr; }
+            set { if (value != curr) { curr = value; NotifyPropertyChanged("Current"); } }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
+
 
         public void NotifyPropertyChanged([CallerMemberName]string propertyName = "") {
             if (PropertyChanged != null) {
