@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 namespace CryptoTracker {
     public sealed partial class CoinDetails : Page {
 
-        private static string crypto;
+        internal static string crypto { get; set; }
         private static int    limit = 60;
         private static string timeSpan = "hour";
         private string Supply = App.stats.Supply;

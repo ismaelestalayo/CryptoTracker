@@ -15,20 +15,21 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <CommandBar x:Name="TopCommandBar" Grid.Row="0" OverflowButtonVisibility="Collapsed" 
+        <CommandBar x:Name="TopCommandBar" Grid.Row="0" OverflowButtonVisibility="Auto" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
             Margin="0, 30, 0, 0"
-            Visibility="Collapsed">
+            Visibility="Visible">
 
-            <AppBarButton Icon="Find"        Click="EditButton_Click" />
-            <AppBarButton Icon="Sync"        Click="UpdateButton_Click" />
-            
-            <AppBarSeparator/>
-            
-            <AppBarButton Icon="Home"        Click="Home_Click" />
-            <AppBarButton Icon="PreviewLink" Click="News_Click" />
-            <AppBarButton Icon="Shop"        Click="PortfolioButton_Click" />
-            <AppBarButton Icon="Setting"     Click="SettingsButton_Click"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Find"       Click="SearchButton_Click"      Label="Search"/>
+                <AppBarButton Icon="Sync"       Click="UpdateButton_Click"      Label="Update"/>
+                <AppBarButton Icon="Pin"        Click="PinButton_Click"         Label="Pin"/>
+            </CommandBar.SecondaryCommands>
+
+            <AppBarButton Icon="Home"           Click="Home_Click"              Label="Home"/>
+            <AppBarButton Icon="PreviewLink"    Click="News_Click"              Label="News"/>
+            <AppBarButton Icon="Shop"           Click="PortfolioButton_Click"   Label="Portfolio"/>
+            <AppBarButton Icon="Setting"        Click="SettingsButton_Click"    Label="Settings"/>
         </CommandBar>
         
         <Frame Grid.Row="1" Name="rootFrame" 
@@ -38,17 +39,18 @@
 
         <CommandBar x:Name="BottomCommandBar" Grid.Row="2" OverflowButtonVisibility="Auto" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Visibility="Collapsed" >
+            Visibility="Visible" >
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Find"        Click="EditButton_Click"   Label="Search coin"/>
-                <AppBarButton Icon="Sync"        Click="UpdateButton_Click" Label="Update"/>
+                <AppBarButton Icon="Find"       Click="SearchButton_Click"      Label="Search"/>
+                <AppBarButton Icon="Sync"       Click="UpdateButton_Click"      Label="Update"/>
+                <AppBarButton Icon="Pin"        Click="UpdateButton_Click"      Label="Pin"/>
             </CommandBar.SecondaryCommands>
 
-            <AppBarButton Icon="Home"        Click="Home_Click"             Label="Home"/>
-            <AppBarButton Icon="PreviewLink" Click="News_Click"             Label="News"/>
-            <AppBarButton Icon="Shop"        Click="PortfolioButton_Click"  Label="Potfolio"/>
-            <AppBarButton Icon="Setting"     Click="SettingsButton_Click"   Label="Settings"/>
+            <AppBarButton Icon="Home"           Click="Home_Click"              Label="Home"/>
+            <AppBarButton Icon="PreviewLink"    Click="News_Click"              Label="News"/>
+            <AppBarButton Icon="Shop"           Click="PortfolioButton_Click"   Label="Potfolio"/>
+            <AppBarButton Icon="Setting"        Click="SettingsButton_Click"    Label="Settings"/>
         </CommandBar>
 
     </Grid>

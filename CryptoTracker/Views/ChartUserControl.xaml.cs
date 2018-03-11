@@ -34,7 +34,6 @@ namespace CryptoTracker.Views {
 
         public ChartUserControl() {
             this.InitializeComponent();
-            (this.Content as FrameworkElement).DataContext = this;
             Update();
         }
 
@@ -42,7 +41,7 @@ namespace CryptoTracker.Views {
             string c = Crypto;
             int ii = 0;
             while (c.Equals("null")) {
-                await Task.Delay(TimeSpan.FromMilliseconds(200) );
+                await Task.Delay(TimeSpan.FromMilliseconds(100) );
                 c = Crypto;
                 ii++;
             }

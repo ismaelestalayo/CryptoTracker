@@ -22,7 +22,7 @@ namespace CryptoTracker {
 
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-                TopCommandBar.Visibility = Visibility.Visible;
+                BottomCommandBar.Visibility = Visibility.Collapsed;
             }
 
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
@@ -51,7 +51,7 @@ namespace CryptoTracker {
                 //statusBar.HideAsync();
 
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
-                BottomCommandBar.Visibility = Visibility.Visible;
+                TopCommandBar.Visibility = Visibility.Collapsed; 
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
@@ -68,7 +68,9 @@ namespace CryptoTracker {
                     break;
                 case "Home":
                     var p2 = (Home)rootFrame.Content;
-                    p2.UpdateHome();
+                    //p2.UpdateHome();
+                    // TO-DO
+                    // MAKE NEW HOME UPDATE ITSELF!!
                     break;
                 case "Portfolio":
                     var p1 = (Portfolio)rootFrame.Content;
@@ -96,7 +98,7 @@ namespace CryptoTracker {
         }
         private void PortfolioButton_Click(object sender, RoutedEventArgs e) {
             if(rootFrame.SourcePageType.Name != "Portfolio") {
-                rootFrame.Navigate(typeof(test));
+                rootFrame.Navigate(typeof(Portfolio));
                 Analytics.TrackEvent("Section_Portflio");
             } else {
                 rootFrame.Navigate(typeof(Home));
@@ -122,7 +124,15 @@ namespace CryptoTracker {
             rootFrame.Navigate(typeof(WebVieww));            
         }
 
-        private void EditButton_Click(object sender, RoutedEventArgs e) {
+        private void PinButton_Click(object sender, RoutedEventArgs e) {
+            if (rootFrame.SourcePageType.Name == "CoinDetails") {
+                var x = CoinDetails.crypto;
+                if (!App.pinnedCoins.Contains(x))
+                    App.pinnedCoins.Add(x);
+            }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e) {
             rootFrame.Navigate(typeof(EditWatchlist));
         }
     }

@@ -104,7 +104,7 @@
     </Compile>
     <Compile Include="Helpers\CurrencyHelper.cs" />
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
-    <Compile Include="Helpers\homeCoinsClass.cs" />
+    <Compile Include="Helpers\HomeTileClass.cs" />
     <Compile Include="Helpers\JSONstats.cs" />
     <Compile Include="Helpers\LiveTile.cs" />
     <Compile Include="Helpers\JSONhistoric.cs" />

@@ -8,25 +8,28 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace CryptoTracker.Views {
-    public sealed partial class test : Page {
+    public sealed partial class Home : Page {
 
-        static ObservableCollection<HomeCoinsClass> homeCoinList { get; set; }
+        static ObservableCollection<HomeTileClass> homeCoinList { get; set; }
         private string diff;
         private int limit = 60;
-        private string timeSpan = "hour";
+        private string timeSpan = "minute";
 
-        public test() {
+        public Home() {
             this.InitializeComponent();
-
-            homeCoinList = new ObservableCollection<HomeCoinsClass>();
-
-            for (int i = 0; i < App.pinnedCoins.Count; i++) {
-                updateChartAsync(App.pinnedCoins[i] ).ConfigureAwait(true);
-            }
+            
+            homeCoinList = new ObservableCollection<HomeTileClass>();
+            homeListView.ItemsSource = homeCoinList;
+            uuuuuuupdate();
         }
 
+        private async void uuuuuuupdate() {
+            for (int i = 0; i < App.pinnedCoins.Count; i++) {
+                await updateChart(App.pinnedCoins[i]);
+            }
+        }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        private async Task updateChartAsync(string c) {
+        private async Task updateChart(string c) {
             await App.GetHisto(c, timeSpan, limit);
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
@@ -59,7 +62,7 @@ namespace CryptoTracker.Views {
                 iconPath = "/Assets/iconNULL.png";
             }
 
-            homeCoinList.Add(new HomeCoinsClass {
+            homeCoinList.Add(new HomeTileClass {
                 _cryptoName = c,
                 _priceCurr = App.GetCurrentPrice(c, "defaultMarket").ToString() + App.coinSymbol,
                 _priceDiff = diff,
@@ -67,10 +70,10 @@ namespace CryptoTracker.Views {
                 _iconSrc = iconPath
             });
 
-            homeListView.ItemsSource = homeCoinList;
+            //homeListView.ItemsSource = homeCoinList;
         }
 
-        private async void UpdateHome() {
+        private void testHome() {
             for (int i = 0;  i< homeListView.Items.Count; i++) {
                 homeCoinList[i]._crypto = "bobo";
                 homeCoinList[i]._cryptoName = "bobo";
@@ -113,7 +116,12 @@ namespace CryptoTracker.Views {
                     break;
 
             }
-            UpdateHome();
+            testHome();
+        }
+
+        private void homeListView_Click(object sender, ItemClickEventArgs e) {
+            var clickedItem = (HomeTileClass)e.ClickedItem;
+            this.Frame.Navigate(typeof(CoinDetails), clickedItem._crypto);
         }
     }
 

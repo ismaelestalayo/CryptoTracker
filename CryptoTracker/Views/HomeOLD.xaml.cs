@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
-    public sealed partial class Home : Page {
+    public sealed partial class HomeOLD : Page {
 
         private int    limit = 60;
         private string timeSpan = "hour";
@@ -21,7 +21,7 @@ namespace CryptoTracker {
             public float Value { get; set; }
         }
 
-        public Home() {
+        public HomeOLD() {
             this.InitializeComponent();
 
             TimeSpan period = TimeSpan.FromSeconds(45);

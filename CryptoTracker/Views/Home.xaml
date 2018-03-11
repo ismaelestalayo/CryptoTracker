@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="CryptoTracker.Views.test"
+    x:Class="CryptoTracker.Views.Home"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -69,7 +69,7 @@
             </StackPanel>
 
 
-            <ListView Grid.Row="1" x:Name="homeListView" SelectionMode="None">
+            <ListView Grid.Row="1" x:Name="homeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
@@ -80,14 +80,14 @@
 
                             <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
                                 <Image Name="coinLogo" Source="{Binding _iconSrc}" Width="25" Margin="2"/>
-                                <TextBlock Name="coinName" Text="{Binding _cryptoName}" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, -2"/>
+                                <TextBlock Name="coinName" Text="{Binding _cryptoName, Mode=TwoWay}" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, -2"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-                                <TextBlock Name="priceCurr" Text="{Binding _priceCurr}" Style="{StaticResource currTextStyle}"/>
-                                <TextBlock Name="priceDiff" Text="{Binding _priceDiff}" Style="{StaticResource diffTextStyle}"/>
+                                <TextBlock Name="priceCurr" Text="{Binding _priceCurr, Mode=TwoWay}" Style="{StaticResource currTextStyle}"/>
+                                <TextBlock Name="priceDiff" Text="{Binding _priceDiff, Mode=TwoWay}" Style="{StaticResource diffTextStyle}"/>
                             </StackPanel>
 
-                            <local:ChartUserControl x:Name="myUserControl" Crypto="{Binding _crypto}" Grid.Row="1"/>
+                            <local:ChartUserControl x:Name="myUserControl" Crypto="{Binding _crypto, Mode=TwoWay}" Grid.Row="1"/>
 
                         </Grid>
 
