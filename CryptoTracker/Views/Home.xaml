@@ -68,7 +68,13 @@
                 <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
             </StackPanel>
 
-
+            
+            
+            
+            <!-- 
+            ###################################################################################################
+            ###################################################################################################
+            ################################################################################################### -->
             <ListView Grid.Row="1" x:Name="homeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -87,7 +93,7 @@
                                 <TextBlock Name="priceDiff" Text="{Binding _priceDiff, Mode=TwoWay}" Style="{StaticResource diffTextStyle}"/>
                             </StackPanel>
 
-                            <local:ChartUserControl x:Name="myUserControl" Crypto="{Binding _crypto, Mode=TwoWay}" Grid.Row="1"/>
+                            <local:ChartUserControl x:Name="myUserControl" Crypto="{Binding _crypto}" timeSpan="{Binding _timeSpan}" limit="{Binding _limit}" Grid.Row="1"/>
 
                         </Grid>
 

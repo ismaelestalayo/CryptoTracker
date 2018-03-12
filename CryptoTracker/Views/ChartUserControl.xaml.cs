@@ -23,6 +23,14 @@ namespace CryptoTracker.Views {
             get { return (string)GetValue(CryptoProperty); }
             set { SetValueDp(CryptoProperty, value); }
         }
+        public string timeSpan {
+            get { return (string)GetValue(CryptoProperty); }
+            set { SetValueDp(CryptoProperty, value); }
+        }
+        public int limit {
+            get { return (int)GetValue(CryptoProperty); }
+            set { SetValueDp(CryptoProperty, value); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         void SetValueDp(DependencyProperty property, object value,

@@ -27,7 +27,7 @@ namespace CryptoTracker {
         internal static int pivotIndex = 0;
 
         internal static List<string> coinList = new List<string>();
-        internal static List<string> pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "ADA", "BCH", "XRP", "LTC"});
+        internal static List<string> pinnedCoins;
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
         internal static List<JSONexchanges> exchanges = new List<JSONexchanges>();
@@ -46,17 +46,19 @@ namespace CryptoTracker {
         }
 
         public App() {
-
-            string x, y;
+            
 
             TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true);
 
             try {
-                x = localSettings.Values["Theme"].ToString();
-                y = localSettings.Values["Coin"].ToString();
+                string _theme  = localSettings.Values["Theme"].ToString();
+                string _coin   = localSettings.Values["Coin"].ToString();
+                string _pinned = localSettings.Values["Pinned"].ToString();
+                pinnedCoins = new List<string>(_pinned.Split( new char[] { '|' } ));
+                pinnedCoins.Remove("");
 
-                if (x != null) {
-                    switch (x) {
+                if (_theme != null) {
+                    switch (_theme) {
                         case "Light":
                             RequestedTheme = ApplicationTheme.Light;
                             break;
@@ -65,8 +67,8 @@ namespace CryptoTracker {
                             break;
                     }
                 }
-                if (y != null) {
-                    coin = y;
+                if (_coin != null) {
+                    coin = _coin;
                     switch (coin) {
                         case "EUR":
                             coinSymbol = "€";
@@ -91,12 +93,13 @@ namespace CryptoTracker {
                 }
                 
             } catch (Exception ex){
-                // Light theme and EUR by default (first time on the app)
+                // Light theme and EUR by default and {BTC, ETH, LTC and XRP}
                 string err = ex.StackTrace;
                 localSettings.Values["Theme"] = "Light";
                 localSettings.Values["Coin"] = "EUR";
+                localSettings.Values["Pinned"] = "BTC|ETH|LTC|XRP";
                 this.RequestedTheme = ApplicationTheme.Light;
-                pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC" });
+                pinnedCoins = new List<string>(new string[] {"BTC", "ETH", "LTC", "XRP"});
             }
 
             this.InitializeComponent();

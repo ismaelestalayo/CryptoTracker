@@ -20,16 +20,18 @@ namespace CryptoTracker.Views {
             
             homeCoinList = new ObservableCollection<HomeTileClass>();
             homeListView.ItemsSource = homeCoinList;
-            uuuuuuupdate();
+            UpdateHomeListView();
+            // keep an updated list of coins
+            App.GetCoinList();
         }
 
-        private async void uuuuuuupdate() {
+        private async void UpdateHomeListView() {
             for (int i = 0; i < App.pinnedCoins.Count; i++) {
-                await updateChart(App.pinnedCoins[i]);
+                await UpdateHomeCard(App.pinnedCoins[i]);
             }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        private async Task updateChart(string c) {
+        private async Task UpdateHomeCard(string c) {
             await App.GetHisto(c, timeSpan, limit);
 
             List<App.ChartDataObject> data = new List<App.ChartDataObject>();
@@ -67,10 +69,10 @@ namespace CryptoTracker.Views {
                 _priceCurr = App.GetCurrentPrice(c, "defaultMarket").ToString() + App.coinSymbol,
                 _priceDiff = diff,
                 _crypto = c,
-                _iconSrc = iconPath
+                _iconSrc = iconPath,
+                _timeSpan = timeSpan,
+                _limit = limit
             });
-
-            //homeListView.ItemsSource = homeCoinList;
         }
 
         private void testHome() {
@@ -116,7 +118,7 @@ namespace CryptoTracker.Views {
                     break;
 
             }
-            testHome();
+            UpdateHomeListView();
         }
 
         private void homeListView_Click(object sender, ItemClickEventArgs e) {

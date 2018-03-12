@@ -9,6 +9,9 @@ namespace CryptoTracker.Helpers {
         public string _cryptoName { get; set; }
         public string _crypto { get; set; }
         public string _iconSrc { get; set; }
+        public string _timeSpan { get; set; }
+        public int _limit { get; set; }
+
         public string curr;
         public string _priceCurr {
             get { return curr; }

@@ -19,6 +19,7 @@ namespace CryptoTracker {
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
 
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
@@ -26,8 +27,6 @@ namespace CryptoTracker {
             }
 
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
 
             //Transparent buttons, with gray foreground
             titleBar.ButtonBackgroundColor         = Color.FromArgb(0, 242, 0, 242);
@@ -58,6 +57,17 @@ namespace CryptoTracker {
             rootFrame.Navigate(typeof(Home));
         }
 
+        private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e) {
+            if (rootFrame == null)
+                return;
+
+            // Navigate back if possible, and if the event has not already been handled .
+            if (rootFrame.CanGoBack && e.Handled == false) {
+                e.Handled = true;
+                rootFrame.GoBack();
+            }
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////
         internal void UpdateButton_Click(object sender, RoutedEventArgs e) {
 
@@ -80,17 +90,6 @@ namespace CryptoTracker {
 
             LiveTile l = new LiveTile();
             l.UpdateLiveTile();
-        }
-
-        private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e) {
-            if (rootFrame == null)
-                return;
-
-            // Navigate back if possible, and if the event has not already been handled .
-            if (rootFrame.CanGoBack && e.Handled == false) {
-                e.Handled = true;
-                rootFrame.GoBack();
-            }
         }
 
         private void Home_Click(object sender, RoutedEventArgs e) {
@@ -127,8 +126,17 @@ namespace CryptoTracker {
         private void PinButton_Click(object sender, RoutedEventArgs e) {
             if (rootFrame.SourcePageType.Name == "CoinDetails") {
                 var x = CoinDetails.crypto;
-                if (!App.pinnedCoins.Contains(x))
+                if (App.pinnedCoins.Contains(x)) {
+                    App.pinnedCoins.Remove(x);
+                } else {
                     App.pinnedCoins.Add(x);
+                }
+                string s = "";
+                foreach (var item in App.pinnedCoins) {
+                    s += item + "|";
+                }
+                s = s.Remove(s.Length - 1);
+                App.localSettings.Values["Pinned"] = s;
             }
         }
 
