@@ -11,9 +11,9 @@
     
     <ContentDialog.TitleTemplate>
         <DataTemplate>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Image Source="/Assets/CryptoTracker 400.png" Width="35" Height="35" Margin="0"/>
-                <TextBlock VerticalAlignment="Center" Text="Welcome" FontSize="22" Margin="10,0,0,0"/>
+                <TextBlock VerticalAlignment="Center" Text="Welcome to CryptoTracker" FontSize="22" Margin="10,0,0,0"/>
             </StackPanel>
         </DataTemplate>
     </ContentDialog.TitleTemplate>
@@ -22,22 +22,27 @@
         <StackPanel>
             <TextBlock TextWrapping="WrapWholeWords">
                 
-                <Run>Thanks for installing CryptoTracker!</Run><LineBreak/>
+                <Run>New in this version &#x1F680;</Run><LineBreak/>
+                
+                <Run FontWeight="ExtraLight"
+                     Text=" • Edit Home layout by pinning your fav coins!
+                     &#x0a; • Check the subreddit for updates and feedback.
+                     &#x0a; • Added logos and colors to more coins!
+                     &#x0a; • Bug fixes.
+                     "/> 
                 <LineBreak/>
                 
-                <Run>New in this version:</Run><LineBreak/>
-                <Run Text=" • Added 100 altcoins! (try using the search icon)." 
-                     FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" • Richer settings page." 
-                     FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" • Be sure to check the new subreddit." 
-                     FontWeight="ExtraLight"/><LineBreak/>
-                <Run Text=" • Refined UI." 
-                     FontWeight="ExtraLight"/><LineBreak/>
+                <LineBreak/>
+                <Run FontWeight="ExtraLight"
+                     Text="Thanks for installing CryptoTracker
+                     &#x0a;Ismael."/> <LineBreak/>
                 
                 <LineBreak/>
-                <Run>Any bug or suggestion, be sure to reach me through 
-                    email, Reddit, Twitter or the Windows Store (contact info on settings).</Run>
+                <Run FontWeight="ExtraLight" FontStyle="Italic">
+                    Any bug or suggestion, you can reach me through 
+                    email, Reddit, Twitter or the Windows Store (contact on the settings page).
+                </Run>
+                
             </TextBlock>
         </StackPanel>
     </ScrollViewer>

@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:local="using:CryptoTracker.Views"
     mc:Ignorable="d">
 
@@ -11,7 +12,6 @@
         <Style x:Key="currTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="Text" Value="val€"/>
             <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="Padding" Value="5, 0"/>
         </Style>
         <Style x:Key="diffTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="Text" Value="▲0%"/>
@@ -58,7 +58,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 0, 0, -15" VerticalAlignment="Bottom">
                 <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
                 <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
@@ -67,9 +67,6 @@
                 <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
                 <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
             </StackPanel>
-
-            
-            
             
             <!-- 
             ###################################################################################################
@@ -90,10 +87,37 @@
                             </StackPanel>
                             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
                                 <TextBlock Name="priceCurr" Text="{Binding _priceCurr, Mode=TwoWay}" Style="{StaticResource currTextStyle}"/>
-                                <TextBlock Name="priceDiff" Text="{Binding _priceDiff, Mode=TwoWay}" Style="{StaticResource diffTextStyle}"/>
+                                <TextBlock Name="priceDiff" Text="{Binding _priceDiff, Mode=TwoWay}" Foreground="{Binding _priceDiffFG}" Style="{StaticResource diffTextStyle}"/>
                             </StackPanel>
 
-                            <local:ChartUserControl x:Name="myUserControl" Crypto="{Binding _crypto}" timeSpan="{Binding _timeSpan}" limit="{Binding _limit}" Grid.Row="1"/>
+                            <telerikChart:RadCartesianChart x:Name="radChart" Grid.Row="1">
+                                <telerikChart:RadCartesianChart.Grid>
+                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="None"/>
+                                </telerikChart:RadCartesianChart.Grid>
+
+                                <telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:DateTimeCategoricalAxis
+                                        x:Name="radChart_horizontalAxis"
+                                        Visibility="Collapsed"/>
+                                </telerikChart:RadCartesianChart.HorizontalAxis>
+
+                                <telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:LinearAxis
+                                        x:Name="radChart_verticalAxis"
+                                        Visibility="Collapsed"
+                                        DesiredTickCount="5"
+                                        HorizontalLocation="Left"/>
+                                </telerikChart:RadCartesianChart.VerticalAxis>
+
+                                <telerikChart:SplineAreaSeries
+                                    x:Name="splineAreaSerie"
+                                    StrokeThickness="1">
+                                </telerikChart:SplineAreaSeries>
+                            </telerikChart:RadCartesianChart>
+
+                            <!-- 
+                            <local:ChartUserControl x:Name="myUserControl" Crypto="{Binding _crypto}" Window="{Binding _timeSpan}" Grid.Row="1"/>                            
+                            -->
 
                         </Grid>
 

@@ -258,17 +258,71 @@ namespace CryptoTracker {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         internal static string GetCoinDescription(string crypto) {
-            String URL = "https://krausefx.github.io/crypto-summaries/coins/" +crypto.ToLower()+ "-5.txt";
+            String URL = "https://krausefx.github.io/crypto-summaries/coins/" + crypto.ToLower() + "-5.txt";
             Uri uri = new Uri(URL);
 
             try {
                 string data = GetStringAsync(uri).Result;
-                
+
 
                 return data;
 
             } catch (Exception) {
                 return "No description found for this coin.";
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        internal async static Task GetTop100(string crypto) {
+            String URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + App.coin;
+
+            Uri uri = new Uri(URL);
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+
+            String response = "";
+
+            try {
+                httpResponse = await httpClient.GetAsync(uri);
+                httpResponse.EnsureSuccessStatusCode();
+
+                response = await httpResponse.Content.ReadAsStringAsync();
+                var data = JToken.Parse(response);
+
+                exchanges.Clear();
+                int lastIndex = ((JContainer)data["Data"]).Count;
+                for (int i = 0; i < lastIndex; i++) {
+                    exchanges.Add(JSONexchanges.GetExchanges(data["Data"][i]));
+                }
+
+            } catch (Exception ex) {
+                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+            }
+        }
+        internal async static Task GetTop100GlobalStats(string crypto) {
+            String URL = "https://api.coinmarketcap.com/v1/global/?convert=EUR" + App.coin;
+
+            Uri uri = new Uri(URL);
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+
+            String response = "";
+
+            try {
+                httpResponse = await httpClient.GetAsync(uri);
+                httpResponse.EnsureSuccessStatusCode();
+
+                response = await httpResponse.Content.ReadAsStringAsync();
+                var data = JToken.Parse(response);
+
+                exchanges.Clear();
+                int lastIndex = ((JContainer)data["Data"]).Count;
+                for (int i = 0; i < lastIndex; i++) {
+                    exchanges.Add(JSONexchanges.GetExchanges(data["Data"][i]));
+                }
+
+            } catch (Exception ex) {
+                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 
