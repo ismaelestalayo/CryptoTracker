@@ -1,9 +1,11 @@
 ﻿using CryptoTracker.Helpers;
+using CryptoTracker.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
@@ -16,6 +18,7 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
@@ -31,6 +34,7 @@ namespace CryptoTracker {
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
         internal static List<JSONexchanges> exchanges = new List<JSONexchanges>();
+        internal static GlobalData globalData = new GlobalData();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -263,8 +267,6 @@ namespace CryptoTracker {
 
             try {
                 string data = GetStringAsync(uri).Result;
-
-
                 return data;
 
             } catch (Exception) {
@@ -273,8 +275,9 @@ namespace CryptoTracker {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
-        internal async static Task GetTop100(string crypto) {
-            String URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + App.coin;
+        internal async static Task<List<Top100coin>> GetTop100() {
+            int limit = 50;
+            String URL = "https://api.coinmarketcap.com/v1/ticker/?limit=" + limit + "&convert=" + coin;
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
@@ -289,18 +292,35 @@ namespace CryptoTracker {
                 response = await httpResponse.Content.ReadAsStringAsync();
                 var data = JToken.Parse(response);
 
-                exchanges.Clear();
-                int lastIndex = ((JContainer)data["Data"]).Count;
-                for (int i = 0; i < lastIndex; i++) {
-                    exchanges.Add(JSONexchanges.GetExchanges(data["Data"][i]));
+                List<Top100coin> topCoins = new List<Top100coin>();
+                for (int i = 0; i < limit; i++) {
+                    topCoins.Add(
+                        new Top100coin {
+                            Name = data[i]["name"].ToString(),
+                            Symbol = data[i]["symbol"].ToString(),
+                            Rank = data[i]["rank"].ToString(),
+                            Price = ToKMB((double)data[i]["price_" + coin.ToLower()]) + coinSymbol,
+                            Vol24 = ToKMB((double)data[i]["24h_volume_" + coin.ToLower()]),
+                            MarketCap = ToKMB((double)data[i]["market_cap_" + coin.ToLower()]),
+                            AvailableSupply = data[i]["available_supply"].ToString(),
+                            TotalSupply      = data[i]["total_supply"].ToString(),
+                            MaxSupply = data[i]["max_supply"].ToString(),
+                            Change1h = data[i]["percent_change_1h"].ToString() + "%",
+                            Change1d = data[i]["percent_change_24h"].ToString() + "%",
+                            Change7d = data[i]["percent_change_7d"].ToString() + "%",
+                            ChangeFG = data[i]["percent_change_24h"].ToString().StartsWith("-") ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelRed"],
+                            Src             = "/Assets/icon" + data[i]["symbol"].ToString() + ".png"
+                        });
                 }
+                return topCoins;
 
             } catch (Exception ex) {
                 var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                return new List<Top100coin>();
             }
         }
-        internal async static Task GetTop100GlobalStats(string crypto) {
-            String URL = "https://api.coinmarketcap.com/v1/global/?convert=EUR" + App.coin;
+        internal async static Task<GlobalStats> GetGlobalStats() {
+            String URL = "https://api.coinmarketcap.com/v1/global/?convert=" + App.coin;
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
@@ -315,19 +335,39 @@ namespace CryptoTracker {
                 response = await httpResponse.Content.ReadAsStringAsync();
                 var data = JToken.Parse(response);
 
-                exchanges.Clear();
-                int lastIndex = ((JContainer)data["Data"]).Count;
-                for (int i = 0; i < lastIndex; i++) {
-                    exchanges.Add(JSONexchanges.GetExchanges(data["Data"][i]));
-                }
+                GlobalStats g = new GlobalStats();
+                g.currency          = coin;
+                g.totalMarketCap    = data["total_market_cap_" + coin.ToLower()].ToString();
+                g.total24Vol        = data["total_24h_volume_" + coin.ToLower()].ToString();
+                g.btcDominance      = data["bitcoin_percentage_of_market_cap"].ToString() + "%";
+                g.activeCurrencies  = data["active_currencies"].ToString();
+                g.totalMarketCap    = coinSymbol + ToKMB(double.Parse(g.totalMarketCap));
+                g.total24Vol        = coinSymbol + ToKMB(double.Parse(g.total24Vol));
+                return g;
 
             } catch (Exception ex) {
                 var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                return new GlobalStats();
             }
         }
 
+        public static string ToKMB(double num) {
+            if (num > 999999999) {
+                return num.ToString("0,,,.###B", CultureInfo.InvariantCulture);
+            } else
+            if (num > 999999) {
+                return num.ToString("0,,.##M", CultureInfo.InvariantCulture);
+            } else
+            if (num > 999) {
+                num = Math.Round(num, 2);
+                return num.ToString(CultureInfo.InvariantCulture);
+            } else {
+                num = Math.Round(num, 3);
+                return num.ToString(CultureInfo.InvariantCulture);
+            }
+        }
 
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         /// <summary>
         /// do NOT mess with async methods...
         /// 

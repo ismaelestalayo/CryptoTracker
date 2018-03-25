@@ -110,6 +110,7 @@
     <Compile Include="Helpers\JSONhistoric.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
     <Compile Include="Helpers\JSONexchanges.cs" />
+    <Compile Include="Helpers\Test.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

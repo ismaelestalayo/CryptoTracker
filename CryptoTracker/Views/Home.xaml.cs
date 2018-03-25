@@ -64,8 +64,17 @@ namespace CryptoTracker.Views {
                 await App.GetHisto(c, timeSpan, limit);
 
                 float d = 0;
-                float oldestPrice = App.historic[0].Close;
-                float newestPrice = App.historic[App.historic.Count - 1].Close;
+                float oldestPrice;
+                float newestPrice;
+                if (App.historic == null) {
+                    oldestPrice = App.historic[0].Close;
+                    newestPrice = App.historic[App.historic.Count - 1].Close;
+                } else {
+                    oldestPrice = 0;
+                    newestPrice = 0;
+                }
+
+                
                 d = (float)Math.Round(((newestPrice / oldestPrice) - 1) * 100, 2);
 
                 if (d < 0) {

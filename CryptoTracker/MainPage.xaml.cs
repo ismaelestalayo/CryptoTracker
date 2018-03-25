@@ -113,7 +113,7 @@ namespace CryptoTracker {
         }
         private void News_Click(object sender, RoutedEventArgs e) {
             if (rootFrame.SourcePageType.Name != "News") {
-                rootFrame.Navigate(typeof(News));
+                rootFrame.Navigate(typeof(Top100));
                 Analytics.TrackEvent("Section_News");
             } else {
                 rootFrame.Navigate(typeof(Home));
