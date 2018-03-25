@@ -111,7 +111,7 @@ namespace CryptoTracker {
                 rootFrame.Navigate(typeof(Home));
             }
         }
-        private void News_Click(object sender, RoutedEventArgs e) {
+        private void Top100_Click(object sender, RoutedEventArgs e) {
             if (rootFrame.SourcePageType.Name != "News") {
                 rootFrame.Navigate(typeof(Top100));
                 Analytics.TrackEvent("Section_News");
@@ -121,23 +121,6 @@ namespace CryptoTracker {
         }
         public void WebView_Click() {
             rootFrame.Navigate(typeof(WebVieww));            
-        }
-
-        private void PinButton_Click(object sender, RoutedEventArgs e) {
-            if (rootFrame.SourcePageType.Name == "CoinDetails") {
-                var x = CoinDetails.crypto;
-                if (App.pinnedCoins.Contains(x)) {
-                    App.pinnedCoins.Remove(x);
-                } else {
-                    App.pinnedCoins.Add(x);
-                }
-                string s = "";
-                foreach (var item in App.pinnedCoins) {
-                    s += item + "|";
-                }
-                s = s.Remove(s.Length - 1);
-                App.localSettings.Values["Pinned"] = s;
-            }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e) {

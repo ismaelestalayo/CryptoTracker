@@ -104,13 +104,11 @@
     </Compile>
     <Compile Include="Helpers\CurrencyHelper.cs" />
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
-    <Compile Include="Helpers\HomeTileClass.cs" />
     <Compile Include="Helpers\JSONstats.cs" />
     <Compile Include="Helpers\LiveTile.cs" />
     <Compile Include="Helpers\JSONhistoric.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
     <Compile Include="Helpers\JSONexchanges.cs" />
-    <Compile Include="Helpers\Test.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

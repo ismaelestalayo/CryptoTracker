@@ -114,11 +114,6 @@
                                     StrokeThickness="1">
                                 </telerikChart:SplineAreaSeries>
                             </telerikChart:RadCartesianChart>
-
-                            <!-- 
-                            <local:ChartUserControl x:Name="myUserControl" Crypto="{Binding _crypto}" Window="{Binding _timeSpan}" Grid.Row="1"/>                            
-                            -->
-
                         </Grid>
 
                     </DataTemplate>

@@ -5,6 +5,7 @@ using Microsoft.AppCenter.Analytics;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -34,7 +35,6 @@ namespace CryptoTracker {
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
         internal static List<JSONexchanges> exchanges = new List<JSONexchanges>();
-        internal static GlobalData globalData = new GlobalData();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -275,7 +275,7 @@ namespace CryptoTracker {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
-        internal async static Task<List<Top100coin>> GetTop100() {
+        internal async static Task<ObservableCollection<Top100coin>> GetTop100() {
             int limit = 50;
             String URL = "https://api.coinmarketcap.com/v1/ticker/?limit=" + limit + "&convert=" + coin;
 
@@ -292,31 +292,32 @@ namespace CryptoTracker {
                 response = await httpResponse.Content.ReadAsStringAsync();
                 var data = JToken.Parse(response);
 
-                List<Top100coin> topCoins = new List<Top100coin>();
+                ObservableCollection<Top100coin> topCoins = new ObservableCollection<Top100coin>();
                 for (int i = 0; i < limit; i++) {
                     topCoins.Add(
                         new Top100coin {
-                            Name = data[i]["name"].ToString(),
-                            Symbol = data[i]["symbol"].ToString(),
-                            Rank = data[i]["rank"].ToString(),
-                            Price = ToKMB((double)data[i]["price_" + coin.ToLower()]) + coinSymbol,
-                            Vol24 = ToKMB((double)data[i]["24h_volume_" + coin.ToLower()]),
-                            MarketCap = ToKMB((double)data[i]["market_cap_" + coin.ToLower()]),
+                            Name            = data[i]["name"].ToString(),
+                            Symbol          = data[i]["symbol"].ToString(),
+                            Rank            = data[i]["rank"].ToString(),
+                            Price           = ToKMB((double)data[i]["price_" + coin.ToLower()]) + coinSymbol,
+                            Vol24           = ToKMB((double)data[i]["24h_volume_" + coin.ToLower()]),
+                            MarketCap       = ToKMB((double)data[i]["market_cap_" + coin.ToLower()]),
                             AvailableSupply = data[i]["available_supply"].ToString(),
-                            TotalSupply      = data[i]["total_supply"].ToString(),
-                            MaxSupply = data[i]["max_supply"].ToString(),
-                            Change1h = data[i]["percent_change_1h"].ToString() + "%",
-                            Change1d = data[i]["percent_change_24h"].ToString() + "%",
-                            Change7d = data[i]["percent_change_7d"].ToString() + "%",
-                            ChangeFG = data[i]["percent_change_24h"].ToString().StartsWith("-") ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelRed"],
-                            Src             = "/Assets/icon" + data[i]["symbol"].ToString() + ".png"
+                            TotalSupply     = data[i]["total_supply"].ToString(),
+                            MaxSupply       = data[i]["max_supply"].ToString(),
+                            Change1h        = data[i]["percent_change_1h"].ToString() + "%",
+                            Change1d        = data[i]["percent_change_24h"].ToString() + "%",
+                            Change7d        = data[i]["percent_change_7d"].ToString() + "%",
+                            ChangeFG        = data[i]["percent_change_24h"].ToString().StartsWith("-") ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelGreen"],
+                            Src             = "/Assets/icon" + data[i]["symbol"].ToString() + ".png",
+                            FavIcon         = pinnedCoins.Contains(data[i]["symbol"].ToString()) ? "\uEB52" : "\uEB51"
                         });
                 }
                 return topCoins;
 
             } catch (Exception ex) {
                 var dontWait = await new MessageDialog(ex.Message).ShowAsync();
-                return new List<Top100coin>();
+                return new ObservableCollection<Top100coin>();
             }
         }
         internal async static Task<GlobalStats> GetGlobalStats() {

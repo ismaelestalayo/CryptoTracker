@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.Storage;
@@ -66,7 +67,7 @@ namespace CryptoTracker.Views {
                 float d = 0;
                 float oldestPrice;
                 float newestPrice;
-                if (App.historic == null) {
+                if (App.historic != null) {
                     oldestPrice = App.historic[0].Close;
                     newestPrice = App.historic[App.historic.Count - 1].Close;
                 } else {
@@ -172,5 +173,52 @@ namespace CryptoTracker.Views {
         }
     }
 
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    internal class HomeTileClass : INotifyPropertyChanged {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        void RaiseProperty(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        public string _cryptoName { get; set; }
+        public string _crypto { get; set; }
+        public string _iconSrc { get; set; }
+        public string _timeSpan { get; set; }
+        public int _limit { get; set; }
+
+
+        public string curr;
+        public string _priceCurr {
+            get { return curr; }
+            set {
+                curr = value;
+                RaiseProperty(nameof(_priceCurr));
+            }
+        }
+        private string diff;
+        public string _priceDiff {
+            get { return diff; }
+            set {
+                diff = value;
+                if (value.StartsWith("▼"))
+                    _priceDiffFG = (SolidColorBrush)App.Current.Resources["pastelRed"];
+                else
+                    _priceDiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
+                RaiseProperty(nameof(_priceDiff));
+            }
+        }
+        private SolidColorBrush fg;
+        public SolidColorBrush _priceDiffFG {
+            get { return fg; }
+            set {
+                fg = value;
+                RaiseProperty(nameof(_priceDiffFG));
+            }
+        }
+    }
 }
 

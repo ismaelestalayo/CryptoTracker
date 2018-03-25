@@ -21,13 +21,15 @@
         </Style>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <!-- 
+    ################################################################################################### -->
+    <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Padding="0 10" Margin="10" CornerRadius="0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+        <Grid Grid.Row="0" Padding="0 10" Margin="10" CornerRadius="0" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -35,8 +37,8 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="0">
-                <TextBlock Text="Market Cap." Style="{StaticResource b}"/>
-                <TextBlock Text="{Binding totalMarketCap, FallbackValue=0}" Style="{StaticResource a}"/>
+                <TextBlock Text="BTC dominance" Style="{StaticResource b}"/>
+                <TextBlock Text="{Binding btcDominance, FallbackValue=0}" Style="{StaticResource a}"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1">
@@ -45,16 +47,18 @@
             </StackPanel>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="2">
-                <TextBlock Text="BTC dominance" Style="{StaticResource b}"/>
-                <TextBlock Text="{Binding btcDominance, FallbackValue=0}" Style="{StaticResource a}"/>
-            </StackPanel>
+                <TextBlock Text="Market Cap." Style="{StaticResource b}"/>
+                <TextBlock Text="{Binding totalMarketCap, FallbackValue=0}" Style="{StaticResource a}"/>
+            </StackPanel>            
         </Grid>
 
+        <!-- 
+        ################################################################################################### -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
             <ListView x:Name="top100ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_Click">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" BorderThickness="0 1 0 0">
+                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" BorderThickness="0 1 0 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -66,28 +70,34 @@
                             <TextBlock 
                                 Grid.Column="0"
                                 Margin="0 0"
-                                Text="{Binding Rank, FallbackValue=0}" 
+                                Text="{Binding Rank, FallbackValue=0, Mode=TwoWay}" 
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center" 
                                 Opacity="0.5"/>
 
-                            <Button 
-                                Grid.Column="1" 
-                                Content="&#xEB51;" 
-                                Background="Transparent" 
-                                FontFamily="Segoe MDL2 Assets" 
+                            <Button
+                                Grid.Column="1"
+                                Content="{Binding FavIcon, Mode=OneWay}"
+                                FontFamily="Segoe MDL2 Assets"
+                                Background="Transparent"
                                 Click="Pin_click"/>
 
                             <Image 
                                 Grid.Column="2" 
                                 Source="{Binding Src}" 
                                 Width="35"/>
-                            
+
+                            <Image Grid.Column="2">
+                                <Image.Source>
+                                    <BitmapImage UriSource="{Binding LogoURL}" />
+                                </Image.Source>
+                            </Image>
+
                             <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" >
                                 <TextBlock Text="{Binding Name, FallbackValue=NULL}" FontSize="18" FontWeight="Normal"/>
                                 <TextBlock Opacity="0.7">
                                     <Run Text="{Binding Price}"/>
-                                    <Run Text="{Binding Change1d}" Foreground="{Binding ChangeFG}"/>
+                                    <Run Text="{Binding Change1d, Mode=OneWay}" Foreground="{Binding ChangeFG}"/>
                                 </TextBlock>
                             </StackPanel>
                             

@@ -23,11 +23,10 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Find"       Click="SearchButton_Click"      Label="Search"/>
                 <AppBarButton Icon="Sync"       Click="UpdateButton_Click"      Label="Update"/>
-                <AppBarButton Icon="Pin"        Click="PinButton_Click"         Label="Pin"/>
             </CommandBar.SecondaryCommands>
 
             <AppBarButton Icon="Home"           Click="Home_Click"              Label="Home"/>
-            <AppBarButton Icon="PreviewLink"    Click="News_Click"              Label="News"/>
+            <AppBarButton Icon="List"           Click="Top100_Click"            Label="Top 50"/>
             <AppBarButton Icon="Shop"           Click="PortfolioButton_Click"   Label="Portfolio"/>
             <AppBarButton Icon="Setting"        Click="SettingsButton_Click"    Label="Settings"/>
         </CommandBar>
@@ -44,11 +43,10 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Find"       Click="SearchButton_Click"      Label="Search"/>
                 <AppBarButton Icon="Sync"       Click="UpdateButton_Click"      Label="Update"/>
-                <AppBarButton Icon="Pin"        Click="UpdateButton_Click"      Label="Pin"/>
             </CommandBar.SecondaryCommands>
 
             <AppBarButton Icon="Home"           Click="Home_Click"              Label="Home"/>
-            <AppBarButton Icon="PreviewLink"    Click="News_Click"              Label="News"/>
+            <AppBarButton Icon="List"           Click="Top100_Click"            Label="Top 50"/>
             <AppBarButton Icon="Shop"           Click="PortfolioButton_Click"   Label="Potfolio"/>
             <AppBarButton Icon="Setting"        Click="SettingsButton_Click"    Label="Settings"/>
         </CommandBar>
