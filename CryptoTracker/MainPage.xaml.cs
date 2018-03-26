@@ -78,9 +78,7 @@ namespace CryptoTracker {
                     break;
                 case "Home":
                     var p2 = (Home)rootFrame.Content;
-                    //p2.UpdateHome();
-                    // TO-DO
-                    // MAKE NEW HOME UPDATE ITSELF!!
+                    p2.UpdateAllCards();
                     break;
                 case "Portfolio":
                     var p1 = (Portfolio)rootFrame.Content;
@@ -112,7 +110,7 @@ namespace CryptoTracker {
             }
         }
         private void Top100_Click(object sender, RoutedEventArgs e) {
-            if (rootFrame.SourcePageType.Name != "News") {
+            if (rootFrame.SourcePageType.Name != "Top100") {
                 rootFrame.Navigate(typeof(Top100));
                 Analytics.TrackEvent("Section_News");
             } else {

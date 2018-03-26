@@ -5,12 +5,13 @@
     xmlns:local="using:CryptoTracker.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationCacheMode="Required"
     mc:Ignorable="d">
 
     <Page.Resources>
         <Style TargetType="TextBlock" x:Key="a">
             <Setter Property="FontSize" Value="22"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="b">
@@ -63,8 +64,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="7*"/>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="4*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock 
@@ -85,7 +86,7 @@
                             <Image 
                                 Grid.Column="2" 
                                 Source="{Binding Src}" 
-                                Width="35"/>
+                                Width="35" Visibility="Collapsed"/>
 
                             <Image Grid.Column="2">
                                 <Image.Source>
@@ -102,8 +103,14 @@
                             </StackPanel>
                             
                             <StackPanel Grid.Column="4" VerticalAlignment="Center" Margin="10 0">
-                                <TextBlock Text="{Binding MarketCap, FallbackValue=0}" FontWeight="SemiBold" HorizontalAlignment="Right"/>
-                                <TextBlock Text="{Binding Vol24, FallbackValue=0}" FontWeight="Light" HorizontalAlignment="Right" Opacity="0.5"/>
+                                <TextBlock FontWeight="Bold" HorizontalAlignment="Right">
+                                    <Run Text="Cap:"/>
+                                    <Run Text="{Binding MarketCap, FallbackValue=0}"/>
+                                </TextBlock>
+                                <TextBlock FontWeight="Light" HorizontalAlignment="Right" Opacity="0.5">
+                                    <Run Text="Vol:"/>
+                                    <Run Text="{Binding Vol24, FallbackValue=0}"/>
+                                </TextBlock>
                             </StackPanel>
                         </Grid>
 

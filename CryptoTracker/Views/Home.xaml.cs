@@ -9,6 +9,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace CryptoTracker.Views {
     public sealed partial class Home : Page {
@@ -57,7 +58,13 @@ namespace CryptoTracker.Views {
             });            
         }
 
-        private async Task UpdateAllCards() {
+        internal async Task UpdateAllCards() {
+            //for (int j = 0; j < homeCoinList.Count; j++) {
+            //    ListViewItem cc = (ListViewItem)homeListView.ContainerFromItem(homeListView.Items[j]);
+            //    var loadingg = (cc.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
+            //    loadingg.IsLoading = true;
+            //}
+
             for (int i = 0; i < homeCoinList.Count; i++) {
                 string c = App.pinnedCoins[i];
 
@@ -74,7 +81,6 @@ namespace CryptoTracker.Views {
                     oldestPrice = 0;
                     newestPrice = 0;
                 }
-
                 
                 d = (float)Math.Round(((newestPrice / oldestPrice) - 1) * 100, 2);
 
@@ -87,10 +93,15 @@ namespace CryptoTracker.Views {
                 homeCoinList[i]._priceCurr = App.GetCurrentPrice(c, "defaultMarket").ToString() + App.coinSymbol;
                 homeCoinList[i]._priceDiff = diff;
 
+                
 
-                // CHARTS:
+                // LOADING BAR:
                 var item = homeListView.Items[i];
-                var container = (ListViewItem)homeListView.ContainerFromItem(item);
+                ListViewItem container = (ListViewItem)homeListView.ContainerFromItem(item);
+                var loading = (container.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
+                loading.IsLoading = true;
+                
+                // CHARTS:
                 if (container == null)
                     break;
 
@@ -126,6 +137,8 @@ namespace CryptoTracker.Views {
                     series.Fill     = (SolidColorBrush)Application.Current.Resources["null_colorT"];
                     series.Stroke   = (SolidColorBrush)Application.Current.Resources["null_color"];
                 }
+
+                loading.IsLoading = false;
             }
         }
 

@@ -15,18 +15,17 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <CommandBar x:Name="TopCommandBar" Grid.Row="0" OverflowButtonVisibility="Auto" 
+        <CommandBar x:Name="TopCommandBar" Grid.Row="0" OverflowButtonVisibility="Collapsed" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
             Margin="0, 30, 0, 0"
             Visibility="Visible">
 
-            <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Find"       Click="SearchButton_Click"      Label="Search"/>
-                <AppBarButton Icon="Sync"       Click="UpdateButton_Click"      Label="Update"/>
-            </CommandBar.SecondaryCommands>
-
+            <AppBarButton Icon="Sync"           Click="UpdateButton_Click"      Label="Update"/>
+            
+            <AppBarSeparator/>
+            
             <AppBarButton Icon="Home"           Click="Home_Click"              Label="Home"/>
-            <AppBarButton Icon="List"           Click="Top100_Click"            Label="Top 50"/>
+            <AppBarButton Icon="AllApps"        Click="Top100_Click"            Label="Top 50"/>
             <AppBarButton Icon="Shop"           Click="PortfolioButton_Click"   Label="Portfolio"/>
             <AppBarButton Icon="Setting"        Click="SettingsButton_Click"    Label="Settings"/>
         </CommandBar>
@@ -40,11 +39,10 @@
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
             Visibility="Visible" >
 
-            <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Find"       Click="SearchButton_Click"      Label="Search"/>
-                <AppBarButton Icon="Sync"       Click="UpdateButton_Click"      Label="Update"/>
-            </CommandBar.SecondaryCommands>
-
+            <AppBarButton Icon="Sync"           Click="UpdateButton_Click"      Label="Update"/>
+            
+            <AppBarSeparator/>
+            
             <AppBarButton Icon="Home"           Click="Home_Click"              Label="Home"/>
             <AppBarButton Icon="List"           Click="Top100_Click"            Label="Top 50"/>
             <AppBarButton Icon="Shop"           Click="PortfolioButton_Click"   Label="Potfolio"/>
