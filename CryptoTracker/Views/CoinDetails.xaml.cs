@@ -39,7 +39,7 @@ namespace CryptoTracker {
 
             try {
                 cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/icon" + crypto.ToUpper() + ".png"));
-            } catch {
+            } catch(Exception) {
                 cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconNULL.png"));
             }
 

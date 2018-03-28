@@ -219,6 +219,7 @@
     <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-400.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\twitter.png" />
+    <None Include="Package.xml" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
