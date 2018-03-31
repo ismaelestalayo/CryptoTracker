@@ -205,6 +205,7 @@ namespace CryptoTracker {
                 
 
             } catch (Exception) {
+                JSONhistoric.HandleHistoricJSONnull(crypto, limit);
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }

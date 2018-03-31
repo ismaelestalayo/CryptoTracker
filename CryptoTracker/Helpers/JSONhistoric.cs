@@ -3,7 +3,7 @@ using System;
 
 namespace CryptoTracker.Helpers {
 
-    internal class JSONhistoric{
+    internal class JSONhistoric {
         internal int LinuxTime;
         internal string Date { get; set; }
         internal DateTime DateTime { get; set; }
@@ -15,11 +15,31 @@ namespace CryptoTracker.Helpers {
         internal float Volumeto { get; set; }
 
         public static void HandleHistoricJSON(JToken data, string crypto) {
+
+            if (data["Response"].ToString().Equals("Error")) 
+                throw new NullReferenceException("Manually caught null coin exception.");
+            
+
             App.historic.Clear();
 
             int lastIndex = ((JContainer)data["Data"]).Count;
             for (int i = 0; i < lastIndex; i++) {
-                App.historic.Add( GetHistoricPoint(data["Data"][i]) );
+                App.historic.Add(GetHistoricPoint(data["Data"][i]));
+            }
+        }
+
+        public static void HandleHistoricJSONnull(string crypto, int limit) {
+            App.historic.Clear();
+            
+            for (int i = 0; i < limit; i++) {
+                App.historic.Add( new JSONhistoric() {
+                    Low         = 0,
+                    High        = 0,
+                    Open        = 0,
+                    Close       = 0,
+                    Volumefrom  = 0,
+                    Volumeto    = 0
+                } );
             }
         }
 

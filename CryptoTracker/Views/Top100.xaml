@@ -62,7 +62,7 @@
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" BorderThickness="0 1 0 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="6*"/>
                                 <ColumnDefinition Width="4*"/>
@@ -70,14 +70,14 @@
 
                             <TextBlock 
                                 Grid.Column="0"
-                                Margin="0 0"
-                                Text="{Binding Rank, FallbackValue=0, Mode=TwoWay}" 
-                                HorizontalAlignment="Center" 
+                                HorizontalAlignment="Center"
                                 VerticalAlignment="Center" 
+                                Text="{Binding Rank, FallbackValue=0, Mode=TwoWay}" 
                                 Opacity="0.5"/>
 
                             <Button
                                 Grid.Column="1"
+                                VerticalAlignment="Center"
                                 Content="{Binding FavIcon, Mode=OneWay}"
                                 FontFamily="Segoe MDL2 Assets"
                                 Background="Transparent"
@@ -88,7 +88,7 @@
                                 Source="{Binding Src}" 
                                 Width="35" Visibility="Collapsed"/>
 
-                            <Image Grid.Column="2">
+                            <Image Grid.Column="2" Margin="0">
                                 <Image.Source>
                                     <BitmapImage UriSource="{Binding LogoURL}" />
                                 </Image.Source>

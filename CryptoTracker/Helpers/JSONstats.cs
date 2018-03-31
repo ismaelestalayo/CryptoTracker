@@ -13,8 +13,11 @@ namespace CryptoTracker.Helpers {
         internal string Marketcap   { get; set; }
 
         public static JSONstats HandleStatsJSON(JToken data, string crypto, string coin) {
-            JSONstats a = new JSONstats();
 
+            if (data["Response"].ToString().Equals("Error"))
+                return HandleNULL();
+
+            JSONstats a = new JSONstats();
             string fromSymbol = data["DISPLAY"][crypto][coin]["FROMSYMBOL"].ToString();
             string toSymbol = data["DISPLAY"][crypto][coin]["TOSYMBOL"].ToString();
 
@@ -28,6 +31,25 @@ namespace CryptoTracker.Helpers {
             a.Volume24    = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24H"  ]).ToString("N2") + fromSymbol;
             a.Volume24To  = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24HTO"]).ToString("N2") + toSymbol;
                                                                                              
+            return a;
+        }
+
+        public static JSONstats HandleNULL() {
+            JSONstats a = new JSONstats();
+
+            string fromSymbol = "null";
+            string toSymbol = "null";
+
+            a.Open24        = toSymbol;
+            a.High24        = toSymbol;
+            a.Low24         = toSymbol;
+            a.Change24      = toSymbol;
+            a.Change24pct   = 0 + "%";
+            a.Supply        = fromSymbol;
+            a.Marketcap     = toSymbol;
+            a.Volume24      = fromSymbol;
+            a.Volume24To    = toSymbol;
+
             return a;
         }
     }
