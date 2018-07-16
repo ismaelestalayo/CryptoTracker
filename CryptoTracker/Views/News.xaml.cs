@@ -16,12 +16,14 @@ using Windows.UI.Xaml.Navigation;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace CryptoTracker.Views {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class News : Page {
         public News() {
             this.InitializeComponent();
+
+            Frame contentFrame = Window.Current.Content as Frame;
+            MainPage mp = contentFrame.Content as MainPage;
+            TextBlock t = mp.FindName("mainTitle") as TextBlock;
+            t.Text = "News";
         }
     }
 }

@@ -64,15 +64,6 @@
     
     <!-- -->
     <StackPanel>
-        
-        <StackPanel Margin="0, 5" Padding="0, -10, 0, 5">
-            <TextBlock
-                    Text="News"
-                    Margin="15, 0"
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource SubheaderTextBlockStyle}"/>
-        </StackPanel>
-
         <TextBlock Margin="10, 0" Text="News section coming soon..."/>
 
     </StackPanel>

@@ -72,7 +72,75 @@
             ###################################################################################################
             ###################################################################################################
             ################################################################################################### -->
-            <ListView x:Name="homeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
+            <ListView Grid.Row="1" x:Name="homeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <controls:Loading 
+                                x:Name="LoadingControl"
+                                Width="700"
+                                
+                                Opacity="0.5" Grid.RowSpan="3">
+                                <ContentControl>
+                                    <ProgressBar 
+                                        IsIndeterminate="True" Width="500"
+                                        HorizontalAlignment="Center"
+                                        Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
+                                        Background="Transparent"/>
+                                </ContentControl>
+                            </controls:Loading>
+
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
+                                <Image Name="coinLogo" Source="{Binding _iconSrc}" Width="25" Margin="2"/>
+                                <TextBlock Name="coinName" Text="{Binding _cryptoName, Mode=TwoWay}" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, -2"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
+                                <TextBlock Name="priceCurr" Text="{Binding _priceCurr, Mode=TwoWay}" Style="{StaticResource currTextStyle}"/>
+                                <TextBlock Name="priceDiff" Text="{Binding _priceDiff, Mode=TwoWay}" Foreground="{Binding _priceDiffFG}" Style="{StaticResource diffTextStyle}"/>
+                            </StackPanel>
+
+                            <telerikChart:RadCartesianChart x:Name="radChart" Grid.Row="1">
+                                <telerikChart:RadCartesianChart.Grid>
+                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="None"/>
+                                </telerikChart:RadCartesianChart.Grid>
+
+                                <telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:DateTimeCategoricalAxis
+                                        x:Name="radChart_horizontalAxis"
+                                        Visibility="Collapsed"/>
+                                </telerikChart:RadCartesianChart.HorizontalAxis>
+
+                                <telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:LinearAxis
+                                        x:Name="radChart_verticalAxis"
+                                        Visibility="Collapsed"
+                                        DesiredTickCount="5"
+                                        HorizontalLocation="Left"/>
+                                </telerikChart:RadCartesianChart.VerticalAxis>
+
+                                <telerikChart:SplineAreaSeries
+                                    x:Name="splineAreaSerie"
+                                    StrokeThickness="1">
+                                </telerikChart:SplineAreaSeries>
+                            </telerikChart:RadCartesianChart>
+                        </Grid>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+
+            <ListView Grid.Row="1" Grid.Column="1" x:Name="home2ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">

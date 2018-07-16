@@ -33,11 +33,10 @@ namespace CryptoTracker.Views {
         private async void InitHome() {
 
             Frame contentFrame = Window.Current.Content as Frame;
-            if (contentFrame.Content != null) {
-                MainPage mp = contentFrame.Content as MainPage;
-                TextBlock t = mp.FindName("mainTitle") as TextBlock;
-                t.Text = "Dashboard";
-            }
+            MainPage mp = contentFrame.Content as MainPage;
+            TextBlock t = mp.FindName("mainTitle") as TextBlock;
+            t.Text = "Dashboard";
+            
 
             for (int i = 0; i < App.pinnedCoins.Count; i++) {
                 await AddCoinHome(App.pinnedCoins[i]);

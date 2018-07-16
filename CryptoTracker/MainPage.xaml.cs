@@ -8,6 +8,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace CryptoTracker {
     public sealed partial class MainPage : Page {
@@ -42,20 +43,20 @@ namespace CryptoTracker {
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
-            rootFrame.Navigate(typeof(Home));
+            //ContentFrame.Navigate(typeof(Home));
 
             // Extend acrylic
             ExtendAcrylicIntoTitleBar();
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e) {
-            if (rootFrame == null)
+            if (ContentFrame == null)
                 return;
 
             // Navigate back if possible, and if the event has not already been handled .
-            if (rootFrame.CanGoBack && e.Handled == false) {
+            if (ContentFrame.CanGoBack && e.Handled == false) {
                 e.Handled = true;
-                rootFrame.GoBack();
+                ContentFrame.GoBack();
             }
         }
 
@@ -76,17 +77,17 @@ namespace CryptoTracker {
         ////////////////////////////////////////////////////////////////////////////////////////
         internal void UpdateButton_Click(object sender, RoutedEventArgs e) {
 
-            switch (rootFrame.SourcePageType.Name) {
+            switch (ContentFrame.SourcePageType.Name) {
                 case "CoinDetails":
-                    var p0 = (CoinDetails)rootFrame.Content;
+                    var p0 = (CoinDetails)ContentFrame.Content;
                     p0.UpdatePage();
                     break;
                 case "Home":
-                    var p2 = (Home)rootFrame.Content;
+                    var p2 = (Home)ContentFrame.Content;
                     p2.UpdateAllCards();
                     break;
                 case "Portfolio":
-                    var p1 = (Portfolio)rootFrame.Content;
+                    var p1 = (Portfolio)ContentFrame.Content;
                     p1.UpdatePortfolio();
                     break;
             }
@@ -95,25 +96,34 @@ namespace CryptoTracker {
             l.UpdateLiveTile();
         }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e) {
-            rootFrame.Navigate(typeof(EditWatchlist));
+
+        private void NavView_Loaded(object sender, RoutedEventArgs e) {
+            // set the initial SelectedItem 
+            NavView.SelectedItem = NavView.MenuItems[0];
         }
 
-        private void mainNavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-            switch (((ContentControl)args.SelectedItem).Content) {
-                case "Home":
-                    rootFrame.Navigate(typeof(Home));
-                    break;
-                case "Top 50":
-                    rootFrame.Navigate(typeof(Top100));
-                    break;
-                case "Portfolio":
-                    rootFrame.Navigate(typeof(Portfolio));
-                    //Analytics.TrackEvent("Section_News");
-                    break;
-                case "Settings":
-                    rootFrame.Navigate(typeof(Settings));
-                    break;
+        private void NavView_Sync_Tapped(object sender, TappedRoutedEventArgs e) {
+            UpdateButton_Click(sender, e);
+        }
+
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
+            if (args.IsSettingsSelected) {
+                ContentFrame.Navigate(typeof(Settings));
+            } else {
+                switch (((FrameworkElement)args.SelectedItem).Tag) {
+                    case "home":
+                        ContentFrame.Navigate(typeof(Home));
+                        break;
+                    case "top":
+                        ContentFrame.Navigate(typeof(Top100));
+                        break;
+                    case "news":
+                        ContentFrame.Navigate(typeof(News));
+                        break;
+                    case "portfolio":
+                        ContentFrame.Navigate(typeof(Portfolio));
+                        break;
+                }
             }
         }
     }

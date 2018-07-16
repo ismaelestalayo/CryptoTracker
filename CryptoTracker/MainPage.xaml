@@ -14,17 +14,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <NavigationView Grid.RowSpan="2" Grid.Row="0" SelectionChanged="mainNavigationView_SelectionChanged"
+        <NavigationView x:Name="NavView" Grid.RowSpan="2" Grid.Row="0" SelectionChanged="NavView_SelectionChanged"
             IsBackButtonVisible="Collapsed" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+            Loaded="NavView_Loaded"
             OpenPaneLength="280" CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="560">
 
             <NavigationView.MenuItems>
                 <!--<NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Sections"/>-->
-                <NavigationViewItem Icon="Home"         Content="Home"/>
-                <NavigationViewItem Icon="AllApps"      Content="Top 50"/>
-                <NavigationViewItem Icon="PreviewLink"  Content="News"/>
-                <NavigationViewItem Icon="Shop"         Content="Portfolio"/>                
+                <NavigationViewItem Icon="Home"         Content="Home"      Tag="home"/>
+                <NavigationViewItem Icon="AllApps"      Content="Top 100"    Tag="top"/>
+                <NavigationViewItem Icon="PreviewLink"  Content="News"      Tag="news"/>
+                
+                <NavigationViewItem Icon="Shop"         Content="Portfolio" Tag="portfolio"/>                
             </NavigationView.MenuItems>
 
 
@@ -41,16 +43,16 @@
             <NavigationView.Header>
                 <StackPanel BorderThickness="0, 0, 0, 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
                     <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"
-                        Margin="0, 42, 0, 0" Text="Dashboard" FontWeight="Bold"/>
+                        Margin="0, 42, 0, 0" Text="Title" FontWeight="Bold"/>
                 </StackPanel>
                 
             </NavigationView.Header>
 
-            <!--<NavigationView.PaneFooter>
-                <NavigationViewItem Icon="Home"     Content="Info"/>
-            </NavigationView.PaneFooter>-->
+            <NavigationView.PaneFooter>
+                <NavigationViewItem Icon="Sync"     Content="Update" Tapped="NavView_Sync_Tapped"/>
+            </NavigationView.PaneFooter>
 
-            <Frame x:Name="rootFrame">
+            <Frame x:Name="ContentFrame">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition/>

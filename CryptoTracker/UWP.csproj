@@ -118,9 +118,6 @@
     <Compile Include="Views\EditWatchlist.xaml.cs">
       <DependentUpon>EditWatchlist.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomeOLD.xaml.cs">
-      <DependentUpon>HomeOLD.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Portfolio.xaml.cs">
       <DependentUpon>Portfolio.xaml</DependentUpon>
     </Compile>
@@ -236,10 +233,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditWatchlist.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\HomeOLD.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
