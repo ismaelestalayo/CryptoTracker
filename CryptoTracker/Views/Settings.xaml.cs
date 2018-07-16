@@ -17,6 +17,13 @@ namespace CryptoTracker {
         public Settings() {
             this.InitializeComponent();
 
+            Frame contentFrame = Window.Current.Content as Frame;
+            if (contentFrame.Content != null) {
+                MainPage mp = contentFrame.Content as MainPage;
+                TextBlock t = mp.FindName("mainTitle") as TextBlock;
+                t.Text = "Settings";
+            }
+
             var assembly = typeof(App).GetTypeInfo().Assembly;
             v = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
             VersionTextBlock.Text = "Version: " + v;

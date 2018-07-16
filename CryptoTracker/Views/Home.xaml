@@ -24,7 +24,7 @@
 
     <!-- 
     ################################################################################################### -->
-    <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Hidden" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+    <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Hidden">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
@@ -39,7 +39,7 @@
 
                 <VisualState x:Name="WideState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900" />
+                        <AdaptiveTrigger MinWindowWidth="1100" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="5*"/>
@@ -72,7 +72,7 @@
             ###################################################################################################
             ###################################################################################################
             ################################################################################################### -->
-            <ListView Grid.Row="1" x:Name="homeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
+            <ListView x:Name="homeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">

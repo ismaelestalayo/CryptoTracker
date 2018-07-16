@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace CryptoTracker {
@@ -16,6 +17,13 @@ namespace CryptoTracker {
 
         public Portfolio() {
             this.InitializeComponent();
+
+            Frame contentFrame = Window.Current.Content as Frame;
+            if (contentFrame.Content != null) {
+                MainPage mp = contentFrame.Content as MainPage;
+                TextBlock t = mp.FindName("mainTitle") as TextBlock;
+                t.Text = "Portfolio";
+            }
 
             dataList = ReadPortfolio().Result;
             MyListView.ItemsSource = dataList;

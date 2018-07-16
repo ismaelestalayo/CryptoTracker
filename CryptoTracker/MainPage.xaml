@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page 
     x:Class="CryptoTracker.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,49 +8,61 @@
 
     <!-- 
     ################################################################################################### -->
-    <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <CommandBar x:Name="TopCommandBar" Grid.Row="0" OverflowButtonVisibility="Collapsed" 
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Margin="0, 30, 0, 0"
-            Visibility="Visible">
+        <NavigationView Grid.RowSpan="2" Grid.Row="0" SelectionChanged="mainNavigationView_SelectionChanged"
+            IsBackButtonVisible="Collapsed" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+            OpenPaneLength="280" CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="560">
 
-            <AppBarButton Icon="Sync"           Click="UpdateButton_Click"      Label="Update"/>
-            
-            <AppBarSeparator/>
-            
-            <AppBarButton Icon="Home"           Click="Home_Click"              Label="Home"/>
-            <AppBarButton Icon="AllApps"        Click="Top100_Click"            Label="Top 50"/>
-            <AppBarButton Icon="Shop"           Click="PortfolioButton_Click"   Label="Portfolio"/>
-            <AppBarButton Icon="Setting"        Click="SettingsButton_Click"    Label="Settings"/>
-        </CommandBar>
-        
-        <Frame Grid.Row="1" Name="rootFrame" 
-            Background="Transparent">
+            <NavigationView.MenuItems>
+                <!--<NavigationViewItemSeparator/>
+                <NavigationViewItemHeader Content="Sections"/>-->
+                <NavigationViewItem Icon="Home"         Content="Home"/>
+                <NavigationViewItem Icon="AllApps"      Content="Top 50"/>
+                <NavigationViewItem Icon="PreviewLink"  Content="News"/>
+                <NavigationViewItem Icon="Shop"         Content="Portfolio"/>                
+            </NavigationView.MenuItems>
 
-        </Frame>
 
-        <CommandBar x:Name="BottomCommandBar" Grid.Row="2" OverflowButtonVisibility="Auto" 
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Visibility="Visible" >
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox Margin="0, 0" PlaceholderText="Search" QueryIcon="Find">
+                    <AutoSuggestBox.TextBoxStyle>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </AutoSuggestBox.TextBoxStyle>
+                </AutoSuggestBox>
+            </NavigationView.AutoSuggestBox>
 
-            <AppBarButton Icon="Sync"           Click="UpdateButton_Click"      Label="Update"/>
-            
-            <AppBarSeparator/>
-            
-            <AppBarButton Icon="Home"           Click="Home_Click"              Label="Home"/>
-            <AppBarButton Icon="List"           Click="Top100_Click"            Label="Top 50"/>
-            <AppBarButton Icon="Shop"           Click="PortfolioButton_Click"   Label="Potfolio"/>
-            <AppBarButton Icon="Setting"        Click="SettingsButton_Click"    Label="Settings"/>
-        </CommandBar>
+            <NavigationView.Header>
+                <StackPanel BorderThickness="0, 0, 0, 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+                    <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"
+                        Margin="0, 42, 0, 0" Text="Dashboard" FontWeight="Bold"/>
+                </StackPanel>
+                
+            </NavigationView.Header>
 
+            <!--<NavigationView.PaneFooter>
+                <NavigationViewItem Icon="Home"     Content="Info"/>
+            </NavigationView.PaneFooter>-->
+
+            <Frame x:Name="rootFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+
+        </NavigationView>
+
+        <StackPanel x:Name="AppTitle" Background="Transparent" Height="50"
+                    VerticalAlignment="Top" Margin="50, 0, 0, 0"/>
     </Grid>
-
 
 
 </Page>

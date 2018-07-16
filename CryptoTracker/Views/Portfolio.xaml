@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
 
-    <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" x:Name="MainGrid">
+    <Grid x:Name="MainGrid">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -22,26 +22,12 @@
 
         <RelativePanel Grid.Row="0" Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
                        BorderThickness="0, 0, 0, 0.5" 
-                       BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
-            <StackPanel Margin="0, 5" Padding="0, -10, 0, 5">
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock 
-                        Text="Portfolio"
-                        Margin="10, 0"
-                        VerticalAlignment="Center"
-						Style="{ThemeResource SubheaderTextBlockStyle}"/>
-                </StackPanel>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="5"
-                        RelativePanel.AlignRightWithPanel="True">
-
-                <TextBlock Name="Portfolio_total" 
-                           Text="0€"
-                           FontSize="24"
-                           FontWeight="Light"/>
-            </StackPanel>
+                       BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+                       Visibility="Collapsed">
+            <TextBlock Name="Portfolio_total" 
+                       Text="0€"
+                       FontSize="24"
+                       FontWeight="Light"/>
 
         </RelativePanel>
 

@@ -63,7 +63,7 @@
     </Page.Resources>-->
     
     <!-- -->
-    <StackPanel Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+    <StackPanel>
         
         <StackPanel Margin="0, 5" Padding="0, -10, 0, 5">
             <TextBlock

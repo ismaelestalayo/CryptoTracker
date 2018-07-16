@@ -24,7 +24,7 @@
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="10, 0" x:Name="SettingsGrid">
+        <Grid Padding="10, 0" x:Name="SettingsGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
@@ -66,11 +66,6 @@
                     Name="ThemeSwitcher" Header="Theme"
                     OffContent="Light" OnContent="Dark" 
                     Toggled="ThemeToogled"/>
-
-                <TextBlock 
-                    Text="A restart is required to  &#x0d;change the status bar color."
-                    TextWrapping="WrapWholeWords" FontSize="14" FontWeight="ExtraLight"
-                    Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
 
                 <!-- 
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->

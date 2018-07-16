@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -50,8 +52,6 @@ namespace CryptoTracker {
         }
 
         public App() {
-            
-
             TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true);
 
             try {
@@ -145,6 +145,8 @@ namespace CryptoTracker {
 
             deferral.Complete();
         }
+
+        
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####

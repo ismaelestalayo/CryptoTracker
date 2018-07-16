@@ -18,21 +18,12 @@ namespace CryptoTracker {
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
 
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
 
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-                BottomCommandBar.Visibility = Visibility.Collapsed;
             }
-
-            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-            //Transparent buttons, with gray foreground
-            titleBar.ButtonBackgroundColor         = Color.FromArgb(0, 242, 0, 242);
-            titleBar.ButtonForegroundColor         = Color.FromArgb(255, 150, 150, 150);
-            titleBar.InactiveBackgroundColor       = Color.FromArgb(0, 242, 0, 242);
-            titleBar.ButtonInactiveBackgroundColor = Color.FromArgb(0, 242, 0, 242);
 
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
@@ -47,17 +38,17 @@ namespace CryptoTracker {
                     statusBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
                 }
 
-                //statusBar.HideAsync();
-
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
-                TopCommandBar.Visibility = Visibility.Collapsed; 
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
             rootFrame.Navigate(typeof(Home));
+
+            // Extend acrylic
+            ExtendAcrylicIntoTitleBar();
         }
 
-        private void App_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e) {
+        private void App_BackRequested(object sender, BackRequestedEventArgs e) {
             if (rootFrame == null)
                 return;
 
@@ -66,6 +57,20 @@ namespace CryptoTracker {
                 e.Handled = true;
                 rootFrame.GoBack();
             }
+        }
+
+        /// Extend acrylic into the title bar. 
+        private void ExtendAcrylicIntoTitleBar() {
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.BackgroundColor = Colors.Transparent;
+            titleBar.InactiveBackgroundColor = Colors.Transparent;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonForegroundColor = Color.FromArgb(255, 150, 150, 150);
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 150, 150, 150);
+
+            Window.Current.SetTitleBar(AppTitle);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -90,39 +95,26 @@ namespace CryptoTracker {
             l.UpdateLiveTile();
         }
 
-        private void Home_Click(object sender, RoutedEventArgs e) {
-            rootFrame.Navigate(typeof(Home));
-        }
-        private void PortfolioButton_Click(object sender, RoutedEventArgs e) {
-            if(rootFrame.SourcePageType.Name != "Portfolio") {
-                rootFrame.Navigate(typeof(Portfolio));
-                Analytics.TrackEvent("Section_Portflio");
-            } else {
-                rootFrame.Navigate(typeof(Home));
-            }
-        }
-        private void SettingsButton_Click(object sender, RoutedEventArgs e) {
-            if (rootFrame.SourcePageType.Name != "Settings") {
-                rootFrame.Navigate(typeof(Settings));
-                Analytics.TrackEvent("Section_Settings");
-            } else {
-                rootFrame.Navigate(typeof(Home));
-            }
-        }
-        private void Top100_Click(object sender, RoutedEventArgs e) {
-            if (rootFrame.SourcePageType.Name != "Top100") {
-                rootFrame.Navigate(typeof(Top100));
-                Analytics.TrackEvent("Section_News");
-            } else {
-                rootFrame.Navigate(typeof(Home));
-            }
-        }
-        public void WebView_Click() {
-            rootFrame.Navigate(typeof(WebVieww));            
-        }
-
         private void SearchButton_Click(object sender, RoutedEventArgs e) {
             rootFrame.Navigate(typeof(EditWatchlist));
+        }
+
+        private void mainNavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
+            switch (((ContentControl)args.SelectedItem).Content) {
+                case "Home":
+                    rootFrame.Navigate(typeof(Home));
+                    break;
+                case "Top 50":
+                    rootFrame.Navigate(typeof(Top100));
+                    break;
+                case "Portfolio":
+                    rootFrame.Navigate(typeof(Portfolio));
+                    //Analytics.TrackEvent("Section_News");
+                    break;
+                case "Settings":
+                    rootFrame.Navigate(typeof(Settings));
+                    break;
+            }
         }
     }
 }
