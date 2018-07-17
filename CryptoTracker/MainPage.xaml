@@ -17,16 +17,15 @@
         <NavigationView x:Name="NavView" Grid.RowSpan="2" Grid.Row="0" SelectionChanged="NavView_SelectionChanged"
             IsBackButtonVisible="Collapsed" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
             Loaded="NavView_Loaded"
-            OpenPaneLength="280" CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="560">
+            OpenPaneLength="280" CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="700">
 
             <NavigationView.MenuItems>
                 <!--<NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Sections"/>-->
                 <NavigationViewItem Icon="Home"         Content="Home"      Tag="home"/>
-                <NavigationViewItem Icon="AllApps"      Content="Top 100"    Tag="top"/>
+                <NavigationViewItem Icon="AllApps"      Content="Top 100"   Tag="top"/>
                 <NavigationViewItem Icon="PreviewLink"  Content="News"      Tag="news"/>
-                
-                <NavigationViewItem Icon="Shop"         Content="Portfolio" Tag="portfolio"/>                
+                <NavigationViewItem Icon="Contact"      Content="Portfolio" Tag="portfolio"/>                
             </NavigationView.MenuItems>
 
 

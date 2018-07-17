@@ -10,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Microsoft.Toolkit.Uwp.UI.Controls;
+using Windows.UI;
 
 namespace CryptoTracker.Views {
     public sealed partial class Home : Page {
@@ -23,7 +24,8 @@ namespace CryptoTracker.Views {
             this.InitializeComponent();
 
             homeCoinList = new ObservableCollection<HomeTileClass>();
-            homeListView.ItemsSource = homeCoinList;
+            priceListView.ItemsSource = homeCoinList;
+            volumeListView.ItemsSource = homeCoinList;
 
             InitHome();
             // keep an updated list of coins
@@ -67,7 +69,7 @@ namespace CryptoTracker.Views {
 
         internal async Task UpdateAllCards() {
             //for (int j = 0; j < homeCoinList.Count; j++) {
-            //    ListViewItem cc = (ListViewItem)homeListView.ContainerFromItem(homeListView.Items[j]);
+            //    ListViewItem cc = (ListViewItem)priceListView.ContainerFromItem(priceListView.Items[j]);
             //    var loadingg = (cc.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
             //    loadingg.IsLoading = true;
             //}
@@ -100,27 +102,34 @@ namespace CryptoTracker.Views {
                 homeCoinList[i]._priceCurr = App.GetCurrentPrice(c, "defaultMarket").ToString() + App.coinSymbol;
                 homeCoinList[i]._priceDiff = diff;
 
-                
-
                 // LOADING BAR:
-                var item = homeListView.Items[i];
-                ListViewItem container = (ListViewItem)homeListView.ContainerFromItem(item);
+                ListViewItem container = (ListViewItem)priceListView.ContainerFromIndex(i);
                 var loading = (container.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
                 loading.IsLoading = true;
-                
-                // CHARTS:
+
+
+                // COLOR:
+                SolidColorBrush colorT, color;
+                try {
+                    colorT = (SolidColorBrush)Application.Current.Resources[c + "_colorT"];
+                    color  = (SolidColorBrush)Application.Current.Resources[c + "_color"];
+                } catch (Exception) {
+                    colorT = (SolidColorBrush)Application.Current.Resources["null_colorT"];
+                    color  = (SolidColorBrush)Application.Current.Resources["null_color"];
+                }
+
+
+                // PRICE CHART:
                 if (container == null)
                     break;
 
-                var temp = (container.ContentTemplateRoot as FrameworkElement)?.FindName("radChart") as FrameworkElement;
-                RadCartesianChart radChart = (RadCartesianChart)temp;
+                RadCartesianChart priceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("priceChart") as RadCartesianChart;
 
-                c = App.pinnedCoins[i];
                 await App.GetHisto(c, timeSpan, limit);
-                List<App.ChartDataObject> data = new List<App.ChartDataObject>();
+                List<App.ChartDataObject> priceData = new List<App.ChartDataObject>();
 
                 for (int k = 0; k < App.historic.Count; ++k) {
-                    App.ChartDataObject obj = new App.ChartDataObject {
+                    priceData.Add(new App.ChartDataObject() {
                         Date    = App.historic[k].DateTime,
                         Value   =(App.historic[k].Low + App.historic[k].High) / 2,
                         Low     = App.historic[k].Low,
@@ -128,29 +137,46 @@ namespace CryptoTracker.Views {
                         Open    = App.historic[k].Open,
                         Close   = App.historic[k].Close,
                         Volume  = App.historic[k].Volumefrom
-                    };
-                    data.Add(obj);
+                    });
                 }
 
-                SplineAreaSeries series = (SplineAreaSeries)radChart.Series[0];
-                series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-                series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-                series.ItemsSource = data;
+                SplineAreaSeries series = (SplineAreaSeries)priceChart.Series[0];
+                series.CategoryBinding  = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+                series.ValueBinding     = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+                series.ItemsSource      = priceData;
+                series.Fill     = colorT;
+                series.Stroke   = color;
 
-                try {
-                    series.Fill     = (SolidColorBrush)Application.Current.Resources[c + "_colorT"];
-                    series.Stroke   = (SolidColorBrush)Application.Current.Resources[c + "_color"];
-                } catch (Exception) {
-                    series.Fill     = (SolidColorBrush)Application.Current.Resources["null_colorT"];
-                    series.Stroke   = (SolidColorBrush)Application.Current.Resources["null_color"];
+
+                // VOLUME CHART:
+                ListViewItem container2 = (ListViewItem)volumeListView.ContainerFromIndex(i);
+                await App.GetHisto(c, "hour", 24);
+
+                List<App.ChartDataObject> volumeData = new List<App.ChartDataObject>();
+                for (int j = 0; j < 24; j++) {
+                    volumeData.Add(new App.ChartDataObject() {
+                        Date = App.historic[j].DateTime,
+                        Volume = App.historic[j].Volumefrom
+                    });
                 }
+
+                RadCartesianChart volumeChart = (container2.ContentTemplateRoot as FrameworkElement)?.FindName("volumeChart") as RadCartesianChart;
+                BarSeries barSeries = (BarSeries)volumeChart.Series[0];
+                
+
+                Style style = new Style(typeof(Border));
+                style.Setters.Add(new Setter(Border.BackgroundProperty, color));
+                barSeries.DefaultVisualStyle = style;
+                barSeries.ItemsSource = volumeData;
+                barSeries.Background = new SolidColorBrush(Colors.DarkGreen);
 
                 loading.IsLoading = false;
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void ALL_TimerangeButton_Click(object sender, RoutedEventArgs e) {
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            private void ALL_TimerangeButton_Click(object sender, RoutedEventArgs e) {
             RadioButton btn = sender as RadioButton;
 
             switch (btn.Content) {

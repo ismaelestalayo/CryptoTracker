@@ -45,7 +45,7 @@ namespace CryptoTracker {
 
             try {
                 ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[ crypto.ToUpper() + "_color"]).Color;
-                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_colorT"]).Color;
+                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[ crypto.ToUpper() + "_colorT"]).Color;
             } catch {
                 ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = Windows.UI.Color.FromArgb(255, 43, 42, 42);
                 ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = Windows.UI.Color.FromArgb(102, 43, 42, 42);

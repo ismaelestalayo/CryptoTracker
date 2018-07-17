@@ -21,7 +21,7 @@
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" x:Name="MainGrid" Padding="5, 0">
+    <Grid x:Name="MainGrid" Padding="5, 0">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
 

@@ -23,8 +23,8 @@
     </Page.Resources>
 
     <!-- 
-    ################################################################################################### -->
-    <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Hidden">
+    ########################################################################################################################### -->
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
@@ -39,7 +39,7 @@
 
                 <VisualState x:Name="WideState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1100" />
+                        <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="5*"/>
@@ -58,8 +58,9 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
-            <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 0, 0, -15" VerticalAlignment="Bottom">
+            
+            <!-- TIME RADIO BUTTONS-->
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0, 0, 0, -15" VerticalAlignment="Bottom">
                 <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
                 <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
                 <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
@@ -67,12 +68,13 @@
                 <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
                 <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
             </StackPanel>
-            
+
             <!-- 
-            ###################################################################################################
-            ###################################################################################################
-            ################################################################################################### -->
-            <ListView Grid.Row="1" x:Name="homeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
+            ###########################################################################################################################
+            ######################################################## PRICE LIST VIEW ##################################################
+            ########################################################################################################################### -->
+            <ListView x:Name="priceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click"
+                      Grid.Row="1" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
@@ -84,7 +86,6 @@
                             <controls:Loading 
                                 x:Name="LoadingControl"
                                 Width="700"
-                                
                                 Opacity="0.5" Grid.RowSpan="3">
                                 <ContentControl>
                                     <ProgressBar 
@@ -103,28 +104,26 @@
                                 <TextBlock Name="priceCurr" Text="{Binding _priceCurr, Mode=TwoWay}" Style="{StaticResource currTextStyle}"/>
                                 <TextBlock Name="priceDiff" Text="{Binding _priceDiff, Mode=TwoWay}" Foreground="{Binding _priceDiffFG}" Style="{StaticResource diffTextStyle}"/>
                             </StackPanel>
-
-                            <telerikChart:RadCartesianChart x:Name="radChart" Grid.Row="1">
+                            
+                            <!-- PRICE CHART: -->
+                            <telerikChart:RadCartesianChart x:Name="priceChart" Grid.Row="1">
                                 <telerikChart:RadCartesianChart.Grid>
                                     <telerikChart:CartesianChartGrid MajorLinesVisibility="None"/>
                                 </telerikChart:RadCartesianChart.Grid>
 
                                 <telerikChart:RadCartesianChart.HorizontalAxis>
                                     <telerikChart:DateTimeCategoricalAxis
-                                        x:Name="radChart_horizontalAxis"
                                         Visibility="Collapsed"/>
                                 </telerikChart:RadCartesianChart.HorizontalAxis>
 
                                 <telerikChart:RadCartesianChart.VerticalAxis>
                                     <telerikChart:LinearAxis
-                                        x:Name="radChart_verticalAxis"
                                         Visibility="Collapsed"
                                         DesiredTickCount="5"
                                         HorizontalLocation="Left"/>
                                 </telerikChart:RadCartesianChart.VerticalAxis>
 
                                 <telerikChart:SplineAreaSeries
-                                    x:Name="splineAreaSerie"
                                     StrokeThickness="1">
                                 </telerikChart:SplineAreaSeries>
                             </telerikChart:RadCartesianChart>
@@ -140,61 +139,60 @@
                 </ListView.ItemContainerStyle>
             </ListView>
 
-            <ListView Grid.Row="1" Grid.Column="1" x:Name="home2ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click">
+            <!-- 
+            ###########################################################################################################################
+            ####################################################### VOLUME LIST VIEW ##################################################
+            ########################################################################################################################### -->
+            <ListView x:Name="volumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
+                      Grid.Row="1" Grid.Column="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
 
-                            <controls:Loading 
-                                x:Name="LoadingControl"
-                                Width="700"
-                                
-                                Opacity="0.5" Grid.RowSpan="3">
-                                <ContentControl>
-                                    <ProgressBar 
-                                        IsIndeterminate="True" Width="500"
-                                        HorizontalAlignment="Center"
-                                        Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
-                                        Background="Transparent"/>
-                                </ContentControl>
-                            </controls:Loading>
+                            <!--  controls:Loading -->
 
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
-                                <Image Name="coinLogo" Source="{Binding _iconSrc}" Width="25" Margin="2"/>
-                                <TextBlock Name="coinName" Text="{Binding _cryptoName, Mode=TwoWay}" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, -2"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-                                <TextBlock Name="priceCurr" Text="{Binding _priceCurr, Mode=TwoWay}" Style="{StaticResource currTextStyle}"/>
-                                <TextBlock Name="priceDiff" Text="{Binding _priceDiff, Mode=TwoWay}" Foreground="{Binding _priceDiffFG}" Style="{StaticResource diffTextStyle}"/>
-                            </StackPanel>
+                            <!-- VOLUME CHART: -->
+                            <telerikChart:RadCartesianChart x:Name="volumeChart" Grid.Row="1" Grid.Column="1">
+                                <telerikChart:BarSeries>
 
-                            <telerikChart:RadCartesianChart x:Name="radChart" Grid.Row="1">
-                                <telerikChart:RadCartesianChart.Grid>
-                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="None"/>
-                                </telerikChart:RadCartesianChart.Grid>
+                                    <telerikChart:BarSeries.PointTemplate>
+                                        <DataTemplate>
+                                            <Border Background="HotPink"/>
+                                        </DataTemplate>
+                                    </telerikChart:BarSeries.PointTemplate>
 
-                                <telerikChart:RadCartesianChart.HorizontalAxis>
-                                    <telerikChart:DateTimeCategoricalAxis
-                                        x:Name="radChart_horizontalAxis"
-                                        Visibility="Collapsed"/>
-                                </telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:BarSeries.VerticalAxis>
+                                        <telerikChart:LinearAxis 
+                                            Visibility="Collapsed"/>
+                                    </telerikChart:BarSeries.VerticalAxis>
 
-                                <telerikChart:RadCartesianChart.VerticalAxis>
-                                    <telerikChart:LinearAxis
-                                        x:Name="radChart_verticalAxis"
-                                        Visibility="Collapsed"
-                                        DesiredTickCount="5"
-                                        HorizontalLocation="Left"/>
-                                </telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:BarSeries.HorizontalAxis>
+                                        <telerikChart:DateTimeCategoricalAxis 
+                                            MajorTickTemplate="{StaticResource TransparentRect}"
+                                            Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                                            FontWeight="Light"
+                                            LineStyle="{StaticResource TransparentLine}"
+                                            VerticalLocation="Bottom"
+                                            Visibility="Collapsed"
+                                            LabelInterval="3"
+                                            LabelFormat="{}{0,0:HH}">
+                                            <telerikChart:DateTimeCategoricalAxis.LabelStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Margin" Value="0, -5, 0, 0"/>
+                                                </Style>
+                                            </telerikChart:DateTimeCategoricalAxis.LabelStyle>
+                                        </telerikChart:DateTimeCategoricalAxis>
+                                    </telerikChart:BarSeries.HorizontalAxis>
 
-                                <telerikChart:SplineAreaSeries
-                                    x:Name="splineAreaSerie"
-                                    StrokeThickness="1">
-                                </telerikChart:SplineAreaSeries>
+                                    <telerikChart:BarSeries.CategoryBinding>
+                                        <telerikChart:PropertyNameDataPointBinding PropertyName="Date"/>
+                                    </telerikChart:BarSeries.CategoryBinding>
+
+                                    <telerikChart:BarSeries.ValueBinding>
+                                        <telerikChart:PropertyNameDataPointBinding PropertyName="Volume"/>
+                                    </telerikChart:BarSeries.ValueBinding>
+
+                                </telerikChart:BarSeries>
                             </telerikChart:RadCartesianChart>
                         </Grid>
 
