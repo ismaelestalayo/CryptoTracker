@@ -49,6 +49,7 @@ namespace CryptoTracker {
             public float Close { get; set; }
             public float Volume { get; set; }
             public string Category { get; set; }
+            public Brush cc { get; set; }
         }
 
         public App() {

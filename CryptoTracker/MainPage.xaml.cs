@@ -109,19 +109,24 @@ namespace CryptoTracker {
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
             if (args.IsSettingsSelected) {
                 ContentFrame.Navigate(typeof(Settings));
+                mainTitle.Text = "Settings";
             } else {
                 switch (((FrameworkElement)args.SelectedItem).Tag) {
                     case "home":
                         ContentFrame.Navigate(typeof(Home));
+                        mainTitle.Text = "Home";
                         break;
                     case "top":
                         ContentFrame.Navigate(typeof(Top100));
+                        mainTitle.Text = "Top 100";
                         break;
                     case "news":
                         ContentFrame.Navigate(typeof(News));
+                        mainTitle.Text = "News";
                         break;
                     case "portfolio":
                         ContentFrame.Navigate(typeof(Portfolio));
+                        mainTitle.Text = "Portfolio";
                         break;
                 }
             }

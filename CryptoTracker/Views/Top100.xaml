@@ -63,7 +63,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="6*"/>
                                 <ColumnDefinition Width="4*"/>
                             </Grid.ColumnDefinitions>
@@ -88,14 +88,14 @@
                                 Source="{Binding Src}" 
                                 Width="35" Visibility="Collapsed"/>
 
-                            <Image Grid.Column="2" Margin="0">
+                            <Image Grid.Column="2" Width="40">
                                 <Image.Source>
                                     <BitmapImage UriSource="{Binding LogoURL}" />
                                 </Image.Source>
                             </Image>
 
                             <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" >
-                                <TextBlock Text="{Binding Name, FallbackValue=NULL}" FontSize="18" FontWeight="Normal"/>
+                                <TextBlock Text="{Binding Name, FallbackValue=NULL}" FontSize="18" FontWeight="SemiBold"/>
                                 <TextBlock Opacity="0.7">
                                     <Run Text="{Binding Price}"/>
                                     <Run Text="{Binding Change1d, Mode=OneWay}" Foreground="{Binding ChangeFG}"/>

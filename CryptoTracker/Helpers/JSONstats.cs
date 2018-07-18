@@ -30,8 +30,8 @@ namespace CryptoTracker.Helpers {
                 a.Change24pct = ((double)data["RAW"][crypto][coin]["CHANGEPCT24HOUR"]).ToString() + "%";
                 a.Supply = ((double)data["RAW"][crypto][coin]["SUPPLY"]).ToString("N0") + fromSymbol;
                 a.Marketcap = ((double)data["RAW"][crypto][coin]["MKTCAP"]).ToString("N2") + toSymbol;
-                a.Volume24 = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24H"]).ToString("N2") + fromSymbol;
-                a.Volume24To = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24HTO"]).ToString("N2") + toSymbol;
+                a.Volume24 = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24H"]).ToString("N0") + fromSymbol;
+                a.Volume24To = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24HTO"]).ToString("N0") + toSymbol;
 
                 return a;
             } catch(Exception) {

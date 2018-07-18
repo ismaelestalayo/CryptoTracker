@@ -18,13 +18,6 @@ namespace CryptoTracker {
         public Portfolio() {
             this.InitializeComponent();
 
-            Frame contentFrame = Window.Current.Content as Frame;
-            if (contentFrame.Content != null) {
-                MainPage mp = contentFrame.Content as MainPage;
-                TextBlock t = mp.FindName("mainTitle") as TextBlock;
-                t.Text = "Portfolio";
-            }
-
             dataList = ReadPortfolio().Result;
             MyListView.ItemsSource = dataList;
 

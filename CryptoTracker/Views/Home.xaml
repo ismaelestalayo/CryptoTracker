@@ -6,7 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    NavigationCacheMode="Enabled">
 
     <Page.Resources>
         <Style x:Key="currTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
@@ -61,8 +62,8 @@
             
             <!-- TIME RADIO BUTTONS-->
             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0, 0, 0, -15" VerticalAlignment="Bottom">
-                <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
-                <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+                <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
+                <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
                 <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
                 <RadioButton GroupName="Home" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
                 <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
@@ -148,16 +149,31 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                            <!--  controls:Loading -->
+                            <Grid Margin="5, -2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Volumen 24h" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" />
+
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <TextBlock Text="{Binding _volume24, FallbackValue=0}"   Style="{StaticResource currTextStyle}" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding _volume24to, FallbackValue=0}" Style="{StaticResource diffTextStyle}" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Grid>
 
                             <!-- VOLUME CHART: -->
-                            <telerikChart:RadCartesianChart x:Name="volumeChart" Grid.Row="1" Grid.Column="1">
+                            <telerikChart:RadCartesianChart x:Name="volumeChart" Grid.Row="1">
                                 <telerikChart:BarSeries>
 
                                     <telerikChart:BarSeries.PointTemplate>
                                         <DataTemplate>
-                                            <Border Background="HotPink"/>
+                                            <Rectangle Fill="{Binding DataItem.cc}"/>
                                         </DataTemplate>
                                     </telerikChart:BarSeries.PointTemplate>
 
@@ -172,7 +188,7 @@
                                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                                             FontWeight="Light"
                                             LineStyle="{StaticResource TransparentLine}"
-                                            VerticalLocation="Bottom"
+                                            VerticalLocation="Top"
                                             Visibility="Collapsed"
                                             LabelInterval="3"
                                             LabelFormat="{}{0,0:HH}">

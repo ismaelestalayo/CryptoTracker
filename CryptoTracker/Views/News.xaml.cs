@@ -19,11 +19,7 @@ namespace CryptoTracker.Views {
     public sealed partial class News : Page {
         public News() {
             this.InitializeComponent();
-
-            Frame contentFrame = Window.Current.Content as Frame;
-            MainPage mp = contentFrame.Content as MainPage;
-            TextBlock t = mp.FindName("mainTitle") as TextBlock;
-            t.Text = "News";
+            
         }
     }
 }

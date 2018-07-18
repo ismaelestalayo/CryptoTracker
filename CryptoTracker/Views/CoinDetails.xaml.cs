@@ -35,6 +35,11 @@ namespace CryptoTracker {
                 crypto = "BTC";
             }
 
+            Frame contentFrame = Window.Current.Content as Frame;
+            MainPage mp = contentFrame.Content as MainPage;
+            TextBlock t = mp.FindName("mainTitle") as TextBlock;
+            t.Text = crypto;
+
             Description.Text = App.GetCoinDescription(crypto);
 
             try {
@@ -44,11 +49,11 @@ namespace CryptoTracker {
             }
 
             try {
-                ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[ crypto.ToUpper() + "_color"]).Color;
-                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[ crypto.ToUpper() + "_colorT"]).Color;
+                ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_color"]).Color;
+                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_colorT"]).Color;
             } catch {
-                ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = Windows.UI.Color.FromArgb(255, 43, 42, 42);
-                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = Windows.UI.Color.FromArgb(102, 43, 42, 42);
+                ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
+                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
             }
 
             switch (crypto) {
@@ -209,6 +214,7 @@ namespace CryptoTracker {
                 LoadingControl.IsLoading = false;
         }
 
+        // copied to Home.xaml.cs
         async private Task GetStats() {
 
             await App.GetCoinStats(crypto, "defaultMarket");

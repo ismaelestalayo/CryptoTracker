@@ -309,7 +309,7 @@
 
                             <telerik:BarSeries.PointTemplate>
                                 <DataTemplate>
-                                    <Border Background="{StaticResource coinColor}"/>
+                                    <Border Background="{StaticResource coinColorT}"/>
                                 </DataTemplate>
                             </telerik:BarSeries.PointTemplate>
 
