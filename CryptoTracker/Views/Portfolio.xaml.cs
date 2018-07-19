@@ -22,6 +22,7 @@ namespace CryptoTracker {
             MyListView.ItemsSource = dataList;
 
             UpdatePortfolio();
+            UpdateEarnings();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +93,11 @@ namespace CryptoTracker {
             float total = 0;
             for (int i = 0; i < MyListView.Items.Count; i++) {
                 total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i]._CryptoQty;
-                Portfolio_total.Text = total.ToString() + App.coinSymbol;
+
+                Frame contentFrame = Window.Current.Content as Frame;
+                MainPage mp = contentFrame.Content as MainPage;
+                TextBlock val = mp.FindName("mainTitleVal") as TextBlock;
+                val.Text = total.ToString() + App.coinSymbol;
             }
         }
 

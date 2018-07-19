@@ -53,7 +53,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <RelativePanel 
+        <!--<RelativePanel Visibility="Collapsed"
             Grid.Row="0" Padding="0, 0, 0, -5"
             BorderThickness="0, 0, 0, 0.5" 
             BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
@@ -89,7 +89,7 @@
                            FontWeight="Light"/>
             </StackPanel>
 
-        </RelativePanel>
+        </RelativePanel>-->
 
         <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -33,7 +33,7 @@
 
         <!-- 
         ############################################################################################################### -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10, 20, 15, 10">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15">
             <ComboBox x:Name="CryptoComboBox" PlaceholderText="BTC" Header="Crypto">
                 <ComboBoxItem Content="BTC" Name="BTC" IsSelected="True"/>
                 <ComboBoxItem Content="ETH" Name="ETH" />
@@ -63,7 +63,7 @@
 
         <!-- 
         ############################################################################################################### -->
-        <Grid Grid.Row="2" Margin="10, 10, 10, 0">
+        <Grid Grid.Row="2" Margin="15, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.2*"/>
                 <ColumnDefinition Width="*"/>

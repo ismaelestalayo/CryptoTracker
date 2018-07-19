@@ -25,12 +25,14 @@
                 <NavigationViewItem Icon="Home"         Content="Home"      Tag="home"/>
                 <NavigationViewItem Icon="AllApps"      Content="Top 100"   Tag="top"/>
                 <NavigationViewItem Icon="PreviewLink"  Content="News"      Tag="news"/>
-                <NavigationViewItem Icon="Contact"      Content="Portfolio" Tag="portfolio"/>                
+                <NavigationViewItem Icon="Contact"      Content="Portfolio" Tag="portfolio"/>
             </NavigationView.MenuItems>
 
 
             <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox Margin="0, 0" PlaceholderText="Search" QueryIcon="Find">
+                <AutoSuggestBox x:Name="CoinAutoSuggestBox" PlaceholderText="Search" QueryIcon="Find"
+                    GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged"
+                    SuggestionChosen="AutoSuggestBox_SuggestionChosen" QuerySubmitted="AutoSuggestBox_QuerySubmitted">
                     <AutoSuggestBox.TextBoxStyle>
                         <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
                             <Setter Property="BorderThickness" Value="0"/>
@@ -40,11 +42,40 @@
             </NavigationView.AutoSuggestBox>
 
             <NavigationView.Header>
-                <StackPanel BorderThickness="0, 0, 0, 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+                <RelativePanel BorderThickness="0,0,0,0.5" Margin="0,42,0,0" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image 
+                            x:Name="mainTitleLogo" 
+                            Source="/Assets/iconBTCc.png" 
+                            Visibility="Collapsed" Margin="0,0,5,0"
+                            Width="23" />
+                        <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"
+                            Text="Title" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="10, 0"
+                        RelativePanel.AlignRightWithPanel="True">
+
+                        <TextBlock x:Name="mainTitleVal"
+                           Text="val€" 
+                           FontSize="24"
+                           FontWeight="Light"/>
+
+                        <TextBlock x:Name="mainTitleDiff" 
+                            Text="0%"
+                            VerticalAlignment="Bottom"
+                            Margin="5,0,0,1"
+                            FontSize="19"
+                            FontWeight="Light"/>
+                    </StackPanel>
+
+                </RelativePanel>
+
+                <!--<StackPanel BorderThickness="0, 0, 0, 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
                     <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"
                         Margin="0, 42, 0, 0" Text="Title" FontWeight="Bold"/>
-                </StackPanel>
-                
+                </StackPanel>-->
+
             </NavigationView.Header>
 
             <NavigationView.PaneFooter>

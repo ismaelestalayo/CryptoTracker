@@ -1,6 +1,8 @@
 ﻿using CryptoTracker.Helpers;
 using CryptoTracker.Views;
 using Microsoft.AppCenter.Analytics;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI;
@@ -12,6 +14,8 @@ using Windows.UI.Xaml.Input;
 
 namespace CryptoTracker {
     public sealed partial class MainPage : Page {
+
+        private ObservableCollection<string> suggestions = new ObservableCollection<string>();
 
         public MainPage() {
             this.InitializeComponent();
@@ -110,26 +114,69 @@ namespace CryptoTracker {
             if (args.IsSettingsSelected) {
                 ContentFrame.Navigate(typeof(Settings));
                 mainTitle.Text = "Settings";
+                mainTitleVal.Visibility  = Visibility.Collapsed;
+                mainTitleDiff.Visibility = Visibility.Collapsed;
+                mainTitleLogo.Visibility = Visibility.Collapsed;
             } else {
                 switch (((FrameworkElement)args.SelectedItem).Tag) {
                     case "home":
                         ContentFrame.Navigate(typeof(Home));
                         mainTitle.Text = "Home";
+                        mainTitleVal.Visibility  = Visibility.Collapsed;
+                        mainTitleDiff.Visibility = Visibility.Collapsed;
+                        mainTitleLogo.Visibility = Visibility.Collapsed;
                         break;
                     case "top":
                         ContentFrame.Navigate(typeof(Top100));
                         mainTitle.Text = "Top 100";
+                        mainTitleVal.Visibility  = Visibility.Collapsed;
+                        mainTitleDiff.Visibility = Visibility.Collapsed;
+                        mainTitleLogo.Visibility = Visibility.Collapsed;
                         break;
                     case "news":
                         ContentFrame.Navigate(typeof(News));
                         mainTitle.Text = "News";
+                        mainTitleVal.Visibility  = Visibility.Collapsed;
+                        mainTitleDiff.Visibility = Visibility.Collapsed;
+                        mainTitleLogo.Visibility = Visibility.Collapsed;
                         break;
                     case "portfolio":
                         ContentFrame.Navigate(typeof(Portfolio));
                         mainTitle.Text = "Portfolio";
+                        mainTitleVal.Visibility  = Visibility.Visible;
+                        mainTitleDiff.Visibility = Visibility.Collapsed;
+                        mainTitleLogo.Visibility = Visibility.Collapsed;
                         break;
                 }
             }
+        }
+
+        // AUTO SUGGEST-BOX
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
+            // Only get results when it was a user typing, 
+            // otherwise assume the value got filled in by TextMemberPath 
+            // or the handler for SuggestionChosen.
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
+                sender.Text = sender.Text.ToUpper();
+                suggestions.Clear();
+                sender.ItemsSource = App.coinList.Where(x => x.StartsWith(sender.Text)).ToList();
+            }
+        }
+
+        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
+            CoinAutoSuggestBox.Text = args.SelectedItem.ToString();
+        }
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
+            if (args.ChosenSuggestion != null) {
+                ContentFrame.Navigate(typeof(CoinDetails), CoinAutoSuggestBox.Text);
+            } else
+                CoinAutoSuggestBox.Text = sender.Text;
+        }
+
+        private void AutoSuggestBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            AutoSuggestBox a = sender as AutoSuggestBox;
+            a.ItemsSource = App.coinList.Where(x => x.StartsWith(a.Text)).ToList();
         }
     }
 }

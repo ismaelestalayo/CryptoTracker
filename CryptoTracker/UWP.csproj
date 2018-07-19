@@ -115,9 +115,6 @@
     <Compile Include="Views\CoinDetails.xaml.cs">
       <DependentUpon>CoinDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EditWatchlist.xaml.cs">
-      <DependentUpon>EditWatchlist.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Portfolio.xaml.cs">
       <DependentUpon>Portfolio.xaml</DependentUpon>
     </Compile>
@@ -229,10 +226,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CoinDetails.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditWatchlist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -37,16 +37,18 @@ namespace CryptoTracker {
 
             Frame contentFrame = Window.Current.Content as Frame;
             MainPage mp = contentFrame.Content as MainPage;
-            TextBlock t = mp.FindName("mainTitle") as TextBlock;
-            t.Text = crypto;
+            TextBlock title = mp.FindName("mainTitle") as TextBlock;
+            Image titleLogo = mp.FindName("mainTitleLogo") as Image; 
+            title.Text = crypto;
 
             Description.Text = App.GetCoinDescription(crypto);
 
             try {
-                cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/icon" + crypto.ToUpper() + ".png"));
+                titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/icon" + crypto.ToUpper() + ".png"));
             } catch(Exception) {
-                cryptoLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconNULL.png"));
+                titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconNULL.png"));
             }
+            titleLogo.Visibility = Visibility.Visible;
 
             try {
                 ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_color"]).Color;
@@ -87,7 +89,7 @@ namespace CryptoTracker {
                     Reddit.Text = "";
                     break;
             }
-            cryptoName.Text = crypto;
+
             InitValues();
         }
 
@@ -108,7 +110,6 @@ namespace CryptoTracker {
 
             } catch (Exception) {
                 LoadingControl.IsLoading = false;
-                curr.Text = "Error!";
                 //var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
@@ -155,7 +156,14 @@ namespace CryptoTracker {
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         async private Task UpdateCoin() {
-            curr.Text = App.GetCurrentPrice(crypto, "defaultMarket").ToString() + App.coinSymbol;
+
+            Frame contentFrame = Window.Current.Content as Frame;
+            MainPage mp = contentFrame.Content as MainPage;
+            TextBlock titleVal = mp.FindName("mainTitleVal") as TextBlock;
+            TextBlock titleDiff = mp.FindName("mainTitleDiff") as TextBlock;
+            titleVal.Text = App.GetCurrentPrice(crypto, "defaultMarket").ToString() + App.coinSymbol;
+            titleVal.Visibility  = Visibility.Visible;
+            titleDiff.Visibility = Visibility.Visible;
 
             switch (timeSpan) {
                 case "hour":
@@ -197,12 +205,12 @@ namespace CryptoTracker {
             d = (float)Math.Round( ((newestPrice / oldestPrice) - 1) * 100, 2);
 
             if (d < 0) {
-                diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
+                titleDiff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 d = Math.Abs(d);
-                diff.Text = "▼" + d.ToString() + "%";
+                titleDiff.Text = "▼" + d.ToString() + "%";
             } else {
-                diff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
-                diff.Text = "▲" + d.ToString() + "%";
+                titleDiff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                titleDiff.Text = "▲" + d.ToString() + "%";
             }
 
             SplineAreaSeries series = (SplineAreaSeries)priceChart.Series[0];
