@@ -16,7 +16,7 @@
 
         <NavigationView x:Name="NavView" Grid.RowSpan="2" Grid.Row="0" SelectionChanged="NavView_SelectionChanged"
             IsBackButtonVisible="Collapsed" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
-            Loaded="NavView_Loaded"
+            Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked"
             OpenPaneLength="280" CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="700">
 
             <NavigationView.MenuItems>

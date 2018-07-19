@@ -1,6 +1,5 @@
 ﻿using CryptoTracker.Helpers;
 using CryptoTracker.Views;
-using Microsoft.AppCenter.Analytics;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.ApplicationModel.Core;
@@ -22,9 +21,7 @@ namespace CryptoTracker {
 
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
-
-            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            
 
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
@@ -47,7 +44,6 @@ namespace CryptoTracker {
             }
 
             FirstRunDialogHelper.ShowIfAppropriateAsync();
-            //ContentFrame.Navigate(typeof(Home));
 
             // Extend acrylic
             ExtendAcrylicIntoTitleBar();
@@ -106,51 +102,66 @@ namespace CryptoTracker {
             NavView.SelectedItem = NavView.MenuItems[0];
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // NavigationView
         private void NavView_Sync_Tapped(object sender, TappedRoutedEventArgs e) {
             UpdateButton_Click(sender, e);
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-            if (args.IsSettingsSelected) {
-                ContentFrame.Navigate(typeof(Settings));
-                mainTitle.Text = "Settings";
-                mainTitleVal.Visibility  = Visibility.Collapsed;
-                mainTitleDiff.Visibility = Visibility.Collapsed;
-                mainTitleLogo.Visibility = Visibility.Collapsed;
-            } else {
-                switch (((FrameworkElement)args.SelectedItem).Tag) {
-                    case "home":
-                        ContentFrame.Navigate(typeof(Home));
-                        mainTitle.Text = "Home";
-                        mainTitleVal.Visibility  = Visibility.Collapsed;
-                        mainTitleDiff.Visibility = Visibility.Collapsed;
-                        mainTitleLogo.Visibility = Visibility.Collapsed;
-                        break;
-                    case "top":
-                        ContentFrame.Navigate(typeof(Top100));
-                        mainTitle.Text = "Top 100";
-                        mainTitleVal.Visibility  = Visibility.Collapsed;
-                        mainTitleDiff.Visibility = Visibility.Collapsed;
-                        mainTitleLogo.Visibility = Visibility.Collapsed;
-                        break;
-                    case "news":
-                        ContentFrame.Navigate(typeof(News));
-                        mainTitle.Text = "News";
-                        mainTitleVal.Visibility  = Visibility.Collapsed;
-                        mainTitleDiff.Visibility = Visibility.Collapsed;
-                        mainTitleLogo.Visibility = Visibility.Collapsed;
-                        break;
-                    case "portfolio":
-                        ContentFrame.Navigate(typeof(Portfolio));
-                        mainTitle.Text = "Portfolio";
-                        mainTitleVal.Visibility  = Visibility.Visible;
-                        mainTitleDiff.Visibility = Visibility.Collapsed;
-                        mainTitleLogo.Visibility = Visibility.Collapsed;
-                        break;
-                }
+            string name = ((ContentControl)args.SelectedItem).Content.ToString();
+            pagesNavigation(name);
+        }
+        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
+            string name = args.InvokedItem.ToString();
+            pagesNavigation(name);
+        }
+        private void pagesNavigation(string s) {
+            switch (s) {
+                case "Home":
+                    ContentFrame.Navigate(typeof(Home));
+                    mainTitle.Text = "Home";
+                    mainTitleVal.Visibility  = Visibility.Collapsed;
+                    mainTitleDiff.Visibility = Visibility.Collapsed;
+                    mainTitleLogo.Visibility = Visibility.Collapsed;
+                    break;
+                case "Top 100":
+                    ContentFrame.Navigate(typeof(Top100));
+                    mainTitle.Text = "Top 100";
+                    mainTitleVal.Visibility  = Visibility.Collapsed;
+                    mainTitleDiff.Visibility = Visibility.Collapsed;
+                    mainTitleLogo.Visibility = Visibility.Collapsed;
+                    break;
+                case "News":
+                    ContentFrame.Navigate(typeof(News));
+                    mainTitle.Text = "News";
+                    mainTitleVal.Visibility  = Visibility.Collapsed;
+                    mainTitleDiff.Visibility = Visibility.Collapsed;
+                    mainTitleLogo.Visibility = Visibility.Collapsed;
+                    break;
+                case "Portfolio":
+                    ContentFrame.Navigate(typeof(Portfolio));
+                    mainTitle.Text = "Portfolio";
+                    mainTitleVal.Visibility  = Visibility.Visible;
+                    mainTitleDiff.Visibility = Visibility.Collapsed;
+                    mainTitleLogo.Visibility = Visibility.Collapsed;
+                    break;
+                case "CoinDetails":
+                    mainTitleVal.Visibility = Visibility.Visible;
+                    mainTitleDiff.Visibility = Visibility.Collapsed;
+                    mainTitleLogo.Visibility = Visibility.Collapsed;
+                    break;
+
+                case "Settings":
+                    ContentFrame.Navigate(typeof(Settings));
+                    mainTitleVal.Visibility  = Visibility.Visible;
+                    mainTitleDiff.Visibility = Visibility.Collapsed;
+                    mainTitleLogo.Visibility = Visibility.Collapsed;
+                    break;
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////
         // AUTO SUGGEST-BOX
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
             // Only get results when it was a user typing, 
