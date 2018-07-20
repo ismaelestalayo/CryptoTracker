@@ -180,7 +180,7 @@ namespace CryptoTracker {
                 var data = await GetJSONAsync(uri);
 
                 for (int i = 0; i < 100; i++) {
-                    coinList.Add( data["Data"][i]["CoinInfo"]["Name"].ToString() );
+                    coinList.Add(data["Data"][i]["CoinInfo"]["Name"].ToString());                    
                 }
 
             } catch (Exception) {
@@ -190,6 +190,9 @@ namespace CryptoTracker {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         internal async static Task GetHisto(string crypto, string time, int limit) {
+            if (crypto == "MIOTA")
+                crypto = "IOT";
+
             //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
             string URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
                 + crypto + "&tsym=" + coin + "&limit=" + limit;

@@ -81,6 +81,9 @@ namespace CryptoTracker.Views {
             topCoins = await App.GetTop100();
             
             for (int i = 0; i < topCoins.Count; i++) {
+                if (topCoins[i].Symbol == "MIOTA")
+                    topCoins[i].Symbol = "IOT";
+
                 string filename = "/Assets/icon" + topCoins[i].Symbol + ".png";
                 topCoins[i].LogoURL = "https://chasing-coins.com/api/v1/std/logo/" + topCoins[i].Symbol;
             }

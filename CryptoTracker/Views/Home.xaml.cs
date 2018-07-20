@@ -43,6 +43,9 @@ namespace CryptoTracker.Views {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         private async Task AddCoinHome(string c) {
 
+            if (c == "MIOTA")
+                c = "IOT";
+
             String iconPath = "/Assets/icon" + c + ".png";
             try {
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + iconPath));
