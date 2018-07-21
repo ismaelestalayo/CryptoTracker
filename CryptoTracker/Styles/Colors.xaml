@@ -5,49 +5,70 @@
     <SolidColorBrush x:Key="null_color"		    Color="#333333"/>
     <SolidColorBrush x:Key="null_colorT"        Color="#333333" Opacity="0.4" />
 
+    <SolidColorBrush x:Key="ADA_color"          Color="#091a26"/>
+    <SolidColorBrush x:Key="ADA_colorT"         Color="#091a26" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="BCH_color"          Color="#F08B16"/>
+    <SolidColorBrush x:Key="BCH_colorT"         Color="#F08B16" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="BCN_color"          Color="#FF3E89"/>
+    <SolidColorBrush x:Key="BCN_colorT"         Color="#FF3E89" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="BNB_color"          Color="#FFBB0C"/>
+    <SolidColorBrush x:Key="BNB_colorT"         Color="#FFBB0C" Opacity="0.4"/> 
+
     <SolidColorBrush x:Key="BTC_color"		    Color="#FFB119"/>
     <SolidColorBrush x:Key="BTC_colorT"         Color="#FFB119" Opacity="0.4" />
 
+    <SolidColorBrush x:Key="DASH_color"         Color="#0076C0"/>
+    <SolidColorBrush x:Key="DASH_colorT"        Color="#0076C0" Opacity="0.4"/> 
+
+    <SolidColorBrush x:Key="DOGE_color"         Color="#CDA71F"/>
+    <SolidColorBrush x:Key="DOGE_colorT"        Color="#CDA71F" Opacity="0.4"/> 
+
+    <SolidColorBrush x:Key="EOS_color"          Color="#443F54"/>
+    <SolidColorBrush x:Key="EOS_colorT"         Color="#443F54" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="ETC_color"          Color="#4C9172"/>
+    <SolidColorBrush x:Key="ETC_colorT"         Color="#4C9172" Opacity="0.4"/>
+    
     <SolidColorBrush x:Key="ETH_color"		    Color="#6F7CBA"/>
     <SolidColorBrush x:Key="ETH_colorT"         Color="#6F7CBA" Opacity="0.4" />
-    
-    <SolidColorBrush x:Key="LTC_color"		    Color="#B5B5B5"/>
-    <SolidColorBrush x:Key="LTC_colorT"		    Color="#B5B5B5" Opacity="0.4"/>
-    
-    <SolidColorBrush x:Key="XRP_color"		    Color="#1277A8"/>
-    <SolidColorBrush x:Key="XRP_colorT"		    Color="#1277A8" Opacity="0.4"/>
 
     <SolidColorBrush x:Key="IOT_color"          Color="#04A997"/>
     <SolidColorBrush x:Key="IOT_colorT"         Color="#04A997" Opacity="0.4"/>
     <SolidColorBrush x:Key="MIOTA_color"        Color="#04A997"/>
     <SolidColorBrush x:Key="MIOTA_colorT"       Color="#04A997" Opacity="0.4"/>
 
-    <SolidColorBrush x:Key="BCH_color"          Color="#F08B16"/>
-    <SolidColorBrush x:Key="BCH_colorT"         Color="#F08B16" Opacity="0.4"/>
+    <SolidColorBrush x:Key="LTC_color"		    Color="#B5B5B5"/>
+    <SolidColorBrush x:Key="LTC_colorT"		    Color="#B5B5B5" Opacity="0.4"/>
 
-    <SolidColorBrush x:Key="ETC_color"          Color="#4C9172"/>
-    <SolidColorBrush x:Key="ETC_colorT"         Color="#4C9172" Opacity="0.4"/>
+    <SolidColorBrush x:Key="NANO_color"          Color="#0092E8"/>
+    <SolidColorBrush x:Key="NANO_colorT"         Color="#0092E8" Opacity="0.4"/>
 
     <SolidColorBrush x:Key="NEO_color"          Color="#58BF00"/>
     <SolidColorBrush x:Key="NEO_colorT"         Color="#58BF00" Opacity="0.4"/>
 
-    <SolidColorBrush x:Key="DASH_color"         Color="#0076C0"/>
-    <SolidColorBrush x:Key="DASH_colorT"        Color="#0076C0" Opacity="0.4"/>
+    <SolidColorBrush x:Key="USDT_color"         Color="#26A17B"/>
+    <SolidColorBrush x:Key="USDT_colorT"        Color="#26A17B" Opacity="0.4"/>
 
-    <SolidColorBrush x:Key="EOS_color"          Color="#443F54"/>
-    <SolidColorBrush x:Key="EOS_colorT"         Color="#443F54" Opacity="0.4"/>
+    <SolidColorBrush x:Key="TRX_color"          Color="#E60815"/>
+    <SolidColorBrush x:Key="TRX_colorT"         Color="#E60815" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="XEM_color"          Color="#20B5AC"/>
+    <SolidColorBrush x:Key="XEM_colorT"         Color="#20B5AC" Opacity="0.4"/>
 
     <SolidColorBrush x:Key="XLM_color"          Color="#00B6E7"/>
     <SolidColorBrush x:Key="XLM_colorT"         Color="#00B6E7" Opacity="0.4"/>
 
-    <SolidColorBrush x:Key="ADA_color"          Color="#091a26"/>
-    <SolidColorBrush x:Key="ADA_colorT"         Color="#091a26" Opacity="0.4"/>
-
-    <SolidColorBrush x:Key="USDT_color"         Color="#26A17B"/>
-    <SolidColorBrush x:Key="USDT_colorT"        Color="#26A17B" Opacity="0.4"/>
-
     <SolidColorBrush x:Key="XMR_color"          Color="#EE5922"/>
     <SolidColorBrush x:Key="XMR_colorT"         Color="#EE5922" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="XRP_color"		    Color="#1277A8"/>
+    <SolidColorBrush x:Key="XRP_colorT"		    Color="#1277A8" Opacity="0.4"/>
+
+    <SolidColorBrush x:Key="ZRX_color"          Color="#131313"/>
+    <SolidColorBrush x:Key="ZRX_colorT"         Color="#131313" Opacity="0.4"/> 
 
 
 
