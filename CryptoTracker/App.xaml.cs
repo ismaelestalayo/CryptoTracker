@@ -301,6 +301,9 @@ namespace CryptoTracker {
 
                 ObservableCollection<Top100coin> topCoins = new ObservableCollection<Top100coin>();
                 for (int i = 0; i < limit; i++) {
+                    if (data[i]["symbol"].ToString() == "MIOTA")
+                        data[i]["symbol"] = "IOT";
+
                     topCoins.Add(
                         new Top100coin {
                             Name            = data[i]["name"].ToString(),

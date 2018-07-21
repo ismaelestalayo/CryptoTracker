@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Windows.Storage;
 using Windows.Storage.Search;
@@ -81,11 +82,10 @@ namespace CryptoTracker.Views {
             topCoins = await App.GetTop100();
             
             for (int i = 0; i < topCoins.Count; i++) {
-                if (topCoins[i].Symbol == "MIOTA")
-                    topCoins[i].Symbol = "IOT";
+                string filename = "Assets/icon" + topCoins[i].Symbol + ".png";
 
-                string filename = "/Assets/icon" + topCoins[i].Symbol + ".png";
-                topCoins[i].LogoURL = "https://chasing-coins.com/api/v1/std/logo/" + topCoins[i].Symbol;
+                if(!File.Exists(filename) )
+                    topCoins[i].LogoURL = "https://chasing-coins.com/api/v1/std/logo/" + topCoins[i].Symbol;
             }
 
             top100ListView.ItemsSource = topCoins;

@@ -88,7 +88,7 @@
                                 Source="{Binding Src}" 
                                 Width="40" Visibility="Visible"/>
 
-                            <Image Grid.Column="2" Width="40" Visibility="Collapsed">
+                            <Image Grid.Column="2" Width="40" Visibility="Visible">
                                 <Image.Source>
                                     <BitmapImage UriSource="{Binding LogoURL}" />
                                 </Image.Source>
