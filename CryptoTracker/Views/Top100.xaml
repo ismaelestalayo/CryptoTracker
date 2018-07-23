@@ -30,7 +30,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Padding="0 10" Margin="10" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Width="700">
+        <Grid Padding="0 10" Margin="10" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" MaxWidth="750">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -56,16 +56,16 @@
         <!-- 
         ################################################################################################### -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
-            <ListView x:Name="top100ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_Click" Width="700">
+            <ListView x:Name="top100ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_Click" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" BorderThickness="0 1 0 0">
+                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" BorderThickness="0 1 0 0" MaxWidth="600">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="6*"/>
-                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock 

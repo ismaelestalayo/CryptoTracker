@@ -52,45 +52,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-
-        <!--<RelativePanel Visibility="Collapsed"
-            Grid.Row="0" Padding="0, 0, 0, -5"
-            BorderThickness="0, 0, 0, 0.5" 
-            BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
-            <StackPanel Margin="0, 5" Padding="0, -5, 0, 5">
-
-                <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
-                    <Image 
-                        x:Name="cryptoLogo" 
-                        Source="/Assets/iconBTCc.png" 
-                        Width="25" Margin="0, 3"/>
-                    <TextBlock 
-                        x:Name="cryptoName" 
-                        Text="Crypto" 
-                        Style="{ThemeResource TitleTextBlockStyle}"
-                        FontWeight="ExtraLight" Margin="5, -2"/>
-                </StackPanel>
-
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="5, 0"
-                        RelativePanel.AlignRightWithPanel="True">
-
-                <TextBlock Name="curr" 
-                           Text="val€" 
-                           FontSize="24"
-                           FontWeight="Light"/>
-
-                <TextBlock Name="diff" 
-                           Text="0%"
-                           VerticalAlignment="Bottom"
-                           Margin="5, 0, 5, 1"
-                           FontSize="19"
-                           FontWeight="Light"/>
-            </StackPanel>
-
-        </RelativePanel>-->
-
         <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
