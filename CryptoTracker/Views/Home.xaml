@@ -159,7 +159,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Volumen 24h" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" />
+                                <TextBlock Text="Volume 24h" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" />
 
                                 <StackPanel Grid.Column="1" Orientation="Vertical">
                                     <TextBlock Text="{Binding _volume24, FallbackValue=0}"   Style="{StaticResource currTextStyle}" HorizontalAlignment="Right"/>
