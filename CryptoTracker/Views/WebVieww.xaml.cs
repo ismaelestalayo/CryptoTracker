@@ -51,7 +51,10 @@ namespace CryptoTracker.Views {
                 case "XRP_Reddit":
                     myWebView.Navigate(new Uri("https://www.reddit.com/r/ripple"));
                     break;
-                    
+
+                default:
+                    myWebView.Navigate(new Uri(crypto));
+                    break;
             }
 
         }
