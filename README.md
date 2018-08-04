@@ -17,9 +17,7 @@ A simple yet powerful crypto-currency tracker UWP.
 
 ## Mobile version:
 
-<img src="Screenshots/Phone_homeL.png" width = "30%"/> 
-<img src="Screenshots/Phone_btcL.png" width = "30%"/> 
-<img src="Screenshots/Phone_ethD.png" width = "30%"/>
+<img src="Screenshots/Phone_homeL.png" width = "30%"/> <img src="Screenshots/Phone_btcL.png" width = "30%"/> <img src="Screenshots/Phone_ethD.png" width = "30%"/>
 
 
 # Milestones:
