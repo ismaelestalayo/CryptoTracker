@@ -7,37 +7,34 @@ A simple yet powerful crypto-currency tracker UWP.
 - Beautiful light and dark theme for you to choose!
 
 
-<img src="Screenshots/promo_transparent.png?raw=true" width = "130%"/>
+<img src="Screenshots/promo/FamilyT.png" width = "130%"/>
 
 ## PC Version
+<img src="Screenshots/promo/LaptopR_HomeDT.png" width = "100%"/>
 
-<img src="Screenshots/PC_HomeL.png" width = "80%"/>
 
 
-<img src="Screenshots/PC_btcL.png" width = "80%"/>
-
-<img src="Screenshots/PC_ethL.png" width = "80%"/>
-
-<img src="Screenshots/PC_ltcL.png" width = "80%"/>
 
 ## Mobile version:
 
-<img src="Screenshots/promo_phone.gif" width="40%">
+<img src="Screenshots/Phone_homeL.png" width = "30%"/> 
+<img src="Screenshots/Phone_btcL.png" width = "30%"/> 
+<img src="Screenshots/Phone_ethD.png" width = "30%"/>
 
-<img src="Screenshots/Phone_homeL.png" width = "30%"/> <img src="Screenshots/Phone_btcL.png" width = "30%"/> <img src="Screenshots/Phone_ethD.png" width = "30%"/>
 
-<img src="Screenshots/Phone_homeL.png" width = "30%"/> <img src="Screenshots/Phone_settingsD.png" width = "30%"/> <img src="Screenshots/Phone_portfolioL.png" width = "30%"/>
+# Milestones:
+#### 3.0:
+- Editable home layout
+- Added top100 coins page
+- Added news page
+- Refined UI
+- Added minimal logos for coins
 
-# Changelog:
-#### 2.2:
+#### 2.3:
 - Added 100 altcoins! (try using the search icon)
 - Richer settings page
 - Be sure to check out the new subreddit
 - Refined UI
-
-#### 2.2:
-- Added Ripple (XRP) support
-- Fixed portfolio not scrolling
 
 #### 2.0:
 - New logo, name and fluent UI
@@ -54,11 +51,10 @@ A simple yet powerful crypto-currency tracker UWP.
 
 #### 1.4:
 - New minimal UI for both PC and mobile.
-- Few errors fixed.
-
-#### 1.3:
 - CAD and MXN added to currency options.
 - Added 24h stats and 24h volume chart.
+- Few errors fixed.
+
 
 #### 1.2:
 - Ability to choose between EUR and USD
@@ -84,10 +80,11 @@ A simple yet powerful crypto-currency tracker UWP.
 - [x] Stats about each coin on their pages
 - [x] Portfolio to keep track of earnings
 - [ ] Live tile
-- [ ] More cryptocurrencies
+- [x] More cryptocurrencies
 - [ ] More languages
 - [ ] Log in to CoinBase/Kraken account
-- [ ] Port to Android (maybe iOS but developer account is 100€/year)
+- [ ] Port to Android (dev account is 20€)
+- [ ] Port to iOS (dev account is 100€/year + must have a Mac)
 
 # Suggest anything at:
 
