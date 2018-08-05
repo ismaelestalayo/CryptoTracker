@@ -6,8 +6,10 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
     public partial class Portfolio : Page {
@@ -18,40 +20,42 @@ namespace CryptoTracker {
         public Portfolio() {
             this.InitializeComponent();
 
+            CryptoComboBox.ItemsSource = App.coinList;
+
             dataList = ReadPortfolio().Result;
             MyListView.ItemsSource = dataList;
 
             UpdatePortfolio();
-            UpdateEarnings();
+            UpdateProfits();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            string crypto = ((ComboBoxItem)CryptoComboBox.SelectedItem).Content.ToString();
-
-            curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
-
+        private void AddButton_Click(object sender, RoutedEventArgs e) {
+            
             try {
+                string crypto = CryptoComboBox.SelectedItem.ToString();
+                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
+
+
                 double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
                 priceBought = Math.Round(priceBought, 2);
                 double earningz = Math.Round((curr - priceBought) * double.Parse(cryptoQtyTextBox.Text), 5);
 
                 dataList.Add(new PurchaseClass {
-                    _Crypto = crypto,
-                    _CryptoQty = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
-                    _InvestedQty = double.Parse(investedQtyTextBox.Text),
-                    _BoughtAt = Math.Round(priceBought, 2),
-                    c = App.coinSymbol,
-                    upDown = (earningz < 0 ? "▼" : "▲"),
-                    Current = curr,
-                    Earnings = Math.Round(Math.Abs(earningz), 2).ToString()
-                    //earningsFG = (earningz < 0) ? new SolidColorBrush(Color.FromArgb(255, 180, 0, 0)) : new SolidColorBrush(Color.FromArgb(255, 0, 120, 0))
+                    _Crypto     = crypto,
+                    _CryptoQty  = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
+                    _InvestedQty= double.Parse(investedQtyTextBox.Text),
+                    _BoughtAt   = Math.Round(priceBought, 2),
+                    c           = App.coinSymbol,
+                    Current     = curr,
+                    Profit      = (earningz < 0 ? "▼" : "▲") + Math.Round(Math.Abs(earningz), 2).ToString(),
+                    ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"]
                 });
 
                 cryptoQtyTextBox.Text = String.Empty;
                 investedQtyTextBox.Text = String.Empty;
 
-                UpdateEarnings();
+                UpdateProfits();
                 SavePortfolio();
 
             } catch(Exception) {
@@ -71,9 +75,12 @@ namespace CryptoTracker {
                 dataList[i].Current = curr;
                 double priceBought = (1 / dataList[i]._CryptoQty) * dataList[i]._InvestedQty;
                 priceBought = Math.Round(priceBought, 2);
-                dataList[i].Earnings = Math.Round((curr - priceBought) * dataList[i]._CryptoQty, 2).ToString();
+
+                double earningz = Math.Round((curr - priceBought) * dataList[i]._CryptoQty, 2);
+                dataList[i].Profit = (earningz < 0 ? "▼" : "▲") + earningz.ToString();
+                dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
             }
-            UpdateEarnings();
+            UpdateProfits();
             SavePortfolio();
 
             List<double> pie = new List<double>();
@@ -82,14 +89,14 @@ namespace CryptoTracker {
                 pie.Add(100);
 
             for (int i = 0; i < MyListView.Items.Count; i++) {
-                pie.Add( double.Parse(dataList[i].Earnings) );
+                pie.Add( double.Parse(dataList[i].Profit) );
             }
 
             portfolioPieChart.Series[0].ItemsSource = pie;
 
         }
 
-        private void UpdateEarnings() {
+        private void UpdateProfits() {
             float total = 0;
             for (int i = 0; i < MyListView.Items.Count; i++) {
                 total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i]._CryptoQty;

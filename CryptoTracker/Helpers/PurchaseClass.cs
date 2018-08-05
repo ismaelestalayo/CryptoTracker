@@ -17,21 +17,19 @@ namespace CryptoTracker.Helpers {
         public double _BoughtAt { get; set; }
         [DataMember()]
         public string c { get; set; }
-        [DataMember()]
-        public string upDown { get; set; }
 
-        public double _Current;
+        private double _Current;
         [DataMember()]
         public double Current {
             get { return _Current; }
             set { if (value != _Current) { _Current = value; NotifyPropertyChanged("Current");}}}
-        public string _Earnings;
+        private string _Profits;
         [DataMember()]
-        public string Earnings {
-            get { return _Earnings; }
-            set { if (value != _Earnings) { _Earnings = value; NotifyPropertyChanged("Earnings"); } }}
+        public string Profit {
+            get { return _Profits; }
+            set { if (value != _Profits) { _Profits = value; NotifyPropertyChanged("Earnings"); } }}
 
-        public SolidColorBrush earningsFG { get; set; }
+        public SolidColorBrush ProfitFG { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

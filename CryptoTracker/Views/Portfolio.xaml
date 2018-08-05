@@ -34,12 +34,7 @@
         <!-- 
         ############################################################################################################### -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15">
-            <ComboBox x:Name="CryptoComboBox" PlaceholderText="BTC" Header="Crypto">
-                <ComboBoxItem Content="BTC" Name="BTC" IsSelected="True"/>
-                <ComboBoxItem Content="ETH" Name="ETH" />
-                <ComboBoxItem Content="LTC" Name="LTC" />
-                <ComboBoxItem Content="XRP" Name="XRP" />
-            </ComboBox>
+            <ComboBox x:Name="CryptoComboBox" PlaceholderText="Coin" Header="Crypto"/>
 
             <TextBox 
                 x:Name="cryptoQtyTextBox" Header="Amount"
@@ -91,7 +86,7 @@
             </Border>
 
             <Border Grid.Column="4" BorderThickness="0" Background="#3F3F3F">
-                <TextBlock Text="Earnings" Style="{StaticResource ListViewTextBlockTitle}"/>
+                <TextBlock Text="Profit" Style="{StaticResource ListViewTextBlockTitle}"/>
             </Border>
         </Grid>
 
@@ -143,7 +138,6 @@
                                 Grid.Column="3" 
                                 HorizontalAlignment="Center" 
                                 Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding upDown, Mode=OneWay}"/>
                                 <Run Text="{Binding Current, Mode=OneWay}"/>
                                 <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
@@ -151,8 +145,9 @@
                             <TextBlock 
                                 Grid.Column="4" 
                                 HorizontalAlignment="Center" 
-                                Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding Earnings, Mode=OneWay}"/>
+                                Style="{StaticResource ListViewTextBlock}"
+                                Foreground="{Binding ProfitFG, Mode=TwoWay}">
+                                <Run Text="{Binding Profit, Mode=OneWay}"/>
                                 <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
