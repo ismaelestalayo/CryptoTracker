@@ -179,9 +179,12 @@ namespace CryptoTracker {
             try {
                 var data = await GetJSONAsync(uri);
 
-                for (int i = 0; i < 100; i++) {
+                int lastIndex = ((JContainer)data["Data"]).Count;
+                for (int i = 0; i < lastIndex; i++) {
                     coinList.Add(data["Data"][i]["CoinInfo"]["Name"].ToString());                    
                 }
+
+                coinList.Sort();
 
             } catch (Exception) {
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();

@@ -20,8 +20,6 @@
             OpenPaneLength="280" CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="700">
 
             <NavigationView.MenuItems>
-                <!--<NavigationViewItemSeparator/>
-                <NavigationViewItemHeader Content="Sections"/>-->
                 <NavigationViewItem Icon="Home"         Content="Home"      Tag="home"/>
                 <NavigationViewItem Icon="AllApps"      Content="Top 100"   Tag="top"/>
                 <NavigationViewItem Icon="PreviewLink"  Content="News"      Tag="news"/>
