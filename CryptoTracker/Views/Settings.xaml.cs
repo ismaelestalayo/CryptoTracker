@@ -7,7 +7,9 @@ using Windows.System;
 using CryptoTracker.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
+using System.Threading.Tasks;
+using Windows.Services.Store;
+using Newtonsoft.Json.Linq;
 
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
@@ -86,7 +88,8 @@ namespace CryptoTracker {
         }
         private async void ReviewButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("reviewButton_Click");
-            await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store:reviewapp?appid=" + Windows.ApplicationModel.Store.CurrentApp.AppId));
+            //await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store:reviewapp?appid=" + Windows.ApplicationModel.Store.CurrentApp.AppId));
+            await ShowRatingReviewDialog();
         }
         private async void MailButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("mailButton_Click");
@@ -105,6 +108,25 @@ namespace CryptoTracker {
             await Launcher.LaunchUriAsync(new Uri("https://www.reddit.com/r/CryptoTracker/"));
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        public async Task<bool> ShowRatingReviewDialog() {
+            StoreSendRequestResult result = await StoreRequestHelper.SendRequestAsync(
+                StoreContext.GetDefault(), 16, String.Empty);
+
+            if (result.ExtendedError == null) {
+                JObject jsonObject = JObject.Parse(result.Response);
+                if (jsonObject.SelectToken("status").ToString() == "success") {
+                    // The customer rated or reviewed the app.
+                    return true;
+                }
+            }
+
+            // There was an error with the request, or the customer chose not to
+            // rate or review the app.
+            return false;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
         private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
             ComboBox c = sender as ComboBox;
             String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
