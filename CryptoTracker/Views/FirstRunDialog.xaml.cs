@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.ApplicationModel;
+using Windows.UI.Xaml.Controls;
 
 // La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -10,6 +11,11 @@ namespace CryptoTracker.Views {
 
         public FirstRunDialog() {
             this.InitializeComponent();
+
+            Package package = Package.Current;
+            PackageVersion version = package.Id.Version;
+
+            title.Text += string.Format(" {0}.{1}.{2}", version.Major, version.Minor, version.Revision);
         }
         
     }

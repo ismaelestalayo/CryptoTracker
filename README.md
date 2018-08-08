@@ -21,12 +21,19 @@ A simple yet powerful crypto-currency tracker UWP.
 
 
 # Milestones:
+#### 3.5:
+- New Fluent Design!
+- Add coins to Home with the heart button!
+- See the volume of each coin from Home.
+- Portfolio now supports 100 altcoins.
+- Added minimal colorized icons to more coins.
+- Added News page.
+
 #### 3.0:
 - Editable home layout
 - Added top100 coins page
-- Added news page
 - Refined UI
-- Added minimal logos for coins
+- Bug Fixes
 
 #### 2.3:
 - Added 100 altcoins! (try using the search icon)

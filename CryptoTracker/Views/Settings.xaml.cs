@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using System.Threading.Tasks;
 using Windows.Services.Store;
 using Newtonsoft.Json.Linq;
+using Windows.ApplicationModel;
 
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
@@ -17,11 +18,11 @@ namespace CryptoTracker {
         private string v;
 
         public Settings() {
-            this.InitializeComponent();
+            this.InitializeComponent();            
 
-            var assembly = typeof(App).GetTypeInfo().Assembly;
-            v = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
-            VersionTextBlock.Text = "Version: " + v;
+            Package package = Package.Current;
+            PackageVersion version = package.Id.Version;
+            VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}.", version.Major, version.Minor, version.Revision);
 
             ThemeSwitcher.IsOn = App.localSettings.Values["Theme"].Equals("Dark");
 
@@ -86,10 +87,13 @@ namespace CryptoTracker {
             var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
             await launcher.LaunchAsync();
         }
+        private async void RatingButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("ratingButton_Click");
+            await ShowRatingReviewDialog();
+        }
         private async void ReviewButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("reviewButton_Click");
-            //await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store:reviewapp?appid=" + Windows.ApplicationModel.Store.CurrentApp.AppId));
-            await ShowRatingReviewDialog();
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9n3b47hbvblc"));
         }
         private async void MailButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("mailButton_Click");

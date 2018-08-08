@@ -70,9 +70,15 @@
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <TextBlock Text="Feedback" Style="{StaticResource LabelTitle}"/>
                 <TextBlock Text="Take a minute and leave a review on the Store." FontWeight="ExtraLight"/>
-                <Button Content="Review"
-                    Style="{StaticResource SettingsButtonsStyle}" 
-                    Click="ReviewButton_Click" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Rating"
+                        Style="{StaticResource SettingsButtonsStyle}" 
+                        Click="RatingButton_Click" />
+                    <Button Content="Review" Margin="5, 0"
+                        Style="{StaticResource SettingsButtonsStyle}" 
+                        Click="ReviewButton_Click" />
+                </StackPanel>
+                
 
                 <TextBlock Text="I'd love to hear your thoughts about the app." FontWeight="ExtraLight"/>
                 <Button Content="Feedback Hub" 
@@ -116,7 +122,7 @@
                 <StackPanel Margin="10, 0">
                     <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
                     <TextBlock Text="Made with ❤ by an engineering student." FontWeight="Light"/>
-                    <TextBlock Name="VersionTextBlock" Text="Version: 2.X.X" FontWeight="Light"/>
+                    <TextBlock Name="VersionTextBlock" Text="Version: 3.X.X" FontWeight="Light"/>
                     <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
                         Content    ="http://ismaelestalayo.github.io/" 
                         Margin="0, -6, 0, 0"

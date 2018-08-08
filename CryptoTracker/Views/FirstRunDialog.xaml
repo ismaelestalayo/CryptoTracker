@@ -8,27 +8,24 @@
     d:DesignHeight="345"
     d:DesignWidth="550"
     PrimaryButtonText="Ok">
-    
-    <ContentDialog.TitleTemplate>
-        <DataTemplate>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Image Source="/Assets/CryptoTracker 400.png" Width="35" Height="35" Margin="0"/>
-                <TextBlock VerticalAlignment="Center" Text="Welcome to CryptoTracker" FontSize="22" Margin="10,0,0,0"/>
-            </StackPanel>
-        </DataTemplate>
-    </ContentDialog.TitleTemplate>
-    
+
     <ScrollViewer>
         <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
+                <Image Source="/Assets/CryptoTracker 400.png" Width="35" Height="35" Margin="0 0 10 0"/>
+                <TextBlock x:Name="title" VerticalAlignment="Center" Text="Welcome to CryptoTracker" FontSize="22"/>
+            </StackPanel>
+
             <TextBlock TextWrapping="WrapWholeWords">
-                
-                <Run>New in this version &#x1F680;</Run><LineBreak/>
+                <Run Text="New in this version: &#x1F680; &#x0a;"/>
                 
                 <Run FontWeight="ExtraLight"
-                     Text=" • Edit Home layout by pinning your fav coins!
-                     &#x0a; • Check the subreddit for updates and feedback.
-                     &#x0a; • Added logos and colors to more coins!
-                     &#x0a; • Bug fixes.
+                     Text="• New Fluent Design!
+                     &#x0a; • Add coins to Home with the heart button!
+                     &#x0a; • See the volume of each coin from Home.
+                     &#x0a; • Portfolio now supports 100 altcoins.
+                     &#x0a; • Added minimal colorized icons to more coins.
+                     &#x0a; • Added News page.
                      "/> 
                 <LineBreak/>
                 
