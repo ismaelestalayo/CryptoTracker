@@ -15,7 +15,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -147,6 +147,7 @@
                                 HorizontalAlignment="Center" 
                                 Style="{StaticResource ListViewTextBlock}"
                                 Foreground="{Binding ProfitFG, Mode=TwoWay}">
+                                <Run Text="{Binding _arrow, Mode=OneWay}"/>
                                 <Run Text="{Binding Profit, Mode=OneWay}"/>
                                 <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
@@ -175,6 +176,8 @@
                 </telerik:PieSeries.ValueBinding>
             </telerik:PieSeries>
         </telerik:RadPieChart>
+        
+
 
         <!-- 
         ###############################################################################################################

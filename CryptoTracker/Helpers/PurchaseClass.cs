@@ -17,6 +17,8 @@ namespace CryptoTracker.Helpers {
         public double _BoughtAt { get; set; }
         [DataMember()]
         public string c { get; set; }
+        [DataMember()]
+        public string _arrow { get; set; }
 
         private double _Current;
         [DataMember()]
@@ -27,12 +29,12 @@ namespace CryptoTracker.Helpers {
         [DataMember()]
         public string Profit {
             get { return _Profits; }
-            set { if (value != _Profits) { _Profits = value; NotifyPropertyChanged("Earnings"); } }}
+            set { if (value != _Profits) { _Profits = value; NotifyPropertyChanged("Profits"); } }}
 
         public SolidColorBrush ProfitFG { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
+        public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName]string propertyName = "") {
             if (PropertyChanged != null) {
                 System.Diagnostics.Debug.WriteLine("Update now");

@@ -46,9 +46,10 @@ namespace CryptoTracker {
                     _CryptoQty  = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
                     _InvestedQty= double.Parse(investedQtyTextBox.Text),
                     _BoughtAt   = Math.Round(priceBought, 2),
+                    _arrow      = earningz < 0 ? "▼" : "▲",
                     c           = App.coinSymbol,
                     Current     = curr,
-                    Profit      = (earningz < 0 ? "▼" : "▲") + Math.Round(Math.Abs(earningz), 2).ToString(),
+                    Profit      = Math.Round(Math.Abs(earningz), 2).ToString(),
                     ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"]
                 });
 
@@ -77,7 +78,8 @@ namespace CryptoTracker {
                 priceBought = Math.Round(priceBought, 2);
 
                 double earningz = Math.Round((curr - priceBought) * dataList[i]._CryptoQty, 2);
-                dataList[i].Profit = (earningz < 0 ? "▼" : "▲") + earningz.ToString();
+                dataList[i]._arrow = earningz < 0 ? "▼" : "▲";
+                dataList[i].Profit = earningz.ToString();
                 dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
             }
             UpdateProfits();
