@@ -44,7 +44,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Image 
                             x:Name="mainTitleLogo" 
-                            Source="/Assets/iconBTCc.png" 
+                            Source="/Assets/Icons/iconBTC.png" 
                             Visibility="Collapsed" Margin="0,0,5,0"
                             Width="23" />
                         <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"

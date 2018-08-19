@@ -44,9 +44,9 @@ namespace CryptoTracker {
             Description.Text = App.GetCoinDescription(crypto);
 
             try {
-                titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/icon" + crypto.ToUpper() + ".png"));
+                titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper() + ".png"));
             } catch(Exception) {
-                titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/iconNULL.png"));
+                titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/iconNULL.png"));
             }
             titleLogo.Visibility = Visibility.Visible;
 

@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="CryptoTracker.App">
-      <uap:VisualElements DisplayName="CryptoTracker" Square150x150Logo="Assets\Tiles and stuff\Square150x150Logo.png" Square44x44Logo="Assets\Tiles and stuff\Square44x44Logo.png" Description="UWP app to keep track of the crypto-market." BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="CryptoTracker" Square150x150Logo="Assets\Tiles and stuff\Square150x150Logo.png" Square44x44Logo="Assets\Tiles and stuff\Square44x44Logo.png" Description="UWP app to keep track of the crypto-market." BackgroundColor="#1E1E1E">
         <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\Tiles and stuff\BadgeLogo.png" />
         <uap:DefaultTile Wide310x150Logo="Assets\Tiles and stuff\Wide310x150Logo.png" Square71x71Logo="Assets\Tiles and stuff\SmallTile.png" Square310x310Logo="Assets\Tiles and stuff\LargeTile.png" ShortName="CryptoTracker">
           <uap:ShowNameOnTiles>
@@ -23,7 +23,7 @@
             <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\Tiles and stuff\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\Tiles and stuff\SplashScreen.png" BackgroundColor="#1E1E1E" />
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="portrait" />
           <uap:Rotation Preference="landscape" />

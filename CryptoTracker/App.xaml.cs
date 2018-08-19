@@ -322,7 +322,7 @@ namespace CryptoTracker {
                             Change1d        = data[i]["percent_change_24h"].ToString() + "%",
                             Change7d        = data[i]["percent_change_7d"].ToString() + "%",
                             ChangeFG        = data[i]["percent_change_24h"].ToString().StartsWith("-") ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelGreen"],
-                            Src             = "/Assets/icon" + data[i]["symbol"].ToString() + ".png",
+                            Src             = "/Assets/Icons/icon" + data[i]["symbol"].ToString() + ".png",
                             FavIcon         = pinnedCoins.Contains(data[i]["symbol"].ToString()) ? "\uEB52" : "\uEB51"
                         });
                 }

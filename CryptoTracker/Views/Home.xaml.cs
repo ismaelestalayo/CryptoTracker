@@ -46,11 +46,11 @@ namespace CryptoTracker.Views {
             if (c == "MIOTA")
                 c = "IOT";
 
-            String iconPath = "/Assets/icon" + c + ".png";
+            String iconPath = "/Assets/Icons/icon" + c + ".png";
             try {
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + iconPath));
             } catch (Exception) {
-                iconPath = "/Assets/iconNULL.png";
+                iconPath = "/Assets/Icons/iconNULL.png";
             }
 
             homeCoinList.Add(new HomeTileClass {

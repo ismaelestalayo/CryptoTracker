@@ -75,7 +75,7 @@ namespace CryptoTracker.Views {
             topCoins = await App.GetTop100();
             
             for (int i = 0; i < topCoins.Count; i++) {
-                string filename = "Assets/icon" + topCoins[i].Symbol + ".png";
+                string filename = "Assets/Icons/icon" + topCoins[i].Symbol + ".png";
 
                 if(!File.Exists(filename) )
                     topCoins[i].LogoURL = "https://chasing-coins.com/api/v1/std/logo/" + topCoins[i].Symbol;
