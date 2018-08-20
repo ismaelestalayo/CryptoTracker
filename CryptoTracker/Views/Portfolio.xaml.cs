@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Helpers;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
@@ -23,7 +25,9 @@ namespace CryptoTracker {
             CryptoComboBox.ItemsSource = App.coinList;
 
             dataList = ReadPortfolio().Result;
-            MyListView.ItemsSource = dataList;
+            portfolioListView.ItemsSource = dataList;
+            dataGridd.ItemsSource = dataList;
+
 
             UpdatePortfolio();
             UpdateProfits();
@@ -42,15 +46,15 @@ namespace CryptoTracker {
                 double earningz = Math.Round((curr - priceBought) * double.Parse(cryptoQtyTextBox.Text), 5);
 
                 dataList.Add(new PurchaseClass {
-                    _Crypto     = crypto,
-                    _CryptoQty  = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
-                    _InvestedQty= double.Parse(investedQtyTextBox.Text),
-                    _BoughtAt   = Math.Round(priceBought, 2),
-                    _arrow      = earningz < 0 ? "▼" : "▲",
-                    c           = App.coinSymbol,
-                    Current     = curr,
-                    Profit      = Math.Round(Math.Abs(earningz), 2).ToString(),
-                    ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"]
+                    Crypto     = crypto,
+                    CryptoQty  = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
+                    InvestedQty= double.Parse(investedQtyTextBox.Text),
+                    BoughtAt   = Math.Round(priceBought, 2),
+                    arrow      = earningz < 0 ? "▼" : "▲",
+                    c          = App.coinSymbol,
+                    Current    = curr,
+                    Profit     = Math.Round(Math.Abs(earningz), 2).ToString(),
+                    ProfitFG   = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"]
                 });
 
                 cryptoQtyTextBox.Text = String.Empty;
@@ -68,17 +72,17 @@ namespace CryptoTracker {
         //For Sync all
         internal void UpdatePortfolio() {
 
-            for (int i = 0; i < MyListView.Items.Count; i++) {
-                string crypto = dataList[i]._Crypto;
+            for (int i = 0; i < portfolioListView.Items.Count; i++) {
+                string crypto = dataList[i].Crypto;
 
                 curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
 
                 dataList[i].Current = curr;
-                double priceBought = (1 / dataList[i]._CryptoQty) * dataList[i]._InvestedQty;
+                double priceBought = (1 / dataList[i].CryptoQty) * dataList[i].InvestedQty;
                 priceBought = Math.Round(priceBought, 2);
 
-                double earningz = Math.Round((curr - priceBought) * dataList[i]._CryptoQty, 2);
-                dataList[i]._arrow = earningz < 0 ? "▼" : "▲";
+                double earningz = Math.Round((curr - priceBought) * dataList[i].CryptoQty, 2);
+                dataList[i].arrow = earningz < 0 ? "▼" : "▲";
                 dataList[i].Profit = earningz.ToString();
                 dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
             }
@@ -87,10 +91,10 @@ namespace CryptoTracker {
 
             List<double> pie = new List<double>();
 
-            if (MyListView.Items.Count == 0)
+            if (portfolioListView.Items.Count == 0)
                 pie.Add(100);
 
-            for (int i = 0; i < MyListView.Items.Count; i++) {
+            for (int i = 0; i < portfolioListView.Items.Count; i++) {
                 pie.Add( double.Parse(dataList[i].Profit) );
             }
 
@@ -100,8 +104,8 @@ namespace CryptoTracker {
 
         private void UpdateProfits() {
             float total = 0;
-            for (int i = 0; i < MyListView.Items.Count; i++) {
-                total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i]._CryptoQty;
+            for (int i = 0; i < portfolioListView.Items.Count; i++) {
+                total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
 
                 Frame contentFrame = Window.Current.Content as Frame;
                 MainPage mp = contentFrame.Content as MainPage;
@@ -110,15 +114,20 @@ namespace CryptoTracker {
             }
         }
 
-        private void RemovePortfolio_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            if (MyListView.SelectedIndex != -1) {
-                dataList.RemoveAt(MyListView.SelectedIndex);
+        private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
+            if (portfolioListView.SelectedIndex != -1) {
+                dataList.RemoveAt(portfolioListView.SelectedIndex);
                 SavePortfolio();
             }
         }
 
+        private void portfolioListView_ItemClick(object sender, ItemClickEventArgs e) {
+            //if (portfolioListView.SelectedIndex != -1) {
+            //    portfolioListView.SelectedIndex = -1;
+            //}
+        }
 
-
+        ////////////////////////////////////////////////////////////////////////////////////////////
         private static async void SavePortfolio() {
             try {
                 StorageFile savedStuffFile =
@@ -139,7 +148,6 @@ namespace CryptoTracker {
                 throw new Exception("ERROR saving portfolio", e);
             }
         }
-
         private static async Task<ObservableCollection<PurchaseClass>> ReadPortfolio() {
 
             try {
@@ -156,6 +164,6 @@ namespace CryptoTracker {
                 return new ObservableCollection<PurchaseClass>();
             }
         }
-
+        
     }
 }

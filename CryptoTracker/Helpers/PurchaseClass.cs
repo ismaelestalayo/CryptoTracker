@@ -8,30 +8,33 @@ namespace CryptoTracker.Helpers {
     internal class PurchaseClass : INotifyPropertyChanged {
 
         [DataMember()]
-        public string _Crypto { get; set; }
+        public string Crypto { get; set; }
         [DataMember()]
-        public double _CryptoQty { get; set; }
+        public double CryptoQty { get; set; }
         [DataMember()]
-        public double _InvestedQty { get; set; }
+        public double InvestedQty { get; set; }
         [DataMember()]
-        public double _BoughtAt { get; set; }
+        public double BoughtAt { get; set; }
         [DataMember()]
         public string c { get; set; }
         [DataMember()]
-        public string _arrow { get; set; }
-
-        private double _Current;
-        [DataMember()]
-        public double Current {
-            get { return _Current; }
-            set { if (value != _Current) { _Current = value; NotifyPropertyChanged("Current");}}}
-        private string _Profits;
-        [DataMember()]
-        public string Profit {
-            get { return _Profits; }
-            set { if (value != _Profits) { _Profits = value; NotifyPropertyChanged("Profits"); } }}
+        public string arrow { get; set; }
 
         public SolidColorBrush ProfitFG { get; set; }
+
+        private double _curr;
+        [DataMember()]
+        public double Current {
+            get { return _curr; }
+            set { if (value != _curr) { _curr = value; NotifyPropertyChanged("Current");}}}
+
+        private string _profit;
+        [DataMember()]
+        public string Profit {
+            get { return _profit; }
+            set { if (value != _profit) { _profit = value; NotifyPropertyChanged("Profits"); } }}
+
+        
 
 
         public event PropertyChangedEventHandler PropertyChanged;

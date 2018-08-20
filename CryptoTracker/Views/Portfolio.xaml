@@ -4,10 +4,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
-
 
     <Grid x:Name="MainGrid">
 
@@ -95,8 +95,10 @@
         ###############################################################################################################
         ############################################################################################################### -->
         <ScrollViewer Grid.Row="3" Margin="15, 0">
-            <ListView x:Name="MyListView" 
-                      Background="Transparent"
+            <ListView x:Name="portfolioListView" 
+                      Background="Transparent" 
+                      ItemClick="portfolioListView_ItemClick"
+                      IsItemClickEnabled="True"
                       SelectionMode="Single">
 
                 <ListView.ItemTemplate>
@@ -117,27 +119,32 @@
                                 HorizontalAlignment="Center" 
                                 Style="{StaticResource ListViewTextBlock}"
                                 FontWeight="Medium">
-                                <Run Text="{Binding _CryptoQty}"/><Run Text="{Binding _Crypto}"/>
+                                <Run Text="{Binding CryptoQty}"/>
+                                <Run Text="{Binding Crypto}"/>
                             </TextBlock>
 
                             <TextBlock 
                                 Grid.Column="1" 
                                 HorizontalAlignment="Center" 
                                 Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding _InvestedQty}"/><Run Text="{Binding c, Mode=OneWay}"/>
+                                <Run Text="{Binding InvestedQty}"/>
+                                <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
                             <TextBlock 
                                 Grid.Column="2" 
                                 HorizontalAlignment="Center" 
                                 Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding _BoughtAt}"/><Run Text="{Binding c, Mode=OneWay}"/>
+                                <Run Text="{Binding BoughtAt}"/>
+                                <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
                             <TextBlock 
                                 Grid.Column="3" 
                                 HorizontalAlignment="Center" 
+                                Foreground="{Binding ProfitFG, Mode=TwoWay}"
                                 Style="{StaticResource ListViewTextBlock}">
+                                <Run Text="{Binding arrow, Mode=OneWay}"/>
                                 <Run Text="{Binding Current, Mode=OneWay}"/>
                                 <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
@@ -145,9 +152,7 @@
                             <TextBlock 
                                 Grid.Column="4" 
                                 HorizontalAlignment="Center" 
-                                Style="{StaticResource ListViewTextBlock}"
-                                Foreground="{Binding ProfitFG, Mode=TwoWay}">
-                                <Run Text="{Binding _arrow, Mode=OneWay}"/>
+                                Style="{StaticResource ListViewTextBlock}">
                                 <Run Text="{Binding Profit, Mode=OneWay}"/>
                                 <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
@@ -176,8 +181,49 @@
                 </telerik:PieSeries.ValueBinding>
             </telerik:PieSeries>
         </telerik:RadPieChart>
-        
 
+
+        <controls:DataGrid x:Name="dataGridd" Grid.Row="4" Margin="12"
+            VerticalAlignment="Top" HorizontalAlignment="Left"
+            HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+            AlternatingRowBackground="Transparent" AlternatingRowForeground="Gray"
+            AreRowDetailsFrozen="True" AreRowGroupHeadersFrozen="True"
+            AutoGenerateColumns="False"
+            CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="True"
+            ColumnHeaderHeight="32" MaxColumnWidth="400"
+            GridLinesVisibility="Vertical" 
+            HeadersVisibility="Column"
+            IsReadOnly="True"
+            RowDetailsVisibilityMode="VisibleWhenSelected"
+            SelectionMode="Single">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Header="Crypto"    Binding="{Binding CryptoQty}"/>
+                <controls:DataGridTextColumn Header="Invested"  Binding="{Binding InvestedQty}"/>
+                <controls:DataGridTextColumn Header="Bought at" Binding="{Binding BoughtAt}"/>
+                <controls:DataGridTextColumn Header="Currently" Binding="{Binding Current}"/>
+                <controls:DataGridTextColumn Header="Profit"    Binding="{Binding Profit}"/>
+                <controls:DataGridTextColumn Header=""    Binding="{Binding Crypto}"/>
+            </controls:DataGrid.Columns>
+
+            <controls:DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"  Background="LightBlue">
+
+                        <TextBlock Margin="10,0" Style="{StaticResource ListViewTextBlock}" FontWeight="Medium">
+                            <Run Text="{Binding CryptoQty}"/>
+                            <Run Text="{Binding Crypto}"/>
+                        </TextBlock>
+                        <TextBlock Margin="10,0" Style="{StaticResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="Medium">
+                            <Run Text="Difference" Foreground="Black"/>
+                            <Run Text="{Binding arrow, Mode=OneWay}"/>
+                            <Run Text="{Binding Current, Mode=OneWay}"/>
+                            <Run Text="{Binding c, Mode=OneWay}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </controls:DataGrid.RowDetailsTemplate>
+
+        </controls:DataGrid>
 
         <!-- 
         ###############################################################################################################
