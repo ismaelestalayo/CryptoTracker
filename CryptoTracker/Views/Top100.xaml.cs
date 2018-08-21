@@ -78,7 +78,7 @@ namespace CryptoTracker.Views {
                 string filename = "Assets/Icons/icon" + topCoins[i].Symbol + ".png";
 
                 if(!File.Exists(filename) )
-                    topCoins[i].LogoURL = "https://chasing-coins.com/api/v1/std/logo/" + topCoins[i].Symbol;
+                    topCoins[i].LogoURL = "https://chasing-coins.com/coin/logo/" + topCoins[i].Symbol;
             }
 
             top100ListView.ItemsSource = topCoins;
