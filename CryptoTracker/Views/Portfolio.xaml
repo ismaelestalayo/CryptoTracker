@@ -9,6 +9,29 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Style x:Key="dataGrid_HeaderStyle" TargetType="ContentControl">
+            <Setter Property="FontWeight" Value="SemiLight" />
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContentControl">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Margin="1, 0" 
+                            Background="#3F3F3F" 
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <Grid x:Name="MainGrid">
 
         <Grid.RowDefinitions>
@@ -183,26 +206,27 @@
         </telerik:RadPieChart>
 
 
-        <controls:DataGrid x:Name="dataGridd" Grid.Row="4" Margin="12"
-            VerticalAlignment="Top" HorizontalAlignment="Left"
+        <controls:DataGrid x:Name="dataGridd" Grid.Row="4" Margin="12" Visibility="Visible" ColumnHeaderStyle="{ThemeResource dataGrid_HeaderStyle}"
+            VerticalAlignment="Top" HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
             HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
             AlternatingRowBackground="Transparent" AlternatingRowForeground="Gray"
             AreRowDetailsFrozen="True" AreRowGroupHeadersFrozen="True"
             AutoGenerateColumns="False"
-            CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="True"
+            CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False"
+            GridLinesVisibility="Horizontal" 
             ColumnHeaderHeight="32" MaxColumnWidth="400"
-            GridLinesVisibility="Vertical" 
             HeadersVisibility="Column"
             IsReadOnly="True"
             RowDetailsVisibilityMode="VisibleWhenSelected"
             SelectionMode="Single">
             <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Header="Crypto"    Binding="{Binding CryptoQty}"/>
-                <controls:DataGridTextColumn Header="Invested"  Binding="{Binding InvestedQty}"/>
-                <controls:DataGridTextColumn Header="Bought at" Binding="{Binding BoughtAt}"/>
-                <controls:DataGridTextColumn Header="Currently" Binding="{Binding Current}"/>
-                <controls:DataGridTextColumn Header="Profit"    Binding="{Binding Profit}"/>
-                <controls:DataGridTextColumn Header=""    Binding="{Binding Crypto}"/>
+                <controls:DataGridTextColumn Header="Crypto"    Binding="{Binding CryptoQty}"   Width="100"/>
+                <controls:DataGridTextColumn Header="Invested"  Binding="{Binding InvestedQty}" Width="100"/>
+                <controls:DataGridTextColumn Header="Bought at" Binding="{Binding BoughtAt}"    Width="100"/>
+                <controls:DataGridTextColumn Header="Currently" Binding="{Binding Current}"     Width="100"/>
+                <controls:DataGridTextColumn Header="Profit"    Binding="{Binding Profit}"      Width="100"/>
+                <controls:DataGridTextColumn Header="test"      Binding="{Binding Crypto}"      Width="100"/>
             </controls:DataGrid.Columns>
 
             <controls:DataGrid.RowDetailsTemplate>
