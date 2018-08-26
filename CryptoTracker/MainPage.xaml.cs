@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.Helpers;
 using CryptoTracker.Views;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.ApplicationModel.Core;
@@ -20,8 +21,7 @@ namespace CryptoTracker {
             this.InitializeComponent();
 
             // Clear the current tile
-            //TileUpdateManager.CreateTileUpdaterForApplication().Clear();
-            
+            //TileUpdateManager.CreateTileUpdaterForApplication().Clear();            
 
             if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
@@ -92,18 +92,17 @@ namespace CryptoTracker {
                     break;
             }
 
-            LiveTile l = new LiveTile();
-            l.UpdateLiveTile();
+            //LiveTile l = new LiveTile();
+            //l.UpdateLiveTile();
         }
 
-
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // NAVIGATION VIEW
         private void NavView_Loaded(object sender, RoutedEventArgs e) {
             // set the initial SelectedItem 
             NavView.SelectedItem = NavView.MenuItems[0];
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // NavigationView
         private void NavView_Sync_Tapped(object sender, TappedRoutedEventArgs e) {
             UpdateButton_Click(sender, e);
         }
@@ -164,14 +163,21 @@ namespace CryptoTracker {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // AUTO SUGGEST-BOX
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox box, AutoSuggestBoxTextChangedEventArgs args) {
             // Only get results when it was a user typing, 
             // otherwise assume the value got filled in by TextMemberPath 
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
-                sender.Text = sender.Text.ToUpper();
+                box.Text = box.Text.ToUpper();
                 suggestions.Clear();
-                sender.ItemsSource = App.coinList.Where(x => x.StartsWith(sender.Text)).ToList();
+
+                //autoSuggestBox.ItemsSource = App.coinList.Where(x => x.Name.Contains(autoSuggestBox.Text) || x.FullName.Contains(autoSuggestBox.Text)).ToList();
+                var filtered = App.coinList.Where(x => x.Name.Contains(box.Text) || x.FullName.Contains(box.Text)).ToList();
+                List<string> coins = new List<string>();
+                foreach(JSONcoins coin in filtered) {
+                    coins.Add(coin.Name);
+                }
+                box.ItemsSource = coins;
             }
         }
 
@@ -186,9 +192,15 @@ namespace CryptoTracker {
                 CoinAutoSuggestBox.Text = sender.Text;
         }
 
-        private void AutoSuggestBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            AutoSuggestBox a = sender as AutoSuggestBox;
-            a.ItemsSource = App.coinList.Where(x => x.StartsWith(a.Text)).ToList();
+        private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
+            AutoSuggestBox box = sender as AutoSuggestBox;
+
+            var filtered = App.coinList.Where(x => x.Name.Contains(box.Text) || x.FullName.Contains(box.Text)).ToList();
+            List<string> coins = new List<string>();
+            foreach (JSONcoins coin in filtered) {
+                coins.Add(coin.Name);
+            }
+            box.ItemsSource = coins;
         }
     }
 }

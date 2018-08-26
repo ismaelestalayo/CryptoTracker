@@ -12,10 +12,8 @@ using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -32,7 +30,7 @@ namespace CryptoTracker {
 
         internal static int pivotIndex = 0;
 
-        internal static List<string> coinList = new List<string>();
+        internal static List<JSONcoins> coinList = new List<JSONcoins>();
         internal static List<string> pinnedCoins;
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
@@ -178,13 +176,7 @@ namespace CryptoTracker {
 
             try {
                 var data = await GetJSONAsync(uri);
-
-                int lastIndex = ((JContainer)data["Data"]).Count;
-                for (int i = 0; i < lastIndex; i++) {
-                    coinList.Add(data["Data"][i]["CoinInfo"]["Name"].ToString());                    
-                }
-
-                coinList.Sort();
+                JSONcoins.HandleJSON(data);
 
             } catch (Exception) {
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
