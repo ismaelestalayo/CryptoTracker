@@ -170,9 +170,8 @@ namespace CryptoTracker {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####
         internal async static Task GetCoinList() {
-            String URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin;
+            string URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin;
             Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
 
             try {
                 var data = await GetJSONAsync(uri);
@@ -180,6 +179,22 @@ namespace CryptoTracker {
 
             } catch (Exception) {
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        internal async static Task<JSONsnapshot> GetCoinInfo(int id) {
+            string URL = "https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=" + id;
+            Uri uri = new Uri(URL);
+
+            try {
+                var data = await GetJSONAsync(uri);
+                JSONsnapshot snapshot = JSONsnapshot.HandleJSON(data);
+                return snapshot;
+
+            } catch (Exception ex) {
+                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                return null;
             }
         }
 

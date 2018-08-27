@@ -108,6 +108,7 @@
     <Compile Include="Helpers\CurrencyHelper.cs" />
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
     <Compile Include="Helpers\JSONcoins.cs" />
+    <Compile Include="Helpers\JSONsnapshot.cs" />
     <Compile Include="Helpers\JSONstats.cs" />
     <Compile Include="Helpers\LiveTile.cs" />
     <Compile Include="Helpers\JSONhistoric.cs" />

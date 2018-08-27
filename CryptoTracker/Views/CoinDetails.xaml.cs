@@ -20,6 +20,7 @@ namespace CryptoTracker {
         private static int    limit = 60;
         private static string timeSpan = "hour";
         private string Supply = App.stats.Supply;
+        JSONcoins coin;
 
         public CoinDetails() {
             this.InitializeComponent();
@@ -27,21 +28,18 @@ namespace CryptoTracker {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-
-            String CoinType = e.Parameter.ToString();
-            if (CoinType != null) {
+            
+            if (e.Parameter.ToString() != null) {
                 crypto = e.Parameter as string;
             } else {
-                crypto = "BTC";
+                crypto = "NULL";
             }
 
             Frame contentFrame = Window.Current.Content as Frame;
             MainPage mp = contentFrame.Content as MainPage;
             TextBlock title = mp.FindName("mainTitle") as TextBlock;
-            Image titleLogo = mp.FindName("mainTitleLogo") as Image; 
-            title.Text = crypto;
-
-            Description.Text = App.GetCoinDescription(crypto);
+            Image titleLogo = mp.FindName("mainTitleLogo") as Image;
+            title.Text      = App.coinList.Find(x => x.Name == crypto).FullName + " (" + crypto + ")";
 
             try {
                 titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper() + ".png"));
@@ -58,42 +56,16 @@ namespace CryptoTracker {
                 ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
             }
 
-            switch (crypto) {
-                case "BTC":
-                    Website.Text = "bitcoin.org/";
-                    Twitter.Text = "#Bitcoin";
-                    Reddit.Text = "r/bitcoin";
-                    break;
-
-                case "ETH":
-                    Website.Text = "ethereum.org/";
-                    Twitter.Text = "@ethereumproject";
-                    Reddit.Text = "r/ethereum";
-                    break;
-
-                case "LTC":
-                    Website.Text = "litecoin.org/";
-                    Twitter.Text = "@litecoinproject";
-                    Reddit.Text = "r/litecoin";
-                    break;
-
-                case "XRP":
-                    Website.Text = "ripple.com/";
-                    Twitter.Text = "@ripple";
-                    Reddit.Text = "r/ripple";
-                    break;
-
-                default:                    
-                    Website.Text = "";
-                    Twitter.Text = "";
-                    Reddit.Text = "";
-                    break;
-            }
-
             InitValues();
         }
 
-        private void InitValues() {
+        private async void InitValues() {
+
+            JSONcoins coin = App.coinList.Find(x => x.Name == crypto);
+            JSONsnapshot snapshot = await App.GetCoinInfo(coin.Id);
+            Description.Text = snapshot.Description;
+            Website.Text = snapshot.WebSiteURL;
+            Twitter.Text = snapshot.Twitter;
 
             TimeSpan period = TimeSpan.FromSeconds(30);
             ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {

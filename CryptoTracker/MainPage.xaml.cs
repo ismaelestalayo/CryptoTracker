@@ -145,11 +145,6 @@ namespace CryptoTracker {
                     mainTitleDiff.Visibility = Visibility.Collapsed;
                     mainTitleLogo.Visibility = Visibility.Collapsed;
                     break;
-                case "CoinDetails":
-                    mainTitleVal.Visibility  = Visibility.Visible;
-                    mainTitleDiff.Visibility = Visibility.Collapsed;
-                    mainTitleLogo.Visibility = Visibility.Collapsed;
-                    break;
 
                 case "Settings":
                     ContentFrame.Navigate(typeof(Settings));

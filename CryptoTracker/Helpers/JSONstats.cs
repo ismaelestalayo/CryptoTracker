@@ -33,7 +33,6 @@ namespace CryptoTracker.Helpers {
                 a.Volume24 = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24H"]).ToString("N0") + fromSymbol;
                 a.Volume24To = ((double)data["RAW"][crypto][coin]["TOTALVOLUME24HTO"]).ToString("N0") + toSymbol;
 
-                return a;
             } catch(Exception) {
 
                 string fromSymbol = "null";
@@ -48,10 +47,10 @@ namespace CryptoTracker.Helpers {
                 a.Marketcap = toSymbol;
                 a.Volume24 = fromSymbol;
                 a.Volume24To = toSymbol;
-
-                return a;
             }
-            
+
+            return a;
+
         }
     }
 
