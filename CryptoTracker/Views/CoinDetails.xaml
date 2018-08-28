@@ -328,10 +328,7 @@
                             <TextBlock x:Name="Twitter" Text="@example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
                         </RelativePanel>
 
-                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Reddit" Padding="0, 3">
-                            <TextBlock Text="Reddit:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock x:Name="Reddit" Text="r/example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
-                        </RelativePanel>
+                        <RichTextBlock/>
                     </StackPanel>
                 </ScrollViewer>
 

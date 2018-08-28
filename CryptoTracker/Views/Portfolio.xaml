@@ -14,15 +14,13 @@
             <Setter Property="FontWeight" Value="SemiLight" />
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ContentControl">
                         <ContentPresenter Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Margin="1, 0" 
-                            Background="#3F3F3F" 
+                            Margin="1 0" Background="#3F3F3F" 
                             ContentTransitions="{TemplateBinding ContentTransitions}"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"/>
@@ -37,26 +35,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
-        <RelativePanel Grid.Row="0" Grid.ColumnSpan="2" Padding="0, 0, 0, -10"
-                       BorderThickness="0, 0, 0, 0.5" 
-                       BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-                       Visibility="Collapsed">
-            <TextBlock Name="Portfolio_total" 
-                       Text="0€"
-                       FontSize="24"
-                       FontWeight="Light"/>
-
-        </RelativePanel>
-
         <!-- 
         ############################################################################################################### -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="15">
             <ComboBox x:Name="CryptoComboBox" PlaceholderText="Coin" Header="Crypto"/>
 
             <TextBox 
@@ -79,160 +64,81 @@
             </Button>
         </StackPanel>
 
-        <!-- 
-        ############################################################################################################### -->
-        <Grid Grid.Row="2" Margin="15, 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.2*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.2*"/>
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Border Grid.Column="0" BorderThickness="0" Background="#3F3F3F">
-                <TextBlock Text="Crypto" Style="{StaticResource ListViewTextBlockTitle}"/>
-            </Border>
-
-            <Border Grid.Column="1" BorderThickness="2, 0, 2, 0" Background="#3F3F3F"
-                BorderBrush="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-                <TextBlock Text="Invested" Style="{StaticResource ListViewTextBlockTitle}"/>
-            </Border>
-
-            <Border Grid.Column="2" BorderThickness="0, 0, 2, 0" Background="#3F3F3F" 
-                BorderBrush="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-                <TextBlock Text="Bought at" Style="{StaticResource ListViewTextBlockTitle}"/>
-            </Border>
-
-            <Border Grid.Column="3" BorderThickness="0, 0, 2, 0" Background="#3F3F3F">
-                <TextBlock Text="Currently" Style="{StaticResource ListViewTextBlockTitle}"/>
-            </Border>
-
-            <Border Grid.Column="4" BorderThickness="0" Background="#3F3F3F">
-                <TextBlock Text="Profit" Style="{StaticResource ListViewTextBlockTitle}"/>
-            </Border>
-        </Grid>
-
+        
         <!-- 
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <ScrollViewer Grid.Row="3" Margin="15, 0">
-            <ListView x:Name="portfolioListView" 
-                      Background="Transparent" 
-                      ItemClick="portfolioListView_ItemClick"
-                      IsItemClickEnabled="True"
-                      SelectionMode="Single">
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" 
-                              Margin="-10, -20"
-                              BorderBrush="#3F3F3F" BorderThickness="0, 0, 0, 1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.2*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="1.2*"/>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock 
-                                Grid.Column="0" 
-                                HorizontalAlignment="Center" 
-                                Style="{StaticResource ListViewTextBlock}"
-                                FontWeight="Medium">
-                                <Run Text="{Binding CryptoQty}"/>
-                                <Run Text="{Binding Crypto}"/>
-                            </TextBlock>
-
-                            <TextBlock 
-                                Grid.Column="1" 
-                                HorizontalAlignment="Center" 
-                                Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding InvestedQty}"/>
-                                <Run Text="{Binding c, Mode=OneWay}"/>
-                            </TextBlock>
-
-                            <TextBlock 
-                                Grid.Column="2" 
-                                HorizontalAlignment="Center" 
-                                Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding BoughtAt}"/>
-                                <Run Text="{Binding c, Mode=OneWay}"/>
-                            </TextBlock>
-
-                            <TextBlock 
-                                Grid.Column="3" 
-                                HorizontalAlignment="Center" 
-                                Foreground="{Binding ProfitFG, Mode=TwoWay}"
-                                Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding arrow, Mode=OneWay}"/>
-                                <Run Text="{Binding Current, Mode=OneWay}"/>
-                                <Run Text="{Binding c, Mode=OneWay}"/>
-                            </TextBlock>
-
-                            <TextBlock 
-                                Grid.Column="4" 
-                                HorizontalAlignment="Center" 
-                                Style="{StaticResource ListViewTextBlock}">
-                                <Run Text="{Binding Profit, Mode=OneWay}"/>
-                                <Run Text="{Binding c, Mode=OneWay}"/>
-                            </TextBlock>
-
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-        </ScrollViewer>
-
-        <!-- 
-        ###############################################################################################################
-        ###############################################################################################################
-        ############################################################################################################### -->
-        <telerik:RadPieChart Grid.Row="4" x:Name="portfolioPieChart" PaletteName="DefaultDark" Visibility="Collapsed">
-            <telerik:PieSeries ShowLabels="True">
-                <telerik:PieSeries.ValueBinding>
-                    <telerik:PropertyNameDataPointBinding PropertyName="Value"/>
-                </telerik:PieSeries.ValueBinding>
-            </telerik:PieSeries>
-        </telerik:RadPieChart>
-
-
-        <controls:DataGrid x:Name="dataGridd" Grid.Row="4" Margin="12" Visibility="Visible" ColumnHeaderStyle="{ThemeResource dataGrid_HeaderStyle}"
-            VerticalAlignment="Top" HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Stretch"
-            HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+        <controls:DataGrid x:Name="dataGridd" Grid.Row="1" Margin="12" ColumnHeaderStyle="{ThemeResource dataGrid_HeaderStyle}"
+            VerticalAlignment="Top" HorizontalAlignment="Stretch" 
             AlternatingRowBackground="Transparent" AlternatingRowForeground="Gray"
-            AreRowDetailsFrozen="True" AreRowGroupHeadersFrozen="True"
             AutoGenerateColumns="False"
             CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False"
-            GridLinesVisibility="Horizontal" 
-            ColumnHeaderHeight="32" MaxColumnWidth="400"
-            HeadersVisibility="Column"
-            IsReadOnly="True"
-            RowDetailsVisibilityMode="VisibleWhenSelected"
-            SelectionMode="Single">
+            GridLinesVisibility="None" HeadersVisibility="Column"            
+            RowDetailsVisibilityMode="Collapsed" SelectionMode="Single">
             <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Header="Crypto"    Binding="{Binding CryptoQty}"   Width="100"/>
-                <controls:DataGridTextColumn Header="Invested"  Binding="{Binding InvestedQty}" Width="100"/>
-                <controls:DataGridTextColumn Header="Bought at" Binding="{Binding BoughtAt}"    Width="100"/>
-                <controls:DataGridTextColumn Header="Currently" Binding="{Binding Current}"     Width="100"/>
-                <controls:DataGridTextColumn Header="Profit"    Binding="{Binding Profit}"      Width="100"/>
-                <controls:DataGridTextColumn Header="test"      Binding="{Binding Crypto}"      Width="100"/>
-            </controls:DataGrid.Columns>
+                <controls:DataGridTemplateColumn Header="Crypto" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding CryptoQty}"/>
+                                <TextBlock Text="{Binding Crypto}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
 
-            <controls:DataGrid.RowDetailsTemplate>
+                <controls:DataGridTemplateColumn Header="Invested" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding InvestedQty}"/>
+                                <TextBlock Text="{Binding c}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="Bought at" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding BoughtAt}"/>
+                                <TextBlock Text="{Binding c}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="Currently" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding arrow}"   Foreground="{Binding ProfitFG, Mode=TwoWay}"/>
+                                <TextBlock Text="{Binding Current}" Foreground="{Binding ProfitFG, Mode=TwoWay}"/>
+                                <TextBlock Text="{Binding c}"       Foreground="{Binding ProfitFG, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="Profit" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding Profit}"/>
+                                <TextBlock Text="{Binding c}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
+
+        <!--<controls:DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal"  Background="LightBlue">
-
                         <TextBlock Margin="10,0" Style="{StaticResource ListViewTextBlock}" FontWeight="Medium">
                             <Run Text="{Binding CryptoQty}"/>
                             <Run Text="{Binding Crypto}"/>
@@ -245,14 +151,17 @@
                         </TextBlock>
                     </StackPanel>
                 </DataTemplate>
-            </controls:DataGrid.RowDetailsTemplate>
-
-        </controls:DataGrid>
+            </controls:DataGrid.RowDetailsTemplate>--> 
 
         <!-- 
-        ###############################################################################################################
-        ###############################################################################################################
         ############################################################################################################### -->
+        <telerik:RadPieChart Grid.Row="4" x:Name="portfolioPieChart" PaletteName="DefaultDark" Visibility="Collapsed">
+            <telerik:PieSeries ShowLabels="True">
+                <telerik:PieSeries.ValueBinding>
+                    <telerik:PropertyNameDataPointBinding PropertyName="Value"/>
+                </telerik:PieSeries.ValueBinding>
+            </telerik:PieSeries>
+        </telerik:RadPieChart>
         
         
     </Grid>

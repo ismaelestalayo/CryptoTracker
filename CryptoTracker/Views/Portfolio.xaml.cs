@@ -1,5 +1,4 @@
 ﻿using CryptoTracker.Helpers;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,10 +6,8 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
@@ -22,10 +19,12 @@ namespace CryptoTracker {
         public Portfolio() {
             this.InitializeComponent();
 
-            CryptoComboBox.ItemsSource = App.coinList;
+            List<string> coinsArray = new List<string>();
+            foreach (JSONcoins coin in App.coinList)
+                coinsArray.Add(coin.Name);
+            CryptoComboBox.ItemsSource = coinsArray;
 
             dataList = ReadPortfolio().Result;
-            portfolioListView.ItemsSource = dataList;
             dataGridd.ItemsSource = dataList;
 
 
@@ -39,7 +38,6 @@ namespace CryptoTracker {
             try {
                 string crypto = CryptoComboBox.SelectedItem.ToString();
                 curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
-
 
                 double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
                 priceBought = Math.Round(priceBought, 2);
@@ -72,7 +70,7 @@ namespace CryptoTracker {
         //For Sync all
         internal void UpdatePortfolio() {
 
-            for (int i = 0; i < portfolioListView.Items.Count; i++) {
+            for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
                 string crypto = dataList[i].Crypto;
 
                 curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
@@ -90,11 +88,8 @@ namespace CryptoTracker {
             SavePortfolio();
 
             List<double> pie = new List<double>();
-
-            if (portfolioListView.Items.Count == 0)
-                pie.Add(100);
-
-            for (int i = 0; i < portfolioListView.Items.Count; i++) {
+            
+            for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
                 pie.Add( double.Parse(dataList[i].Profit) );
             }
 
@@ -104,7 +99,7 @@ namespace CryptoTracker {
 
         private void UpdateProfits() {
             float total = 0;
-            for (int i = 0; i < portfolioListView.Items.Count; i++) {
+            for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
                 total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
 
                 Frame contentFrame = Window.Current.Content as Frame;
@@ -115,16 +110,10 @@ namespace CryptoTracker {
         }
 
         private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
-            if (portfolioListView.SelectedIndex != -1) {
-                dataList.RemoveAt(portfolioListView.SelectedIndex);
+            if (dataGridd.SelectedIndex != -1) {
+                dataList.RemoveAt(dataGridd.SelectedIndex);
                 SavePortfolio();
             }
-        }
-
-        private void portfolioListView_ItemClick(object sender, ItemClickEventArgs e) {
-            //if (portfolioListView.SelectedIndex != -1) {
-            //    portfolioListView.SelectedIndex = -1;
-            //}
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////

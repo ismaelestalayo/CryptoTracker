@@ -63,7 +63,8 @@ namespace CryptoTracker {
 
             JSONcoins coin = App.coinList.Find(x => x.Name == crypto);
             JSONsnapshot snapshot = await App.GetCoinInfo(coin.Id);
-            Description.Text = snapshot.Description;
+            //Description.Text = snapshot.Description;
+            Description.Text = App.GetCoinDescription(crypto);
             Website.Text = snapshot.WebSiteURL;
             Twitter.Text = snapshot.Twitter;
 
@@ -275,9 +276,6 @@ namespace CryptoTracker {
         }
         private void Tapped_Twitter(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             this.Frame.Navigate(typeof(WebVieww), crypto + "_Twitter");
-        }
-        private void Tapped_Reddit(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(WebVieww), crypto + "_Reddit");
         }
     }
 }
