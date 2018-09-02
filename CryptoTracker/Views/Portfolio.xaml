@@ -71,11 +71,11 @@
         ############################################################################################################### -->
         <controls:DataGrid x:Name="dataGridd" Grid.Row="1" Margin="12" ColumnHeaderStyle="{ThemeResource dataGrid_HeaderStyle}"
             VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-            AlternatingRowBackground="Transparent" AlternatingRowForeground="Gray"
+            AlternatingRowBackground="Transparent"
             AutoGenerateColumns="False"
             CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False"
-            GridLinesVisibility="None" HeadersVisibility="Column"            
-            RowDetailsVisibilityMode="Collapsed" SelectionMode="Single">
+            GridLinesVisibility="Horizontal" HeadersVisibility="Column"            
+            RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Extended">
             <controls:DataGrid.Columns>
                 <controls:DataGridTemplateColumn Header="Crypto" Width="*">
                     <controls:DataGridTemplateColumn.CellTemplate>
@@ -122,7 +122,7 @@
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
 
-                <controls:DataGridTemplateColumn Header="Profit" Width="*">
+                <!--<controls:DataGridTemplateColumn Header="Profit" Width="*">
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -131,27 +131,30 @@
                             </StackPanel>
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+                </controls:DataGridTemplateColumn>-->
                 
             </controls:DataGrid.Columns>
-        </controls:DataGrid>
 
-        <!--<controls:DataGrid.RowDetailsTemplate>
+            <controls:DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal"  Background="LightBlue">
-                        <TextBlock Margin="10,0" Style="{StaticResource ListViewTextBlock}" FontWeight="Medium">
-                            <Run Text="{Binding CryptoQty}"/>
-                            <Run Text="{Binding Crypto}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource ListViewTextBlock}" FontWeight="Medium" Margin="10, 0" Text="Date: " HorizontalAlignment="Left"/>
+                        <TextBlock Style="{StaticResource ListViewTextBlock}" FontWeight="Light" HorizontalAlignment="Right" Visibility="Collapsed">
+                                <Run Text="{Binding CryptoQty}"/>
+                                <Run Text="{Binding Crypto}"/>
                         </TextBlock>
-                        <TextBlock Margin="10,0" Style="{StaticResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="Medium">
-                            <Run Text="Difference" Foreground="Black"/>
-                            <Run Text="{Binding arrow, Mode=OneWay}"/>
-                            <Run Text="{Binding Current, Mode=OneWay}"/>
-                            <Run Text="{Binding c, Mode=OneWay}"/>
+                        <CalendarDatePicker Grid.Row="0" Grid.Column="1" PlaceholderText="1/1/2018"/>
+
+                        <TextBlock Style="{StaticResource ListViewTextBlock}" FontWeight="Medium" Margin="10, 0" Text="Profit: " HorizontalAlignment="Left"/>
+                        <TextBlock Style="{StaticResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="Light" HorizontalAlignment="Right">
+                                <Run Text="{Binding arrow, Mode=OneWay}"/>
+                                <Run Text="{Binding Profit, Mode=OneWay}"/>
+                                <Run Text="{Binding c, Mode=OneWay}"/>
                         </TextBlock>
                     </StackPanel>
                 </DataTemplate>
-            </controls:DataGrid.RowDetailsTemplate>--> 
+            </controls:DataGrid.RowDetailsTemplate>
+        </controls:DataGrid>
 
         <!-- 
         ############################################################################################################### -->

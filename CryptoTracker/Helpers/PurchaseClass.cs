@@ -8,6 +8,8 @@ namespace CryptoTracker.Helpers {
     internal class PurchaseClass : INotifyPropertyChanged {
 
         [DataMember()]
+        public string Exchange { get; set; }
+        [DataMember()]
         public string Crypto { get; set; }
         [DataMember()]
         public double CryptoQty { get; set; }
