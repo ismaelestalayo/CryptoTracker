@@ -15,13 +15,14 @@ using Windows.ApplicationModel;
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
 
-        private string v;
+        private Package package;
+        private PackageVersion version;
 
         public Settings() {
             this.InitializeComponent();            
 
-            Package package = Package.Current;
-            PackageVersion version = package.Id.Version;
+            package = Package.Current;
+            version = package.Id.Version;
             VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}.", version.Major, version.Minor, version.Revision);
 
             ThemeSwitcher.IsOn = App.localSettings.Values["Theme"].Equals("Dark");
@@ -99,7 +100,7 @@ namespace CryptoTracker {
             Analytics.TrackEvent("mailButton_Click");
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));
-            emailMessage.Subject = "Feedback for CoinBase Unofficial v" + v;
+            emailMessage.Subject = "Feedback for CryptoTracker v" + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Revision);
 
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
         }
