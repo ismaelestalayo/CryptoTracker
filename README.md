@@ -7,7 +7,7 @@ A simple yet powerful crypto-currency tracker for Windows 10.
 - Beautiful light and dark theme for you to choose!
 
 
-<img src="Screenshots/promo/LaptopR HomeLT.png" width = "130%"/>
+<img src="https://raw.githubusercontent.com/ismaelestalayo/CryptoTracker/master/Screenshots/promo/LaptopR%20homeLT.png" width = "130%"/>
 
 ## PC Version
 <img src="Screenshots/desktop_ethL.png" width = "90%"/>
