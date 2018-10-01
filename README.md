@@ -1,5 +1,5 @@
-# CryptoTracker
-A simple yet powerful crypto-currency tracker UWP.
+# [CryptoTracker](http://ismaelestalayo.github.io/CryptoTracker)
+A simple yet powerful crypto-currency tracker for Windows 10.
 
 - Adjustable charts to show last hour/day/week/month... 
 - Supports Bitcoin, Ethereum, Litecoin and Ripple (with more to come)
@@ -10,7 +10,7 @@ A simple yet powerful crypto-currency tracker UWP.
 <img src="Screenshots/promo/LaptopR HomeLT.png" width = "130%"/>
 
 ## PC Version
-<img src="Screenshots/promo/LaptopFront ethL.png" width = "80%"/>
+<img src="Screenshots/desktop_ethL.png" width = "90%"/>
 
 
 
