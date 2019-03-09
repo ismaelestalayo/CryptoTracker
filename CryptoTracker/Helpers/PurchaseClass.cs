@@ -12,6 +12,8 @@ namespace CryptoTracker.Helpers {
         [DataMember()]
         public string Crypto { get; set; }
         [DataMember()]
+        public string CryptoLogo { get; set; }
+        [DataMember()]
         public double CryptoQty { get; set; }
         [DataMember()]
         public double InvestedQty { get; set; }

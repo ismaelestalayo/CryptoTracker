@@ -39,12 +39,23 @@ namespace CryptoTracker {
                 string crypto = CryptoComboBox.SelectedItem.ToString();
                 curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
 
+                // Calculate earnings/losings
                 double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
                 priceBought = Math.Round(priceBought, 2);
                 double earningz = Math.Round((curr - priceBought) * double.Parse(cryptoQtyTextBox.Text), 5);
 
+                // Get logo for the coin
+                string logoURL = "Assets/Icons/icon" + crypto + ".png";
+
+                if (!File.Exists(logoURL))
+                    logoURL = "https://chasing-coins.com/coin/logo/" + crypto;
+                else
+                    logoURL = "/" + logoURL;
+                
+
                 dataList.Add(new PurchaseClass {
                     Crypto     = crypto,
+                    CryptoLogo = logoURL,
                     CryptoQty  = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
                     InvestedQty= double.Parse(investedQtyTextBox.Text),
                     BoughtAt   = Math.Round(priceBought, 2),

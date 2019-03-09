@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Core;
@@ -19,6 +20,9 @@ namespace CryptoTracker {
 
         public MainPage() {
             this.InitializeComponent();
+
+            // Set the application minimum window size
+            ApplicationView.GetForCurrentView().SetPreferredMinSize( new Size(600, 600) );
 
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();            

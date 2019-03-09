@@ -80,10 +80,19 @@
                 <controls:DataGridTemplateColumn Header="Crypto" Width="*">
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TextBlock Text="{Binding CryptoQty}"/>
-                                <TextBlock Text="{Binding Crypto}"/>
-                            </StackPanel>
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <Run Text="{Binding CryptoQty}"/>
+                                    <Run Text="{Binding Crypto}"/>
+                                </TextBlock>
+
+                                <Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
+                            </Grid>
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
@@ -137,21 +146,37 @@
 
             <controls:DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Style="{StaticResource ListViewTextBlock}" FontWeight="Medium" Margin="10, 0" Text="Date: " HorizontalAlignment="Left"/>
-                        <TextBlock Style="{StaticResource ListViewTextBlock}" FontWeight="Light" HorizontalAlignment="Right" Visibility="Collapsed">
-                                <Run Text="{Binding CryptoQty}"/>
-                                <Run Text="{Binding Crypto}"/>
-                        </TextBlock>
-                        <CalendarDatePicker Grid.Row="0" Grid.Column="1" PlaceholderText="1/1/2018"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Style="{StaticResource ListViewTextBlock}" FontWeight="Medium" Margin="10, 0" Text="Profit: " HorizontalAlignment="Left"/>
-                        <TextBlock Style="{StaticResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="Light" HorizontalAlignment="Right">
-                                <Run Text="{Binding arrow, Mode=OneWay}"/>
-                                <Run Text="{Binding Profit, Mode=OneWay}"/>
-                                <Run Text="{Binding c, Mode=OneWay}"/>
+                        <!-- Row 1 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource ListViewTextBlock}" FontWeight="Medium" Margin="10, 0" Text="Buy price: " HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource ListViewTextBlock}" FontWeight="Light" HorizontalAlignment="Right">
+                            <Run Text="{Binding BoughtAt, Mode=OneWay}"/>
+                            <Run Text="{Binding c, Mode=OneWay}"/>
                         </TextBlock>
-                    </StackPanel>
+
+                        <!-- Row 2 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource ListViewTextBlock}" FontWeight="Medium" Margin="10, 0" Text="Worth: " HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="Light" HorizontalAlignment="Right">
+                            <Run Text="{Binding arrow, Mode=OneWay}"/>
+                            <Run Text="{Binding Current, Mode=OneWay}"/>
+                            <Run Text="{Binding c, Mode=OneWay}"/>
+                        </TextBlock>
+
+                        <!-- Row 3 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource ListViewTextBlock}" FontWeight="Medium" Margin="10, 0" Text="Date: " HorizontalAlignment="Left"/>
+                        <CalendarDatePicker Grid.Row="2" Grid.Column="1" PlaceholderText="1/1/2018"/>
+                    </Grid>
                 </DataTemplate>
             </controls:DataGrid.RowDetailsTemplate>
         </controls:DataGrid>
