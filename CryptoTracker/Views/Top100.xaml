@@ -5,6 +5,7 @@
     xmlns:local="using:CryptoTracker.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
@@ -125,6 +126,15 @@
                 </ListView.ItemContainerStyle>
             </ListView>
         </ScrollViewer>
+
+        <controls:InAppNotification 
+            x:Name="inAppNotification"
+            Grid.Row="1"
+            ShowDismissButton="False"
+            AnimationDuration="00:00:00.300"
+            VerticalOffset="100"
+            HorizontalOffset="0"
+            StackMode="StackInFront" />
 
     </Grid>
 </Page>

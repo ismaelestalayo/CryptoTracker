@@ -91,10 +91,13 @@ namespace CryptoTracker.Views {
 
         private void Pin_click(object sender, RoutedEventArgs e) {
             string c = ((Top100coin)((FrameworkElement)((FrameworkElement)sender).Parent).DataContext).Symbol;
-            if (!App.pinnedCoins.Contains(c))
+            if (!App.pinnedCoins.Contains(c)) {
                 App.pinnedCoins.Add(c);
-            else
+                inAppNotification.Show(c + " pinned to home.", 2000);
+            } else {
                 App.pinnedCoins.Remove(c);
+                inAppNotification.Show(c + " unpinned from home.", 2000);
+            }
 
             int index = int.Parse(((Top100coin)((FrameworkElement)((FrameworkElement)sender).Parent).DataContext).Rank) - 1;
 
