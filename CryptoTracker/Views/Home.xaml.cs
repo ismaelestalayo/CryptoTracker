@@ -40,7 +40,8 @@ namespace CryptoTracker.Views {
             await UpdateAllCards();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // #########################################################################################
+        // Add a new coin
         private async Task AddCoinHome(string c) {
 
             if (c == "MIOTA")
@@ -63,6 +64,7 @@ namespace CryptoTracker.Views {
             });
         }
 
+        // #########################################################################################
         internal async Task UpdateAllCards() {
 
             for (int i = 0; i < homeCoinList.Count; i++) {
@@ -104,13 +106,14 @@ namespace CryptoTracker.Views {
                 //marketcap.Text = App.stats.Marketcap;
                 //totVol24.Text = "Total Vol 24h: " + App.stats.Volume24;
 
-                // LOADING BAR:
+                // #########################################################################################
+                // LOADING BAR
                 ListViewItem container = (ListViewItem)priceListView.ContainerFromIndex(i);
                 var loading = (container.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
                 loading.IsLoading = true;
 
-
-                // COLOR:
+                // #########################################################################################
+                // COLOR
                 SolidColorBrush coinColorT, coinColor;
                 try {
                     coinColorT = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_colorT"];
@@ -120,7 +123,8 @@ namespace CryptoTracker.Views {
                     coinColor = (SolidColorBrush)Application.Current.Resources["null_color"];
                 }
 
-                // PRICE CHART:
+                // #########################################################################################
+                // PRICE CHART
                 if (container == null)
                     break;
 
@@ -148,8 +152,8 @@ namespace CryptoTracker.Views {
                 series.Fill = coinColorT;
                 series.Stroke = coinColor;
 
-
-                // VOLUME CHART:
+                // #########################################################################################
+                // VOLUME CHART
                 ListViewItem container2 = (ListViewItem)volumeListView.ContainerFromIndex(i);
                 await App.GetHisto(c, "hour", 24);
 
@@ -173,7 +177,7 @@ namespace CryptoTracker.Views {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // #########################################################################################
         private void ALL_TimerangeButton_Click(object sender, RoutedEventArgs e) {
             RadioButton btn = sender as RadioButton;
 
@@ -219,10 +223,10 @@ namespace CryptoTracker.Views {
 
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // #########################################################################################
+    // #########################################################################################
+    // #########################################################################################
+    // #########################################################################################
     internal class HomeTileClass : INotifyPropertyChanged {
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -96,7 +96,7 @@ namespace CryptoTracker {
                 }
                 
             } catch (Exception ex){
-                // Light theme and EUR by default and {BTC, ETH, LTC and XRP}
+                // Default: Light theme, EUR and {BTC, ETH, LTC and XRP}
                 string err = ex.StackTrace;
                 localSettings.Values["Theme"] = "Light";
                 localSettings.Values["Coin"] = "EUR";
@@ -109,6 +109,7 @@ namespace CryptoTracker {
             this.Suspending += OnSuspending;
         }
 
+        // #########################################################################################
         protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -136,6 +137,7 @@ namespace CryptoTracker {
             AppCenter.Start("37e61258-8639-47d6-9f6a-d47d54cd8ad5", typeof(Analytics));
         }
 
+        // ###############################################################################################
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
@@ -145,11 +147,11 @@ namespace CryptoTracker {
             deferral.Complete();
         }
 
-        
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+
+
+        // ###############################################################################################
+        //  (GET) current price of a coin
         internal static double GetCurrentPrice(string crypto, string market) {
             string URL = "https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" + App.coin;
 
@@ -168,7 +170,8 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
+        //  (GET) list of coins
         internal async static Task GetCoinList() {
             string URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin;
             Uri uri = new Uri(URL);
@@ -182,7 +185,8 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
+        //  (GET) info about a coin
         internal async static Task<JSONsnapshot> GetCoinInfo(int id) {
             string URL = "https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=" + id;
             Uri uri = new Uri(URL);
@@ -198,7 +202,8 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
+        //  (GET) Historic prices
         internal async static Task GetHisto(string crypto, string time, int limit) {
             if (crypto == "MIOTA")
                 crypto = "IOT";
@@ -226,7 +231,8 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
+        //  (GET) coin stats
         internal async static Task GetCoinStats(string crypto, string market) {
 
             string URL = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + crypto + "&tsyms=" + coin;
@@ -248,7 +254,8 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
+        //  (GET) top exchanges
         internal async static Task GetTopExchanges(string crypto, string toSym) {
 
             String URL = "https://min-api.cryptocompare.com/data/top/exchanges?fsym=" + crypto  +"&tsym="+ toSym + "&limit=8";
@@ -277,7 +284,8 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
+        //  (GET) coin description
         internal static string GetCoinDescription(string crypto) {
             String URL = "https://krausefx.github.io/crypto-summaries/coins/" + crypto.ToLower() + "-5.txt";
             Uri uri = new Uri(URL);
@@ -291,7 +299,8 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
+        //  (GET) top 100 coins (by capitalization)
         internal async static Task<ObservableCollection<Top100coin>> GetTop100() {
             int limit = 50;
             String URL = "https://api.coinmarketcap.com/v1/ticker/?limit=" + limit + "&convert=" + coin;
@@ -340,6 +349,9 @@ namespace CryptoTracker {
                 return new ObservableCollection<Top100coin>();
             }
         }
+
+        // ###############################################################################################
+        //  (GET) global stats
         internal async static Task<GlobalStats> GetGlobalStats() {
             String URL = "https://api.coinmarketcap.com/v1/global/?convert=" + App.coin;
 
@@ -388,7 +400,7 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
         /// <summary>
         /// do NOT mess with async methods...
         /// 
@@ -410,7 +422,8 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////// #####
+        // ###############################################################################################
+        //  Adjust axis
         internal static DateTimeContinuousAxis AdjustAxis(DateTimeContinuousAxis DateTimeAxis, string timeSpan) {
             switch (timeSpan) {
                 case "hour":
