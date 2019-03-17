@@ -15,7 +15,6 @@ namespace CryptoTracker {
 
         static ObservableCollection<PurchaseClass> dataList { get; set; }
         private double curr = 0;
-        internal bool flag_Tapped = false;
 
         public Portfolio() {
             this.InitializeComponent();
@@ -33,7 +32,8 @@ namespace CryptoTracker {
             UpdateProfits();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
+        // ###############################################################################################
+        //  Add new purchase
         private void AddButton_Click(object sender, RoutedEventArgs e) {
             
             try {
@@ -138,14 +138,11 @@ namespace CryptoTracker {
         // ###############################################################################################
         //  Save new purchase date
         private void purchaseDate_changed(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args) {
-            if (args.OldDate > sender.MinDate && flag_Tapped) {
-                flag_Tapped = false;
+            if (args.OldDate > new DateTime(2000, 01, 01, 00, 00, 00, 0) ) 
                 SavePortfolio();
-            }
+            
         }
-        private void purchaseDate_tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            flag_Tapped = true;
-        }
+        
 
 
         // ###############################################################################################

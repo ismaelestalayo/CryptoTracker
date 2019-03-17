@@ -201,7 +201,7 @@
                         <TextBlock          Grid.Column="4" Style="{ThemeResource ListViewTextBlock}" Foreground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" FontWeight="Medium" Margin="30 0 0 0" Text="Purchased: " HorizontalAlignment="Left"/>
                         <CalendarDatePicker Grid.Column="5" Date="{Binding Date, Mode=TwoWay}" 
                                             Height="25" Margin="0 -2 0 0" VerticalContentAlignment="Stretch"
-                                            DateChanged="purchaseDate_changed" Tapped="purchaseDate_tapped"
+                                            DateChanged="purchaseDate_changed"
                                             DateFormat="{}{day.integer} {month.full} {year.full}"/>
                     </Grid>
                 </DataTemplate>
