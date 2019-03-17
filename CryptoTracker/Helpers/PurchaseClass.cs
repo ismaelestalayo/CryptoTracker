@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml.Media;
@@ -15,6 +16,10 @@ namespace CryptoTracker.Helpers {
         public string CryptoLogo { get; set; }
         [DataMember()]
         public double CryptoQty { get; set; }
+        [DataMember()]
+        public DateTimeOffset Date { get; set; }
+        [DataMember()]
+        public double Delta { get; set; }
         [DataMember()]
         public double InvestedQty { get; set; }
         [DataMember()]
@@ -36,9 +41,21 @@ namespace CryptoTracker.Helpers {
         [DataMember()]
         public string Profit {
             get { return _profit; }
-            set { if (value != _profit) { _profit = value; NotifyPropertyChanged("Profits"); } }}
+            set { if (value != _profit) { _profit = value; NotifyPropertyChanged("Profit"); } } }
 
-        
+        private double _worth;
+        [DataMember()]
+        public double Worth {
+            get { return _worth; }
+            set { if (value != _worth) { _worth = value; NotifyPropertyChanged("Worth"); } } }
+
+        //private DateTimeOffset _date;
+        //[DataMember()]
+        //public DateTimeOffset Date {
+        //    get { return _date; }
+        //    set { if (value != _date) { _date = value; NotifyPropertyChanged("Date"); } } }
+
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;
