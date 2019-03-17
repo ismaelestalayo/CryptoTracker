@@ -15,6 +15,7 @@ namespace CryptoTracker {
 
         static ObservableCollection<PurchaseClass> dataList { get; set; }
         private double curr = 0;
+        internal bool flag_Tapped = false;
 
         public Portfolio() {
             this.InitializeComponent();
@@ -46,7 +47,6 @@ namespace CryptoTracker {
 
                 // Get logo for the coin
                 string logoURL = "Assets/Icons/icon" + crypto + ".png";
-
                 if (!File.Exists(logoURL))
                     logoURL = "https://chasing-coins.com/coin/logo/" + crypto;
                 else
@@ -54,21 +54,26 @@ namespace CryptoTracker {
                 
 
                 dataList.Add(new PurchaseClass {
-                    Crypto     = crypto,
-                    CryptoLogo = logoURL,
-                    CryptoQty  = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
-                    InvestedQty= double.Parse(investedQtyTextBox.Text),
-                    BoughtAt   = Math.Round(priceBought, 2),
-                    arrow      = earningz < 0 ? "▼" : "▲",
-                    c          = App.coinSymbol,
-                    Current    = curr,
-                    Profit     = Math.Round(Math.Abs(earningz), 2).ToString(),
-                    ProfitFG   = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"]
+                    Crypto      = crypto,
+                    CryptoLogo  = logoURL,
+                    CryptoQty   = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
+                    Date        = DateTime.Today,
+                    Delta       = Math.Round( (curr / priceBought), 2),
+                    InvestedQty = double.Parse(investedQtyTextBox.Text),
+                    BoughtAt    = Math.Round(priceBought, 2),
+                    arrow       = earningz < 0 ? "▼" : "▲",
+                    c           = App.coinSymbol,
+                    Current     = curr,
+                    Profit      = Math.Round(Math.Abs(earningz), 2).ToString(),
+                    ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"],
+                    Worth       = Math.Round( curr * double.Parse(cryptoQtyTextBox.Text), 2)
                 });
 
+                // Clear user input
                 cryptoQtyTextBox.Text = String.Empty;
                 investedQtyTextBox.Text = String.Empty;
 
+                // Update and save
                 UpdateProfits();
                 SavePortfolio();
 
@@ -78,7 +83,8 @@ namespace CryptoTracker {
             }
         }
 
-        //For Sync all
+        // ###############################################################################################
+        //  For sync all
         internal void UpdatePortfolio() {
 
             for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
@@ -92,6 +98,7 @@ namespace CryptoTracker {
 
                 double earningz = Math.Round((curr - priceBought) * dataList[i].CryptoQty, 2);
                 dataList[i].arrow = earningz < 0 ? "▼" : "▲";
+                dataList[i].Delta = Math.Round(curr / priceBought, 2);
                 dataList[i].Profit = earningz.ToString();
                 dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
             }
@@ -108,6 +115,7 @@ namespace CryptoTracker {
 
         }
 
+        // ###############################################################################################
         private void UpdateProfits() {
             float total = 0;
             for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
@@ -127,7 +135,21 @@ namespace CryptoTracker {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
+        // ###############################################################################################
+        //  Save new purchase date
+        private void purchaseDate_changed(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args) {
+            if (args.OldDate > sender.MinDate && flag_Tapped) {
+                flag_Tapped = false;
+                SavePortfolio();
+            }
+        }
+        private void purchaseDate_tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            flag_Tapped = true;
+        }
+
+
+        // ###############################################################################################
+        //  Read/Write portfolio
         private static async void SavePortfolio() {
             try {
                 StorageFile savedStuffFile =
@@ -145,7 +167,7 @@ namespace CryptoTracker {
 
                 }
             } catch (Exception e) {
-                throw new Exception("ERROR saving portfolio", e);
+                var z = e.Message;
             }
         }
         private static async Task<ObservableCollection<PurchaseClass>> ReadPortfolio() {
@@ -158,12 +180,15 @@ namespace CryptoTracker {
                     new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
 
                 var setResult = (ObservableCollection<PurchaseClass>)stuffSerializer.ReadObject(readStream);
+                await readStream.FlushAsync();
+                readStream.Dispose();
 
                 return setResult;
-            } catch (Exception) {
+            } catch (Exception ex) {
                 return new ObservableCollection<PurchaseClass>();
             }
         }
+
         
     }
 }
