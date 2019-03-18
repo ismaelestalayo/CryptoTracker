@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using CryptoTracker.Helpers;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using Windows.UI.Xaml;
@@ -75,10 +76,7 @@ namespace CryptoTracker.Views {
             topCoins = await App.GetTop100();
             
             for (int i = 0; i < topCoins.Count; i++) {
-                string filename = "Assets/Icons/icon" + topCoins[i].Symbol + ".png";
-
-                if(!File.Exists(filename) )
-                    topCoins[i].LogoURL = "https://chasing-coins.com/coin/logo/" + topCoins[i].Symbol;
+                topCoins[i].LogoURL = IconsHelper.GetIcon(topCoins[i].Symbol);
             }
 
             top100ListView.ItemsSource = topCoins;
