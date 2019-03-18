@@ -18,10 +18,15 @@ namespace CryptoTracker {
 
         private ObservableCollection<string> suggestions = new ObservableCollection<string>();
 
+        private class SuggestionCoinList{
+            public string Icon { get; set; }
+            public string Name { get; set; }
+        }
+
+        // ###############################################################################################
         public MainPage() {
             this.InitializeComponent();
-
-            // Set the application minimum window size
+            
             ApplicationView.GetForCurrentView().SetPreferredMinSize( new Size(600, 600) );
 
             // Clear the current tile
@@ -75,10 +80,10 @@ namespace CryptoTracker {
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 150, 150, 150);
 
-            Window.Current.SetTitleBar(AppTitle);
+            //Window.Current.SetTitleBar(AppTitle);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////
+        // #########################################################################################
         internal void UpdateButton_Click(object sender, RoutedEventArgs e) {
 
             switch (ContentFrame.SourcePageType.Name) {
@@ -100,8 +105,8 @@ namespace CryptoTracker {
             //l.UpdateLiveTile();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // NAVIGATION VIEW
+        // #########################################################################################
+        //  Nabigation View
         private void NavView_Loaded(object sender, RoutedEventArgs e) {
             // set the initial SelectedItem 
             NavView.SelectedItem = NavView.MenuItems[0];
@@ -112,8 +117,12 @@ namespace CryptoTracker {
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-            string name = ((ContentControl)args.SelectedItem).Content.ToString();
-            pagesNavigation(name);
+            if(args.IsSettingsSelected)
+                pagesNavigation("Settings");
+            else { 
+                string name = ((ContentControl)args.SelectedItem).Content.ToString();
+                pagesNavigation(name);
+            }
         }
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
             string name = args.InvokedItem.ToString();
@@ -123,45 +132,25 @@ namespace CryptoTracker {
             switch (s) {
                 case "Home":
                     ContentFrame.Navigate(typeof(Home));
-                    mainTitle.Text = "Home";
-                    mainTitleVal.Visibility  = Visibility.Collapsed;
-                    mainTitleDiff.Visibility = Visibility.Collapsed;
-                    mainTitleLogo.Visibility = Visibility.Collapsed;
                     break;
                 case "Top 100":
                     ContentFrame.Navigate(typeof(Top100));
-                    mainTitle.Text = "Top 100";
-                    mainTitleVal.Visibility  = Visibility.Collapsed;
-                    mainTitleDiff.Visibility = Visibility.Collapsed;
-                    mainTitleLogo.Visibility = Visibility.Collapsed;
                     break;
                 case "News":
                     ContentFrame.Navigate(typeof(News));
-                    mainTitle.Text = "News";
-                    mainTitleVal.Visibility  = Visibility.Collapsed;
-                    mainTitleDiff.Visibility = Visibility.Collapsed;
-                    mainTitleLogo.Visibility = Visibility.Collapsed;
                     break;
                 case "Portfolio":
                     ContentFrame.Navigate(typeof(Portfolio));
-                    mainTitle.Text = "Portfolio";
-                    mainTitleVal.Visibility  = Visibility.Visible;
-                    mainTitleDiff.Visibility = Visibility.Collapsed;
-                    mainTitleLogo.Visibility = Visibility.Collapsed;
                     break;
 
                 case "Settings":
                     ContentFrame.Navigate(typeof(Settings));
-                    mainTitle.Text = "Settings";
-                    mainTitleVal.Visibility  = Visibility.Collapsed;
-                    mainTitleDiff.Visibility = Visibility.Collapsed;
-                    mainTitleLogo.Visibility = Visibility.Collapsed;
                     break;
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // AUTO SUGGEST-BOX
+        // #########################################################################################
+        //  AUTO SUGGEST-BOX
         private void AutoSuggestBox_TextChanged(AutoSuggestBox box, AutoSuggestBoxTextChangedEventArgs args) {
             // Only get results when it was a user typing, 
             // otherwise assume the value got filled in by TextMemberPath 
@@ -170,36 +159,60 @@ namespace CryptoTracker {
                 box.Text = box.Text.ToUpper();
                 suggestions.Clear();
 
-                //autoSuggestBox.ItemsSource = App.coinList.Where(x => x.Name.Contains(autoSuggestBox.Text) || x.FullName.Contains(autoSuggestBox.Text)).ToList();
-                var filtered = App.coinList.Where(x => x.Name.Contains(box.Text) || x.FullName.Contains(box.Text)).ToList();
-                List<string> coins = new List<string>();
-                foreach(JSONcoins coin in filtered) {
-                    coins.Add(coin.Name);
-                }
-                box.ItemsSource = coins;
+                box.ItemsSource = FilterCoins(box);
             }
         }
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
-            CoinAutoSuggestBox.Text = args.SelectedItem.ToString();
+            CoinAutoSuggestBox.Text = ((SuggestionCoinList)args.SelectedItem).Name;
         }
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
             if (args.ChosenSuggestion != null) {
-                ContentFrame.Navigate(typeof(CoinDetails), CoinAutoSuggestBox.Text);
-            } else
-                CoinAutoSuggestBox.Text = sender.Text;
+                ContentFrame.Navigate(typeof(CoinDetails), ((SuggestionCoinList)args.ChosenSuggestion).Name);
+            }
+            
+            CoinAutoSuggestBox.Text = "";
         }
 
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
-            AutoSuggestBox box = sender as AutoSuggestBox;
-
-            var filtered = App.coinList.Where(x => x.Name.Contains(box.Text) || x.FullName.Contains(box.Text)).ToList();
-            List<string> coins = new List<string>();
-            foreach (JSONcoins coin in filtered) {
-                coins.Add(coin.Name);
-            }
-            box.ItemsSource = coins;
+            //AutoSuggestBox box = sender as AutoSuggestBox;
+            //box.ItemsSource = FilterCoins(box);
         }
+
+        private void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e) {
+            CoinAutoSuggestBox.Text = "";
+            findBtn.Visibility = Visibility.Visible;
+            CoinAutoSuggestBox.Visibility = Visibility.Collapsed;
+        }
+
+        private void AutoSuggestBox_SizeChanged(object sender, SizeChangedEventArgs e) {
+            if(e.PreviousSize == new Size(0, 0))
+                CoinAutoSuggestBox.Focus(FocusState.Programmatic);
+        }
+
+        // #########################################################################################
+        private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
+            var filtered = App.coinList.Where(x => x.Name.Contains(box.Text) || x.FullName.Contains(box.Text)).ToList();
+            List<SuggestionCoinList> list = new List<SuggestionCoinList>();
+            foreach (JSONcoins coin in filtered) {
+                list.Add(new SuggestionCoinList {
+                    Icon = IconsHelper.GetIcon(coin.Name),
+                    Name = coin.Name
+                });
+            }
+
+            return list;
+        }
+
+        // #########################################################################################
+        //  Search button
+        private void NavView_Search_Tapped(object sender, TappedRoutedEventArgs e) {
+            findBtn.Visibility = Visibility.Collapsed;
+            CoinAutoSuggestBox.Visibility = Visibility.Visible;
+            CoinAutoSuggestBox.Focus(FocusState.Programmatic);
+        }
+
+        
     }
 }

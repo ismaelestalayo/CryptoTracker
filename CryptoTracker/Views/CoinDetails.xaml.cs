@@ -41,19 +41,14 @@ namespace CryptoTracker {
             } else {
                 crypto = "NULL";
             }
-
-            Frame contentFrame = Window.Current.Content as Frame;
-            MainPage mp = contentFrame.Content as MainPage;
-            TextBlock title = mp.FindName("mainTitle") as TextBlock;
-            Image titleLogo = mp.FindName("mainTitleLogo") as Image;
-            title.Text      = App.coinList.Find(x => x.Name == crypto).FullName + " (" + crypto + ")";
+            mainTitle.Text      = App.coinList.Find(x => x.Name == crypto).FullName + " (" + crypto + ")";
 
             try {
-                titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper() + ".png"));
+                mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper() + ".png"));
             } catch(Exception) {
-                titleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/iconNULL.png"));
+                mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/iconNULL.png"));
             }
-            titleLogo.Visibility = Visibility.Visible;
+            mainTitleLogo.Visibility = Visibility.Visible;
 
             try {
                 ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_color"]).Color;
@@ -71,9 +66,11 @@ namespace CryptoTracker {
             JSONcoins coin = App.coinList.Find(x => x.Name == crypto);
             JSONsnapshot snapshot = await App.GetCoinInfo(coin.Id);
             //Description.Text = snapshot.Description;
-            Description.Text = App.GetCoinDescription(crypto);
-            Website.Text = snapshot.WebSiteURL;
-            Twitter.Text = snapshot.Twitter;
+            try {
+                Description.Text = App.GetCoinDescription(crypto);
+                Website.Text = snapshot.WebSiteURL;
+                Twitter.Text = snapshot.Twitter;
+            } catch (Exception) { }
 
             TimeSpan period = TimeSpan.FromSeconds(30);
             ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
@@ -136,14 +133,10 @@ namespace CryptoTracker {
         }
         // #########################################################################################
         async private Task UpdateCoin() {
-
-            Frame contentFrame = Window.Current.Content as Frame;
-            MainPage mp = contentFrame.Content as MainPage;
-            TextBlock titleVal = mp.FindName("mainTitleVal") as TextBlock;
-            TextBlock titleDiff = mp.FindName("mainTitleDiff") as TextBlock;
-            titleVal.Text = App.GetCurrentPrice(crypto, "defaultMarket").ToString() + App.coinSymbol;
-            titleVal.Visibility  = Visibility.Visible;
-            titleDiff.Visibility = Visibility.Visible;
+            
+            mainTitleVal.Text = App.GetCurrentPrice(crypto, "defaultMarket").ToString() + App.coinSymbol;
+            mainTitleVal.Visibility  = Visibility.Visible;
+            mainTitleDiff.Visibility = Visibility.Visible;
 
             switch (timeSpan) {
                 case "hour":
@@ -185,12 +178,12 @@ namespace CryptoTracker {
             d = (float)Math.Round( ((newestPrice / oldestPrice) - 1) * 100, 2);
 
             if (d < 0) {
-                titleDiff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
+                mainTitleDiff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 d = Math.Abs(d);
-                titleDiff.Text = "▼" + d.ToString() + "%";
+                mainTitleDiff.Text = "▼" + d.ToString() + "%";
             } else {
-                titleDiff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
-                titleDiff.Text = "▲" + d.ToString() + "%";
+                mainTitleDiff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+                mainTitleDiff.Text = "▲" + d.ToString() + "%";
             }
 
             SplineAreaSeries series = (SplineAreaSeries)priceChart.Series[0];

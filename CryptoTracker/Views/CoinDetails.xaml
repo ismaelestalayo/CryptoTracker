@@ -9,7 +9,7 @@
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
     mc:Ignorable="d"
     NavigationCacheMode="Disabled">
-    
+
     <Page.Resources>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
             <Setter Property="Margin" Value="0, 8"/>
@@ -18,10 +18,8 @@
             <Setter Property="VerticalAlignment" Value="Top"/>
         </Style>
     </Page.Resources>
-
-    <!-- ////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <Grid x:Name="MainGrid" Padding="5, 0">
+    
+    <Grid x:Name="MainGrid" Padding="5, 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
 
@@ -44,6 +42,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -51,11 +50,44 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
+        <!-- 
+        ####################################################################################################
+        ############################################### Page Title #########################################
+        #################################################################################################### -->
+        <RelativePanel BorderThickness="0,0,0,0.5" Margin="0,0,0,0" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="mainTitleLogo" 
+                    Source="/Assets/Icons/iconBTC.png" 
+                    Visibility="Collapsed" Margin="0,0,5,0"
+                    Width="23" />
+                <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"
+                    Text="Title" FontWeight="Bold"/>
+            </StackPanel>
 
-        <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <Grid Grid.Row="1" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" Margin="10, 0"
+                        RelativePanel.AlignRightWithPanel="True">
+
+                <TextBlock x:Name="mainTitleVal"
+                           Text="val€" 
+                           FontSize="24"
+                           FontWeight="Light"/>
+
+                <TextBlock x:Name="mainTitleDiff" 
+                            Text="0%"
+                            VerticalAlignment="Bottom"
+                            Margin="5,0,0,1"
+                            FontSize="19"
+                            FontWeight="Light"/>
+            </StackPanel>
+
+        </RelativePanel>
+
+        <!-- 
+        ####################################################################################################
+        ############################################### Price Chart ########################################
+        #################################################################################################### -->
+        <Grid Grid.Row="2" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
@@ -154,10 +186,11 @@
             </StackPanel>
         </Grid>
 
-        <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-        <Pivot Grid.Row="2" Grid.Column="0" Margin="0, -15, 0, 0">
+        <!-- 
+        ####################################################################################################
+        ############################################## Bottom Pivot ########################################
+        #################################################################################################### -->
+        <Pivot Grid.Row="3" Grid.Column="0" Margin="0, -15, 0, 0">
 
             <PivotItem Header="Stats">
                 <Grid>

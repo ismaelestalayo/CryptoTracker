@@ -33,8 +33,12 @@ namespace CryptoTracker.Views {
             await App.GetCoinList();
 
             for (int i = 0; i < App.pinnedCoins.Count; i++) {
-                await AddCoinHome(App.pinnedCoins[i]);
-                await UpdateCard(i);
+                try {
+                    await AddCoinHome(App.pinnedCoins[i]);
+                    await UpdateCard(i);
+                } catch (Exception ex) {
+                    var message = ex.Message;
+                }
             }
         }
 
