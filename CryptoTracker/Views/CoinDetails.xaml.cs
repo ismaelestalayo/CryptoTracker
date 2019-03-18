@@ -10,6 +10,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -20,7 +21,6 @@ namespace CryptoTracker {
         private static int    limit = 60;
         private static string timeSpan = "hour";
         private string Supply = App.stats.Supply;
-        JSONcoins coin;
 
         public CoinDetails() {
             this.InitializeComponent();
@@ -28,7 +28,14 @@ namespace CryptoTracker {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            
+
+            // Connected animation
+            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
+            if (animation != null) {
+                animation.TryStart(priceChart);
+            }
+
+            // Page title
             if (e.Parameter.ToString() != null) {
                 crypto = e.Parameter as string;
             } else {

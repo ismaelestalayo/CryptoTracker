@@ -60,7 +60,9 @@
             <ListView x:Name="top100ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_Click" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" BorderThickness="0 1 0 0" MaxWidth="600">
+                        <Grid x:Name="listView_Element" 
+                              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                              BorderThickness="0 1 0 0" MaxWidth="600">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>

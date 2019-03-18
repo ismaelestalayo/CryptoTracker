@@ -78,7 +78,7 @@
                       Grid.Row="1" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
+                        <Grid x:Name="priceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -148,7 +148,7 @@
                       Grid.Row="1" Grid.Column="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
+                        <Grid x:Name="volumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -162,8 +162,8 @@
                                 <TextBlock Text="Volume 24h" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" />
 
                                 <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <TextBlock Text="{Binding _volume24, FallbackValue=0}"   Style="{StaticResource currTextStyle}" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding _volume24to, FallbackValue=0}" Style="{StaticResource diffTextStyle}" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding _volume24to,   FallbackValue=0, Mode=TwoWay}" Style="{StaticResource currTextStyle}" HorizontalAlignment="Right"/>
+                                    <TextBlock Visibility="Collapsed" Text="{Binding _volume24, FallbackValue=0, Mode=TwoWay}" Style="{StaticResource diffTextStyle}" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Grid>
 

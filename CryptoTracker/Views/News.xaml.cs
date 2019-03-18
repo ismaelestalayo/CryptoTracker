@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.UI.Composition;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
 
 namespace CryptoTracker.Views {
 
@@ -19,22 +20,26 @@ namespace CryptoTracker.Views {
         public string language  { get; set; }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    // ###############################################################################################
+    // ###############################################################################################
+    // ###############################################################################################
     public sealed partial class News : Page {
 
-        private List<NewsItem> newsTilesList { get; set; }
+        private List<NewsItem> NewsTilesList { get; set; }
+
+        Compositor _compositor = Window.Current.Compositor;
+
 
         public News() {
             this.InitializeComponent();
 
-            newsTilesList = new List<NewsItem>();
+            NewsTilesList = new List<NewsItem>();
             getNewsAsync();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////
+        
+
+        // ###############################################################################################
         private async Task getNewsAsync() {
             String URL = "https://min-api.cryptocompare.com/data/v2/news/?lang=EN";
 
@@ -53,7 +58,7 @@ namespace CryptoTracker.Views {
 
                 int lastIndex = ((JContainer)data["Data"]).Count;
                 for (int i = 0; i < lastIndex; i++) {
-                    newsTilesList.Add(new NewsItem {
+                    NewsTilesList.Add(new NewsItem {
                         imageURL    = data["Data"][i]["imageurl"].ToString(),
                         title       = data["Data"][i]["title"].ToString(),
                         url         = data["Data"][i]["url"].ToString(),
@@ -62,17 +67,25 @@ namespace CryptoTracker.Views {
                         tags        = data["Data"][i]["tags"].ToString(),
                         language    = data["Data"][i]["lang"].ToString(),
                     });
+                    newsAdaptiveGridView.ItemsSource = NewsTilesList;
                 }
                 
-                newsAdaptiveGridView.ItemsSource = newsTilesList;
+                //newsAdaptiveGridView.ItemsSource = NewsTilesList;
 
             } catch (Exception ex) {
                 var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 
+        // ###############################################################################################
         private void newsAdaptiveGridView_Click(object sender, ItemClickEventArgs e) {
+
+            newsAdaptiveGridView.PrepareConnectedAnimation("toWebView", e.ClickedItem, "GridView_Element");
+
             this.Frame.Navigate(typeof(WebVieww), ((NewsItem)e.ClickedItem).url);
         }
-    }    
+
+        
+
+    }
 }

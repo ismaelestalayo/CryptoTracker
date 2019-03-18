@@ -53,9 +53,9 @@ namespace CryptoTracker.Views {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // #########################################################################################
+    // #########################################################################################
+    // #########################################################################################
     public sealed partial class Top100 : Page {
 
         private GlobalStats g;
@@ -67,7 +67,7 @@ namespace CryptoTracker.Views {
             InitPage();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // #########################################################################################
         private async void InitPage() {
             g = await App.GetGlobalStats();
             DataContext = g;
@@ -84,7 +84,10 @@ namespace CryptoTracker.Views {
             top100ListView.ItemsSource = topCoins;
         }
 
+        // #########################################################################################
         private void ListView_Click(object sender, ItemClickEventArgs e) {
+            top100ListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "listView_Element");
+
             var clickedItem = (Top100coin)e.ClickedItem;
             this.Frame.Navigate(typeof(CoinDetails), clickedItem.Symbol);
         }

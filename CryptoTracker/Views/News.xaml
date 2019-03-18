@@ -13,7 +13,8 @@
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemClick="newsAdaptiveGridView_Click">
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="5">
+                        <Grid x:Name="GridView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                              Margin="5">
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="7*"/>

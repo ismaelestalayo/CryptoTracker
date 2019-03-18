@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker.Views {
@@ -9,6 +10,12 @@ namespace CryptoTracker.Views {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
+
+            // Connected animation
+            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toWebView");
+            if (animation != null) {
+                animation.TryStart(myWebView);
+            }
 
             String crypto = e.Parameter.ToString();
             switch (crypto) {
