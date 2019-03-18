@@ -58,7 +58,7 @@ namespace CryptoTracker {
                     CryptoLogo  = logoURL,
                     CryptoQty   = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
                     Date        = DateTime.Today,
-                    Delta       = Math.Round( (curr / priceBought), 2),
+                    Delta       = Math.Round( (curr / priceBought), 2) * 100, // percentage
                     InvestedQty = double.Parse(investedQtyTextBox.Text),
                     BoughtAt    = Math.Round(priceBought, 2),
                     arrow       = earningz < 0 ? "▼" : "▲",
@@ -98,7 +98,7 @@ namespace CryptoTracker {
 
                 double earningz = Math.Round((curr - priceBought) * dataList[i].CryptoQty, 2);
                 dataList[i].arrow = earningz < 0 ? "▼" : "▲";
-                dataList[i].Delta = Math.Round(curr / priceBought, 2);
+                dataList[i].Delta = Math.Round(curr / priceBought, 2) * 100; // percentage
                 dataList[i].Profit = earningz.ToString();
                 dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
             }
@@ -153,7 +153,7 @@ namespace CryptoTracker {
                     await ApplicationData.Current.LocalFolder.CreateFileAsync("portfolio", CreationCollisionOption.ReplaceExisting);
 
                 using (Stream writeStream =
-                    await savedStuffFile.OpenStreamForWriteAsync()) {
+                    await savedStuffFile.OpenStreamForWriteAsync().ConfigureAwait(false) ) {
 
                     DataContractSerializer stuffSerializer =
                         new DataContractSerializer(typeof(List<PurchaseClass>));

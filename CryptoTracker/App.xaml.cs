@@ -180,8 +180,8 @@ namespace CryptoTracker {
                 var data = await GetJSONAsync(uri);
                 JSONcoins.HandleJSON(data);
 
-            } catch (Exception) {
-                //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+            } catch (Exception ex) {
+                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 
