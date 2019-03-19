@@ -26,8 +26,6 @@ namespace CryptoTracker {
         // ###############################################################################################
         public MainPage() {
             this.InitializeComponent();
-            
-            ApplicationView.GetForCurrentView().SetPreferredMinSize( new Size(600, 600) );
 
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();            

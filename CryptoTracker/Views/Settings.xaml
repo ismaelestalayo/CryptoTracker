@@ -22,7 +22,7 @@
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <ScrollViewer>
+    <ScrollViewer Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
         <Grid Padding="10, 0" x:Name="SettingsGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

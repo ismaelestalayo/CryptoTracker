@@ -58,7 +58,7 @@ namespace CryptoTracker {
             }
             CoinComboBox.PlaceholderText = App.localSettings.Values["Coin"].ToString();
 
-            //Show feedback button
+            // Show feedback button
             if (Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.IsSupported()) {
                 this.feedbackButton.IsEnabled = true;
             } else {
@@ -67,7 +67,7 @@ namespace CryptoTracker {
 
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
+        // ###############################################################################################
         private void ThemeToogled(object sender, RoutedEventArgs e) {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
 
@@ -106,14 +106,14 @@ namespace CryptoTracker {
         }
         private async void TwitterButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("twitterButton_Click");
-            await Launcher.LaunchUriAsync(new Uri("https://twitter.com/isma_estalayo"));
+            await Launcher.LaunchUriAsync(new Uri("https://twitter.com/ismaelestalayo"));
         }
         private async void RedditButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("redditButton_Click");
             await Launcher.LaunchUriAsync(new Uri("https://www.reddit.com/r/CryptoTracker/"));
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
+        // ###############################################################################################
         public async Task<bool> ShowRatingReviewDialog() {
             StoreSendRequestResult result = await StoreRequestHelper.SendRequestAsync(
                 StoreContext.GetDefault(), 16, String.Empty);
@@ -131,7 +131,7 @@ namespace CryptoTracker {
             return false;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
+        // ###############################################################################################
         private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
             ComboBox c = sender as ComboBox;
             String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();

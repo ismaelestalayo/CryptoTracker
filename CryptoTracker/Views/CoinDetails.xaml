@@ -31,9 +31,6 @@
                     <VisualState.Setters>
                         <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="*"/>
                         <Setter Target="MainGrid.RowDefinitions[0].Height" Value="auto"/>
-                        <!-- <Setter Target="statsStack.(Grid.Column)" Value="0"/>
-                        <Setter Target="statsStack.(Grid.Row)" Value="2"/>
-                        <Setter Target="statsStack.Margin" Value="55, 0"/> -->
                     </VisualState.Setters>
                 </VisualState>
 
