@@ -18,7 +18,7 @@ namespace CryptoTracker {
 
         private ObservableCollection<string> suggestions = new ObservableCollection<string>();
 
-        private class SuggestionCoinList{
+        internal class SuggestionCoinList{
             public string Icon { get; set; }
             public string Name { get; set; }
         }

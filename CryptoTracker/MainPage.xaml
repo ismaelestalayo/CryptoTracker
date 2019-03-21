@@ -18,7 +18,6 @@
             x:Name="NavView" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
             Grid.RowSpan="2" Grid.Row="0" OverflowLabelMode="NoLabel"
             IsBackButtonVisible="Collapsed" PaneDisplayMode="Top"
-            OpenPaneLength="280" CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="800" 
             Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked"
             SelectionChanged="NavView_SelectionChanged">
 
@@ -52,39 +51,8 @@
                     </AutoSuggestBox.ItemTemplate>
                 </AutoSuggestBox>
             </NavigationView.AutoSuggestBox>
-            
-            <!-- HEADER -->
-            <!--<NavigationView.Header>
-                <RelativePanel Background="Red" BorderThickness="0,0,0,0.5" Margin="-30,0,0,0" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image 
-                            x:Name="mainTitleLogo" 
-                            Source="/Assets/Icons/iconBTC.png" 
-                            Visibility="Collapsed" Margin="0,0,5,0"
-                            Width="23" />
-                        <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"
-                            Text="Title" FontWeight="Bold"/>
-                    </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="10, 0"
-                        RelativePanel.AlignRightWithPanel="True">
-
-                        <TextBlock x:Name="mainTitleVal"
-                           Text="val€" 
-                           FontSize="24"
-                           FontWeight="Light"/>
-
-                        <TextBlock x:Name="mainTitleDiff" 
-                            Text="0%"
-                            VerticalAlignment="Bottom"
-                            Margin="5,0,0,1"
-                            FontSize="19"
-                            FontWeight="Light"/>
-                    </StackPanel>
-
-                </RelativePanel>
-            </NavigationView.Header>-->
-
+            <!-- FOOTER -->
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
                     <NavigationViewItem Icon="Find" x:Name="findBtn"  Tapped="NavView_Search_Tapped"/>
@@ -92,6 +60,7 @@
                 </StackPanel>
             </NavigationView.PaneFooter>
 
+            <!-- MAIN FRAME -->
             <Frame x:Name="ContentFrame">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
@@ -99,7 +68,6 @@
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
-
         </NavigationView>
     </Grid>
 
