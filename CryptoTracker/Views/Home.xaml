@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:views="using:CryptoTracker.Views"
     mc:Ignorable="d"
     NavigationCacheMode="Enabled">
 
@@ -77,7 +78,7 @@
             <ListView x:Name="priceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click"
                       Grid.Row="1" >
                 <ListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="views:HomeTileClass">
                         <Grid x:Name="priceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -98,12 +99,12 @@
                             </controls:Loading>
 
                             <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
-                                <Image Name="coinLogo" Source="{Binding _iconSrc}" Width="25" Margin="2"/>
-                                <TextBlock Name="coinName" Text="{Binding _cryptoName, Mode=TwoWay}" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, -2"/>
+                                <Image Name="coinLogo" Source="{x:Bind _iconSrc}" Width="25" Margin="2"/>
+                                <TextBlock Name="coinName" Text="{x:Bind _cryptoName, Mode=TwoWay}" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, -2"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-                                <TextBlock Name="priceCurr" Text="{Binding _priceCurr, Mode=TwoWay}" Style="{StaticResource currTextStyle}"/>
-                                <TextBlock Name="priceDiff" Text="{Binding _priceDiff, Mode=TwoWay}" Foreground="{Binding _priceDiffFG}" Style="{StaticResource diffTextStyle}"/>
+                                <TextBlock Name="priceCurr" Text="{x:Bind _priceCurr, Mode=TwoWay}" Style="{StaticResource currTextStyle}"/>
+                                <TextBlock Name="priceDiff" Text="{x:Bind _priceDiff, Mode=TwoWay}" Foreground="{x:Bind _priceDiffFG}" Style="{StaticResource diffTextStyle}"/>
                             </StackPanel>
                             
                             <!-- PRICE CHART: -->
@@ -147,7 +148,7 @@
             <ListView x:Name="volumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
                       Grid.Row="1" Grid.Column="1">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="views:HomeTileClass">
                         <Grid x:Name="volumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -162,8 +163,14 @@
                                 <TextBlock Text="Volume 24h" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" />
 
                                 <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <TextBlock Text="{Binding _volume24to,   FallbackValue=0, Mode=TwoWay}" Style="{StaticResource currTextStyle}" HorizontalAlignment="Right"/>
-                                    <TextBlock Visibility="Collapsed" Text="{Binding _volume24, FallbackValue=0, Mode=TwoWay}" Style="{StaticResource diffTextStyle}" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{x:Bind _volume24to,   FallbackValue=0, Mode=TwoWay}" 
+                                               Style="{StaticResource currTextStyle}" 
+                                               HorizontalAlignment="Right"/>
+                                    
+                                    <TextBlock Visibility="Collapsed" 
+                                               Text="{x:Bind _volume24, FallbackValue=0, Mode=TwoWay}" 
+                                               Style="{StaticResource diffTextStyle}" 
+                                               HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Grid>
 
@@ -172,7 +179,7 @@
                                 <telerikChart:BarSeries>
 
                                     <telerikChart:BarSeries.PointTemplate>
-                                        <DataTemplate>
+                                        <DataTemplate>  <!-- TODO: change to x:Bind -->
                                             <Rectangle Fill="{Binding DataItem.cc}"/>
                                         </DataTemplate>
                                     </telerikChart:BarSeries.PointTemplate>

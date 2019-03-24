@@ -7,6 +7,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
+    xmlns:helpers="using:CryptoTracker.Helpers"
     mc:Ignorable="d"
     NavigationCacheMode="Disabled">
 
@@ -189,6 +190,7 @@
         #################################################################################################### -->
         <Pivot Grid.Row="3" Grid.Column="0" Margin="0, -15, 0, 0">
 
+            <!-- Pivot 1: Stats -->
             <PivotItem Header="Stats">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -247,9 +249,8 @@
                     </StackPanel>
 
                     <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="-10, 0, 0, 0">
-
                         <ListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="helpers:JSONexchanges">
                                 <Grid BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}" BorderThickness="0, 0, 0, 1" Padding="0, 0, 0, 5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -257,12 +258,12 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel>
-                                        <TextBlock Text="{Binding Exchange    , Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiLight"/>
-                                        <TextBlock Text="{Binding T_Volume24  , Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
-                                        <TextBlock Text="{Binding T_Volume24To, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
+                                        <TextBlock Text="{x:Bind Exchange    , Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiLight"/>
+                                        <TextBlock Text="{x:Bind T_Volume24  , Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
+                                        <TextBlock Text="{x:Bind T_Volume24To, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
                                     </StackPanel>
                                     
-                                    <TextBlock Text="{Binding Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>
+                                    <TextBlock Text="{x:Bind Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>
 
                                 </Grid>
                             </DataTemplate>
@@ -279,7 +280,7 @@
 
             </PivotItem>
 
-            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <!-- Pivot 2: Volume -->
             <PivotItem Header="Volume">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -341,7 +342,7 @@
                 </Grid>
             </PivotItem>
 
-            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <!-- Pivot 3: About -->
             <PivotItem Header="About">
                 <ScrollViewer>
                     <StackPanel>

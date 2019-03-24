@@ -158,9 +158,9 @@ namespace CryptoTracker {
                     break;
             }
 
-            List<App.ChartDataObject> data = new List<App.ChartDataObject>();
+            List<ChartData> data = new List<ChartData>();
             for (int i = 0; i < App.historic.Count; ++i) {
-                App.ChartDataObject obj = new App.ChartDataObject {
+                ChartData obj = new ChartData {
                     Date   =  App.historic[i].DateTime,
                     Value  = (App.historic[i].Low + App.historic[i].High) / 2,
                     Low    =  App.historic[i].Low,
@@ -212,9 +212,9 @@ namespace CryptoTracker {
         async private Task Get24Volume() {
             await App.GetHisto(crypto, "hour", 24);
 
-            List<App.ChartDataObject> data = new List<App.ChartDataObject>();
+            List<ChartData> data = new List<ChartData>();
             for (int i = 0; i < 24; i++) {
-                data.Add(new App.ChartDataObject() {
+                data.Add(new ChartData() {
                     Date   = App.historic[i].DateTime,
                     Volume = App.historic[i].Volumefrom
                 });

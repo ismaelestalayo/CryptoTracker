@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+﻿using CryptoTracker.Helpers;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -132,10 +133,10 @@ namespace CryptoTracker.Views {
             RadCartesianChart priceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("priceChart") as RadCartesianChart;
 
             await App.GetHisto(c, timeSpan, limit);
-            List<App.ChartDataObject> priceData = new List<App.ChartDataObject>();
+            List<ChartData> priceData = new List<ChartData>();
 
             for (int k = 0; k < App.historic.Count; ++k) {
-                priceData.Add(new App.ChartDataObject() {
+                priceData.Add(new ChartData() {
                     Date = App.historic[k].DateTime,
                     Value = (App.historic[k].Low + App.historic[k].High) / 2,
                     Low = App.historic[k].Low,
@@ -158,9 +159,9 @@ namespace CryptoTracker.Views {
             ListViewItem container2 = (ListViewItem)volumeListView.ContainerFromIndex(i);
             await App.GetHisto(c, "hour", 24);
 
-            List<App.ChartDataObject> volumeData = new List<App.ChartDataObject>();
+            List<ChartData> volumeData = new List<ChartData>();
             for (int j = 0; j < 24; j++) {
-                volumeData.Add(new App.ChartDataObject() {
+                volumeData.Add(new ChartData() {
                     Date = App.historic[j].DateTime,
                     Volume = App.historic[j].Volumefrom,
                     cc = coinColorT
