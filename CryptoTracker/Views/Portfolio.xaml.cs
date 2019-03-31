@@ -16,6 +16,33 @@ namespace CryptoTracker {
         static ObservableCollection<PurchaseClass> dataList { get; set; }
         private double curr = 0;
 
+        /* 
+         private class SuggestionCoinList {
+            public string Icon { get; set; }
+            public string Name { get; set; }
+        }
+
+        // ###############################################################################################
+        public Portfolio() {
+            this.InitializeComponent();
+
+            List<SuggestionCoinList> coinList = new List<SuggestionCoinList>();
+            foreach (JSONcoins coin in App.coinList)
+                coinList.Add( new SuggestionCoinList {
+                    Icon = IconsHelper.GetIcon(coin.Name),
+                    Name = coin.Name
+                });
+            CryptoComboBox.ItemsSource = coinList;
+
+            dataList = ReadPortfolio().Result;
+            dataGridd.ItemsSource = dataList;
+
+
+            UpdatePortfolio();
+            UpdateProfits();
+        } 
+         */
+
         public Portfolio() {
             this.InitializeComponent();
 
@@ -123,8 +150,8 @@ namespace CryptoTracker {
 
                 Frame contentFrame = Window.Current.Content as Frame;
                 MainPage mp = contentFrame.Content as MainPage;
-                TextBlock val = mp.FindName("mainTitleVal") as TextBlock;
-                val.Text = total.ToString() + App.coinSymbol;
+                //TextBlock val = mp.FindName("mainTitleVal") as TextBlock;
+                //val.Text = total.ToString() + App.coinSymbol;
             }
         }
 

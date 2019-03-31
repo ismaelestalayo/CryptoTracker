@@ -30,7 +30,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid x:Name="MainGrid">
+    <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -42,7 +42,16 @@
         <!-- 
         ############################################################################################################### -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="15">
-            <ComboBox x:Name="CryptoComboBox" PlaceholderText="Coin" Header="Crypto"/>
+            <ComboBox x:Name="CryptoComboBox" PlaceholderText="Coin" Header="Crypto">
+                <!--<ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="30" Source="{Binding Icon}"/>
+                            <TextBlock Text="{Binding Name}" Margin="10 0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>-->
+            </ComboBox>
 
             <TextBox 
                 x:Name="cryptoQtyTextBox" Header="Amount"
