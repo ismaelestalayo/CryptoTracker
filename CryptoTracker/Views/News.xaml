@@ -5,16 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:views="using:CryptoTracker.Views"
     mc:Ignorable="d">
 
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <controls:AdaptiveGridView Name="newsAdaptiveGridView" OneRowModeEnabled="False"  
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
-                ItemClick="newsAdaptiveGridView_Click" 
-                ContainerContentChanging="newsAdaptiveGridView_ContentChanging">
+                ItemClick="newsAdaptiveGridView_Click">
                 <controls:AdaptiveGridView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="views:NewsItem">
                         <Grid x:Name="GridView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
                               Margin="5">
 
@@ -25,19 +25,18 @@
 
                             <Image Stretch="UniformToFill" VerticalAlignment="Center">
                                 <Image.Source>
-                                    <BitmapImage UriSource="{Binding imageURL}" />
+                                    <BitmapImage UriSource="{x:Bind imageURL}" />
                                 </Image.Source>
                             </Image>
 
                             <RelativePanel Grid.Row="1" Margin="5 5 5 5">
-                                <TextBlock Text="{Binding title}" Style="{StaticResource BaseTextBlockStyle}" 
+                                <TextBlock Text="{x:Bind title}" Style="{StaticResource BaseTextBlockStyle}" 
                                     TextWrapping="WrapWholeWords" MaxLines="3"/>
-                                <TextBlock Text="{Binding source}" Style="{ThemeResource CaptionTextBlockStyle}"
+                                <TextBlock Text="{x:Bind source}" Style="{ThemeResource CaptionTextBlockStyle}"
                                     RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
                             </RelativePanel>
 
                         </Grid>
-
                     </DataTemplate>
                 </controls:AdaptiveGridView.ItemTemplate>
             </controls:AdaptiveGridView>

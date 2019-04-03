@@ -11,17 +11,19 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
+
+    public class SuggestionCoinList {
+        public string Icon { get; set; }
+        public string Name { get; set; }
+    }
+
     public partial class Portfolio : Page {
 
         static ObservableCollection<PurchaseClass> dataList { get; set; }
         private double curr = 0;
+ 
 
-        /* 
-         private class SuggestionCoinList {
-            public string Icon { get; set; }
-            public string Name { get; set; }
-        }
-
+        /*
         // ###############################################################################################
         public Portfolio() {
             this.InitializeComponent();
@@ -209,6 +211,7 @@ namespace CryptoTracker {
 
                 return setResult;
             } catch (Exception ex) {
+                var unusedWarning = ex.Message;
                 return new ObservableCollection<PurchaseClass>();
             }
         }

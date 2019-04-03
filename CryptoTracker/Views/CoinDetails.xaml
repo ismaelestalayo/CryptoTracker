@@ -19,7 +19,7 @@
             <Setter Property="VerticalAlignment" Value="Top"/>
         </Style>
     </Page.Resources>
-    
+
     <Grid x:Name="MainGrid" Padding="5, 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -48,7 +48,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!-- 
         ####################################################################################################
         ############################################### Page Title #########################################
@@ -262,7 +262,7 @@
                                         <TextBlock Text="{x:Bind T_Volume24  , Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
                                         <TextBlock Text="{x:Bind T_Volume24To, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
                                     </StackPanel>
-                                    
+
                                     <TextBlock Text="{x:Bind Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>
 
                                 </Grid>
@@ -292,7 +292,7 @@
                         <TextBlock x:Name="totVol24" Text="Tot. Vol. 24h: "/>
                         <TextBlock x:Name="totVol24to" Text="Tot. Vol. 24h to: "/>
                     </StackPanel>
-                    
+
                     <telerik:RadCartesianChart Grid.Row="1" Margin="0, 20">
                         <telerik:BarSeries 
                             x:Name="volumeChart"

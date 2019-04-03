@@ -30,6 +30,7 @@ namespace CryptoTracker.Helpers {
                 };
                 return z;
             } catch (Exception ex) {
+                var kk = ex.Message;
                 JSONsnapshot z = new JSONsnapshot {
                     H1Text = "Error"
                 };

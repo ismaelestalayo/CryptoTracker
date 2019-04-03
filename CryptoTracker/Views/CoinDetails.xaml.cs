@@ -15,6 +15,12 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
+
+    public class ChartLine {
+        public PropertyNameDataPointBinding Datee { get; set; }
+        public PropertyNameDataPointBinding Valuee { get; set; }
+    }
+
     public sealed partial class CoinDetails : Page {
 
         internal static string crypto { get; set; }

@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cryptotracker="using:CryptoTracker"
     mc:Ignorable="d">
 
     <!-- 
@@ -42,10 +43,10 @@
                         </Style>
                     </AutoSuggestBox.TextBoxStyle>
                     <AutoSuggestBox.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="cryptotracker:SuggestionCoinList">
                             <StackPanel Orientation="Horizontal">
-                                <Image Width="30" Source="{Binding Icon}"/>
-                                <TextBlock Text="{Binding Name}" Margin="10 0" VerticalAlignment="Center"/>
+                                <Image Width="30" Source="{x:Bind Icon}"/>
+                                <TextBlock Text="{x:Bind Name}" Margin="10 0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </DataTemplate>
                     </AutoSuggestBox.ItemTemplate>
