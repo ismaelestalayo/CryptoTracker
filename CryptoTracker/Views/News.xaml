@@ -10,7 +10,7 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
         <Grid>
-            <controls:AdaptiveGridView Name="newsAdaptiveGridView" OneRowModeEnabled="False"  
+            <controls:AdaptiveGridView x:Name="newsAdaptiveGridView" OneRowModeEnabled="False"  
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
                 ItemClick="newsAdaptiveGridView_Click">
                 <controls:AdaptiveGridView.ItemTemplate>

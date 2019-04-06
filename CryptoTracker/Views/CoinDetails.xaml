@@ -4,10 +4,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="using:CryptoTracker.Helpers"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
-    xmlns:helpers="using:CryptoTracker.Helpers"
     mc:Ignorable="d"
     NavigationCacheMode="Disabled">
 
@@ -258,9 +258,9 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel>
-                                        <TextBlock Text="{x:Bind Exchange    , Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiLight"/>
-                                        <TextBlock Text="{x:Bind T_Volume24  , Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
-                                        <TextBlock Text="{x:Bind T_Volume24To, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
+                                        <TextBlock Text="{x:Bind Exchange    , Mode=TwoWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiLight"/>
+                                        <TextBlock Text="{x:Bind T_Volume24  , Mode=TwoWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
+                                        <TextBlock Text="{x:Bind T_Volume24To, Mode=TwoWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
                                     </StackPanel>
 
                                     <TextBlock Text="{x:Bind Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>

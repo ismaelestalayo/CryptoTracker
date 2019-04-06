@@ -20,12 +20,9 @@
                 <Run Text="New in this version: &#x1F680; &#x0a;"/>
                 
                 <Run FontWeight="ExtraLight"
-                     Text="• New Fluent Design!
-                     &#x0a; • Add coins to Home with the heart button!
+                     Text="• Improved navigation and new animations!
                      &#x0a; • See the volume of each coin from Home.
-                     &#x0a; • Portfolio now supports 100 altcoins.
-                     &#x0a; • Added minimal colorized icons to more coins.
-                     &#x0a; • Added News page.
+                     &#x0a; • Portfolio with more info (click on an item).
                      "/> 
                 <LineBreak/>
                 
