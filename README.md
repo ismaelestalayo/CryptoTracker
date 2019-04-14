@@ -2,22 +2,29 @@
 A simple yet powerful crypto-currency tracker for Windows 10.
 
 - Adjustable charts to show last hour/day/week/month... 
-- Supports Bitcoin, Ethereum, Litecoin and Ripple (with more to come)
+- Supports over 100 cryptocurrencies including Bitcoin, Ethereum and Litecoin!
 - Currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
+- Keep track of the latest news.
 - Beautiful light and dark theme for you to choose!
 
 
-<img src="https://raw.githubusercontent.com/ismaelestalayo/CryptoTracker/master/Screenshots/promo/LaptopR%20homeLT.png" width = "130%"/>
-
-## PC Version
-<img src="Screenshots/desktop_ethL.png" width = "90%"/>
+<img src="Screenshots/promo/Laptop_front_home_light_transp.png" width = "100%"/>
 
 
+## Detailed overview of each coin:
+<div style="text-align:center">
+	<img src="Screenshots/window_eth_light.png" width = "80%"/>
+</div>
+
+## Your portfolio at a glance:
+<div style="text-align:center">
+	<img src="Screenshots/window_portfolio_light.png" width = "80%" />
+</div>
 
 
-## Mobile version:
+## Mobile version also available:
 
-<img src="Screenshots/Phone_homeL.png" width = "30%"/> <img src="Screenshots/Phone_btcL.png" width = "30%"/> <img src="Screenshots/Phone_ethD.png" width = "30%"/>
+<img src="Screenshots/Promo_phoneText1.png" width = "30%"/> <img src="Screenshots/Promo_phoneText2.png" width = "30%"/> <img src="Screenshots/Promo_phoneText3.png" width = "30%"/>
 
 
 # Milestones:
