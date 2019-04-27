@@ -11,7 +11,7 @@
     <AssemblyName>CryptoTracker</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -154,8 +154,9 @@
   <ItemGroup>
     <Content Include="Assets\CryptoTracker 1300.png" />
     <Content Include="Assets\CryptoTracker 400.png" />
+    <Content Include="Assets\CryptoTracker transp_dark 400.png" />
+    <Content Include="Assets\CryptoTracker transp_light 400.png" />
     <Content Include="Assets\CryptoTracker Wide.png" />
-    <Content Include="Assets\CryptoTrackerT 400.png" />
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
     <Content Include="Assets\Icons\iconBCN.png" />
@@ -206,6 +207,11 @@
     <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-150.png" />
     <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
     <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-16.png" />
     <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-24.png" />
     <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-256.png" />
@@ -341,7 +347,7 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="WindowsMobile, Version=10.0.17763.0">
+    <SDKReference Include="WindowsMobile, Version=10.0.18362.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
