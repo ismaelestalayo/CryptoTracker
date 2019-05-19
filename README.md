@@ -1,4 +1,4 @@
-# [CryptoTracker](http://ismaelestalayo.github.io/CryptoTracker)
+# [CryptoTracker](http://ismaelestalayo.github.io/projects/CryptoTracker/)
 A simple yet powerful crypto-currency tracker for Windows 10.
 
 - Adjustable charts to show last hour/day/week/month... 
@@ -12,14 +12,14 @@ A simple yet powerful crypto-currency tracker for Windows 10.
 
 
 ## Detailed overview of each coin:
-<div style="text-align:center">
-	<img src="Screenshots/window_eth_light.png" width = "80%"/>
-</div>
+<p align="center">
+	<img src="Screenshots/window_eth_light.png" width = "90%"/>
+</p>
 
 ## Your portfolio at a glance:
-<div style="text-align:center">
-	<img src="Screenshots/window_portfolio_light.png" width = "80%" />
-</div>
+<p align="center">
+	<img src="Screenshots/window_portfolio_light.png" width = "90%" />
+</p>
 
 
 ## Mobile version also available:
@@ -28,6 +28,10 @@ A simple yet powerful crypto-currency tracker for Windows 10.
 
 
 # Milestones:
+#### 4.0:
+- Improved navigation and new animations!
+- Portfolio with detailed info.
+
 #### 3.5:
 - New Fluent Design!
 - Add coins to Home with the heart button!
