@@ -21,29 +21,6 @@ namespace CryptoTracker {
 
         static ObservableCollection<PurchaseClass> dataList { get; set; }
         private double curr = 0;
- 
-
-        /*
-        // ###############################################################################################
-        public Portfolio() {
-            this.InitializeComponent();
-
-            List<SuggestionCoinList> coinList = new List<SuggestionCoinList>();
-            foreach (JSONcoins coin in App.coinList)
-                coinList.Add( new SuggestionCoinList {
-                    Icon = IconsHelper.GetIcon(coin.Name),
-                    Name = coin.Name
-                });
-            CryptoComboBox.ItemsSource = coinList;
-
-            dataList = ReadPortfolio().Result;
-            dataGridd.ItemsSource = dataList;
-
-
-            UpdatePortfolio();
-            UpdateProfits();
-        } 
-         */
 
         public Portfolio() {
             this.InitializeComponent();
@@ -58,7 +35,6 @@ namespace CryptoTracker {
 
 
             UpdatePortfolio();
-            UpdateProfits();
         }
 
         // ###############################################################################################
@@ -67,11 +43,11 @@ namespace CryptoTracker {
             
             try {
                 string crypto = CryptoComboBox.SelectedItem.ToString();
-                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
+                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
 
                 // Calculate earnings/losings
                 double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
-                priceBought = Math.Round(priceBought, 2);
+                priceBought = Math.Round(priceBought, 4);
                 double earningz = Math.Round((curr - priceBought) * double.Parse(cryptoQtyTextBox.Text), 5);
 
                 // Get logo for the coin
@@ -89,7 +65,7 @@ namespace CryptoTracker {
                     Date        = DateTime.Today,
                     Delta       = Math.Round( (curr / priceBought), 2) * 100, // percentage
                     InvestedQty = double.Parse(investedQtyTextBox.Text),
-                    BoughtAt    = Math.Round(priceBought, 2),
+                    BoughtAt    = Math.Round(priceBought, 4),
                     arrow       = earningz < 0 ? "▼" : "▲",
                     c           = App.coinSymbol,
                     Current     = curr,
@@ -103,7 +79,7 @@ namespace CryptoTracker {
                 investedQtyTextBox.Text = String.Empty;
 
                 // Update and save
-                UpdateProfits();
+                UpdatePortfolio();
                 SavePortfolio();
 
             } catch(Exception) {
@@ -119,48 +95,57 @@ namespace CryptoTracker {
             for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
                 string crypto = dataList[i].Crypto;
 
-                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 3);
+                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
 
                 dataList[i].Current = curr;
                 double priceBought = (1 / dataList[i].CryptoQty) * dataList[i].InvestedQty;
-                priceBought = Math.Round(priceBought, 2);
+                priceBought = Math.Round(priceBought, 4);
 
-                double earningz = Math.Round((curr - priceBought) * dataList[i].CryptoQty, 2);
+                double earningz = Math.Round((curr - priceBought) * dataList[i].CryptoQty, 4);
                 dataList[i].arrow = earningz < 0 ? "▼" : "▲";
                 dataList[i].Delta = Math.Round(curr / priceBought, 2) * 100; // percentage
-                dataList[i].Profit = earningz.ToString();
+                dataList[i].Profit = Math.Round(Math.Abs(earningz), 2).ToString();
                 dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
+                dataList[i].Worth = Math.Round(curr * dataList[i].CryptoQty, 2);
             }
             UpdateProfits();
             SavePortfolio();
-
-            List<double> pie = new List<double>();
-            
-            for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
-                pie.Add( double.Parse(dataList[i].Profit) );
-            }
-
-            portfolioPieChart.Series[0].ItemsSource = pie;
-
         }
 
         // ###############################################################################################
         private void UpdateProfits() {
             float total = 0;
+            // empty chart
+            portfolioChartGrid.ColumnDefinitions.Clear();
+
             for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
                 total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
 
-                Frame contentFrame = Window.Current.Content as Frame;
-                MainPage mp = contentFrame.Content as MainPage;
-                //TextBlock val = mp.FindName("mainTitleVal") as TextBlock;
-                //val.Text = total.ToString() + App.coinSymbol;
+
+                ColumnDefinition col = new ColumnDefinition();
+                col.Width = new GridLength(dataList[i].Worth, GridUnitType.Star);
+                portfolioChartGrid.ColumnDefinitions.Add(col);
+
+                var s = new StackPanel();
+                s.BorderThickness = new Thickness(0);
+                s.Margin = new Thickness(1, 0, 1, 0);
+                s.BorderBrush = (SolidColorBrush) App.Current.Resources["TextBoxForegroundHeaderThemeBrush"];
+                try { s.Background = (SolidColorBrush)App.Current.Resources[ dataList[i].Crypto + "_color"]; }
+                catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
+
+                portfolioChartGrid.Children.Add(s);
+                Grid.SetColumn(s, i);
             }
+
         }
 
         private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
             if (dataGridd.SelectedIndex != -1) {
                 dataList.RemoveAt(dataGridd.SelectedIndex);
+                UpdatePortfolio();
                 SavePortfolio();
+
+                dataGridd.SelectedIndex = -1;
             }
         }
 

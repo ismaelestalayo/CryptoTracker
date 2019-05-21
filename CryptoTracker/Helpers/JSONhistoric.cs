@@ -48,12 +48,12 @@ namespace CryptoTracker.Helpers {
             JSONhistoric a = new JSONhistoric();
 
             a.LinuxTime = (int)data["time"];
-            a.Low = (float)Math.Round((float)data["low"], 2);
-            a.High = (float)Math.Round((float)data["high"], 2);
-            a.Open = (float)Math.Round((float)data["open"], 2);
-            a.Close = (float)Math.Round((float)data["close"], 2);
-            a.Volumefrom = (float)Math.Round((float)data["volumefrom"], 2);
-            a.Volumeto = (float)Math.Round((float)data["volumeto"], 2);
+            a.Low = (float)Math.Round((float)data["low"], 3);
+            a.High = (float)Math.Round((float)data["high"], 3);
+            a.Open = (float)Math.Round((float)data["open"], 3);
+            a.Close = (float)Math.Round((float)data["close"], 3);
+            a.Volumefrom = (float)Math.Round((float)data["volumefrom"], 3);
+            a.Volumeto = (float)Math.Round((float)data["volumeto"], 3);
 
             int unixTimeStamp = a.LinuxTime;
 

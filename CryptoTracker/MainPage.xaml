@@ -7,6 +7,10 @@
     xmlns:cryptotracker="using:CryptoTracker"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <AcrylicBrush x:Key="NavigationViewTopPaneBackground" BackgroundSource="Backdrop" TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity="1"/>
+    </Page.Resources>
+    
     <!-- 
     ################################################################################################### -->
     <Grid>
@@ -16,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <NavigationView 
-            x:Name="NavView" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+            x:Name="NavView" Background="{ThemeResource SystemChromeMediumColor}" 
             Grid.RowSpan="2" Grid.Row="0" OverflowLabelMode="NoLabel"
             IsBackButtonVisible="Collapsed" PaneDisplayMode="Top"
             Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked"

@@ -151,7 +151,12 @@ namespace CryptoTracker {
 
             try {
                 var data = GetJSONAsync(uri).Result;
-                return Math.Round((float)data[coin], 2);
+
+                if((float)data[coin] > 99)
+                    return Math.Round((float)data[coin], 2);
+                else {
+                    return Math.Round((float)data[coin], 4);
+                }
                 
             } catch (Exception) {
                 return 0;
