@@ -1,6 +1,7 @@
 # [CryptoTracker](http://ismaelestalayo.github.io/projects/CryptoTracker/)
 
-A simple yet powerful crypto-currency tracker for Windows 10.
+## A simple yet powerful crypto-currency tracker for Windows 10
+<img src="Screenshots/promo/Hero-art.png" width = "100%"/>
 
 - Adjustable charts to show last hour/day/week/month... 
 - Supports over 100 cryptocurrencies including Bitcoin, Ethereum and Litecoin!
