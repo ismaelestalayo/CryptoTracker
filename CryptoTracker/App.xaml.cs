@@ -125,7 +125,6 @@ namespace CryptoTracker {
             AppCenter.Start("37e61258-8639-47d6-9f6a-d47d54cd8ad5", typeof(Analytics));
         }
 
-        // ###############################################################################################
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
@@ -135,6 +134,15 @@ namespace CryptoTracker {
             deferral.Complete();
         }
 
+        // ###############################################################################################
+        internal static void UpdatePinnedCoins() {
+            string s = "";
+            foreach (var item in App.pinnedCoins) {
+                s += item + "|";
+            }
+            s = s.Remove(s.Length - 1);
+            App.localSettings.Values["Pinned"] = s;
+        }
 
 
 

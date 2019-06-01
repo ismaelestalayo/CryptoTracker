@@ -105,17 +105,12 @@ namespace CryptoTracker.Views {
             topCoins[index].FavIcon = topCoins[index].FavIcon.Equals("\uEB51") ? "\uEB52" : "\uEB51";
 
             // Update pinnedCoin list
-            string s = "";
-            foreach (var item in App.pinnedCoins) {
-                s += item + "|";
-            }
-            s = s.Remove(s.Length - 1);
-            App.localSettings.Values["Pinned"] = s;
+            App.UpdatePinnedCoins();
 
             // Reset the cache of home to update the added/removed coin
-            var cacheSize = ((Frame)Parent).CacheSize;
-            ((Frame)Parent).CacheSize = 0;
-            ((Frame)Parent).CacheSize = cacheSize;
+            //var cacheSize = ((Frame)Parent).CacheSize;
+            //((Frame)Parent).CacheSize = 0;
+            //((Frame)Parent).CacheSize = cacheSize;
         }
     }
 }

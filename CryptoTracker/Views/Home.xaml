@@ -22,6 +22,24 @@
             <Setter Property="Margin" Value="0, 2"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
         </Style>
+
+        <MenuFlyout x:Key="coinListFlyout">
+            <MenuFlyoutItem Name="Item1" Text="Unpin" Click="UnpinCoin">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA92;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Name="Item2" Text="Move up" Click="MoveCoinUp">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74A;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Name="Item3" Text="Move down" Click="MoveCoinDown">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74B;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
     </Page.Resources>
 
     <!-- 
@@ -75,11 +93,12 @@
             ####################################################################################################
             ############################################# PRICE LIST VIEW ######################################
             #################################################################################################### -->
-            <ListView x:Name="priceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click"
-                      Grid.Row="1" >
+            <ListView x:Name="priceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1" >
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
-                        <Grid x:Name="priceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
+                        <Grid x:Name="priceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                              Margin="0, 5" Height="210" 
+                              ContextFlyout="{StaticResource coinListFlyout}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -149,7 +168,9 @@
                       Grid.Row="1" Grid.Column="1">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
-                        <Grid x:Name="volumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="0, 5" Height="210">
+                        <Grid x:Name="volumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                              Margin="0, 5" Height="210"
+                              ContextFlyout="{StaticResource coinListFlyout}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>

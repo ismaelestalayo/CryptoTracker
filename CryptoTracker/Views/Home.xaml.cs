@@ -9,6 +9,7 @@ using Telerik.UI.Xaml.Controls.Chart;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Views {
@@ -234,6 +235,66 @@ namespace CryptoTracker.Views {
 
             var clickedItem = (HomeTileClass)e.ClickedItem;
             this.Frame.Navigate(typeof(CoinDetails), clickedItem._crypto);
+        }
+
+        private void ShowMenu(object sender) {
+            FlyoutShowOptions myOption = new FlyoutShowOptions();
+            //myOption.ShowMode = isTransient ? FlyoutShowMode.Transient : FlyoutShowMode.Standard;
+            //coinFlyout.ShowAt(sender, FlyoutShowMode.Transient);
+        }
+
+        private void UnpinCoin(object sender, RoutedEventArgs e) {
+            string crypto = ((HomeTileClass)((FrameworkElement)sender).DataContext)._crypto;
+
+            if (App.pinnedCoins.Contains(crypto)) {
+                int n = App.pinnedCoins.IndexOf(crypto);
+
+                App.pinnedCoins.RemoveAt(n);
+                homeCoinList.RemoveAt(n);
+
+                // Update pinnedCoin list
+                App.UpdatePinnedCoins();
+            }
+        }
+        private void MoveCoinDown(object sender, RoutedEventArgs e) {
+            string crypto = ((HomeTileClass)((FrameworkElement)sender).DataContext)._crypto;
+            int n = App.pinnedCoins.IndexOf(crypto);
+
+            if(n < homeCoinList.Count - 1) {
+                var tempName = App.pinnedCoins[n];
+                App.pinnedCoins[n] = App.pinnedCoins[n + 1];
+                App.pinnedCoins[n + 1] = tempName;
+
+                var tempListItem = homeCoinList[n];
+                homeCoinList[n] = homeCoinList[n + 1];
+                homeCoinList[n + 1] = tempListItem;
+
+                priceListView.UpdateLayout();
+                UpdateCard(n);
+
+                // Update pinnedCoin list
+                App.UpdatePinnedCoins();
+            }
+        }
+        private void MoveCoinUp(object sender, RoutedEventArgs e) {
+            string crypto = ((HomeTileClass)((FrameworkElement)sender).DataContext)._crypto;
+            int n = App.pinnedCoins.IndexOf(crypto);
+
+            if (n != 0) {
+                var tempName = App.pinnedCoins[n];
+                App.pinnedCoins[n] = App.pinnedCoins[n - 1];
+                App.pinnedCoins[n - 1] = tempName;
+
+                var tempListItem = homeCoinList[n];
+                homeCoinList[n] = homeCoinList[n - 1];
+                homeCoinList[n - 1] = tempListItem;
+
+                priceListView.UpdateLayout();
+                UpdateCard(n);
+
+                // Update pinnedCoin list
+                App.UpdatePinnedCoins();
+            }
         }
     }
 
