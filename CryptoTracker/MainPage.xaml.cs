@@ -12,12 +12,13 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace CryptoTracker {
     public sealed partial class MainPage : Page {
 
         private ObservableCollection<string> suggestions = new ObservableCollection<string>();
-
+        private int CurrentTabIndex = 0;
         
 
         // ###############################################################################################
@@ -123,31 +124,43 @@ namespace CryptoTracker {
                 PagesNavigation(name);
             }
         }
-        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
-            string name = args.InvokedItem.ToString();
-            PagesNavigation(name);
-        }
-        private void PagesNavigation(string s) {
-            switch (s) {
+        
+        private void PagesNavigation(string tag) {
+            var direction = "fromleft";
+            var page = typeof(Page);
+            switch (tag) {
                 case "Home":
-                    ContentFrame.Navigate(typeof(Home));
+                    direction = "fromleft";
+                    page = typeof(Home);
+                    CurrentTabIndex = 0;
                     break;
                 case "Top 100":
-                    ContentFrame.Navigate(typeof(Top100));
+                    direction = (CurrentTabIndex > 1) ? "fromleft" : "fromright";
+                    page = typeof(Top100);
+                    CurrentTabIndex = 1;
                     break;
                 case "News":
-                    ContentFrame.Navigate(typeof(News));
+                    direction = (CurrentTabIndex > 2) ? "fromleft" : "fromright";
+                    page = typeof(News);
+                    CurrentTabIndex = 2;
                     break;
                 case "Portfolio":
-                    ContentFrame.Navigate(typeof(Portfolio));
+                    direction = (CurrentTabIndex > 3) ? "fromleft" : "fromright";
+                    page = typeof(Portfolio);
+                    CurrentTabIndex = 3;
                     break;
 
                 case "Settings":
-                    ContentFrame.Navigate(typeof(Settings));
-                    break;
-                default:
+                    direction = "fromright";
+                    page = typeof(Settings);
+                    CurrentTabIndex = 4;
                     break;
             }
+
+            ContentFrame.Navigate(page, null,
+                direction == "fromleft"
+                    ? new SlideNavigationTransitionInfo() {Effect = SlideNavigationTransitionEffect.FromLeft}
+                    : new SlideNavigationTransitionInfo() {Effect = SlideNavigationTransitionEffect.FromRight});
         }
 
         // #########################################################################################
