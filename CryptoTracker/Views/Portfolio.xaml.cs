@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
@@ -31,7 +33,7 @@ namespace CryptoTracker {
             CryptoComboBox.ItemsSource = coinsArray;
 
             dataList = ReadPortfolio().Result;
-            dataGridd.ItemsSource = dataList;
+            DataGridd.ItemsSource = dataList;
 
 
             UpdatePortfolio();
@@ -46,9 +48,9 @@ namespace CryptoTracker {
                 curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
 
                 // Calculate earnings/losings
-                double priceBought = (1 / double.Parse(cryptoQtyTextBox.Text)) * double.Parse(investedQtyTextBox.Text);
+                double priceBought = (1 / double.Parse(CryptoQtyTextBox.Text)) * double.Parse(InvestedQtyTextBox.Text);
                 priceBought = Math.Round(priceBought, 4);
-                double earningz = Math.Round((curr - priceBought) * double.Parse(cryptoQtyTextBox.Text), 5);
+                double earningz = Math.Round((curr - priceBought) * double.Parse(CryptoQtyTextBox.Text), 5);
 
                 // Get logo for the coin
                 string logoURL = "Assets/Icons/icon" + crypto + ".png";
@@ -61,30 +63,30 @@ namespace CryptoTracker {
                 dataList.Add(new PurchaseClass {
                     Crypto      = crypto,
                     CryptoLogo  = logoURL,
-                    CryptoQty   = Math.Round(double.Parse(cryptoQtyTextBox.Text), 5),
+                    CryptoQty   = Math.Round(double.Parse(CryptoQtyTextBox.Text), 5),
                     Date        = DateTime.Today,
                     Delta       = Math.Round( (curr / priceBought), 2) * 100, // percentage
-                    InvestedQty = double.Parse(investedQtyTextBox.Text),
+                    InvestedQty = double.Parse(InvestedQtyTextBox.Text),
                     BoughtAt    = Math.Round(priceBought, 4),
                     arrow       = earningz < 0 ? "▼" : "▲",
                     c           = App.coinSymbol,
                     Current     = curr,
                     Profit      = Math.Round(Math.Abs(earningz), 2).ToString(),
                     ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"],
-                    Worth       = Math.Round( curr * double.Parse(cryptoQtyTextBox.Text), 2)
+                    Worth       = Math.Round( curr * double.Parse(CryptoQtyTextBox.Text), 2)
                 });
 
                 // Clear user input
-                cryptoQtyTextBox.Text = String.Empty;
-                investedQtyTextBox.Text = String.Empty;
+                CryptoQtyTextBox.Text = String.Empty;
+                InvestedQtyTextBox.Text = String.Empty;
 
                 // Update and save
                 UpdatePortfolio();
                 SavePortfolio();
 
             } catch(Exception) {
-                cryptoQtyTextBox.Text = String.Empty;
-                investedQtyTextBox.Text = String.Empty;
+                CryptoQtyTextBox.Text = String.Empty;
+                InvestedQtyTextBox.Text = String.Empty;
             }
         }
 
@@ -92,7 +94,7 @@ namespace CryptoTracker {
         //  For sync all
         internal void UpdatePortfolio() {
 
-            for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
+            for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
                 string crypto = dataList[i].Crypto;
 
                 curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
@@ -116,15 +118,15 @@ namespace CryptoTracker {
         private void UpdateProfits() {
             float total = 0;
             // empty chart
-            portfolioChartGrid.ColumnDefinitions.Clear();
+            PortfolioChartGrid.ColumnDefinitions.Clear();
 
-            for (int i = 0; i < ((Collection<PurchaseClass>)dataGridd.ItemsSource).Count; i++) {
+            for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
                 total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
 
 
                 ColumnDefinition col = new ColumnDefinition();
                 col.Width = new GridLength(dataList[i].Worth, GridUnitType.Star);
-                portfolioChartGrid.ColumnDefinitions.Add(col);
+                PortfolioChartGrid.ColumnDefinitions.Add(col);
 
                 var s = new StackPanel();
                 s.BorderThickness = new Thickness(0);
@@ -133,20 +135,20 @@ namespace CryptoTracker {
                 try { s.Background = (SolidColorBrush)App.Current.Resources[ dataList[i].Crypto + "_color"]; }
                 catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
 
-                portfolioChartGrid.Children.Add(s);
+                PortfolioChartGrid.Children.Add(s);
                 Grid.SetColumn(s, i);
             }
 
         }
 
         private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
-            if (dataGridd.SelectedIndex != -1) {
-                dataList.RemoveAt(dataGridd.SelectedIndex);
-                UpdatePortfolio();
-                SavePortfolio();
-
-                dataGridd.SelectedIndex = -1;
-            }
+            var menu = sender as MenuFlyoutItem;
+            var item = menu.DataContext as PurchaseClass;
+            var items = DataGridd.ItemsSource.Cast<PurchaseClass>().ToList();
+            var index = items.IndexOf(item);
+            dataList.RemoveAt(index);
+            UpdatePortfolio();
+            SavePortfolio();
         }
 
         // ###############################################################################################
@@ -201,6 +203,13 @@ namespace CryptoTracker {
             }
         }
 
-        
+        private void test(object sender, RoutedEventArgs e) {
+            var menu = sender as MenuFlyoutItem;
+            var item = menu.DataContext as PurchaseClass;
+            var items = DataGridd.ItemsSource.Cast<PurchaseClass>().ToList();
+            var index = items.IndexOf(item);
+            var z = 2;
+            // Do things with your item.
+        }
     }
 }

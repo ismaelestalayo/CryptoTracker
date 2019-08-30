@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Style x:Key="dataGrid_HeaderStyle" TargetType="ContentControl">
+        <Style x:Key="DataGrid_HeaderStyle" TargetType="ContentControl">
             <Setter Property="FontWeight" Value="SemiLight" />
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -28,6 +28,19 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <MenuFlyout x:Key="PortfolioListFlyout">
+            <MenuFlyoutItem Text="Edit" Click="RemovePortfolio_Click">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
@@ -49,8 +62,8 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="15 15 10 15">
                 <ComboBox x:Name="CryptoComboBox" PlaceholderText="Coin" Header="Crypto"/>
 
-                <TextBox x:Name="cryptoQtyTextBox"   Header="Amount"   Margin="5, 0" PlaceholderText="3.14" Width="70"/>
-                <TextBox x:Name="investedQtyTextBox" Header="Invested" Margin="5, 0" PlaceholderText="27"   Width="70"/>
+                <TextBox x:Name="CryptoQtyTextBox"   Header="Amount"   Margin="5, 0" PlaceholderText="3.14" Width="70"/>
+                <TextBox x:Name="InvestedQtyTextBox" Header="Invested" Margin="5, 0" PlaceholderText="27"   Width="70"/>
 
                 <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10 0" Background="#3F3F3F" Foreground="White">
                     <SymbolIcon Symbol="Add"/>
@@ -60,7 +73,7 @@
                 </Button>
             </StackPanel>
             
-            <Grid x:Name="portfolioChartGrid" Grid.Column="1" Background="Transparent" 
+            <Grid x:Name="PortfolioChartGrid" Grid.Column="1" Background="Transparent" 
                   Height="33" VerticalAlignment="Bottom" Margin="5 15 15 15">
                 
             </Grid>
@@ -73,9 +86,9 @@
         ###############################################################################################################
         ############################################################################################################### -->
         <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
-            <controls:DataGrid x:Name="dataGridd" Margin="12" ColumnHeaderStyle="{ThemeResource dataGrid_HeaderStyle}"
+            <controls:DataGrid x:Name="DataGridd" Margin="12" ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
                 VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                AlternatingRowBackground="Transparent"
+                AlternatingRowBackground="Transparent" 
                 AutoGenerateColumns="False" Background="{ThemeResource SystemChromeMediumColor}"
                 CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False"
                 GridLinesVisibility="Horizontal" HeadersVisibility="Column"            
@@ -91,8 +104,8 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <Run Text="{Binding CryptoQty}"/>
-                                    <Run Text="{Binding Crypto}"/>
+                                        <Run Text="{Binding CryptoQty}"/>
+                                        <Run Text="{Binding Crypto}"/>
                                     </TextBlock>
 
                                     <Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
@@ -147,6 +160,27 @@
                 </controls:DataGridTemplateColumn>-->
 
                 </controls:DataGrid.Columns>
+
+                <controls:DataGrid.RowStyle>
+                    <Style TargetType="controls:DataGridRow">
+                        <Setter Property="controls:DataGridRow.ContextFlyout">
+                            <Setter.Value>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Edit" Click="test">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </controls:DataGrid.RowStyle>
 
                 <controls:DataGrid.RowDetailsTemplate>
                     <DataTemplate>
