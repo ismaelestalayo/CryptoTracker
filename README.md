@@ -1,4 +1,5 @@
-## A simple yet powerful crypto-currency tracker for Windows 10
+##  simple yet powerful crypto-currency tracker for Windows 10
+
 <img src="Screenshots/promo/Hero-art.png" width = "100%"/>
 
 - Adjustable charts to show last hour/day/week/month... 
@@ -93,7 +94,7 @@
 
 # Suggest anything at:
  Mail: ismael.em@outlook.com
- 
+
  Reddit: [r/CryptoTracker](https://www.reddit.com/r/CryptoTracker/)
 
  Twitter: [@ismaelestalayo](https://twitter.com/ismaelestalayo)

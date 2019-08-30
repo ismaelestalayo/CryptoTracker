@@ -34,12 +34,11 @@ namespace CryptoTracker {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-
-            // Connected animation
             var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
-            if (animation != null) {
-                animation.TryStart(priceChart);
-            }
+            if (animation != null)
+                animation.TryStart(PriceChart, new UIElement[]{ BottomPivot } );
+            
+
 
             // Page title
             if (e.Parameter.ToString() != null) {
@@ -192,7 +191,7 @@ namespace CryptoTracker {
                 mainTitleDiff.Text = "▲" + d.ToString() + "%";
             }
 
-            SplineAreaSeries series = (SplineAreaSeries)priceChart.Series[0];
+            SplineAreaSeries series = (SplineAreaSeries)PriceChart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;

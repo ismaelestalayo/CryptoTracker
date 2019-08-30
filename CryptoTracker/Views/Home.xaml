@@ -11,11 +11,11 @@
     NavigationCacheMode="Enabled">
 
     <Page.Resources>
-        <Style x:Key="currTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
+        <Style x:Key="CurrTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="Text" Value="val€"/>
             <Setter Property="FontWeight" Value="Light"/>
         </Style>
-        <Style x:Key="diffTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+        <Style x:Key="DiffTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="Text" Value="▲0%"/>
             <Setter Property="FontWeight" Value="ExtraLight"/>
             <Setter Property="FontSize" Value="16"/>
@@ -23,7 +23,7 @@
             <Setter Property="VerticalAlignment" Value="Bottom"/>
         </Style>
 
-        <MenuFlyout x:Key="coinListFlyout">
+        <MenuFlyout x:Key="CoinListFlyout">
             <MenuFlyoutItem Name="Item1" Text="Unpin" Click="UnpinCoin">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA92;" />
@@ -93,12 +93,11 @@
             ####################################################################################################
             ############################################# PRICE LIST VIEW ######################################
             #################################################################################################### -->
-            <ListView x:Name="priceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1" >
+            <ListView x:Name="PriceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1" >
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
-                        <Grid x:Name="priceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0, 5" Height="210" 
-                              ContextFlyout="{StaticResource coinListFlyout}">
+                        <Grid x:Name="PriceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                              Margin="0, 5" Height="210" ContextFlyout="{StaticResource CoinListFlyout}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -122,12 +121,12 @@
                                 <TextBlock Name="coinName" Text="{x:Bind _cryptoName, Mode=TwoWay}" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" Margin="5, -2"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-                                <TextBlock Name="priceCurr" Text="{x:Bind _priceCurr, Mode=TwoWay}" Style="{StaticResource currTextStyle}"/>
-                                <TextBlock Name="priceDiff" Text="{x:Bind _priceDiff, Mode=TwoWay}" Foreground="{x:Bind _priceDiffFG}" Style="{StaticResource diffTextStyle}"/>
+                                <TextBlock Name="priceCurr" Text="{x:Bind _priceCurr, Mode=TwoWay}" Style="{StaticResource CurrTextStyle}"/>
+                                <TextBlock Name="priceDiff" Text="{x:Bind _priceDiff, Mode=TwoWay}" Foreground="{x:Bind _priceDiffFG}" Style="{StaticResource DiffTextStyle}"/>
                             </StackPanel>
                             
                             <!-- PRICE CHART: -->
-                            <telerikChart:RadCartesianChart x:Name="priceChart" Grid.Row="1">
+                            <telerikChart:RadCartesianChart x:Name="PriceChart" Grid.Row="1">
                                 <telerikChart:RadCartesianChart.Grid>
                                     <telerikChart:CartesianChartGrid MajorLinesVisibility="None"/>
                                 </telerikChart:RadCartesianChart.Grid>
@@ -164,13 +163,12 @@
             ###########################################################################################################################
             ####################################################### VOLUME LIST VIEW ##################################################
             ########################################################################################################################### -->
-            <ListView x:Name="volumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
+            <ListView x:Name="VolumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
                       Grid.Row="1" Grid.Column="1">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
-                        <Grid x:Name="volumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0, 5" Height="210"
-                              ContextFlyout="{StaticResource coinListFlyout}">
+                        <Grid x:Name="VolumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                              Margin="0, 5" Height="210" ContextFlyout="{StaticResource CoinListFlyout}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -185,12 +183,12 @@
 
                                 <StackPanel Grid.Column="1" Orientation="Vertical">
                                     <TextBlock Text="{x:Bind _volume24to,   FallbackValue=0, Mode=TwoWay}" 
-                                               Style="{StaticResource currTextStyle}" 
+                                               Style="{StaticResource CurrTextStyle}" 
                                                HorizontalAlignment="Right"/>
                                     
                                     <TextBlock Visibility="Collapsed" 
                                                Text="{x:Bind _volume24, FallbackValue=0, Mode=TwoWay}" 
-                                               Style="{StaticResource diffTextStyle}" 
+                                               Style="{StaticResource DiffTextStyle}" 
                                                HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Grid>

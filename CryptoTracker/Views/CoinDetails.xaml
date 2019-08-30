@@ -101,7 +101,7 @@
                 </ContentControl>
             </controls:Loading>
 
-            <telerik:RadCartesianChart x:Name="priceChart" Margin="-5, 0, -25, 0" Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
+            <telerik:RadCartesianChart x:Name="PriceChart" Margin="-5, 0, -25, 0" Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
 
                 <telerik:RadCartesianChart.Behaviors>
                     <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
@@ -188,7 +188,7 @@
         ####################################################################################################
         ############################################## Bottom Pivot ########################################
         #################################################################################################### -->
-        <Pivot Grid.Row="3" Grid.Column="0" Margin="0, -15, 0, 0">
+        <Pivot Grid.Row="3" Grid.Column="0" Margin="0, -15, 0, 0" x:Name="BottomPivot">
 
             <!-- Pivot 1: Stats -->
             <PivotItem Header="Stats">

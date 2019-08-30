@@ -105,7 +105,7 @@ namespace CryptoTracker {
         }
 
         // #########################################################################################
-        //  Nabigation View
+        //  Navigation View
         private void NavView_Loaded(object sender, RoutedEventArgs e) {
             // set the initial SelectedItem 
             NavView.SelectedItem = NavView.MenuItems[0];
@@ -117,17 +117,17 @@ namespace CryptoTracker {
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
             if(args.IsSettingsSelected)
-                pagesNavigation("Settings");
+                PagesNavigation("Settings");
             else { 
                 string name = ((ContentControl)args.SelectedItem).Content.ToString();
-                pagesNavigation(name);
+                PagesNavigation(name);
             }
         }
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
             string name = args.InvokedItem.ToString();
-            pagesNavigation(name);
+            PagesNavigation(name);
         }
-        private void pagesNavigation(string s) {
+        private void PagesNavigation(string s) {
             switch (s) {
                 case "Home":
                     ContentFrame.Navigate(typeof(Home));
@@ -145,11 +145,13 @@ namespace CryptoTracker {
                 case "Settings":
                     ContentFrame.Navigate(typeof(Settings));
                     break;
+                default:
+                    break;
             }
         }
 
         // #########################################################################################
-        //  AUTO SUGGEST-BOX
+        //  AutoSuggest-Box
         private void AutoSuggestBox_TextChanged(AutoSuggestBox box, AutoSuggestBoxTextChangedEventArgs args) {
             // Only get results when it was a user typing, 
             // otherwise assume the value got filled in by TextMemberPath 

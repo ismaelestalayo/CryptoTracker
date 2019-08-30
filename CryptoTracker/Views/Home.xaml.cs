@@ -11,6 +11,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker.Views {
     public sealed partial class Home : Page {
@@ -24,8 +26,8 @@ namespace CryptoTracker.Views {
             this.InitializeComponent();
 
             homeCoinList = new ObservableCollection<HomeTileClass>();
-            priceListView.ItemsSource = homeCoinList;
-            volumeListView.ItemsSource = homeCoinList;
+            PriceListView.ItemsSource = homeCoinList;
+            VolumeListView.ItemsSource = homeCoinList;
 
             InitHome();
         }
@@ -76,7 +78,7 @@ namespace CryptoTracker.Views {
             }
         }
 
-        internal async Task UpdateCard(int i) {
+        private async Task UpdateCard(int i) {
             
             string c = App.pinnedCoins[i];
 
@@ -111,7 +113,7 @@ namespace CryptoTracker.Views {
 
             // #########################################################################################
             // LOADING BAR
-            ListViewItem container = (ListViewItem)priceListView.ContainerFromIndex(i);
+            ListViewItem container = (ListViewItem)PriceListView.ContainerFromIndex(i);
             var loading = (container.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
             loading.IsLoading = true;
 
@@ -131,7 +133,7 @@ namespace CryptoTracker.Views {
             //if (container == null)
             //    break;
 
-            RadCartesianChart priceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("priceChart") as RadCartesianChart;
+            RadCartesianChart PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
 
             await App.GetHisto(c, timeSpan, limit);
             List<ChartData> priceData = new List<ChartData>();
@@ -148,7 +150,7 @@ namespace CryptoTracker.Views {
                 });
             }
 
-            SplineAreaSeries series = (SplineAreaSeries)priceChart.Series[0];
+            SplineAreaSeries series = (SplineAreaSeries)PriceChart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = priceData;
@@ -157,7 +159,7 @@ namespace CryptoTracker.Views {
 
             // #########################################################################################
             // VOLUME CHART
-            ListViewItem container2 = (ListViewItem)volumeListView.ContainerFromIndex(i);
+            ListViewItem container2 = (ListViewItem)VolumeListView.ContainerFromIndex(i);
             await App.GetHisto(c, "hour", 24);
 
             List<ChartData> volumeData = new List<ChartData>();
@@ -224,12 +226,12 @@ namespace CryptoTracker.Views {
         private void homeListView_Click(object sender, ItemClickEventArgs e) {
             // Connected animation
             switch ( ((ListView)sender).Name ) {
-                case "priceListView":
-                    priceListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "priceListView_Element");
+                case "PriceListView":
+                    PriceListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "PriceListView_Element");
                     break;
 
-                case "volumeListView":
-                    volumeListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "volumeListView_Element");
+                case "VolumeListView":
+                    VolumeListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "VolumeListView_Element");
                     break;
             }
 
@@ -269,7 +271,7 @@ namespace CryptoTracker.Views {
                 homeCoinList[n] = homeCoinList[n + 1];
                 homeCoinList[n + 1] = tempListItem;
 
-                priceListView.UpdateLayout();
+                PriceListView.UpdateLayout();
                 UpdateCard(n);
 
                 // Update pinnedCoin list
@@ -289,7 +291,7 @@ namespace CryptoTracker.Views {
                 homeCoinList[n] = homeCoinList[n - 1];
                 homeCoinList[n - 1] = tempListItem;
 
-                priceListView.UpdateLayout();
+                PriceListView.UpdateLayout();
                 UpdateCard(n);
 
                 // Update pinnedCoin list
