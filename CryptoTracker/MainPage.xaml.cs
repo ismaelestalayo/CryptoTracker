@@ -196,7 +196,6 @@ namespace CryptoTracker {
 
         private void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e) {
             CoinAutoSuggestBox.Text = "";
-            findBtn.Visibility = Visibility.Visible;
             CoinAutoSuggestBox.Visibility = Visibility.Collapsed;
         }
 
@@ -222,7 +221,6 @@ namespace CryptoTracker {
         // #########################################################################################
         //  Search button
         private void NavView_Search_Tapped(object sender, TappedRoutedEventArgs e) {
-            findBtn.Visibility = Visibility.Collapsed;
             CoinAutoSuggestBox.Visibility = Visibility.Visible;
             CoinAutoSuggestBox.Focus(FocusState.Programmatic);
         }

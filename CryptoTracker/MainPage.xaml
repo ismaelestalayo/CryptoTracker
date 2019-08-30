@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cryptotracker="using:CryptoTracker"
+    xmlns:helpers="using:CryptoTracker.Helpers"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -60,7 +61,7 @@
             <!-- FOOTER -->
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
-                    <NavigationViewItem Icon="Find" x:Name="findBtn"  Tapped="NavView_Search_Tapped"/>
+                    <NavigationViewItem Icon="Find"  Visibility="{x:Bind Path=helpers:Converters.InvertVisibility(CoinAutoSuggestBox.Visibility)}"  Tapped="NavView_Search_Tapped"/>
                     <NavigationViewItem Icon="Sync"  Tapped="NavView_Sync_Tapped" />
                 </StackPanel>
             </NavigationView.PaneFooter>
