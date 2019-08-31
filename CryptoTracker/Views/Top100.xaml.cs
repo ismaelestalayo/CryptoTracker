@@ -94,23 +94,21 @@ namespace CryptoTracker.Views {
             string c = ((Top100coin)((FrameworkElement)((FrameworkElement)sender).Parent).DataContext).Symbol;
             if (!App.pinnedCoins.Contains(c)) {
                 App.pinnedCoins.Add(c);
+                Home.AddCoinHome(c);
                 inAppNotification.Show(c + " pinned to home.", 2000);
             } else {
-                App.pinnedCoins.Remove(c);
+                Home.RemoveCoinHome(c);
                 inAppNotification.Show(c + " unpinned from home.", 2000);
             }
 
             int index = int.Parse(((Top100coin)((FrameworkElement)((FrameworkElement)sender).Parent).DataContext).Rank) - 1;
 
+            // TODO: deleting from Home should empty a heart icon
             topCoins[index].FavIcon = topCoins[index].FavIcon.Equals("\uEB51") ? "\uEB52" : "\uEB51";
 
             // Update pinnedCoin list
             App.UpdatePinnedCoins();
-
-            // Reset the cache of home to update the added/removed coin
-            //var cacheSize = ((Frame)Parent).CacheSize;
-            //((Frame)Parent).CacheSize = 0;
-            //((Frame)Parent).CacheSize = cacheSize;
+            App.UpdateHome = true;
         }
     }
 }

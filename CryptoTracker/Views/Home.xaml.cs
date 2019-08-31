@@ -18,9 +18,9 @@ namespace CryptoTracker.Views {
     public sealed partial class Home : Page {
 
         static ObservableCollection<HomeTileClass> homeCoinList { get; set; }
-        private string diff = "0";
-        private int limit = 1500;
-        private string timeSpan = "minute";
+        private static string diff = "0";
+        private static int limit = 1500;
+        private static string timeSpan = "minute";
 
         public Home() {
             this.InitializeComponent();
@@ -30,6 +30,10 @@ namespace CryptoTracker.Views {
             VolumeListView.ItemsSource = homeCoinList;
 
             InitHome();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            UpdateAllCards();
         }
 
         private async void InitHome() {
@@ -47,13 +51,13 @@ namespace CryptoTracker.Views {
         }
 
         // #########################################################################################
-        // Add a new coin
-        private async Task AddCoinHome(string c) {
+        // Add/remove coins from Home
+        internal static async Task AddCoinHome(string crypto) {
 
-            if (c == "MIOTA")
-                c = "IOT";
+            if (crypto == "MIOTA")
+                crypto = "IOT";
 
-            String iconPath = "/Assets/Icons/icon" + c + ".png";
+            String iconPath = "/Assets/Icons/icon" + crypto + ".png";
             try {
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + iconPath));
             } catch (Exception) {
@@ -61,13 +65,25 @@ namespace CryptoTracker.Views {
             }
 
             homeCoinList.Add(new HomeTileClass {
-                _cryptoName = c,
+                _cryptoName = crypto,
                 _priceDiff = diff,
-                _crypto = c,
+                _crypto = crypto,
                 _iconSrc = iconPath,
                 _timeSpan = timeSpan,
                 _limit = limit,
             });
+        }
+
+        internal static void RemoveCoinHome(string crypto) {
+            if (App.pinnedCoins.Contains(crypto)) {
+                var n = App.pinnedCoins.IndexOf(crypto);
+
+                App.pinnedCoins.RemoveAt(n);
+                homeCoinList.RemoveAt(n);
+
+                // Update pinnedCoin list
+                App.UpdatePinnedCoins();
+            }
         }
 
         // #########################################################################################
@@ -130,8 +146,6 @@ namespace CryptoTracker.Views {
 
             // #########################################################################################
             // PRICE CHART
-            //if (container == null)
-            //    break;
 
             RadCartesianChart PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
 
@@ -177,9 +191,7 @@ namespace CryptoTracker.Views {
             var z = barSeries.DefaultVisualStyle;
 
 
-
             loading.IsLoading = false;
-            
         }
 
         // #########################################################################################
@@ -239,24 +251,10 @@ namespace CryptoTracker.Views {
             this.Frame.Navigate(typeof(CoinDetails), clickedItem._crypto);
         }
 
-        private void ShowMenu(object sender) {
-            FlyoutShowOptions myOption = new FlyoutShowOptions();
-            //myOption.ShowMode = isTransient ? FlyoutShowMode.Transient : FlyoutShowMode.Standard;
-            //coinFlyout.ShowAt(sender, FlyoutShowMode.Transient);
-        }
-
         private void UnpinCoin(object sender, RoutedEventArgs e) {
             string crypto = ((HomeTileClass)((FrameworkElement)sender).DataContext)._crypto;
 
-            if (App.pinnedCoins.Contains(crypto)) {
-                int n = App.pinnedCoins.IndexOf(crypto);
-
-                App.pinnedCoins.RemoveAt(n);
-                homeCoinList.RemoveAt(n);
-
-                // Update pinnedCoin list
-                App.UpdatePinnedCoins();
-            }
+            RemoveCoinHome(crypto);
         }
         private void MoveCoinDown(object sender, RoutedEventArgs e) {
             string crypto = ((HomeTileClass)((FrameworkElement)sender).DataContext)._crypto;

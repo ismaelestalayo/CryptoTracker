@@ -24,17 +24,17 @@
         </Style>
 
         <MenuFlyout x:Key="CoinListFlyout">
-            <MenuFlyoutItem Name="Item1" Text="Unpin" Click="UnpinCoin">
+            <MenuFlyoutItem Text="Unpin" Click="UnpinCoin">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA92;" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Name="Item2" Text="Move up" Click="MoveCoinUp">
+            <MenuFlyoutItem Text="Move up" Click="MoveCoinUp">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74A;" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Name="Item3" Text="Move down" Click="MoveCoinDown">
+            <MenuFlyoutItem Text="Move down" Click="MoveCoinDown">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74B;" />
                 </MenuFlyoutItem.Icon>
