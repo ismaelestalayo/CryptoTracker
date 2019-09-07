@@ -108,7 +108,6 @@ namespace CryptoTracker.Views {
 
             // Update pinnedCoin list
             App.UpdatePinnedCoins();
-            App.UpdateHome = true;
         }
     }
 }
