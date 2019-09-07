@@ -10,9 +10,10 @@
         <Style TargetType="Button" x:Key="SettingsButtonsStyle">
             <Setter Property="Background" Value="#3F3F3F"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Padding" Value="20, 5"/>
-            <Setter Property="Margin" Value="0, 5"/>
+            <Setter Property="Padding" Value="20 5"/>
+            <Setter Property="Margin" Value="0 2 5 5"/>
             <Setter Property="FontWeight" Value="SemiLight"/>
+            <Setter Property="CornerRadius" Value="2"/>
         </Style>
 
         <Style TargetType="TextBlock" x:Key="LabelTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
@@ -23,7 +24,7 @@
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
-        <Grid Padding="10, 0" x:Name="SettingsGrid">
+        <Grid Padding="10 5" x:Name="SettingsGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
@@ -34,97 +35,137 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Row="0">
-
-                <TextBlock Text="Currency" Style="{StaticResource TitleTextBlockStyle}"/>
-                <TextBlock 
-                    Text="Choose the currency in which to to show prices. 
-                    &#x0a;(Pages need to be updated manually.)"
-                    FontWeight="ExtraLight"/>
-                <ComboBox 
-                    x:Name="CoinComboBox" 
-                    PlaceholderText="Coin" 
-                    VerticalAlignment="Center"
-                    Margin="0, 10, 0, 0"
-                    SelectionChanged="CoinBox_changed">
-                    <ComboBoxItem Content="EUR (€)" Name="EUR"/>
-                    <ComboBoxItem Content="USD ($)" Name="USD"/>
-                    <ComboBoxItem Content="GBP (£)" Name="GBP"/>
-                    <ComboBoxItem Content="CAD ($)" Name="CAD"/>
-                    <ComboBoxItem Content="AUD ($)" Name="AUD"/>
-                    <ComboBoxItem Content="MXN ($)" Name="MXN"/>
-                    <ComboBoxItem Content="CNY (¥)" Name="CNY"/>
-                    <ComboBoxItem Content="JPY (¥)" Name="JPY"/>
-                    <ComboBoxItem Content="INR (₹)" Name="INR"/>
-                </ComboBox>
-
-                <!-- 
+                <!-- CURRENCY
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
-                <TextBlock Text="Appearance" Style="{StaticResource LabelTitle}"/>
-                <ToggleSwitch 
-                    Grid.Row="0" Grid.Column="1"
-                    Name="ThemeSwitcher" Header="Theme"
-                    OffContent="Light" OnContent="Dark" 
-                    Toggled="ThemeToogled"/>
-
-                <!-- 
-                /////////////////////////////////////////////////////////////////////////////////////////////////-->
-                <TextBlock Text="Feedback" Style="{StaticResource LabelTitle}"/>
-                <TextBlock Text="Take a minute and leave a review on the Store." FontWeight="ExtraLight"/>
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Rating"
-                        Style="{StaticResource SettingsButtonsStyle}" 
-                        Click="RatingButton_Click" />
-                    <Button Content="Review" Margin="5, 0"
-                        Style="{StaticResource SettingsButtonsStyle}" 
-                        Click="ReviewButton_Click" />
-                </StackPanel>
-                
-
-                <TextBlock Text="I'd love to hear your thoughts about the app." FontWeight="ExtraLight"/>
-                <Button Content="Feedback Hub" 
-                    x:Name="feedbackButton"
-                    Style="{StaticResource SettingsButtonsStyle}" 
-                    Click="FeedbackButton_Click"/>
-
-                <TextBlock Text="Or use one of this for a more direct feedback:" FontWeight="ExtraLight"/>
-                <StackPanel Orientation="Horizontal">
-                    <Button Style="{StaticResource SettingsButtonsStyle}" Click="RedditButton_Click" Padding="40, 5">
-                        <Image Source="/Assets/Icons/reddit.png" Height="20"/>
-                    </Button>
-                    <Button Style="{StaticResource SettingsButtonsStyle}" Click="MailButton_Click" Padding="40, 5" Margin="5, 0">
-                        <Image Source="/Assets/Icons/outlook.png" Height="20"/>
-                    </Button>
-                    <Button Style="{StaticResource SettingsButtonsStyle}" Click="TwitterButton_Click" Padding="40, 5">
-                        <Image Source="/Assets/Icons/twitter.png" Height="20"/>
-                    </Button>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE909;" Margin="0 0 10 0"/>
+                    <TextBlock Text="Currency" Style="{StaticResource TitleTextBlockStyle}"/>
                 </StackPanel>
 
-                <!-- 
-                /////////////////////////////////////////////////////////////////////////////////////////////////-->
-                <TextBlock Text="Mention" Style="{StaticResource LabelTitle}"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text=" • Data provided by" FontWeight="ExtraLight"/>
-                    <HyperlinkButton 
-                        NavigateUri="https://www.cryptocompare.com/api" 
-                        Content="CryptoCompare API"
-                        Margin="5, -10"
+                <StackPanel Margin="30 0">
+                    <TextBlock 
+                        Text="Choose the currency in which to to show prices. &#x0a;(Pages need to be updated manually.)"
                         FontWeight="ExtraLight"/>
+                    <ComboBox 
+                        x:Name="CoinComboBox" 
+                        PlaceholderText="Coin" 
+                        VerticalAlignment="Center"
+                        Margin="0, 10, 0, 0"
+                        CornerRadius="2"
+                        BorderThickness="1"
+                        SelectionChanged="CoinBox_changed">
+                        <ComboBoxItem Content="EUR (€)" Name="EUR"/>
+                        <ComboBoxItem Content="USD ($)" Name="USD"/>
+                        <ComboBoxItem Content="GBP (£)" Name="GBP"/>
+                        <ComboBoxItem Content="CAD ($)" Name="CAD"/>
+                        <ComboBoxItem Content="AUD ($)" Name="AUD"/>
+                        <ComboBoxItem Content="MXN ($)" Name="MXN"/>
+                        <ComboBoxItem Content="CNY (¥)" Name="CNY"/>
+                        <ComboBoxItem Content="JPY (¥)" Name="JPY"/>
+                        <ComboBoxItem Content="INR (₹)" Name="INR"/>
+                    </ComboBox>
                 </StackPanel>
 
-                
-
-                <!-- 
+                <!-- APPEARANCE
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE703;" Margin="0 0 10 0"/>
+                    <TextBlock Text="Appearance" Style="{StaticResource TitleTextBlockStyle}"/>
+                </StackPanel>
+
+                <StackPanel Margin="30 0">
+                    <ToggleSwitch 
+                        Name="ThemeSwitcher" Header="Theme"
+                        OffContent="Light" OnContent="Dark" 
+                        Toggled="ThemeToogled"/>
+                </StackPanel>
+
+                <!-- CLOUD SYNC
+                /////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE753;" Margin="0 0 10 0"/>
+                    <TextBlock Text="Cloud sync" Style="{StaticResource TitleTextBlockStyle}"/>
+                </StackPanel>
+
+                <StackPanel Margin="30 0">
+                    <TextBlock Text="Sync your settings from/to OneDrive with just a click." FontWeight="ExtraLight"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Upload"
+                                Style="{StaticResource SettingsButtonsStyle}" 
+                                Click="RatingButton_Click" />
+                        <Button Content="Download"
+                                Style="{StaticResource SettingsButtonsStyle}" 
+                                Click="ReviewButton_Click" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- FEEDBACK
+                /////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE724;" Margin="0 0 10 0"/>
+                    <TextBlock Text="Feedback" Style="{StaticResource TitleTextBlockStyle}"/>
+                </StackPanel>
+
+                <StackPanel Margin="30 0">
+                    <TextBlock Text="Take a minute and leave a review on the Store." FontWeight="ExtraLight"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Rating"
+                                Style="{StaticResource SettingsButtonsStyle}" 
+                                Click="RatingButton_Click" />
+                        <Button Content="Review"
+                                Style="{StaticResource SettingsButtonsStyle}" 
+                                Click="ReviewButton_Click" />
+                    </StackPanel>
+
+                    <TextBlock Text="I'd love to hear your thoughts about the app." FontWeight="ExtraLight"/>
+                    <Button Content="Feedback Hub" 
+                            x:Name="feedbackButton"
+                            Style="{StaticResource SettingsButtonsStyle}" 
+                            Click="FeedbackButton_Click"/>
+
+                    <TextBlock Text="Or use one of this for a more direct feedback:" FontWeight="ExtraLight"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource SettingsButtonsStyle}" Click="RedditButton_Click" Padding="40 5">
+                            <Image Source="/Assets/Icons/reddit.png" Height="20"/>
+                        </Button>
+                        <Button Style="{StaticResource SettingsButtonsStyle}" Click="MailButton_Click" Padding="40 5">
+                            <Image Source="/Assets/Icons/outlook.png" Height="20"/>
+                        </Button>
+                        <Button Style="{StaticResource SettingsButtonsStyle}" Click="TwitterButton_Click" Padding="40 5">
+                            <Image Source="/Assets/Icons/twitter.png" Height="20"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- MENTION
+                /////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE90A;" Margin="0 0 10 0"/>
+                    <TextBlock Text="Mention" Style="{StaticResource TitleTextBlockStyle}"/>
+                </StackPanel>
+
+                <StackPanel Margin="30 0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text=" • Data provided by" FontWeight="ExtraLight"/>
+                        <HyperlinkButton 
+                            NavigateUri="https://www.cryptocompare.com/api" 
+                            Content="CryptoCompare API"
+                            Margin="5, -10"
+                            FontWeight="ExtraLight"/>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
 
-            <StackPanel Margin="0, 15, 0, 0" Grid.Row="1" Orientation="Horizontal">
+            <!-- FOOTER
+                /////////////////////////////////////////////////////////////////////////////////////////////////-->
+            <StackPanel Margin="0 15 0 0" Grid.Row="1" Orientation="Horizontal">
                 <Image Source="/Assets/CryptoTracker 400.png" Width="80" HorizontalAlignment="Left"/>
                 <StackPanel Margin="10, 0">
                     <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
                     <TextBlock Text="Made with ❤ by an engineering student." FontWeight="Light"/>
                     <TextBlock Name="VersionTextBlock" Text="Version: 3.X.X" FontWeight="Light"/>
-                    <HyperlinkButton NavigateUri="http://ismaelestalayo.github.io/" 
-                        Content    ="http://ismaelestalayo.github.io/" 
+                    <HyperlinkButton NavigateUri="https://ismaelestalayo.com/" 
+                        Content    ="https://ismaelestalayo.com/" 
                         Margin="0, -6, 0, 0"
                         Foreground="{ThemeResource HyperlinkButtonForeground}"
                         FontWeight="Light"/>
