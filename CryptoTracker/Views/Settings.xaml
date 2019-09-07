@@ -24,7 +24,7 @@
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
-        <Grid Padding="10 5" x:Name="SettingsGrid">
+        <Grid Padding="15 5" x:Name="SettingsGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
@@ -146,7 +146,7 @@
 
                 <StackPanel Margin="30 0">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text=" • Data provided by" FontWeight="ExtraLight"/>
+                        <TextBlock Text="Data provided by" FontWeight="ExtraLight"/>
                         <HyperlinkButton 
                             NavigateUri="https://www.cryptocompare.com/api" 
                             Content="CryptoCompare API"
