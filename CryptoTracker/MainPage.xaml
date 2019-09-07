@@ -61,7 +61,7 @@
             <!-- FOOTER -->
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
-                    <NavigationViewItem Icon="Find"  Visibility="{x:Bind Path=helpers:Converters.InvertVisibility(CoinAutoSuggestBox.Visibility)}"  Tapped="NavView_Search_Tapped"/>
+                    <NavigationViewItem Icon="Find"  Visibility="{x:Bind Path=helpers:Converters.InvertVisibility(CoinAutoSuggestBox.Visibility), Mode=OneWay}"  Tapped="NavView_Search_Tapped"/>
                     <NavigationViewItem Icon="Sync"  Tapped="NavView_Sync_Tapped" />
                 </StackPanel>
             </NavigationView.PaneFooter>
