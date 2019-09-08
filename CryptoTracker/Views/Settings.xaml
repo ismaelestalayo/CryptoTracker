@@ -11,13 +11,14 @@
             <Setter Property="Background" Value="#3F3F3F"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Padding" Value="20 5"/>
-            <Setter Property="Margin" Value="0 2 5 5"/>
+            <Setter Property="Margin" Value="0 0 5 10"/>
             <Setter Property="FontWeight" Value="SemiLight"/>
             <Setter Property="CornerRadius" Value="2"/>
         </Style>
 
-        <Style TargetType="TextBlock" x:Key="LabelTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
-            <Setter Property="Margin" Value="0, 15, 0, 0"/>
+        <Style TargetType="TextBlock" x:Key="LabelTitle" BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontWeight" Value="ExtraLight"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
     </Page.Resources>
 
@@ -45,15 +46,14 @@
                 <StackPanel Margin="30 0">
                     <TextBlock 
                         Text="Choose the currency in which to to show prices. &#x0a;(Pages need to be updated manually.)"
-                        FontWeight="ExtraLight"/>
+                        Style="{ThemeResource LabelTitle}"/>
                     <ComboBox 
-                        x:Name="CoinComboBox" 
-                        PlaceholderText="Coin" 
-                        VerticalAlignment="Center"
-                        Margin="0, 10, 0, 0"
-                        CornerRadius="2"
+                        x:Name="CoinComboBox"
                         BorderThickness="1"
-                        SelectionChanged="CoinBox_changed">
+                        CornerRadius="2"
+                        PlaceholderText="Coin" 
+                        SelectionChanged="CoinBox_changed"
+                        VerticalAlignment="Center">
                         <ComboBoxItem Content="EUR (€)" Name="EUR"/>
                         <ComboBoxItem Content="USD ($)" Name="USD"/>
                         <ComboBoxItem Content="GBP (£)" Name="GBP"/>
@@ -88,7 +88,7 @@
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
-                    <TextBlock Text="Sync your settings from/to OneDrive with just a click." FontWeight="ExtraLight"/>
+                    <TextBlock Text="Sync your settings from/to OneDrive with just a click." Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Upload"
                                 Style="{StaticResource SettingsButtonsStyle}" 
@@ -107,7 +107,7 @@
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
-                    <TextBlock Text="Take a minute and leave a review on the Store." FontWeight="ExtraLight"/>
+                    <TextBlock Text="Take a minute and leave a review on the Store." Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Rating"
                                 Style="{StaticResource SettingsButtonsStyle}" 
@@ -117,13 +117,13 @@
                                 Click="ReviewButton_Click" />
                     </StackPanel>
 
-                    <TextBlock Text="I'd love to hear your thoughts about the app." FontWeight="ExtraLight"/>
+                    <TextBlock Text="I'd love to hear your thoughts about the app." Style="{ThemeResource LabelTitle}"/>
                     <Button Content="Feedback Hub" 
                             x:Name="feedbackButton"
                             Style="{StaticResource SettingsButtonsStyle}" 
                             Click="FeedbackButton_Click"/>
 
-                    <TextBlock Text="Or use one of this for a more direct feedback:" FontWeight="ExtraLight"/>
+                    <TextBlock Text="Or use one of this for a more direct feedback:" Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Style="{StaticResource SettingsButtonsStyle}" Click="RedditButton_Click" Padding="40 5">
                             <Image Source="/Assets/Icons/reddit.png" Height="20"/>
@@ -146,7 +146,7 @@
 
                 <StackPanel Margin="30 0">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Data provided by" FontWeight="ExtraLight"/>
+                        <TextBlock Text="Data provided by" Style="{ThemeResource LabelTitle}"/>
                         <HyperlinkButton 
                             NavigateUri="https://www.cryptocompare.com/api" 
                             Content="CryptoCompare API"
