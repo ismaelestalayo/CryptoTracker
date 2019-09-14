@@ -8,7 +8,7 @@
     xmlns:views="using:CryptoTracker.Views"
     mc:Ignorable="d">
 
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="5 0 0 0">
         <Grid>
             <controls:AdaptiveGridView x:Name="newsAdaptiveGridView" OneRowModeEnabled="False"  
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
@@ -16,7 +16,7 @@
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="views:NewsItem">
                         <Grid x:Name="GridView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="5">
+                              Margin="1 5 1 0" CornerRadius="2">
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="7*"/>

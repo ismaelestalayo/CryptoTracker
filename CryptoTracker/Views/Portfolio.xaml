@@ -20,7 +20,7 @@
                     <ControlTemplate TargetType="ContentControl">
                         <ContentPresenter Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Margin="1 0" Background="#3F3F3F" 
+                            Background="#3F3F3F" CornerRadius="2 2 0 0"
                             ContentTransitions="{TemplateBinding ContentTransitions}"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"/>
@@ -43,7 +43,7 @@
         </MenuFlyout>
     </Page.Resources>
 
-    <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+    <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -59,23 +59,19 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="15 15 10 15">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10 15">
                 <ComboBox x:Name="CryptoComboBox" PlaceholderText="Coin" Header="Crypto"/>
 
-                <TextBox x:Name="CryptoQtyTextBox"   Header="Amount"   Margin="5, 0" PlaceholderText="3.14" Width="70"/>
-                <TextBox x:Name="InvestedQtyTextBox" Header="Invested" Margin="5, 0" PlaceholderText="27"   Width="70"/>
+                <TextBox x:Name="CryptoQtyTextBox"   Header="Amount"   Margin="5 0" PlaceholderText="3.14" Width="70"/>
+                <TextBox x:Name="InvestedQtyTextBox" Header="Invested" Margin="5 0" PlaceholderText="27"   Width="70"/>
 
-                <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10 0" Background="#3F3F3F" Foreground="White">
+                <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10 0 0 0" Background="#3F3F3F" Foreground="White">
                     <SymbolIcon Symbol="Add"/>
-                </Button>
-                <Button Click="RemovePortfolio_Click" VerticalAlignment="Bottom" Background="#3F3F3F" Foreground="White">
-                    <SymbolIcon Symbol="Delete"/>
                 </Button>
             </StackPanel>
             
             <Grid x:Name="PortfolioChartGrid" Grid.Column="1" Background="Transparent" 
-                  Height="33" VerticalAlignment="Bottom" Margin="5 15 15 15">
-                
+                  Height="33" VerticalAlignment="Bottom" Margin="5 15" CornerRadius="4">
             </Grid>
         </Grid>
         
@@ -86,12 +82,12 @@
         ###############################################################################################################
         ############################################################################################################### -->
         <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
-            <controls:DataGrid x:Name="DataGridd" Margin="12" ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
+            <controls:DataGrid x:Name="DataGridd" Margin="7" ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
                 VerticalAlignment="Top" HorizontalAlignment="Stretch"
                 AlternatingRowBackground="Transparent" 
-                AutoGenerateColumns="False" Background="{ThemeResource SystemChromeMediumColor}"
+                AutoGenerateColumns="False"
                 CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False"
-                GridLinesVisibility="Horizontal" HeadersVisibility="Column"            
+                GridLinesVisibility="Horizontal" HeadersVisibility="Column"
                 RowDetailsVisibilityMode="Visible" SelectionMode="Single">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTemplateColumn Header="Crypto" Width="*">
@@ -184,7 +180,7 @@
 
                 <controls:DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <Grid Padding="0 15" Background="{ThemeResource SystemChromeLowColor}" >
+                        <Grid Padding="0 15" CornerRadius="0 0 5 5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>

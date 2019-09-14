@@ -44,7 +44,7 @@
 
     <!-- 
     #################################################################################################### -->
-    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0 0 0 5">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
@@ -93,11 +93,11 @@
             ####################################################################################################
             ############################################# PRICE LIST VIEW ######################################
             #################################################################################################### -->
-            <ListView x:Name="PriceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1" >
+            <ListView x:Name="PriceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
                         <Grid x:Name="PriceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0, 5" Height="210" ContextFlyout="{StaticResource CoinListFlyout}">
+                              Margin="0 5 -5 5" Height="210" CornerRadius="3" ContextFlyout="{StaticResource CoinListFlyout}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -168,7 +168,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
                         <Grid x:Name="VolumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0, 5" Height="210" ContextFlyout="{StaticResource CoinListFlyout}">
+                              Margin="-5 5 0 5" Height="210" CornerRadius="3" ContextFlyout="{StaticResource CoinListFlyout}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
