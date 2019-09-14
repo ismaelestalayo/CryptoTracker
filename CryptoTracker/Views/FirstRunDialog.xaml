@@ -13,28 +13,28 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
                 <Image Source="/Assets/CryptoTracker 400.png" Width="35" Height="35" Margin="0 0 10 0"/>
-                <TextBlock x:Name="title" VerticalAlignment="Center" Text="Welcome to CryptoTracker" FontSize="22"/>
+                <TextBlock x:Name="Title" VerticalAlignment="Center" Text="Welcome to CryptoTracker" FontSize="22"/>
             </StackPanel>
 
             <TextBlock TextWrapping="WrapWholeWords">
                 <Run Text="New in this version: &#x1F680; &#x0a;"/>
                 
                 <Run FontWeight="ExtraLight"
-                     Text="• Improved navigation and new animations!
-                     &#x0a; • See the volume of each coin from Home.
-                     &#x0a; • Portfolio with more info (click on an item).
+                     Text="• New animations between pages.
+                     &#x0a; • Pin/Unpin and move coins directly from Home (right click).
+                     &#x0a; • Portfolio with more detailed info.
                      "/> 
                 <LineBreak/>
                 
                 <LineBreak/>
                 <Run FontWeight="ExtraLight"
-                     Text="Thanks for installing CryptoTracker
-                     &#x0a;Ismael."/> <LineBreak/>
+                     Text="Thanks for installing CryptoTracker.
+                     &#x0a;Made with 🖤 by Ismael."/> <LineBreak/>
                 
                 <LineBreak/>
                 <Run FontWeight="ExtraLight" FontStyle="Italic">
-                    Any bug or suggestion, you can reach me through 
-                    email, Reddit, Twitter or the Windows Store (contact on the settings page).
+                    Any bug or suggestion, you can reach me through
+                    email, Twitter or the Windows Store (contact on the settings page).
                 </Run>
                 
             </TextBlock>

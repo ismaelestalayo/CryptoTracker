@@ -12,10 +12,10 @@ namespace CryptoTracker.Views {
         public FirstRunDialog() {
             this.InitializeComponent();
 
-            Package package = Package.Current;
-            PackageVersion version = package.Id.Version;
+            var package = Package.Current;
+            var version = package.Id.Version;
 
-            title.Text += string.Format(" {0}.{1}.{2}", version.Major, version.Minor, version.Revision);
+            Title.Text += string.Format(" {0}.{1}.{2}", version.Major, version.Minor, version.Revision);
         }
         
     }
