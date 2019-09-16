@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
 
@@ -21,7 +23,7 @@ namespace CryptoTracker {
 
     public partial class Portfolio : Page {
 
-        static ObservableCollection<PurchaseClass> dataList { get; set; }
+        internal static ObservableCollection<PurchaseClass> dataList { get; set; }
         private double curr = 0;
 
         public Portfolio() {
@@ -36,6 +38,13 @@ namespace CryptoTracker {
             DataGridd.ItemsSource = dataList;
 
 
+            UpdatePortfolio();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            base.OnNavigatedTo(e);
+            // If the current items of DataGridd doesn't match with the ones on dataList, update the ItemsSource
+            DataGridd.ItemsSource = dataList;
             UpdatePortfolio();
         }
 
@@ -203,13 +212,9 @@ namespace CryptoTracker {
             }
         }
 
-        private void test(object sender, RoutedEventArgs e) {
-            var menu = sender as MenuFlyoutItem;
-            var item = menu.DataContext as PurchaseClass;
-            var items = DataGridd.ItemsSource.Cast<PurchaseClass>().ToList();
-            var index = items.IndexOf(item);
-            var z = 2;
-            // Do things with your item.
+        internal static void importPortfolio(List<PurchaseClass>portfolio) {
+            dataList = new ObservableCollection<PurchaseClass>(portfolio);
+            SavePortfolio();
         }
     }
 }

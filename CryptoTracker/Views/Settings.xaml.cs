@@ -1,5 +1,6 @@
 ﻿using Microsoft.AppCenter.Analytics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using Windows.ApplicationModel.Email;
@@ -11,12 +12,16 @@ using System.Threading.Tasks;
 using Windows.Services.Store;
 using Newtonsoft.Json.Linq;
 using Windows.ApplicationModel;
+using Windows.UI.Popups;
+
+using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
 
         private Package package;
         private PackageVersion version;
+        private String portfolioKey = "portfolio";
 
         public Settings() {
             this.InitializeComponent();            
@@ -140,6 +145,28 @@ namespace CryptoTracker {
             App.localSettings.Values["Coin"] = currency;
             App.coin = currency;
             App.coinSymbol = CurrencyHelper.CurrencyToSymbol(currency);
+        }
+
+        private async void UploadConfigButton_Click(object sender, RoutedEventArgs e) {
+            var helper = new RoamingObjectStorageHelper();
+            var portfolio = Portfolio.dataList;
+
+            await helper.SaveFileAsync(portfolioKey, portfolio);
+        }
+
+        private async void DownloadConfigButton_Click(object sender, RoutedEventArgs e) {
+            var helper = new RoamingObjectStorageHelper();
+
+            // Read complex/large objects 
+            if (await helper.FileExistsAsync(portfolioKey)) {
+                var obj = await helper.ReadFileAsync<List<PurchaseClass>>(portfolioKey);
+                Portfolio.importPortfolio(obj);
+                download_btn.Flyout.Hide();
+            }
+            else {
+                download_btn.Flyout.Hide();
+                await new MessageDialog("You don't seem to have uploaded any portfolio.").ShowAsync();
+            }
         }
     }
 }

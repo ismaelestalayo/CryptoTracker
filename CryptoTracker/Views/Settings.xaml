@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -13,7 +14,7 @@
             <Setter Property="Padding" Value="20 5"/>
             <Setter Property="Margin" Value="0 0 5 10"/>
             <Setter Property="FontWeight" Value="SemiLight"/>
-            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="CornerRadius" Value="2"/>
         </Style>
 
         <Style TargetType="TextBlock" x:Key="LabelTitle" BasedOn="{StaticResource BaseTextBlockStyle}">
@@ -88,14 +89,23 @@
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
-                    <TextBlock Text="Sync your settings from/to OneDrive with just a click." Style="{ThemeResource LabelTitle}"/>
+                    <TextBlock Text="Sync your portfolio with OneDrive with just a click." Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Upload"
                                 Style="{ThemeResource SettingsButtonsStyle}" 
-                                Click="RatingButton_Click" />
-                        <Button Content="Download"
-                                Style="{ThemeResource SettingsButtonsStyle}" 
-                                Click="ReviewButton_Click" />
+                                Click="UploadConfigButton_Click" />
+                        <Button Content="Download" x:Name="download_btn"
+                                Style="{ThemeResource SettingsButtonsStyle}" >
+                            <Button.Flyout>
+                                <Flyout Placement="RightEdgeAlignedBottom">
+                                    <StackPanel>
+                                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All current items will be removed. Do you want to continue?" Margin="0,0,0,12" />
+                                        <Button Click="DownloadConfigButton_Click" Content="Continue" />
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+
+                        </Button>
                     </StackPanel>
                 </StackPanel>
 

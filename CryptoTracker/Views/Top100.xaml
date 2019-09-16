@@ -31,7 +31,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Padding="0 10" Margin="5"  MaxWidth="750" CornerRadius="4"
+        <Grid Padding="0 10" Margin="5"  MaxWidth="750" CornerRadius="3"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -63,7 +63,7 @@
                     <DataTemplate>
                         <Grid x:Name="listView_Element" 
                               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0 2" MaxWidth="600" CornerRadius="4">
+                              Margin="0 2" MaxWidth="600" CornerRadius="3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
