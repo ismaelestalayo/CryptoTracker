@@ -9,8 +9,10 @@
 
     <Page.Resources>
         <Style TargetType="Button" x:Key="SettingsButtonsStyle">
-            <Setter Property="Background" Value="#3F3F3F"/>
-            <Setter Property="Foreground" Value="#f0f0f0"/>
+            <Setter Property="Background" Value="{ThemeResource SystemBaseMediumHighColor}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource SystemBaseMediumHighColor}"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Foreground" Value="{ThemeResource SystemChromeMediumLowColor}"/>
             <Setter Property="Padding" Value="20 5"/>
             <Setter Property="Margin" Value="0 0 5 10"/>
             <Setter Property="FontWeight" Value="SemiLight"/>
@@ -20,6 +22,16 @@
         <Style TargetType="TextBlock" x:Key="LabelTitle" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="FontWeight" Value="ExtraLight"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
+        </Style>
+
+        <Style TargetType="FontIcon" x:Key="ClassFontIcon">
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+            <Setter Property="Margin" Value="0 0 10 0"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
+            <Setter Property="TextLineBounds" Value="Tight"></Setter>
+            <Setter Property="Margin" Value="0 10"></Setter>
         </Style>
     </Page.Resources>
 
@@ -40,8 +52,8 @@
                 <!-- CURRENCY
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE909;" Margin="0 0 10 0"/>
-                    <TextBlock Text="Currency" Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <FontIcon  Glyph="&#xE909;" Style="{ThemeResource ClassFontIcon}"/>
+                    <TextBlock Text="Currency" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
@@ -70,8 +82,8 @@
                 <!-- APPEARANCE
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE703;" Margin="0 0 10 0"/>
-                    <TextBlock Text="Appearance" Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <FontIcon Glyph="&#xE703;" Style="{ThemeResource ClassFontIcon}"/>
+                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
@@ -84,8 +96,8 @@
                 <!-- CLOUD SYNC
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE753;" Margin="0 0 10 0"/>
-                    <TextBlock Text="Cloud sync" Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <FontIcon Glyph="&#xE753;" Style="{ThemeResource ClassFontIcon}"/>
+                    <TextBlock Text="Cloud sync" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
@@ -94,17 +106,9 @@
                         <Button Content="Upload"
                                 Style="{ThemeResource SettingsButtonsStyle}" 
                                 Click="UploadConfigButton_Click" />
-                        <Button Content="Download" x:Name="download_btn"
-                                Style="{ThemeResource SettingsButtonsStyle}" >
-                            <Button.Flyout>
-                                <Flyout Placement="RightEdgeAlignedBottom">
-                                    <StackPanel>
-                                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All current items will be removed. Do you want to continue?" Margin="0,0,0,12" />
-                                        <Button Click="DownloadConfigButton_Click" Content="Continue" />
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.Flyout>
-
+                        <Button Content="Download"
+                                Style="{ThemeResource SettingsButtonsStyle}"
+                                Click="DownloadConfigButton_Click">
                         </Button>
                     </StackPanel>
                 </StackPanel>
@@ -112,55 +116,57 @@
                 <!-- FEEDBACK
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE724;" Margin="0 0 10 0"/>
-                    <TextBlock Text="Feedback" Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <FontIcon Glyph="&#xE724;" Style="{ThemeResource ClassFontIcon}"/>
+                    <TextBlock Text="Feedback" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
                     <TextBlock Text="Take a minute and leave a review on the Store." Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Rating"
-                                Style="{ThemeResource SettingsButtonsStyle}" 
-                                Click="RatingButton_Click" />
-                        <Button Content="Review"
-                                Style="{ThemeResource SettingsButtonsStyle}" 
-                                Click="ReviewButton_Click" />
+                        <Button Content="Rating" Click="RatingButton_Click" 
+                                Style="{ThemeResource SettingsButtonsStyle}" />
+                        <Button Content="Review" Click="ReviewButton_Click" 
+                                Style="{ThemeResource SettingsButtonsStyle}"/>
                     </StackPanel>
 
                     <TextBlock Text="I'd love to hear your thoughts about the app." Style="{ThemeResource LabelTitle}"/>
-                    <Button Content="Feedback Hub" 
-                            x:Name="feedbackButton"
-                            Style="{ThemeResource SettingsButtonsStyle}" 
-                            Click="FeedbackButton_Click"/>
+                    <Button Content="Feedback Hub" x:Name="feedbackButton" Click="FeedbackButton_Click"
+                            Style="{ThemeResource SettingsButtonsStyle}"/>
 
                     <TextBlock Text="Or use one of this for a more direct feedback:" Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Style="{ThemeResource SettingsButtonsStyle}" Click="RedditButton_Click" Padding="40 5">
-                            <Image Source="/Assets/Icons/reddit.png" Height="20"/>
-                        </Button>
-                        <Button Style="{ThemeResource SettingsButtonsStyle}" Click="MailButton_Click" Padding="40 5">
-                            <Image Source="/Assets/Icons/outlook.png" Height="20"/>
-                        </Button>
-                        <Button Style="{ThemeResource SettingsButtonsStyle}" Click="TwitterButton_Click" Padding="40 5">
-                            <Image Source="/Assets/Icons/twitter.png" Height="20"/>
-                        </Button>
+                        <Button Click="RedditButton_Click" Content="r/CryptoTracker" Style="{ThemeResource SettingsButtonsStyle}"/>
+                        <Button Click="MailButton_Click" Content="ismael.em@outlook.com" Style="{ThemeResource SettingsButtonsStyle}"/>
+                        <Button Click="TwitterButton_Click" Content="@ismaelestalayo" Style="{ThemeResource SettingsButtonsStyle}" />
                     </StackPanel>
                 </StackPanel>
+
+                <!--<Viewbox Height="18">
+                                <Path Fill="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Data="M24 11.779c0-1.459-1.192-2.645-2.657-2.645-.715 0-1.363.286-1.84.746-1.81-1.191-4.259-1.949-6.971-2.046l1.483-4.669 4.016.941-.006.058c0 1.193.975 2.163 2.174 2.163 1.198 0 2.172-.97 2.172-2.163s-.975-2.164-2.172-2.164c-.92 0-1.704.574-2.021 1.379l-4.329-1.015c-.189-.046-.381.063-.44.249l-1.654 5.207c-2.838.034-5.409.798-7.3 2.025-.474-.438-1.103-.712-1.799-.712-1.465 0-2.656 1.187-2.656 2.646 0 .97.533 1.811 1.317 2.271-.052.282-.086.567-.086.857 0 3.911 4.808 7.093 10.719 7.093s10.72-3.182 10.72-7.093c0-.274-.029-.544-.075-.81.832-.447 1.405-1.312 1.405-2.318zm-17.224 1.816c0-.868.71-1.575 1.582-1.575.872 0 1.581.707 1.581 1.575s-.709 1.574-1.581 1.574-1.582-.706-1.582-1.574zm9.061 4.669c-.797.793-2.048 1.179-3.824 1.179l-.013-.003-.013.003c-1.777 0-3.028-.386-3.824-1.179-.145-.144-.145-.379 0-.523.145-.145.381-.145.526 0 .65.647 1.729.961 3.298.961l.013.003.013-.003c1.569 0 2.648-.315 3.298-.962.145-.145.381-.144.526 0 .145.145.145.379 0 .524zm-.189-3.095c-.872 0-1.581-.706-1.581-1.574 0-.868.709-1.575 1.581-1.575s1.581.707 1.581 1.575-.709 1.574-1.581 1.574z"/>
+                </Viewbox>-->
+
+                <!--<Viewbox Height="18">
+                                <Path Fill="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Data="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+                </Viewbox>-->
+
+                <!--<Viewbox Height="18">
+                    <Path Fill="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Data="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                </Viewbox>-->
+                        
+                    
 
                 <!-- MENTION
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE90A;" Margin="0 0 10 0"/>
-                    <TextBlock Text="Mention" Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <FontIcon Glyph="&#xE90A;" Style="{ThemeResource ClassFontIcon}"/>
+                    <TextBlock Text="Mention" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Data provided by" Style="{ThemeResource LabelTitle}"/>
-                        <HyperlinkButton 
-                            NavigateUri="https://www.cryptocompare.com/api" 
-                            Content="CryptoCompare API"
-                            Margin="5, -10"
+                        <HyperlinkButton NavigateUri="https://www.cryptocompare.com/api" 
+                            Content="CryptoCompare API" Margin="5 -5 0 0"
                             FontWeight="ExtraLight"/>
                     </StackPanel>
                 </StackPanel>
@@ -182,6 +188,21 @@
 
                 </StackPanel>
             </StackPanel>
+
+            <ContentDialog
+                x:Name="ImportDialog"
+                Title="Import X purchases?"
+                PrimaryButtonText="Import"
+                CloseButtonText="Cancel"
+                Visibility="Collapsed"
+                DefaultButton="Primary">
+
+                <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding ImportDialog.IsPrimaryButtonEnabled}">
+                    <TextBlock Text="This will clear your current portfolio and download your backup." 
+                               TextWrapping="Wrap" />
+                </StackPanel>
+
+            </ContentDialog>
 
         </Grid>
     </ScrollViewer>

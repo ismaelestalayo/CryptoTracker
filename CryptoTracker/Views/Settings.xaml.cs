@@ -160,13 +160,20 @@ namespace CryptoTracker {
             // Read complex/large objects 
             if (await helper.FileExistsAsync(portfolioKey)) {
                 var obj = await helper.ReadFileAsync<List<PurchaseClass>>(portfolioKey);
+                ImportDialog.Title = $"Import {obj.Count} purchases?";
+                var z = await ImportDialog.ShowAsync();
+
                 Portfolio.importPortfolio(obj);
-                download_btn.Flyout.Hide();
             }
             else {
-                download_btn.Flyout.Hide();
+                ImportDialog.Title = "No backup found.";
+                ImportDialog.IsPrimaryButtonEnabled = false;
                 await new MessageDialog("You don't seem to have uploaded any portfolio.").ShowAsync();
             }
+        }
+
+        private void ImportPortfolio() {
+
         }
     }
 }

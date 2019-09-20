@@ -182,9 +182,6 @@
     <Content Include="Assets\Icons\iconXMR.png" />
     <Content Include="Assets\Icons\iconXRP.png" />
     <Content Include="Assets\Icons\iconZRX.png" />
-    <Content Include="Assets\Icons\Outlook.png" />
-    <Content Include="Assets\Icons\reddit.png" />
-    <Content Include="Assets\Icons\twitter.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-100.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-125.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-150.png" />
