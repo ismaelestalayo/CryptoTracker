@@ -7,6 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="345"
     d:DesignWidth="550"
+    CornerRadius="2"
     PrimaryButtonText="Ok">
 
     <ScrollViewer>
@@ -22,7 +23,8 @@
                 <Run FontWeight="ExtraLight"
                      Text="• New animations between pages.
                      &#x0a; • Pin/Unpin and move coins directly from Home (right click).
-                     &#x0a; • Portfolio with more detailed info.
+                     &#x0a; • Portfolio page with detailed info.
+                     &#x0a; • Sync your portfolio to the cloud.
                      "/> 
                 <LineBreak/>
                 
