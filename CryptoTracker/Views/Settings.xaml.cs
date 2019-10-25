@@ -30,7 +30,9 @@ namespace CryptoTracker {
             version = package.Id.Version;
             VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}.", version.Major, version.Minor, version.Revision);
 
-            ThemeSwitcher.IsOn = App.localSettings.Values["Theme"].Equals("Dark");
+            ThemeComboBox.PlaceholderText = App.localSettings.Values["Theme"].ToString();
+            //ThemeSwitcher.IsOn = App.localSettings.Values["Theme"].Equals("Dark");
+
 
             switch (App.localSettings.Values["Coin"]) {
                 case "EUR":
@@ -73,21 +75,6 @@ namespace CryptoTracker {
         }
 
         // ###############################################################################################
-        private void ThemeToogled(object sender, RoutedEventArgs e) {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-
-            Analytics.TrackEvent("ThemeToogled");
-            if (toggleSwitch != null) {
-                if (toggleSwitch.IsOn == true) {
-                    App.localSettings.Values["Theme"] = "Dark";
-                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
-                } else {
-                    App.localSettings.Values["Theme"] = "Light";
-                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
-                }
-            }
-        }
-
         private async void FeedbackButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("feedbackButton_Click");
             var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
@@ -170,6 +157,48 @@ namespace CryptoTracker {
                 ImportDialog.Title = "No backup found.";
                 ImportDialog.IsPrimaryButtonEnabled = false;
                 await new MessageDialog("You don't seem to have uploaded any portfolio.").ShowAsync();
+            }
+        }
+
+        private void Theme_RadioButton_Click(object sender, RoutedEventArgs e) {
+            RadioButton btn = sender as RadioButton;
+
+            switch (btn.Content) {
+                case "Dark":
+                    App.localSettings.Values["Theme"] = "Dark";
+                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
+                    Analytics.TrackEvent("theme_dark_side");
+                    break;
+
+                case "Light":
+                    App.localSettings.Values["Theme"] = "Light";
+                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
+                    Analytics.TrackEvent("theme_light");
+                    break;
+
+                case "Windows":
+                    App.localSettings.Values["Theme"] = "Windows";
+                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
+                    Analytics.TrackEvent("theme_windows");
+                    break;
+            }
+        }
+
+        private void ThemeComboBox_changed(object sender, SelectionChangedEventArgs e) {
+            ComboBox c = sender as ComboBox;
+            String theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
+
+            App.localSettings.Values["Theme"] = theme;
+            switch (theme) {
+                case "Light":
+                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
+                    break;
+                case "Dark":
+                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
+                    break;
+                case "Windows":
+                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Default;
+                    break;
             }
         }
     }
