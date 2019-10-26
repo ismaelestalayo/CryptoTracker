@@ -2,6 +2,7 @@
 using CryptoTracker.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -84,12 +86,11 @@ namespace CryptoTracker {
                 }
                 
             } catch (Exception ex){
-                // Default: Light theme, EUR and {BTC, ETH, LTC and XRP}
-                string err = ex.StackTrace;
-                localSettings.Values["Theme"] = "Light";
+                // Default: Windows theme, EUR and {BTC, ETH, LTC and XRP}
+                localSettings.Values["Theme"] = "Windows";
                 localSettings.Values["Coin"] = "EUR";
                 localSettings.Values["Pinned"] = "BTC|ETH|LTC|XRP";
-                this.RequestedTheme = ApplicationTheme.Light;
+                this.RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
                 pinnedCoins = new List<string>(new string[] {"BTC", "ETH", "LTC", "XRP"});
             }
 
@@ -122,7 +123,7 @@ namespace CryptoTracker {
                 Window.Current.Activate();
             }
 
-            AppCenter.Start("37e61258-8639-47d6-9f6a-d47d54cd8ad5", typeof(Analytics));
+            AppCenter.Start("37e61258-8639-47d6-9f6a-d47d54cd8ad5", typeof(Analytics), typeof(Crashes));
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
