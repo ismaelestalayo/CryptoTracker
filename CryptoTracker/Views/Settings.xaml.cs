@@ -15,6 +15,8 @@ using Windows.ApplicationModel;
 using Windows.UI.Popups;
 
 using Microsoft.Toolkit.Uwp.Helpers;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
@@ -186,7 +188,7 @@ namespace CryptoTracker {
 
         private void ThemeComboBox_changed(object sender, SelectionChangedEventArgs e) {
             ComboBox c = sender as ComboBox;
-            String theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
+            var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
             App.localSettings.Values["Theme"] = theme;
             switch (theme) {
@@ -197,7 +199,7 @@ namespace CryptoTracker {
                     ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
                     break;
                 case "Windows":
-                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Default;
+                    ((Frame)Window.Current.Content).RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ElementTheme.Dark : ElementTheme.Light;
                     break;
             }
         }

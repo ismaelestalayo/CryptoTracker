@@ -85,7 +85,7 @@
                 <StackPanel Margin="30 0">
                     <ComboBox x:Name="ThemeComboBox" BorderThickness="1" CornerRadius="2"
                         PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed"
-                        VerticalAlignment="Center">
+                        VerticalAlignment="Center" Header="Theme">
                         <ComboBoxItem Content="Light" Name="Light"/>
                         <ComboBoxItem Content="Dark" Name="Dark"/>
                         <ComboBoxItem Content="Windows" Name="Windows"/>
@@ -179,7 +179,6 @@
                 Title="Import X purchases?"
                 PrimaryButtonText="Import"
                 CloseButtonText="Cancel"
-                Visibility="Collapsed"
                 DefaultButton="Primary">
 
                 <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding ImportDialog.IsPrimaryButtonEnabled}">

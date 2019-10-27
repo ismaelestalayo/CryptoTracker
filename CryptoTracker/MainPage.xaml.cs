@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.Helpers;
 using CryptoTracker.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,6 +13,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace CryptoTracker {
@@ -19,7 +21,7 @@ namespace CryptoTracker {
 
         private ObservableCollection<string> suggestions = new ObservableCollection<string>();
         private int CurrentTabIndex = 0;
-        
+        UISettings uiSettings = new UISettings();
 
         // ###############################################################################################
         public MainPage() {
@@ -48,12 +50,35 @@ namespace CryptoTracker {
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
             }
 
+            // Subscribe to light/dark theme change event
+            uiSettings.ColorValuesChanged += ColorValuesChanged;
+
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             FirstRunDialogHelper.ShowIfAppropriateAsync();
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
             // Extend acrylic
             ExtendAcrylicIntoTitleBar();
+        }
+
+        private void ColorValuesChanged(UISettings sender, object args) {
+            if (App.localSettings.Values["Theme"].Equals("Windows")){
+                var color = uiSettings.GetColorValue(UIColorType.Background);
+                switch (color.ToString()) {
+                    case "#FF000000":
+                        changeTheme("Dark");
+                        break;
+                    case "#FFFFFFFF":
+                        changeTheme("Light");
+                        break;
+                }
+            }
+        }
+
+        private async void changeTheme(string theme) {
+            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                ((Frame)Window.Current.Content).RequestedTheme = theme.Equals("Dark") ? ElementTheme.Dark : ElementTheme.Light;
+            });
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e) {
