@@ -57,9 +57,9 @@ namespace CryptoTracker {
                 curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
 
                 // Calculate earnings/losings
-                double priceBought = (1 / double.Parse(CryptoQtyTextBox.Text)) * double.Parse(InvestedQtyTextBox.Text);
+                double priceBought = (1 / CryptoQtyNumberBox.Value) * InvestedQtyNumberBox.Value;
                 priceBought = Math.Round(priceBought, 4);
-                double earningz = Math.Round((curr - priceBought) * double.Parse(CryptoQtyTextBox.Text), 5);
+                double earningz = Math.Round((curr - priceBought) * CryptoQtyNumberBox.Value, 5);
 
                 // Get logo for the coin
                 string logoURL = "Assets/Icons/icon" + crypto + ".png";
@@ -72,30 +72,31 @@ namespace CryptoTracker {
                 dataList.Add(new PurchaseClass {
                     Crypto      = crypto,
                     CryptoLogo  = logoURL,
-                    CryptoQty   = Math.Round(double.Parse(CryptoQtyTextBox.Text), 5),
+                    CryptoQty   = Math.Round(CryptoQtyNumberBox.Value, 5),
                     Date        = DateTime.Today,
                     Delta       = Math.Round( (curr / priceBought), 2) * 100, // percentage
-                    InvestedQty = double.Parse(InvestedQtyTextBox.Text),
+                    InvestedQty = InvestedQtyNumberBox.Value,
                     BoughtAt    = Math.Round(priceBought, 4),
                     arrow       = earningz < 0 ? "▼" : "▲",
                     c           = App.coinSymbol,
                     Current     = curr,
                     Profit      = Math.Round(Math.Abs(earningz), 2).ToString(),
                     ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"],
-                    Worth       = Math.Round( curr * double.Parse(CryptoQtyTextBox.Text), 2)
+                    Worth       = Math.Round( curr * CryptoQtyNumberBox.Value, 2)
                 });
 
                 // Clear user input
-                CryptoQtyTextBox.Text = String.Empty;
-                InvestedQtyTextBox.Text = String.Empty;
+                //CryptoQtyTextBox.Text = String.Empty;
+                //InvestedQtyTextBox.Text = String.Empty;
+                
 
                 // Update and save
                 UpdatePortfolio();
                 SavePortfolio();
 
             } catch(Exception) {
-                CryptoQtyTextBox.Text = String.Empty;
-                InvestedQtyTextBox.Text = String.Empty;
+                //CryptoQtyTextBox.Text = String.Empty;
+                //InvestedQtyTextBox.Text = String.Empty;
             }
         }
 

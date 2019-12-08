@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls2="using:Microsoft.UI.Xaml.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
@@ -60,12 +61,20 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10 15">
-                <ComboBox x:Name="CryptoComboBox" PlaceholderText="Coin" Header="Crypto"/>
+                <ComboBox
+                    x:Name="CryptoComboBox" Width="90" Margin="0 0 5 0"
+                    PlaceholderText="Coin" Header="Crypto"/>
 
-                <TextBox x:Name="CryptoQtyTextBox"   Header="Amount"   Margin="5 0" PlaceholderText="3.14" Width="70"/>
-                <TextBox x:Name="InvestedQtyTextBox" Header="Invested" Margin="5 0" PlaceholderText="27"   Width="70"/>
+                <controls2:NumberBox 
+                    x:Name="CryptoQtyNumberBox" Header="Amount"
+                    Width="70px" Margin="0 0 5 0" AcceptsExpression="True"/>
+                <controls2:NumberBox 
+                    x:Name="InvestedQtyNumberBox" Header="Invested"
+                    Width="70px" Margin="0 0 5 0" AcceptsExpression="True"/>
 
-                <Button Click="AddButton_Click" VerticalAlignment="Bottom" Margin="10 0 0 0" Background="#3F3F3F" Foreground="White">
+                <Button
+                    Click="AddButton_Click" VerticalAlignment="Bottom" 
+                    Background="#3F3F3F" Foreground="White" Margin="0 0 -10 0">
                     <SymbolIcon Symbol="Add"/>
                 </Button>
             </StackPanel>
@@ -233,10 +242,11 @@
 
                             <!-- Third Column -->
                             <TextBlock          Grid.Column="4" Style="{ThemeResource ListViewTextBlock}" Foreground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" FontWeight="Medium" Margin="30 0 0 0" Text="Purchased: " HorizontalAlignment="Left"/>
-                            <CalendarDatePicker Grid.Column="5" Date="{Binding Date, Mode=TwoWay}" 
-                                            Height="25" Margin="0 -2 0 0" VerticalContentAlignment="Stretch"
-                                            DateChanged="purchaseDate_changed"
-                                            DateFormat="{}{day.integer} {month.full} {year.full}"/>
+                            <CalendarDatePicker 
+                                Grid.Column="5" Date="{Binding Date, Mode=TwoWay}" 
+                                Margin="0 -2 0 0" VerticalContentAlignment="Stretch"
+                                DateChanged="purchaseDate_changed"
+                                DateFormat="{}{day.integer} {month.full} {year.full}"/>
                         </Grid>
                     </DataTemplate>
                 </controls:DataGrid.RowDetailsTemplate>
