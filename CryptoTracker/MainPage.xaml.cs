@@ -101,14 +101,14 @@ namespace CryptoTracker {
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonForegroundColor = Color.FromArgb(255, 150, 150, 150);
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveForegroundColor = Color.FromArgb(255, 150, 150, 150);
+            titleBar.ButtonInactiveForegroundColor = Color.FromArgb(127, 150, 150, 150);
 
             //Window.Current.SetTitleBar(AppTitle);
         }
 
         // #########################################################################################
-        internal void UpdateButton_Click(object sender, RoutedEventArgs e) {
-
+        internal async void UpdateButton_Click(object sender, RoutedEventArgs e) {
+            SyncIcon.Visibility = Visibility.Collapsed;
             switch (ContentFrame.SourcePageType.Name) {
                 case "CoinDetails":
                     var p0 = (CoinDetails)ContentFrame.Content;
@@ -116,9 +116,7 @@ namespace CryptoTracker {
                     break;
                 case "Home":
                     var p2 = (Home)ContentFrame.Content;
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    p2.UpdateAllCards();
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    await p2.UpdateAllCards();
                     break;
                 case "Portfolio":
                     var p1 = (Portfolio)ContentFrame.Content;
@@ -126,6 +124,7 @@ namespace CryptoTracker {
                     break;
             }
 
+            SyncIcon.Visibility = Visibility.Visible;
             //LiveTile l = new LiveTile();
             //l.UpdateLiveTile();
         }

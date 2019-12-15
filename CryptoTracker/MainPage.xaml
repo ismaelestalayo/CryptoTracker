@@ -62,7 +62,14 @@
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
                     <NavigationViewItem Icon="Find"  Visibility="{x:Bind Path=helpers:Converters.InvertVisibility(CoinAutoSuggestBox.Visibility), Mode=OneWay}"  Tapped="NavView_Search_Tapped"/>
-                    <NavigationViewItem Icon="Sync"  Tapped="NavView_Sync_Tapped" />
+                    <NavigationViewItem>
+                        <RelativePanel Margin="-15 0 0 0">
+                            <NavigationViewItem x:Name="SyncIcon" Icon="Sync" Tapped="NavView_Sync_Tapped" Visibility="Visible"/>
+                            <ProgressRing x:Name="SyncLoading" IsActive="True" Height="24" Margin="10" Visibility="{x:Bind Path=helpers:Converters.InvertVisibility(SyncIcon.Visibility), Mode=OneWay}"/>
+                            
+                        </RelativePanel>
+                    </NavigationViewItem>
+                    
                 </StackPanel>
             </NavigationView.PaneFooter>
 
