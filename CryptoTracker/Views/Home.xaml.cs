@@ -71,6 +71,7 @@ namespace CryptoTracker.Views {
                 _iconSrc = iconPath,
                 _timeSpan = timeSpan,
                 _limit = limit,
+                _opacity = 1,
             });
         }
 
@@ -88,10 +89,15 @@ namespace CryptoTracker.Views {
 
         // #########################################################################################
         //  Update all cards
-        internal async Task UpdateAllCards() {
+        internal async Task UpdateAllCards() {            
+            foreach (HomeTileClass homeTile in homeCoinList) {
+                homeTile._opacity = 0.33;
+            }
             for (int i = 0; i < homeCoinList.Count; i++) {
                 await UpdateCard(i);
+                homeCoinList[i]._opacity = 1;
             }
+            
         }
 
         private async Task UpdateCard(int i) {
@@ -230,9 +236,7 @@ namespace CryptoTracker.Views {
 
             }
 
-            for (int i = 0; i < App.pinnedCoins.Count; i++) {
-                await UpdateCard(i);
-            }
+            UpdateAllCards();
         }
 
         private void homeListView_Click(object sender, ItemClickEventArgs e) {
@@ -314,6 +318,15 @@ namespace CryptoTracker.Views {
         public string _iconSrc { get; set; }
         public string _timeSpan { get; set; }
         public int _limit { get; set; }
+
+        private double alpha { get; set; }
+        public double _opacity {
+            get { return alpha; }
+            set {
+                alpha = value;
+                RaiseProperty(nameof(_opacity));
+            }
+        }
 
         public string curr;
         public string _priceCurr {
