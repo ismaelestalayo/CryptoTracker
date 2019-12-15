@@ -53,7 +53,7 @@
         ####################################################################################################
         ############################################### Page Title #########################################
         #################################################################################################### -->
-        <RelativePanel BorderThickness="0,0,0,0.5" Margin="0,0,0,0" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+        <RelativePanel BorderThickness="0 0 0 0.5" Margin="0,0,0,0" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Orientation="Horizontal">
                 <Image x:Name="mainTitleLogo" 
                     Source="/Assets/Icons/iconBTC.png" 
@@ -188,7 +188,7 @@
         ####################################################################################################
         ############################################## Bottom Pivot ########################################
         #################################################################################################### -->
-        <Pivot Grid.Row="3" Grid.Column="0" Margin="0, -15, 0, 0" x:Name="BottomPivot">
+        <Pivot Grid.Row="3" Grid.Column="0" Margin="0 -15 0 0" x:Name="BottomPivot">
 
             <!-- Pivot 1: Stats -->
             <PivotItem Header="Stats">
@@ -199,7 +199,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Padding="0, 0, 0, 10" Margin="0, 0, 0, 0" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}">
+                    <Grid Padding="0 0 0 10" Margin="0 0 0 0" BorderThickness="0 0 0 2" BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -248,22 +248,22 @@
                         <TextBlock Text="No markets found..." FontWeight="Light"/>
                     </StackPanel>
 
-                    <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="-10, 0, 0, 0">
+                    <ListView Grid.Row="2" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="helpers:JSONexchanges">
-                                <Grid BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}" BorderThickness="0, 0, 0, 1" Padding="0, 0, 0, 5">
+                                <Grid BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}" BorderThickness="0 0 0 2" Padding="0 0 0 5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel>
-                                        <TextBlock Text="{x:Bind Exchange    , Mode=TwoWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiLight"/>
+                                        <TextBlock Text="{x:Bind Exchange    , Mode=TwoWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Normal"/>
                                         <TextBlock Text="{x:Bind T_Volume24  , Mode=TwoWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
                                         <TextBlock Text="{x:Bind T_Volume24To, Mode=TwoWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
                                     </StackPanel>
 
-                                    <TextBlock Text="{x:Bind Price  }" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>
+                                    <TextBlock Text="{x:Bind Price}" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>
 
                                 </Grid>
                             </DataTemplate>
