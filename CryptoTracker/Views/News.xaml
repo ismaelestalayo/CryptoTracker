@@ -16,7 +16,7 @@
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="views:NewsItem">
                         <Grid x:Name="GridView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="1 5 1 0" CornerRadius="2">
+                              Margin="1 5 1 0" CornerRadius="4">
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="7*"/>

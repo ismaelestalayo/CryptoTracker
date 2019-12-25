@@ -80,7 +80,7 @@
             </StackPanel>
             
             <Grid x:Name="PortfolioChartGrid" Grid.Column="1" Background="Transparent" 
-                  Height="33" VerticalAlignment="Bottom" Margin="5 15" CornerRadius="4">
+                  Height="33" VerticalAlignment="Bottom" Margin="5 15" CornerRadius="5">
             </Grid>
         </Grid>
         

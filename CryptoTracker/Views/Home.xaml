@@ -97,7 +97,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
                         <Grid x:Name="PriceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0 5 -5 5" Height="210" CornerRadius="3" ContextFlyout="{StaticResource CoinListFlyout}" Opacity="{x:Bind _opacity, Mode=OneWay}">
+                              Margin="0 5 -5 5" Height="210" CornerRadius="5" ContextFlyout="{StaticResource CoinListFlyout}" Opacity="{x:Bind _opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -168,7 +168,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
                         <Grid x:Name="VolumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="-5 5 0 5" Height="210" CornerRadius="3" ContextFlyout="{StaticResource CoinListFlyout}" Opacity="{x:Bind _opacity, Mode=OneWay}">
+                              Margin="-5 5 0 5" Height="210" CornerRadius="5" ContextFlyout="{StaticResource CoinListFlyout}" Opacity="{x:Bind _opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>

@@ -61,7 +61,7 @@
                         Text="Choose the currency in which to to show prices. &#x0a;(Pages need to be updated manually.)"
                         Style="{ThemeResource LabelTitle}"/>
                     <ComboBox x:Name="CoinComboBox" PlaceholderText="Coin" BorderThickness="1"
-                        CornerRadius="2" SelectionChanged="CoinBox_changed" Margin="0 5 0 0"
+                        SelectionChanged="CoinBox_changed" Margin="0 5 0 0"
                         VerticalAlignment="Center">
                         <ComboBoxItem Content="EUR (€)" Name="EUR"/>
                         <ComboBoxItem Content="USD ($)" Name="USD"/>
@@ -83,7 +83,7 @@
                 </StackPanel>
                 
                 <StackPanel Margin="30 0">
-                    <ComboBox x:Name="ThemeComboBox" BorderThickness="1" CornerRadius="2"
+                    <ComboBox x:Name="ThemeComboBox" BorderThickness="1"
                         PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed"
                         VerticalAlignment="Center" Header="Theme">
                         <ComboBoxItem Content="Light" Name="Light"/>

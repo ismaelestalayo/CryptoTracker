@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="345"
     d:DesignWidth="550"
-    CornerRadius="2"
+    CornerRadius="5"
     PrimaryButtonText="Ok">
 
     <ScrollViewer>
