@@ -66,10 +66,10 @@
                     PlaceholderText="Coin" Header="Crypto"/>
 
                 <controls2:NumberBox 
-                    x:Name="CryptoQtyNumberBox" Header="Amount"
+                    x:Name="CryptoQtyNumberBox" Header="Amount" Minimum="0"
                     Width="70px" Margin="0 0 5 0" AcceptsExpression="True"/>
                 <controls2:NumberBox 
-                    x:Name="InvestedQtyNumberBox" Header="Invested"
+                    x:Name="InvestedQtyNumberBox" Header="Invested" Minimum="0"
                     Width="70px" Margin="0 0 5 0" AcceptsExpression="True"/>
 
                 <Button
