@@ -21,7 +21,7 @@
                     <ControlTemplate TargetType="ContentControl">
                         <ContentPresenter Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Background="#3F3F3F" CornerRadius="2 2 0 0"
+                            Background="#3F3F3F" CornerRadius="0 0 0 0"
                             ContentTransitions="{TemplateBinding ContentTransitions}"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"/>
@@ -74,14 +74,15 @@
 
                 <Button
                     Click="AddButton_Click" VerticalAlignment="Bottom" 
-                    Background="#3F3F3F" Foreground="White" Margin="0 0 -10 0">
+                    Background="#3F3F3F" Foreground="White" Margin="0 0 5 0">
                     <SymbolIcon Symbol="Add"/>
                 </Button>
+                <Button 
+                    Click="ToggleDetails_click" VerticalAlignment="Bottom" 
+                    Background="#3F3F3F" Foreground="White" Margin="0 0 5 0" >
+                    <SymbolIcon Symbol="ShowBcc"/>
+                </Button>
             </StackPanel>
-            
-            <Grid x:Name="PortfolioChartGrid" Grid.Column="1" Background="Transparent" 
-                  Height="33" VerticalAlignment="Bottom" Margin="5 15" CornerRadius="5">
-            </Grid>
         </Grid>
         
 
@@ -93,10 +94,11 @@
         <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
             <controls:DataGrid x:Name="DataGridd" Margin="7" ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
                 VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                AlternatingRowBackground="Transparent" 
-                AutoGenerateColumns="False"
+                AlternatingRowBackground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                RowBackground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+                AutoGenerateColumns="False" HeadersVisibility="Column"
                 CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False"
-                GridLinesVisibility="Horizontal" HeadersVisibility="Column"
+                 GridLinesVisibility="None"
                 RowDetailsVisibilityMode="Visible" SelectionMode="Single">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTemplateColumn Header="Crypto" Width="*">
@@ -134,6 +136,7 @@
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding arrow}" Margin="4 0" Foreground="{Binding ProfitFG, Mode=TwoWay}"/>
                                     <TextBlock Text="{Binding Worth}"/>
                                     <TextBlock Text="{Binding c}"/>
                                 </StackPanel>
@@ -171,11 +174,6 @@
                         <Setter Property="controls:DataGridRow.ContextFlyout">
                             <Setter.Value>
                                 <MenuFlyout>
-                                    <!--<MenuFlyoutItem Text="Edit" Click="test">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>-->
                                     <MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
@@ -186,10 +184,11 @@
                         </Setter>
                     </Style>
                 </controls:DataGrid.RowStyle>
-
+                
+                <!-- DETAILS OF EACH PURCHASE -->
                 <controls:DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <Grid Padding="0 15" CornerRadius="0 0 5 5">
+                        <Grid Padding="0 15" CornerRadius="0 0 0 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
@@ -206,20 +205,26 @@
                             </Grid.RowDefinitions>
 
                             <!-- First Column-->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium" Margin="20 0 10 0" Text="Buy price: " HorizontalAlignment="Left"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Style="{ThemeResource ListViewTextBlock}" FontWeight="Light"  HorizontalAlignment="Right">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium"
+                                       Margin="20 0 10 0" Text="Buy price: " HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Style="{ThemeResource ListViewTextBlock}" FontWeight="Light" 
+                                       HorizontalAlignment="Right">
                             <Run Text="{Binding BoughtAt, Mode=OneWay}"/>
                             <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium" Margin="20 0 10 0" Text="Currently: " HorizontalAlignment="Left"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Style="{ThemeResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="Light" HorizontalAlignment="Right">
+                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium"
+                                       Margin="20 0 10 0" Text="Currently: " HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Style="{ThemeResource ListViewTextBlock}" FontWeight="Light"
+                                       Foreground="{Binding ProfitFG, Mode=OneWay}" HorizontalAlignment="Right">
                             <Run Text="{Binding Current, Mode=OneWay}"/>
                             <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium" Margin="20 0 10 0" Text="Delta: " HorizontalAlignment="Left"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Style="{ThemeResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="Light" HorizontalAlignment="Right">
+                            <TextBlock Grid.Row="2" Grid.Column="0" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium"
+                                       Margin="20 5 10 0" Text="Delta: " HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Style="{ThemeResource ListViewTextBlock}" FontWeight="Light"
+                                       Foreground="{Binding ProfitFG, Mode=OneWay}" Margin="0 5 0 0" HorizontalAlignment="Right">
                             <Run Text="{Binding arrow, Mode=OneWay}"/>
                             <Run Text="{Binding Delta, Mode=OneWay}"/>
                             <Run Text="%"/>
@@ -227,21 +232,25 @@
 
 
                             <!-- Seconds Column -->
-                            <TextBlock Grid.Row="0" Grid.Column="2" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium" Margin="30 0 10 0" Text="Cost: " HorizontalAlignment="Left"/>
-                            <TextBlock Grid.Row="0" Grid.Column="3" Style="{ThemeResource ListViewTextBlock}" FontWeight="Light" HorizontalAlignment="Right">
+                            <TextBlock Grid.Row="0" Grid.Column="2" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium"
+                                       Margin="30 0 10 0" Text="Cost: " HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="0" Grid.Column="3" Style="{ThemeResource ListViewTextBlock}" FontWeight="Light"
+                                       HorizontalAlignment="Right">
                             <Run Text="{Binding InvestedQty, Mode=OneWay}"/>
                             <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium" Margin="30 0 10 0" Text="Worth: " HorizontalAlignment="Left"/>
-                            <TextBlock Grid.Row="1" Grid.Column="3" Style="{ThemeResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="Light" HorizontalAlignment="Right">
+                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{ThemeResource ListViewTextBlock}" FontWeight="Medium"
+                                       Margin="30 0 10 0" Text="Worth: " HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="1" Grid.Column="3" Style="{ThemeResource ListViewTextBlock}" FontWeight="Light"
+                                       Foreground="{Binding ProfitFG, Mode=OneWay}" HorizontalAlignment="Right">
                             <Run Text="{Binding Worth, Mode=OneWay}"/>
                             <Run Text="{Binding c, Mode=OneWay}"/>
                             </TextBlock>
 
 
                             <!-- Third Column -->
-                            <TextBlock          Grid.Column="4" Style="{ThemeResource ListViewTextBlock}" Foreground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" FontWeight="Medium" Margin="30 0 0 0" Text="Purchased: " HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Column="4" Style="{ThemeResource ListViewTextBlock}" Foreground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" FontWeight="Medium" Margin="30 0 0 0" Text="Purchased: " HorizontalAlignment="Left"/>
                             <CalendarDatePicker 
                                 Grid.Column="5" Date="{Binding Date, Mode=TwoWay}" 
                                 Margin="0 -2 0 0" VerticalContentAlignment="Stretch"
@@ -252,10 +261,17 @@
                 </controls:DataGrid.RowDetailsTemplate>
             </controls:DataGrid>
         </ScrollViewer>
-        
-        
-        
-        
+
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Margin="5 15">
+            <TextBlock Text="Coin diversification:" Style="{ThemeResource NavigationViewItemHeaderTextStyle}" FontSize="18" Margin="2 5"/>
+            <Grid x:Name="PortfolioChartGrid" Background="Transparent" 
+                  Height="33" VerticalAlignment="Bottom" CornerRadius="4">
+            </Grid>
+        </StackPanel>
+
+
+
     </Grid>
 
 </Page>

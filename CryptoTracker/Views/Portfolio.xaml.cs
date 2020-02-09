@@ -129,6 +129,7 @@ namespace CryptoTracker {
             float total = 0;
             // empty chart
             PortfolioChartGrid.ColumnDefinitions.Clear();
+            PortfolioChartGrid.Children.Clear();
 
             for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
                 total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
@@ -142,7 +143,13 @@ namespace CryptoTracker {
                 s.BorderThickness = new Thickness(0);
                 s.Margin = new Thickness(1, 0, 1, 0);
                 s.BorderBrush = (SolidColorBrush) App.Current.Resources["TextBoxForegroundHeaderThemeBrush"];
-                try { s.Background = (SolidColorBrush)App.Current.Resources[ dataList[i].Crypto + "_color"]; }
+                var t = new TextBlock();
+                t.Text = dataList[i].Crypto;
+                t.FontSize = 12;
+                t.HorizontalAlignment = HorizontalAlignment.Center;
+                t.Margin = new Thickness(0, 7, 0, 7);
+                s.Children.Add(t);
+                try { s.Background = (SolidColorBrush)App.Current.Resources[ dataList[i].Crypto + "_colorT"]; }
                 catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
 
                 PortfolioChartGrid.Children.Add(s);
@@ -216,6 +223,17 @@ namespace CryptoTracker {
         internal static void importPortfolio(List<PurchaseClass>portfolio) {
             dataList = new ObservableCollection<PurchaseClass>(portfolio);
             SavePortfolio();
+        }
+
+        private void ToggleDetails_click(object sender, RoutedEventArgs e) {
+            if (DataGridd.RowDetailsVisibilityMode == Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Visible) {
+                DataGridd.RowDetailsVisibilityMode = Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Collapsed;
+                DataGridd.GridLinesVisibility = Microsoft.Toolkit.Uwp.UI.Controls.DataGridGridLinesVisibility.Horizontal;
+            }
+            else {
+                DataGridd.RowDetailsVisibilityMode = Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Visible;
+                DataGridd.GridLinesVisibility = Microsoft.Toolkit.Uwp.UI.Controls.DataGridGridLinesVisibility.None;
+            }
         }
     }
 }
