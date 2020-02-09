@@ -21,23 +21,6 @@
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Padding="5, 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-
-                <VisualState x:Name="NarrowState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="*"/>
-                        <Setter Target="MainGrid.RowDefinitions[0].Height" Value="auto"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -55,28 +38,30 @@
         #################################################################################################### -->
         <RelativePanel BorderThickness="0 0 0 0.5" Margin="0,0,0,0" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Orientation="Horizontal">
-                <Image x:Name="mainTitleLogo" 
-                    Source="/Assets/Icons/iconBTC.png" 
+                <Image
+                    x:Name="mainTitleLogo"  Source="/Assets/Icons/iconBTC.png" 
                     Visibility="Collapsed" Margin="0,0,5,0"
                     Width="23" />
-                <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"
-                    Text="Title" FontWeight="Bold"/>
+                <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}"
+                    VerticalAlignment="Center" Text="Title"
+                    FontWeight="Bold"/>
+                <Button
+                    Margin="5 0" Padding="5 0" Height="32" FontFamily="Segoe MDL2 Assets"
+                    FontSize="23" Background="Transparent" VerticalContentAlignment="Bottom"
+                    x:Name="FavIcon" Click="PinCoin_btn"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="10, 0"
-                        RelativePanel.AlignRightWithPanel="True">
+            <StackPanel Orientation="Horizontal" Margin="10, 0" RelativePanel.AlignRightWithPanel="True">
+                <TextBlock
+                    x:Name="mainTitleVal"
+                    Text="val€" FontSize="24"
+                    FontWeight="Light"/>
 
-                <TextBlock x:Name="mainTitleVal"
-                           Text="val€" 
-                           FontSize="24"
-                           FontWeight="Light"/>
-
-                <TextBlock x:Name="mainTitleDiff" 
-                            Text="0%"
-                            VerticalAlignment="Bottom"
-                            Margin="5,0,0,1"
-                            FontSize="19"
-                            FontWeight="Light"/>
+                <TextBlock
+                    x:Name="mainTitleDiff" 
+                    Text="0%" VerticalAlignment="Bottom"
+                    Margin="10 0 0 1"
+                    FontSize="19" FontWeight="Light"/>
             </StackPanel>
 
         </RelativePanel>
@@ -365,6 +350,13 @@
 
             </PivotItem>
         </Pivot>
+
+        <controls:InAppNotification 
+            x:Name="inAppNotification"
+            Grid.Row="4" ShowDismissButton="False"
+            AnimationDuration="00:00:00.300"
+            VerticalOffset="100" HorizontalOffset="0"
+            StackMode="StackInFront" CornerRadius="7"/>
 
     </Grid>
 </Page>

@@ -73,24 +73,24 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock 
-                            Grid.Column="0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center" 
-                            Text="{Binding Rank, FallbackValue=0, Mode=TwoWay}" 
-                            Opacity="0.5"/>
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" 
+                                Text="{Binding Rank, FallbackValue=0, Mode=TwoWay}" 
+                                Opacity="0.5"/>
 
                             <Button
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Content="{Binding FavIcon, Mode=OneWay}"
-                            FontFamily="Segoe MDL2 Assets"
-                            Background="Transparent"
-                            Click="Pin_click"/>
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Content="{Binding FavIcon, Mode=OneWay}"
+                                FontFamily="Segoe MDL2 Assets"
+                                Background="Transparent"
+                                Click="Pin_click"/>
 
                             <Image 
-                            Grid.Column="2" 
-                            Source="{Binding Src}" 
-                            Width="40" Visibility="Visible"/>
+                                Grid.Column="2" 
+                                Source="{Binding Src}" 
+                                Width="40" Visibility="Visible"/>
 
                             <Image Grid.Column="2" Width="40" Visibility="Visible">
                                 <Image.Source>
@@ -133,12 +133,10 @@
 
         <controls:InAppNotification 
             x:Name="inAppNotification"
-            Grid.Row="1"
-            ShowDismissButton="False"
+            Grid.Row="1" ShowDismissButton="False"
             AnimationDuration="00:00:00.300"
-            VerticalOffset="100"
-            HorizontalOffset="0"
-            StackMode="StackInFront" />
+            VerticalOffset="100" HorizontalOffset="0"
+            StackMode="StackInFront" CornerRadius="7"/>
 
     </Grid>
 </Page>

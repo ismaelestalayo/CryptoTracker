@@ -3,10 +3,12 @@ using CryptoTracker.Views;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -22,11 +24,9 @@ namespace CryptoTracker {
     }
 
     public sealed partial class CoinDetails : Page {
-
         internal static string crypto { get; set; }
         private static int    limit = 60;
         private static string timeSpan = "hour";
-        private string Supply = App.stats.Supply;
 
         public CoinDetails() {
             this.InitializeComponent();
@@ -34,36 +34,40 @@ namespace CryptoTracker {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
-            if (animation != null)
-                animation.TryStart(PriceChart, new UIElement[]{ BottomPivot } );
-            
-
-
-            // Page title
-            if (e.Parameter.ToString() != null) {
-                crypto = e.Parameter as string;
-            } else {
-                crypto = "NULL";
-            }
-            mainTitle.Text      = App.coinList.Find(x => x.Name == crypto).FullName + " (" + crypto + ")";
-
             try {
-                mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper() + ".png"));
-            } catch(Exception) {
-                mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/iconNULL.png"));
-            }
-            mainTitleLogo.Visibility = Visibility.Visible;
+                var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
+                if (animation != null)
+                    animation.TryStart(PriceChart, new UIElement[]{ BottomPivot } );
+                
+                
+                // Page title
+                crypto = (e.Parameter.ToString() != null) ? e.Parameter as string :  "NULL";
+                
+                mainTitle.Text      = App.coinList.Find(x => x.Name == crypto).FullName + " (" + crypto + ")";
 
-            try {
-                ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_color"]).Color;
-                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_colorT"]).Color;
-            } catch {
-                ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
-                ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
-            }
+                try {
+                    mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper() + ".png"));
+                } catch(Exception) {
+                    mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/iconNULL.png"));
+                }
+                mainTitleLogo.Visibility = Visibility.Visible;
 
-            InitValues();
+                try {
+                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_color"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_colorT"]).Color;
+                } catch {
+                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
+                }
+
+                FavIcon.Content = App.pinnedCoins.Contains(crypto.ToUpper()) ? "\uEB52" : "\uEB51";
+
+                InitValues();
+            }
+            catch (Exception ex){
+                var message = "There was an error loading that coin. Try again later.";
+                new MessageDialog(message).ShowAsync();
+            }
         }
 
         private async void InitValues() {
@@ -281,6 +285,21 @@ namespace CryptoTracker {
         }
         private void Tapped_Twitter(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             this.Frame.Navigate(typeof(WebVieww), crypto + "_Twitter");
+        }
+
+        private void PinCoin_btn(object sender, RoutedEventArgs e) {
+            var c = crypto;
+            if (!App.pinnedCoins.Contains(c)) {
+                App.pinnedCoins.Add(c);
+                Home.AddCoinHome(c);
+                FavIcon.Content = "\uEB52";
+                inAppNotification.Show(c + " pinned to home.", 2000);
+            }
+            else {
+                Home.RemoveCoinHome(c);
+                FavIcon.Content = "\uEB51";
+                inAppNotification.Show(c + " unpinned from home.", 2000);
+            }
         }
     }
 }
