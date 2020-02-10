@@ -155,10 +155,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\CryptoTracker 1300.png" />
-    <Content Include="Assets\CryptoTracker 400.png" />
-    <Content Include="Assets\CryptoTracker transp_dark 400.png" />
-    <Content Include="Assets\CryptoTracker transp_light 400.png" />
     <Content Include="Assets\CryptoTracker Wide.png" />
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
