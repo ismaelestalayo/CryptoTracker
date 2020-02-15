@@ -8,17 +8,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Style TargetType="Button" x:Key="SettingsButtonsStyle">
-            <Setter Property="Background" Value="{ThemeResource SystemBaseMediumHighColor}"/>
-            <Setter Property="BorderBrush" Value="{ThemeResource SystemBaseMediumHighColor}"></Setter>
-            <Setter Property="BorderThickness" Value="1"></Setter>
-            <Setter Property="Foreground" Value="{ThemeResource SystemChromeMediumLowColor}"/>
-            <Setter Property="Padding" Value="20 5"/>
-            <Setter Property="Margin" Value="0 0 5 10"/>
-            <Setter Property="FontWeight" Value="SemiLight"/>
-            <Setter Property="CornerRadius" Value="2"/>
-        </Style>
-
         <Style TargetType="TextBlock" x:Key="LabelTitle" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="FontWeight" Value="ExtraLight"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
@@ -103,10 +92,10 @@
                     <TextBlock Text="Sync your portfolio with OneDrive with just a click." Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Upload"
-                                Style="{ThemeResource SettingsButtonsStyle}" 
+                                Style="{ThemeResource Crypto_button_style}" 
                                 Click="UploadConfigButton_Click" />
                         <Button Content="Download"
-                                Style="{ThemeResource SettingsButtonsStyle}"
+                                Style="{ThemeResource Crypto_button_style}"
                                 Click="DownloadConfigButton_Click">
                         </Button>
                     </StackPanel>
@@ -123,20 +112,20 @@
                     <TextBlock Text="Take a minute and leave a review on the Store." Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Rating" Click="RatingButton_Click" 
-                                Style="{ThemeResource SettingsButtonsStyle}" />
+                                Style="{ThemeResource Crypto_button_style}" />
                         <Button Content="Review" Click="ReviewButton_Click" 
-                                Style="{ThemeResource SettingsButtonsStyle}"/>
+                                Style="{ThemeResource Crypto_button_style}"/>
                     </StackPanel>
 
                     <TextBlock Text="I'd love to hear your thoughts about the app." Style="{ThemeResource LabelTitle}"/>
                     <Button Content="Feedback Hub" x:Name="feedbackButton" Click="FeedbackButton_Click"
-                            Style="{ThemeResource SettingsButtonsStyle}"/>
+                            Style="{ThemeResource Crypto_button_style}"/>
 
                     <TextBlock Text="Or use one of this for a more direct feedback:" Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Click="RedditButton_Click" Content="r/CryptoTracker" Style="{ThemeResource SettingsButtonsStyle}"/>
-                        <Button Click="MailButton_Click" Content="ismael.em@outlook.com" Style="{ThemeResource SettingsButtonsStyle}"/>
-                        <Button Click="TwitterButton_Click" Content="@ismaelestalayo" Style="{ThemeResource SettingsButtonsStyle}" />
+                        <Button Click="RedditButton_Click" Content="r/CryptoTracker" Style="{ThemeResource Crypto_button_style}"/>
+                        <Button Click="MailButton_Click" Content="ismael.em@outlook.com" Style="{ThemeResource Crypto_button_style}"/>
+                        <Button Click="TwitterButton_Click" Content="@ismaelestalayo" Style="{ThemeResource Crypto_button_style}" />
                     </StackPanel>
                 </StackPanel>
 
@@ -160,7 +149,7 @@
             <!-- FOOTER
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
             <StackPanel Margin="0 15 0 0" Grid.Row="1" Orientation="Horizontal">
-                <Image Source="/Assets/CryptoTracker 400.png" Width="80" HorizontalAlignment="Left"/>
+                <Image Source="/Assets/CryptoTracker Square.png" Width="80" HorizontalAlignment="Left"/>
                 <StackPanel Margin="10, 0">
                     <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
                     <TextBlock Text="Made with ❤ by an engineering student." FontWeight="Light"/>
@@ -173,20 +162,6 @@
 
                 </StackPanel>
             </StackPanel>
-
-            <ContentDialog
-                x:Name="ImportDialog"
-                Title="Import X purchases?"
-                PrimaryButtonText="Import"
-                CloseButtonText="Cancel"
-                DefaultButton="Primary">
-
-                <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding ImportDialog.IsPrimaryButtonEnabled}">
-                    <TextBlock Text="This will clear your current portfolio and download your backup." 
-                               TextWrapping="Wrap" />
-                </StackPanel>
-
-            </ContentDialog>
 
         </Grid>
     </ScrollViewer>

@@ -15,13 +15,14 @@
             <Setter Property="FontWeight" Value="SemiLight" />
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemChromeMediumLowColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ContentControl">
                         <ContentPresenter Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Background="#3F3F3F" CornerRadius="0 0 0 0"
+                            Background="{ThemeResource SystemBaseMediumHighColor}"
+                            CornerRadius="0 0 0 0"
                             ContentTransitions="{TemplateBinding ContentTransitions}"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"/>
@@ -73,13 +74,13 @@
                     Width="70px" Margin="0 0 5 0" AcceptsExpression="True"/>
 
                 <Button
-                    Click="AddButton_Click" VerticalAlignment="Bottom" 
-                    Background="#3F3F3F" Foreground="White" Margin="0 0 5 0">
+                    Click="AddButton_Click" VerticalAlignment="Bottom" Style="{ThemeResource Crypto_button_style}"
+                    Margin="0 0 3 0" ToolTipService.ToolTip="Add">
                     <SymbolIcon Symbol="Add"/>
                 </Button>
                 <Button 
-                    Click="ToggleDetails_click" VerticalAlignment="Bottom" 
-                    Background="#3F3F3F" Foreground="White" Margin="0 0 5 0" >
+                    Click="ToggleDetails_click" VerticalAlignment="Bottom" Style="{ThemeResource Crypto_button_style}"
+                    Margin="0 0 3 0" ToolTipService.ToolTip="Toggle details">
                     <SymbolIcon Symbol="ShowBcc"/>
                 </Button>
             </StackPanel>

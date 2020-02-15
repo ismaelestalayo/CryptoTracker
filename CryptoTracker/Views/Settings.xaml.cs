@@ -137,10 +137,25 @@ namespace CryptoTracker {
         }
 
         private async void UploadConfigButton_Click(object sender, RoutedEventArgs e) {
-            var helper = new RoamingObjectStorageHelper();
-            var portfolio = Portfolio.dataList;
+            try {
+                var helper = new RoamingObjectStorageHelper();
+                var portfolio = Portfolio.dataList;
 
-            await helper.SaveFileAsync(portfolioKey, portfolio);
+                ContentDialog exportDialog = new ContentDialog() {
+                    Title = $"Export {portfolio.Count} purchases?",
+                    Content = "This will create a backup of your current portfolio in the cloud.",
+                    DefaultButton = ContentDialogButton.Primary,
+                    PrimaryButtonText = "Export",
+                    CloseButtonText = "Cancel"
+                };
+
+                var response = await exportDialog.ShowAsync();                
+
+                if (response == ContentDialogResult.Primary)
+                    await helper.SaveFileAsync(portfolioKey, portfolio);
+            } catch  {
+                await new MessageDialog("Error uploading your portfolio. Try again later.").ShowAsync();
+            }
         }
 
         private async void DownloadConfigButton_Click(object sender, RoutedEventArgs e) {
@@ -149,16 +164,30 @@ namespace CryptoTracker {
             // Read complex/large objects 
             if (await helper.FileExistsAsync(portfolioKey)) {
                 var obj = await helper.ReadFileAsync<List<PurchaseClass>>(portfolioKey);
-                ImportDialog.Title = $"Import {obj.Count} purchases?";
-                var response = await ImportDialog.ShowAsync();
+
+                ContentDialog importDialog = new ContentDialog() {
+                    Title = $"Import {obj.Count} purchases?",
+                    Content = "This will clear your current portfolio and download your backup.",
+                    DefaultButton = ContentDialogButton.Primary,
+                    PrimaryButtonText = "Import",
+                    CloseButtonText = "Cancel"
+                };
+
+                var response = await importDialog.ShowAsync();
 
                 if (response == ContentDialogResult.Primary)
                     Portfolio.importPortfolio(obj);
             }
             else {
-                ImportDialog.Title = "No backup found.";
-                ImportDialog.IsPrimaryButtonEnabled = false;
-                await new MessageDialog("You don't seem to have uploaded any portfolio.").ShowAsync();
+                ContentDialog importDialog = new ContentDialog() {
+                    Title = "No backup found.",
+                    Content = "You don't seem to have uploaded any portfolio before.",
+                    DefaultButton = ContentDialogButton.Primary,
+                    IsPrimaryButtonEnabled = false,
+                    PrimaryButtonText = "Import",
+                    CloseButtonText = "Cancel"
+                };
+                importDialog.ShowAsync();
             }
         }
 
