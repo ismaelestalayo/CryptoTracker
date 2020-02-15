@@ -7,13 +7,13 @@
     mc:Ignorable="d"
     d:DesignHeight="345"
     d:DesignWidth="550"
-    CornerRadius="5"
+    CornerRadius="4"
     PrimaryButtonText="Ok">
 
     <ScrollViewer>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
-                <Image Source="/Assets/CryptoTracker 400.png" Width="35" Height="35" Margin="0 0 10 0"/>
+                <Image Source="/Assets/CryptoTracker Square.png" Width="35" Height="35" Margin="0 0 10 0"/>
                 <TextBlock x:Name="Title" VerticalAlignment="Center" Text="Welcome to CryptoTracker" FontSize="22"/>
             </StackPanel>
 
@@ -21,11 +21,10 @@
                 <Run Text="New in this version: &#x1F680; &#x0a;"/>
                 
                 <Run FontWeight="ExtraLight"
-                     Text="• New animations between pages.
-                     &#x0a; • Pin/Unpin and move coins directly from Home (right click).
-                     &#x0a; • Portfolio page with detailed info.
-                     &#x0a; • Sync your portfolio to the cloud.
-                     &#x0a; • Auto light/dark theme with Windows.
+                     Text="• Pin/Unpin directly from a coin's page.
+                     &#x0a; • Improved portfolio page.
+                     &#x0a; • Backup your portfolio to the cloud.
+                     &#x0a; • Bugfixes.
                      "/> 
                 <LineBreak/>
                 
@@ -36,7 +35,7 @@
                 
                 <LineBreak/>
                 <Run FontWeight="ExtraLight" FontStyle="Italic">
-                    Any bug or suggestion, you can reach me through
+                    For bugs or suggestions, be sure to reach me through
                     email, Twitter or the Windows Store (contact on the settings page).
                 </Run>
                 
