@@ -18,7 +18,7 @@ namespace CryptoTracker {
                 //l.SendStockTileNotification("LTC", 0, 0, DateTime.Now);
 
             } catch (Exception ex) {
-                var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
+                new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 

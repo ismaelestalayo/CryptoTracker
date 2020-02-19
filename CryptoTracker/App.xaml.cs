@@ -156,7 +156,6 @@ namespace CryptoTracker {
                 URL += "&e=" + market;
 
             Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
 
             try {
                 var data = GetJSONAsync(uri).Result;
@@ -183,7 +182,7 @@ namespace CryptoTracker {
                 JSONcoins.HandleJSON(data);
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 
@@ -199,7 +198,7 @@ namespace CryptoTracker {
                 return snapshot;
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                await new MessageDialog(ex.Message).ShowAsync();
                 return null;
             }
         }
@@ -252,7 +251,7 @@ namespace CryptoTracker {
                 stats = JSONstats.HandleStatsJSON(data, crypto, coin);
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 
@@ -282,7 +281,7 @@ namespace CryptoTracker {
                 }
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                await new MessageDialog(ex.Message).ShowAsync();
             }
         }
 
@@ -347,7 +346,7 @@ namespace CryptoTracker {
                 return topCoins;
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                await new MessageDialog(ex.Message).ShowAsync();
                 return new ObservableCollection<Top100coin>();
             }
         }
@@ -381,7 +380,7 @@ namespace CryptoTracker {
                 return g;
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                await new MessageDialog(ex.Message).ShowAsync();
                 return new GlobalStats();
             }
         }

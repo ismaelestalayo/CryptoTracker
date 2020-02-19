@@ -187,7 +187,7 @@ namespace CryptoTracker {
                     PrimaryButtonText = "Import",
                     CloseButtonText = "Cancel"
                 };
-                importDialog.ShowAsync();
+                await importDialog.ShowAsync();
             }
         }
 

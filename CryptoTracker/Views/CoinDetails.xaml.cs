@@ -181,10 +181,9 @@ namespace CryptoTracker {
                 data.Add(obj);
             }
 
-            float d = 0;
             float oldestPrice = App.historic[0].Close;
             float newestPrice = App.historic[App.historic.Count - 1].Close;
-            d = (float)Math.Round( ((newestPrice / oldestPrice) - 1) * 100, 2);
+            float d = (float)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
 
             if (d < 0) {
                 mainTitleDiff.Foreground = (SolidColorBrush)Application.Current.Resources["pastelRed"];

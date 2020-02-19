@@ -44,8 +44,8 @@ namespace CryptoTracker.Views {
                 try {
                     await AddCoinHome(App.pinnedCoins[i]);
                     await UpdateCard(i);
-                } catch (Exception ex) {
-                    var message = ex.Message;
+                } catch (Exception) {
+                    
                 }
             }
         }
@@ -107,7 +107,6 @@ namespace CryptoTracker.Views {
             // DATA:
             await App.GetHisto(c, timeSpan, limit);
 
-            float d = 0;
             float oldestPrice;
             float newestPrice;
             if (App.historic != null) {
@@ -118,7 +117,7 @@ namespace CryptoTracker.Views {
                 newestPrice = 0;
             }
 
-            d = (float)Math.Round(((newestPrice / oldestPrice) - 1) * 100, 2);
+            float d = (float)Math.Round(((newestPrice / oldestPrice) - 1) * 100, 2);
 
             if (d < 0) {
                 d = Math.Abs(d);

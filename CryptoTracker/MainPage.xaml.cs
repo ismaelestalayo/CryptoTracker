@@ -19,9 +19,9 @@ using Windows.UI.Xaml.Media.Animation;
 namespace CryptoTracker {
     public sealed partial class MainPage : Page {
 
-        private ObservableCollection<string> suggestions = new ObservableCollection<string>();
+        private readonly ObservableCollection<string> suggestions = new ObservableCollection<string>();
         private int CurrentTabIndex = 0;
-        UISettings uiSettings = new UISettings();
+        readonly UISettings uiSettings = new UISettings();
 
         // ###############################################################################################
         public MainPage() {
@@ -66,30 +66,19 @@ namespace CryptoTracker {
                 var color = uiSettings.GetColorValue(UIColorType.Background);
                 switch (color.ToString()) {
                     case "#FF000000":
-                        changeTheme("Dark");
+                        ChangeTheme("Dark");
                         break;
                     case "#FFFFFFFF":
-                        changeTheme("Light");
+                        ChangeTheme("Light");
                         break;
                 }
             }
         }
 
-        private async void changeTheme(string theme) {
+        private async void ChangeTheme(string theme) {
             await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                 ((Frame)Window.Current.Content).RequestedTheme = theme.Equals("Dark") ? ElementTheme.Dark : ElementTheme.Light;
             });
-        }
-
-        private void App_BackRequested(object sender, BackRequestedEventArgs e) {
-            if (ContentFrame == null)
-                return;
-
-            // Navigate back if possible, and if the event has not already been handled .
-            if (ContentFrame.CanGoBack && e.Handled == false) {
-                e.Handled = true;
-                ContentFrame.GoBack();
-            }
         }
 
         /// Extend acrylic into the title bar. 

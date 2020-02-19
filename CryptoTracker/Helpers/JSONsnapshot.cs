@@ -29,8 +29,7 @@ namespace CryptoTracker.Helpers {
                     TotalCoinSupply = long.Parse(data["Data"]["General"]["TotalCoinSupply"].ToString())
                 };
                 return z;
-            } catch (Exception ex) {
-                var kk = ex.Message;
+            } catch (Exception) {
                 JSONsnapshot z = new JSONsnapshot {
                     H1Text = "Error"
                 };
