@@ -1,12 +1,16 @@
-##  simple yet powerful crypto-currency tracker for Windows 10
+<img src="CryptoTracker/Assets/CryptoTracker Wide DarkT.png" width = "100%"/>
+
+## Simple yet powerful crypto-currency tracker for Windows 10
+
 
 <img src="Screenshots/promo/Hero-art.png" width = "100%"/>
 
-- Adjustable charts to show last hour/day/week/month... 
-- Supports over 100 cryptocurrencies including Bitcoin, Ethereum and Litecoin!
+- Adjustable **hourly/daily/weekly/monthly charts**
+- Supports **over 100 cryptocurrencies**!
+- Portfolio to keep track of all your purchases (with **cloud backup**).
+- Keep up with the latest news.
 - Currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
-- Keep track of the latest news.
-- Beautiful light and dark theme for you to choose!
+- Beautiful light and dark fluent themes!
 
 
 <img src="Screenshots/promo/Laptop_front_home_light.png" width = "100%"/>
@@ -29,6 +33,12 @@
 <p/>
 
 # Milestones:
+#### 4.5:
+- New animations between pages!
+- Pin/Unpin coins directly from a coin's page.
+- Portfolio page improved (plus cloud backup)
+- Bug fixes
+
 #### 4.0:
 - Added smooth animations!
 - Improved navigation 
