@@ -130,50 +130,62 @@ namespace CryptoTracker {
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-            if(args.IsSettingsSelected)
-                PagesNavigation("Settings");
-            else { 
-                string name = ((ContentControl)args.SelectedItem).Content.ToString();
-                PagesNavigation(name);
-            }
+            string source = "null";
+            string selected = "null";
+
+            if (((Frame)sender.Content).SourcePageType != null)
+                source = (((Frame)sender.Content).SourcePageType).Name;
+            
+            if (args.IsSettingsSelected)
+                selected = "Settings";
+            else 
+                selected = ((ContentControl)args.SelectedItem).Content.ToString();
+            
+            // With ItemInvoked the navigation may have already been done
+            // so not to navigate twice, check the current page
+            if (source != selected)
+                PagesNavigation(selected);
         }
         
-        private void PagesNavigation(string tag) {
-            var direction = "fromleft";
+        private void PagesNavigation(string toPage, bool samePage = false) {
+            var dir = new SlideNavigationTransitionInfo();
             var page = typeof(Page);
-            switch (tag) {
+            switch (toPage) {
                 case "Home":
-                    direction = "fromleft";
+                    dir.Effect = SlideNavigationTransitionEffect.FromLeft;
                     page = typeof(Home);
                     CurrentTabIndex = 0;
                     break;
                 case "Top 100":
-                    direction = (CurrentTabIndex > 1) ? "fromleft" : "fromright";
+                    dir.Effect = (CurrentTabIndex > 1) ? SlideNavigationTransitionEffect.FromLeft : SlideNavigationTransitionEffect.FromRight;
                     page = typeof(Top100);
                     CurrentTabIndex = 1;
                     break;
                 case "News":
-                    direction = (CurrentTabIndex > 2) ? "fromleft" : "fromright";
+                    dir.Effect = (CurrentTabIndex > 2) ? SlideNavigationTransitionEffect.FromLeft : SlideNavigationTransitionEffect.FromRight;
                     page = typeof(News);
                     CurrentTabIndex = 2;
                     break;
                 case "Portfolio":
-                    direction = (CurrentTabIndex > 3) ? "fromleft" : "fromright";
+                    dir.Effect = (CurrentTabIndex > 3) ? SlideNavigationTransitionEffect.FromLeft : SlideNavigationTransitionEffect.FromRight;
                     page = typeof(Portfolio);
                     CurrentTabIndex = 3;
                     break;
 
                 case "Settings":
-                    direction = "fromright";
+                    dir.Effect = SlideNavigationTransitionEffect.FromRight;
                     page = typeof(Settings);
                     CurrentTabIndex = 4;
                     break;
             }
 
-            ContentFrame.Navigate(page, null,
-                direction == "fromleft"
-                    ? new SlideNavigationTransitionInfo() {Effect = SlideNavigationTransitionEffect.FromLeft}
-                    : new SlideNavigationTransitionInfo() {Effect = SlideNavigationTransitionEffect.FromRight});
+            // if it's the same page, override the default animation for one from the Bottom
+            if (samePage) { 
+                dir.Effect = SlideNavigationTransitionEffect.FromBottom;
+            }
+
+            ContentFrame.Navigate(page, null, dir);
+            
         }
 
         // #########################################################################################
@@ -238,6 +250,25 @@ namespace CryptoTracker {
             CoinAutoSuggestBox.Focus(FocusState.Programmatic);
         }
 
-        
+        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
+            string selected;
+            string source = (((Frame)sender.Content).SourcePageType).Name;
+            try {
+                selected = ((ContentControl)sender.SelectedItem).Content.ToString();
+            }
+            catch (NullReferenceException) {
+                if (args.IsSettingsInvoked)
+                    selected = "Settings";
+                else
+                    selected = "Null";
+            }
+
+            // CoinDetails and the WebView are loaded on the current NavigationViewTab
+            // so the user can go back by clicking the same tab itself
+            if (source == "CoinDetails" || source == "WebVieww")
+                PagesNavigation(selected, true);
+            
+            
+        }
     }
 }
