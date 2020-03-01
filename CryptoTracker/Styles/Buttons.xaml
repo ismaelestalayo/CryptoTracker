@@ -18,7 +18,7 @@
         <Setter Property="Background" Value="{ThemeResource SystemBaseMediumHighColor}"/>
         <Setter Property="Foreground" Value="{ThemeResource SystemChromeMediumLowColor}"/>
         <Setter Property="FontWeight" Value="SemiLight"/>
-        <Setter Property="Margin" Value="0 0 5 10"/>
+        <Setter Property="Margin" Value="0 0 5 5"/>
         <Setter Property="Padding" Value="20 5"/>
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="Template">
