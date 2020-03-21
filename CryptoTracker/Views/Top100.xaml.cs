@@ -26,12 +26,7 @@ namespace CryptoTracker.Views {
         public string Price { get; set; }
         public string Vol24 { get; set; }
         public string MarketCap { get; set; }
-        public string AvailableSupply { get; set; }
-        public string TotalSupply { get; set; }
-        public string MaxSupply { get; set; }
-        public string Change1h { get; set; }
-        public string Change1d { get; set; }
-        public string Change7d { get; set; }
+        public string Change24h { get; set; }
         public SolidColorBrush ChangeFG { get; set; }
         public string Src { get; set; }
         public string LogoURL { get; set; }
@@ -59,7 +54,6 @@ namespace CryptoTracker.Views {
     // #########################################################################################
     public sealed partial class Top100 : Page {
 
-        private GlobalStats g;
         private ObservableCollection<Top100coin> topCoins { get; set; }
 
         public Top100() {
@@ -70,9 +64,6 @@ namespace CryptoTracker.Views {
 
         // #########################################################################################
         private async void InitPage() {
-            g = await App.GetGlobalStats();
-            DataContext = g;
-
             topCoins = await App.GetTop100();
             
             for (int i = 0; i < topCoins.Count; i++) {

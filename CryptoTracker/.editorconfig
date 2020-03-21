@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = silent
+
+# CA1307: Specify StringComparison
+dotnet_diagnostic.CA1307.severity = silent
