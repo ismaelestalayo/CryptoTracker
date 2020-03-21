@@ -31,7 +31,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Agent.TempDirectory)'
-    Contents: '*.pfx'
+    Contents: 'UWP_StoreKey.pfx'
     TargetFolder: 'CryptoTracker\'
 
 - task: VSBuild@1
