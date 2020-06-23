@@ -299,6 +299,16 @@ namespace CryptoTracker.Views {
                 App.UpdatePinnedCoins();
             }
         }
+
+        private void Grid_Hover_Animation_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            Grid g = sender as Grid;
+            g.RenderTransform = new CompositeTransform() { ScaleX = 1.02, ScaleY = 1.02, CenterX=g.ActualWidth / 2, CenterY=g.ActualHeight / 2 };
+        }
+
+        private void Grid_Hover_Animation_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            Grid g = sender as Grid;
+            g.RenderTransform = new CompositeTransform() { ScaleX = 1, ScaleY = 1, CenterX = g.ActualWidth / 2, CenterY = g.ActualHeight / 2 };
+        }
     }
 
 
