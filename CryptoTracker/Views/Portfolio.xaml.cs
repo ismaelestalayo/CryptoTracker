@@ -142,7 +142,6 @@ namespace CryptoTracker {
                 var s = new StackPanel();
                 s.BorderThickness = new Thickness(0);
                 s.Margin = new Thickness(1, 0, 1, 0);
-                s.BorderBrush = (SolidColorBrush) App.Current.Resources["TextBoxForegroundHeaderThemeBrush"];
                 var t = new TextBlock();
                 t.Text = dataList[i].Crypto;
                 t.FontSize = 12;
