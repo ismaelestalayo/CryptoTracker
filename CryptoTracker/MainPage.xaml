@@ -9,7 +9,10 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <AcrylicBrush x:Key="NavigationViewTopPaneBackground" BackgroundSource="Backdrop" TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity="1"/>
+        <AcrylicBrush 
+            x:Key="NavigationViewTopPaneBackground" BackgroundSource="HostBackdrop" 
+            TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity="0.9"
+            FallbackColor="{ThemeResource SystemChromeMediumLowColor}"/>
     </Page.Resources>
     
     <!-- 
