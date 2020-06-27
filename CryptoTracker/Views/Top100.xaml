@@ -25,13 +25,13 @@
 
     <!-- 
     ################################################################################################### -->
-    <Grid Padding="5" MaxWidth="750">
+    <Grid Padding="5" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="0"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--<Grid Padding="0 10" Margin="5" CornerRadius="5"
+        <Grid Padding="0 10" Margin="5" CornerRadius="5" MaxWidth="750"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -41,27 +41,27 @@
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="0">
                 <TextBlock Text="BTC dominance" Style="{StaticResource b}"/>
-                <TextBlock Text="{Binding btcDominance, FallbackValue=0}" Style="{StaticResource a}"/>
+                <TextBlock Text="{Binding BtcDominance, FallbackValue=0}" Style="{StaticResource a}"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1">
                 <TextBlock Text="24h Vol" Style="{StaticResource b}"/>
-                <TextBlock Text="{Binding total24Vol, FallbackValue=0}" Style="{StaticResource a}"/>
+                <TextBlock Text="{Binding TotalVolume, FallbackValue=0}" Style="{StaticResource a}"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="2">
                 <TextBlock Text="Market Cap." Style="{StaticResource b}"/>
-                <TextBlock Text="{Binding totalMarketCap, FallbackValue=0}" Style="{StaticResource a}"/>
-            </StackPanel>            
-        </Grid>-->
+                <TextBlock Text="{Binding TotalMarketCap, FallbackValue=0}" Style="{StaticResource a}"/>
+            </StackPanel>
+        </Grid>
 
         <!-- 
         ################################################################################################### -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" >
             <ListView x:Name="top100ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_Click">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid x:Name="listView_Element" 
+                        <Grid x:Name="listView_Element" Height="65"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
                             Margin="0 3" MaxWidth="600" CornerRadius="5">
                             <Grid.ColumnDefinitions>
@@ -90,30 +90,30 @@
                             <Image 
                                 Grid.Column="2" 
                                 Source="{Binding Src}" 
-                                Width="40" Visibility="Visible"/>
+                                Width="45" Visibility="Visible"/>
 
-                            <Image Grid.Column="2" Width="40" Visibility="Visible">
+                            <Image Grid.Column="2" Width="45" Visibility="Visible">
                                 <Image.Source>
                                     <BitmapImage UriSource="{Binding LogoURL}" />
                                 </Image.Source>
                             </Image>
 
-                            <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" >
-                                <TextBlock Text="{Binding Name, FallbackValue=NULL}" FontSize="18" FontWeight="SemiBold"/>
-                                <TextBlock Opacity="0.7">
-                                <Run Text="{Binding Price}"/>
-                                <Run Text="{Binding Change24h, Mode=OneWay}" Foreground="{Binding ChangeFG}"/>
+                            <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Name, FallbackValue=NULL}" FontSize="20" FontWeight="SemiBold"/>
+                                <TextBlock Opacity="0.8">
+                                    <Run Text="{Binding Price}" FontSize="16"/>
+                                    <Run Text="{Binding Change24h, Mode=OneWay}" Foreground="{Binding ChangeFG}" FontSize="16" FontWeight="Medium"/>
                                 </TextBlock>
                             </StackPanel>
 
                             <StackPanel Grid.Column="4" VerticalAlignment="Center" Margin="10 0">
-                                <TextBlock FontWeight="Bold" HorizontalAlignment="Right">
-                                <Run Text="Cap:"/>
-                                <Run Text="{Binding MarketCap, FallbackValue=0}"/>
+                                <TextBlock FontWeight="Bold" HorizontalAlignment="Right" FontSize="15">
+                                    <Run Text="Cap:"/>
+                                    <Run Text="{Binding MarketCap, FallbackValue=0}"/>
                                 </TextBlock>
-                                <TextBlock FontWeight="Light" HorizontalAlignment="Right" Opacity="0.5">
-                                <Run Text="Vol:"/>
-                                <Run Text="{Binding Vol24, FallbackValue=0}"/>
+                                <TextBlock FontWeight="Light" HorizontalAlignment="Right" Opacity="0.7" FontSize="15">
+                                    <Run Text="Vol:"/>
+                                    <Run Text="{Binding Vol24, FallbackValue=0}"/>
                                 </TextBlock>
                             </StackPanel>
                         </Grid>

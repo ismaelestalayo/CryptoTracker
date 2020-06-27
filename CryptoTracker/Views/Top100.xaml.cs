@@ -9,11 +9,11 @@ using Windows.UI.Xaml.Media;
 namespace CryptoTracker.Views {
 
     public class GlobalStats {
-        public string currency { get; set; }
-        public string totalMarketCap { get; set; }
-        public string total24Vol { get; set; }
-        public string btcDominance { get; set; }
-        public string activeCurrencies { get; set; }
+        public string Currency { get; set; }
+        public string TotalMarketCap { get; set; }
+        public string TotalVolume { get; set; }
+        public string BtcDominance { get; set; }
+        public string ActiveCurrencies { get; set; }
     }
 
     public class Top100coin : INotifyPropertyChanged {
@@ -54,6 +54,7 @@ namespace CryptoTracker.Views {
     // #########################################################################################
     public sealed partial class Top100 : Page {
 
+        private GlobalStats g;
         private ObservableCollection<Top100coin> topCoins { get; set; }
 
         public Top100() {
@@ -64,6 +65,9 @@ namespace CryptoTracker.Views {
 
         // #########################################################################################
         private async void InitPage() {
+            g = await App.GetGlobalStats();
+            DataContext = g;
+
             topCoins = await App.GetTop100();
             
             for (int i = 0; i < topCoins.Count; i++) {

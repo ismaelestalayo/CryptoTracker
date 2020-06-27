@@ -306,7 +306,7 @@ namespace CryptoTracker {
         //  (GET) top 100 coins (by marketcap)
         internal async static Task<ObservableCollection<Top100coin>> GetTop100() {
             int limit = 100;
-            String URL = string.Format("https://min-api.cryptocompare.com/data/top/mktcapfull?tsym={0}&limit={1}", coin, limit);
+            String URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", coin, limit);
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
@@ -346,7 +346,7 @@ namespace CryptoTracker {
                                 Name = data[i]["CoinInfo"]["FullName"].ToString() ?? "NULL",
                                 Symbol = symbol,
                                 Price = ToKMB((double)(data[i]["RAW"][coinn]["PRICE"] ?? "0")) + coinSymbol,
-                                Vol24 = ToKMB((double)(data[i]["RAW"][coinn]["VOLUME24HOUR"] ?? "0")) + coinSymbol,
+                                Vol24 = ToKMB((double)(data[i]["RAW"][coinn]["TOTALVOLUME24HTO"] ?? "0")) + coinSymbol,
                                 MarketCap = ToKMB((double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0")) + coinSymbol,
                                 Change24h = change.ToString() + "%",
                                 ChangeFG = change < 0 ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelGreen"],
@@ -368,7 +368,7 @@ namespace CryptoTracker {
         // ###############################################################################################
         //  (GET) global stats
         internal async static Task<GlobalStats> GetGlobalStats() {
-            String URL = "https://api.coinmarketcap.com/v1/global/?convert=" + App.coin;
+            String URL = "https://api.coingecko.com/api/v3/global";
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
@@ -382,15 +382,13 @@ namespace CryptoTracker {
 
                 response = await httpResponse.Content.ReadAsStringAsync();
                 var data = JToken.Parse(response);
+                data = data["data"];
 
                 GlobalStats g = new GlobalStats();
-                g.currency          = coin;
-                g.totalMarketCap    = data["total_market_cap_" + coin.ToLower()].ToString();
-                g.total24Vol        = data["total_24h_volume_" + coin.ToLower()].ToString();
-                g.btcDominance      = data["bitcoin_percentage_of_market_cap"].ToString() + "%";
-                g.activeCurrencies  = data["active_currencies"].ToString();
-                g.totalMarketCap    = coinSymbol + ToKMB(double.Parse(g.totalMarketCap));
-                g.total24Vol        = coinSymbol + ToKMB(double.Parse(g.total24Vol));
+                g.ActiveCurrencies  = data["active_cryptocurrencies"].ToString();
+                g.BtcDominance      = Math.Round((double)data["market_cap_percentage"]["btc"], 2).ToString() + "%";
+                g.TotalVolume       = ToKMB((double)(data["total_volume"][coin.ToLower()] ?? data["total_volume"]["usd"])) + coinSymbol;
+                g.TotalMarketCap    = ToKMB((double)(data["total_market_cap"][coin.ToLower()] ?? data["total_market_cap"]["usd"])) + coinSymbol;
                 return g;
 
             } catch (Exception ex) {
@@ -401,7 +399,7 @@ namespace CryptoTracker {
 
         public static string ToKMB(double num) {
             if (num > 999999999) {
-                return num.ToString("0,,,.###B", CultureInfo.InvariantCulture);
+                return num.ToString("0,,,.##B", CultureInfo.InvariantCulture);
             } else
             if (num > 999999) {
                 return num.ToString("0,,.##M", CultureInfo.InvariantCulture);
