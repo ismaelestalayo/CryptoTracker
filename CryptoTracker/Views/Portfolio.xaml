@@ -99,14 +99,15 @@
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="30 30 0 0">
             <controls:DataGrid x:Name="DataGridd" Margin="7" ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
                 VerticalAlignment="Top" HorizontalAlignment="Stretch"
                 RowBackground="Transparent"
                 AutoGenerateColumns="False" HeadersVisibility="Column"
                 CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False"
                 GridLinesVisibility="Horizontal" BorderBrush="{ThemeResource SystemControlDisabledChromeHighBrush}" BorderThickness="1 0"
-                RowDetailsVisibilityMode="Visible" SelectionMode="Single">
+                HorizontalGridLinesBrush="{ThemeResource SystemControlDisabledChromeHighBrush}"
+                RowDetailsVisibilityMode="Collapsed" SelectionMode="Single">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTemplateColumn Header="Crypto" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
@@ -195,7 +196,7 @@
                 <!-- DETAILS OF EACH PURCHASE -->
                 <controls:DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <Grid Padding="0 15" CornerRadius="5" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                        <Grid Padding="0 15" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>

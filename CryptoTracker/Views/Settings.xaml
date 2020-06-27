@@ -141,7 +141,7 @@
                         <TextBlock Text="Data provided by" Style="{ThemeResource LabelTitle}"/>
                         <HyperlinkButton NavigateUri="https://www.cryptocompare.com/api" 
                             Content="CryptoCompare API" Margin="5 -5 0 0"
-                            FontWeight="ExtraLight"/>
+                            Foreground="{ThemeResource HyperlinkForegroundThemeBrush}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -157,7 +157,7 @@
                     <HyperlinkButton NavigateUri="https://ismaelestalayo.com/" 
                         Content    ="https://ismaelestalayo.com/" 
                         Margin="0, -6, 0, 0"
-                        Foreground="{ThemeResource HyperlinkButtonForeground}"
+                        Foreground="{ThemeResource HyperlinkForegroundThemeBrush}"
                         FontWeight="Light"/>
 
                 </StackPanel>
