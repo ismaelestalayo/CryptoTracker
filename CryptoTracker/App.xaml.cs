@@ -41,7 +41,6 @@ namespace CryptoTracker {
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
-            TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true);
 
             try {
                 string _theme  = localSettings.Values["Theme"].ToString();
@@ -96,8 +95,8 @@ namespace CryptoTracker {
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += OnUnhandledException;
         }
-
         // #########################################################################################
         protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -133,6 +132,9 @@ namespace CryptoTracker {
             var deferral = e.SuspendingOperation.GetDeferral();
 
             deferral.Complete();
+        }
+        private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e) {
+            Analytics.TrackEvent("UNHANDLED: " + e.Message);
         }
 
         // ###############################################################################################
