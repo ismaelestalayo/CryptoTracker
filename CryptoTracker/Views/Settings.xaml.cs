@@ -103,9 +103,9 @@ namespace CryptoTracker {
             Analytics.TrackEvent("twitterButton_Click");
             await Launcher.LaunchUriAsync(new Uri("https://twitter.com/ismaelestalayo"));
         }
-        private async void RedditButton_Click(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("redditButton_Click");
-            await Launcher.LaunchUriAsync(new Uri("https://www.reddit.com/r/CryptoTracker/"));
+        private async void PaypalButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("paypalButton_Click");
+            await Launcher.LaunchUriAsync(new Uri("https://paypal.me/ismaelEstalayo"));
         }
 
         // ###############################################################################################
@@ -232,5 +232,6 @@ namespace CryptoTracker {
                     break;
             }
         }
+        
     }
 }

@@ -117,15 +117,16 @@
                                 Style="{ThemeResource Crypto_button_style}"/>
                     </StackPanel>
 
-                    <TextBlock Text="I'd love to hear your thoughts about the app." Style="{ThemeResource LabelTitle}"/>
-                    <Button Content="Feedback Hub" x:Name="feedbackButton" Click="FeedbackButton_Click"
-                            Style="{ThemeResource Crypto_button_style}"/>
-
-                    <TextBlock Text="Or use one of this for a more direct feedback:" Style="{ThemeResource LabelTitle}"/>
+                    <TextBlock Text="I would love to hear your thoughts about the app." Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Click="RedditButton_Click" Content="r/CryptoTracker" Style="{ThemeResource Crypto_button_style}"/>
                         <Button Click="MailButton_Click" Content="ismael.em@outlook.com" Style="{ThemeResource Crypto_button_style}"/>
                         <Button Click="TwitterButton_Click" Content="@ismaelestalayo" Style="{ThemeResource Crypto_button_style}" />
+                        <Button Content="Feedback Hub" x:Name="feedbackButton" Click="FeedbackButton_Click" Style="{ThemeResource Crypto_button_style}"/>
+                    </StackPanel>
+
+                    <TextBlock Text="And if you love the app and want to support it, you can donate here:" Style="{ThemeResource LabelTitle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="PaypalButton_Click" Content="Paypal" Style="{ThemeResource Crypto_button_style}"/>
                     </StackPanel>
                 </StackPanel>
 
