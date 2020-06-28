@@ -281,15 +281,6 @@ namespace CryptoTracker {
             UpdatePage();
         }
 
-        private void Tapped_Website(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            var btn = sender as Button;
-            this.Frame.Navigate(typeof(WebVieww), btn.Content);
-        }
-        private void Tapped_Twitter(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            var btn = sender as Button;
-            this.Frame.Navigate(typeof(WebVieww), btn.Content);
-        }
-
         private void PinCoin_btn(object sender, RoutedEventArgs e) {
             var c = crypto;
             if (!App.pinnedCoins.Contains(c)) {
