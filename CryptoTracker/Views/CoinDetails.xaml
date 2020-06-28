@@ -331,20 +331,14 @@
             <PivotItem Header="About">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="Description:" Style="{ThemeResource BaseTextBlockStyle}" />
-                        <TextBlock x:Name="Description" Text="Description..." FontWeight="ExtraLight" Foreground="Gray" Margin="0, 0, 0, 5" TextWrapping="WrapWholeWords"/>
+                        <TextBlock Text="Description:" Style="{ThemeResource BaseTextBlockStyle}" Margin="0 5 0 0"/>
+                        <TextBlock x:Name="Description" Text="Description..." FontWeight="ExtraLight" Foreground="Gray" Margin="0 0 15 0" TextWrapping="WrapWholeWords" TextAlignment="Justify"/>
 
-                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Website" Padding="0, 3">
-                            <TextBlock Text="Website:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock x:Name="Website" Text="exampleURL.com" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
-                        </RelativePanel>
+                        <TextBlock Text="Website:" Style="{ThemeResource BaseTextBlockStyle}" Margin="0 5 0 0"/>
+                        <HyperlinkButton x:Name="Website_link" Content="website" Margin="0 -5 0 5" FontWeight="ExtraLight" Foreground="Gray"/>
 
-                        <RelativePanel Style="{StaticResource AboutRelativePanelStyle}" Tapped="Tapped_Twitter" Padding="0, 3">
-                            <TextBlock Text="Twitter:" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock x:Name="Twitter" Text="@example" FontWeight="ExtraLight" RelativePanel.AlignRightWithPanel="True" Foreground="Gray"/>
-                        </RelativePanel>
-
-                        <RichTextBlock/>
+                        <TextBlock Text="Twitter:" Style="{ThemeResource BaseTextBlockStyle}" Margin="0 5 0 0"/>
+                        <HyperlinkButton x:Name="Twitter_link" Content="@Twitter handle" Margin="0 -5 0 5" FontWeight="ExtraLight" Foreground="Gray"/>
                     </StackPanel>
                 </ScrollViewer>
 

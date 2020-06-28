@@ -77,8 +77,10 @@ namespace CryptoTracker {
             //Description.Text = snapshot.Description;
             try {
                 Description.Text = App.GetCoinDescription(crypto);
-                Website.Text = snapshot.WebSiteURL;
-                Twitter.Text = snapshot.Twitter;
+                Website_link.Content = snapshot.WebSiteURL;
+                Website_link.NavigateUri = new Uri(snapshot.WebSiteURL);
+                Twitter_link.Content = snapshot.Twitter;
+                Twitter_link.NavigateUri = new Uri(string.Format("https://twitter.com/{0}", snapshot.Twitter));
             } catch (Exception) { }
 
             TimeSpan period = TimeSpan.FromSeconds(30);
@@ -280,10 +282,12 @@ namespace CryptoTracker {
         }
 
         private void Tapped_Website(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(WebVieww), crypto + "_Website");
+            var btn = sender as Button;
+            this.Frame.Navigate(typeof(WebVieww), btn.Content);
         }
         private void Tapped_Twitter(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(WebVieww), crypto + "_Twitter");
+            var btn = sender as Button;
+            this.Frame.Navigate(typeof(WebVieww), btn.Content);
         }
 
         private void PinCoin_btn(object sender, RoutedEventArgs e) {
