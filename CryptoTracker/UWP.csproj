@@ -7,11 +7,11 @@
     <ProjectGuid>{7E2C342E-1D50-499B-9006-7CD6AC674534}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CryptoTracker</RootNamespace>
-    <AssemblyName>CryptoTracker</AssemblyName>
+    <RootNamespace>Crypto_Tracker</RootNamespace>
+    <AssemblyName>Crypto Tracker</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -156,6 +156,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\CryptoTracker Square DarkT.png" />
+    <Content Include="Assets\CryptoTracker Square LightT.png" />
     <Content Include="Assets\CryptoTracker Square.png" />
     <Content Include="Assets\CryptoTracker Wide.png" />
     <Content Include="Assets\Icons\iconADA.png" />
@@ -306,10 +308,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>3.2.1</Version>
+      <Version>3.2.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>3.2.1</Version>
+      <Version>3.2.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
       <Version>3.0.0</Version>
@@ -323,19 +325,19 @@
       <Version>10.1901.28001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>6.0.0</Version>
+      <Version>6.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
-      <Version>6.0.0</Version>
+      <Version>6.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>6.0.0</Version>
+      <Version>6.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
-      <Version>6.0.0</Version>
+      <Version>6.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.4.0</Version>
+      <Version>2.4.2</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
@@ -347,7 +349,7 @@
       <Version>4.3.0</Version>
     </PackageReference>
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
-      <Version>1.0.1.8</Version>
+      <Version>1.0.1.9</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -357,7 +359,7 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="WindowsMobile, Version=10.0.18362.0">
+    <SDKReference Include="WindowsMobile, Version=10.0.19041.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
