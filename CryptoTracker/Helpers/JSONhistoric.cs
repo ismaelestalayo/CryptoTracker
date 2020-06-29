@@ -14,7 +14,7 @@ namespace CryptoTracker.Helpers {
         internal float Volumefrom { get; set; }
         internal float Volumeto { get; set; }
 
-        public static void HandleHistoricJSON(JToken data, string crypto) {
+        public static void HandleHistoricJSON(JToken data) {
 
             if (data["Response"].ToString().Equals("Error")) 
                 throw new NullReferenceException("Manually caught null coin exception.");
@@ -28,7 +28,7 @@ namespace CryptoTracker.Helpers {
             }
         }
 
-        public static void HandleHistoricJSONnull(string crypto, int limit) {
+        public static void HandleHistoricJSONnull(int limit) {
             App.historic.Clear();
             
             for (int i = 0; i < limit; i++) {

@@ -225,11 +225,11 @@ namespace CryptoTracker {
                 string response = await httpClient.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
-                JSONhistoric.HandleHistoricJSON(data, crypto);                
+                JSONhistoric.HandleHistoricJSON(data);                
                 
 
             } catch (Exception) {
-                JSONhistoric.HandleHistoricJSONnull(crypto, limit);
+                JSONhistoric.HandleHistoricJSONnull(limit);
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
             }
         }
@@ -252,8 +252,12 @@ namespace CryptoTracker {
 
                 stats = JSONstats.HandleStatsJSON(data, crypto, coin);
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
+            }
+            finally {
+                httpClient.Dispose();
             }
         }
 
@@ -282,8 +286,13 @@ namespace CryptoTracker {
                     exchanges.Add(JSONexchanges.GetExchanges(data["Data"][i]));
                 }
 
-            } catch (Exception ex) {
+            } 
+            catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
+            }
+            finally {
+                httpResponse.Dispose();
+                httpClient.Dispose();
             }
         }
 
