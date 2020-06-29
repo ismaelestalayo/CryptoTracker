@@ -11,27 +11,28 @@ namespace CryptoTracker.Views {
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
 
-            // Connected animation
-            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toWebView");
-            if (animation != null) {
-                animation.TryStart(myWebView);
+            if (e != null) { 
+                // Connected animation
+                var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toWebView");
+                if (animation != null) {
+                    animation.TryStart(myWebView);
+                }
+
+                String url = e.Parameter.ToString();
+                if (url.StartsWith("http"))
+                    myWebView.Navigate(new Uri(url));
+                else if (url.StartsWith("@"))
+                    myWebView.Navigate(new Uri(string.Format("https://twitter.com/{0}", url)));
+                else { }
+
             }
-
-            String url = e.Parameter.ToString();
-            if (url.StartsWith("http"))
-                myWebView.Navigate(new Uri(url));
-            else if (url.StartsWith("@"))
-                myWebView.Navigate(new Uri(string.Format("https://twitter.com/{0}", url)));
-            else { }
-
-
         }
 
-        private void myWebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args) {
+        private void MyWebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args) {
             urlBar.Text = args.Uri.ToString();
         }
 
-        private void myWebView_ContentLoading(WebView sender, WebViewContentLoadingEventArgs args) {
+        private void MyWebView_ContentLoading(WebView sender, WebViewContentLoadingEventArgs args) {
             urlBar.Text = args.Uri.ToString();
         }
     }

@@ -15,7 +15,7 @@
         
         <WebView x:Name="myWebView" x:FieldModifier="internal" 
                  DefaultBackgroundColor="#2A2A2A"
-                 NavigationStarting="myWebView_NavigationStarting" ContentLoading="myWebView_ContentLoading">
+                 NavigationStarting="MyWebView_NavigationStarting" ContentLoading="MyWebView_ContentLoading">
         
         </WebView>
 

@@ -13,7 +13,7 @@
     <ScrollViewer>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
-                <Image Source="/Assets/CryptoTracker Square.png" Width="35" Height="35" Margin="0 0 10 0"/>
+                <Image Source="/Assets/CryptoTracker Square DarkT.png" Width="35" Height="35" Margin="0 0 10 0"/>
                 <TextBlock x:Name="Title" VerticalAlignment="Center" Text="Welcome to CryptoTracker" FontSize="22"/>
             </StackPanel>
 
@@ -21,9 +21,8 @@
                 <Run Text="New in this version: &#x1F680; &#x0a;"/>
                 
                 <Run FontWeight="ExtraLight"
-                     Text="• Pin/Unpin directly from a coin's page.
-                     &#x0a; • Improved portfolio page.
-                     &#x0a; • Backup your portfolio to the cloud.
+                     Text="• Small UI refinements in most pages.
+                     &#x0a; • Improved Top100 and Portfolio pages.
                      &#x0a; • Bugfixes.
                      "/> 
                 <LineBreak/>

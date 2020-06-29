@@ -17,24 +17,26 @@ using Windows.UI.Popups;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.UI.ViewManagement;
 using Windows.UI;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
 
-        private Package package;
         private PackageVersion version;
-        private String portfolioKey = "portfolio";
+        private readonly String portfolioKey = "portfolio";
 
         public Settings() {
             this.InitializeComponent();            
 
-            package = Package.Current;
-            version = package.Id.Version;
+            
+            version = Package.Current.Id.Version;
             VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}.", version.Major, version.Minor, version.Revision);
 
             ThemeComboBox.PlaceholderText = App.localSettings.Values["Theme"].ToString();
-            //ThemeSwitcher.IsOn = App.localSettings.Values["Theme"].Equals("Dark");
-
+            FooterLogo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? 
+                new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+            
 
             switch (App.localSettings.Values["Coin"]) {
                 case "EUR":
@@ -191,30 +193,6 @@ namespace CryptoTracker {
             }
         }
 
-        private void Theme_RadioButton_Click(object sender, RoutedEventArgs e) {
-            RadioButton btn = sender as RadioButton;
-
-            switch (btn.Content) {
-                case "Dark":
-                    App.localSettings.Values["Theme"] = "Dark";
-                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
-                    Analytics.TrackEvent("theme_dark_side");
-                    break;
-
-                case "Light":
-                    App.localSettings.Values["Theme"] = "Light";
-                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
-                    Analytics.TrackEvent("theme_light");
-                    break;
-
-                case "Windows":
-                    App.localSettings.Values["Theme"] = "Windows";
-                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
-                    Analytics.TrackEvent("theme_windows");
-                    break;
-            }
-        }
-
         private void ThemeComboBox_changed(object sender, SelectionChangedEventArgs e) {
             ComboBox c = sender as ComboBox;
             var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
@@ -222,13 +200,22 @@ namespace CryptoTracker {
             App.localSettings.Values["Theme"] = theme;
             switch (theme) {
                 case "Light":
+                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
                     ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
                     break;
                 case "Dark":
+                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png"));
                     ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
                     break;
                 case "Windows":
-                    ((Frame)Window.Current.Content).RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ElementTheme.Dark : ElementTheme.Light;
+                    if (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) {
+                        ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
+                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png"));
+                    }
+                    else {
+                        ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
+                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+                    }
                     break;
             }
         }

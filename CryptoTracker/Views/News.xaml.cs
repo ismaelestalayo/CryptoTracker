@@ -45,7 +45,7 @@ namespace CryptoTracker.Views {
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
 
-            String response = "";
+            var response = "";
 
             try {
                 httpResponse = await httpClient.GetAsync(uri);
@@ -65,22 +65,26 @@ namespace CryptoTracker.Views {
                         tags        = data["Data"][i]["tags"].ToString(),
                         language    = data["Data"][i]["lang"].ToString(),
                     });
-                    newsAdaptiveGridView.ItemsSource = NewsTilesList;
+                    NewsAdaptiveGridView.ItemsSource = NewsTilesList;
                     
                 }
                 
-                //newsAdaptiveGridView.ItemsSource = NewsTilesList;
+                //NewsAdaptiveGridView.ItemsSource = NewsTilesList;
 
             } catch (Exception ex) {
-                var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+                await new MessageDialog(ex.Message).ShowAsync();
+            }
+            finally {
+                httpClient.Dispose();
+                httpResponse.Dispose();
             }
         }
 
         // ###############################################################################################
         //  AdaptiveGridView Elements
-        private void newsAdaptiveGridView_Click(object sender, ItemClickEventArgs e) {
+        private void NewsAdaptiveGridView_Click(object sender, ItemClickEventArgs e) {
 
-            newsAdaptiveGridView.PrepareConnectedAnimation("toWebView", e.ClickedItem, "GridView_Element");
+            NewsAdaptiveGridView.PrepareConnectedAnimation("toWebView", e.ClickedItem, "GridView_Element");
             this.Frame.Navigate(typeof(WebVieww), ((NewsItem)e.ClickedItem).url);
         }
     }

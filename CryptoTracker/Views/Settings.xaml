@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -150,14 +150,24 @@
             <!-- FOOTER
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
             <StackPanel Margin="0 15 0 0" Grid.Row="1" Orientation="Horizontal">
-                <Image Source="/Assets/CryptoTracker Square.png" Width="80" HorizontalAlignment="Left"/>
+                <controls:DropShadowPanel BlurRadius="6"
+                                  ShadowOpacity="0.5"
+                                  OffsetX="3"
+                                  OffsetY="3"
+                                  Color="{ThemeResource SystemBaseHighColor}"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  IsMasked="True">
+                    <Image x:Name="FooterLogo" Source="/Assets/CryptoTracker Square DarkT.png" Width="80" HorizontalAlignment="Left"/>
+                </controls:DropShadowPanel>
+                
                 <StackPanel Margin="10, 0">
-                    <TextBlock Text="CryptoTracker" FontSize="18" FontWeight="Bold"/>
+                    <TextBlock Text="Crypto Tracker" FontSize="18" FontWeight="Bold"/>
                     <TextBlock Text="Made with ❤ by an engineering student." FontWeight="Light"/>
-                    <TextBlock Name="VersionTextBlock" Text="Version: 3.X.X" FontWeight="Light"/>
+                    <TextBlock Name="VersionTextBlock" Text="Version: 5.X.X" FontWeight="Light"/>
                     <HyperlinkButton NavigateUri="https://ismaelestalayo.com/" 
                         Content    ="https://ismaelestalayo.com/" 
-                        Margin="0, -6, 0, 0"
+                        Margin="0 -6 0 0"
                         Foreground="{ThemeResource HyperlinkForegroundThemeBrush}"
                         FontWeight="Light"/>
 

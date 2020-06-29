@@ -10,9 +10,9 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="5 0 0 0">
         <Grid>
-            <controls:AdaptiveGridView x:Name="newsAdaptiveGridView" OneRowModeEnabled="False"  
+            <controls:AdaptiveGridView x:Name="NewsAdaptiveGridView" OneRowModeEnabled="False"  
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
-                ItemClick="newsAdaptiveGridView_Click">
+                ItemClick="NewsAdaptiveGridView_Click">
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="views:NewsItem">
                         <Grid x:Name="GridView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 

@@ -4,6 +4,7 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
@@ -46,21 +47,21 @@ namespace CryptoTracker {
                 mainTitle.Text      = App.coinList.Find(x => x.Name == crypto).FullName + " (" + crypto + ")";
 
                 try {
-                    mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper() + ".png"));
+                    mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper(CultureInfo.InvariantCulture) + ".png"));
                 } catch(Exception) {
                     mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/iconNULL.png"));
                 }
                 mainTitleLogo.Visibility = Visibility.Visible;
 
                 try {
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_color"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper() + "_colorT"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper(CultureInfo.InvariantCulture) + "_color"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper(CultureInfo.InvariantCulture) + "_colorT"]).Color;
                 } catch {
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
                 }
 
-                FavIcon.Content = App.pinnedCoins.Contains(crypto.ToUpper()) ? "\uEB52" : "\uEB51";
+                FavIcon.Content = App.pinnedCoins.Contains(crypto.ToUpper(CultureInfo.InvariantCulture)) ? "\uEB52" : "\uEB51";
 
                 InitValues();
             }
@@ -120,7 +121,7 @@ namespace CryptoTracker {
             await GetExchanges();
         }
 
-        private float GetMaximum(List<JSONhistoric> a) {
+        private static float GetMaximum(List<JSONhistoric> a) {
             int i = 0;
             float max = 0;
 
@@ -131,7 +132,7 @@ namespace CryptoTracker {
             }
             return max;
         }
-        private float GetMinimum(List<JSONhistoric> a) {
+        private static float GetMinimum(List<JSONhistoric> a) {
             int i = 0;
             float min = 15000;
 
