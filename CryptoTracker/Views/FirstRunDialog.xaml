@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="345"
+    d:DesignHeight="380"
     d:DesignWidth="550"
     CornerRadius="4"
     PrimaryButtonText="Ok">
@@ -13,8 +13,8 @@
     <ScrollViewer>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
-                <Image Source="/Assets/CryptoTracker Square DarkT.png" Width="35" Height="35" Margin="0 0 10 0"/>
-                <TextBlock x:Name="Title" VerticalAlignment="Center" Text="Welcome to CryptoTracker" FontSize="22"/>
+                <Image x:Name="logo" Source="/Assets/CryptoTracker Square DarkT.png" Width="35" Height="35" Margin="0 0 10 0"/>
+                <TextBlock x:Name="Title" VerticalAlignment="Center" Text="Welcome to CryptoTracker X.X.X" FontSize="22"/>
             </StackPanel>
 
             <TextBlock TextWrapping="WrapWholeWords">
@@ -38,6 +38,11 @@
                     email, Twitter or the Windows Store (contact on the settings page).
                 </Run>
                 
+                <LineBreak/>
+                <LineBreak/>
+                <Hyperlink Foreground="Gray" NavigateUri="https://ismaelestalayo.com/privacy">
+                    Privacy Policy
+                </Hyperlink>                
             </TextBlock>
         </StackPanel>
     </ScrollViewer>

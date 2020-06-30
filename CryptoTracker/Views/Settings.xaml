@@ -119,9 +119,12 @@
 
                     <TextBlock Text="I would love to hear your thoughts about the app." Style="{ThemeResource LabelTitle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Click="MailButton_Click" Content="ismael.em@outlook.com" Style="{ThemeResource Crypto_button_style}"/>
-                        <Button Click="TwitterButton_Click" Content="@ismaelestalayo" Style="{ThemeResource Crypto_button_style}" />
-                        <Button Content="Feedback Hub" x:Name="feedbackButton" Click="FeedbackButton_Click" Style="{ThemeResource Crypto_button_style}"/>
+                        <Button Click="MailButton_Click" Content="Email"
+                                Style="{ThemeResource Crypto_button_style}" ToolTipService.ToolTip="ismael.em@outlook.com"/>
+                        <Button Click="TwitterButton_Click" Content="Twitter"
+                                Style="{ThemeResource Crypto_button_style}" ToolTipService.ToolTip="@ismaelestalayo"/>
+                        <Button Content="Feedback Hub" x:Name="feedbackButton" Click="FeedbackButton_Click"
+                                Style="{ThemeResource Crypto_button_style}"/>
                     </StackPanel>
 
                     <TextBlock Text="And if you love the app and want to support it, you can donate here:" Style="{ThemeResource LabelTitle}"/>
@@ -138,12 +141,18 @@
                 </StackPanel>
 
                 <StackPanel Margin="30 0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Data provided by" Style="{ThemeResource LabelTitle}"/>
-                        <HyperlinkButton NavigateUri="https://www.cryptocompare.com/api" 
-                            Content="CryptoCompare API" Margin="5 -5 0 0"
-                            Foreground="{ThemeResource HyperlinkForegroundThemeBrush}"/>
-                    </StackPanel>
+                    <TextBlock Style="{ThemeResource LabelTitle}">
+                        <Run Text="Data provided by"/>
+                        <Hyperlink Foreground="Gray" NavigateUri="https://www.cryptocompare.com/api" >
+                            CryptoCompare API
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Style="{ThemeResource LabelTitle}">
+                        <Run Text="Crypto Tracker's"/>
+                        <Hyperlink Foreground="Gray" NavigateUri="https://ismaelestalayo.com/privacy">
+                            Privacy policy
+                        </Hyperlink>
+                    </TextBlock>
                 </StackPanel>
             </StackPanel>
 
