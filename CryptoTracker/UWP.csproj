@@ -7,7 +7,7 @@
     <ProjectGuid>{7E2C342E-1D50-499B-9006-7CD6AC674534}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Crypto_Tracker</RootNamespace>
+    <RootNamespace>CryptoTracker</RootNamespace>
     <AssemblyName>Crypto Tracker</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
@@ -18,8 +18,9 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>UWP_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>C00F25C576A19F833F682615F2787781B988221C</PackageCertificateThumbprint>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <PackageCertificateThumbprint>
+    </PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxPackageDir>C:\Users\ismae\Desktop\appxupload</AppxPackageDir>
