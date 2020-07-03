@@ -136,12 +136,14 @@ namespace CryptoTracker {
 
         // ###############################################################################################
         internal static void UpdatePinnedCoins() {
-            string s = "";
-            foreach (var item in App.pinnedCoins) {
-                s += item + "|";
+            if (App.pinnedCoins.Count > 0) { 
+                string s = "";
+                foreach (var item in App.pinnedCoins) {
+                    s += item + "|";
+                }
+                s = s.Remove(s.Length - 1);
+                App.localSettings.Values["Pinned"] = s;
             }
-            s = s.Remove(s.Length - 1);
-            App.localSettings.Values["Pinned"] = s;
         }
 
 
