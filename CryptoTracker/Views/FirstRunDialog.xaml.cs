@@ -19,7 +19,7 @@ namespace CryptoTracker.Views {
             var package = Package.Current;
             var version = package.Id.Version;
 
-            Title.Text = string.Format("Welcome to Crypto Tracker {0}.{1}.{2}", version.Major, version.Minor, version.Revision);
+            Title.Text = string.Format("Welcome to Crypto Tracker {0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
             logo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
                 new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));

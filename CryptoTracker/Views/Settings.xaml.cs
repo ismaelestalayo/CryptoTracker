@@ -31,7 +31,7 @@ namespace CryptoTracker {
 
             
             version = Package.Current.Id.Version;
-            VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}.", version.Major, version.Minor, version.Revision);
+            VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
             ThemeComboBox.PlaceholderText = App.localSettings.Values["Theme"].ToString();
             FooterLogo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? 
