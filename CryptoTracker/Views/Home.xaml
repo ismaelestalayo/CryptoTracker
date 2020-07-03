@@ -8,6 +8,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:views="using:CryptoTracker.Views"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     NavigationCacheMode="Enabled">
 
     <Page.Resources>
@@ -76,7 +77,8 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             
             <!-- TIME RADIO BUTTONS-->
@@ -247,6 +249,12 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
+
+            <StackPanel x:Name="EmptyPageWarning" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 150 0 0">
+                <TextBlock HorizontalTextAlignment="Center">
+                    <Run Text="Pin a coin from 'Top 100' with the 🤍 icon"/>
+                </TextBlock>
+            </StackPanel>
         </Grid>
     </ScrollViewer>
 

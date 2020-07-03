@@ -9,9 +9,7 @@ using Telerik.UI.Xaml.Controls.Chart;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker.Views {
@@ -24,16 +22,20 @@ namespace CryptoTracker.Views {
 
         public Home() {
             this.InitializeComponent();
+        }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e) {
             homeCoinList = new ObservableCollection<HomeTileClass>();
             PriceListView.ItemsSource = homeCoinList;
             VolumeListView.ItemsSource = homeCoinList;
 
             InitHome();
+
+            homeCoinList.CollectionChanged += HomeCoinList_CollectionChanged;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            UpdateAllCards();
+        private void HomeCoinList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            EmptyPageWarning.Visibility = (((Collection<HomeTileClass>)sender).Count > 0) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private async void InitHome() {
