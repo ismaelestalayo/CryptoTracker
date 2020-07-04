@@ -10,7 +10,6 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker.Views {
     public sealed partial class Home : Page {
@@ -46,7 +45,7 @@ namespace CryptoTracker.Views {
                 try {
                     await AddCoinHome(App.pinnedCoins[i]);
                     await UpdateCard(i);
-                } catch (Exception) {
+                } catch {
                     
                 }
             }

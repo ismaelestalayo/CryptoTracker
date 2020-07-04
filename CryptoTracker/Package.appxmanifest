@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5">
-  <Identity Name="54989IsmaelEstalayoMena.CoinBaseUnofficial" Publisher="CN=CE0D17DE-AC9B-4B2D-AE14-FFACDE33BF50" Version="4.6.1.0" />
+  <Identity Name="54989IsmaelEstalayoMena.CoinBaseUnofficial" Publisher="CN=CE0D17DE-AC9B-4B2D-AE14-FFACDE33BF50" Version="4.6.2.0" />
   <mp:PhoneIdentity PhoneProductId="513801eb-40f0-470e-9b23-ed3f9bab18dd" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>CryptoTracker</DisplayName>

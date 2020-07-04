@@ -3,7 +3,6 @@ using CryptoTracker.Views;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;

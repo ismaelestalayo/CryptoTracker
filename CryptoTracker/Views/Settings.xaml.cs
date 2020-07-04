@@ -1,23 +1,19 @@
-﻿using Microsoft.AppCenter.Analytics;
+﻿using CryptoTracker.Helpers;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
+using Windows.Services.Store;
 using Windows.System;
-using CryptoTracker.Helpers;
+using Windows.UI;
+using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System.Threading.Tasks;
-using Windows.Services.Store;
-using Newtonsoft.Json.Linq;
-using Windows.ApplicationModel;
-using Windows.UI.Popups;
-
-using Microsoft.Toolkit.Uwp.Helpers;
-using Windows.UI.ViewManagement;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace CryptoTracker {
