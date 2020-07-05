@@ -110,6 +110,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\API_CoinGecko.cs" />
     <Compile Include="Helpers\ChartData.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\CurrencyHelper.cs" />
