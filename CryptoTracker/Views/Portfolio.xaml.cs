@@ -1,8 +1,8 @@
 ﻿using CryptoTracker.Helpers;
+using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,9 +10,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
 
@@ -38,13 +36,6 @@ namespace CryptoTracker {
             DataGridd.ItemsSource = dataList;
 
 
-            UpdatePortfolio();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            base.OnNavigatedTo(e);
-            // If the current items of DataGridd doesn't match with the ones on dataList, update the ItemsSource
-            DataGridd.ItemsSource = dataList;
             UpdatePortfolio();
         }
 
@@ -127,33 +118,38 @@ namespace CryptoTracker {
         // ###############################################################################################
         private void UpdateProfits() {
             float total = 0;
-            // empty chart
-            PortfolioChartGrid.ColumnDefinitions.Clear();
-            PortfolioChartGrid.Children.Clear();
+            try {
+                // empty chart
+                PortfolioChartGrid.ColumnDefinitions.Clear();
+                PortfolioChartGrid.Children.Clear();
 
-            for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
-                total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
+                for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
+                    total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
 
 
-                ColumnDefinition col = new ColumnDefinition();
-                col.Width = new GridLength(dataList[i].Worth, GridUnitType.Star);
-                PortfolioChartGrid.ColumnDefinitions.Add(col);
+                    ColumnDefinition col = new ColumnDefinition();
+                    col.Width = new GridLength(dataList[i].Worth, GridUnitType.Star);
+                    PortfolioChartGrid.ColumnDefinitions.Add(col);
 
-                var s = new StackPanel();
-                s.BorderThickness = new Thickness(0);
-                s.Margin = new Thickness(1, 0, 1, 0);
-                var t = new TextBlock();
-                t.Text = dataList[i].Crypto;
-                t.FontSize = 12;
-                t.HorizontalAlignment = HorizontalAlignment.Center;
-                t.Margin = new Thickness(0, 7, 0, 7);
-                s.Children.Add(t);
-                try { s.Background = (SolidColorBrush)App.Current.Resources[ dataList[i].Crypto + "_colorT"]; }
-                catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
+                    var s = new StackPanel();
+                    s.BorderThickness = new Thickness(0);
+                    s.Margin = new Thickness(1, 0, 1, 0);
+                    var t = new TextBlock();
+                    t.Text = dataList[i].Crypto;
+                    t.FontSize = 12;
+                    t.HorizontalAlignment = HorizontalAlignment.Center;
+                    t.Margin = new Thickness(0, 7, 0, 7);
+                    s.Children.Add(t);
+                    try { s.Background = (SolidColorBrush)App.Current.Resources[dataList[i].Crypto + "_colorT"]; }
+                    catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
 
-                PortfolioChartGrid.Children.Add(s);
-                Grid.SetColumn(s, i);
+                    PortfolioChartGrid.Children.Add(s);
+                    Grid.SetColumn(s, i);
+                }
+            } catch (Exception ex){
+                Analytics.TrackEvent(string.Format("UpdateProfits({0})", ex));
             }
+            
 
         }
 

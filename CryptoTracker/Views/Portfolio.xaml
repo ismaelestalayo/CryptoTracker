@@ -7,7 +7,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls2="using:Microsoft.UI.Xaml.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-    NavigationCacheMode="Required"
+    NavigationCacheMode="Disabled"
     mc:Ignorable="d">
 
     <Page.Resources>
