@@ -3,7 +3,9 @@ using CryptoTracker.Views;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
@@ -23,21 +25,37 @@ namespace CryptoTracker {
         public PropertyNameDataPointBinding Valuee { get; set; }
     }
 
+    public class CoinDataWrapper : INotifyPropertyChanged {
+        private CoinData _cd;
+        public CoinData cd { get { return _cd; } set { _cd = value; OnPropertyChanged("cd"); } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+            this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
     public sealed partial class CoinDetails : Page {
-        internal static string crypto { get; set; }
-        private static int    limit = 60;
+        private static int limit = 60;
         private static string timeSpan = "hour";
+        private static ThreadPoolTimer PeriodicTimer;
+
+        internal string crypto { get; set; }
+        internal string coin = App.coin;
+        internal string coinSymbol = App.coinSymbol;
+        public CoinDataWrapper cdw { get; set; }
 
         public CoinDetails() {
             this.InitializeComponent();
 
+            cdw = new CoinDataWrapper();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             try {
                 var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
                 if (animation != null)
-                    animation.TryStart(PriceChart, new UIElement[]{ BottomPivot } );
+                    animation.TryStart(PriceChart, new UIElement[]{ BottomCards } );
                 
                 
                 // Page title
@@ -70,21 +88,19 @@ namespace CryptoTracker {
             }
         }
 
+        private void Page_Unloaded(object sender, RoutedEventArgs e) {
+            if (PeriodicTimer != null)
+                PeriodicTimer.Cancel();
+        }
+
         private async void InitValues() {
 
             JSONcoins coin = App.coinList.Find(x => x.Name == crypto);
-            JSONsnapshot snapshot = await App.GetCoinInfo(coin.Id);
-            //Description.Text = snapshot.Description;
-            try {
-                Description.Text = App.GetCoinDescription(crypto);
-                Website_link.Content = snapshot.WebSiteURL;
-                Website_link.NavigateUri = new Uri(snapshot.WebSiteURL);
-                Twitter_link.Content = snapshot.Twitter;
-                Twitter_link.NavigateUri = new Uri(string.Format("https://twitter.com/{0}", snapshot.Twitter));
-            } catch (Exception) { }
+            cdw.cd = await API_CoinGecko.GetCoin(coin.FullName);
+            cdw.cd.short_description = await App.GetCoinDescription(crypto, 3);
 
             TimeSpan period = TimeSpan.FromSeconds(30);
-            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+            PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                     RadioButton r = new RadioButton { Content = timeSpan };
                     if (timeSpan == "hour" && this.Frame.SourcePageType.Name == "CoinDetails")
@@ -115,7 +131,6 @@ namespace CryptoTracker {
             verticalAxis.Minimum = GetMinimum(App.historic);
             verticalAxis.Maximum = GetMaximum(App.historic);
             dateTimeAxis = App.AdjustAxis(dateTimeAxis, timeSpan);
-            await GetStats();
             await Get24Volume();
             await GetExchanges();
         }
@@ -205,20 +220,7 @@ namespace CryptoTracker {
                 LoadingControl.IsLoading = false;
         }
 
-        // copied to Home.xaml.cs
-        async private Task GetStats() {
-
-            await App.GetCoinStats(crypto, "defaultMarket");
-
-            statsOpen.Text  = App.stats.Open24;
-            statsHigh.Text  = App.stats.High24;
-            statsLow.Text   = App.stats.Low24;
-            statsVol24.Text = App.stats.Volume24;
-            supply.Text     = App.stats.Supply;
-            marketcap.Text  = App.stats.Marketcap;
-            totVol24.Text   = "Total Vol 24h: " + App.stats.Volume24;
-            totVol24to.Text = "Total Vol 24h to: " + App.stats.Volume24To;
-        }
+        
         async private Task Get24Volume() {
             await App.GetHisto(crypto, "hour", 24);
 
@@ -233,13 +235,6 @@ namespace CryptoTracker {
         }
         async private Task GetExchanges() {
             await App.GetTopExchanges(crypto, App.coin);
-
-            if (App.exchanges.Count != 0) {
-                noMarketsWarning.Visibility = Visibility.Collapsed;
-                MarketList.ItemsSource = App.exchanges;
-            } else {
-                noMarketsWarning.Visibility = Visibility.Visible;
-            }
         }
 
         // #########################################################################################
