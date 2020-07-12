@@ -222,6 +222,9 @@ namespace CryptoTracker.Helpers {
                 var data = JToken.Parse(response);
                 //CoinJSON coin_data = CoinJSON.HandleJSON(data);
                 var coinData = JToken.Parse(data.ToString()).ToObject<CoinData>();
+                string descr = await App.GetCoinDescription(coinData.symbol.ToUpper(CultureInfo.InvariantCulture), 5).ConfigureAwait(true);
+                if (!String.IsNullOrEmpty(descr))
+                    coinData.description.en = descr;
                 return coinData;
             }
             catch (Exception ex) {
