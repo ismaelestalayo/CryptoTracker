@@ -14,7 +14,7 @@
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
                 ItemClick="NewsAdaptiveGridView_Click">
                 <controls:AdaptiveGridView.ItemTemplate>
-                    <DataTemplate x:DataType="views:NewsItem">
+                    <DataTemplate x:DataType="views:NewsData">
                         <Grid x:Name="GridView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
                               Margin="1 5 1 0" CornerRadius="4">
 
@@ -25,13 +25,14 @@
 
                             <Image Stretch="UniformToFill" VerticalAlignment="Center">
                                 <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind imageURL}" />
+                                    <BitmapImage UriSource="{x:Bind imageurl}" />
                                 </Image.Source>
                             </Image>
 
                             <RelativePanel Grid.Row="1" Margin="5 5 5 5">
                                 <TextBlock Text="{x:Bind title}" Style="{StaticResource BaseTextBlockStyle}" 
                                     TextWrapping="WrapWholeWords" MaxLines="3"/>
+                                
                                 <TextBlock Text="{x:Bind source}" Style="{ThemeResource CaptionTextBlockStyle}"
                                     RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
                             </RelativePanel>
