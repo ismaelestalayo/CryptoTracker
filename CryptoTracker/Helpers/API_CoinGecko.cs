@@ -1,16 +1,16 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Globalization;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace CryptoTracker.Helpers {
 
     public class Description {
-        public string en { get; set; }
+        public string en { get; set; } = "No description.\n";
     }
 
     public class Links {
@@ -184,7 +184,6 @@ namespace CryptoTracker.Helpers {
         public string symbol { get; set; } = "null";
         public string name { get; set; } = "Null";
         public string hashing_algorithm { get; set; } = "null";
-        public string short_description { get; set; } = "No description";
         public Description description { get; set; } = new Description() { en = "" };
         public Links links { get; set; }
         public Image image { get; set; }
@@ -225,6 +224,8 @@ namespace CryptoTracker.Helpers {
                 string descr = await App.GetCoinDescription(coinData.symbol.ToUpper(CultureInfo.InvariantCulture), 5).ConfigureAwait(true);
                 if (!String.IsNullOrEmpty(descr))
                     coinData.description.en = descr;
+                else
+                    coinData.description.en = coinData.description.en.Split('\n')[0];
                 return coinData;
             }
             catch (Exception ex) {
