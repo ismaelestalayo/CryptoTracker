@@ -97,7 +97,6 @@ namespace CryptoTracker {
 
             JSONcoins coin = App.coinList.Find(x => x.Name == crypto);
             cdw.cd = await API_CoinGecko.GetCoin(coin.FullName);
-            cdw.cd.short_description = await App.GetCoinDescription(crypto, 3);
 
             TimeSpan period = TimeSpan.FromSeconds(30);
             PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {

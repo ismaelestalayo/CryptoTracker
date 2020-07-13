@@ -125,16 +125,14 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="10, 0" RelativePanel.AlignRightWithPanel="True">
-                <TextBlock
-                    x:Name="mainTitleVal"
+                <TextBlock x:Name="mainTitleVal"
                     Text="val€" FontSize="24"
-                    FontWeight="Normal"/>
+                    FontWeight="Medium"/>
 
-                <TextBlock
-                    x:Name="mainTitleDiff" 
+                <TextBlock x:Name="mainTitleDiff" 
                     Text="0%" VerticalAlignment="Bottom"
                     Margin="3 0 0 0"
-                    FontSize="19" FontWeight="Light"/>
+                    FontSize="18" FontWeight="Light"/>
             </StackPanel>
 
         </RelativePanel>
@@ -270,7 +268,7 @@
 
                         <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
                             <TextBlock Text="{x:Bind cdw.cd.description.en, Mode=OneWay}" TextWrapping="WrapWholeWords"
-                                       TextAlignment="Justify"/>
+                                       TextAlignment="Justify" Opacity="0.8"/>
                         </ScrollViewer>
                     </Grid>
 
@@ -281,7 +279,7 @@
                             <TextBlock Text="Stats" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                         </RelativePanel>
 
-                        <controls:UniformGrid Margin="10">
+                        <controls:UniformGrid Margin="10" Opacity="0.9">
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="Low (24h)" FontWeight="SemiBold"/>
                                 <LineBreak/>
@@ -322,14 +320,15 @@
                             </TextBlock>
                         </RelativePanel>
 
-                        <controls:UniformGrid Margin="10" Columns="1">
+                        <controls:UniformGrid Margin="10" Columns="1" Opacity="0.9">
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="Market Cap:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind cdw.cd.market_data.market_cap.eur, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}"
                                      Foreground="Green"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
-                                <Run Text="▲0" Foreground="Green" FontWeight="Light" FontSize="11"/>
-                                <Run Text="%" Foreground="Green" FontWeight="Light" FontSize="11"/>
+                                <Run Text="▲" Foreground="Green" FontWeight="Light" FontSize="11"/><Run 
+                                    Text="{x:Bind cdw.cd.market_data.market_cap_change_percentage_24h, Mode=OneWay, FallbackValue=0}" Foreground="Green" FontWeight="Light" FontSize="11"/><Run
+                                    Text="%" Foreground="Green" FontWeight="Light" FontSize="11"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="Circulating supply" FontWeight="SemiBold"/>
@@ -344,7 +343,7 @@
                     <!-- Volume card -->
                     <StackPanel Style="{ThemeResource CardStackPanel}" Grid.ColumnSpan="3">
                         <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Volume" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                            <TextBlock Text="Volume 24h" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiBold" RelativePanel.AlignRightWithPanel="True">
                                 <Run Text="{x:Bind cdw.cd.market_data.total_volume.eur, Mode=OneWay, FallbackValue=0,
                                     Converter={StaticResource StringFormatConverter}}"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}"/>
@@ -352,14 +351,6 @@
                         </RelativePanel>
 
                         <StackPanel Margin="10 0">
-                            <!--<TextBlock Margin="5" FontSize="16">
-                                <Run Text="Volume from (24h)" FontWeight="SemiBold"/>
-                                <LineBreak/>
-                                <Run Text="{x:Bind cdw.cd.market_data.total_volume.eur, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}"
-                                        Foreground="Green"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
-                                <Run Text="▲0%" Foreground="Green" FontWeight="Light" FontSize="11"/>
-                            </TextBlock>-->
-
                             <telerik:RadCartesianChart Height="140">
                                 <telerik:BarSeries
                                     x:Name="volumeChart"
