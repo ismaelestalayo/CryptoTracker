@@ -5,35 +5,58 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:views="using:CryptoTracker.Views"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     mc:Ignorable="d">
 
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="5 0 0 0">
+    <Page.Resources>
+        <DataTemplate x:Key="StringDataTemplate" x:DataType="x:String">
+            <Grid Background="{ThemeResource main_black}" Margin="0 0 2 0" CornerRadius="4" Height="18" VerticalAlignment="Bottom">
+                <TextBlock Padding="5" Text="{x:Bind}" FontSize="10" Foreground="White" 
+                    HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        <AcrylicBrush
+            x:Key="CustomInAppAcrylic" BackgroundSource="Backdrop" TintOpacity="0.75"
+            TintColor="{ThemeResource SystemAltHighColor}" FallbackColor="{ThemeResource SystemAltHighColor}" />
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="5 10 0 0">
         <Grid>
-            <controls:AdaptiveGridView x:Name="NewsAdaptiveGridView" OneRowModeEnabled="False"  
+            <controls:AdaptiveGridView x:Name="NewsAdaptiveGridView" OneRowModeEnabled="False"
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
                 ItemClick="NewsAdaptiveGridView_Click">
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="views:NewsData">
-                        <Grid x:Name="GridView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="1 5 1 0" CornerRadius="4">
+                        <Grid x:Name="GridView_Element" Background="{ThemeResource CustomInAppAcrylic}"
+                              Margin="1 2" CornerRadius="5">
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="7*"/>
-                                <RowDefinition Height="6*"/>
+                                <RowDefinition Height="4*"/>
                             </Grid.RowDefinitions>
 
-                            <Image Stretch="UniformToFill" VerticalAlignment="Center">
+                            <Image Stretch="UniformToFill" VerticalAlignment="Center" Grid.RowSpan="2">
                                 <Image.Source>
                                     <BitmapImage UriSource="{x:Bind imageurl}" />
                                 </Image.Source>
                             </Image>
 
-                            <RelativePanel Grid.Row="1" Margin="5 5 5 5">
-                                <TextBlock Text="{x:Bind title}" Style="{StaticResource BaseTextBlockStyle}" 
-                                    TextWrapping="WrapWholeWords" MaxLines="3"/>
-                                
-                                <TextBlock Text="{x:Bind source}" Style="{ThemeResource CaptionTextBlockStyle}"
+                            <RelativePanel Grid.Row="1" Padding="5" Background="{ThemeResource CustomInAppAcrylic}">
+                                <TextBlock x:Name="Title" Text="{x:Bind title}" Style="{StaticResource BaseTextBlockStyle}" 
+                                    TextWrapping="WrapWholeWords" MaxLines="2"/>
+
+                                <muxc:ItemsRepeater ItemsSource="{x:Bind categorylist}"
+                                                    ItemTemplate="{StaticResource StringDataTemplate}"
+                                                    RelativePanel.Below="Title"
+                                                    RelativePanel.AlignBottomWithPanel="True">
+                                    <muxc:ItemsRepeater.Layout>
+                                        <muxc:StackLayout Orientation="Horizontal"/>
+                                    </muxc:ItemsRepeater.Layout>
+                                </muxc:ItemsRepeater>
+
+                                <TextBlock Text="{x:Bind source}" Style="{ThemeResource CaptionTextBlockStyle}" Margin="0 2"
                                     RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
                             </RelativePanel>
 
@@ -42,8 +65,6 @@
                 </controls:AdaptiveGridView.ItemTemplate>
             </controls:AdaptiveGridView>
         </Grid>
-
     </ScrollViewer>
 
-    
 </Page>

@@ -75,6 +75,8 @@ namespace CryptoTracker.Views {
                 var news = JToken.Parse(data.ToString()).ToObject<NewsItem>();
                 foreach (NewsData n in news.Data) {
                     n.categorylist = n.categories.Split('|').ToList();
+                    if (n.categorylist.Count > 3)
+                        n.categorylist = n.categorylist.GetRange(1, 3);
                 }
                 NewsAdaptiveGridView.ItemsSource = news.Data;
 
