@@ -35,9 +35,10 @@ namespace CryptoTracker {
             dataList = ReadPortfolio().Result;
             DataGridd.ItemsSource = dataList;
 
-
             UpdatePortfolio();
         }
+
+        
 
         // ###############################################################################################
         //  Add new purchase
@@ -106,7 +107,9 @@ namespace CryptoTracker {
 
                 double earningz = Math.Round((curr - priceBought) * dataList[i].CryptoQty, 4);
                 dataList[i].arrow = earningz < 0 ? "▼" : "▲";
-                dataList[i].Delta = Math.Round(curr / priceBought, 2) * 100; // percentage
+                dataList[i].Delta = Math.Round(curr / priceBought, 2) * 100;
+                if (dataList[i].Delta > 100)
+                    dataList[i].Delta -= 100;
                 dataList[i].Profit = Math.Round(Math.Abs(earningz), 2).ToString();
                 dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
                 dataList[i].Worth = Math.Round(curr * dataList[i].CryptoQty, 2);
