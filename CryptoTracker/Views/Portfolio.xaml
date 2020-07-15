@@ -219,26 +219,26 @@
                                 <RowDefinition Height="25"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="170"/>
-                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*" MinWidth="150"/>
+                                <ColumnDefinition Width="*" MinWidth="170"/>
+                                <ColumnDefinition Width="*" MinWidth="140"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <!-- First Row-->
-                            <Grid Grid.Row="0" Grid.Column="0" Margin="15 0 0 0">
+                            <Grid Grid.Row="0" Grid.Column="0" Margin="15 0 0 0" MaxWidth="150">
                                 <TextBlock Text="Buy price:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
                                 <TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}">
                                     <Run Text="{Binding BoughtAt, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
                                 </TextBlock>
                             </Grid>
-                            <Grid Grid.Row="0" Grid.Column="1" Margin="25 0 0 0">
+                            <Grid Grid.Row="0" Grid.Column="1" Margin="25 0 0 0" MaxWidth="170">
                                 <TextBlock Text="Currently:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
                                 <TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}">
                                     <Run Text="{Binding Current, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
                                 </TextBlock>
                             </Grid>
-                            <Grid Grid.Row="0" Grid.Column="2" Margin="25 0 0 0">
+                            <Grid Grid.Row="0" Grid.Column="2" Margin="25 0 0 0" MaxWidth="140">
                                 <TextBlock Text="Delta:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
                                 <TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="SemiBold">
                                     <Run Text="{Binding arrow, Mode=OneWay}"/><Run Text="{Binding Delta, Mode=OneWay}"/><Run Text="%"/>
@@ -247,19 +247,19 @@
 
 
                             <!-- Second Row-->
-                            <Grid Grid.Row="1" Grid.Column="0" Margin="15 0 0 0">
+                            <Grid Grid.Row="1" Grid.Column="0" Margin="15 0 0 0" MaxWidth="150">
                                 <TextBlock Text="Cost:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
                                 <TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}">
                                     <Run Text="{Binding InvestedQty, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
                                 </TextBlock>
                             </Grid>
-                            <Grid Grid.Row="1" Grid.Column="1" Margin="25 0 0 0">
+                            <Grid Grid.Row="1" Grid.Column="1" Margin="25 0 0 0" MaxWidth="170">
                                 <TextBlock Text="Worth:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
                                 <TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}">
                                     <Run Text="{Binding Worth, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
                                 </TextBlock>
                             </Grid>
-                            <Grid Grid.Row="1" Grid.Column="2" Margin="25 0 0 0">
+                            <Grid Grid.Row="1" Grid.Column="2" Margin="25 0 0 0" MaxWidth="140">
                                 <TextBlock Text="Diff:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
                                 <TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}" Foreground="{Binding ProfitFG, Mode=OneWay}" FontWeight="SemiBold">
                                     <Run
@@ -271,8 +271,10 @@
 
 
                             <!-- Third Row-->
-                            <Grid Grid.Row="2" Grid.Column="0" Margin="15 0 0 0" Grid.ColumnSpan="2">
+                            <Grid Grid.Row="2" Grid.Column="0" Margin="15 0 0 0" MaxWidth="150">
                                 <TextBlock Text="Date:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="1" Margin="15 0 0 0" MaxWidth="170">
                                 <CalendarDatePicker Date="{Binding Date, Mode=TwoWay}" Margin="0 -2"
                                     DateChanged="purchaseDate_changed" 
                                     DateFormat="{}{day.integer} {month.full} {year.full}"/>
