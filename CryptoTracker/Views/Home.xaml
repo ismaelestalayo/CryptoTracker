@@ -23,24 +23,6 @@
             <Setter Property="Margin" Value="0, 2"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
         </Style>
-
-        <MenuFlyout x:Key="CoinListFlyout">
-            <MenuFlyoutItem Text="Unpin" Click="UnpinCoin">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA92;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Move up" Click="MoveCoinUp">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74A;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Move down" Click="MoveCoinDown">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74B;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-        </MenuFlyout>
     </Page.Resources>
 
     <!-- 
@@ -99,11 +81,30 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
                         <Grid x:Name="PriceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0 5 -5 5" Height="210" CornerRadius="5" ContextFlyout="{StaticResource CoinListFlyout}" Opacity="{x:Bind _opacity, Mode=OneWay}">
+                              Margin="0 5 -5 5" Height="210" CornerRadius="5" Opacity="{x:Bind _opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
+                            <Grid.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Unpin" Click="UnpinCoin">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA92;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Move up" Click="MoveCoinUp">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74A;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Move down" Click="MoveCoinDown">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74B;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </Grid.ContextFlyout>
 
                             <controls:Loading 
                                 x:Name="LoadingControl"
@@ -169,12 +170,32 @@
                       Grid.Row="1" Grid.Column="1">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="views:HomeTileClass">
-                        <Grid x:Name="VolumeListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-                              Margin="-5 5 0 5" Height="210" CornerRadius="5" ContextFlyout="{StaticResource CoinListFlyout}" Opacity="{x:Bind _opacity, Mode=OneWay}">
+                        <Grid x:Name="VolumeListView_Element" Height="210"
+                            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+                            Margin="-5 5 0 5" CornerRadius="5" Opacity="{x:Bind _opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
+                            <Grid.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Unpin" Click="UnpinCoin">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA92;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Move up" Click="MoveCoinUp">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74A;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Move down" Click="MoveCoinDown">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74B;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </Grid.ContextFlyout>
 
                             <Grid Margin="5, -2">
                                 <Grid.ColumnDefinitions>
