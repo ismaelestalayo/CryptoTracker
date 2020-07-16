@@ -110,6 +110,10 @@ namespace CryptoTracker {
                     var p1 = (Portfolio)ContentFrame.Content;
                     p1.UpdatePortfolio();
                     break;
+                case "News":
+                    var p3 = (News)ContentFrame.Content;
+                    p3.GetNews();
+                    break;
             }
 
             SyncIcon.Visibility = Visibility.Visible;
