@@ -6,8 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ex="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:views="using:CryptoTracker.Views"
-    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
+    NavigationCacheMode="Disabled"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -22,11 +23,41 @@
             TintColor="{ThemeResource SystemAltHighColor}" FallbackColor="{ThemeResource SystemAltHighColor}" />
     </Page.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="5 10 0 0">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="5 5 0 0">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <controls:TokenizingTextBox
+                x:Name="CategoriesTokenBox" Grid.Row="0" MinWidth="270"
+                Margin="2 5 0 10" BorderThickness="0" Background="{ThemeResource SystemAltHighColor}"
+                PlaceholderText="Filter categories"
+                QueryIcon="{ex:SymbolIconSource Symbol=Find}"
+                MaxHeight="104" HorizontalAlignment="Left"
+                TextMemberPath="Text" TokenDelimiter=",">
+                <controls:TokenizingTextBox.SuggestedItemTemplate>
+                    <DataTemplate x:DataType="views:NewsCategories">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind categoryName}" Padding="4 0 0 0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:TokenizingTextBox.SuggestedItemTemplate>
+                <controls:TokenizingTextBox.TokenItemTemplate>
+                    <DataTemplate x:DataType="views:NewsCategories">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind categoryName}" Padding="4 0 0 0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:TokenizingTextBox.TokenItemTemplate>
+            </controls:TokenizingTextBox>
+            
             <controls:AdaptiveGridView x:Name="NewsAdaptiveGridView" OneRowModeEnabled="False"
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
-                ItemClick="NewsAdaptiveGridView_Click">
+                ItemClick="NewsAdaptiveGridView_Click" Grid.Row="1">
+                <controls:AdaptiveGridView.OpacityTransition>
+                    <ScalarTransition />
+                </controls:AdaptiveGridView.OpacityTransition>
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="views:NewsData">
                         <Grid x:Name="GridView_Element" Background="{ThemeResource CustomInAppAcrylic}"
@@ -63,6 +94,7 @@
                         </Grid>
                     </DataTemplate>
                 </controls:AdaptiveGridView.ItemTemplate>
+                
             </controls:AdaptiveGridView>
         </Grid>
     </ScrollViewer>
