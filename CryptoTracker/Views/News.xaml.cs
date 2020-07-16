@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -25,28 +24,21 @@ namespace CryptoTracker.Views {
         public bool HasWarning { get; set; }
     }
 
-    public class SourceInfo {
-        public string name { get; set; }
-        public string lang { get; set; }
-        public string img { get; set; }
-    }
-
     public class NewsData {
         public string id { get; set; }
         public string guid { get; set; }
         public int published_on { get; set; }
-        public string imageurl { get; set; }
-        public string title { get; set; } = "null";
+        public string imageurl { get; set; } = "ms-appx:///Assets/transparent.png";
+        public string title { get; set; } = "Loading...";
         public string url { get; set; } = "null";
-        public string source { get; set; } = "null";
+        public string source { get; set; } = "";
         public string body { get; set; }
         public string tags { get; set; }
-        public string categories { get; set; } = "null";
-        public List<string> categorylist { get; set; }
+        public string categories { get; set; } = "cat";
+        public List<string> categorylist { get; set; } = new List<string>();
         public string upvotes { get; set; }
         public string downvotes { get; set; }
         public string lang { get; set; }
-        public SourceInfo source_info { get; set; }
     }
 
 
@@ -66,7 +58,7 @@ namespace CryptoTracker.Views {
     // ###############################################################################################
     // ###############################################################################################
     public sealed partial class News : Page {
-        
+        private NewsData[] _emptyNews = Enumerable.Repeat(new NewsData(), 30).ToArray();
         private List<String> _filters { get; set; }
         private List<NewsCategories> _categories { get; set; }
         private AdvancedCollectionView _acv;
@@ -104,16 +96,17 @@ namespace CryptoTracker.Views {
 
         // ###############################################################################################
         internal async Task GetNews() {
+            NewsAdaptiveGridView.IsItemClickEnabled = false;
+            NewsAdaptiveGridView.ItemsSource = _emptyNews;
+
             string URL = "https://min-api.cryptocompare.com/data/v2/news/?lang=EN";
             if (_filters.Count > 0)
                 URL += string.Format("&categories={0}", string.Join(",", _filters));
-
+            
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
 
-            NewsAdaptiveGridView.Opacity = 0.5;
-            NewsAdaptiveGridView.IsItemClickEnabled = false;
 
             try {
                 httpResponse = await httpClient.GetAsync(uri);
@@ -129,6 +122,7 @@ namespace CryptoTracker.Views {
                         n.categorylist = n.categorylist.GetRange(1, 3);
                 }
                 NewsAdaptiveGridView.ItemsSource = news.Data;
+                NewsAdaptiveGridView.IsItemClickEnabled = true;
 
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
@@ -136,9 +130,6 @@ namespace CryptoTracker.Views {
             finally {
                 httpClient.Dispose();
                 httpResponse.Dispose();
-
-                NewsAdaptiveGridView.Opacity = 1;
-                NewsAdaptiveGridView.IsItemClickEnabled = true;
             }
         }
 
