@@ -139,19 +139,33 @@ namespace CryptoTracker {
                 var helper = new RoamingObjectStorageHelper();
                 var portfolio = Portfolio.dataList;
 
-                ContentDialog exportDialog = new ContentDialog() {
-                    Title = $"Export {portfolio.Count} purchases?",
-                    Content = "This will create a backup of your current portfolio in the cloud.",
-                    DefaultButton = ContentDialogButton.Primary,
-                    PrimaryButtonText = "Export",
-                    CloseButtonText = "Cancel"
-                };
+                if (portfolio == null || portfolio.Count == 0) {
+                    await new ContentDialog() {
+                        Title = "Empty portfolio",
+                        Content = "Your current portfolio is empty.",
+                        DefaultButton = ContentDialogButton.Primary,
+                        PrimaryButtonText = "Export",
+                        IsPrimaryButtonEnabled = false,
+                        CloseButtonText = "Cancel",
+                        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                    }.ShowAsync();
+                }
 
-                var response = await exportDialog.ShowAsync();                
+                else {
+                    ContentDialog exportDialog = new ContentDialog() {
+                        Title = $"Export {portfolio.Count} purchases?",
+                        Content = "This will create a backup of your current portfolio in the cloud.",
+                        DefaultButton = ContentDialogButton.Primary,
+                        PrimaryButtonText = "Export",
+                        CloseButtonText = "Cancel",
+                        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                    };
+                    var response = await exportDialog.ShowAsync();
 
-                if (response == ContentDialogResult.Primary)
-                    await helper.SaveFileAsync(portfolioKey, portfolio);
-            } catch  {
+                    if (response == ContentDialogResult.Primary)
+                        await helper.SaveFileAsync(portfolioKey, portfolio);
+                }
+            } catch (Exception ex) {
                 await new MessageDialog("Error uploading your portfolio. Try again later.").ShowAsync();
             }
         }
@@ -168,7 +182,8 @@ namespace CryptoTracker {
                     Content = "This will clear your current portfolio and download your backup.",
                     DefaultButton = ContentDialogButton.Primary,
                     PrimaryButtonText = "Import",
-                    CloseButtonText = "Cancel"
+                    CloseButtonText = "Cancel",
+                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
                 };
 
                 var response = await importDialog.ShowAsync();
@@ -183,7 +198,8 @@ namespace CryptoTracker {
                     DefaultButton = ContentDialogButton.Primary,
                     IsPrimaryButtonEnabled = false,
                     PrimaryButtonText = "Import",
-                    CloseButtonText = "Cancel"
+                    CloseButtonText = "Cancel",
+                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
                 };
                 await importDialog.ShowAsync();
             }
