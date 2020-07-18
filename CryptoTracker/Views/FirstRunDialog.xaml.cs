@@ -5,7 +5,6 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-// La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace CryptoTracker.Views {
     /// <summary>
@@ -22,7 +21,7 @@ namespace CryptoTracker.Views {
             Title.Text = string.Format("Welcome to Crypto Tracker {0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
             logo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
-                new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+                new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-AppIcon-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-AppIcon-D.png"));
         }
         
     }
