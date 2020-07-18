@@ -31,7 +31,7 @@ namespace CryptoTracker {
 
             ThemeComboBox.PlaceholderText = App.localSettings.Values["Theme"].ToString();
             FooterLogo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? 
-                new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+                new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-D.png"));
             
 
             switch (App.localSettings.Values["Coin"]) {
@@ -212,21 +212,21 @@ namespace CryptoTracker {
             App.localSettings.Values["Theme"] = theme;
             switch (theme) {
                 case "Light":
-                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-D.png"));
                     ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
                     break;
                 case "Dark":
-                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png"));
+                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-L.png"));
                     ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
                     break;
                 case "Windows":
                     if (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) {
                         ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
-                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png"));
+                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-L.png"));
                     }
                     else {
                         ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
-                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-D.png"));
                     }
                     break;
             }
