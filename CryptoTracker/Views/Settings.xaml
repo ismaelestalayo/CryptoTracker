@@ -167,7 +167,7 @@
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"
                                   IsMasked="True">
-                    <Image x:Name="FooterLogo" Source="/Assets/CryptoTracker Square DarkT.png" Width="80" HorizontalAlignment="Left"/>
+                    <Image x:Name="FooterLogo" Source="/Assets/CryptoTracker-Asset-Tile-D.png" Width="80" HorizontalAlignment="Left"/>
                 </controls:DropShadowPanel>
                 
                 <StackPanel Margin="10, 0">

@@ -13,7 +13,7 @@
     <ScrollViewer>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
-                <Image x:Name="logo" Source="/Assets/CryptoTracker Square DarkT.png" Width="35" Height="35" Margin="0 0 10 0"/>
+                <Image x:Name="logo" Source="/Assets/CryptoTracker-Asset-Tile-D.png" Width="35" Height="35" Margin="0 0 10 0"/>
                 <TextBlock x:Name="Title" VerticalAlignment="Center" Text="Welcome to CryptoTracker X.X.X" FontSize="22"/>
             </StackPanel>
 

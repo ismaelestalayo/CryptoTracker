@@ -158,10 +158,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\CryptoTracker Square DarkT.png" />
-    <Content Include="Assets\CryptoTracker Square LightT.png" />
-    <Content Include="Assets\CryptoTracker Square.png" />
-    <Content Include="Assets\CryptoTracker Wide.png" />
+    <Content Include="Assets\CryptoTracker-Asset-AppIcon-D.png" />
+    <Content Include="Assets\CryptoTracker-Asset-AppIcon-L.png" />
+    <Content Include="Assets\CryptoTracker-Asset-Tile-D.png" />
+    <Content Include="Assets\CryptoTracker-Asset-Tile-L.png" />
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
     <Content Include="Assets\Icons\iconBCN.png" />
