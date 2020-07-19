@@ -95,6 +95,7 @@
                         <Setter Target="UniformGrid.Columns" Value="4"/>
                         <Setter Target="UniformGrid.Rows" Value="2"/>
                         <Setter Target="UniformGrid.Height" Value="370"/>
+                        <Setter Target="InfoCard.(Grid.ColumnSpan)" Value="2"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -257,7 +258,7 @@
                 <controls:UniformGrid Grid.Row="0" x:Name="UniformGrid" Rows="3" Columns="2" Height="700">
                     
                     <!-- Info card -->
-                    <Grid Style="{ThemeResource CardGrid}" Grid.RowSpan="2">
+                    <Grid x:Name="InfoCard" Style="{ThemeResource CardGrid}" Grid.RowSpan="2" Grid.ColumnSpan="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
