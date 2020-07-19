@@ -29,19 +29,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <MenuFlyout x:Key="PortfolioListFlyout">
-            <MenuFlyoutItem Text="Edit" Click="RemovePortfolio_Click">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-        </MenuFlyout>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
@@ -198,9 +185,14 @@
                         <Setter Property="controls:DataGridRow.ContextFlyout">
                             <Setter.Value>
                                 <MenuFlyout>
+                                    <MenuFlyoutItem Text="See coin" Click="GoToCoinPortfolio_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="Find"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
+                                            <SymbolIcon Symbol="Delete"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                 </MenuFlyout>

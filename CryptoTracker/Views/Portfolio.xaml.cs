@@ -156,6 +156,12 @@ namespace CryptoTracker {
 
         }
 
+        private void GoToCoinPortfolio_Click(object sender, RoutedEventArgs e) {
+            var menu = sender as MenuFlyoutItem;
+            var item = menu.DataContext as PurchaseClass;
+            this.Frame.Navigate(typeof(CoinDetails), item.Crypto);
+        }
+
         private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
             var menu = sender as MenuFlyoutItem;
             var item = menu.DataContext as PurchaseClass;
