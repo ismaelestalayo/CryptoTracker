@@ -181,10 +181,10 @@ namespace CryptoTracker.Helpers {
 
     public class CoinData : INotifyPropertyChanged {
         public string id { get; set; } = "null";
-        public string symbol { get; set; } = "null";
+        public string symbol { get; set; } = "NULL";
         public string name { get; set; } = "Null";
         public string hashing_algorithm { get; set; } = "null";
-        public Description description { get; set; } = new Description() { en = "" };
+        public Description description { get; set; } = new Description();
         public Links links { get; set; }
         public Image image { get; set; }
         public string genesis_date { get; set; } = "null";
@@ -210,6 +210,8 @@ namespace CryptoTracker.Helpers {
     class API_CoinGecko {
         // Get current data (name, price, market...) for a coin
         public static async Task<CoinData> GetCoin(string coin) {
+            if (coin == "XRP")
+                coin = "Ripple";
             coin = coin.ToLower(CultureInfo.InvariantCulture);
             string URL = string.Format("https://api.coingecko.com/api/v3/coins/{0}?localization=false&tickers=false&community_data=false&developer_data=false", coin);
             Uri uri = new Uri(URL);
