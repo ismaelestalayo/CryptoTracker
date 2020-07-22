@@ -121,8 +121,9 @@ namespace CryptoTracker {
                 ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(900, 550));
                 Window.Current.Activate();
             }
-
+#if !DEBUG
             AppCenter.Start("37e61258-8639-47d6-9f6a-d47d54cd8ad5", typeof(Analytics), typeof(Crashes));
+#endif
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
