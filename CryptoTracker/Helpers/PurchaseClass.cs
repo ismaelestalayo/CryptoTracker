@@ -8,62 +8,88 @@ namespace CryptoTracker.Helpers {
     [DataContractAttribute()]
     internal class PurchaseClass : INotifyPropertyChanged {
 
+        private string _exchange { get; set; }
         [DataMember()]
-        public string Exchange { get; set; }
+        public string Exchange {
+            get { return _exchange; }
+            set { _exchange = value; NotifyPropertyChanged(nameof(Exchange)); } }
+
         [DataMember()]
         public string Crypto { get; set; }
+
         [DataMember()]
         public string CryptoLogo { get; set; }
-        [DataMember()]
-        public double CryptoQty { get; set; }
-        [DataMember()]
-        public DateTimeOffset Date { get; set; }
-        [DataMember()]
-        public double Delta { get; set; }
-        [DataMember()]
-        public double InvestedQty { get; set; }
-        [DataMember()]
-        public double BoughtAt { get; set; }
-        [DataMember()]
-        public string c { get; set; }
-        [DataMember()]
-        public string arrow { get; set; }
 
-        public SolidColorBrush ProfitFG { get; set; }
+        private double _cryptoQty { get; set; }
+        [DataMember()]
+        public double CryptoQty {
+            get { return _cryptoQty; }
+            set { _cryptoQty = value; NotifyPropertyChanged(nameof(CryptoQty)); } }
 
-        private double _curr;
+        [DataMember()]
+        public DateTimeOffset Date { get; set; } = DateTime.Today;
+
+        private double _delta { get; set; }
+        [DataMember()]
+        public double Delta {
+            get { return _delta; }
+            set { _delta = value; NotifyPropertyChanged(nameof(Delta)); } }
+
+        private double _investedQty { get; set; }
+        [DataMember()]
+        public double InvestedQty {
+            get { return _investedQty; }
+            set { _investedQty = value; NotifyPropertyChanged(nameof(InvestedQty)); } }
+
+        private double _boughtAt { get; set; }
+        [DataMember()]
+        public double BoughtAt {
+            get { return _boughtAt; }
+            set { _boughtAt = value; NotifyPropertyChanged(nameof(BoughtAt)); } }
+
+        private string _c { get; set; } = App.coinSymbol;
+        [DataMember()]
+        public string c {
+            get { return _c; }
+            set { _c = value; NotifyPropertyChanged(nameof(c)); } }
+
+        private string _arrow { get; set; }
+        [DataMember()]
+        public string arrow {
+            get { return _arrow; }
+            set { _arrow = value; NotifyPropertyChanged(nameof(arrow)); } }
+
+
+        private SolidColorBrush _profitFG { get; set; }
+        public SolidColorBrush ProfitFG {
+            get { return _profitFG; }
+            set { _profitFG = value; NotifyPropertyChanged(nameof(ProfitFG)); } }
+
+        private double _curr { get; set; } = 0;
         [DataMember()]
         public double Current {
             get { return _curr; }
-            set { if (value != _curr) { _curr = value; NotifyPropertyChanged("Current");}}}
+            set { _curr = value; NotifyPropertyChanged(nameof(Current)); } }
 
-        private string _profit;
+        private string _profit { get; set; }
         [DataMember()]
         public string Profit {
             get { return _profit; }
-            set { if (value != _profit) { _profit = value; NotifyPropertyChanged("Profit"); } } }
+            set { _profit = value; NotifyPropertyChanged(nameof(Profit)); } }
 
-        private double _worth;
+        private double _worth { get; set; } = 0;
         [DataMember()]
         public double Worth {
             get { return _worth; }
-            set { if (value != _worth) { _worth = value; NotifyPropertyChanged("Worth"); } } }
-
-        //private DateTimeOffset _date;
-        //[DataMember()]
-        //public DateTimeOffset Date {
-        //    get { return _date; }
-        //    set { if (value != _date) { _date = value; NotifyPropertyChanged("Date"); } } }
-
+            set { _worth = value; NotifyPropertyChanged(nameof(Worth)); } }
 
 
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName]string propertyName = "") {
-            if (PropertyChanged != null) {
-                System.Diagnostics.Debug.WriteLine("Update now");
+            if (PropertyChanged != null) 
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            
         }
     }
 }

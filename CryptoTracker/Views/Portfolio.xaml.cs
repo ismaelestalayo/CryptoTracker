@@ -3,8 +3,10 @@ using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -22,15 +24,18 @@ namespace CryptoTracker {
     public partial class Portfolio : Page {
 
         internal static ObservableCollection<PurchaseClass> dataList { get; set; }
+        internal List<PurchaseClass> NewItem = new List<PurchaseClass>(1) { new PurchaseClass() };
+        internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
+
         private double curr = 0;
 
         public Portfolio() {
             this.InitializeComponent();
 
-            List<string> coinsArray = new List<string>();
-            foreach (JSONcoins coin in App.coinList)
-                coinsArray.Add(coin.Name);
-            CryptoComboBox.ItemsSource = coinsArray;
+            
+            //foreach (JSONcoins coin in App.coinList)
+            //    coinsArray.Add(coin.Name);
+            //CryptoComboBox.ItemsSource = coinsArray;
 
             dataList = ReadPortfolio().Result;
             DataGridd.ItemsSource = dataList;
@@ -116,6 +121,33 @@ namespace CryptoTracker {
             }
             UpdateProfits();
             SavePortfolio();
+        }
+
+        internal PurchaseClass UpdatePurchase(PurchaseClass purchase) {
+            string crypto = purchase.Crypto;
+
+            if (purchase.Current <= 0)
+                purchase.Current = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
+
+            curr = purchase.Current;
+            purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
+
+            // If the user has also filled the invested quantity, we can calculate everything else
+            if (purchase.InvestedQty > 0) {
+                double priceBought = (1 / purchase.CryptoQty) * purchase.InvestedQty;
+                priceBought = Math.Round(priceBought, 4);
+
+                double earningz = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
+                purchase.arrow = earningz < 0 ? "▼" : "▲";
+                purchase.Delta = Math.Round(curr / priceBought, 2) * 100;
+                if (purchase.Delta > 100)
+                    purchase.Delta -= 100;
+                purchase.Profit = Math.Round(Math.Abs(earningz), 2).ToString();
+                purchase.ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
+
+            }
+            
+            return purchase;
         }
 
         // ###############################################################################################
@@ -238,6 +270,24 @@ namespace CryptoTracker {
                 DataGridd.RowDetailsVisibilityMode = Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Visible;
                 DataGridd.GridLinesVisibility = Microsoft.Toolkit.Uwp.UI.Controls.DataGridGridLinesVisibility.Horizontal;
             }
+        }
+
+        private void AddPurchaseDialog_click(object sender, RoutedEventArgs e) {
+            NewItem = new List<PurchaseClass>() { new PurchaseClass() };
+            TestRepeater.ItemsSource = NewItem;
+            TestDialog.ShowAsync();
+        }
+
+        private void TestDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
+            //var z1 = string.IsNullOrEmpty(DialogCrypto.Text);
+            //var z2 = string.IsNullOrEmpty(DialogAmount.Text);
+            //var z3 = string.IsNullOrEmpty(DialogInvested.Text);
+        }
+
+        private void DialogBtn_LostFocus(object sender, RoutedEventArgs e) {
+            // If we have the coin and the quantity, we can update some properties
+            if (!string.IsNullOrEmpty(NewItem[0].Crypto) && NewItem[0].CryptoQty > 0)
+                NewItem[0] = UpdatePurchase(NewItem[0]);
         }
     }
 }
