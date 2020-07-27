@@ -137,7 +137,7 @@ namespace CryptoTracker {
         private async void UploadConfigButton_Click(object sender, RoutedEventArgs e) {
             try {
                 var helper = new RoamingObjectStorageHelper();
-                var portfolio = Portfolio.dataList;
+                var portfolio = Portfolio.PurchaseList;
 
                 if (portfolio == null || portfolio.Count == 0) {
                     await new ContentDialog() {

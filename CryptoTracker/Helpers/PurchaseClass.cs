@@ -3,10 +3,21 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace CryptoTracker.Helpers {
     [DataContractAttribute()]
     internal class PurchaseClass : INotifyPropertyChanged {
+
+        private bool _isComplete { get; set; } = false;
+        public bool IsComplete {
+            get { return _isComplete; }
+            set { _isComplete = value; NotifyPropertyChanged(nameof(IsComplete)); } }
+
+        private DateTime _lastUpdate { get; set; } = DateTime.Now;
+        public DateTime LastUpdate {
+            get { return _lastUpdate; }
+            set { _lastUpdate = value; NotifyPropertyChanged(nameof(LastUpdate)); } }
 
         private string _exchange { get; set; }
         [DataMember()]
@@ -30,7 +41,6 @@ namespace CryptoTracker.Helpers {
         public DateTimeOffset Date { get; set; } = DateTime.Today;
 
         private double _delta { get; set; }
-        [DataMember()]
         public double Delta {
             get { return _delta; }
             set { _delta = value; NotifyPropertyChanged(nameof(Delta)); } }
@@ -42,43 +52,37 @@ namespace CryptoTracker.Helpers {
             set { _investedQty = value; NotifyPropertyChanged(nameof(InvestedQty)); } }
 
         private double _boughtAt { get; set; }
-        [DataMember()]
         public double BoughtAt {
             get { return _boughtAt; }
             set { _boughtAt = value; NotifyPropertyChanged(nameof(BoughtAt)); } }
 
         private string _c { get; set; } = App.coinSymbol;
-        [DataMember()]
         public string c {
             get { return _c; }
             set { _c = value; NotifyPropertyChanged(nameof(c)); } }
 
         private string _arrow { get; set; }
-        [DataMember()]
         public string arrow {
             get { return _arrow; }
             set { _arrow = value; NotifyPropertyChanged(nameof(arrow)); } }
 
 
-        private SolidColorBrush _profitFG { get; set; }
+        private SolidColorBrush _profitFG { get; set; } = new SolidColorBrush(Color.FromArgb(255, 128, 128, 128));
         public SolidColorBrush ProfitFG {
             get { return _profitFG; }
             set { _profitFG = value; NotifyPropertyChanged(nameof(ProfitFG)); } }
 
         private double _curr { get; set; } = 0;
-        [DataMember()]
         public double Current {
             get { return _curr; }
             set { _curr = value; NotifyPropertyChanged(nameof(Current)); } }
 
         private string _profit { get; set; }
-        [DataMember()]
         public string Profit {
             get { return _profit; }
             set { _profit = value; NotifyPropertyChanged(nameof(Profit)); } }
 
         private double _worth { get; set; } = 0;
-        [DataMember()]
         public double Worth {
             get { return _worth; }
             set { _worth = value; NotifyPropertyChanged(nameof(Worth)); } }

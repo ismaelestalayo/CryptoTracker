@@ -3,13 +3,12 @@ using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -23,22 +22,19 @@ namespace CryptoTracker {
 
     public partial class Portfolio : Page {
 
-        internal static ObservableCollection<PurchaseClass> dataList { get; set; }
-        internal List<PurchaseClass> NewItem = new List<PurchaseClass>(1) { new PurchaseClass() };
+
+        internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
+        internal List<PurchaseClass> NewPurchase { get; set; }
         internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
+        //internal static List<string> fullCoinList = App.coinList.Select(x => x.Name).ToList();
 
         private double curr = 0;
 
         public Portfolio() {
             this.InitializeComponent();
 
-            
-            //foreach (JSONcoins coin in App.coinList)
-            //    coinsArray.Add(coin.Name);
-            //CryptoComboBox.ItemsSource = coinsArray;
-
-            dataList = ReadPortfolio().Result;
-            DataGridd.ItemsSource = dataList;
+            PurchaseList = ReadPortfolio().Result;
+            DataGridd.ItemsSource = PurchaseList;
 
             UpdatePortfolio();
         }
@@ -47,77 +43,72 @@ namespace CryptoTracker {
 
         // ###############################################################################################
         //  Add new purchase
-        private void AddButton_Click(object sender, RoutedEventArgs e) {
+        //private void AddButton_Click(object sender, RoutedEventArgs e) {
             
-            try {
-                string crypto = CryptoComboBox.SelectedItem.ToString();
-                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
+        //    try {
+        //        string crypto = CryptoComboBox.SelectedItem.ToString();
+        //        curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
 
-                // Calculate earnings/losings
-                double priceBought = (1 / CryptoQtyNumberBox.Value) * InvestedQtyNumberBox.Value;
-                priceBought = Math.Round(priceBought, 4);
-                double earningz = Math.Round((curr - priceBought) * CryptoQtyNumberBox.Value, 5);
+        //        // Calculate earnings/losings
+        //        double priceBought = (1 / CryptoQtyNumberBox.Value) * InvestedQtyNumberBox.Value;
+        //        priceBought = Math.Round(priceBought, 4);
+        //        double earningz = Math.Round((curr - priceBought) * CryptoQtyNumberBox.Value, 5);
 
-                // Get logo for the coin
-                string logoURL = "Assets/Icons/icon" + crypto + ".png";
-                if (!File.Exists(logoURL))
-                    logoURL = "https://chasing-coins.com/coin/logo/" + crypto;
-                else
-                    logoURL = "/" + logoURL;
+        //        // Get logo for the coin
+        //        string logoURL = "Assets/Icons/icon" + crypto + ".png";
+        //        if (!File.Exists(logoURL))
+        //            logoURL = "https://chasing-coins.com/coin/logo/" + crypto;
+        //        else
+        //            logoURL = "/" + logoURL;
                 
 
-                dataList.Add(new PurchaseClass {
-                    Crypto      = crypto,
-                    CryptoLogo  = logoURL,
-                    CryptoQty   = Math.Round(CryptoQtyNumberBox.Value, 5),
-                    Date        = DateTime.Today,
-                    Delta       = Math.Round( (curr / priceBought), 2) * 100, // percentage
-                    InvestedQty = InvestedQtyNumberBox.Value,
-                    BoughtAt    = Math.Round(priceBought, 4),
-                    arrow       = earningz < 0 ? "▼" : "▲",
-                    c           = App.coinSymbol,
-                    Current     = curr,
-                    Profit      = Math.Round(Math.Abs(earningz), 2).ToString(),
-                    ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"],
-                    Worth       = Math.Round( curr * CryptoQtyNumberBox.Value, 2)
-                });
+        //        PurchaseList.Add(new PurchaseClass {
+        //            Crypto      = crypto,
+        //            CryptoLogo  = logoURL,
+        //            CryptoQty   = Math.Round(CryptoQtyNumberBox.Value, 5),
+        //            Date        = DateTime.Today,
+        //            Delta       = Math.Round( (curr / priceBought), 2) * 100, // percentage
+        //            InvestedQty = InvestedQtyNumberBox.Value,
+        //            BoughtAt    = Math.Round(priceBought, 4),
+        //            arrow       = earningz < 0 ? "▼" : "▲",
+        //            c           = App.coinSymbol,
+        //            Current     = curr,
+        //            Profit      = Math.Round(Math.Abs(earningz), 2).ToString(),
+        //            ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"],
+        //            Worth       = Math.Round( curr * CryptoQtyNumberBox.Value, 2)
+        //        });                
 
-                // Clear user input
-                //CryptoQtyTextBox.Text = String.Empty;
-                //InvestedQtyTextBox.Text = String.Empty;
-                
+        //        // Update and save
+        //        UpdatePortfolio();
+        //        SavePortfolio();
 
-                // Update and save
-                UpdatePortfolio();
-                SavePortfolio();
-
-            } catch(Exception) {
-                //CryptoQtyTextBox.Text = String.Empty;
-                //InvestedQtyTextBox.Text = String.Empty;
-            }
-        }
+        //    } catch(Exception) {
+        //        //CryptoQtyTextBox.Text = String.Empty;
+        //        //InvestedQtyTextBox.Text = String.Empty;
+        //    }
+        //}
 
         // ###############################################################################################
         //  For sync all
         internal void UpdatePortfolio() {
 
             for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
-                string crypto = dataList[i].Crypto;
+                string crypto = PurchaseList[i].Crypto;
 
                 curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
 
-                dataList[i].Current = curr;
-                double priceBought = (1 / dataList[i].CryptoQty) * dataList[i].InvestedQty;
+                PurchaseList[i].Current = curr;
+                double priceBought = (1 / PurchaseList[i].CryptoQty) * PurchaseList[i].InvestedQty;
                 priceBought = Math.Round(priceBought, 4);
 
-                double earningz = Math.Round((curr - priceBought) * dataList[i].CryptoQty, 4);
-                dataList[i].arrow = earningz < 0 ? "▼" : "▲";
-                dataList[i].Delta = Math.Round(curr / priceBought, 2) * 100;
-                if (dataList[i].Delta > 100)
-                    dataList[i].Delta -= 100;
-                dataList[i].Profit = Math.Round(Math.Abs(earningz), 2).ToString();
-                dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
-                dataList[i].Worth = Math.Round(curr * dataList[i].CryptoQty, 2);
+                double earningz = Math.Round((curr - priceBought) * PurchaseList[i].CryptoQty, 4);
+                PurchaseList[i].arrow = earningz < 0 ? "▼" : "▲";
+                PurchaseList[i].Delta = Math.Round(curr / priceBought, 2) * 100;
+                if (PurchaseList[i].Delta > 100)
+                    PurchaseList[i].Delta -= 100;
+                PurchaseList[i].Profit = Math.Round(Math.Abs(earningz), 2).ToString();
+                PurchaseList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
+                PurchaseList[i].Worth = Math.Round(curr * PurchaseList[i].CryptoQty, 2);
             }
             UpdateProfits();
             SavePortfolio();
@@ -126,7 +117,7 @@ namespace CryptoTracker {
         internal PurchaseClass UpdatePurchase(PurchaseClass purchase) {
             string crypto = purchase.Crypto;
 
-            if (purchase.Current <= 0)
+            if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
                 purchase.Current = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
 
             curr = purchase.Current;
@@ -159,23 +150,23 @@ namespace CryptoTracker {
                 PortfolioChartGrid.Children.Clear();
 
                 for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
-                    total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
+                    total += float.Parse(PurchaseList[i].Current.ToString()) * (float)PurchaseList[i].CryptoQty;
 
 
                     ColumnDefinition col = new ColumnDefinition();
-                    col.Width = new GridLength(dataList[i].Worth, GridUnitType.Star);
+                    col.Width = new GridLength(PurchaseList[i].Worth, GridUnitType.Star);
                     PortfolioChartGrid.ColumnDefinitions.Add(col);
 
                     var s = new StackPanel();
                     s.BorderThickness = new Thickness(0);
                     s.Margin = new Thickness(1, 0, 1, 0);
                     var t = new TextBlock();
-                    t.Text = dataList[i].Crypto;
+                    t.Text = PurchaseList[i].Crypto;
                     t.FontSize = 12;
                     t.HorizontalAlignment = HorizontalAlignment.Center;
                     t.Margin = new Thickness(0, 7, 0, 7);
                     s.Children.Add(t);
-                    try { s.Background = (SolidColorBrush)App.Current.Resources[dataList[i].Crypto + "_colorT"]; }
+                    try { s.Background = (SolidColorBrush)App.Current.Resources[PurchaseList[i].Crypto + "_colorT"]; }
                     catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
 
                     PortfolioChartGrid.Children.Add(s);
@@ -199,7 +190,7 @@ namespace CryptoTracker {
             var item = menu.DataContext as PurchaseClass;
             var items = DataGridd.ItemsSource.Cast<PurchaseClass>().ToList();
             var index = items.IndexOf(item);
-            dataList.RemoveAt(index);
+            PurchaseList.RemoveAt(index);
             UpdatePortfolio();
             SavePortfolio();
         }
@@ -227,7 +218,7 @@ namespace CryptoTracker {
                     DataContractSerializer stuffSerializer =
                         new DataContractSerializer(typeof(List<PurchaseClass>));
 
-                    stuffSerializer.WriteObject(writeStream, dataList);
+                    stuffSerializer.WriteObject(writeStream, PurchaseList);
                     await writeStream.FlushAsync();
                     writeStream.Dispose();
 
@@ -257,7 +248,7 @@ namespace CryptoTracker {
         }
 
         internal static void importPortfolio(List<PurchaseClass>portfolio) {
-            dataList = new ObservableCollection<PurchaseClass>(portfolio);
+            PurchaseList = new ObservableCollection<PurchaseClass>(portfolio);
             SavePortfolio();
         }
 
@@ -273,21 +264,29 @@ namespace CryptoTracker {
         }
 
         private void AddPurchaseDialog_click(object sender, RoutedEventArgs e) {
-            NewItem = new List<PurchaseClass>() { new PurchaseClass() };
-            TestRepeater.ItemsSource = NewItem;
+            NewPurchase = new List<PurchaseClass>() { new PurchaseClass() };
+            TestRepeater.ItemsSource = NewPurchase;
             TestDialog.ShowAsync();
         }
 
         private void TestDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
-            //var z1 = string.IsNullOrEmpty(DialogCrypto.Text);
-            //var z2 = string.IsNullOrEmpty(DialogAmount.Text);
-            //var z3 = string.IsNullOrEmpty(DialogInvested.Text);
+            if (string.IsNullOrEmpty(NewPurchase[0].Crypto) || NewPurchase[0].CryptoQty <= 0 || NewPurchase[0].InvestedQty <= 0) {
+                args.Cancel = true;
+                new MessageDialog("Error.").ShowAsync();
+            }
+            else {
+                PurchaseList.Add(NewPurchase[0]);
+            }
         }
 
         private void DialogBtn_LostFocus(object sender, RoutedEventArgs e) {
+            // If we change the crypto, set the current price to 0 so everything updates
+            if (sender.GetType().Name == "ComboBox")
+                NewPurchase[0].Current = 0;
+
             // If we have the coin and the quantity, we can update some properties
-            if (!string.IsNullOrEmpty(NewItem[0].Crypto) && NewItem[0].CryptoQty > 0)
-                NewItem[0] = UpdatePurchase(NewItem[0]);
+            if (!string.IsNullOrEmpty(NewPurchase[0].Crypto) && NewPurchase[0].CryptoQty > 0)
+                NewPurchase[0] = UpdatePurchase(NewPurchase[0]);
         }
     }
 }

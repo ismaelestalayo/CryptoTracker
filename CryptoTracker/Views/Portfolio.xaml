@@ -30,36 +30,91 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-	</Page.Resources>
+        <DataTemplate x:DataType="helpers:PurchaseClass" x:Key="NewPurchaseDialog">
+            <controls:UniformGrid Columns="3" Rows="3" Margin="0 15" VerticalAlignment="Top">
+                <!-- Row 1 -->
+                <ComboBox
+					Header="Crypto"
+                    ItemsSource="{x:Bind Path=views:Portfolio.coinsArray}"
+					LostFocus="DialogBtn_LostFocus"
+					Margin="0 0 5 0"
+                    PlaceholderText="Coin"
+					SelectedValue="{x:Bind Crypto, Mode=TwoWay}"
+					Width="130"/>
+                <muxc:NumberBox
+					AcceptsExpression="True"
+					Header="Amount"
+					Margin="0 0 5 0" Minimum="0"
+					PlaceholderText="0"
+					LostFocus="DialogBtn_LostFocus"
+					HorizontalAlignment="Left"
+					Value="{x:Bind CryptoQty, Mode=TwoWay}"
+                    Width="130"/>
+                <muxc:NumberBox
+					AcceptsExpression="True"
+					Header="Invested"
+                    Foreground="{x:Bind ProfitFG, Mode=OneWay}"
+					Margin="0 0 5 0" Minimum="0"
+					PlaceholderText="0"
+					HorizontalAlignment="Left"
+					LostFocus="DialogBtn_LostFocus"
+					Value="{x:Bind InvestedQty, Mode=TwoWay}"
+					Width="130"/>
+
+                <!-- Row 2 -->
+                <DatePicker
+					Grid.Row="1"
+					Header="Date" HorizontalAlignment="Left"
+					Date="{x:Bind Date, Mode=OneWay}"
+					Grid.ColumnSpan="2"
+                    VerticalAlignment="Top"/>
+                <TextBox
+                    Header="Exchange"  HorizontalAlignment="Left"
+                    Text="{x:Bind Exchange, Mode=TwoWay}"
+                    PlaceholderText="CoinBase"
+                    VerticalAlignment="Top"
+                    Width="130"/>
+
+                <!-- Row 3 -->
+                <controls:HeaderedContentControl 
+                    Foreground="{ThemeResource TextControlHeaderForegroundDisabled}"
+                    Header="Worth" Margin="0 10 0 0" VerticalAlignment="Bottom">
+                    <StackPanel
+						Background="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"
+						BorderBrush="{ThemeResource TextControlBorderBrushDisabled}"
+						BorderThickness="1"
+						Padding="6" Margin="0 5 0 0"
+						CornerRadius="{ThemeResource ControlCornerRadius}"
+						Width="130">
+                        <TextBlock
+                            Foreground="{ThemeResource TextControlForegroundDisabled}">
+                            <Run Text="{x:Bind Worth, Mode=OneWay, FallbackValue=0}"/><Run Text="{x:Bind c, Mode=OneWay}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </controls:HeaderedContentControl>
+                <controls:HeaderedContentControl
+                    Foreground="{ThemeResource TextControlHeaderForegroundDisabled}"
+                    Header="Profit" Margin="0 10 0 0" VerticalAlignment="Bottom">
+                    <StackPanel
+						Background="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"
+						BorderBrush="{ThemeResource TextControlBorderBrushDisabled}"
+						BorderThickness="1"
+						Padding="6" Margin="0 5 0 0"
+						CornerRadius="{ThemeResource ControlCornerRadius}"
+						Width="130">
+                        <TextBlock
+                            Foreground="{x:Bind ProfitFG, Mode=OneWay, FallbackValue='Gray'}">
+                            <Run Text="{x:Bind Profit, Mode=OneWay, FallbackValue='0'}"/><Run Text="{x:Bind c, Mode=OneWay}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </controls:HeaderedContentControl>
+            </controls:UniformGrid>
+        </DataTemplate>
+
+        <converters:ColorConverter x:Key="ColorConverter"/>
+    </Page.Resources>
 
 	<Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
-		<!-- Adapt CoinDiversification stack placement -->
-		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup>
-				<VisualState x:Name="NarrowState">
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="0" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="DiversificationPanel.Margin" Value="0 10 0 0"/>
-					</VisualState.Setters>
-				</VisualState>
-
-				<VisualState x:Name="WideState">
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="900" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="DiversificationPanel.(Grid.Row)" Value="0"/>
-						<Setter Target="DiversificationPanel.(Grid.Column)" Value="1"/>
-						<Setter Target="DiversificationPanel.Margin" Value="0"/>
-						<Setter Target="PortfolioInfoGrid.ColumnDefinitions[0].Width" Value="auto"/>
-						<Setter Target="PortfolioInfoGrid.ColumnDefinitions[1].Width" Value="*"/>
-					</VisualState.Setters>
-				</VisualState>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
-
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>
@@ -68,52 +123,42 @@
 
 		<!-- 
 		############################################################################################################### -->
-		<Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 20 7 10">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="auto"/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="auto"/>
-			</Grid.ColumnDefinitions>
+        <Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 10 7 5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0" x:Name="PortfolioChartGrid" Background="Transparent" BorderThickness="0"
+				Height="32" VerticalAlignment="Center" CornerRadius="5" Margin="0 4 0 0">
+            </Grid>
 
-			<StackPanel Grid.Row="0" Orientation="Horizontal">
-				<ComboBox
-					x:Name="CryptoComboBox" Width="90" Margin="0 0 5 0"
-					PlaceholderText="Coin" Header="Crypto"/>
 
-				<muxc:NumberBox 
-					x:Name="CryptoQtyNumberBox" Header="Amount" Minimum="0"  PlaceholderText="0"
-					Width="70px" Margin="0 0 5 0" AcceptsExpression="True"/>
-				<muxc:NumberBox 
-					x:Name="InvestedQtyNumberBox" Header="Invested" Minimum="0" PlaceholderText="0"
-					Width="70px" Margin="0 0 5 0" AcceptsExpression="True"/>
-
-				<Button
-					Click="AddButton_Click" VerticalAlignment="Bottom" Style="{ThemeResource Crypto_button_style}"
-					Margin="0 0 3 0" ToolTipService.ToolTip="Add">
-					<SymbolIcon Symbol="Add"/>
-				</Button>
-				<Button 
-					Click="ToggleDetails_click" VerticalAlignment="Bottom" Style="{ThemeResource Crypto_button_style}"
-					Margin="0 0 3 0" ToolTipService.ToolTip="Toggle details">
-					<SymbolIcon Symbol="ShowBcc"/>
-				</Button>
-				<Button
-					Click="AddPurchaseDialog_click" VerticalAlignment="Bottom" Style="{ThemeResource Crypto_button_style}"
-					Margin="0 0 3 0" ToolTipService.ToolTip="Add">
-					<SymbolIcon Symbol="Add"/>
-				</Button>
-			</StackPanel>
-
-			<StackPanel x:Name="DiversificationPanel" Grid.Row="1">
-				<TextBlock Text="Coin diversification" Style="{ThemeResource InkToolbarFlyoutItemContentTextStyle}"/>
-				<Grid x:Name="PortfolioChartGrid" Background="Transparent" BorderThickness="0"
-					Height="32" VerticalAlignment="Center" CornerRadius="5" Margin="0 4 0 0">
-				</Grid>
-			</StackPanel>
-		</Grid>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 10 0 0">
+                <Button
+					Click="AddPurchaseDialog_click"
+                    Style="{ThemeResource Crypto_button_style}"
+					Margin="0 0 3 0"
+                    ToolTipService.ToolTip="Add"
+                    VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE109;" FontSize="15"/>
+                        <TextBlock Text="Add purchase" Margin="10 0 0 0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button 
+					Click="ToggleDetails_click"
+                    Style="{ThemeResource Crypto_button_style}"
+					Margin="0 0 3 0"
+                    ToolTipService.ToolTip="Toggle details"
+                    VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="ShowBcc"/>
+                        <TextBlock Text="Toggle details" Margin="10 0 0 0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
 
 
 
@@ -126,7 +171,7 @@
 				VerticalAlignment="Top" HorizontalAlignment="Stretch"
 				RowBackground="Transparent"
 				AutoGenerateColumns="False" HeadersVisibility="Column"
-				CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False"
+				CanUserSortColumns="True" CanUserReorderColumns="False" CanUserResizeColumns="False"
 				GridLinesVisibility="Horizontal" BorderBrush="{ThemeResource SystemControlDisabledChromeHighBrush}" BorderThickness="1 0"
 				HorizontalGridLinesBrush="{ThemeResource SystemControlDisabledChromeHighBrush}"
 				RowDetailsVisibilityMode="Collapsed" SelectionMode="Single">
@@ -290,7 +335,7 @@
 			</controls:DataGrid>
 		</ScrollViewer>
 
-		<ContentDialog
+        <ContentDialog
 			x:Name="TestDialog"
 			Grid.RowSpan="2"
 			Title="New purchase"
@@ -298,113 +343,11 @@
 			PrimaryButtonClick="TestDialog_PrimaryButtonClick"
 			CloseButtonText="Cancel"
 			DefaultButton="Primary">
-			<muxc:ItemsRepeater
-				x:Name="TestRepeater" VerticalAlignment="Top"
-				HorizontalAlignment="Center">
-				
-				<muxc:ItemsRepeater.ItemTemplate>
-					<DataTemplate x:DataType="helpers:PurchaseClass">
-						<controls:UniformGrid Columns="3" Rows="3" Margin="0 15" VerticalAlignment="Top">
-							<ComboBox
-								Header="Crypto"
-								ItemsSource="{x:Bind Path=views:Portfolio.coinsArray}"
-								Margin="0 0 5 0"
-								LostFocus="DialogBtn_LostFocus"
-								PlaceholderText="Coin"
-								SelectedValue="{x:Bind Crypto, Mode=TwoWay}"
-								Width="130"/>
-
-							<muxc:NumberBox
-								AcceptsExpression="True"
-								Header="Amount"
-								Minimum="0"
-								PlaceholderText="0"
-								LostFocus="DialogBtn_LostFocus"
-								Width="130"
-								Margin="0 0 5 0"
-								HorizontalAlignment="Left"
-								Value="{x:Bind CryptoQty, Mode=TwoWay}"/>
-							<muxc:NumberBox
-								AcceptsExpression="True"
-								Header="Invested"
-								Margin="0 0 5 0"
-								Minimum="0"
-								PlaceholderText="0"
-								HorizontalAlignment="Left"
-								LostFocus="DialogBtn_LostFocus"
-								Value="{x:Bind InvestedQty, Mode=TwoWay}"
-								Width="130"/>
-
-							<DatePicker
-								Grid.Row="1"
-								Header="Date"
-								Date="{x:Bind Date, Mode=OneWay}"
-								HorizontalAlignment="Left"
-								Margin="0 5 0 0"
-								Grid.ColumnSpan="2"/>
-
-							<StackPanel
-								HorizontalAlignment="Stretch"
-								Grid.Row="2"
-								Grid.ColumnSpan="2"
-								Orientation="Horizontal"
-								Margin="0 15 0 0">
-								<TextBlock Text="Worth: "/>
-								<TextBlock>
-									<Run Text=" "/>
-									<Run Text="{x:Bind Worth, Mode=OneWay, FallbackValue='0'}"/><Run 
-										Text="{x:Bind c, Mode=OneWay}"/>
-								</TextBlock>
-								<TextBlock Foreground="{x:Bind ProfitFG, Mode=OneWay}">
-									<Run
-										Text="{x:Bind arrow, Mode=OneWay}"/><Run Text="{x:Bind Delta, Mode=OneWay}"/><Run Text="%"/>
-								</TextBlock>
-							</StackPanel>
-							
-
-						</controls:UniformGrid>
-					</DataTemplate>
-				</muxc:ItemsRepeater.ItemTemplate>
-			</muxc:ItemsRepeater>
-
-			<!--<controls:UniformGrid Columns="3" Margin="0 15">
-				<ComboBox
-					x:Name="DialogCrypto"
-					Width="130" Margin="0 0 5 0"
-					PlaceholderText="Coin" Header="Crypto" ItemsSource="{x:Bind coinsArray}"
-					SelectedValue="{x:Bind NewItem.Crypto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-				<muxc:NumberBox
-					x:Name="DialogAmount"
-					Header="Amount"
-					Minimum="0"  PlaceholderText="0"
-					Width="130" Margin="0 0 5 0" AcceptsExpression="True" HorizontalAlignment="Left"
-					Value="{x:Bind NewItem.CryptoQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-				<muxc:NumberBox
-					x:Name="DialogInvested"
-					Header="Invested" Minimum="0" PlaceholderText="0" HorizontalAlignment="Left"
-					Width="130" Margin="0 0 5 0" AcceptsExpression="True"
-					Value="{x:Bind NewItem.InvestedQty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-				<DatePicker
-					x:Name="DialogDate"
-					Grid.Row="1"
-					Header="Date"
-					HorizontalAlignment="Left"
-					Margin="0 5 0 0"
-					Grid.ColumnSpan="2"/>
-				
-				<TextBox
-					Grid.Row="1" Grid.Column="2"
-					Margin="0 5 5 0"
-					IsReadOnly="True"
-					Header="Worth"
-					HorizontalAlignment="Left"
-					PlaceholderText="0" Visibility="Visible"
-					Text="{x:Bind NewItem.Worth, Mode=OneWay}"
-					Width="130"/>
-				
-			</controls:UniformGrid>-->
+            <muxc:ItemsRepeater
+				x:Name="TestRepeater" VerticalAlignment="Top" 
+				HorizontalAlignment="Center" ItemTemplate="{ThemeResource NewPurchaseDialog}">
+            </muxc:ItemsRepeater>
+            
 
 		</ContentDialog>
 
