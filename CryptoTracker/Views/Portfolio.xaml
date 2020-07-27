@@ -88,7 +88,7 @@
 						Width="130">
                         <TextBlock
                             Foreground="{ThemeResource TextControlForegroundDisabled}">
-                            <Run Text="{x:Bind Worth, Mode=OneWay, FallbackValue=0}"/><Run Text="{x:Bind c, Mode=OneWay}"/>
+                            <Run Text="{x:Bind Worth, Mode=OneWay}"/><Run Text="{x:Bind c, Mode=OneWay}"/>
                         </TextBlock>
                     </StackPanel>
                 </controls:HeaderedContentControl>
@@ -104,14 +104,12 @@
 						Width="130">
                         <TextBlock
                             Foreground="{x:Bind ProfitFG, Mode=OneWay, FallbackValue='Gray'}">
-                            <Run Text="{x:Bind Profit, Mode=OneWay, FallbackValue='0'}"/><Run Text="{x:Bind c, Mode=OneWay}"/>
+                            <Run Text="{x:Bind Profit, Mode=OneWay}"/><Run Text="{x:Bind c, Mode=OneWay}"/>
                         </TextBlock>
                     </StackPanel>
                 </controls:HeaderedContentControl>
             </controls:UniformGrid>
         </DataTemplate>
-
-        <converters:ColorConverter x:Key="ColorConverter"/>
     </Page.Resources>
 
 	<Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
@@ -166,8 +164,8 @@
 		###############################################################################################################
 		###############################################################################################################
 		############################################################################################################### -->
-		<ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="30 30 0 0">
-			<controls:DataGrid x:Name="DataGridd" Margin="7" ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
+		<ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5">
+			<controls:DataGrid x:Name="DataGridd" Margin="0" ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
 				VerticalAlignment="Top" HorizontalAlignment="Stretch"
 				RowBackground="Transparent"
 				AutoGenerateColumns="False" HeadersVisibility="Column"
@@ -338,7 +336,7 @@
         <ContentDialog
 			x:Name="TestDialog"
 			Grid.RowSpan="2"
-			Title="New purchase"
+			Title="💵 New purchase"
 			PrimaryButtonText="Add"
 			PrimaryButtonClick="TestDialog_PrimaryButtonClick"
 			CloseButtonText="Cancel"

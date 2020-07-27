@@ -57,6 +57,7 @@ namespace CryptoTracker.Helpers {
             set { _boughtAt = value; NotifyPropertyChanged(nameof(BoughtAt)); } }
 
         private string _c { get; set; } = App.coinSymbol;
+        [DataMember()]
         public string c {
             get { return _c; }
             set { _c = value; NotifyPropertyChanged(nameof(c)); } }
@@ -77,8 +78,8 @@ namespace CryptoTracker.Helpers {
             get { return _curr; }
             set { _curr = value; NotifyPropertyChanged(nameof(Current)); } }
 
-        private string _profit { get; set; }
-        public string Profit {
+        private double _profit { get; set; }
+        public double Profit {
             get { return _profit; }
             set { _profit = value; NotifyPropertyChanged(nameof(Profit)); } }
 
