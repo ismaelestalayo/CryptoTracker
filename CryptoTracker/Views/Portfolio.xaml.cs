@@ -26,7 +26,7 @@ namespace CryptoTracker {
         internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
         internal List<PurchaseClass> NewPurchase { get; set; }
         internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
-        //internal static List<string> fullCoinList = App.coinList.Select(x => x.Name).ToList();
+        private int EditingPurchaseId { get; set; }
 
         private double curr = 0;
 
@@ -186,27 +186,46 @@ namespace CryptoTracker {
             }
         }
 
-        private void AddPurchaseDialog_click(object sender, RoutedEventArgs e) {
+        // ###############################################################################################
+        // Add/Edit purchase dialog
+        private void AddPurchase_click(object sender, RoutedEventArgs e) {
             NewPurchase = new List<PurchaseClass>() { new PurchaseClass() };
             TestRepeater.ItemsSource = NewPurchase;
-            TestDialog.ShowAsync();
+            PurchaseDialog.Title = "💵 New purchase";
+            PurchaseDialog.PrimaryButtonText = "Add";
+            PurchaseDialog.ShowAsync();
         }
 
-        private void TestDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
+        private void EditPurchase_Click(object sender, RoutedEventArgs e) {
+            var purchase = ((PurchaseClass)((FrameworkElement)sender).DataContext);
+            EditingPurchaseId = PurchaseList.IndexOf(purchase);
+            NewPurchase = new List<PurchaseClass>(1) { purchase };
+            TestRepeater.ItemsSource = NewPurchase;
+            PurchaseDialog.Title = "💵 Edit purchase";
+            PurchaseDialog.PrimaryButtonText = "Save";
+            PurchaseDialog.ShowAsync();
+        }
+
+        private void PurchaseDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
             if (string.IsNullOrEmpty(NewPurchase[0].Crypto) || NewPurchase[0].CryptoQty <= 0 || NewPurchase[0].InvestedQty <= 0) {
                 args.Cancel = true;
                 new MessageDialog("Error.").ShowAsync();
             }
             else {
-                // Get logo for the coin
-                var crypto = NewPurchase[0].Crypto;
-                string logoURL = "Assets/Icons/icon" + crypto + ".png";
-                if (!File.Exists(logoURL))
-                    NewPurchase[0].CryptoLogo = "https://chasing-coins.com/coin/logo/" + crypto;
-                else
-                    NewPurchase[0].CryptoLogo = "/" + logoURL;
-                PurchaseList.Add(NewPurchase[0]);
-
+                if (sender.PrimaryButtonText == "Add") {
+                    // Get logo for the coin
+                    var crypto = NewPurchase[0].Crypto;
+                    string logoURL = "Assets/Icons/icon" + crypto + ".png";
+                    if (!File.Exists(logoURL))
+                        NewPurchase[0].CryptoLogo = "https://chasing-coins.com/coin/logo/" + crypto;
+                    else
+                        NewPurchase[0].CryptoLogo = "/" + logoURL;
+                    PurchaseList.Add(NewPurchase[0]);
+                }
+                else if(sender.PrimaryButtonText == "Save") {
+                    PurchaseList.RemoveAt(EditingPurchaseId);
+                    PurchaseList.Insert(EditingPurchaseId, NewPurchase[0]);
+                }
                 // Update and save
                 UpdatePortfolio();
                 SavePortfolio();

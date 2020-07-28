@@ -51,4 +51,9 @@ namespace CryptoTracker.Helpers {
             throw new NotImplementedException();
         }
     }
+
+    public class DateTimeShortener : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, string language) => ((DateTimeOffset)value).DateTime.ToShortDateString();
+        public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
+    }
 }

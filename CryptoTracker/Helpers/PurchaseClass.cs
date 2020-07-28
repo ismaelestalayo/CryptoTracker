@@ -37,8 +37,11 @@ namespace CryptoTracker.Helpers {
             get { return _cryptoQty; }
             set { _cryptoQty = value; NotifyPropertyChanged(nameof(CryptoQty)); } }
 
+        private DateTimeOffset _date { get; set; } = DateTime.Today;
         [DataMember()]
-        public DateTimeOffset Date { get; set; } = DateTime.Today;
+        public DateTimeOffset Date {
+            get { return _date; }
+            set { _date = value; NotifyPropertyChanged(nameof(Date)); } }
 
         private double _delta { get; set; }
         public double Delta {

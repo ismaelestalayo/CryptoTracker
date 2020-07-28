@@ -65,7 +65,7 @@
                 <DatePicker
 					Grid.Row="1"
 					Header="Date" HorizontalAlignment="Left"
-					Date="{x:Bind Date, Mode=OneWay}"
+					Date="{x:Bind Date, Mode=TwoWay}"
 					Grid.ColumnSpan="2"
                     VerticalAlignment="Top"/>
                 <TextBox
@@ -110,6 +110,7 @@
                 </controls:HeaderedContentControl>
             </controls:UniformGrid>
         </DataTemplate>
+        <helpers:DateTimeShortener x:Key="DateTimeShortener"/>
     </Page.Resources>
 
 	<Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
@@ -134,7 +135,7 @@
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 10 0 0">
                 <Button
-					Click="AddPurchaseDialog_click"
+					Click="AddPurchase_click"
                     Style="{ThemeResource Crypto_button_style}"
 					Margin="0 0 3 0"
                     ToolTipService.ToolTip="Add"
@@ -239,7 +240,7 @@
 											<SymbolIcon Symbol="Find"/>
 										</MenuFlyoutItem.Icon>
 									</MenuFlyoutItem>
-									<MenuFlyoutItem Text="Edit" Click="GoToCoinPortfolio_Click">
+									<MenuFlyoutItem Text="Edit" Click="EditPurchase_Click">
 										<MenuFlyoutItem.Icon>
 											<SymbolIcon Symbol="Edit"/>
 										</MenuFlyoutItem.Icon>
@@ -319,26 +320,38 @@
 							<!-- Third Row-->
 							<Grid Grid.Row="2" Grid.Column="0" Margin="15 0 0 0" MaxWidth="150">
 								<TextBlock Text="Date:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
+                                <TextBlock
+                                    Text="{Binding Date, Mode=OneWay, Converter={StaticResource DateTimeShortener}}"
+                                    HorizontalAlignment="Right"
+                                    Style="{ThemeResource ListViewTextBlock}"/>
 							</Grid>
-							<Grid Grid.Row="2" Grid.Column="1" Margin="15 0 0 0" MaxWidth="170">
-								<CalendarDatePicker Date="{Binding Date, Mode=TwoWay}" Margin="0 -2"
-									DateChanged="purchaseDate_changed" 
-									DateFormat="{}{day.integer} {month.full} {year.full}"/>
-							</Grid>
+							<Grid Grid.Row="2" Grid.Column="1" Margin="25 0 0 0" MaxWidth="170">
+                                <TextBlock Text="Exchange:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
+                                <TextBlock
+                                    Text="{Binding Exchange, Mode=OneWay}"
+                                    HorizontalAlignment="Right"
+                                    Style="{ThemeResource ListViewTextBlock}"/>
+                            </Grid>
 
 
 						</Grid>
 					</DataTemplate>
 				</controls:DataGrid.RowDetailsTemplate>
+                <controls:DataGrid.Resources>
+                    <SolidColorBrush x:Key="DataGridRowSelectedBackgroundColor" Color="LightSeaGreen"/>
+                    <SolidColorBrush x:Key="DataGridRowSelectedHoveredBackgroundColor" Color="LightSeaGreen"/>
+                    <SolidColorBrush x:Key="DataGridRowSelectedUnfocusedBackgroundColor" Color="LightSeaGreen"/>
+                    <SolidColorBrush x:Key="DataGridRowSelectedHoveredUnfocusedBackgroundColor" Color="LightSeaGreen"/>
+                </controls:DataGrid.Resources>
 			</controls:DataGrid>
 		</ScrollViewer>
 
         <ContentDialog
-			x:Name="TestDialog"
+			x:Name="PurchaseDialog"
 			Grid.RowSpan="2"
 			Title="💵 New purchase"
 			PrimaryButtonText="Add"
-			PrimaryButtonClick="TestDialog_PrimaryButtonClick"
+			PrimaryButtonClick="PurchaseDialog_PrimaryButtonClick"
 			CloseButtonText="Cancel"
 			DefaultButton="Primary">
             <muxc:ItemsRepeater
