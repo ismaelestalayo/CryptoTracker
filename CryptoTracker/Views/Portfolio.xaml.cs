@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.Helpers;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,7 +24,7 @@ namespace CryptoTracker {
     public partial class Portfolio : Page {
 
 
-        internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
+        internal static List<PurchaseClass> PurchaseList { get; set; }
         internal List<PurchaseClass> NewPurchase { get; set; }
         internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
         private int EditingPurchaseId { get; set; }
@@ -116,16 +117,7 @@ namespace CryptoTracker {
             PurchaseList.RemoveAt(index);
             UpdatePortfolio();
             SavePortfolio();
-        }
-
-        // ###############################################################################################
-        //  Save new purchase date
-        private void purchaseDate_changed(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args) {
-            if (args.OldDate > new DateTime(2000, 01, 01, 00, 00, 00, 0) ) 
-                SavePortfolio();
-            
-        }
-        
+        }        
 
 
         // ###############################################################################################
@@ -150,28 +142,28 @@ namespace CryptoTracker {
                 var z = e.Message;
             }
         }
-        private static async Task<ObservableCollection<PurchaseClass>> ReadPortfolio() {
+        private static async Task<List<PurchaseClass>> ReadPortfolio() {
 
             try {
                 var readStream =
                     await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("portfolio").ConfigureAwait(false);
 
                 DataContractSerializer stuffSerializer =
-                    new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
+                    new DataContractSerializer(typeof(List<PurchaseClass>));
 
-                var setResult = (ObservableCollection<PurchaseClass>)stuffSerializer.ReadObject(readStream);
+                var setResult = (List<PurchaseClass>)stuffSerializer.ReadObject(readStream);
                 await readStream.FlushAsync();
                 readStream.Dispose();
 
                 return setResult;
             } catch (Exception ex) {
                 var unusedWarning = ex.Message;
-                return new ObservableCollection<PurchaseClass>();
+                return new List<PurchaseClass>();
             }
         }
 
         internal static void importPortfolio(List<PurchaseClass>portfolio) {
-            PurchaseList = new ObservableCollection<PurchaseClass>(portfolio);
+            PurchaseList = new List<PurchaseClass>(portfolio);
             SavePortfolio();
         }
 
@@ -240,6 +232,72 @@ namespace CryptoTracker {
             // If we have the coin and the quantity, we can update some properties
             if (!string.IsNullOrEmpty(NewPurchase[0].Crypto) && NewPurchase[0].CryptoQty > 0)
                 NewPurchase[0] = UpdatePurchase(NewPurchase[0]);
+        }
+
+        private void DataGrid_Sorting(object sender, DataGridColumnEventArgs e) {
+            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+            else
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+
+            switch (e.Column.Header) {
+                case "Crypto":
+                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Crypto ascending
+                                                                                        select item);
+                    else
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Crypto descending
+                                                                                        select item);
+                    break;
+                case "Invested":
+                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.InvestedQty ascending
+                                                                                        select item);
+                    else
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.InvestedQty descending
+                                                                                        select item);
+                    break;
+                case "Worth":
+                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Worth ascending
+                                                                                        select item);
+                    else
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Worth descending
+                                                                                        select item);
+                    break;
+                case "Currently":
+                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Current ascending
+                                                                                        select item);
+                    else 
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Current descending
+                                                                                        select item);
+                    break;
+            }
+            foreach (var dgColumn in DataGridd.Columns) {
+                if (dgColumn.Header.ToString() != e.Column.Header.ToString())
+                    dgColumn.SortDirection = null;
+            }
+
+            /*
+            if (!e.Column.SortDirection.HasValue) {
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+                //PurchaseList = PurchaseList.OrderBy(x => x.Crypto).ToList();
+            }
+            else {
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+                //PurchaseList = PurchaseList.OrderByDescending(x => x.Crypto).ToList();
+            }
+            //DataGridd.ItemsSource = PurchaseList;
+            */
         }
     }
 }

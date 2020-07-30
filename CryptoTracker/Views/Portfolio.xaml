@@ -166,14 +166,19 @@
 		###############################################################################################################
 		############################################################################################################### -->
 		<ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5">
-			<controls:DataGrid x:Name="DataGridd" Margin="0" ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
-				VerticalAlignment="Top" HorizontalAlignment="Stretch"
-				RowBackground="Transparent"
-				AutoGenerateColumns="False" HeadersVisibility="Column"
-				CanUserSortColumns="True" CanUserReorderColumns="False" CanUserResizeColumns="False"
-				GridLinesVisibility="Horizontal" BorderBrush="{ThemeResource SystemControlDisabledChromeHighBrush}" BorderThickness="1 0"
-				HorizontalGridLinesBrush="{ThemeResource SystemControlDisabledChromeHighBrush}"
-				RowDetailsVisibilityMode="Collapsed" SelectionMode="Single">
+			<controls:DataGrid
+                x:Name="DataGridd"
+                AutoGenerateColumns="False"
+                BorderBrush="{ThemeResource SystemControlDisabledChromeHighBrush}" BorderThickness="1 0"
+                CanUserSortColumns="True" CanUserReorderColumns="False" CanUserResizeColumns="False"
+                ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
+                GridLinesVisibility="Horizontal"
+				HeadersVisibility="Column" HorizontalAlignment="Stretch"
+                HorizontalGridLinesBrush="{ThemeResource SystemControlDisabledChromeHighBrush}"
+				Margin="0" 
+                RowBackground="Transparent" RowDetailsVisibilityMode="Collapsed"
+                SelectionMode="Single" Sorting="DataGrid_Sorting"
+                VerticalAlignment="Top">
 				<controls:DataGrid.Columns>
 					<controls:DataGridTemplateColumn Header="Crypto" Width="*">
 						<controls:DataGridTemplateColumn.CellTemplate>
@@ -195,7 +200,7 @@
 						</controls:DataGridTemplateColumn.CellTemplate>
 					</controls:DataGridTemplateColumn>
 
-					<controls:DataGridTemplateColumn Header="Invested" Width="*">
+                    <controls:DataGridTemplateColumn Header="Invested" Width="*">
 						<controls:DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
