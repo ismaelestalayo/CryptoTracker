@@ -121,8 +121,9 @@ namespace CryptoTracker {
                 ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(900, 550));
                 Window.Current.Activate();
             }
-
+#if !DEBUG
             AppCenter.Start("37e61258-8639-47d6-9f6a-d47d54cd8ad5", typeof(Analytics), typeof(Crashes));
+#endif
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
@@ -154,7 +155,8 @@ namespace CryptoTracker {
         // ###############################################################################################
         //  (GET) current price of a coin
         internal static double GetCurrentPrice(string crypto, string market) {
-            string URL = "https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" + App.coin;
+            string URL = "https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" + App.coin
+                + "&api_key=569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286";
 
             if (market != "defaultMarket") 
                 URL += "&e=" + market;
@@ -178,7 +180,8 @@ namespace CryptoTracker {
         // ###############################################################################################
         //  (GET) list of coins
         internal async static Task GetCoinList() {
-            string URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin;
+            string URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin
+                + "&api_key=569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286";
             Uri uri = new Uri(URL);
 
             try {
@@ -300,12 +303,12 @@ namespace CryptoTracker {
 
         // ###############################################################################################
         //  (GET) coin description
-        internal static string GetCoinDescription(string crypto) {
-            String URL = "https://krausefx.github.io/crypto-summaries/coins/" + crypto.ToLower() + "-5.txt";
+        internal static async Task<string> GetCoinDescription(string crypto, int lines = 5) {
+            String URL = string.Format("https://krausefx.github.io/crypto-summaries/coins/{0}-{1}.txt", crypto.ToLower(), lines);
             Uri uri = new Uri(URL);
 
             try {
-                string data = GetStringAsync(uri).Result;
+                string data = await GetStringAsync(uri);
                 return data;
 
             } catch (Exception) {

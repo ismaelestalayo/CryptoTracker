@@ -17,13 +17,11 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>UWP_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>
-    </PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxPackageDir>C:\Users\ismae\Desktop\appxupload</AppxPackageDir>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <HockeyAppResourceId>40853427385b47e0bacec33938f84566</HockeyAppResourceId>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>
@@ -110,10 +108,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\API_CoinGecko.cs" />
     <Compile Include="Helpers\ChartData.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\CurrencyHelper.cs" />
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
+    <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\JSONcoins.cs" />
     <Compile Include="Helpers\JSONsnapshot.cs" />
@@ -125,6 +125,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\HomeTile.cs" />
     <Compile Include="Views\CoinDetails.xaml.cs">
       <DependentUpon>CoinDetails.xaml</DependentUpon>
     </Compile>
@@ -157,10 +158,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\CryptoTracker Square DarkT.png" />
-    <Content Include="Assets\CryptoTracker Square LightT.png" />
-    <Content Include="Assets\CryptoTracker Square.png" />
-    <Content Include="Assets\CryptoTracker Wide.png" />
+    <Content Include="Assets\CryptoTracker-Asset-AppIcon-D.png" />
+    <Content Include="Assets\CryptoTracker-Asset-AppIcon-L.png" />
+    <Content Include="Assets\CryptoTracker-Asset-Tile-D.png" />
+    <Content Include="Assets\CryptoTracker-Asset-Tile-L.png" />
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
     <Content Include="Assets\Icons\iconBCN.png" />
@@ -183,64 +184,85 @@
     <Content Include="Assets\Icons\iconXMR.png" />
     <Content Include="Assets\Icons\iconXRP.png" />
     <Content Include="Assets\Icons\iconZRX.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-48.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-48.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-100.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-125.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-150.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-200.png" />
     <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-400.png" />
-    <Content Include="Assets\Tiles and stuff\LargeTile.scale-100.png" />
-    <Content Include="Assets\Tiles and stuff\LargeTile.scale-125.png" />
-    <Content Include="Assets\Tiles and stuff\LargeTile.scale-150.png" />
-    <Content Include="Assets\Tiles and stuff\LargeTile.scale-200.png" />
-    <Content Include="Assets\Tiles and stuff\LargeTile.scale-400.png" />
-    <Content Include="Assets\Tiles and stuff\SmallTile.scale-100.png" />
-    <Content Include="Assets\Tiles and stuff\SmallTile.scale-125.png" />
-    <Content Include="Assets\Tiles and stuff\SmallTile.scale-150.png" />
-    <Content Include="Assets\Tiles and stuff\SmallTile.scale-200.png" />
-    <Content Include="Assets\Tiles and stuff\SmallTile.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-400.png" />
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-100.png" />
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-125.png" />
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-150.png" />
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-200.png" />
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-400.png" />
-    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-100.png" />
-    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-125.png" />
-    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-150.png" />
-    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Tiles and stuff\Square150x150Logo.scale-400.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-16.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-24.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-256.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-32.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.altform-unplated_targetsize-48.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-100.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-125.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-150.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.scale-400.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-16.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-24.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-256.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-32.png" />
-    <Content Include="Assets\Tiles and stuff\Square44x44Logo.targetsize-48.png" />
-    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-100.png" />
-    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-125.png" />
-    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-150.png" />
-    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-200.png" />
-    <Content Include="Assets\Tiles and stuff\StoreLogo.scale-400.png" />
-    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-100.png" />
-    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-125.png" />
-    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-150.png" />
-    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-200.png" />
-    <Content Include="Assets\Tiles and stuff\Wide310x150Logo.scale-400.png" />
     <None Include=".editorconfig" />
     <None Include="Package.xml" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-100_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-125_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-150_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-200_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-400_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-100_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-125_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-150_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-200_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-400_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-100_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-125_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-150_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-200_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-400_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-100_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-125_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-150_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-200_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-400_altform-colorful_theme-light.png" />
+    <Content Include="Assets\transparent.png" />
     <Content Include="Properties\Default.rd.xml" />
     <None Include="UWP_StoreKey.pfx" />
     <None Include="UWP_TemporaryKey.pfx" />
@@ -367,7 +389,9 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Converters\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

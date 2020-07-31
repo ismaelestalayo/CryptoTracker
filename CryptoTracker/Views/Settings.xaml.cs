@@ -1,23 +1,19 @@
-﻿using Microsoft.AppCenter.Analytics;
+﻿using CryptoTracker.Helpers;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
+using Windows.Services.Store;
 using Windows.System;
-using CryptoTracker.Helpers;
+using Windows.UI;
+using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System.Threading.Tasks;
-using Windows.Services.Store;
-using Newtonsoft.Json.Linq;
-using Windows.ApplicationModel;
-using Windows.UI.Popups;
-
-using Microsoft.Toolkit.Uwp.Helpers;
-using Windows.UI.ViewManagement;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace CryptoTracker {
@@ -35,7 +31,7 @@ namespace CryptoTracker {
 
             ThemeComboBox.PlaceholderText = App.localSettings.Values["Theme"].ToString();
             FooterLogo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? 
-                new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+                new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-D.png"));
             
 
             switch (App.localSettings.Values["Coin"]) {
@@ -141,21 +137,35 @@ namespace CryptoTracker {
         private async void UploadConfigButton_Click(object sender, RoutedEventArgs e) {
             try {
                 var helper = new RoamingObjectStorageHelper();
-                var portfolio = Portfolio.dataList;
+                var portfolio = Portfolio.PurchaseList;
 
-                ContentDialog exportDialog = new ContentDialog() {
-                    Title = $"Export {portfolio.Count} purchases?",
-                    Content = "This will create a backup of your current portfolio in the cloud.",
-                    DefaultButton = ContentDialogButton.Primary,
-                    PrimaryButtonText = "Export",
-                    CloseButtonText = "Cancel"
-                };
+                if (portfolio == null || portfolio.Count == 0) {
+                    await new ContentDialog() {
+                        Title = "Empty portfolio",
+                        Content = "Your current portfolio is empty.",
+                        DefaultButton = ContentDialogButton.Primary,
+                        PrimaryButtonText = "Export",
+                        IsPrimaryButtonEnabled = false,
+                        CloseButtonText = "Cancel",
+                        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                    }.ShowAsync();
+                }
 
-                var response = await exportDialog.ShowAsync();                
+                else {
+                    ContentDialog exportDialog = new ContentDialog() {
+                        Title = $"Export {portfolio.Count} purchases?",
+                        Content = "This will create a backup of your current portfolio in the cloud.",
+                        DefaultButton = ContentDialogButton.Primary,
+                        PrimaryButtonText = "Export",
+                        CloseButtonText = "Cancel",
+                        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                    };
+                    var response = await exportDialog.ShowAsync();
 
-                if (response == ContentDialogResult.Primary)
-                    await helper.SaveFileAsync(portfolioKey, portfolio);
-            } catch  {
+                    if (response == ContentDialogResult.Primary)
+                        await helper.SaveFileAsync(portfolioKey, portfolio);
+                }
+            } catch (Exception ex) {
                 await new MessageDialog("Error uploading your portfolio. Try again later.").ShowAsync();
             }
         }
@@ -172,7 +182,8 @@ namespace CryptoTracker {
                     Content = "This will clear your current portfolio and download your backup.",
                     DefaultButton = ContentDialogButton.Primary,
                     PrimaryButtonText = "Import",
-                    CloseButtonText = "Cancel"
+                    CloseButtonText = "Cancel",
+                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
                 };
 
                 var response = await importDialog.ShowAsync();
@@ -187,7 +198,8 @@ namespace CryptoTracker {
                     DefaultButton = ContentDialogButton.Primary,
                     IsPrimaryButtonEnabled = false,
                     PrimaryButtonText = "Import",
-                    CloseButtonText = "Cancel"
+                    CloseButtonText = "Cancel",
+                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
                 };
                 await importDialog.ShowAsync();
             }
@@ -200,21 +212,21 @@ namespace CryptoTracker {
             App.localSettings.Values["Theme"] = theme;
             switch (theme) {
                 case "Light":
-                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-D.png"));
                     ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
                     break;
                 case "Dark":
-                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png"));
+                    FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-L.png"));
                     ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
                     break;
                 case "Windows":
                     if (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) {
                         ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
-                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square LightT.png"));
+                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-L.png"));
                     }
                     else {
                         ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
-                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker Square DarkT.png"));
+                        FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-Tile-D.png"));
                     }
                     break;
             }

@@ -1,21 +1,20 @@
 ﻿using CryptoTracker.Helpers;
+using CryptoTracker.Model;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker.Views {
     public sealed partial class Home : Page {
 
-        static ObservableCollection<HomeTileClass> homeCoinList { get; set; }
+        static ObservableCollection<HomeTile> homeCoinList { get; set; }
         private static string diff = "0";
         private static int limit = 1500;
         private static string timeSpan = "minute";
@@ -25,7 +24,7 @@ namespace CryptoTracker.Views {
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) {
-            homeCoinList = new ObservableCollection<HomeTileClass>();
+            homeCoinList = new ObservableCollection<HomeTile>();
             PriceListView.ItemsSource = homeCoinList;
             VolumeListView.ItemsSource = homeCoinList;
 
@@ -35,7 +34,7 @@ namespace CryptoTracker.Views {
         }
 
         private void HomeCoinList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
-            EmptyPageWarning.Visibility = (((Collection<HomeTileClass>)sender).Count > 0) ? Visibility.Collapsed : Visibility.Visible;
+            EmptyPageWarning.Visibility = (((Collection<HomeTile>)sender).Count > 0) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private async void InitHome() {
@@ -46,7 +45,7 @@ namespace CryptoTracker.Views {
                 try {
                     await AddCoinHome(App.pinnedCoins[i]);
                     await UpdateCard(i);
-                } catch (Exception) {
+                } catch {
                     
                 }
             }
@@ -66,7 +65,7 @@ namespace CryptoTracker.Views {
                 iconPath = "/Assets/Icons/iconNULL.png";
             }
 
-            homeCoinList.Add(new HomeTileClass {
+            homeCoinList.Add(new HomeTile {
                 _cryptoName = crypto,
                 _priceDiff = diff,
                 _crypto = crypto,
@@ -92,7 +91,7 @@ namespace CryptoTracker.Views {
         // #########################################################################################
         //  Update all cards
         internal async Task UpdateAllCards() {            
-            foreach (HomeTileClass homeTile in homeCoinList) {
+            foreach (HomeTile homeTile in homeCoinList) {
                 homeTile._opacity = 0.33;
             }
             for (int i = 0; i < homeCoinList.Count; i++) {
@@ -154,10 +153,13 @@ namespace CryptoTracker.Views {
             // #########################################################################################
             // PRICE CHART
 
-            RadCartesianChart PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
+            var PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
+            var verticalAxis = (container.ContentTemplateRoot as FrameworkElement)?.FindName("VerticalAxis") as LinearAxis;
 
             await App.GetHisto(c, timeSpan, limit);
             List<ChartData> priceData = new List<ChartData>();
+            verticalAxis.Minimum = GraphHelper.GetMinimum(App.historic);
+            verticalAxis.Maximum = GraphHelper.GetMaximum(App.historic);
 
             for (int k = 0; k < App.historic.Count; ++k) {
                 priceData.Add(new ChartData() {
@@ -170,14 +172,15 @@ namespace CryptoTracker.Views {
                     Volume = App.historic[k].Volumefrom
                 });
             }
-
+            
             SplineAreaSeries series = (SplineAreaSeries)PriceChart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = priceData;
             series.Fill = coinColorT;
             series.Stroke = coinColor;
-
+            var v = series.VerticalAxis;
+            
             // #########################################################################################
             // VOLUME CHART
             ListViewItem container2 = (ListViewItem)VolumeListView.ContainerFromIndex(i);
@@ -252,17 +255,17 @@ namespace CryptoTracker.Views {
                     break;
             }
 
-            var clickedItem = (HomeTileClass)e.ClickedItem;
+            var clickedItem = (HomeTile)e.ClickedItem;
             this.Frame.Navigate(typeof(CoinDetails), clickedItem._crypto);
         }
 
         private void UnpinCoin(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeTileClass)((FrameworkElement)sender).DataContext)._crypto;
+            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext)._crypto;
 
             RemoveCoinHome(crypto);
         }
         private void MoveCoinDown(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeTileClass)((FrameworkElement)sender).DataContext)._crypto;
+            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext)._crypto;
             int n = App.pinnedCoins.IndexOf(crypto);
 
             if(n < homeCoinList.Count - 1) {
@@ -282,7 +285,7 @@ namespace CryptoTracker.Views {
             }
         }
         private void MoveCoinUp(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeTileClass)((FrameworkElement)sender).DataContext)._crypto;
+            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext)._crypto;
             int n = App.pinnedCoins.IndexOf(crypto);
 
             if (n != 0) {
@@ -299,84 +302,6 @@ namespace CryptoTracker.Views {
 
                 // Update pinnedCoin list
                 App.UpdatePinnedCoins();
-            }
-        }
-    }
-
-
-
-    // #########################################################################################
-    // #########################################################################################
-    // #########################################################################################
-    // #########################################################################################
-    internal class HomeTileClass : INotifyPropertyChanged {
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        void RaiseProperty(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-        public string _cryptoName { get; set; }
-        public string _crypto { get; set; }
-        public string _iconSrc { get; set; }
-        public string _timeSpan { get; set; }
-        public int _limit { get; set; }
-
-        private double alpha { get; set; }
-        public double _opacity {
-            get { return alpha; }
-            set {
-                alpha = value;
-                RaiseProperty(nameof(_opacity));
-            }
-        }
-
-        public string curr;
-        public string _priceCurr {
-            get { return curr; }
-            set {
-                curr = value;
-                RaiseProperty(nameof(_priceCurr));
-            }
-        }
-        private string diff;
-        public string _priceDiff {
-            get { return diff; }
-            set {
-                if(value != diff) {
-                    diff = value;
-                    if (value.StartsWith("▼"))
-                        _priceDiffFG = (SolidColorBrush)App.Current.Resources["pastelRed"];
-                    else
-                        _priceDiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
-
-                    RaiseProperty(nameof(_priceDiff));
-                }
-            }
-        }
-
-        private string vol24;
-        public string _volume24 {
-            get { return vol24; }
-            set { if (value != vol24) {
-                    vol24 = value;
-                    RaiseProperty(nameof(_volume24));
-            } }
-        }
-
-        private string vol24to;
-        public string _volume24to {
-            get { return vol24to; }
-            set { if (value != vol24to) {
-                    vol24to = value;
-                    RaiseProperty(nameof(_volume24to));
-            } }
-        }
-
-        private SolidColorBrush fg;
-        public SolidColorBrush _priceDiffFG {
-            get { return fg; }
-            set {
-                fg = value;
-                RaiseProperty(nameof(_priceDiffFG));
             }
         }
     }

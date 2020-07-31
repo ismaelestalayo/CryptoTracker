@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5">
-  <Identity Name="54989IsmaelEstalayoMena.CoinBaseUnofficial" Publisher="CN=CE0D17DE-AC9B-4B2D-AE14-FFACDE33BF50" Version="4.6.1.0" />
+  <Identity Name="54989IsmaelEstalayoMena.CoinBaseUnofficial" Publisher="CN=CE0D17DE-AC9B-4B2D-AE14-FFACDE33BF50" Version="5.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="513801eb-40f0-470e-9b23-ed3f9bab18dd" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>CryptoTracker</DisplayName>
     <PublisherDisplayName>Ismael Estalayo Mena</PublisherDisplayName>
-    <Logo>Assets\Tiles and stuff\StoreLogo.png</Logo>
+    <Logo>Assets\Tiles and stuff\PackageLogo.png</Logo>
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
@@ -15,9 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="CryptoTracker.App">
-      <uap:VisualElements DisplayName="CryptoTracker" Square150x150Logo="Assets\Tiles and stuff\Square150x150Logo.png" Square44x44Logo="Assets\Tiles and stuff\Square44x44Logo.png" Description="Keep track of your crypto portfolios and the latest news."  BackgroundColor="#232323">
+      <uap:VisualElements DisplayName="CryptoTracker" Square44x44Logo="Assets\Tiles and stuff\AppIcon.png" Description="Keep track of your crypto portfolios and the latest news."  BackgroundColor="transparent" Square150x150Logo="Assets\Tiles and stuff\Tile-Medium.png">
         <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\Tiles and stuff\BadgeLogo.png" />
-        <uap:DefaultTile Wide310x150Logo="Assets\Tiles and stuff\Wide310x150Logo.png" Square71x71Logo="Assets\Tiles and stuff\SmallTile.png" Square310x310Logo="Assets\Tiles and stuff\LargeTile.png" ShortName="CryptoTracker">
+        <uap:DefaultTile Wide310x150Logo="Assets\Tiles and stuff\Tile-Wide.png" Square71x71Logo="Assets\Tiles and stuff\Tile-Small.png" Square310x310Logo="Assets\Tiles and stuff\Tile-Large.png" ShortName="CryptoTracker">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
           </uap:ShowNameOnTiles>

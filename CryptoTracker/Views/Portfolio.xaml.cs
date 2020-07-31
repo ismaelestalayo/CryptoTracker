@@ -1,18 +1,18 @@
 ﻿using CryptoTracker.Helpers;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
 
@@ -23,138 +23,90 @@ namespace CryptoTracker {
 
     public partial class Portfolio : Page {
 
-        internal static ObservableCollection<PurchaseClass> dataList { get; set; }
+
+        internal static List<PurchaseClass> PurchaseList { get; set; }
+        internal List<PurchaseClass> NewPurchase { get; set; }
+        internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
+        private int EditingPurchaseId { get; set; }
+
         private double curr = 0;
 
         public Portfolio() {
             this.InitializeComponent();
 
-            List<string> coinsArray = new List<string>();
-            foreach (JSONcoins coin in App.coinList)
-                coinsArray.Add(coin.Name);
-            CryptoComboBox.ItemsSource = coinsArray;
-
-            dataList = ReadPortfolio().Result;
-            DataGridd.ItemsSource = dataList;
-
+            PurchaseList = ReadPortfolio().Result;
+            DataGridd.ItemsSource = PurchaseList;
 
             UpdatePortfolio();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            base.OnNavigatedTo(e);
-            // If the current items of DataGridd doesn't match with the ones on dataList, update the ItemsSource
-            DataGridd.ItemsSource = dataList;
-            UpdatePortfolio();
-        }
-
-        // ###############################################################################################
-        //  Add new purchase
-        private void AddButton_Click(object sender, RoutedEventArgs e) {
-            
-            try {
-                string crypto = CryptoComboBox.SelectedItem.ToString();
-                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
-
-                // Calculate earnings/losings
-                double priceBought = (1 / CryptoQtyNumberBox.Value) * InvestedQtyNumberBox.Value;
-                priceBought = Math.Round(priceBought, 4);
-                double earningz = Math.Round((curr - priceBought) * CryptoQtyNumberBox.Value, 5);
-
-                // Get logo for the coin
-                string logoURL = "Assets/Icons/icon" + crypto + ".png";
-                if (!File.Exists(logoURL))
-                    logoURL = "https://chasing-coins.com/coin/logo/" + crypto;
-                else
-                    logoURL = "/" + logoURL;
-                
-
-                dataList.Add(new PurchaseClass {
-                    Crypto      = crypto,
-                    CryptoLogo  = logoURL,
-                    CryptoQty   = Math.Round(CryptoQtyNumberBox.Value, 5),
-                    Date        = DateTime.Today,
-                    Delta       = Math.Round( (curr / priceBought), 2) * 100, // percentage
-                    InvestedQty = InvestedQtyNumberBox.Value,
-                    BoughtAt    = Math.Round(priceBought, 4),
-                    arrow       = earningz < 0 ? "▼" : "▲",
-                    c           = App.coinSymbol,
-                    Current     = curr,
-                    Profit      = Math.Round(Math.Abs(earningz), 2).ToString(),
-                    ProfitFG    = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"],
-                    Worth       = Math.Round( curr * CryptoQtyNumberBox.Value, 2)
-                });
-
-                // Clear user input
-                //CryptoQtyTextBox.Text = String.Empty;
-                //InvestedQtyTextBox.Text = String.Empty;
-                
-
-                // Update and save
-                UpdatePortfolio();
-                SavePortfolio();
-
-            } catch(Exception) {
-                //CryptoQtyTextBox.Text = String.Empty;
-                //InvestedQtyTextBox.Text = String.Empty;
-            }
-        }
 
         // ###############################################################################################
         //  For sync all
         internal void UpdatePortfolio() {
-
-            for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
-                string crypto = dataList[i].Crypto;
-
-                curr = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
-
-                dataList[i].Current = curr;
-                double priceBought = (1 / dataList[i].CryptoQty) * dataList[i].InvestedQty;
-                priceBought = Math.Round(priceBought, 4);
-
-                double earningz = Math.Round((curr - priceBought) * dataList[i].CryptoQty, 4);
-                dataList[i].arrow = earningz < 0 ? "▼" : "▲";
-                dataList[i].Delta = Math.Round(curr / priceBought, 2) * 100; // percentage
-                dataList[i].Profit = Math.Round(Math.Abs(earningz), 2).ToString();
-                dataList[i].ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
-                dataList[i].Worth = Math.Round(curr * dataList[i].CryptoQty, 2);
-            }
-            UpdateProfits();
-            SavePortfolio();
-        }
-
-        // ###############################################################################################
-        private void UpdateProfits() {
-            float total = 0;
-            // empty chart
+            // empty diversification chart
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
 
-            for (int i = 0; i < ((Collection<PurchaseClass>)DataGridd.ItemsSource).Count; i++) {
-                total += float.Parse(dataList[i].Current.ToString()) * (float)dataList[i].CryptoQty;
+            foreach (PurchaseClass purchase in PurchaseList) {
+                // this update the ObservableCollection itself
+                UpdatePurchase(purchase);
 
-
+                // create the diversification grid
                 ColumnDefinition col = new ColumnDefinition();
-                col.Width = new GridLength(dataList[i].Worth, GridUnitType.Star);
+                col.Width = new GridLength(purchase.Worth, GridUnitType.Star);
                 PortfolioChartGrid.ColumnDefinitions.Add(col);
 
                 var s = new StackPanel();
                 s.BorderThickness = new Thickness(0);
                 s.Margin = new Thickness(1, 0, 1, 0);
-                var t = new TextBlock();
-                t.Text = dataList[i].Crypto;
-                t.FontSize = 12;
-                t.HorizontalAlignment = HorizontalAlignment.Center;
-                t.Margin = new Thickness(0, 7, 0, 7);
+                var t = new TextBlock() {
+                    Text = purchase.Crypto,
+                    FontSize = 12,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 7, 0, 7)
+                };
                 s.Children.Add(t);
-                try { s.Background = (SolidColorBrush)App.Current.Resources[ dataList[i].Crypto + "_colorT"]; }
+                try { s.Background = (SolidColorBrush)App.Current.Resources[purchase.Crypto + "_colorT"]; }
                 catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
 
                 PortfolioChartGrid.Children.Add(s);
-                Grid.SetColumn(s, i);
+                Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);
             }
+        }
 
+        internal PurchaseClass UpdatePurchase(PurchaseClass purchase) {
+            string crypto = purchase.Crypto;
+
+            if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
+                purchase.Current = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
+
+            curr = purchase.Current;
+            purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
+
+            // If the user has also filled the invested quantity, we can calculate everything else
+            if (purchase.InvestedQty > 0) {
+                double priceBought = (1 / purchase.CryptoQty) * purchase.InvestedQty;
+                priceBought = Math.Round(priceBought, 4);
+
+                double earningz = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
+                purchase.arrow = earningz < 0 ? "▼" : "▲";
+                purchase.BoughtAt = priceBought;
+                purchase.Delta = Math.Round(curr / priceBought, 2) * 100;
+                if (purchase.Delta > 100)
+                    purchase.Delta -= 100;
+                purchase.Profit = Math.Round(Math.Abs(earningz), 2);
+                purchase.ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
+            }
+            
+            return purchase;
+        }
+
+        // ###############################################################################################
+        private void GoToCoinPortfolio_Click(object sender, RoutedEventArgs e) {
+            var menu = sender as MenuFlyoutItem;
+            var item = menu.DataContext as PurchaseClass;
+            this.Frame.Navigate(typeof(CoinDetails), item.Crypto);
         }
 
         private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
@@ -162,19 +114,10 @@ namespace CryptoTracker {
             var item = menu.DataContext as PurchaseClass;
             var items = DataGridd.ItemsSource.Cast<PurchaseClass>().ToList();
             var index = items.IndexOf(item);
-            dataList.RemoveAt(index);
+            PurchaseList.RemoveAt(index);
             UpdatePortfolio();
             SavePortfolio();
-        }
-
-        // ###############################################################################################
-        //  Save new purchase date
-        private void purchaseDate_changed(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args) {
-            if (args.OldDate > new DateTime(2000, 01, 01, 00, 00, 00, 0) ) 
-                SavePortfolio();
-            
-        }
-        
+        }        
 
 
         // ###############################################################################################
@@ -190,7 +133,7 @@ namespace CryptoTracker {
                     DataContractSerializer stuffSerializer =
                         new DataContractSerializer(typeof(List<PurchaseClass>));
 
-                    stuffSerializer.WriteObject(writeStream, dataList);
+                    stuffSerializer.WriteObject(writeStream, PurchaseList);
                     await writeStream.FlushAsync();
                     writeStream.Dispose();
 
@@ -199,28 +142,28 @@ namespace CryptoTracker {
                 var z = e.Message;
             }
         }
-        private static async Task<ObservableCollection<PurchaseClass>> ReadPortfolio() {
+        private static async Task<List<PurchaseClass>> ReadPortfolio() {
 
             try {
                 var readStream =
                     await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("portfolio").ConfigureAwait(false);
 
                 DataContractSerializer stuffSerializer =
-                    new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
+                    new DataContractSerializer(typeof(List<PurchaseClass>));
 
-                var setResult = (ObservableCollection<PurchaseClass>)stuffSerializer.ReadObject(readStream);
+                var setResult = (List<PurchaseClass>)stuffSerializer.ReadObject(readStream);
                 await readStream.FlushAsync();
                 readStream.Dispose();
 
                 return setResult;
             } catch (Exception ex) {
                 var unusedWarning = ex.Message;
-                return new ObservableCollection<PurchaseClass>();
+                return new List<PurchaseClass>();
             }
         }
 
         internal static void importPortfolio(List<PurchaseClass>portfolio) {
-            dataList = new ObservableCollection<PurchaseClass>(portfolio);
+            PurchaseList = new List<PurchaseClass>(portfolio);
             SavePortfolio();
         }
 
@@ -233,6 +176,128 @@ namespace CryptoTracker {
                 DataGridd.RowDetailsVisibilityMode = Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Visible;
                 DataGridd.GridLinesVisibility = Microsoft.Toolkit.Uwp.UI.Controls.DataGridGridLinesVisibility.Horizontal;
             }
+        }
+
+        // ###############################################################################################
+        // Add/Edit purchase dialog
+        private void AddPurchase_click(object sender, RoutedEventArgs e) {
+            NewPurchase = new List<PurchaseClass>() { new PurchaseClass() };
+            TestRepeater.ItemsSource = NewPurchase;
+            PurchaseDialog.Title = "💵 New purchase";
+            PurchaseDialog.PrimaryButtonText = "Add";
+            PurchaseDialog.ShowAsync();
+        }
+
+        private void EditPurchase_Click(object sender, RoutedEventArgs e) {
+            var purchase = ((PurchaseClass)((FrameworkElement)sender).DataContext);
+            EditingPurchaseId = PurchaseList.IndexOf(purchase);
+            NewPurchase = new List<PurchaseClass>(1) { purchase };
+            TestRepeater.ItemsSource = NewPurchase;
+            PurchaseDialog.Title = "💵 Edit purchase";
+            PurchaseDialog.PrimaryButtonText = "Save";
+            PurchaseDialog.ShowAsync();
+        }
+
+        private void PurchaseDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
+            if (string.IsNullOrEmpty(NewPurchase[0].Crypto) || NewPurchase[0].CryptoQty <= 0 || NewPurchase[0].InvestedQty <= 0) {
+                args.Cancel = true;
+                new MessageDialog("Error.").ShowAsync();
+            }
+            else {
+                if (sender.PrimaryButtonText == "Add") {
+                    // Get logo for the coin
+                    var crypto = NewPurchase[0].Crypto;
+                    string logoURL = "Assets/Icons/icon" + crypto + ".png";
+                    if (!File.Exists(logoURL))
+                        NewPurchase[0].CryptoLogo = "https://chasing-coins.com/coin/logo/" + crypto;
+                    else
+                        NewPurchase[0].CryptoLogo = "/" + logoURL;
+                    PurchaseList.Add(NewPurchase[0]);
+                }
+                else if(sender.PrimaryButtonText == "Save") {
+                    PurchaseList.RemoveAt(EditingPurchaseId);
+                    PurchaseList.Insert(EditingPurchaseId, NewPurchase[0]);
+                }
+                // Update and save
+                UpdatePortfolio();
+                SavePortfolio();
+            }
+        }
+
+        private void DialogBtn_LostFocus(object sender, RoutedEventArgs e) {
+            // If we change the crypto, set the current price to 0 so everything updates
+            if (sender.GetType().Name == "ComboBox")
+                NewPurchase[0].Current = 0;
+
+            // If we have the coin and the quantity, we can update some properties
+            if (!string.IsNullOrEmpty(NewPurchase[0].Crypto) && NewPurchase[0].CryptoQty > 0)
+                NewPurchase[0] = UpdatePurchase(NewPurchase[0]);
+        }
+
+        private void DataGrid_Sorting(object sender, DataGridColumnEventArgs e) {
+            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+            else
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+
+            switch (e.Column.Header) {
+                case "Crypto":
+                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Crypto ascending
+                                                                                        select item);
+                    else
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Crypto descending
+                                                                                        select item);
+                    break;
+                case "Invested":
+                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.InvestedQty ascending
+                                                                                        select item);
+                    else
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.InvestedQty descending
+                                                                                        select item);
+                    break;
+                case "Worth":
+                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Worth ascending
+                                                                                        select item);
+                    else
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Worth descending
+                                                                                        select item);
+                    break;
+                case "Currently":
+                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Current ascending
+                                                                                        select item);
+                    else 
+                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                                                                                        orderby item.Current descending
+                                                                                        select item);
+                    break;
+            }
+            foreach (var dgColumn in DataGridd.Columns) {
+                if (dgColumn.Header.ToString() != e.Column.Header.ToString())
+                    dgColumn.SortDirection = null;
+            }
+
+            /*
+            if (!e.Column.SortDirection.HasValue) {
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+                //PurchaseList = PurchaseList.OrderBy(x => x.Crypto).ToList();
+            }
+            else {
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+                //PurchaseList = PurchaseList.OrderByDescending(x => x.Crypto).ToList();
+            }
+            //DataGridd.ItemsSource = PurchaseList;
+            */
         }
     }
 }

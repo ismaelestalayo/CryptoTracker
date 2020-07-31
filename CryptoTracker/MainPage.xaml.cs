@@ -13,7 +13,6 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace CryptoTracker {
@@ -110,6 +109,10 @@ namespace CryptoTracker {
                 case "Portfolio":
                     var p1 = (Portfolio)ContentFrame.Content;
                     p1.UpdatePortfolio();
+                    break;
+                case "News":
+                    var p3 = (News)ContentFrame.Content;
+                    p3.GetNews();
                     break;
             }
 

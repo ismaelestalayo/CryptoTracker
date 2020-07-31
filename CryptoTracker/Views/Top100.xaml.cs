@@ -1,7 +1,6 @@
 ﻿using CryptoTracker.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;

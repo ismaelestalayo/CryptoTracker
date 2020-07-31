@@ -2,8 +2,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="null_color"		    Color="#333333"/>
-    <SolidColorBrush x:Key="null_colorT"        Color="#333333" Opacity="0.4" />
+    <SolidColorBrush x:Key="main_black"         Color="#232323"/>
+    <SolidColorBrush x:Key="main_color1"	    Color="#0A7262"/>
+    <SolidColorBrush x:Key="main_color2"	    Color="#159575"/>
+    <SolidColorBrush x:Key="main_color3"	    Color="#48B990"/>
+
+    <SolidColorBrush x:Key="pastelRed"          Color="#FF4040"/>  <!-- 255, 65, 65 -->
+    <SolidColorBrush x:Key="pastelGreen"        Color="#00C060"/>  <!--  0, 192, 96 -->
+
+    <SolidColorBrush x:Key="null_color"		    Color="#63ae92"/>
+    <SolidColorBrush x:Key="null_colorT"        Color="#63ae92" Opacity="0.4" />
 
     <SolidColorBrush x:Key="ADA_color"          Color="#091a26"/>
     <SolidColorBrush x:Key="ADA_colorT"         Color="#091a26" Opacity="0.4"/>
@@ -75,12 +83,4 @@
 
     <SolidColorBrush x:Key="ZRX_color"          Color="#131313"/>
     <SolidColorBrush x:Key="ZRX_colorT"         Color="#131313" Opacity="0.4"/> 
-
-
-
-
-    <SolidColorBrush x:Key="pastelRed"          Color="#FF4040"/> <!-- 255, 65, 65 -->
-    <SolidColorBrush x:Key="pastelGreen"        Color="#00C060"/> <!--  0, 192, 96 -->
-    <SolidColorBrush x:Key="MainBackground"     Color="#00cc6a"/>
-    <SolidColorBrush x:Key="SecondBackground"   Color="#00cc6a"/>
 </ResourceDictionary>
