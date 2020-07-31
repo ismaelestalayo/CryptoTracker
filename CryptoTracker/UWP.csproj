@@ -125,6 +125,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\HomeTile.cs" />
     <Compile Include="Views\CoinDetails.xaml.cs">
       <DependentUpon>CoinDetails.xaml</DependentUpon>
     </Compile>
