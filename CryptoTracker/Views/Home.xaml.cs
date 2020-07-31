@@ -153,10 +153,13 @@ namespace CryptoTracker.Views {
             // #########################################################################################
             // PRICE CHART
 
-            RadCartesianChart PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
+            var PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
+            var verticalAxis = (container.ContentTemplateRoot as FrameworkElement)?.FindName("VerticalAxis") as LinearAxis;
 
             await App.GetHisto(c, timeSpan, limit);
             List<ChartData> priceData = new List<ChartData>();
+            verticalAxis.Minimum = GraphHelper.GetMinimum(App.historic);
+            verticalAxis.Maximum = GraphHelper.GetMaximum(App.historic);
 
             for (int k = 0; k < App.historic.Count; ++k) {
                 priceData.Add(new ChartData() {
@@ -169,14 +172,15 @@ namespace CryptoTracker.Views {
                     Volume = App.historic[k].Volumefrom
                 });
             }
-
+            
             SplineAreaSeries series = (SplineAreaSeries)PriceChart.Series[0];
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = priceData;
             series.Fill = coinColorT;
             series.Stroke = coinColor;
-
+            var v = series.VerticalAxis;
+            
             // #########################################################################################
             // VOLUME CHART
             ListViewItem container2 = (ListViewItem)VolumeListView.ContainerFromIndex(i);

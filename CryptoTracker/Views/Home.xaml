@@ -141,6 +141,7 @@
 
                                 <telerikChart:RadCartesianChart.VerticalAxis>
                                     <telerikChart:LinearAxis
+                                        x:Name="VerticalAxis"
                                         Visibility="Collapsed"
                                         DesiredTickCount="5"
                                         HorizontalLocation="Left"/>

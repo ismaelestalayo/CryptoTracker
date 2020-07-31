@@ -113,6 +113,7 @@
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\CurrencyHelper.cs" />
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
+    <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\JSONcoins.cs" />
     <Compile Include="Helpers\JSONsnapshot.cs" />

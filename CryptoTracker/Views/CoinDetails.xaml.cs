@@ -27,7 +27,10 @@ namespace CryptoTracker {
 
     public class CoinDataWrapper : INotifyPropertyChanged {
         private CoinData _cd;
-        public CoinData cd { get { return _cd; } set { _cd = value; OnPropertyChanged("cd"); } }
+        public CoinData cd {
+            get { return _cd; }
+            set { _cd = value; OnPropertyChanged("cd"); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string propertyName = null) {
@@ -127,35 +130,13 @@ namespace CryptoTracker {
             LoadingControl.IsLoading = true;
 
             await UpdateCoin();
-            verticalAxis.Minimum = GetMinimum(App.historic);
-            verticalAxis.Maximum = GetMaximum(App.historic);
+            verticalAxis.Minimum = GraphHelper.GetMinimum(App.historic);
+            verticalAxis.Maximum = GraphHelper.GetMaximum(App.historic);
             dateTimeAxis = App.AdjustAxis(dateTimeAxis, timeSpan);
             await Get24Volume();
             await GetExchanges();
         }
 
-        private static float GetMaximum(List<JSONhistoric> a) {
-            int i = 0;
-            float max = 0;
-
-            foreach (JSONhistoric type in a) {
-                if (a[i].High > max)
-                    max = a[i].High;
-                i++;
-            }
-            return max;
-        }
-        private static float GetMinimum(List<JSONhistoric> a) {
-            int i = 0;
-            float min = 15000;
-
-            foreach (JSONhistoric type in a) {
-                if (a[i].High < min)
-                    min = a[i].High;
-                i++;
-            }
-            return min * (float)0.99;
-        }
         // #########################################################################################
         async private Task UpdateCoin() {
             
