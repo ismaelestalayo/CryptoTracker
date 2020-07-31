@@ -1,8 +1,6 @@
-<img src="CryptoTracker/Assets/CryptoTracker Wide DarkT.png" width = "95%"/>
-
-
 <img src="Screenshots/promo/Hero-art.png" width = "100%"/>
 
+- Keep track of your favourite coins by pining them to the dashboard
 - Adjustable **hourly/daily/weekly/monthly charts**
 - Supports **over 100 cryptocurrencies**!
 - Portfolio to keep track of all your purchases (with **cloud backup**).
@@ -25,12 +23,18 @@
 </p>
 
 
-## Mobile version also available:
+## Mobile version (discontinued):
 <p align="center">
 	<img src="Screenshots/phone/Promo_phoneText1.png" width = "30%"/> <img src="Screenshots/phone/Promo_phoneText2.png" width = "30%"/> <img src="Screenshots/phone/Promo_phoneText3.png" width = "30%"/>
 <p/>
 
 # Milestones:
+#### 5.0:
+- Edit and sort your portfolio!
+- Improved appearance of graphs
+- Filter the news with tags
+- Under the hood improvements and fixes
+
 #### 4.5:
 - New animations between pages!
 - Pin/Unpin coins directly from a coin's page.
@@ -71,7 +75,7 @@
 
 #### 1.2:
 - Ability to choose between EUR and USD
-- More friendly mobile UI (still work in progress)
+- More friendly mobile UI (still WIP)
 - Added the bases for 
 
 #### 1.1:
@@ -85,20 +89,7 @@
 - Each coin has a slider to choose a time-span for the graph.
 
 
-# Task list:
-- [x] Adjust the time range of each graphic independently
-- [x] Dark and light and dark theme
-- [x] Support for EUR, USD, CAD, MXN...
-- [x] Mobile friendly UI
-- [x] Stats about each coin on their pages
-- [x] Portfolio to keep track of earnings
-- [ ] Live tile
-- [x] More cryptocurrencies
-- [ ] More languages
-- [ ] Log in to CoinBase/Kraken account
-- [ ] Port to Android (dev account = 20€)
-- [ ] Port to iOS (dev account is 100€/year + must compile on Mac)
-
+---
 
 # Suggest anything at:
  Mail: ismael.em@outlook.com
