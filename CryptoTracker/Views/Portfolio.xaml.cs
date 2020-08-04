@@ -1,5 +1,4 @@
 ﻿using CryptoTracker.Helpers;
-using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -24,7 +23,7 @@ namespace CryptoTracker {
     public partial class Portfolio : Page {
 
 
-        internal static List<PurchaseClass> PurchaseList { get; set; }
+        internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
         internal List<PurchaseClass> NewPurchase { get; set; }
         internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
         private int EditingPurchaseId { get; set; }
@@ -142,28 +141,28 @@ namespace CryptoTracker {
                 var z = e.Message;
             }
         }
-        private static async Task<List<PurchaseClass>> ReadPortfolio() {
+        private static async Task<ObservableCollection<PurchaseClass>> ReadPortfolio() {
 
             try {
                 var readStream =
                     await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("portfolio").ConfigureAwait(false);
 
                 DataContractSerializer stuffSerializer =
-                    new DataContractSerializer(typeof(List<PurchaseClass>));
+                    new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
 
-                var setResult = (List<PurchaseClass>)stuffSerializer.ReadObject(readStream);
+                var setResult = (ObservableCollection<PurchaseClass>)stuffSerializer.ReadObject(readStream);
                 await readStream.FlushAsync();
                 readStream.Dispose();
 
                 return setResult;
             } catch (Exception ex) {
                 var unusedWarning = ex.Message;
-                return new List<PurchaseClass>();
+                return new ObservableCollection<PurchaseClass>();
             }
         }
 
         internal static void importPortfolio(List<PurchaseClass>portfolio) {
-            PurchaseList = new List<PurchaseClass>(portfolio);
+            PurchaseList = new ObservableCollection<PurchaseClass>(portfolio);
             SavePortfolio();
         }
 
