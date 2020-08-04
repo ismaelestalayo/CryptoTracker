@@ -24,7 +24,7 @@ namespace CryptoTracker {
 
 
         internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
-        internal List<PurchaseClass> NewPurchase { get; set; }
+        internal ObservableCollection<PurchaseClass> NewPurchase { get; set; }
         internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
         private int EditingPurchaseId { get; set; }
 
@@ -130,7 +130,7 @@ namespace CryptoTracker {
                     await savedStuffFile.OpenStreamForWriteAsync().ConfigureAwait(false) ) {
 
                     DataContractSerializer stuffSerializer =
-                        new DataContractSerializer(typeof(List<PurchaseClass>));
+                        new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
 
                     stuffSerializer.WriteObject(writeStream, PurchaseList);
                     await writeStream.FlushAsync();
@@ -161,7 +161,7 @@ namespace CryptoTracker {
             }
         }
 
-        internal static void importPortfolio(List<PurchaseClass>portfolio) {
+        internal static void importPortfolio(ObservableCollection<PurchaseClass>portfolio) {
             PurchaseList = new ObservableCollection<PurchaseClass>(portfolio);
             SavePortfolio();
         }
@@ -180,7 +180,7 @@ namespace CryptoTracker {
         // ###############################################################################################
         // Add/Edit purchase dialog
         private void AddPurchase_click(object sender, RoutedEventArgs e) {
-            NewPurchase = new List<PurchaseClass>() { new PurchaseClass() };
+            NewPurchase = new ObservableCollection<PurchaseClass>() { new PurchaseClass() };
             TestRepeater.ItemsSource = NewPurchase;
             PurchaseDialog.Title = "💵 New purchase";
             PurchaseDialog.PrimaryButtonText = "Add";
@@ -190,7 +190,7 @@ namespace CryptoTracker {
         private void EditPurchase_Click(object sender, RoutedEventArgs e) {
             var purchase = ((PurchaseClass)((FrameworkElement)sender).DataContext);
             EditingPurchaseId = PurchaseList.IndexOf(purchase);
-            NewPurchase = new List<PurchaseClass>(1) { purchase };
+            NewPurchase = new ObservableCollection<PurchaseClass>() { purchase };
             TestRepeater.ItemsSource = NewPurchase;
             PurchaseDialog.Title = "💵 Edit purchase";
             PurchaseDialog.PrimaryButtonText = "Save";
