@@ -4,9 +4,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:model="using:CryptoTracker.Model"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:views="using:CryptoTracker.Views" xmlns:model="using:CryptoTracker.Model"
+    xmlns:views="using:CryptoTracker.Views"
+    xmlns:model="using:CryptoTracker.Model"
+    xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     NavigationCacheMode="Enabled">

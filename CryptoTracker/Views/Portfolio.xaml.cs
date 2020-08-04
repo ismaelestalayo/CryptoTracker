@@ -1,5 +1,4 @@
 ﻿using CryptoTracker.Helpers;
-using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
