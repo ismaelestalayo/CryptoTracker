@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Model {
     internal class HomeTile : INotifyPropertyChanged {
@@ -76,5 +77,4 @@ namespace CryptoTracker.Model {
             }
         }
     }
-}
 }

@@ -21,7 +21,7 @@ namespace CryptoTracker.Views {
             Title.Text = string.Format("Welcome to Crypto Tracker {0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
             logo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
-                new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-AppIcon-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/CryptoTracker-Asset-AppIcon-D.png"));
+                new BitmapImage(new Uri("ms-appx:///Assets/AppIcon-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/AppIcon-D.png"));
         }
         
     }

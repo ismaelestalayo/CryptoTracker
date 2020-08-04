@@ -17,11 +17,11 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <AppxPackageDir>C:\Users\ismae\Desktop\appxupload</AppxPackageDir>
-    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <HockeyAppResourceId>40853427385b47e0bacec33938f84566</HockeyAppResourceId>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>
@@ -158,10 +158,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\CryptoTracker-Asset-AppIcon-D.png" />
-    <Content Include="Assets\CryptoTracker-Asset-AppIcon-L.png" />
-    <Content Include="Assets\CryptoTracker-Asset-Tile-D.png" />
-    <Content Include="Assets\CryptoTracker-Asset-Tile-L.png" />
+    <Content Include="Assets\AppIcon-D.png" />
+    <Content Include="Assets\AppIcon-L.png" />
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
     <Content Include="Assets\Icons\iconBCN.png" />
@@ -184,6 +182,8 @@
     <Content Include="Assets\Icons\iconXMR.png" />
     <Content Include="Assets\Icons\iconXRP.png" />
     <Content Include="Assets\Icons\iconZRX.png" />
+    <Content Include="Assets\Tile-D.png" />
+    <Content Include="Assets\Tile-L.png" />
     <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-16.png" />
     <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-24.png" />
     <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-256.png" />
@@ -331,10 +331,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>3.2.2</Version>
+      <Version>3.4.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>3.2.2</Version>
+      <Version>3.4.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
       <Version>3.0.0</Version>
