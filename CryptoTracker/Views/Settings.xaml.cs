@@ -10,6 +10,7 @@ using Windows.ApplicationModel.Email;
 using Windows.Services.Store;
 using Windows.System;
 using Windows.UI;
+using System.Collections.ObjectModel;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -175,7 +176,7 @@ namespace CryptoTracker {
 
             // Read complex/large objects 
             if (await helper.FileExistsAsync(portfolioKey)) {
-                var obj = await helper.ReadFileAsync<List<PurchaseClass>>(portfolioKey);
+                var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseClass>>(portfolioKey);
 
                 ContentDialog importDialog = new ContentDialog() {
                     Title = $"Import {obj.Count} purchases?",

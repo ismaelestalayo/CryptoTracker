@@ -24,8 +24,8 @@ namespace CryptoTracker {
     public partial class Portfolio : Page {
 
 
-        internal static List<PurchaseClass> PurchaseList { get; set; }
-        internal List<PurchaseClass> NewPurchase { get; set; }
+        internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
+        internal ObservableCollection<PurchaseClass> NewPurchase { get; set; }
         internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
         private int EditingPurchaseId { get; set; }
 
@@ -131,7 +131,7 @@ namespace CryptoTracker {
                     await savedStuffFile.OpenStreamForWriteAsync().ConfigureAwait(false) ) {
 
                     DataContractSerializer stuffSerializer =
-                        new DataContractSerializer(typeof(List<PurchaseClass>));
+                        new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
 
                     stuffSerializer.WriteObject(writeStream, PurchaseList);
                     await writeStream.FlushAsync();
@@ -142,28 +142,28 @@ namespace CryptoTracker {
                 var z = e.Message;
             }
         }
-        private static async Task<List<PurchaseClass>> ReadPortfolio() {
+        private static async Task<ObservableCollection<PurchaseClass>> ReadPortfolio() {
 
             try {
                 var readStream =
                     await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("portfolio").ConfigureAwait(false);
 
                 DataContractSerializer stuffSerializer =
-                    new DataContractSerializer(typeof(List<PurchaseClass>));
+                    new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
 
-                var setResult = (List<PurchaseClass>)stuffSerializer.ReadObject(readStream);
+                var setResult = (ObservableCollection<PurchaseClass>)stuffSerializer.ReadObject(readStream);
                 await readStream.FlushAsync();
                 readStream.Dispose();
 
                 return setResult;
             } catch (Exception ex) {
                 var unusedWarning = ex.Message;
-                return new List<PurchaseClass>();
+                return new ObservableCollection<PurchaseClass>();
             }
         }
 
-        internal static void importPortfolio(List<PurchaseClass>portfolio) {
-            PurchaseList = new List<PurchaseClass>(portfolio);
+        internal static void importPortfolio(ObservableCollection<PurchaseClass>portfolio) {
+            PurchaseList = new ObservableCollection<PurchaseClass>(portfolio);
             SavePortfolio();
         }
 
@@ -181,7 +181,7 @@ namespace CryptoTracker {
         // ###############################################################################################
         // Add/Edit purchase dialog
         private void AddPurchase_click(object sender, RoutedEventArgs e) {
-            NewPurchase = new List<PurchaseClass>() { new PurchaseClass() };
+            NewPurchase = new ObservableCollection<PurchaseClass>() { new PurchaseClass() };
             TestRepeater.ItemsSource = NewPurchase;
             PurchaseDialog.Title = "💵 New purchase";
             PurchaseDialog.PrimaryButtonText = "Add";
@@ -191,7 +191,7 @@ namespace CryptoTracker {
         private void EditPurchase_Click(object sender, RoutedEventArgs e) {
             var purchase = ((PurchaseClass)((FrameworkElement)sender).DataContext);
             EditingPurchaseId = PurchaseList.IndexOf(purchase);
-            NewPurchase = new List<PurchaseClass>(1) { purchase };
+            NewPurchase = new ObservableCollection<PurchaseClass>() { purchase };
             TestRepeater.ItemsSource = NewPurchase;
             PurchaseDialog.Title = "💵 Edit purchase";
             PurchaseDialog.PrimaryButtonText = "Save";
