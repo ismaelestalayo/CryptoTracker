@@ -6,6 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:CryptoTracker.Model"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:views="using:CryptoTracker.Views"
+    xmlns:model="using:CryptoTracker.Model"
     xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
@@ -166,7 +168,7 @@
             <!-- 
             ###########################################################################################################################
             ####################################################### VOLUME LIST VIEW ##################################################
-            ########################################################################################################################### -->
+            ###################################################a######################################################################## -->
             <ListView x:Name="VolumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
                       Grid.Row="1" Grid.Column="1">
                 <ListView.ItemTemplate>
