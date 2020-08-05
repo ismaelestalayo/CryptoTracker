@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using Telerik.UI.Xaml.Controls.Chart;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Popups;
@@ -28,6 +29,7 @@ namespace CryptoTracker {
         internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
         private int EditingPurchaseId { get; set; }
 
+        private bool ShowingDetails = false;
         private double curr = 0;
 
         public Portfolio() {
@@ -37,6 +39,44 @@ namespace CryptoTracker {
             DataGridd.ItemsSource = PurchaseList;
 
             UpdatePortfolio();
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            var t = App.ParseTimeSpan("week");
+            int limit = t.Item2;
+            
+            
+            var k = new List<List<JSONhistoric>>(5);
+            foreach (PurchaseClass purchase in PurchaseList) {
+                var hist = await App.GetHistoricalPrices(purchase.Crypto, "week");
+                k.Add(hist);
+            }
+            
+            var dates_arr = k[0].Select(kk => kk.DateTime).ToList();
+            var arr = k.Select(kk => kk.Select(kkk => kkk.High)).ToArray();
+            var prices = new List<List<double>>();
+            for (int i = 0; i < arr.Length; i++) {
+                prices.Add( arr[i].Select(a => a * PurchaseList[i].CryptoQty).ToList() );
+            }
+
+            var prices_arr = new List<double>();
+            for (int i = 0; i < prices[0].Count; i++) {
+                prices_arr.Add(prices.Select(p => p[i]).Sum());
+            }
+
+
+
+            List<ChartData> data = new List<ChartData>();
+            for (int i = 0; i < limit; ++i) {
+                data.Add( new ChartData {
+                    Date = dates_arr[i],
+                    Value = (float)prices_arr[i]
+                });
+            }
+            var series = (SplineAreaSeries)PortfolioChart.Series[0];
+            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+            series.ItemsSource = data;
         }
 
 
@@ -167,13 +207,18 @@ namespace CryptoTracker {
         }
 
         private void ToggleDetails_click(object sender, RoutedEventArgs e) {
-            if (DataGridd.RowDetailsVisibilityMode == Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Visible) {
-                DataGridd.RowDetailsVisibilityMode = Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Collapsed;
-                DataGridd.GridLinesVisibility = Microsoft.Toolkit.Uwp.UI.Controls.DataGridGridLinesVisibility.Horizontal;
+            ShowingDetails = !ShowingDetails;
+            if (ShowingDetails) {
+                DataGridd.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Visible;
+                DataGridd.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
+                PortfolioChart.Visibility = Visibility.Collapsed;
+                MainGrid.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
             }
             else {
-                DataGridd.RowDetailsVisibilityMode = Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Visible;
-                DataGridd.GridLinesVisibility = Microsoft.Toolkit.Uwp.UI.Controls.DataGridGridLinesVisibility.Horizontal;
+                DataGridd.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+                DataGridd.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
+                PortfolioChart.Visibility = Visibility.Visible;
+                MainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
             }
         }
 

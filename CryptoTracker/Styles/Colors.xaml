@@ -2,7 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="main_black"         Color="#232323"/>
+    <SolidColorBrush x:Key="main_black"         Color="#2E2E2E"/>
+    <SolidColorBrush x:Key="main_blackT"        Color="#2E2E2E" Opacity="0.4"/>
+    <SolidColorBrush x:Key="main_white"         Color="#D2D2D2"/>
+    <SolidColorBrush x:Key="main_whiteT"        Color="#D2D2D2" Opacity="0.4"/>
+    <SolidColorBrush x:Key="main_gray"          Color="#7D7D7D"/>
+    <SolidColorBrush x:Key="main_grayT"         Color="#7D7D7D" Opacity="0.4"/>
     <SolidColorBrush x:Key="main_color1"	    Color="#0A7262"/>
     <SolidColorBrush x:Key="main_color2"	    Color="#159575"/>
     <SolidColorBrush x:Key="main_color3"	    Color="#48B990"/>
