@@ -365,15 +365,15 @@
                 <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
                     <telerik:ChartTrackBallBehavior.LineStyle>
                         <Style TargetType="Polyline">
-                            <Setter Property="Stroke" Value="{StaticResource main_color1}"/>
+                            <Setter Property="Stroke" Value="{StaticResource main_gray}"/>
                             <Setter Property="StrokeThickness" Value="2"/>
                         </Style>
                     </telerik:ChartTrackBallBehavior.LineStyle>
                     <telerik:ChartTrackBallBehavior.InfoStyle>
                         <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                            <Setter Property="Background" Value="{StaticResource main_color3}"/>
+                            <Setter Property="Background" Value="{StaticResource main_grayT}"/>
                             <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource main_color1}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource main_gray}"/>
                         </Style>
                     </telerik:ChartTrackBallBehavior.InfoStyle>
                 </telerik:ChartTrackBallBehavior>
@@ -388,7 +388,7 @@
             <telerik:RadCartesianChart.HorizontalAxis>
                 <telerik:DateTimeContinuousAxis 
 						x:Name="dateTimeAxis"
-                        LabelOffset="1"
+                        LabelOffset="1" MaximumTicks="5"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
             </telerik:RadCartesianChart.HorizontalAxis>

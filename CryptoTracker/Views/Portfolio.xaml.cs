@@ -42,13 +42,15 @@ namespace CryptoTracker {
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            var t = App.ParseTimeSpan("week");
+            var timeSpan = "month";
+
+            var t = App.ParseTimeSpan(timeSpan);
             int limit = t.Item2;
             
             
             var k = new List<List<JSONhistoric>>(5);
             foreach (PurchaseClass purchase in PurchaseList) {
-                var hist = await App.GetHistoricalPrices(purchase.Crypto, "week");
+                var hist = await App.GetHistoricalPrices(purchase.Crypto, timeSpan);
                 k.Add(hist);
             }
             
@@ -77,6 +79,9 @@ namespace CryptoTracker {
             series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
+            verticalAxis.Minimum = GraphHelper.GetMinimumOfArray(data.Select(d => d.Value).ToList());
+            verticalAxis.Maximum = GraphHelper.GetMaximumOfArray(data.Select(d => d.Value).ToList());
+            dateTimeAxis = App.AdjustAxis(dateTimeAxis, timeSpan);
         }
 
 
