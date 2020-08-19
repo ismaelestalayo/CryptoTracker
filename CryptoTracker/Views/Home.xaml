@@ -149,7 +149,7 @@
                                 </telerikChart:RadCartesianChart.VerticalAxis>
 
                                 <telerikChart:SplineAreaSeries
-                                    StrokeThickness="1.5">
+                                    StrokeThickness="1.25">
                                 </telerikChart:SplineAreaSeries>
                             </telerikChart:RadCartesianChart>
                         </Grid>
