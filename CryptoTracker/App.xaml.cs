@@ -185,6 +185,16 @@ namespace CryptoTracker {
                 var data = await GetJSONAsync(uri);
                 JSONcoins.HandleJSON(data);
 
+                // Get coins ranked 101-200
+                uri = new Uri(URL + "&page=1");
+                data = await GetJSONAsync(uri);
+                JSONcoins.HandleJSON(data);
+
+                // Get coins ranked 201-300
+                uri = new Uri(URL + "&page=2");
+                data = await GetJSONAsync(uri);
+                JSONcoins.HandleJSON(data);
+
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
             }
