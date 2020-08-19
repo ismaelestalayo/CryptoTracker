@@ -74,6 +74,9 @@ namespace CryptoTracker.Views {
                 _limit = limit,
                 _opacity = 1,
             });
+
+            // Update pinnedCoin list
+            App.UpdatePinnedCoins();
         }
 
         internal static void RemoveCoinHome(string crypto) {
@@ -146,8 +149,8 @@ namespace CryptoTracker.Views {
                 coinColorT = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_colorT"];
                 coinColor = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_color"];
             } catch (Exception) {
-                coinColorT = (SolidColorBrush)Application.Current.Resources["null_colorT"];
-                coinColor = (SolidColorBrush)Application.Current.Resources["null_color"];
+                coinColorT = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlackT"];
+                coinColor = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
             }
 
             // #########################################################################################

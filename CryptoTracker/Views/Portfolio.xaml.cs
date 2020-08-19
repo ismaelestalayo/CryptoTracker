@@ -3,11 +3,12 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using Telerik.UI.Xaml.Controls.Chart;
 using System.Threading.Tasks;
+using Telerik.UI.Xaml.Controls.Chart;
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -16,7 +17,7 @@ using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
 
-    public class SuggestionCoinList {
+	public class SuggestionCoinList {
         public string Icon { get; set; }
         public string Name { get; set; }
     }
@@ -39,10 +40,17 @@ namespace CryptoTracker {
             PurchaseList = ReadPortfolio().Result;
             DataGridd.ItemsSource = PurchaseList;
 
+			PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
+            PurchaseList_CollectionChanged(null, null);
+
             UpdatePortfolio();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+		private void PurchaseList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            PortfolioChartGrid.Visibility = (PurchaseList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+		}
+
+		private async void Page_Loaded(object sender, RoutedEventArgs e) {
             RadioButton r = new RadioButton { Content = currTimerange };
             TimerangeButton_Click(r, null);
         }
@@ -75,7 +83,7 @@ namespace CryptoTracker {
                 };
                 s.Children.Add(t);
                 try { s.Background = (SolidColorBrush)App.Current.Resources[purchase.Crypto + "_colorT"]; }
-                catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
+                catch { s.Background = (SolidColorBrush)App.Current.Resources["Main_WhiteBlackT"]; }
 
                 PortfolioChartGrid.Children.Add(s);
                 Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);

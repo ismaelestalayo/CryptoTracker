@@ -40,7 +40,7 @@ namespace CryptoTracker {
 
     public sealed partial class CoinDetails : Page {
         private static int limit = 60;
-        private static string timeSpan = "hour";
+        private static string timeSpan = "week";
         private static ThreadPoolTimer PeriodicTimer;
 
         internal string crypto { get; set; }
@@ -77,8 +77,8 @@ namespace CryptoTracker {
                     ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper(CultureInfo.InvariantCulture) + "_color"]).Color;
                     ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources[crypto.ToUpper(CultureInfo.InvariantCulture) + "_colorT"]).Color;
                 } catch {
-                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
-                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["null_colorT"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColor"]).Color  = ((SolidColorBrush)App.Current.Resources["Main_WhiteBlack"]).Color;
+                    ((SolidColorBrush)App.Current.Resources["coinColorT"]).Color = ((SolidColorBrush)App.Current.Resources["Main_WhiteBlackT"]).Color;
                 }
 
                 FavIcon.Content = App.pinnedCoins.Contains(crypto.ToUpper(CultureInfo.InvariantCulture)) ? "\uEB52" : "\uEB51";
