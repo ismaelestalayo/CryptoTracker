@@ -31,6 +31,7 @@ namespace CryptoTracker {
 
         private bool ShowingDetails = false;
         private double curr = 0;
+        private string currTimerange = "month";
 
         public Portfolio() {
             this.InitializeComponent();
@@ -42,46 +43,8 @@ namespace CryptoTracker {
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            var timeSpan = "month";
-
-            var t = App.ParseTimeSpan(timeSpan);
-            int limit = t.Item2;
-            
-            
-            var k = new List<List<JSONhistoric>>(5);
-            foreach (PurchaseClass purchase in PurchaseList) {
-                var hist = await App.GetHistoricalPrices(purchase.Crypto, timeSpan);
-                k.Add(hist);
-            }
-            
-            var dates_arr = k[0].Select(kk => kk.DateTime).ToList();
-            var arr = k.Select(kk => kk.Select(kkk => kkk.High)).ToArray();
-            var prices = new List<List<double>>();
-            for (int i = 0; i < arr.Length; i++) {
-                prices.Add( arr[i].Select(a => a * PurchaseList[i].CryptoQty).ToList() );
-            }
-
-            var prices_arr = new List<double>();
-            for (int i = 0; i < prices[0].Count; i++) {
-                prices_arr.Add(prices.Select(p => p[i]).Sum());
-            }
-
-
-
-            List<ChartData> data = new List<ChartData>();
-            for (int i = 0; i < limit; ++i) {
-                data.Add( new ChartData {
-                    Date = dates_arr[i],
-                    Value = (float)prices_arr[i]
-                });
-            }
-            var series = (SplineAreaSeries)PortfolioChart.Series[0];
-            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            series.ItemsSource = data;
-            verticalAxis.Minimum = GraphHelper.GetMinimumOfArray(data.Select(d => d.Value).ToList());
-            verticalAxis.Maximum = GraphHelper.GetMaximumOfArray(data.Select(d => d.Value).ToList());
-            dateTimeAxis = App.AdjustAxis(dateTimeAxis, timeSpan);
+            RadioButton r = new RadioButton { Content = currTimerange };
+            TimerangeButton_Click(r, null);
         }
 
 
@@ -117,6 +80,9 @@ namespace CryptoTracker {
                 PortfolioChartGrid.Children.Add(s);
                 Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);
             }
+
+            RadioButton r = new RadioButton { Content = currTimerange };
+            TimerangeButton_Click(r, null);
         }
 
         internal PurchaseClass UpdatePurchase(PurchaseClass purchase) {
@@ -217,13 +183,17 @@ namespace CryptoTracker {
                 DataGridd.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Visible;
                 DataGridd.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
                 PortfolioChart.Visibility = Visibility.Collapsed;
+                TimerangeRadioButtons.Visibility = Visibility.Collapsed;
                 MainGrid.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
+                MainGrid.RowDefinitions[3].Height = new GridLength(0, GridUnitType.Star);
             }
             else {
                 DataGridd.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
                 DataGridd.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
                 PortfolioChart.Visibility = Visibility.Visible;
-                MainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
+                TimerangeRadioButtons.Visibility = Visibility.Visible;
+                MainGrid.RowDefinitions[2].Height = new GridLength(2, GridUnitType.Star);
+                MainGrid.RowDefinitions[3].Height = new GridLength(1, GridUnitType.Auto);
             }
         }
 
@@ -335,18 +305,49 @@ namespace CryptoTracker {
                 if (dgColumn.Header.ToString() != e.Column.Header.ToString())
                     dgColumn.SortDirection = null;
             }
+        }
 
-            /*
-            if (!e.Column.SortDirection.HasValue) {
-                e.Column.SortDirection = DataGridSortDirection.Ascending;
-                //PurchaseList = PurchaseList.OrderBy(x => x.Crypto).ToList();
+        private async void TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            RadioButton btn = sender as RadioButton;
+            currTimerange = btn.Content.ToString();
+
+            var t = App.ParseTimeSpan(currTimerange);
+            int limit = t.Item2;
+
+
+            var k = new List<List<JSONhistoric>>(5);
+            foreach (PurchaseClass purchase in PurchaseList) {
+                var hist = await App.GetHistoricalPrices(purchase.Crypto, currTimerange);
+                k.Add(hist);
             }
-            else {
-                e.Column.SortDirection = DataGridSortDirection.Descending;
-                //PurchaseList = PurchaseList.OrderByDescending(x => x.Crypto).ToList();
+
+            var dates_arr = k[0].Select(kk => kk.DateTime).ToList();
+            var arr = k.Select(kk => kk.Select(kkk => kkk.High)).ToArray();
+            var prices = new List<List<double>>();
+            for (int i = 0; i < arr.Length; i++) {
+                prices.Add(arr[i].Select(a => a * PurchaseList[i].CryptoQty).ToList());
             }
-            //DataGridd.ItemsSource = PurchaseList;
-            */
+
+            var prices_arr = new List<double>();
+            var min_limit = prices.Select(x => x.Count).Min();
+            for (int i = 0; i < min_limit; i++) {
+                prices_arr.Add(prices.Select(p => p[i]).Sum());
+            }
+
+            List<ChartData> data = new List<ChartData>();
+            for (int i = 0; i < min_limit; ++i) {
+                data.Add(new ChartData {
+                    Date = dates_arr[i],
+                    Value = (float)prices_arr[i]
+                });
+            }
+            var series = (SplineAreaSeries)PortfolioChart.Series[0];
+            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+            series.ItemsSource = data;
+            verticalAxis.Minimum = GraphHelper.GetMinimumOfArray(data.Select(d => d.Value).ToList());
+            verticalAxis.Maximum = GraphHelper.GetMaximumOfArray(data.Select(d => d.Value).ToList());
+            dateTimeAxis = App.AdjustAxis(dateTimeAxis, currTimerange);
         }
     }
 }
