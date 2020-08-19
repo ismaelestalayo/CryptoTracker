@@ -132,9 +132,14 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <Grid Grid.Row="0" x:Name="PortfolioChartGrid" Background="Transparent" BorderThickness="0"
-                Height="32" VerticalAlignment="Center" CornerRadius="5" Margin="0 4 0 0">
+
+			<Grid x:Name="PortfolioChartGrid"
+				  Background="Transparent" BorderThickness="0"
+				  CornerRadius="5"
+				  Grid.Row="0"
+				  Height="32"
+				  Margin="0 4 0 0"
+				  VerticalAlignment="Center">
             </Grid>
 
 
@@ -359,7 +364,7 @@
         <!-- Portfolio history chart -->
         <telerik:RadCartesianChart
             x:Name="PortfolioChart"
-            Grid.Row="2"
+            Grid.Row="2" Visibility="{Binding ElementName=PortfolioChartGrid, Path=Visibility}"
             Margin="10">
 
             <telerik:RadCartesianChart.Behaviors>
@@ -434,7 +439,7 @@
         <StackPanel
             x:Name="TimerangeRadioButtons"
             Orientation="Horizontal"
-            Grid.Row="3"
+            Grid.Row="3" Visibility="{Binding ElementName=PortfolioChartGrid, Path=Visibility}"
             HorizontalAlignment="Center"
             Margin="0 -15 0 0">
             <RadioButton GroupName="coin" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
