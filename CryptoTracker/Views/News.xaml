@@ -13,8 +13,8 @@
 
     <Page.Resources>
         <DataTemplate x:Key="StringDataTemplate" x:DataType="x:String">
-            <Grid Background="{ThemeResource main_black}" Margin="0 0 2 0" CornerRadius="4" Height="18" VerticalAlignment="Bottom">
-                <TextBlock Padding="5" Text="{x:Bind}" FontSize="10" Foreground="White" 
+            <Grid Background="{ThemeResource Main_WhiteBlack}" Margin="0 0 2 0" CornerRadius="4" Height="18" VerticalAlignment="Bottom">
+                <TextBlock Padding="5" Text="{x:Bind}" FontSize="10" Foreground="{ThemeResource SystemAltMediumHighColor}"
                     HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>

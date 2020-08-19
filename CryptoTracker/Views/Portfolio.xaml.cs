@@ -308,6 +308,10 @@ namespace CryptoTracker {
         }
 
         private async void TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            var nPurchases = PurchaseList.Count;
+            if (nPurchases == 0)
+                return;
+
             RadioButton btn = sender as RadioButton;
             currTimerange = btn.Content.ToString();
 
@@ -315,7 +319,7 @@ namespace CryptoTracker {
             int limit = t.Item2;
 
 
-            var k = new List<List<JSONhistoric>>(5);
+            var k = new List<List<JSONhistoric>>(nPurchases);
             foreach (PurchaseClass purchase in PurchaseList) {
                 var hist = await App.GetHistoricalPrices(purchase.Crypto, currTimerange);
                 k.Add(hist);
