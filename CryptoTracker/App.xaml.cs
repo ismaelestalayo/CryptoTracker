@@ -1,6 +1,8 @@
 ﻿using CryptoTracker.Helpers;
 using CryptoTracker.Views;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
-    sealed partial class App : Application {
+	sealed partial class App : Application {
         
         internal static string coin       = "EUR";
         internal static string coinSymbol = "€";
