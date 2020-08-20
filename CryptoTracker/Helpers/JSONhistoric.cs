@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System;
 
 namespace CryptoTracker.Helpers {
@@ -14,25 +15,25 @@ namespace CryptoTracker.Helpers {
         internal float Volumefrom { get; set; }
         internal float Volumeto { get; set; }
 
-        public static void HandleHistoricJSON(JToken data) {
+        public static List<JSONhistoric> HandleHistoricJSON(JToken data) {
 
             if (data["Response"].ToString().Equals("Error")) 
                 throw new NullReferenceException("Manually caught null coin exception.");
             
-
-            App.historic.Clear();
+            var hist = new List<JSONhistoric>();
 
             int lastIndex = ((JContainer)data["Data"]).Count;
-            for (int i = 0; i < lastIndex; i++) {
-                App.historic.Add(GetHistoricPoint(data["Data"][i]));
+            foreach(JToken d in data["Data"]) {
+                hist.Add(GetHistoricPoint(d));
             }
+            return hist;
         }
 
-        public static void HandleHistoricJSONnull(int limit) {
-            App.historic.Clear();
-            
+        public static List<JSONhistoric> HandleHistoricJSONnull(int limit) {
+
+            var hist = new List<JSONhistoric>();
             for (int i = 0; i < limit; i++) {
-                App.historic.Add( new JSONhistoric() {
+                hist.Add( new JSONhistoric() {
                     Low         = 0,
                     High        = 0,
                     Open        = 0,
@@ -41,6 +42,7 @@ namespace CryptoTracker.Helpers {
                     Volumeto    = 0
                 } );
             }
+            return hist;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////// #####

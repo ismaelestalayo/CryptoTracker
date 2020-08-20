@@ -7,7 +7,6 @@
     xmlns:model="using:CryptoTracker.Model"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:views="using:CryptoTracker.Views"
-    xmlns:model="using:CryptoTracker.Model"
     xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
@@ -150,7 +149,7 @@
                                 </telerikChart:RadCartesianChart.VerticalAxis>
 
                                 <telerikChart:SplineAreaSeries
-                                    StrokeThickness="1.5">
+                                    StrokeThickness="1.25">
                                 </telerikChart:SplineAreaSeries>
                             </telerikChart:RadCartesianChart>
                         </Grid>

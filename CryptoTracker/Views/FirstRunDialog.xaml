@@ -21,9 +21,13 @@
                 <Run Text="New in this version: &#x1F680; &#x0a;"/>
                 
                 <Run FontWeight="ExtraLight"
-                     Text="• Small UI refinements in most pages.
-                     &#x0a; • Improved Top100 and Portfolio pages.
-                     &#x0a; • Bugfixes.
+                     Text="• Editable purchases! Modify the date, quantity, exchange... of all your purchases.
+					 &#x0a; • You can now sort your purchases.
+					 &#x0a; • See your portfolio's performance with the historic chart.
+					 &#x0a; • News can be filtered with tags.
+					 &#x0a; • More info on each coin's page with a new layout.
+                     &#x0a; • Improved the vertical usage of the charts.
+                     &#x0a; • Refined logo.
                      "/> 
                 <LineBreak/>
                 

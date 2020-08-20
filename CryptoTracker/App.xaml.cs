@@ -16,7 +16,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -25,7 +24,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
-    sealed partial class App : Application {
+	sealed partial class App : Application {
         
         internal static string coin       = "EUR";
         internal static string coinSymbol = "€";
@@ -188,6 +187,16 @@ namespace CryptoTracker {
                 var data = await GetJSONAsync(uri);
                 JSONcoins.HandleJSON(data);
 
+                // Get coins ranked 101-200
+                uri = new Uri(URL + "&page=1");
+                data = await GetJSONAsync(uri);
+                JSONcoins.HandleJSON(data);
+
+                // Get coins ranked 201-300
+                uri = new Uri(URL + "&page=2");
+                data = await GetJSONAsync(uri);
+                JSONcoins.HandleJSON(data);
+
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
             }
@@ -230,12 +239,61 @@ namespace CryptoTracker {
                 string response = await httpClient.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
-                JSONhistoric.HandleHistoricJSON(data);                
+                App.historic.Clear();
+                App.historic = JSONhistoric.HandleHistoricJSON(data);
                 
 
             } catch (Exception) {
-                JSONhistoric.HandleHistoricJSONnull(limit);
+                App.historic.Clear();
+                App.historic = JSONhistoric.HandleHistoricJSONnull(limit);
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
+            }
+            finally{
+                httpClient.Dispose();
+            }
+        }
+
+        internal async static Task<List<JSONhistoric>> GetHistoricalPrices(string crypto, string timeSpan) {
+            if (crypto == "MIOTA")
+                crypto = "IOT";
+
+            var tuple = ParseTimeSpan(timeSpan);
+            timeSpan = tuple.Item1;
+            int limit = tuple.Item2;
+
+            //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
+            string URL = "https://min-api.cryptocompare.com/data/histo" + timeSpan + "?e=CCCAGG&fsym="
+                + crypto + "&tsym=" + coin + "&limit=" + limit;
+
+            if (limit == 0)
+                URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + coin + "&allData=true";
+
+            Uri uri = new Uri(URL);
+            HttpClient httpClient = new HttpClient();
+
+            try {
+                string response = await httpClient.GetStringAsync(uri);
+                var data = JToken.Parse(response);
+
+                return JSONhistoric.HandleHistoricJSON(data);
+            }
+            catch (Exception) {
+                return JSONhistoric.HandleHistoricJSONnull(limit);
+            }
+            finally {
+                httpClient.Dispose();
+            }
+        }
+
+        internal static Tuple<string, int> ParseTimeSpan(string timeSpan) {
+            switch (timeSpan) {
+                case "hour":    return Tuple.Create("minute", 60);
+                case "day":     return Tuple.Create("minute", 1500);
+                case "week":    return Tuple.Create("hour", 168);
+                case "month":   return Tuple.Create("hour", 744);
+                case "year":    return Tuple.Create("day", 365);
+                case "all":     return Tuple.Create("day", 0);
+                default:        return Tuple.Create("day", 7);
             }
         }
 

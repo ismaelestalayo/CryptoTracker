@@ -3,10 +3,12 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Telerik.UI.Xaml.Controls.Chart;
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -15,7 +17,7 @@ using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
 
-    public class SuggestionCoinList {
+	public class SuggestionCoinList {
         public string Icon { get; set; }
         public string Name { get; set; }
     }
@@ -28,7 +30,9 @@ namespace CryptoTracker {
         internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
         private int EditingPurchaseId { get; set; }
 
+        private bool ShowingDetails = false;
         private double curr = 0;
+        private string currTimerange = "month";
 
         public Portfolio() {
             this.InitializeComponent();
@@ -36,7 +40,19 @@ namespace CryptoTracker {
             PurchaseList = ReadPortfolio().Result;
             DataGridd.ItemsSource = PurchaseList;
 
+			PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
+            PurchaseList_CollectionChanged(null, null);
+
             UpdatePortfolio();
+        }
+
+		private void PurchaseList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            PortfolioChartGrid.Visibility = (PurchaseList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+		}
+
+		private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            RadioButton r = new RadioButton { Content = currTimerange };
+            TimerangeButton_Click(r, null);
         }
 
 
@@ -67,11 +83,14 @@ namespace CryptoTracker {
                 };
                 s.Children.Add(t);
                 try { s.Background = (SolidColorBrush)App.Current.Resources[purchase.Crypto + "_colorT"]; }
-                catch { s.Background = (SolidColorBrush)App.Current.Resources["null_color"]; }
+                catch { s.Background = (SolidColorBrush)App.Current.Resources["Main_WhiteBlackT"]; }
 
                 PortfolioChartGrid.Children.Add(s);
                 Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);
             }
+
+            RadioButton r = new RadioButton { Content = currTimerange };
+            TimerangeButton_Click(r, null);
         }
 
         internal PurchaseClass UpdatePurchase(PurchaseClass purchase) {
@@ -167,13 +186,22 @@ namespace CryptoTracker {
         }
 
         private void ToggleDetails_click(object sender, RoutedEventArgs e) {
-            if (DataGridd.RowDetailsVisibilityMode == Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Visible) {
-                DataGridd.RowDetailsVisibilityMode = Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Collapsed;
-                DataGridd.GridLinesVisibility = Microsoft.Toolkit.Uwp.UI.Controls.DataGridGridLinesVisibility.Horizontal;
+            ShowingDetails = !ShowingDetails;
+            if (ShowingDetails) {
+                DataGridd.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Visible;
+                DataGridd.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
+                PortfolioChart.Visibility = Visibility.Collapsed;
+                TimerangeRadioButtons.Visibility = Visibility.Collapsed;
+                MainGrid.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
+                MainGrid.RowDefinitions[3].Height = new GridLength(0, GridUnitType.Star);
             }
             else {
-                DataGridd.RowDetailsVisibilityMode = Microsoft.Toolkit.Uwp.UI.Controls.DataGridRowDetailsVisibilityMode.Visible;
-                DataGridd.GridLinesVisibility = Microsoft.Toolkit.Uwp.UI.Controls.DataGridGridLinesVisibility.Horizontal;
+                DataGridd.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+                DataGridd.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
+                PortfolioChart.Visibility = Visibility.Visible;
+                TimerangeRadioButtons.Visibility = Visibility.Visible;
+                MainGrid.RowDefinitions[2].Height = new GridLength(2, GridUnitType.Star);
+                MainGrid.RowDefinitions[3].Height = new GridLength(1, GridUnitType.Auto);
             }
         }
 
@@ -285,18 +313,53 @@ namespace CryptoTracker {
                 if (dgColumn.Header.ToString() != e.Column.Header.ToString())
                     dgColumn.SortDirection = null;
             }
+        }
 
-            /*
-            if (!e.Column.SortDirection.HasValue) {
-                e.Column.SortDirection = DataGridSortDirection.Ascending;
-                //PurchaseList = PurchaseList.OrderBy(x => x.Crypto).ToList();
+        private async void TimerangeButton_Click(object sender, RoutedEventArgs e) {
+            var nPurchases = PurchaseList.Count;
+            if (nPurchases == 0)
+                return;
+
+            RadioButton btn = sender as RadioButton;
+            currTimerange = btn.Content.ToString();
+
+            var t = App.ParseTimeSpan(currTimerange);
+            int limit = t.Item2;
+
+
+            var k = new List<List<JSONhistoric>>(nPurchases);
+            foreach (PurchaseClass purchase in PurchaseList) {
+                var hist = await App.GetHistoricalPrices(purchase.Crypto, currTimerange);
+                k.Add(hist);
             }
-            else {
-                e.Column.SortDirection = DataGridSortDirection.Descending;
-                //PurchaseList = PurchaseList.OrderByDescending(x => x.Crypto).ToList();
+
+            var dates_arr = k[0].Select(kk => kk.DateTime).ToList();
+            var arr = k.Select(kk => kk.Select(kkk => kkk.High)).ToArray();
+            var prices = new List<List<double>>();
+            for (int i = 0; i < arr.Length; i++) {
+                prices.Add(arr[i].Select(a => a * PurchaseList[i].CryptoQty).ToList());
             }
-            //DataGridd.ItemsSource = PurchaseList;
-            */
+
+            var prices_arr = new List<double>();
+            var min_limit = prices.Select(x => x.Count).Min();
+            for (int i = 0; i < min_limit; i++) {
+                prices_arr.Add(prices.Select(p => p[i]).Sum());
+            }
+
+            List<ChartData> data = new List<ChartData>();
+            for (int i = 0; i < min_limit; ++i) {
+                data.Add(new ChartData {
+                    Date = dates_arr[i],
+                    Value = (float)prices_arr[i]
+                });
+            }
+            var series = (SplineAreaSeries)PortfolioChart.Series[0];
+            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+            series.ItemsSource = data;
+            verticalAxis.Minimum = GraphHelper.GetMinimumOfArray(data.Select(d => d.Value).ToList());
+            verticalAxis.Maximum = GraphHelper.GetMaximumOfArray(data.Select(d => d.Value).ToList());
+            dateTimeAxis = App.AdjustAxis(dateTimeAxis, currTimerange);
         }
     }
 }
