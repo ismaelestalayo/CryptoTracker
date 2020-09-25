@@ -154,8 +154,8 @@ namespace CryptoTracker {
         // ###############################################################################################
         //  (GET) current price of a coin
         internal static double GetCurrentPrice(string crypto, string market) {
-            string URL = "https://min-api.cryptocompare.com/data/price?fsym=" +crypto+ "&tsyms=" + App.coin
-                + "&api_key=569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286";
+            string URL = "https://min-api.cryptocompare.com/data/price?fsym=" + crypto + "&tsyms=" + App.coin;
+            // + "&api_key=569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286";
 
             if (market != "defaultMarket") 
                 URL += "&e=" + market;
