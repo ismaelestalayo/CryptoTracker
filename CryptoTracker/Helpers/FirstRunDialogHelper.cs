@@ -7,10 +7,9 @@ namespace CryptoTracker.Helpers {
 
         internal static async Task ShowIfAppropriateAsync() {
 
-            try {
-                var x = App.localSettings.Values["newUser"].Equals("false");
+            var newUser = App.localSettings.Values["newUser"];
 
-            } catch (Exception) {
+            if (newUser == null || newUser.ToString() != "false") {
                 var dialog = new FirstRunDialog();
                 await dialog.ShowAsync();
                 App.localSettings.Values["newUser"] = "false";
