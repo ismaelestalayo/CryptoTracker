@@ -29,8 +29,6 @@ namespace CryptoTracker {
         internal static string coin       = "EUR";
         internal static string coinSymbol = "€";
 
-        internal static int pivotIndex = 0;
-
         internal static List<JSONcoins> coinList = new List<JSONcoins>();
         internal static List<string> pinnedCoins;
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
@@ -83,7 +81,7 @@ namespace CryptoTracker {
                     }
                 }
                 
-            } catch (Exception ex){
+            } catch (Exception){
                 // Default: Windows theme, EUR and {BTC, ETH, LTC and XRP}
                 localSettings.Values["Theme"] = "Windows";
                 localSettings.Values["Coin"] = "EUR";
@@ -463,7 +461,7 @@ namespace CryptoTracker {
                 g.TotalMarketCap    = ToKMB((double)(data["total_market_cap"][coin.ToLower()] ?? data["total_market_cap"]["usd"])) + coinSymbol;
                 return g;
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 //await new MessageDialog(ex.Message).ShowAsync();
                 return new GlobalStats();
             }
