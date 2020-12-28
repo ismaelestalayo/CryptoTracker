@@ -34,6 +34,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+		<Style x:Key="DataGrid_DetailsLeftStyle" TargetType="TextBlock" BasedOn="{ThemeResource ListViewTextBlock}">
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+		</Style>
+		<Style x:Key="DataGrid_DetailsRightStyle" TargetType="TextBlock" BasedOn="{ThemeResource ListViewTextBlock}">
+			<Setter Property="HorizontalAlignment" Value="Right"/>
+			<Setter Property="Margin" Value="15 0 50 0"/>
+		</Style>
         <DataTemplate x:DataType="helpers:PurchaseClass" x:Key="NewPurchaseDialog">
             <controls:UniformGrid Columns="3" Rows="3" Margin="0 15" VerticalAlignment="Top">
                 <!-- Row 1 -->
@@ -274,70 +282,63 @@
                 <!-- DETAILS OF EACH PURCHASE -->
                 <controls:DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <Grid Padding="15" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                        <Grid Padding="25 15" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="25"/>
                             </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MinWidth="150"/>
-                                <ColumnDefinition Width="*" MinWidth="170"/>
-                                <ColumnDefinition Width="*" MinWidth="140"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- First Row-->
-                            <Grid Grid.Row="0" Grid.Column="0" Margin="15 0 0 0" MaxWidth="150">
-                                <TextBlock Text="Buy price:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
-                                <TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="auto"/>
+								<ColumnDefinition Width="auto"/>
+								<ColumnDefinition Width="auto"/>
+								<ColumnDefinition Width="auto"/>
+							</Grid.ColumnDefinitions>
+							
+							
+							<!-- First Row-->
+							<TextBlock Grid.Row="0" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Buy price:"/>
+							<TextBlock Grid.Row="0" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
                                     <Run Text="{Binding BoughtAt, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
-                                </TextBlock>
-                            </Grid>
-							<Grid Grid.Row="0" Grid.Column="1" Margin="25 0 0 0" MaxWidth="300">
-								<TextBlock Text="Currently:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
-								<TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}">
-                                    <Run Text="{Binding Current, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
-									<Run Foreground="{Binding ProfitFG}" Text="{Binding arrow, Mode=OneWay}"/><!--
-									--><Run Foreground="{Binding ProfitFG}" Text="{Binding Delta, Mode=OneWay}"/><!--
-									--><Run Foreground="{Binding ProfitFG}" Text="%"/>
-								</TextBlock>
-							</Grid>
+							</TextBlock>
 
-
+							<TextBlock Grid.Row="0" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Currently:"/>
+							<TextBlock Grid.Row="0" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
+                                <Run Text="{Binding Current, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
+								<Run Foreground="{Binding ProfitFG}" Text="{Binding arrow, Mode=OneWay}"/><!--
+								--><Run Foreground="{Binding ProfitFG}" Text="{Binding Delta, Mode=OneWay}"/><!--
+								--><Run Foreground="{Binding ProfitFG}" Text="%"/>
+							</TextBlock>
+							
+							
+							
 							<!-- Second Row-->
-                            <Grid Grid.Row="1" Grid.Column="0" Margin="15 0 0 0" MaxWidth="150">
-                                <TextBlock Text="Cost:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
-                                <TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}">
-                                    <Run Text="{Binding InvestedQty, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
-                                </TextBlock>
-                            </Grid>
-							<Grid Grid.Row="1" Grid.Column="1" Margin="25 0 0 0" MaxWidth="300">
-								<TextBlock Text="Worth:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
-								<TextBlock HorizontalAlignment="Right" Style="{ThemeResource ListViewTextBlock}">
-                                    <Run Text="{Binding Worth, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
-									<Run Foreground="{Binding ProfitFG}" Text="{Binding arrow, Mode=OneWay}"/><!--
-									--><Run Foreground="{Binding ProfitFG}" Text="{Binding Profit, Mode=OneWay}"/><!--
-									--><Run Foreground="{Binding ProfitFG}" Text="{Binding c, Mode=OneWay}"/>
-								</TextBlock>
-							</Grid>
+							<TextBlock Grid.Row="1" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Cost:"/>
+							<TextBlock Grid.Row="1" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
+                                <Run Text="{Binding InvestedQty, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
+                            </TextBlock>
+
+							<TextBlock Grid.Row="1" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Worth:"/>
+							<TextBlock Grid.Row="1" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
+                                <Run Text="{Binding Worth, Mode=OneWay}"/><Run Text="{Binding c, Mode=OneWay}"/>
+								<Run Foreground="{Binding ProfitFG}" Text="{Binding arrow, Mode=OneWay}"/><!--
+								--><Run Foreground="{Binding ProfitFG}" Text="{Binding Profit, Mode=OneWay}"/><!--
+								--><Run Foreground="{Binding ProfitFG}" Text="{Binding c, Mode=OneWay}"/>
+							</TextBlock>
+							
 
 
 							<!-- Third Row-->
-                            <Grid Grid.Row="2" Grid.Column="0" Margin="15 0 0 0" MaxWidth="150">
-                                <TextBlock Text="Date:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
-                                <TextBlock
-                                    Text="{Binding Date, Mode=OneWay, Converter={StaticResource DateTimeShortener}}"
-                                    HorizontalAlignment="Right"
-                                    Style="{ThemeResource ListViewTextBlock}"/>
-                            </Grid>
-							<Grid Grid.Row="2" Grid.Column="1" Margin="25 0 0 0" MaxWidth="300">
-                                <TextBlock Text="Exchange:" HorizontalAlignment="Left" Style="{ThemeResource ListViewTextBlock}" FontWeight="Bold"/>
-                                <TextBlock
-                                    Text="{Binding Exchange, Mode=OneWay}"
-                                    HorizontalAlignment="Right"
-                                    Style="{ThemeResource ListViewTextBlock}"/>
-                            </Grid>
+							<TextBlock Grid.Row="2" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Date:"/>
+							<TextBlock Grid.Row="2" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
+								<Run Text="{Binding Date, Mode=OneWay, Converter={StaticResource DateTimeShortener}}"/>
+							</TextBlock>
+
+							<TextBlock Grid.Row="2" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Exchange:"/>
+							<TextBlock Grid.Row="2" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
+								<Run Text="{Binding Exchange, Mode=OneWay}"/>
+							</TextBlock>
+                            
 
 
                         </Grid>
