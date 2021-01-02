@@ -200,6 +200,8 @@ namespace CryptoTracker {
                 data = await GetJSONAsync(uri);
                 coinList.AddRange(JSONcoins.HandleJSON(data));
 
+                coinList.Sort((x, y) => x.Name.CompareTo(y.Name));
+
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
             }
