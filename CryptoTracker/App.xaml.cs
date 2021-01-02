@@ -183,17 +183,22 @@ namespace CryptoTracker {
 
             try {
                 var data = await GetJSONAsync(uri);
-                JSONcoins.HandleJSON(data);
+                coinList.AddRange(JSONcoins.HandleJSON(data));
 
                 // Get coins ranked 101-200
                 uri = new Uri(URL + "&page=1");
                 data = await GetJSONAsync(uri);
-                JSONcoins.HandleJSON(data);
+                coinList.AddRange(JSONcoins.HandleJSON(data));
 
                 // Get coins ranked 201-300
                 uri = new Uri(URL + "&page=2");
                 data = await GetJSONAsync(uri);
-                JSONcoins.HandleJSON(data);
+                coinList.AddRange(JSONcoins.HandleJSON(data));
+
+                // Get coins ranked 301-400
+                uri = new Uri(URL + "&page=3");
+                data = await GetJSONAsync(uri);
+                coinList.AddRange(JSONcoins.HandleJSON(data));
 
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();

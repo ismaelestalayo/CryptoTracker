@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace CryptoTracker.Helpers {
     internal class JSONcoins {
@@ -6,18 +7,19 @@ namespace CryptoTracker.Helpers {
         internal string Name { get; set; }
         internal string FullName { get; set; }
 
-        public static void HandleJSON(JToken data) {
+        public static List<JSONcoins> HandleJSON(JToken data) {
+            var coins = new List<JSONcoins>();
 
             int lastIndex = ((JContainer)data["Data"]).Count;
             for (int i = 0; i < lastIndex; i++) {
-                App.coinList.Add(new JSONcoins {
+                coins.Add(new JSONcoins {
                     Id       = (int)data["Data"][i]["CoinInfo"]["Id"],
                     Name     = data["Data"][i]["CoinInfo"]["Name"].ToString(),
                     FullName = data["Data"][i]["CoinInfo"]["FullName"].ToString()
                 });
             }
 
-            (App.coinList).Sort((x, y) => x.Name.CompareTo(y.Name) );
+            return coins;
         }
     }
 }
