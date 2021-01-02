@@ -34,11 +34,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
-		<Style x:Key="DataGrid_DetailsLeftStyle" TargetType="TextBlock" BasedOn="{ThemeResource ListViewTextBlock}">
+		<Style x:Key="DataGrid_DetailsLeftStyle" TargetType="TextBlock" >
 			<Setter Property="FontWeight" Value="Bold"/>
 			<Setter Property="HorizontalAlignment" Value="Left"/>
 		</Style>
-		<Style x:Key="DataGrid_DetailsRightStyle" TargetType="TextBlock" BasedOn="{ThemeResource ListViewTextBlock}">
+		<Style x:Key="DataGrid_DetailsRightStyle" TargetType="TextBlock">
 			<Setter Property="HorizontalAlignment" Value="Right"/>
 			<Setter Property="Margin" Value="15 0 50 0"/>
 		</Style>
