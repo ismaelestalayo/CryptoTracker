@@ -38,10 +38,8 @@ namespace CryptoTracker.Views {
         }
 
         private async void InitHome() {
-            // keep an updated list of coins
-            await App.GetCoinList();
-
-            for (int i = 0; i < App.pinnedCoins.Count; i++) {
+            // First update home-coin-tiles
+			for (int i = 0; i < App.pinnedCoins.Count; i++) {
                 try {
                     await AddCoinHome(App.pinnedCoins[i]);
                     await UpdateCard(i);
@@ -49,6 +47,9 @@ namespace CryptoTracker.Views {
                     
                 }
             }
+
+            // keep an updated list of coins
+            await App.GetCoinList();
         }
 
         // #########################################################################################
