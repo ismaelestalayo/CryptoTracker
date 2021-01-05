@@ -8,7 +8,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:ex="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:views="using:CryptoTracker.Views"
-    NavigationCacheMode="Disabled"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.Resources>

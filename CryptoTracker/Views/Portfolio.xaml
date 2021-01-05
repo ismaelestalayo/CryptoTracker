@@ -10,7 +10,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
-    NavigationCacheMode="Disabled"
+    NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
