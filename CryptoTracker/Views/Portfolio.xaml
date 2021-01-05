@@ -16,17 +16,17 @@
 
     <Page.Resources>
         <Style x:Key="DataGrid_HeaderStyle" TargetType="ContentControl">
-            <Setter Property="FontWeight" Value="SemiLight" />
+            <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemChromeMediumLowColor}"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ContentControl">
                         <ContentPresenter Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Background="{ThemeResource SystemBaseMediumHighColor}"
-                            CornerRadius="0 0 0 0"
+                            Background="{ThemeResource SystemChromeDisabledHighColor}"
+                            CornerRadius="0 0 0 0" Padding="5"
                             ContentTransitions="{TemplateBinding ContentTransitions}"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"/>
@@ -47,9 +47,9 @@
                 <!-- Row 1 -->
                 <ComboBox
                     Header="Crypto"
-                    ItemsSource="{x:Bind Path=views:Portfolio.coinsArray}"
+                    ItemsSource="{x:Bind Path=views:Portfolio.coinsArray, Mode=OneWay}"
                     LostFocus="DialogBtn_LostFocus"
-                    Margin="0 0 5 0"
+                    Margin="0 0 5 0" IsEditable="True"
                     PlaceholderText="Coin"
                     SelectedValue="{x:Bind Crypto, Mode=TwoWay}"
                     Width="130"/>
@@ -148,33 +148,36 @@
 				  Height="32"
 				  Margin="0 4 0 0"
 				  VerticalAlignment="Center">
-            </Grid>
+				<d:StackPanel Width="1500" HorizontalAlignment="Left" Background="Goldenrod"/>
+				<d:StackPanel Width="250" HorizontalAlignment="Left" Background="IndianRed"/>
+				<d:StackPanel Width="100" HorizontalAlignment="Left" Background="MediumPurple"/>
+			</Grid>
 
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 10 0 0">
-                <Button
+				<Button
                     Click="AddPurchase_click"
                     Style="{ThemeResource Crypto_button_style}"
+                    Margin="0 0 5 0"
+                    ToolTipService.ToolTip="Add">
+					<StackPanel Orientation="Horizontal">
+						<FontIcon Glyph="&#xE109;" FontSize="15"/>
+						<TextBlock Text="New purchase" Margin="10 0 0 0" VerticalAlignment="Center"/>
+					</StackPanel>
+				</Button>
+				<ComboBox Width="150" SelectionChanged="Grouping_ComboBox_SelectionChanged"
+					Style="{ThemeResource Crypto_comboBox_style}"
+					Margin="0 0 10 0">
+					<ComboBoxItem Content="Dont group" IsSelected="True"/>
+					<ComboBoxItem Content="By profits"/>
+					<ComboBoxItem Content="By coin"/>
+				</ComboBox>
+				<CheckBox 
+                    Click="ToggleDetails_click" IsChecked="False"
                     Margin="0 0 3 0"
-                    ToolTipService.ToolTip="Add"
-                    VerticalAlignment="Bottom">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xE109;" FontSize="15"/>
-                        <TextBlock Text="Add purchase" Margin="10 0 0 0" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button 
-                    Click="ToggleDetails_click"
-                    Style="{ThemeResource Crypto_button_style}"
-                    Margin="0 0 3 0"
-                    ToolTipService.ToolTip="Toggle details"
-                    VerticalAlignment="Bottom">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Symbol="ShowBcc"/>
-                        <TextBlock Text="Toggle details" Margin="10 0 0 0" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+					Content="Show details" ToolTipService.ToolTip="Show details"
+                    VerticalAlignment="Bottom"/>
+			</StackPanel>
         </Grid>
 
 
@@ -183,103 +186,111 @@
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5">
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0">
             <controls:DataGrid
-                x:Name="DataGridd"
-                AutoGenerateColumns="False"
-                BorderBrush="{ThemeResource SystemControlDisabledChromeHighBrush}" BorderThickness="1 0"
+                x:Name="Portfolio_dg"
+                AutoGenerateColumns="False" BorderThickness="0"
                 CanUserSortColumns="True" CanUserReorderColumns="False" CanUserResizeColumns="False"
                 ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
                 GridLinesVisibility="Horizontal"
                 HeadersVisibility="Column" HorizontalAlignment="Stretch"
                 HorizontalGridLinesBrush="{ThemeResource SystemControlDisabledChromeHighBrush}"
-                Margin="0" 
+				LoadingRowGroup="dg_loadingRowGroup"
+                Margin="0"
                 RowBackground="Transparent" RowDetailsVisibilityMode="Collapsed"
-                SelectionMode="Single" Sorting="DataGrid_Sorting"
+				SelectionMode="Single" Sorting="DataGrid_Sorting"
                 VerticalAlignment="Top">
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTemplateColumn Header="Crypto" Width="*">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
+				
+				<controls:DataGrid.RowGroupHeaderStyles>
+					<!-- Override the default Style for groups headers -->
+					<Style TargetType="controls:DataGridRowGroupHeader">
+						<Setter Property="Background" Value="Green" />
+					</Style>
+				</controls:DataGrid.RowGroupHeaderStyles>
 
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
+				<controls:DataGrid.Columns>
+					<controls:DataGridTemplateColumn Header="Crypto" Width="*">
+						<controls:DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0 5">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="3*"/>
+										<ColumnDefinition Width="2*"/>
+									</Grid.ColumnDefinitions>
+
+									<TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Run Text="{Binding CryptoQty}"/>
                                         <Run Text="{Binding Crypto}"/>
-                                    </TextBlock>
+									</TextBlock>
 
-                                    <Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
+									<Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
+								</Grid>
+							</DataTemplate>
+						</controls:DataGridTemplateColumn.CellTemplate>
+					</controls:DataGridTemplateColumn>
 
-                    <controls:DataGridTemplateColumn Header="Invested" Width="*">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding InvestedQty}"/>
-                                    <TextBlock Text="{Binding c}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
+					<controls:DataGridTemplateColumn Header="Invested" Width="*">
+						<controls:DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<TextBlock Text="{Binding InvestedQty}"/>
+									<TextBlock Text="{Binding c}"/>
+								</StackPanel>
+							</DataTemplate>
+						</controls:DataGridTemplateColumn.CellTemplate>
+					</controls:DataGridTemplateColumn>
 
-                    <controls:DataGridTemplateColumn Header="Worth" Width="*">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding arrow}" Margin="4 0" Foreground="{Binding ProfitFG, Mode=OneWay}"/>
-                                    <TextBlock Text="{Binding Worth}"/>
-                                    <TextBlock Text="{Binding c}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
+					<controls:DataGridTemplateColumn Header="Worth" Width="*">
+						<controls:DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<TextBlock Text="{Binding arrow}" Margin="4 0" Foreground="{Binding ProfitFG, Mode=OneWay}"/>
+									<TextBlock Text="{Binding Worth}"/>
+									<TextBlock Text="{Binding c}"/>
+								</StackPanel>
+							</DataTemplate>
+						</controls:DataGridTemplateColumn.CellTemplate>
+					</controls:DataGridTemplateColumn>
 
-                    <controls:DataGridTemplateColumn Header="Currently" Width="*">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding Current}"/>
-                                    <TextBlock Text="{Binding c}"      />
-                                </StackPanel>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-                </controls:DataGrid.Columns>
+					<controls:DataGridTemplateColumn Header="Currently" Width="*">
+						<controls:DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<TextBlock Text="{Binding Current}"/>
+									<TextBlock Text="{Binding c}"      />
+								</StackPanel>
+							</DataTemplate>
+						</controls:DataGridTemplateColumn.CellTemplate>
+					</controls:DataGridTemplateColumn>
+				</controls:DataGrid.Columns>
+                
+				<controls:DataGrid.RowStyle>
+					<Style TargetType="controls:DataGridRow">
+						<Setter Property="controls:DataGridRow.ContextFlyout">
+							<Setter.Value>
+								<MenuFlyout>
+									<MenuFlyoutItem Text="See coin" Click="GoToCoinPortfolio_Click">
+										<MenuFlyoutItem.Icon>
+											<SymbolIcon Symbol="Find"/>
+										</MenuFlyoutItem.Icon>
+									</MenuFlyoutItem>
+									<MenuFlyoutItem Text="Edit" Click="EditPurchase_Click">
+										<MenuFlyoutItem.Icon>
+											<SymbolIcon Symbol="Edit"/>
+										</MenuFlyoutItem.Icon>
+									</MenuFlyoutItem>
+									<MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
+										<MenuFlyoutItem.Icon>
+											<SymbolIcon Symbol="Delete"/>
+										</MenuFlyoutItem.Icon>
+									</MenuFlyoutItem>
+								</MenuFlyout>
+							</Setter.Value>
+						</Setter>
+					</Style>
+				</controls:DataGrid.RowStyle>
 
-                <controls:DataGrid.RowStyle>
-                    <Style TargetType="controls:DataGridRow">
-                        <Setter Property="controls:DataGridRow.ContextFlyout">
-                            <Setter.Value>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Text="See coin" Click="GoToCoinPortfolio_Click">
-                                        <MenuFlyoutItem.Icon>
-                                            <SymbolIcon Symbol="Find"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Edit" Click="EditPurchase_Click">
-                                        <MenuFlyoutItem.Icon>
-                                            <SymbolIcon Symbol="Edit"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
-                                        <MenuFlyoutItem.Icon>
-                                            <SymbolIcon Symbol="Delete"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                </MenuFlyout>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </controls:DataGrid.RowStyle>
-
-                <!-- DETAILS OF EACH PURCHASE -->
+				<!-- DETAILS OF EACH PURCHASE -->
                 <controls:DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <Grid Padding="25 15" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
@@ -348,8 +359,8 @@
                     <SolidColorBrush x:Key="DataGridRowSelectedBackgroundColor" Color="LightSeaGreen"/>
                     <SolidColorBrush x:Key="DataGridRowSelectedHoveredBackgroundColor" Color="LightSeaGreen"/>
                     <SolidColorBrush x:Key="DataGridRowSelectedUnfocusedBackgroundColor" Color="LightSeaGreen"/>
-                    <SolidColorBrush x:Key="DataGridRowSelectedHoveredUnfocusedBackgroundColor" Color="LightSeaGreen"/>
-                </controls:DataGrid.Resources>
+					<SolidColorBrush x:Key="DataGridRowSelectedHoveredUnfocusedBackgroundColor" Color="LightSeaGreen"/>
+				</controls:DataGrid.Resources>
             </controls:DataGrid>
         </ScrollViewer>
 
@@ -449,7 +460,7 @@
             PrimaryButtonText="Add"
             PrimaryButtonClick="PurchaseDialog_PrimaryButtonClick"
             CloseButtonText="Cancel"
-            DefaultButton="Primary">
+            DefaultButton="Primary" Margin="5,0,5,0">
             <muxc:ItemsRepeater
                 x:Name="TestRepeater" VerticalAlignment="Top" 
                 HorizontalAlignment="Center" ItemTemplate="{ThemeResource NewPurchaseDialog}">

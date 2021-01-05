@@ -13,6 +13,8 @@ using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker {
@@ -27,7 +29,7 @@ namespace CryptoTracker {
 
         internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
         internal ObservableCollection<PurchaseClass> NewPurchase { get; set; }
-        internal static List<string> coinsArray = App.coinList.Select(x => x.Name).ToList();
+        internal static List<string> coinsArray = new List<string>();
         private int EditingPurchaseId { get; set; }
 
         private bool ShowingDetails = false;
@@ -38,7 +40,7 @@ namespace CryptoTracker {
             this.InitializeComponent();
 
             PurchaseList = ReadPortfolio().Result;
-            DataGridd.ItemsSource = PurchaseList;
+            Portfolio_dg.ItemsSource = PurchaseList;
 
 			PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
             PurchaseList_CollectionChanged(null, null);
@@ -130,7 +132,7 @@ namespace CryptoTracker {
         private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
             var menu = sender as MenuFlyoutItem;
             var item = menu.DataContext as PurchaseClass;
-            var items = DataGridd.ItemsSource.Cast<PurchaseClass>().ToList();
+            var items = Portfolio_dg.ItemsSource.Cast<PurchaseClass>().ToList();
             var index = items.IndexOf(item);
             PurchaseList.RemoveAt(index);
             UpdatePortfolio();
@@ -188,16 +190,16 @@ namespace CryptoTracker {
         private void ToggleDetails_click(object sender, RoutedEventArgs e) {
             ShowingDetails = !ShowingDetails;
             if (ShowingDetails) {
-                DataGridd.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Visible;
-                DataGridd.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
+                Portfolio_dg.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Visible;
+                Portfolio_dg.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
                 PortfolioChart.Visibility = Visibility.Collapsed;
                 TimerangeRadioButtons.Visibility = Visibility.Collapsed;
                 MainGrid.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
                 MainGrid.RowDefinitions[3].Height = new GridLength(0, GridUnitType.Star);
             }
             else {
-                DataGridd.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
-                DataGridd.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
+                Portfolio_dg.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+                Portfolio_dg.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
                 PortfolioChart.Visibility = Visibility.Visible;
                 TimerangeRadioButtons.Visibility = Visibility.Visible;
                 MainGrid.RowDefinitions[2].Height = new GridLength(2, GridUnitType.Star);
@@ -208,6 +210,9 @@ namespace CryptoTracker {
         // ###############################################################################################
         // Add/Edit purchase dialog
         private void AddPurchase_click(object sender, RoutedEventArgs e) {
+            if (coinsArray.Count == 0)
+                coinsArray = App.coinList.Select(x => x.Name).ToList();
+
             NewPurchase = new ObservableCollection<PurchaseClass>() { new PurchaseClass() };
             TestRepeater.ItemsSource = NewPurchase;
             PurchaseDialog.Title = "💵 New purchase";
@@ -270,46 +275,46 @@ namespace CryptoTracker {
             switch (e.Column.Header) {
                 case "Crypto":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
                                                                                         orderby item.Crypto ascending
                                                                                         select item);
                     else
-                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
                                                                                         orderby item.Crypto descending
                                                                                         select item);
                     break;
                 case "Invested":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
                                                                                         orderby item.InvestedQty ascending
                                                                                         select item);
                     else
-                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
                                                                                         orderby item.InvestedQty descending
                                                                                         select item);
                     break;
                 case "Worth":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
                                                                                         orderby item.Worth ascending
                                                                                         select item);
                     else
-                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
                                                                                         orderby item.Worth descending
                                                                                         select item);
                     break;
                 case "Currently":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
                                                                                         orderby item.Current ascending
                                                                                         select item);
                     else 
-                        DataGridd.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
+                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
                                                                                         orderby item.Current descending
                                                                                         select item);
                     break;
             }
-            foreach (var dgColumn in DataGridd.Columns) {
+            foreach (var dgColumn in Portfolio_dg.Columns) {
                 if (dgColumn.Header.ToString() != e.Column.Header.ToString())
                     dgColumn.SortDirection = null;
             }
@@ -361,5 +366,62 @@ namespace CryptoTracker {
             verticalAxis.Maximum = GraphHelper.GetMaximumOfArray(data.Select(d => d.Value).ToList());
             dateTimeAxis = App.AdjustAxis(dateTimeAxis, currTimerange);
         }
-    }
+
+        public class GroupInfoCollection<T> : ObservableCollection<T> {
+            public object Key { get; set; }
+
+            public new IEnumerator<T> GetEnumerator() {
+                return (IEnumerator<T>)base.GetEnumerator();
+            }
+        }
+
+		private void dg_loadingRowGroup(object sender, DataGridRowGroupHeaderEventArgs e) {
+            ICollectionViewGroup group = e.RowGroupHeader.CollectionViewGroup;
+            e.RowGroupHeader.PropertyValue = ((GroupInfoCollection<PurchaseClass>)group.Group).Key.ToString();
+        }
+
+		private void Grouping_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            var opt = ((ContentControl)((Selector)sender).SelectedItem).Content.ToString();
+
+            if (PurchaseList == null || Portfolio_dg == null)
+                return;
+
+            if (opt == "Dont group") {
+                Portfolio_dg.ItemsSource = PurchaseList;
+            }
+            else {
+                ObservableCollection<GroupInfoCollection<PurchaseClass>> purchases = new ObservableCollection<GroupInfoCollection<PurchaseClass>>();
+                switch (opt) {
+                    case "By profits":
+                        var query = from item in PurchaseList group item by item.arrow into g select new { GroupName = g.Key, Items = g };
+                        foreach (var g in query) {
+                            GroupInfoCollection<PurchaseClass> info = new GroupInfoCollection<PurchaseClass>();
+                            info.Key = (g.GroupName == "▲") ? "Profits" : "Losses";
+                            foreach (var item in g.Items) {
+                                info.Add(item);
+                            }
+                            purchases.Add(info);
+                        }
+                        break;
+                    case "By coin":
+                        query = from item in PurchaseList group item by item.Crypto into g select new { GroupName = g.Key, Items = g };
+                        foreach (var g in query) {
+                            GroupInfoCollection<PurchaseClass> info = new GroupInfoCollection<PurchaseClass>();
+                            info.Key = g.GroupName;
+                            foreach (var item in g.Items) {
+                                info.Add(item);
+                            }
+                            purchases.Add(info);
+                        }
+                        break;
+                }
+
+                CollectionViewSource groupedItems = new CollectionViewSource();
+                groupedItems.IsSourceGrouped = true;
+                groupedItems.Source = purchases;
+
+                Portfolio_dg.ItemsSource = groupedItems.View;
+            }
+        }
+	}
 }
