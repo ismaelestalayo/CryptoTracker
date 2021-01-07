@@ -6,10 +6,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
-using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,7 +23,7 @@ namespace CryptoTracker {
 
     public partial class Portfolio : Page {
 
-
+        internal static bool ForceRefresh { get; set; }
         internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
         internal ObservableCollection<PurchaseClass> NewPurchase { get; set; }
         internal static List<string> coinsArray = new List<string>();
@@ -39,7 +36,7 @@ namespace CryptoTracker {
         public Portfolio() {
             this.InitializeComponent();
 
-            PurchaseList = ReadPortfolio().Result;
+            PurchaseList = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio").Result;
             Portfolio_dg.ItemsSource = PurchaseList;
 
 			PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
@@ -55,12 +52,17 @@ namespace CryptoTracker {
 		private async void Page_Loaded(object sender, RoutedEventArgs e) {
             RadioButton r = new RadioButton { Content = currTimerange };
             TimerangeButton_Click(r, null);
+            if (ForceRefresh) {
+                ForceRefresh = false;
+                UpdatePortfolio();
+                Portfolio_dg.ItemsSource = PurchaseList;
+            }
         }
 
 
-        // ###############################################################################################
-        //  For sync all
-        internal void UpdatePortfolio() {
+		// ###############################################################################################
+		//  For sync all
+		internal void UpdatePortfolio() {
             // empty diversification chart
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
@@ -136,62 +138,23 @@ namespace CryptoTracker {
             var index = items.IndexOf(item);
             PurchaseList.RemoveAt(index);
             UpdatePortfolio();
-            SavePortfolio();
-        }        
+            //SavePortfolio();
+            LocalStorageHelper.SaveObject(PurchaseList, "portfolio");
+        }
 
 
         // ###############################################################################################
-        //  Read/Write portfolio
-        private static async void SavePortfolio() {
-            try {
-                StorageFile savedStuffFile =
-                    await ApplicationData.Current.LocalFolder.CreateFileAsync("portfolio", CreationCollisionOption.ReplaceExisting);
-
-                using (Stream writeStream =
-                    await savedStuffFile.OpenStreamForWriteAsync().ConfigureAwait(false) ) {
-
-                    DataContractSerializer stuffSerializer =
-                        new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
-
-                    stuffSerializer.WriteObject(writeStream, PurchaseList);
-                    await writeStream.FlushAsync();
-                    writeStream.Dispose();
-
-                }
-            } catch (Exception e) {
-                var z = e.Message;
-            }
-        }
-        private static async Task<ObservableCollection<PurchaseClass>> ReadPortfolio() {
-
-            try {
-                var readStream =
-                    await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("portfolio").ConfigureAwait(false);
-
-                DataContractSerializer stuffSerializer =
-                    new DataContractSerializer(typeof(ObservableCollection<PurchaseClass>));
-
-                var setResult = (ObservableCollection<PurchaseClass>)stuffSerializer.ReadObject(readStream);
-                await readStream.FlushAsync();
-                readStream.Dispose();
-
-                return setResult;
-            } catch (Exception ex) {
-                var unusedWarning = ex.Message;
-                return new ObservableCollection<PurchaseClass>();
-            }
-        }
-
         internal static void importPortfolio(ObservableCollection<PurchaseClass>portfolio) {
             PurchaseList = new ObservableCollection<PurchaseClass>(portfolio);
-            SavePortfolio();
+            LocalStorageHelper.SaveObject(PurchaseList, "portfolio");
+            ForceRefresh = true;
         }
 
         private void ToggleDetails_click(object sender, RoutedEventArgs e) {
             ShowingDetails = !ShowingDetails;
             if (ShowingDetails) {
                 Portfolio_dg.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Visible;
-                Portfolio_dg.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
+                Portfolio_dg.GridLinesVisibility = DataGridGridLinesVisibility.None;
                 PortfolioChart.Visibility = Visibility.Collapsed;
                 TimerangeRadioButtons.Visibility = Visibility.Collapsed;
                 MainGrid.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
@@ -252,7 +215,7 @@ namespace CryptoTracker {
                 }
                 // Update and save
                 UpdatePortfolio();
-                SavePortfolio();
+                LocalStorageHelper.SaveObject(PurchaseList, "portfolio");
             }
         }
 

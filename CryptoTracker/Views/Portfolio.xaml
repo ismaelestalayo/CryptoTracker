@@ -194,7 +194,7 @@
                 ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
                 GridLinesVisibility="Horizontal"
                 HeadersVisibility="Column" HorizontalAlignment="Stretch"
-                HorizontalGridLinesBrush="{ThemeResource SystemControlDisabledChromeHighBrush}"
+                HorizontalGridLinesBrush="{ThemeResource SystemChromeDisabledHighColor}"
 				LoadingRowGroup="dg_loadingRowGroup"
                 Margin="0"
                 RowBackground="Transparent" RowDetailsVisibilityMode="Collapsed"
