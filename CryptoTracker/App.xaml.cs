@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
+
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Popups;
@@ -115,7 +115,7 @@ namespace CryptoTracker {
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
 
-                ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(900, 550));
+                ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size(900, 550));
                 Window.Current.Activate();
             }
 #if !DEBUG
@@ -174,33 +174,59 @@ namespace CryptoTracker {
             }
         }
 
-        // ###############################################################################################
-        //  (GET) list of coins
+        /* ###############################################################################################
+         * Gets the list of coins and saves it under App.coinList
+         * Type: List<JSONcoins>
+         * 
+         * API: CryptoCompare
+         * 
+         * Returns: nothing, updates App.coinList
+        */
         internal async static Task GetCoinList() {
+            bool UsedCache = false;
             string URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin
                 + "&api_key=569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286";
             Uri uri = new Uri(URL);
 
+            if (coinList.Count != 0)
+                coinList.Clear();
+
+            
             try {
-                var data = await GetJSONAsync(uri);
-                coinList.AddRange(JSONcoins.HandleJSON(data));
+                if (localSettings.Values["CoinListDate"] != null) {
+                    DateTime lastUpdate = DateTime.FromOADate((double)localSettings.Values["CoinListDate"]);
+                    var days = DateTime.Today.CompareTo(lastUpdate);
 
-                // Get coins ranked 101-200
-                uri = new Uri(URL + "&page=1");
-                data = await GetJSONAsync(uri);
-                coinList.AddRange(JSONcoins.HandleJSON(data));
+                    if (days < 7) {
+                        coinList = LocalStorageHelper.ReadObject<List<JSONcoins>>("coinList").Result;
+                        if (coinList.Count > 0)
+                            UsedCache = true;
+                    }
+                }
 
-                // Get coins ranked 201-300
-                uri = new Uri(URL + "&page=2");
-                data = await GetJSONAsync(uri);
-                coinList.AddRange(JSONcoins.HandleJSON(data));
+                if (!UsedCache) {
+                    var data = await GetJSONAsync(uri);
+                    coinList.AddRange(JSONcoins.HandleJSON(data));
 
-                // Get coins ranked 301-400
-                uri = new Uri(URL + "&page=3");
-                data = await GetJSONAsync(uri);
-                coinList.AddRange(JSONcoins.HandleJSON(data));
+                    // Get coins ranked 101-200
+                    uri = new Uri(URL + "&page=1");
+                    data = await GetJSONAsync(uri);
+                    coinList.AddRange(JSONcoins.HandleJSON(data));
 
-                coinList.Sort((x, y) => x.Name.CompareTo(y.Name));
+                    // Get coins ranked 201-300
+                    uri = new Uri(URL + "&page=2");
+                    data = await GetJSONAsync(uri);
+                    coinList.AddRange(JSONcoins.HandleJSON(data));
+
+                    // Get coins ranked 301-400
+                    uri = new Uri(URL + "&page=3");
+                    data = await GetJSONAsync(uri);
+                    coinList.AddRange(JSONcoins.HandleJSON(data));
+
+                    coinList.Sort((x, y) => x.Name.CompareTo(y.Name));
+                    LocalStorageHelper.SaveObject(coinList, "coinList");
+                    localSettings.Values["CoinListDate"] = DateTime.Today.ToOADate();
+                }
 
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
