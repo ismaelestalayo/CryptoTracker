@@ -33,7 +33,7 @@ namespace CryptoTracker.Helpers {
 
         public static async Task<T> ReadObject<T>(string key) {
             try {
-                var readStream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync("portfolio").ConfigureAwait(false);
+                var readStream = await ApplicationData.Current.LocalFolder.OpenStreamForReadAsync(key).ConfigureAwait(false);
 
                 DataContractSerializer stuffSerializer = new DataContractSerializer(typeof(T));
 
