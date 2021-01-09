@@ -108,6 +108,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="APIs\CryptoCompare.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -118,7 +119,7 @@
     <Compile Include="Helpers\FirstRunDialogHelper.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
-    <Compile Include="Helpers\JSONcoins.cs" />
+    <Compile Include="Helpers\JSONcoin.cs" />
     <Compile Include="Helpers\JSONsnapshot.cs" />
     <Compile Include="Helpers\JSONstats.cs" />
     <Compile Include="Helpers\LiveTile.cs" />

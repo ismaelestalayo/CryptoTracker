@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.APIs;
+using CryptoTracker.Helpers;
 using CryptoTracker.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -29,7 +30,7 @@ namespace CryptoTracker {
         internal static string coin       = "EUR";
         internal static string coinSymbol = "€";
 
-        internal static List<JSONcoins> coinList = new List<JSONcoins>();
+        internal static List<JSONcoin> coinList = new List<JSONcoin>();
         internal static List<string> pinnedCoins;
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
@@ -183,53 +184,20 @@ namespace CryptoTracker {
          * Returns: nothing, updates App.coinList
         */
         internal async static Task GetCoinList() {
-            bool UsedCache = false;
-            string URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin
-                + "&api_key=569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286";
-            Uri uri = new Uri(URL);
+            // check cache before sending an unnecesary request
+            if (App.localSettings.Values["coinListDate"] != null) {
+                DateTime lastUpdate = DateTime.FromOADate((double)App.localSettings.Values["coinListDate"]);
+                var days = DateTime.Today.CompareTo(lastUpdate);
 
-            if (coinList.Count != 0)
-                coinList.Clear();
+                coinList = LocalStorageHelper.ReadObject<List<JSONcoin>>("coinList").Result;
 
-            
-            try {
-                if (localSettings.Values["CoinListDate"] != null) {
-                    DateTime lastUpdate = DateTime.FromOADate((double)localSettings.Values["CoinListDate"]);
-                    var days = DateTime.Today.CompareTo(lastUpdate);
-
-                    if (days < 7) {
-                        coinList = LocalStorageHelper.ReadObject<List<JSONcoins>>("coinList").Result;
-                        if (coinList.Count > 0)
-                            UsedCache = true;
-                    }
+                // if empty list OR old cache -> refresh
+                if (coinList.Count == 0 || days > 7) {
+                    coinList = await CryptoCompare.GetAllCoins();
                 }
-
-                if (!UsedCache) {
-                    var data = await GetJSONAsync(uri);
-                    coinList.AddRange(JSONcoins.HandleJSON(data));
-
-                    // Get coins ranked 101-200
-                    uri = new Uri(URL + "&page=1");
-                    data = await GetJSONAsync(uri);
-                    coinList.AddRange(JSONcoins.HandleJSON(data));
-
-                    // Get coins ranked 201-300
-                    uri = new Uri(URL + "&page=2");
-                    data = await GetJSONAsync(uri);
-                    coinList.AddRange(JSONcoins.HandleJSON(data));
-
-                    // Get coins ranked 301-400
-                    uri = new Uri(URL + "&page=3");
-                    data = await GetJSONAsync(uri);
-                    coinList.AddRange(JSONcoins.HandleJSON(data));
-
-                    coinList.Sort((x, y) => x.Name.CompareTo(y.Name));
-                    LocalStorageHelper.SaveObject(coinList, "coinList");
-                    localSettings.Values["CoinListDate"] = DateTime.Today.ToOADate();
-                }
-
-            } catch (Exception ex) {
-                await new MessageDialog(ex.Message).ShowAsync();
+            }
+			else {
+                coinList = await CryptoCompare.GetAllCoins();
             }
         }
 
@@ -524,7 +492,7 @@ namespace CryptoTracker {
         /// http://blog.stephencleary.com/2012/07/dont-block-on-async-code.html
         /// 
         /// </summary>
-        private static async Task<JToken> GetJSONAsync(Uri uri) {
+        internal static async Task<JToken> GetJSONAsync(Uri uri) {
 
             using (var client = new HttpClient()) {
                 var jsonString = await client.GetStringAsync(uri).ConfigureAwait(false);

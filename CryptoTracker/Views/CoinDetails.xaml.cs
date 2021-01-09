@@ -64,7 +64,7 @@ namespace CryptoTracker {
                 // Page title
                 crypto = (e.Parameter.ToString() != null) ? e.Parameter as string :  "NULL";
                 
-                mainTitle.Text      = App.coinList.Find(x => x.Name == crypto).FullName + " (" + crypto + ")";
+                mainTitle.Text = App.coinList.Find(x => x.Symbol == crypto).FullName;
 
                 try {
                     mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper(CultureInfo.InvariantCulture) + ".png"));
@@ -98,7 +98,7 @@ namespace CryptoTracker {
 
         private async void InitValues() {
 
-            JSONcoins coin = App.coinList.Find(x => x.Name == crypto);
+            JSONcoin coin = App.coinList.Find(x => x.Symbol == crypto);
             cdw.cd = await API_CoinGecko.GetCoin(coin.FullName);
 
             TimeSpan period = TimeSpan.FromSeconds(30);

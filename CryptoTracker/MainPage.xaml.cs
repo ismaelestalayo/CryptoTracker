@@ -234,12 +234,12 @@ namespace CryptoTracker {
 
         // #########################################################################################
         private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinList.Where(x => x.Name.Contains(box.Text) || x.FullName.Contains(box.Text)).ToList();
+            var filtered = App.coinList.Where(x => x.Symbol.Contains(box.Text)).ToList(); // || x.FullName.Contains(box.Text)
             List<SuggestionCoinList> list = new List<SuggestionCoinList>();
-            foreach (JSONcoins coin in filtered) {
+            foreach (JSONcoin coin in filtered) {
                 list.Add(new SuggestionCoinList {
-                    Icon = IconsHelper.GetIcon(coin.Name),
-                    Name = coin.Name
+                    Icon = IconsHelper.GetIcon(coin.Symbol),
+                    Name = coin.Symbol
                 });
             }
 
