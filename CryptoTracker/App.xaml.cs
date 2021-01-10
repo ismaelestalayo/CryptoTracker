@@ -39,64 +39,65 @@ namespace CryptoTracker {
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
+            string _theme  = localSettings.Values["Theme"]?.ToString();
+            string _coin   = localSettings.Values["Coin"]?.ToString();
+            string _pinned = localSettings.Values["Pinned"]?.ToString();
 
-            try {
-                string _theme  = localSettings.Values["Theme"].ToString();
-                string _coin   = localSettings.Values["Coin"].ToString();
-                string _pinned = localSettings.Values["Pinned"].ToString();
-                pinnedCoins = new List<string>(_pinned.Split( new char[] { '|' } ));
-                pinnedCoins.Remove("");
-
-                if (_theme != null) {
-                    switch (_theme) {
-                        case "Light":
-                            RequestedTheme = ApplicationTheme.Light;
-                            break;
-                        case "Dark":
-                            RequestedTheme = ApplicationTheme.Dark;
-                            break;
-                    }
-                }
-                if (_coin != null) {
-                    coin = _coin;
-                    switch (coin) {
-                        case "EUR":
-                            coinSymbol = "€";
-                            break;
-                        case "GBP":
-                            coinSymbol = "£";
-                            break;
-                        case "USD":
-                        case "CAD":
-                        case "AUD":
-                        case "MXN":
-                            coinSymbol = "$";
-                            break;
-                        case "CNY":
-                        case "JPY":
-                            coinSymbol = "¥";
-                            break;
-                        case "INR":
-                            coinSymbol = "₹";
-                            break;
-                    }
-                }
-                
-            } catch (Exception){
+            if (_theme == null || _coin == null || _pinned == null) {
                 // Default: Windows theme, EUR and {BTC, ETH, LTC and XRP}
                 localSettings.Values["Theme"] = "Windows";
                 localSettings.Values["Coin"] = "EUR";
                 localSettings.Values["Pinned"] = "BTC|ETH|LTC|XRP";
                 this.RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
-                pinnedCoins = new List<string>(new string[] {"BTC", "ETH", "LTC", "XRP"});
-            }
+                pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC", "XRP" });
+			}
+			else {
+                pinnedCoins = new List<string>(_pinned.Split(new char[] { '|' }));
+                pinnedCoins.Remove("");
+
+                switch (_theme) {
+					case "Light":
+						RequestedTheme = ApplicationTheme.Light;
+						break;
+					case "Dark":
+						RequestedTheme = ApplicationTheme.Dark;
+						break;
+                    default:
+                        RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                        break;
+                }
+
+				switch (_coin) {
+                    default:
+                    case "EUR":
+                        coinSymbol = "€";
+                        break;
+                    case "GBP":
+                        coinSymbol = "£";
+                        break;
+                    case "USD":
+                    case "CAD":
+                    case "AUD":
+                    case "MXN":
+                        coinSymbol = "$";
+                        break;
+                    case "CNY":
+                    case "JPY":
+                        coinSymbol = "¥";
+                        break;
+                    case "INR":
+                        coinSymbol = "₹";
+                        break;
+                }
+			}
+
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.UnhandledException += OnUnhandledException;
-        }
-        // #########################################################################################
-        protected override void OnLaunched(LaunchActivatedEventArgs e) {
+		}
+		// #########################################################################################
+		protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null) {
@@ -556,7 +557,7 @@ namespace CryptoTracker {
 
 
 
-    }
+	}
 
 }
 
