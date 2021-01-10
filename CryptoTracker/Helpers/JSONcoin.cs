@@ -17,7 +17,7 @@ namespace CryptoTracker.Helpers {
                     var c = ((JContainer)coin).First;
                     coins.Add(new JSONcoin {
                         Id = (int)c["Id"],
-                        ImageUrl = c["ImageUrl"].ToString(),
+                        ImageUrl = (c["ImageURL"]?.ToString()) ?? "NULL",
                         Symbol = c["Symbol"].ToString(),
                         FullName = c["FullName"].ToString()
                     });
