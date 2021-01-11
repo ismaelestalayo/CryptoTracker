@@ -256,10 +256,10 @@ namespace CryptoTracker {
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
             string selected;
             string source = (((Frame)sender.Content).SourcePageType).Name;
-            try {
-                selected = ((ContentControl)sender.SelectedItem).Content.ToString();
-            }
-            catch (NullReferenceException) {
+            
+            selected = ((ContentControl)sender.SelectedItem).Content?.ToString();
+            
+            if (selected == null) {
                 if (args.IsSettingsInvoked)
                     selected = "Settings";
                 else
