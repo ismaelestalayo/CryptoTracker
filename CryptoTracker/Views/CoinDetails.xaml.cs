@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.APIs;
+using CryptoTracker.Helpers;
 using CryptoTracker.Views;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
@@ -63,8 +64,9 @@ namespace CryptoTracker {
                 
                 // Page title
                 crypto = (e.Parameter.ToString() != null) ? e.Parameter as string :  "NULL";
-                
-                mainTitle.Text = App.coinList.Find(x => x.Symbol == crypto).FullName;
+
+                var currentCoin = App.coinList.Find(x => x.symbol == crypto);
+                mainTitle.Text = string.Format("{0} ({1})", currentCoin.name, currentCoin.symbol);
 
                 try {
                     mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper(CultureInfo.InvariantCulture) + ".png"));
@@ -98,8 +100,8 @@ namespace CryptoTracker {
 
         private async void InitValues() {
 
-            JSONcoin coin = App.coinList.Find(x => x.Symbol == crypto);
-            cdw.cd = await API_CoinGecko.GetCoin(coin.FullName);
+            CoinBasicInfo coin = App.coinList.Find(x => x.symbol == crypto);
+            cdw.cd = await API_CoinGecko.GetCoin(coin.name);
 
             TimeSpan period = TimeSpan.FromSeconds(30);
             PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {

@@ -1,9 +1,7 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
 using CryptoTracker.Views;
-using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -30,7 +28,7 @@ namespace CryptoTracker {
         internal static string coin       = "EUR";
         internal static string coinSymbol = "€";
 
-        internal static List<JSONcoin> coinList = new List<JSONcoin>();
+        internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
@@ -178,27 +176,23 @@ namespace CryptoTracker {
 
         /* ###############################################################################################
          * Gets the list of coins and saves it under App.coinList
-         * Type: List<JSONcoins>
-         * 
-         * API: CryptoCompare
-         * 
-         * Returns: nothing, updates App.coinList
+         * API: Github
         */
         internal async static Task GetCoinList() {
             // check cache before sending an unnecesary request
-            if (App.localSettings.Values["coinListDate"] != null) {
-                DateTime lastUpdate = DateTime.FromOADate((double)App.localSettings.Values["coinListDate"]);
+            if (localSettings.Values["coinListDate"] != null) {
+                DateTime lastUpdate = DateTime.FromOADate((double)localSettings.Values["coinListDate"]);
                 var days = DateTime.Today.CompareTo(lastUpdate);
 
-                coinList = LocalStorageHelper.ReadObject<List<JSONcoin>>("coinList").Result;
+				coinList = LocalStorageHelper.ReadObject<List<CoinBasicInfo>>("coinList").Result;
 
-                // if empty list OR old cache -> refresh
-                if (coinList.Count == 0 || days > 7) {
-                    coinList = await CryptoCompare.GetAllCoins();
+				// if empty list OR old cache -> refresh
+				if (coinList.Count == 0 || days > 7) {
+                    coinList = await GitHub.GetAllCoins();
                 }
             }
 			else {
-                coinList = await CryptoCompare.GetAllCoins();
+                coinList = await GitHub.GetAllCoins();
             }
         }
 
@@ -500,7 +494,7 @@ namespace CryptoTracker {
                 return JToken.Parse(jsonString);
             }
         }
-        private static async Task<string> GetStringAsync(Uri uri) {
+        internal static async Task<string> GetStringAsync(Uri uri) {
             using (var client = new HttpClient()) {
                 var s = await client.GetStringAsync(uri).ConfigureAwait(false);
                 return s;

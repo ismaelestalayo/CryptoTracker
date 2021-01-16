@@ -173,8 +173,10 @@ namespace CryptoTracker {
         // ###############################################################################################
         // Add/Edit purchase dialog
         private void AddPurchase_click(object sender, RoutedEventArgs e) {
-            if (coinsArray.Count == 0)
-                coinsArray = App.coinList.Select(x => x.Symbol).ToList();
+            if (coinsArray.Count == 0) { }
+                coinsArray = App.coinList.Select(x => x.symbol).ToList();
+            
+            coinsArray.Sort((x, y) => x.CompareTo(y));
 
             NewPurchase = new ObservableCollection<PurchaseClass>() { new PurchaseClass() };
             TestRepeater.ItemsSource = NewPurchase;

@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.APIs;
+using CryptoTracker.Helpers;
 using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
@@ -234,12 +235,12 @@ namespace CryptoTracker {
 
         // #########################################################################################
         private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinList.Where(x => x.Symbol.Contains(box.Text)).ToList(); // || x.FullName.Contains(box.Text)
+            var filtered = App.coinList.Where(x => x.symbol.Contains(box.Text)).ToList(); // || x.FullName.Contains(box.Text)
             List<SuggestionCoinList> list = new List<SuggestionCoinList>();
-            foreach (JSONcoin coin in filtered) {
+            foreach (CoinBasicInfo coin in filtered) {
                 list.Add(new SuggestionCoinList {
-                    Icon = IconsHelper.GetIcon(coin.Symbol),
-                    Name = coin.Symbol
+                    Icon = IconsHelper.GetIcon(coin.symbol),
+                    Name = coin.symbol
                 });
             }
 
