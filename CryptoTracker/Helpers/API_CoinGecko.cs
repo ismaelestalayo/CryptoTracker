@@ -1,15 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CryptoTracker.Helpers {
 
-    public class Description {
+	public class Description {
         public string en { get; set; } = "No description.\n";
     }
 
@@ -220,14 +220,10 @@ namespace CryptoTracker.Helpers {
 
             try {
                 string response = await httpClient.GetStringAsync(uri);
-                var data = JToken.Parse(response);
-                //CoinJSON coin_data = CoinJSON.HandleJSON(data);
-                var coinData = JToken.Parse(data.ToString()).ToObject<CoinData>();
+                var coinData = JsonSerializer.Deserialize<CoinData>(response);
                 string descr = await App.GetCoinDescription(coinData.symbol.ToUpper(CultureInfo.InvariantCulture), 5).ConfigureAwait(true);
-                if (!String.IsNullOrEmpty(descr))
-                    coinData.description.en = descr;
-                else
-                    coinData.description.en = coinData.description.en.Split('\n')[0];
+                coinData.description.en = (!String.IsNullOrEmpty(descr)) ? descr : coinData.description.en.Split('\n')[0];
+
                 return coinData;
             }
             catch (Exception ex) {
