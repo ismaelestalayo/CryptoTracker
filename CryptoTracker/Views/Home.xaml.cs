@@ -142,6 +142,8 @@ namespace CryptoTracker.Views {
             // #########################################################################################
             // LOADING BAR
             ListViewItem container = (ListViewItem)PriceListView.ContainerFromIndex(i);
+            if (container == null)
+                return;
             var loading = (container.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
             loading.IsLoading = true;
 
