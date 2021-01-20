@@ -127,10 +127,12 @@
 
     <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*" MinHeight="0"/>
+			<RowDefinition Height="*" MinHeight="200" MaxHeight="300"/>
+			<RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <!-- 
@@ -204,7 +206,7 @@
 				<controls:DataGrid.RowGroupHeaderStyles>
 					<!-- Override the default Style for groups headers -->
 					<Style TargetType="controls:DataGridRowGroupHeader">
-						<Setter Property="Background" Value="Green" />
+						<Setter Property="Background" Value="Transparent" />
 					</Style>
 				</controls:DataGrid.RowGroupHeaderStyles>
 
@@ -225,6 +227,17 @@
 
 									<Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
 								</Grid>
+							</DataTemplate>
+						</controls:DataGridTemplateColumn.CellTemplate>
+					</controls:DataGridTemplateColumn>
+
+					<controls:DataGridTemplateColumn Header="Currently" Width="*">
+						<controls:DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<TextBlock Text="{Binding Current}"/>
+									<TextBlock Text="{Binding c}"      />
+								</StackPanel>
 							</DataTemplate>
 						</controls:DataGridTemplateColumn.CellTemplate>
 					</controls:DataGridTemplateColumn>
@@ -250,18 +263,7 @@
 								</StackPanel>
 							</DataTemplate>
 						</controls:DataGridTemplateColumn.CellTemplate>
-					</controls:DataGridTemplateColumn>
-
-					<controls:DataGridTemplateColumn Header="Currently" Width="*">
-						<controls:DataGridTemplateColumn.CellTemplate>
-							<DataTemplate>
-								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<TextBlock Text="{Binding Current}"/>
-									<TextBlock Text="{Binding c}"      />
-								</StackPanel>
-							</DataTemplate>
-						</controls:DataGridTemplateColumn.CellTemplate>
-					</controls:DataGridTemplateColumn>
+					</controls:DataGridTemplateColumn>					
 				</controls:DataGrid.Columns>
                 
 				<controls:DataGrid.RowStyle>
@@ -364,85 +366,92 @@
             </controls:DataGrid>
         </ScrollViewer>
 
+
+		<!-- Total portfolio values -->
+		<Grid Grid.Row="2" Margin="0 0 0 50" Visibility="{Binding DetailsVisibility, Mode=TwoWay}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.Resources>
+				<Style TargetType="TextBlock">
+					<Setter Property="FontSize" Value="16"/>
+					<Setter Property="FontWeight" Value="Bold"/>
+				</Style>
+			</Grid.Resources>
+			<TextBlock Grid.Column="0" TextAlignment="Center" Text="Total:" Margin="65 0"/>
+			<TextBlock Grid.Column="2" TextAlignment="Center" Name="total_invested" Margin="65 0"/>
+			<TextBlock Grid.Column="3" TextAlignment="Center" Name="total_worth" Margin="65 0"/>
+		</Grid>
+		
         <!-- Portfolio history chart -->
-        <telerik:RadCartesianChart
-            x:Name="PortfolioChart"
-            Grid.Row="2" Visibility="{Binding ElementName=PortfolioChartGrid, Path=Visibility}"
-            Margin="10">
+		<telerik:RadCartesianChart
+            x:Name="PortfolioChart" Margin="10 0 0 5"
+            Grid.Row="4" Visibility="{Binding ElementName=PortfolioChartGrid, Path=Visibility}">
 
-            <telerik:RadCartesianChart.Behaviors>
-                <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
-                    <telerik:ChartTrackBallBehavior.LineStyle>
-                        <Style TargetType="Polyline">
-                            <Setter Property="Stroke" Value="{StaticResource main_gray}"/>
-                            <Setter Property="StrokeThickness" Value="2"/>
-                        </Style>
-                    </telerik:ChartTrackBallBehavior.LineStyle>
-                    <telerik:ChartTrackBallBehavior.InfoStyle>
-                        <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                            <Setter Property="Background" Value="{StaticResource main_grayT}"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource main_gray}"/>
-                        </Style>
-                    </telerik:ChartTrackBallBehavior.InfoStyle>
-                </telerik:ChartTrackBallBehavior>
-                <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
-            </telerik:RadCartesianChart.Behaviors>
+			<telerik:RadCartesianChart.Behaviors>
+				<telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
+					<telerik:ChartTrackBallBehavior.LineStyle>
+						<Style TargetType="Polyline">
+							<Setter Property="Stroke" Value="{StaticResource main_gray}"/>
+							<Setter Property="StrokeThickness" Value="2"/>
+						</Style>
+					</telerik:ChartTrackBallBehavior.LineStyle>
+					<telerik:ChartTrackBallBehavior.InfoStyle>
+						<Style TargetType="telerikPrimitives:TrackBallInfoControl">
+							<Setter Property="Background" Value="{StaticResource main_grayT}"/>
+							<Setter Property="Foreground" Value="Black"/>
+							<Setter Property="BorderBrush" Value="{StaticResource main_gray}"/>
+						</Style>
+					</telerik:ChartTrackBallBehavior.InfoStyle>
+				</telerik:ChartTrackBallBehavior>
+				<telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
+			</telerik:RadCartesianChart.Behaviors>
 
-            <telerik:RadCartesianChart.Grid>
-                <telerik:CartesianChartGrid MajorYLinesRenderMode="Inner"
-                        MajorLinesVisibility="XY" MajorYLineStyle="{StaticResource ChartGridColor}"/>
-            </telerik:RadCartesianChart.Grid>
+			<telerik:RadCartesianChart.Grid>
+				<telerik:CartesianChartGrid MajorLinesVisibility="None"/>
+			</telerik:RadCartesianChart.Grid>
 
-            <telerik:RadCartesianChart.HorizontalAxis>
-                <telerik:DateTimeContinuousAxis 
+			<telerik:RadCartesianChart.HorizontalAxis>
+				<telerik:DateTimeContinuousAxis 
                         x:Name="dateTimeAxis"
                         LabelOffset="1" MaximumTicks="5"
                         FontWeight="Light" FontFamily="Segoe UI"
                         Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
-            </telerik:RadCartesianChart.HorizontalAxis>
+			</telerik:RadCartesianChart.HorizontalAxis>
 
-            <telerik:RadCartesianChart.VerticalAxis>
-                <telerik:LinearAxis 
-                        x:Name="verticalAxis"
-                        Visibility="Collapsed"
-                        DesiredTickCount="5"
-                        HorizontalLocation="Left"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        FontWeight="Light" FontFamily="Segoe UI"
-                        Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
-                    <telerik:LinearAxis.LabelStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Width" Value="40"/>
-                            <Setter Property="Height" Value="20"/>
-                            <Setter Property="Padding" Value="0, 0, 0, 0"/>
-                            <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
-                        </Style>
-                    </telerik:LinearAxis.LabelStyle>
-                </telerik:LinearAxis>
-            </telerik:RadCartesianChart.VerticalAxis>
+			<telerik:RadCartesianChart.VerticalAxis>
+				<telerik:LinearAxis x:Name="verticalAxis" Visibility="Collapsed"/>
+			</telerik:RadCartesianChart.VerticalAxis>
 
-            <telerik:SplineAreaSeries Stroke="{ThemeResource Main_WhiteBlack}" Fill="{ThemeResource Main_WhiteBlackT}">
-                <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding DataPoint.Value}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
-                                <TextBlock Text=""/>
-                            </StackPanel>
-                            <TextBlock Text="{Binding DataPoint.Category}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-            </telerik:SplineAreaSeries>
-        </telerik:RadCartesianChart>
+			<telerik:SplineAreaSeries Stroke="#808080">
+				<telerik:SplineAreaSeries.Fill>
+					<LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+						<GradientStop Color="#1a808080" Offset="0" />
+						<GradientStop Color="#3d808080" Offset="0.6" />
+					</LinearGradientBrush>
+				</telerik:SplineAreaSeries.Fill>
+				<telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+					<DataTemplate>
+						<StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding DataPoint.Value}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
+								<TextBlock Text=""/>
+							</StackPanel>
+							<TextBlock Text="{Binding DataPoint.Category}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
+						</StackPanel>
+					</DataTemplate>
+				</telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+			</telerik:SplineAreaSeries>
+		</telerik:RadCartesianChart>
 
-        <!-- Timerange radio buttons -->
+		<!-- Timerange radio buttons -->
         <StackPanel
             x:Name="TimerangeRadioButtons"
             Orientation="Horizontal"
-            Grid.Row="3" Visibility="{Binding ElementName=PortfolioChartGrid, Path=Visibility}"
+            Grid.Row="5" Visibility="{Binding ElementName=PortfolioChartGrid, Path=Visibility}"
             HorizontalAlignment="Center"
             Margin="0 -15 0 0">
             <RadioButton GroupName="coin" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>

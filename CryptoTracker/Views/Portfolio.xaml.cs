@@ -30,8 +30,10 @@ namespace CryptoTracker {
         private int EditingPurchaseId { get; set; }
 
         private bool ShowingDetails = false;
-        private double curr = 0;
         private string currTimerange = "month";
+
+        private double _invested = 0;
+        private double _worth = 0;
 
         public Portfolio() {
             this.InitializeComponent();
@@ -49,15 +51,16 @@ namespace CryptoTracker {
             PortfolioChartGrid.Visibility = (PurchaseList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
 		}
 
-		private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            RadioButton r = new RadioButton { Content = currTimerange };
-            TimerangeButton_Click(r, null);
-            if (ForceRefresh) {
-                ForceRefresh = false;
-                UpdatePortfolio();
-                Portfolio_dg.ItemsSource = PurchaseList;
-            }
-        }
+		private void Page_Loaded(object sender, RoutedEventArgs e) {
+			RadioButton r = new RadioButton { Content = currTimerange };
+			TimerangeButton_Click(r, null);
+			
+			if (ForceRefresh) {
+				ForceRefresh = false;
+				UpdatePortfolio();
+				Portfolio_dg.ItemsSource = PurchaseList;
+			}
+		}
 
 
 		// ###############################################################################################
@@ -66,6 +69,9 @@ namespace CryptoTracker {
             // empty diversification chart
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
+
+            _invested = 0;
+            _worth = 0;
 
             foreach (PurchaseClass purchase in PurchaseList) {
                 // this update the ObservableCollection itself
@@ -91,10 +97,16 @@ namespace CryptoTracker {
 
                 PortfolioChartGrid.Children.Add(s);
                 Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);
+
+                _invested += purchase.InvestedQty;
+                _worth += purchase.Worth;
             }
 
             RadioButton r = new RadioButton { Content = currTimerange };
             TimerangeButton_Click(r, null);
+
+            total_invested.Text = _invested.ToString() + App.coinSymbol;
+            total_worth.Text = _worth.ToString() + App.coinSymbol;
         }
 
         internal PurchaseClass UpdatePurchase(PurchaseClass purchase) {
@@ -103,7 +115,7 @@ namespace CryptoTracker {
             if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
                 purchase.Current = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
 
-            curr = purchase.Current;
+            var curr = purchase.Current;
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
 
             // If the user has also filled the invested quantity, we can calculate everything else
@@ -154,19 +166,13 @@ namespace CryptoTracker {
             ShowingDetails = !ShowingDetails;
             if (ShowingDetails) {
                 Portfolio_dg.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Visible;
-                Portfolio_dg.GridLinesVisibility = DataGridGridLinesVisibility.None;
                 PortfolioChart.Visibility = Visibility.Collapsed;
                 TimerangeRadioButtons.Visibility = Visibility.Collapsed;
-                MainGrid.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
-                MainGrid.RowDefinitions[3].Height = new GridLength(0, GridUnitType.Star);
             }
             else {
                 Portfolio_dg.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
-                Portfolio_dg.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
                 PortfolioChart.Visibility = Visibility.Visible;
                 TimerangeRadioButtons.Visibility = Visibility.Visible;
-                MainGrid.RowDefinitions[2].Height = new GridLength(2, GridUnitType.Star);
-                MainGrid.RowDefinitions[3].Height = new GridLength(1, GridUnitType.Auto);
             }
         }
 
