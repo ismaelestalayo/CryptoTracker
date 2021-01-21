@@ -168,7 +168,7 @@
 					</StackPanel>
 				</Button>
 				<ComboBox Width="150" SelectionChanged="Grouping_ComboBox_SelectionChanged"
-					Style="{ThemeResource Crypto_comboBox_style}"
+					Style="{ThemeResource Crypto_comboBox_style}" Visibility="Collapsed"
 					Margin="0 0 10 0">
 					<ComboBoxItem Content="Dont group" IsSelected="True"/>
 					<ComboBoxItem Content="By profits"/>
@@ -221,11 +221,11 @@
 									</Grid.ColumnDefinitions>
 
 									<TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
-                                        <Run Text="{Binding CryptoQty}"/>
-                                        <Run Text="{Binding Crypto}"/>
+                                        <Run Text="{Binding CryptoQty, Mode=OneWay}"/>
+                                        <Run Text="{Binding Crypto, Mode=OneWay}"/>
 									</TextBlock>
 
-									<Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
+									<Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo, Mode=OneWay}"/>
 								</Grid>
 							</DataTemplate>
 						</controls:DataGridTemplateColumn.CellTemplate>
@@ -235,8 +235,8 @@
 						<controls:DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<TextBlock Text="{Binding Current}"/>
-									<TextBlock Text="{Binding c}"      />
+									<TextBlock Text="{Binding Current, Mode=OneWay}"/>
+									<TextBlock Text="{Binding c, Mode=OneWay}"      />
 								</StackPanel>
 							</DataTemplate>
 						</controls:DataGridTemplateColumn.CellTemplate>
@@ -246,8 +246,8 @@
 						<controls:DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<TextBlock Text="{Binding InvestedQty}"/>
-									<TextBlock Text="{Binding c}"/>
+									<TextBlock Text="{Binding InvestedQty, Mode=OneWay}"/>
+									<TextBlock Text="{Binding c, Mode=OneWay}"/>
 								</StackPanel>
 							</DataTemplate>
 						</controls:DataGridTemplateColumn.CellTemplate>
@@ -257,9 +257,9 @@
 						<controls:DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<TextBlock Text="{Binding arrow}" Margin="4 0" Foreground="{Binding ProfitFG, Mode=OneWay}"/>
-									<TextBlock Text="{Binding Worth}"/>
-									<TextBlock Text="{Binding c}"/>
+									<TextBlock Text="{Binding arrow, Mode=OneWay}" Margin="4 0" Foreground="{Binding ProfitFG, Mode=OneWay}"/>
+									<TextBlock Text="{Binding Worth, Mode=OneWay}"/>
+									<TextBlock Text="{Binding c, Mode=OneWay}"/>
 								</StackPanel>
 							</DataTemplate>
 						</controls:DataGridTemplateColumn.CellTemplate>
@@ -368,7 +368,7 @@
 
 
 		<!-- Total portfolio values -->
-		<Grid Grid.Row="2" Margin="0 0 0 50" Visibility="{Binding DetailsVisibility, Mode=TwoWay}">
+		<Grid Grid.Row="2" Margin="0 5 0 50" Height="32">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
@@ -379,9 +379,10 @@
 				<Style TargetType="TextBlock">
 					<Setter Property="FontSize" Value="16"/>
 					<Setter Property="FontWeight" Value="Bold"/>
+					<Setter Property="VerticalAlignment" Value="Center"/>
 				</Style>
 			</Grid.Resources>
-			<TextBlock Grid.Column="0" TextAlignment="Center" Text="Total:" Margin="65 0"/>
+			<TextBlock Grid.Column="0" TextAlignment="Center" Text="Total" Margin="65 0"/>
 			<TextBlock Grid.Column="2" TextAlignment="Center" Name="total_invested" Margin="65 0"/>
 			<TextBlock Grid.Column="3" TextAlignment="Center" Name="total_worth" Margin="65 0"/>
 		</Grid>
@@ -426,11 +427,11 @@
 				<telerik:LinearAxis x:Name="verticalAxis" Visibility="Collapsed"/>
 			</telerik:RadCartesianChart.VerticalAxis>
 
-			<telerik:SplineAreaSeries Stroke="#808080">
+			<telerik:SplineAreaSeries Stroke="#808080" >
 				<telerik:SplineAreaSeries.Fill>
 					<LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
 						<GradientStop Color="#1a808080" Offset="0" />
-						<GradientStop Color="#3d808080" Offset="0.6" />
+						<GradientStop Color="#3d808080" Offset="0.5" />
 					</LinearGradientBrush>
 				</telerik:SplineAreaSeries.Fill>
 				<telerik:ChartTrackBallBehavior.TrackInfoTemplate>

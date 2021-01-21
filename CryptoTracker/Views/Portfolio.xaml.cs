@@ -54,8 +54,14 @@ namespace CryptoTracker {
 		private void Page_Loaded(object sender, RoutedEventArgs e) {
 			RadioButton r = new RadioButton { Content = currTimerange };
 			TimerangeButton_Click(r, null);
-			
-			if (ForceRefresh) {
+
+            if (coinsArray.Count == 0) {
+                coinsArray = App.coinList.Select(x => x.symbol).ToList();
+                coinsArray.Sort((x, y) => x.CompareTo(y));
+            }
+            
+
+            if (ForceRefresh) {
 				ForceRefresh = false;
 				UpdatePortfolio();
 				Portfolio_dg.ItemsSource = PurchaseList;
@@ -179,11 +185,6 @@ namespace CryptoTracker {
         // ###############################################################################################
         // Add/Edit purchase dialog
         private void AddPurchase_click(object sender, RoutedEventArgs e) {
-            if (coinsArray.Count == 0) { }
-                coinsArray = App.coinList.Select(x => x.symbol).ToList();
-            
-            coinsArray.Sort((x, y) => x.CompareTo(y));
-
             NewPurchase = new ObservableCollection<PurchaseClass>() { new PurchaseClass() };
             TestRepeater.ItemsSource = NewPurchase;
             PurchaseDialog.Title = "💵 New purchase";
@@ -207,14 +208,15 @@ namespace CryptoTracker {
                 new MessageDialog("Error.").ShowAsync();
             }
             else {
+                // Get logo for the coin just in case the coin changed
+                var crypto = NewPurchase[0].Crypto;
+                string logoURL = "Assets/Icons/icon" + crypto + ".png";
+                if (!File.Exists(logoURL))
+                    NewPurchase[0].CryptoLogo = "https://chasing-coins.com/coin/logo/" + crypto;
+                else
+                    NewPurchase[0].CryptoLogo = "/" + logoURL;
+
                 if (sender.PrimaryButtonText == "Add") {
-                    // Get logo for the coin
-                    var crypto = NewPurchase[0].Crypto;
-                    string logoURL = "Assets/Icons/icon" + crypto + ".png";
-                    if (!File.Exists(logoURL))
-                        NewPurchase[0].CryptoLogo = "https://chasing-coins.com/coin/logo/" + crypto;
-                    else
-                        NewPurchase[0].CryptoLogo = "/" + logoURL;
                     PurchaseList.Add(NewPurchase[0]);
                 }
                 else if(sender.PrimaryButtonText == "Save") {
