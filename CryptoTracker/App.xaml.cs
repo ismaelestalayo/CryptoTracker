@@ -132,7 +132,7 @@ namespace CryptoTracker {
             deferral.Complete();
         }
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e) {
-            Analytics.TrackEvent("UNHANDLED: " + e.Message);
+            Analytics.TrackEvent("UNHANDLED1: " + e.Message);
         }
 
         // ###############################################################################################

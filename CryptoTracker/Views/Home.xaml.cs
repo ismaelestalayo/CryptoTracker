@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.Helpers;
 using CryptoTracker.Model;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -111,105 +112,113 @@ namespace CryptoTracker.Views {
             
             string c = App.pinnedCoins[i];
 
-            // DATA:
-            await App.GetHisto(c, timeSpan, limit);
+			try {
+                // DATA:
+                await App.GetHisto(c, timeSpan, limit);
 
-            float oldestPrice;
-            float newestPrice;
-            if (App.historic != null) {
-                oldestPrice = App.historic[0].Close;
-                newestPrice = App.historic[App.historic.Count - 1].Close;
-            } else {
-                oldestPrice = 0;
-                newestPrice = 0;
-            }
+                float oldestPrice;
+                float newestPrice;
+                if (App.historic != null) {
+                    oldestPrice = App.historic[0].Close;
+                    newestPrice = App.historic[App.historic.Count - 1].Close;
+                }
+                else {
+                    oldestPrice = 0;
+                    newestPrice = 0;
+                }
 
-            float d = (float)Math.Round(((newestPrice / oldestPrice) - 1) * 100, 2);
+                float d = (float)Math.Round(((newestPrice / oldestPrice) - 1) * 100, 2);
 
-            if (d < 0) {
-                d = Math.Abs(d);
-                diff = "▼" + d.ToString() + "%";
-            } else
-                diff = "▲" + d.ToString() + "%";
+                if (d < 0) {
+                    d = Math.Abs(d);
+                    diff = "▼" + d.ToString() + "%";
+                }
+                else
+                    diff = "▲" + d.ToString() + "%";
 
-            homeCoinList[i]._priceCurr = App.GetCurrentPrice(c, "defaultMarket").ToString() + App.coinSymbol;
-            homeCoinList[i]._priceDiff = diff;
+                homeCoinList[i]._priceCurr = App.GetCurrentPrice(c, "defaultMarket").ToString() + App.coinSymbol;
+                homeCoinList[i]._priceDiff = diff;
 
-            await App.GetCoinStats(c, "defaultMarket");
-            homeCoinList[i]._volume24 = App.stats.Volume24;
-            homeCoinList[i]._volume24to = App.stats.Volume24To;
+                await App.GetCoinStats(c, "defaultMarket");
+                homeCoinList[i]._volume24 = App.stats.Volume24;
+                homeCoinList[i]._volume24to = App.stats.Volume24To;
 
-            // #########################################################################################
-            // LOADING BAR
-            ListViewItem container = (ListViewItem)PriceListView.ContainerFromIndex(i);
-            if (container == null)
-                return;
-            var loading = (container.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
-            loading.IsLoading = true;
+                // #########################################################################################
+                // LOADING BAR
+                ListViewItem container = (ListViewItem)PriceListView.ContainerFromIndex(i);
+                if (container == null)
+                    return;
+                var loading = (container.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
+                loading.IsLoading = true;
 
-            // #########################################################################################
-            // COLOR
-            SolidColorBrush coinColorT, coinColor;
-            try {
-                coinColorT = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_colorT"];
-                coinColor = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_color"];
-            } catch (Exception) {
-                coinColorT = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlackT"];
-                coinColor = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
-            }
+                // #########################################################################################
+                // COLOR
+                SolidColorBrush coinColorT, coinColor;
+                try {
+                    coinColorT = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_colorT"];
+                    coinColor = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_color"];
+                }
+                catch (Exception) {
+                    coinColorT = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlackT"];
+                    coinColor = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
+                }
 
-            // #########################################################################################
-            // PRICE CHART
+                // #########################################################################################
+                // PRICE CHART
 
-            var PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
-            var verticalAxis = (container.ContentTemplateRoot as FrameworkElement)?.FindName("VerticalAxis") as LinearAxis;
+                var PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
+                var verticalAxis = (container.ContentTemplateRoot as FrameworkElement)?.FindName("VerticalAxis") as LinearAxis;
 
-            await App.GetHisto(c, timeSpan, limit);
-            List<ChartData> priceData = new List<ChartData>();
-            verticalAxis.Minimum = GraphHelper.GetMinimum(App.historic);
-            verticalAxis.Maximum = GraphHelper.GetMaximum(App.historic);
+                await App.GetHisto(c, timeSpan, limit);
+                List<ChartData> priceData = new List<ChartData>();
+                verticalAxis.Minimum = GraphHelper.GetMinimum(App.historic);
+                verticalAxis.Maximum = GraphHelper.GetMaximum(App.historic);
 
-            for (int k = 0; k < App.historic.Count; ++k) {
-                priceData.Add(new ChartData() {
-                    Date = App.historic[k].DateTime,
-                    Value = (App.historic[k].Low + App.historic[k].High) / 2,
-                    Low = App.historic[k].Low,
-                    High = App.historic[k].High,
-                    Open = App.historic[k].Open,
-                    Close = App.historic[k].Close,
-                    Volume = App.historic[k].Volumefrom
-                });
+                for (int k = 0; k < App.historic.Count; ++k) {
+                    priceData.Add(new ChartData() {
+                        Date = App.historic[k].DateTime,
+                        Value = (App.historic[k].Low + App.historic[k].High) / 2,
+                        Low = App.historic[k].Low,
+                        High = App.historic[k].High,
+                        Open = App.historic[k].Open,
+                        Close = App.historic[k].Close,
+                        Volume = App.historic[k].Volumefrom
+                    });
+                }
+
+                SplineAreaSeries series = (SplineAreaSeries)PriceChart.Series[0];
+                series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+                series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
+                series.ItemsSource = priceData;
+                series.Fill = coinColorT;
+                series.Stroke = coinColor;
+                var v = series.VerticalAxis;
+
+                // #########################################################################################
+                // VOLUME CHART
+                ListViewItem container2 = (ListViewItem)VolumeListView.ContainerFromIndex(i);
+                await App.GetHisto(c, "hour", 24);
+
+                List<ChartData> volumeData = new List<ChartData>();
+                for (int j = 0; j < 24; j++) {
+                    volumeData.Add(new ChartData() {
+                        Date = App.historic[j].DateTime,
+                        Volume = App.historic[j].Volumefrom,
+                        cc = coinColorT
+                    });
+                }
+
+                RadCartesianChart volumeChart = (container2.ContentTemplateRoot as FrameworkElement)?.FindName("volumeChart") as RadCartesianChart;
+                BarSeries barSeries = (BarSeries)volumeChart.Series[0];
+                barSeries.ItemsSource = volumeData;
+                var z = barSeries.DefaultVisualStyle;
+
+
+                loading.IsLoading = false;
+            } catch (Exception e) {
+                Analytics.TrackEvent("UNHANDLED2: " + e.Message);
             }
             
-            SplineAreaSeries series = (SplineAreaSeries)PriceChart.Series[0];
-            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            series.ItemsSource = priceData;
-            series.Fill = coinColorT;
-            series.Stroke = coinColor;
-            var v = series.VerticalAxis;
-            
-            // #########################################################################################
-            // VOLUME CHART
-            ListViewItem container2 = (ListViewItem)VolumeListView.ContainerFromIndex(i);
-            await App.GetHisto(c, "hour", 24);
-
-            List<ChartData> volumeData = new List<ChartData>();
-            for (int j = 0; j < 24; j++) {
-                volumeData.Add(new ChartData() {
-                    Date = App.historic[j].DateTime,
-                    Volume = App.historic[j].Volumefrom,
-                    cc = coinColorT
-                });
-            }
-
-            RadCartesianChart volumeChart = (container2.ContentTemplateRoot as FrameworkElement)?.FindName("volumeChart") as RadCartesianChart;
-            BarSeries barSeries = (BarSeries)volumeChart.Series[0];
-            barSeries.ItemsSource = volumeData;
-            var z = barSeries.DefaultVisualStyle;
-
-
-            loading.IsLoading = false;
         }
 
         // #########################################################################################
