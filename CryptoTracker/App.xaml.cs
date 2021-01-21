@@ -370,7 +370,7 @@ namespace CryptoTracker {
 
         // ###############################################################################################
         //  (GET) top 100 coins (by marketcap)
-        internal async static Task<ObservableCollection<Top100coin>> GetTop100() {
+        internal async static Task<List<Top100coin>> GetTop100() {
             int limit = 100;
             String URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", coin, limit);
 
@@ -390,7 +390,7 @@ namespace CryptoTracker {
                 data = data["Data"];
 
                 var coinn = ((JProperty)data[0]["RAW"].First).Name;
-                ObservableCollection<Top100coin> topCoins = new ObservableCollection<Top100coin>();
+                List<Top100coin> topCoins = new List<Top100coin>();
 
                 for (int i = 0; i < limit; i++) {
                     var symbol = data[i]["CoinInfo"]["Name"].ToString();
@@ -414,6 +414,7 @@ namespace CryptoTracker {
                                 Price = ToKMB((double)(data[i]["RAW"][coinn]["PRICE"] ?? "0")) + coinSymbol,
                                 Vol24 = ToKMB((double)(data[i]["RAW"][coinn]["TOTALVOLUME24HTO"] ?? "0")) + coinSymbol,
                                 MarketCap = ToKMB((double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0")) + coinSymbol,
+                                MarketCapRaw = (double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0"),
                                 Change24h = change.ToString() + "%",
                                 ChangeFG = change < 0 ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelGreen"],
                                 Src = string.Format("/Assets/Icons/icon{0}.png", symbol),
@@ -427,7 +428,7 @@ namespace CryptoTracker {
 
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
-                return new ObservableCollection<Top100coin>();
+                return new List<Top100coin>();
             }
         }
 

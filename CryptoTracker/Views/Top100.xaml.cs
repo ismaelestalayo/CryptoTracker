@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Helpers;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Windows.UI.Xaml;
@@ -25,6 +26,7 @@ namespace CryptoTracker.Views {
         public string Price { get; set; }
         public string Vol24 { get; set; }
         public string MarketCap { get; set; }
+        public double MarketCapRaw { get; set; }
         public string Change24h { get; set; }
         public SolidColorBrush ChangeFG { get; set; }
         public string Src { get; set; }
@@ -53,8 +55,8 @@ namespace CryptoTracker.Views {
     // #########################################################################################
     public sealed partial class Top100 : Page {
 
-        private GlobalStats g;
-        private ObservableCollection<Top100coin> topCoins { get; set; }
+        private GlobalStats GlobalStats;
+        private List<Top100coin> topCoins { get; set; }
 
         public Top100() {
             this.InitializeComponent();
@@ -64,12 +66,15 @@ namespace CryptoTracker.Views {
 
         // #########################################################################################
         private async void InitPage() {
-            g = await App.GetGlobalStats();
-            DataContext = g;
+            GlobalStats = await App.GetGlobalStats();
+            DataContext = GlobalStats;
 
             topCoins = await App.GetTop100();
-            
-            for (int i = 0; i < topCoins.Count; i++) {
+			topCoins.Sort((x, y) => y.MarketCapRaw.CompareTo(x.MarketCapRaw));
+
+
+			for (int i = 0; i < topCoins.Count; i++) {
+                topCoins[i].Rank = (i + 1).ToString();
                 topCoins[i].LogoURL = IconsHelper.GetIcon(topCoins[i].Symbol);
             }
 
