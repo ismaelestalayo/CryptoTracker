@@ -17,9 +17,6 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>UWP_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>
-    </PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
@@ -32,6 +29,9 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <PackageCertificateThumbprint>
+    </PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -270,7 +270,6 @@
     <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-400_altform-colorful_theme-light.png" />
     <Content Include="Assets\transparent.png" />
     <Content Include="Properties\Default.rd.xml" />
-    <None Include="UWP_StoreKey.pfx" />
     <None Include="UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

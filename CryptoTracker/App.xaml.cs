@@ -1,18 +1,18 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
 using CryptoTracker.Views;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Popups;
