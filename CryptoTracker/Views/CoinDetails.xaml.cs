@@ -1,6 +1,7 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
 using CryptoTracker.Views;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,7 @@ namespace CryptoTracker {
                     mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon" + crypto.ToUpper(CultureInfo.InvariantCulture) + ".png"));
                 } catch(Exception) {
                     mainTitleLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Icons/iconNULL.png"));
+                    Analytics.TrackEvent(string.Format("Missing icon: {0}", crypto));
                 }
                 mainTitleLogo.Visibility = Visibility.Visible;
 
