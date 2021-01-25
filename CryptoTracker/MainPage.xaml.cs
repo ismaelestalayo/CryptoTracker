@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.APIs;
+using CryptoTracker.Helpers;
 using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
@@ -234,12 +235,12 @@ namespace CryptoTracker {
 
         // #########################################################################################
         private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinList.Where(x => x.Name.Contains(box.Text) || x.FullName.Contains(box.Text)).ToList();
+            var filtered = App.coinList.Where(x => x.symbol.Contains(box.Text)).ToList(); // || x.FullName.Contains(box.Text)
             List<SuggestionCoinList> list = new List<SuggestionCoinList>();
-            foreach (JSONcoins coin in filtered) {
+            foreach (CoinBasicInfo coin in filtered) {
                 list.Add(new SuggestionCoinList {
-                    Icon = IconsHelper.GetIcon(coin.Name),
-                    Name = coin.Name
+                    Icon = IconsHelper.GetIcon(coin.symbol),
+                    Name = coin.symbol
                 });
             }
 
@@ -256,10 +257,10 @@ namespace CryptoTracker {
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
             string selected;
             string source = (((Frame)sender.Content).SourcePageType).Name;
-            try {
-                selected = ((ContentControl)sender.SelectedItem).Content.ToString();
-            }
-            catch (NullReferenceException) {
+            
+            selected = ((ContentControl)sender.SelectedItem).Content?.ToString();
+            
+            if (selected == null) {
                 if (args.IsSettingsInvoked)
                     selected = "Settings";
                 else

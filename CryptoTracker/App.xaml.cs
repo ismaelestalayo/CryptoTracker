@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.APIs;
+using CryptoTracker.Helpers;
 using CryptoTracker.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -6,14 +7,12 @@ using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Popups;
@@ -29,9 +28,7 @@ namespace CryptoTracker {
         internal static string coin       = "EUR";
         internal static string coinSymbol = "€";
 
-        internal static int pivotIndex = 0;
-
-        internal static List<JSONcoins> coinList = new List<JSONcoins>();
+        internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
@@ -40,64 +37,65 @@ namespace CryptoTracker {
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
+            string _theme  = localSettings.Values["Theme"]?.ToString();
+            string _coin   = localSettings.Values["Coin"]?.ToString();
+            string _pinned = localSettings.Values["Pinned"]?.ToString();
 
-            try {
-                string _theme  = localSettings.Values["Theme"].ToString();
-                string _coin   = localSettings.Values["Coin"].ToString();
-                string _pinned = localSettings.Values["Pinned"].ToString();
-                pinnedCoins = new List<string>(_pinned.Split( new char[] { '|' } ));
-                pinnedCoins.Remove("");
-
-                if (_theme != null) {
-                    switch (_theme) {
-                        case "Light":
-                            RequestedTheme = ApplicationTheme.Light;
-                            break;
-                        case "Dark":
-                            RequestedTheme = ApplicationTheme.Dark;
-                            break;
-                    }
-                }
-                if (_coin != null) {
-                    coin = _coin;
-                    switch (coin) {
-                        case "EUR":
-                            coinSymbol = "€";
-                            break;
-                        case "GBP":
-                            coinSymbol = "£";
-                            break;
-                        case "USD":
-                        case "CAD":
-                        case "AUD":
-                        case "MXN":
-                            coinSymbol = "$";
-                            break;
-                        case "CNY":
-                        case "JPY":
-                            coinSymbol = "¥";
-                            break;
-                        case "INR":
-                            coinSymbol = "₹";
-                            break;
-                    }
-                }
-                
-            } catch (Exception ex){
+            if (_theme == null || _coin == null || _pinned == null) {
                 // Default: Windows theme, EUR and {BTC, ETH, LTC and XRP}
                 localSettings.Values["Theme"] = "Windows";
                 localSettings.Values["Coin"] = "EUR";
                 localSettings.Values["Pinned"] = "BTC|ETH|LTC|XRP";
                 this.RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
-                pinnedCoins = new List<string>(new string[] {"BTC", "ETH", "LTC", "XRP"});
-            }
+                pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC", "XRP" });
+			}
+			else {
+                pinnedCoins = new List<string>(_pinned.Split(new char[] { '|' }));
+                pinnedCoins.Remove("");
+
+                switch (_theme) {
+					case "Light":
+						RequestedTheme = ApplicationTheme.Light;
+						break;
+					case "Dark":
+						RequestedTheme = ApplicationTheme.Dark;
+						break;
+                    default:
+                        RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                        break;
+                }
+
+				switch (_coin) {
+                    default:
+                    case "EUR":
+                        coinSymbol = "€";
+                        break;
+                    case "GBP":
+                        coinSymbol = "£";
+                        break;
+                    case "USD":
+                    case "CAD":
+                    case "AUD":
+                    case "MXN":
+                        coinSymbol = "$";
+                        break;
+                    case "CNY":
+                    case "JPY":
+                        coinSymbol = "¥";
+                        break;
+                    case "INR":
+                        coinSymbol = "₹";
+                        break;
+                }
+			}
+
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.UnhandledException += OnUnhandledException;
-        }
-        // #########################################################################################
-        protected override void OnLaunched(LaunchActivatedEventArgs e) {
+		}
+		// #########################################################################################
+		protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null) {
@@ -117,7 +115,7 @@ namespace CryptoTracker {
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
 
-                ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(900, 550));
+                ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size(900, 550));
                 Window.Current.Activate();
             }
 #if !DEBUG
@@ -134,7 +132,7 @@ namespace CryptoTracker {
             deferral.Complete();
         }
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e) {
-            Analytics.TrackEvent("UNHANDLED: " + e.Message);
+            Analytics.TrackEvent("UNHANDLED1: " + e.Message);
         }
 
         // ###############################################################################################
@@ -176,29 +174,25 @@ namespace CryptoTracker {
             }
         }
 
-        // ###############################################################################################
-        //  (GET) list of coins
+        /* ###############################################################################################
+         * Gets the list of coins and saves it under App.coinList
+         * API: Github
+        */
         internal async static Task GetCoinList() {
-            string URL = "https://min-api.cryptocompare.com/data/top/totalvol?limit=100&tsym=" + coin
-                + "&api_key=569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286";
-            Uri uri = new Uri(URL);
+            // check cache before sending an unnecesary request
+            if (localSettings.Values["coinListDate"] != null) {
+                DateTime lastUpdate = DateTime.FromOADate((double)localSettings.Values["coinListDate"]);
+                var days = DateTime.Today.CompareTo(lastUpdate);
 
-            try {
-                var data = await GetJSONAsync(uri);
-                JSONcoins.HandleJSON(data);
+				coinList = LocalStorageHelper.ReadObject<List<CoinBasicInfo>>("coinList").Result;
 
-                // Get coins ranked 101-200
-                uri = new Uri(URL + "&page=1");
-                data = await GetJSONAsync(uri);
-                JSONcoins.HandleJSON(data);
-
-                // Get coins ranked 201-300
-                uri = new Uri(URL + "&page=2");
-                data = await GetJSONAsync(uri);
-                JSONcoins.HandleJSON(data);
-
-            } catch (Exception ex) {
-                await new MessageDialog(ex.Message).ShowAsync();
+				// if empty list OR old cache -> refresh
+				if (coinList.Count == 0 || days > 7) {
+                    coinList = await GitHub.GetAllCoins();
+                }
+            }
+			else {
+                coinList = await GitHub.GetAllCoins();
             }
         }
 
@@ -376,7 +370,7 @@ namespace CryptoTracker {
 
         // ###############################################################################################
         //  (GET) top 100 coins (by marketcap)
-        internal async static Task<ObservableCollection<Top100coin>> GetTop100() {
+        internal async static Task<List<Top100coin>> GetTop100() {
             int limit = 100;
             String URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", coin, limit);
 
@@ -396,7 +390,7 @@ namespace CryptoTracker {
                 data = data["Data"];
 
                 var coinn = ((JProperty)data[0]["RAW"].First).Name;
-                ObservableCollection<Top100coin> topCoins = new ObservableCollection<Top100coin>();
+                List<Top100coin> topCoins = new List<Top100coin>();
 
                 for (int i = 0; i < limit; i++) {
                     var symbol = data[i]["CoinInfo"]["Name"].ToString();
@@ -420,6 +414,7 @@ namespace CryptoTracker {
                                 Price = ToKMB((double)(data[i]["RAW"][coinn]["PRICE"] ?? "0")) + coinSymbol,
                                 Vol24 = ToKMB((double)(data[i]["RAW"][coinn]["TOTALVOLUME24HTO"] ?? "0")) + coinSymbol,
                                 MarketCap = ToKMB((double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0")) + coinSymbol,
+                                MarketCapRaw = (double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0"),
                                 Change24h = change.ToString() + "%",
                                 ChangeFG = change < 0 ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelGreen"],
                                 Src = string.Format("/Assets/Icons/icon{0}.png", symbol),
@@ -433,7 +428,7 @@ namespace CryptoTracker {
 
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
-                return new ObservableCollection<Top100coin>();
+                return new List<Top100coin>();
             }
         }
 
@@ -463,7 +458,7 @@ namespace CryptoTracker {
                 g.TotalMarketCap    = ToKMB((double)(data["total_market_cap"][coin.ToLower()] ?? data["total_market_cap"]["usd"])) + coinSymbol;
                 return g;
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 //await new MessageDialog(ex.Message).ShowAsync();
                 return new GlobalStats();
             }
@@ -493,14 +488,14 @@ namespace CryptoTracker {
         /// http://blog.stephencleary.com/2012/07/dont-block-on-async-code.html
         /// 
         /// </summary>
-        private static async Task<JToken> GetJSONAsync(Uri uri) {
+        internal static async Task<JToken> GetJSONAsync(Uri uri) {
 
             using (var client = new HttpClient()) {
                 var jsonString = await client.GetStringAsync(uri).ConfigureAwait(false);
                 return JToken.Parse(jsonString);
             }
         }
-        private static async Task<string> GetStringAsync(Uri uri) {
+        internal static async Task<string> GetStringAsync(Uri uri) {
             using (var client = new HttpClient()) {
                 var s = await client.GetStringAsync(uri).ConfigureAwait(false);
                 return s;
@@ -557,7 +552,7 @@ namespace CryptoTracker {
 
 
 
-    }
+	}
 
 }
 

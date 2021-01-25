@@ -122,11 +122,11 @@
 
                             <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
                                 <Image Name="coinLogo" Source="{x:Bind _iconSrc}" Width="25" Margin="2"/>
-                                <TextBlock Name="coinName" Text="{x:Bind _cryptoName, Mode=TwoWay}" Style="{ThemeResource TitleTextBlockStyle}" Margin="5, -2"/>
+								<TextBlock Name="coinName" Text="{x:Bind _cryptoName, Mode=OneWay}" Style="{ThemeResource TitleTextBlockStyle}" Margin="5, -2"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-                                <TextBlock Name="priceCurr" Text="{x:Bind _priceCurr, Mode=TwoWay}" Style="{StaticResource CurrTextStyle}"/>
-                                <TextBlock Name="priceDiff" Text="{x:Bind _priceDiff, Mode=TwoWay}" Foreground="{x:Bind _priceDiffFG}" Style="{StaticResource DiffTextStyle}"/>
+								<TextBlock Name="priceCurr" Text="{x:Bind _priceCurr, Mode=OneWay}" Style="{StaticResource CurrTextStyle}"/>
+                                <TextBlock Name="priceDiff" Text="{x:Bind _priceDiff, Mode=OneWay}" Foreground="{x:Bind _priceDiffFG, Mode=OneWay}" Style="{StaticResource DiffTextStyle}"/>
                             </StackPanel>
                             
                             <!-- PRICE CHART: -->

@@ -8,12 +8,12 @@ namespace CryptoTracker.Helpers {
         internal int LinuxTime;
         internal string Date { get; set; }
         internal DateTime DateTime { get; set; }
-        internal float Low { get; set; }
-        internal float High { get; set; }
-        internal float Open { get; set; }
-        internal float Close { get; set; }
-        internal float Volumefrom { get; set; }
-        internal float Volumeto { get; set; }
+        internal float Low { get; set; } = 0;
+        internal float High { get; set; } = 0;
+        internal float Open { get; set; } = 0;
+        internal float Close { get; set; } = 0;
+        internal float Volumefrom { get; set; } = 0;
+        internal float Volumeto { get; set; } = 0;
 
         public static List<JSONhistoric> HandleHistoricJSON(JToken data) {
 
@@ -33,14 +33,7 @@ namespace CryptoTracker.Helpers {
 
             var hist = new List<JSONhistoric>();
             for (int i = 0; i < limit; i++) {
-                hist.Add( new JSONhistoric() {
-                    Low         = 0,
-                    High        = 0,
-                    Open        = 0,
-                    Close       = 0,
-                    Volumefrom  = 0,
-                    Volumeto    = 0
-                } );
+                hist.Add( new JSONhistoric() );
             }
             return hist;
         }

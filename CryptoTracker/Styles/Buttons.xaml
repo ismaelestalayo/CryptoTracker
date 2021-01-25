@@ -15,18 +15,18 @@
     </Style>
 
     <Style TargetType="Button" x:Key="Crypto_button_style">
-        <Setter Property="Background" Value="{ThemeResource SystemBaseMediumHighColor}"/>
-        <Setter Property="Foreground" Value="{ThemeResource SystemChromeMediumLowColor}"/>
-        <Setter Property="FontWeight" Value="SemiLight"/>
-        <Setter Property="Margin" Value="0 0 5 5"/>
-        <Setter Property="Padding" Value="20 5"/>
-        <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+		<Setter Property="Background" Value="{ThemeResource SystemChromeDisabledHighColor}"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Foreground" Value="{ThemeResource SystemBaseMediumHighColor}"/>
+		<Setter Property="Margin" Value="0 0 5 5"/>
+		<Setter Property="Padding" Value="23 7"/>
+		<Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ButtonBase">
-                    <Grid x:Name="Grid" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" CornerRadius="2"
+                    <Grid x:Name="Grid" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" CornerRadius="3"
                               VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                              BorderBrush="{ThemeResource SystemBaseMediumHighColor}" BorderThickness="1">
+                              BorderThickness="0">
                         <ContentPresenter x:Name="Text" Content="{TemplateBinding Content}"
                                           VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
 
@@ -37,15 +37,15 @@
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemBaseMediumColor}" />
-                                        </ObjectAnimationUsingKeyFrames>
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ComboBoxBackgroundPointerOver}" />
+										</ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
 
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemBaseMediumLowColor}" />
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemBaseMediumLowColor}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -59,7 +59,17 @@
         </Setter>
     </Style>
 
-    <Style TargetType="RadioButton" x:Key="timerangeRadioBtn">
+	<Style TargetType="ComboBox" x:Key="Crypto_comboBox_style">
+		<Setter Property="Background" Value="{ThemeResource SystemChromeDisabledHighColor}"/>
+		<Setter Property="Foreground" Value="{ThemeResource SystemBaseMediumHighColor}"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="CornerRadius" Value="3"/>
+		<Setter Property="Margin" Value="0 0 5 5"/>
+		<Setter Property="Padding" Value="23 7"/>
+		<Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}" />
+	</Style>
+
+	<Style TargetType="RadioButton" x:Key="timerangeRadioBtn">
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="MinHeight" Value="30"/>
         <Setter Property="MinWidth" Value="60"/>

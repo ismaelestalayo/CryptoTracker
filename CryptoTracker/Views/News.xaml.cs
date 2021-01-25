@@ -1,22 +1,22 @@
 ﻿using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace CryptoTracker.Views {
-    // ###############################################################################################
-    /// <summary>
-    /// News items for the AdaptiveGridView
-    /// </summary>
-    public class NewsItem {
+	// ###############################################################################################
+	/// <summary>
+	/// News items for the AdaptiveGridView
+	/// </summary>
+	public class NewsItem {
         public int Type { get; set; }
         public string Message { get; set; }
         public List<object> Promoted { get; set; }
@@ -113,9 +113,7 @@ namespace CryptoTracker.Views {
                 httpResponse.EnsureSuccessStatusCode();
 
                 var response = await httpResponse.Content.ReadAsStringAsync();
-                var data = JToken.Parse(response);
-
-                var news = JToken.Parse(data.ToString()).ToObject<NewsItem>();
+                var news = JsonSerializer.Deserialize<NewsItem>(response);
                 foreach (NewsData n in news.Data) {
                     n.categorylist = n.categories.Split('|').ToList();
                     if (n.categorylist.Count > 3)
@@ -146,7 +144,7 @@ namespace CryptoTracker.Views {
 
                 var response = await httpResponse.Content.ReadAsStringAsync();
 
-                cat = JToken.Parse(response.ToString()).ToObject<List<NewsCategories>>();
+                cat = JsonSerializer.Deserialize<List<NewsCategories>>(response);
             }
             catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
