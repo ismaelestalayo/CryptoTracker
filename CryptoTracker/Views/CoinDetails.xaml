@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:CryptoTracker.Helpers"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
     mc:Ignorable="d"
@@ -113,17 +112,22 @@
             <StackPanel Orientation="Horizontal">
                 <Image
                     x:Name="mainTitleLogo"  Source="/Assets/Icons/iconBTC.png" 
-                    Visibility="Collapsed" Margin="5 3"
-                    VerticalAlignment="Bottom"
-                    Width="25"/>
-                <TextBlock x:Name="mainTitle" Style="{StaticResource TitleTextBlockStyle}"
-                    VerticalAlignment="Center" Text="Title"
-                    FontWeight="Bold"/>
+                    Visibility="Collapsed" Margin="5"
+                    VerticalAlignment="Center" Width="25"/>
+                <TextBlock x:Name="mainTitle" Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
+                    VerticalAlignment="Stretch" Text="Title" FontWeight="Bold"/>
                 <Button
                     Margin="5 0" Padding="5 0" Height="32" FontFamily="Segoe MDL2 Assets"
-                    FontSize="23" Background="Transparent" VerticalContentAlignment="Bottom"
+                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
                     x:Name="FavIcon" Click="PinCoin_btn"/>
-            </StackPanel>
+
+				<Button 
+                    Margin="5 0" Padding="5 0" Height="32" FontFamily="Segoe MDL2 Assets"
+                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
+                    x:Name="CompactOverlay_btn" Click="CompactOverlay_btn_click" Visibility="Collapsed">
+					<SymbolIcon Symbol="BackToWindow"/>
+				</Button>
+			</StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="10, 0" RelativePanel.AlignRightWithPanel="True">
                 <TextBlock x:Name="mainTitleVal"
