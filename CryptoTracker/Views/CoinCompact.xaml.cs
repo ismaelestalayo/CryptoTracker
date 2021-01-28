@@ -1,4 +1,6 @@
 ﻿using CryptoTracker.Helpers;
+using CryptoTracker.Model;
+using CryptoTracker.APIs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -46,7 +48,7 @@ namespace CryptoTracker.Views {
 			var crypto = CoinModel.Crypto;
 
 			// Current price
-			CoinModel.CurrentPrice = App.GetCurrentPrice(crypto, "defaultMarket");
+			CoinModel.CurrentPrice = CryptoCompare.GetPrice(crypto, "defaultMarket");
 
 			// Historic values
 			App.GetHisto(crypto, "minute", 60);
@@ -110,21 +112,5 @@ namespace CryptoTracker.Views {
 			await view.TryEnterViewModeAsync(ApplicationViewMode.Default);
 			Frame.Navigate(typeof(CoinDetails), CoinModel.Crypto);
 		}
-	}
-
-	internal class CoinCompactModel {
-		internal string Crypto { get; set; }
-		internal string Currency { get; set; }
-		internal double CurrentPrice { get; set; }
-		internal double CurrentDiff { get; set; }
-		internal string CurrentDiffArrow { get; set; }
-		internal Brush DiffFG { get; set; }
-		internal Brush ChartStroke { get; set; }
-		internal Color ChartFill1 { get; set; }
-		internal Color ChartFill2 { get; set; }
-		internal float HistoricMin { get; set; } = 20000;
-		internal float HistoricMax { get; set; } = 30000;
-		internal List<ChartData> HistoricValues { get; set; } = new List<ChartData>();
-		internal string LogoSource { get; set; }
 	}
 }

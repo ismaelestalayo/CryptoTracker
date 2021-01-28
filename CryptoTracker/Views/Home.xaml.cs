@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.APIs;
+using CryptoTracker.Helpers;
 using CryptoTracker.Model;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.UI.Controls;
@@ -136,7 +137,7 @@ namespace CryptoTracker.Views {
                 else
                     diff = "▲" + d.ToString() + "%";
 
-                homeCoinList[i]._priceCurr = App.GetCurrentPrice(c, "defaultMarket").ToString() + App.coinSymbol;
+                homeCoinList[i]._priceCurr = CryptoCompare.GetPrice(c).ToString() + App.coinSymbol;
                 homeCoinList[i]._priceDiff = diff;
 
                 await App.GetCoinStats(c, "defaultMarket");

@@ -149,7 +149,7 @@ namespace CryptoTracker {
         // #########################################################################################
         async private Task UpdateCoin() {
             
-            mainTitleVal.Text = App.GetCurrentPrice(crypto, "defaultMarket").ToString() + App.coinSymbol;
+            mainTitleVal.Text = CryptoCompare.GetPrice(crypto).ToString() + App.coinSymbol;
             mainTitleVal.Visibility  = Visibility.Visible;
             mainTitleDiff.Visibility = Visibility.Visible;
 

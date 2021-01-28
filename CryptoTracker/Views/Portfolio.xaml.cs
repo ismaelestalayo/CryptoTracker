@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.APIs;
+using CryptoTracker.Helpers;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -119,7 +120,7 @@ namespace CryptoTracker {
             string crypto = purchase.Crypto;
 
             if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
-                purchase.Current = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);
+                purchase.Current = CryptoCompare.GetPrice(crypto);
 
             var curr = purchase.Current;
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);

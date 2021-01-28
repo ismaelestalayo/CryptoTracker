@@ -1,37 +1,39 @@
-﻿using CryptoTracker.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Windows.UI.Popups;
+﻿using System;
 
 namespace CryptoTracker.APIs {
 	class CryptoCompare {
 
-        internal async static Task<List<JSONcoin>> GetAllCoins() {
-            bool UsedCache = false;
-            List<JSONcoin> coinList = new List<JSONcoin>();
-            
-            Uri uri = new Uri("https://min-api.cryptocompare.com/data/all/coinlist?summary=true");
+        /* ###############################################################################################
+         * Gets the current price of a coin (in the currency set by App.coin)
+         * 
+         * Arguments: 
+         * - crypto (BTC, ETH...)
+         * - market
+        */
+        internal static double GetPrice(string crypto, string market = "defaultMarket") {
+            var currency = App.coin;
+            string URL = string.Format("https://min-api.cryptocompare.com/data/price?fsym={0}&tsyms={1}", crypto, currency);
+
+            if (market != "defaultMarket")
+                URL += "&e=" + market;
+
+            Uri uri = new Uri(URL);
 
             try {
-                var data = await App.GetJSONAsync(uri);
-                coinList = JSONcoin.HandleJSON(data);
-                coinList.Sort((x, y) => x.Symbol.CompareTo(y.Symbol));
+                var data = App.GetStringAsync(uri).Result;
 
-                // Save on Local Storage, and save the Date
-                LocalStorageHelper.SaveObject(coinList, "coinList");
-                App.localSettings.Values["coinListDate"] = DateTime.Today.ToOADate();
+                double price = double.Parse(data.Split(":")[1].Replace("}", ""));
 
-                return coinList;
+				if (price > 99)
+					return Math.Round(price, 2);
+				else if (price > 10)
+					return Math.Round(price, 4);
+                else
+                    return Math.Round(price, 6);
+
             }
-            catch (Exception ex) {
-                await new MessageDialog(ex.Message).ShowAsync();
-                return new List<JSONcoin>(){ new JSONcoin() {
-                    Symbol = "ERR",
-                    FullName = "Error",
-                    Id = 1,
-                    ImageUrl = ""}
-                };
+            catch (Exception) {
+                return 0;
             }
         }
 

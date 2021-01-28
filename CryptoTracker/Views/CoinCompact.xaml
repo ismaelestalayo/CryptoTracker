@@ -41,7 +41,7 @@
 				</Button>
 			</StackPanel>
 
-			<StackPanel Orientation="Horizontal" Margin="10, 0" RelativePanel.AlignRightWithPanel="True">
+			<StackPanel Orientation="Horizontal" Margin="10 0" RelativePanel.AlignRightWithPanel="True">
 				<TextBlock
 					FontSize="24" FontWeight="Medium">
 					<Run Text="{x:Bind CoinModel.CurrentPrice, Mode=OneWay}" d:Text="val"/><!--
@@ -69,7 +69,7 @@
 			x:Name="HistoricChart"
 			Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
 			Grid.Row="1"
-			Margin="-5 -5 -5 0">
+			Margin="-5 0 -5 0">
 
 			<telerik:RadCartesianChart.HorizontalAxis>
 				<telerik:DateTimeContinuousAxis 
