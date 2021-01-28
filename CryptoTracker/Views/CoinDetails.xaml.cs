@@ -13,6 +13,7 @@ using Telerik.UI.Xaml.Controls.Chart;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -54,6 +55,10 @@ namespace CryptoTracker {
             this.InitializeComponent();
 
             cdw = new CoinDataWrapper();
+
+            if (ApplicationView.GetForCurrentView().IsViewModeSupported(ApplicationViewMode.CompactOverlay))
+                CompactOverlay_btn.Visibility = Visibility.Visible;
+            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
@@ -64,7 +69,7 @@ namespace CryptoTracker {
                 
                 
                 // Page title
-                crypto = (e.Parameter.ToString() != null) ? e.Parameter as string :  "NULL";
+                crypto = e.Parameter?.ToString() ?? "NULL";
 
                 var currentCoin = App.coinList.Find(x => x.symbol == crypto);
                 mainTitle.Text = string.Format("{0} ({1})", currentCoin.name, currentCoin.symbol);
@@ -274,5 +279,15 @@ namespace CryptoTracker {
                 inAppNotification.Show(c + " unpinned from home.", 2000);
             }
         }
-    }
+
+		private async void CompactOverlay_btn_click(object sender, RoutedEventArgs e) {
+            var view = ApplicationView.GetForCurrentView();
+
+			var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+			preferences.CustomSize = new Windows.Foundation.Size(350, 250);
+
+			await view.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+            Frame.Navigate(typeof(CoinCompact), crypto, new SuppressNavigationTransitionInfo());
+        }
+	}
 }
