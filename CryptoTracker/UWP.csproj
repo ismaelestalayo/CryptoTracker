@@ -132,6 +132,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\HomeTile.cs" />
+    <Compile Include="Views\CoinCompact.xaml.cs">
+      <DependentUpon>CoinCompact.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CoinDetails.xaml.cs">
       <DependentUpon>CoinDetails.xaml</DependentUpon>
     </Compile>
@@ -286,6 +289,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CoinCompact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CoinDetails.xaml">
       <SubType>Designer</SubType>
