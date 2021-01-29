@@ -275,7 +275,6 @@
     <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-400.png" />
     <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-400_altform-colorful_theme-light.png" />
     <Content Include="Assets\transparent.png" />
-    <Content Include="Properties\Default.rd.xml" />
     <None Include="UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
