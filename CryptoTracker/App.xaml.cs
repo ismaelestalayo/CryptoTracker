@@ -157,7 +157,7 @@ namespace CryptoTracker {
                 DateTime lastUpdate = DateTime.FromOADate((double)localSettings.Values["coinListDate"]);
                 var days = DateTime.Today.CompareTo(lastUpdate);
 
-				coinList = LocalStorageHelper.ReadObject<List<CoinBasicInfo>>("coinList").Result;
+				coinList = await LocalStorageHelper.ReadObject<List<CoinBasicInfo>>("coinList");
 
 				// if empty list OR old cache -> refresh
 				if (coinList.Count == 0 || days > 7) {
