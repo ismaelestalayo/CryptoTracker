@@ -8,23 +8,27 @@ using System.Threading.Tasks;
 namespace CryptoTracker.APIs {
 	class CryptoCompare {
 
-        public class CryptoCompareResponse {
-            public string Response { get; set; }
-            public int Type { get; set; }
-            public bool Aggregated { get; set; }
-            public bool FirstValueInArray { get; set; }
-            public double TimeTo { get; set; }
-            public double TimeFrom { get; set; }
-            public object ConversionType { get; set; }
-            public object Data { get; set; }
+        public class HistoricPrice {
+            public int time { get; set; }
+            public float high { get; set; } = 0;
+            public float low { get; set; } = 0;
+            public float open { get; set; } = 0;
+            public float close { get; set; } = 0;
+            public float volumefrom { get; set; } = 0;
+            public float volumeto { get; set; } = 0;
+
+            internal float Average { get; set; } = 0;
+            internal string Date { get; set; }
+            internal DateTime DateTime { get; set; }
         }
 
         /* ###############################################################################################
          * Gets the current price of a coin (in the currency set by App.coin)
          * 
          * Arguments: 
-         * - crypto (BTC, ETH...)
-         * - market
+         * - crypto: BTC ETH...
+         * - market: CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex
+         * 
         */
         internal static double GetPrice(string crypto, string market = "defaultMarket") {
             var currency = App.coin;
@@ -57,32 +61,87 @@ namespace CryptoTracker.APIs {
          * Gets the current price of a coin (in the currency set by App.coin)
          * 
          * Arguments: 
-         * - crypto (BTC, ETH...)
-         * - market
+         * - crypto: BTC ETH...
+         * - time: minute hour day
+         * - limit: 1 - 2000
+         * 
         */
-        internal static async void GetHistoric(string crypto, string time, int limit) {
+        internal static async Task<List<HistoricPrice>> GetHistoric(string crypto, string time, int limit) {
             var coin = App.coin;
 
-            //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
             string URL = string.Format("https://min-api.cryptocompare.com/data/histo{0}?e=CCCAGG&fsym={1}&tsym={2}&limit={3}", time, crypto, coin, limit);
 
             if (limit == 0)
                 URL = string.Format("https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym={0}&tsym={1}&allData=true", crypto, coin);
 
-            Uri uri = new Uri(URL);
-
+            
             try {
-                var data = await App.GetStringAsync(uri);
-                //var data = JToken.Parse(response);
-                var z = new List<JSONhistoric>();
-                var response = JsonSerializer.Deserialize<CryptoCompareResponse>(data);
+                var responseString = await App.GetStringAsync(new Uri(URL));
 
-                var r = JsonSerializer.Deserialize<object>(data);
-                var d = ((JsonElement)r).GetProperty("Data");
+                var response = JsonSerializer.Deserialize<object>(responseString);
+
+                var okey = ((JsonElement)response).GetProperty("Response").ToString();
+
+                // TODO: add NOT OKEY value
+                if (okey == "")
+                    return new List<HistoricPrice>(3);
+                
+                var data = ((JsonElement)response).GetProperty("Data").ToString();
+                var historic = JsonSerializer.Deserialize<List<HistoricPrice>>(data);
+
+                // Add calculation of dates and average values
+                DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+				foreach (var h in historic) {
+                    h.Average = (h.high + h.low) / 2;
+                    DateTime d = dtDateTime.AddSeconds(h.time).ToLocalTime();
+                    h.DateTime = d;
+                    h.Date = d.ToString();
+                }
+
+                return historic;
             }
             catch (Exception ex) {
-                var dontWait = ex;
+                return new List<HistoricPrice>(3);
             }
+        }
+
+
+        /* ###############################################################################################
+         * Gets the exchanges for a crypto (with the price and volume)
+         * TODO: unused endpoint
+         * 
+         * Arguments: 
+         * - crypto: BTC ETH...
+         * 
+        */
+        internal async static Task GetExchanges(string crypto) {
+            var currency = App.coin;
+
+            var URL = string.Format("https://min-api.cryptocompare.com/data/top/exchanges?fsym={0}&tsym={1}&limit={2}", crypto, currency, 8);
+
+            try {
+                var responseString = await App.GetStringFromUrlAsync(URL);
+
+                var response = JsonSerializer.Deserialize<object>(responseString);
+
+                var okey = ((JsonElement)response).GetProperty("Response").ToString();
+
+                var data = ((JsonElement)response).GetProperty("Data").ToString();
+                var exchanges = JsonSerializer.Deserialize<List<Exchange>>(data);
+            }
+            catch (Exception ex) {
+                var message = ex.Message;
+            }
+        }
+
+        public class Exchange {
+            public string exchange { get; set; } = "NULL";
+            public string fromSymbol { get; set; } = "NULL";
+            public string toSymbol { get; set; } = "NULL";
+            public double volume24h { get; set; } = 0;
+            public double volume24hTo { get; set; } = 0;
+            public double price { get; set; } = 0;
+            public string exchangeGrade { get; set; } = "null";
         }
     }
 }
