@@ -404,7 +404,8 @@
                 </controls:UniformGrid>
 
 
-                <ListView Grid.Row="1" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0" Background="Blue" Visibility="Collapsed">
+                <!--
+				<ListView Grid.Row="1" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0" Background="Blue" Visibility="Collapsed">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="helpers:JSONexchanges">
                             <Grid BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}" BorderThickness="0 0 0 2" Padding="0 0 0 5">
@@ -430,6 +431,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
+				-->
 
 
             </Grid>

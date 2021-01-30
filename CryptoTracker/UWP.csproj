@@ -121,13 +121,11 @@
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\JSONcoin.cs" />
-    <Compile Include="Helpers\JSONsnapshot.cs" />
     <Compile Include="Helpers\JSONstats.cs" />
     <Compile Include="Helpers\LiveTile.cs" />
     <Compile Include="Helpers\JSONhistoric.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
-    <Compile Include="Helpers\JSONexchanges.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
