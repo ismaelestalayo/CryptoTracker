@@ -31,7 +31,6 @@ namespace CryptoTracker {
         internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
-        internal static JSONstats stats = new JSONstats();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -243,33 +242,6 @@ namespace CryptoTracker {
                 case "year":    return Tuple.Create("day", 365);
                 case "all":     return Tuple.Create("day", 0);
                 default:        return Tuple.Create("day", 7);
-            }
-        }
-
-        // ###############################################################################################
-        //  (GET) coin stats
-        internal async static Task GetCoinStats(string crypto, string market) {
-
-            string URL = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + crypto + "&tsyms=" + coin;
-            
-            if(market != "defaultMarket") 
-                URL += "&e=" + market;
-
-            Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
-
-            try {
-                string response = await httpClient.GetStringAsync(uri);
-                var data = JToken.Parse(response);
-
-                stats = JSONstats.HandleStatsJSON(data, crypto, coin);
-
-            }
-            catch (Exception ex) {
-                await new MessageDialog(ex.Message).ShowAsync();
-            }
-            finally {
-                httpClient.Dispose();
             }
         }
 

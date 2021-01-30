@@ -140,9 +140,12 @@ namespace CryptoTracker.Views {
                 homeCoinList[i]._priceCurr = CryptoCompare.GetPrice(c).ToString() + App.coinSymbol;
                 homeCoinList[i]._priceDiff = diff;
 
-                await App.GetCoinStats(c, "defaultMarket");
-                homeCoinList[i]._volume24 = App.stats.Volume24;
-                homeCoinList[i]._volume24to = App.stats.Volume24To;
+                // Sum total volume from historic
+                double total1 = 0, total2 = 0;
+                App.historic.ForEach(x => total1 += x.Volumeto);
+                App.historic.ForEach(x => total2 += x.Volumefrom);
+                homeCoinList[i]._volume24 = total2.ToString();
+                homeCoinList[i]._volume24to = total1.ToString();
 
                 // #########################################################################################
                 // LOADING BAR
