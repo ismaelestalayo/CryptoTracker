@@ -170,23 +170,6 @@ namespace CryptoTracker {
         }
 
         // ###############################################################################################
-        //  (GET) info about a coin
-        internal async static Task<JSONsnapshot> GetCoinInfo(int id) {
-            string URL = "https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=" + id;
-            Uri uri = new Uri(URL);
-
-            try {
-                var data = await GetJSONAsync(uri);
-                JSONsnapshot snapshot = JSONsnapshot.HandleJSON(data);
-                return snapshot;
-
-            } catch (Exception ex) {
-                await new MessageDialog(ex.Message).ShowAsync();
-                return null;
-            }
-        }
-
-        // ###############################################################################################
         //  (GET) Historic prices
         internal async static Task GetHisto(string crypto, string time, int limit) {
             if (crypto == "MIOTA")
