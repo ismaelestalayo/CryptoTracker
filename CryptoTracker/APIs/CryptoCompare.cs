@@ -30,11 +30,11 @@ namespace CryptoTracker.APIs {
          * - market: CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex
          * 
         */
-        internal static double GetPrice(string crypto, string market = "defaultMarket") {
+        internal static double GetPrice(string crypto, string market = "null") {
             var currency = App.coin;
             string URL = string.Format("https://min-api.cryptocompare.com/data/price?fsym={0}&tsyms={1}", crypto, currency);
 
-            if (market != "defaultMarket")
+            if (market != "null")
                 URL += "&e=" + market;
 
             Uri uri = new Uri(URL);
@@ -57,6 +57,33 @@ namespace CryptoTracker.APIs {
             }
         }
 
+        internal static async Task<double> GetPriceAsync(string crypto, string market = "null") {
+            var currency = App.coin;
+            string URL = string.Format("https://min-api.cryptocompare.com/data/price?fsym={0}&tsyms={1}", crypto, currency);
+
+            if (market != "null")
+                URL += "&e=" + market;
+
+            Uri uri = new Uri(URL);
+
+            try {
+                var data = await App.GetStringAsync(uri);
+
+                double price = double.Parse(data.Split(":")[1].Replace("}", ""));
+
+                if (price > 99)
+                    return Math.Round(price, 2);
+                else if (price > 10)
+                    return Math.Round(price, 4);
+                else
+                    return Math.Round(price, 6);
+
+            }
+            catch (Exception) {
+                return 0;
+            }
+        }
+
         /* ###############################################################################################
          * Gets the current price of a coin (in the currency set by App.coin)
          * 
@@ -66,7 +93,7 @@ namespace CryptoTracker.APIs {
          * - limit: 1 - 2000
          * 
         */
-        internal static async Task<List<HistoricPrice>> GetHistoric(string crypto, string time, int limit) {
+        internal static async Task<List<HistoricPrice>> GetHistoricAsync(string crypto, string time, int limit) {
             var coin = App.coin;
 
             string URL = string.Format("https://min-api.cryptocompare.com/data/histo{0}?e=CCCAGG&fsym={1}&tsym={2}&limit={3}", time, crypto, coin, limit);
@@ -82,8 +109,7 @@ namespace CryptoTracker.APIs {
 
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
 
-                // TODO: add NOT OKEY value
-                if (okey == "")
+                if (okey != "Success")
                     return new List<HistoricPrice>(3);
                 
                 var data = ((JsonElement)response).GetProperty("Data").ToString();
@@ -91,7 +117,7 @@ namespace CryptoTracker.APIs {
 
                 // Add calculation of dates and average values
                 DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-				foreach (var h in historic) {
+                foreach (var h in historic) {
                     h.Average = (h.high + h.low) / 2;
                     DateTime d = dtDateTime.AddSeconds(h.time).ToLocalTime();
                     h.DateTime = d;
