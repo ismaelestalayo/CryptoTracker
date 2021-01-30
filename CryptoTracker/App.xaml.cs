@@ -451,10 +451,17 @@ namespace CryptoTracker {
                 return JToken.Parse(jsonString);
             }
         }
+        // TODO: removing ConfigureAwait breaks everything... why?
+        // TODO: use a single HttpClient
         internal static async Task<string> GetStringAsync(Uri uri) {
             using (var client = new HttpClient()) {
                 var s = await client.GetStringAsync(uri).ConfigureAwait(false);
                 return s;
+            }
+        }
+        internal static async Task<string> GetStringAsyncc(Uri uri) {
+            using (var client = new HttpClient()) {
+                return await client.GetStringAsync(uri);
             }
         }
 
