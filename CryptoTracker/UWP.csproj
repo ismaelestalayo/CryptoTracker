@@ -121,7 +121,6 @@
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\JSONcoin.cs" />
-    <Compile Include="Helpers\JSONstats.cs" />
     <Compile Include="Helpers\LiveTile.cs" />
     <Compile Include="Helpers\JSONhistoric.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
@@ -358,6 +357,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.Engagement">
       <Version>10.1901.28001</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Mvvm">
+      <Version>7.0.0-preview4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>6.1.1</Version>
