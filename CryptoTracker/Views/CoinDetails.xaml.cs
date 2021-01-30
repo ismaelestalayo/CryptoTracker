@@ -143,7 +143,7 @@ namespace CryptoTracker {
             verticalAxis.Maximum = GraphHelper.GetMaximum(App.historic);
             dateTimeAxis = App.AdjustAxis(dateTimeAxis, timeSpan);
             await Get24Volume();
-            await GetExchanges();
+            //CryptoCompare.GetExchanges(crypto);
         }
 
         // #########################################################################################
@@ -221,9 +221,6 @@ namespace CryptoTracker {
                 });
             }
             this.volumeChart.DataContext = data;
-        }
-        async private Task GetExchanges() {
-            await App.GetTopExchanges(crypto, App.coin);
         }
 
         // #########################################################################################

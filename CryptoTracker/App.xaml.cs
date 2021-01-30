@@ -32,7 +32,6 @@ namespace CryptoTracker {
         internal static List<string> pinnedCoins;
         internal static List<JSONhistoric> historic = new List<JSONhistoric>();
         internal static JSONstats stats = new JSONstats();
-        internal static List<JSONexchanges> exchanges = new List<JSONexchanges>();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -274,41 +273,7 @@ namespace CryptoTracker {
             }
         }
 
-        // ###############################################################################################
-        //  (GET) top exchanges
-        internal async static Task GetTopExchanges(string crypto, string toSym) {
-
-            String URL = "https://min-api.cryptocompare.com/data/top/exchanges?fsym=" + crypto  +"&tsym="+ toSym + "&limit=8";
-
-            Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
-
-            String response = "";
-
-            try {
-                httpResponse = await httpClient.GetAsync(uri);
-                httpResponse.EnsureSuccessStatusCode();
-
-                response = await httpResponse.Content.ReadAsStringAsync();
-                var data = JToken.Parse(response);
-
-                exchanges.Clear();
-                int lastIndex = ((JContainer)data["Data"]).Count;
-                for (int i = 0; i < lastIndex; i++) {
-                    exchanges.Add(JSONexchanges.GetExchanges(data["Data"][i]));
-                }
-
-            } 
-            catch (Exception ex) {
-                await new MessageDialog(ex.Message).ShowAsync();
-            }
-            finally {
-                httpResponse.Dispose();
-                httpClient.Dispose();
-            }
-        }
-
+        
         // ###############################################################################################
         //  (GET) coin description
         internal static async Task<string> GetCoinDescription(string crypto, int lines = 5) {
@@ -459,9 +424,9 @@ namespace CryptoTracker {
                 return s;
             }
         }
-        internal static async Task<string> GetStringAsyncc(Uri uri) {
+        internal static async Task<string> GetStringFromUrlAsync(string url) {
             using (var client = new HttpClient()) {
-                return await client.GetStringAsync(uri);
+                return await client.GetStringAsync(new Uri(url)).ConfigureAwait(false);
             }
         }
 
