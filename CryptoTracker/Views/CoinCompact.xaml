@@ -4,62 +4,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-	<Grid Padding="5 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+	<Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>
+			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
 
-		<!-- 
-        ####################################################################################################
-        ############################################### Page Title #########################################
-        #################################################################################################### -->
-		<RelativePanel
-			BorderThickness="0 0 0 0.5"
-			BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-			Padding="0 10 0 0">
-			<StackPanel Orientation="Horizontal">
-				<Image
-					Source="{x:Bind CoinModel.LogoSource, Mode=OneWay}"
-                    d:Source="ms-appx:///Assets/Icons/iconNULL.png" 
-                    Margin="5" VerticalAlignment="Center" Width="25"/>
-				<TextBlock
-					Text="{x:Bind Path=CoinModel.Crypto, Mode=OneWay}"
-					d:Text="CRYPTO"
-					Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold"/>
-				<Button 
-                    Margin="5 0" Padding="5 0" Height="32" FontFamily="Segoe MDL2 Assets"
-                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
-                    Click="FullScreen_btn_click">
-					<SymbolIcon Symbol="FullScreen"/>
-				</Button>
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" Margin="10 0" RelativePanel.AlignRightWithPanel="True">
-				<TextBlock
-					FontSize="24" FontWeight="Medium">
-					<Run Text="{x:Bind CoinModel.CurrentPrice, Mode=OneWay}" d:Text="val"/><!--
-					--><Run Text="{x:Bind CoinModel.Currency}" d:Text="€"/>
-				</TextBlock>
-
-				<TextBlock
-					FontSize="18" FontWeight="Light"
-					Foreground="{x:Bind CoinModel.DiffFG, Mode=OneWay, FallbackValue='Red'}"
-					Margin="3 0 0 0"
-					VerticalAlignment="Bottom">
-					<Run Text="{x:Bind CoinModel.CurrentDiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-					--><Run Text="{x:Bind CoinModel.CurrentDiff, Mode=OneWay}" d:Text="0"/><!--
-					--><Run Text="%"/>
-				</TextBlock>
-			</StackPanel>
-
-		</RelativePanel>
+		
+		
 
 		<!-- 
         ####################################################################################################
@@ -68,8 +24,7 @@
 		<telerik:RadCartesianChart
 			x:Name="HistoricChart"
 			Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-			Grid.Row="1"
-			Margin="-5 0 -5 0">
+			Grid.RowSpan="2">
 
 			<telerik:RadCartesianChart.HorizontalAxis>
 				<telerik:DateTimeContinuousAxis 
@@ -101,8 +56,44 @@
 					</LinearGradientBrush>
 				</telerik:AreaSeries.Fill>
 			</telerik:SplineAreaSeries>
-
-
 		</telerik:RadCartesianChart>
+
+
+		<!-- 
+        ####################################################################################################
+        ############################################### Page Title #########################################
+        #################################################################################################### -->
+		<RelativePanel Grid.Row="1">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock
+					Text="{x:Bind Path=CoinModel.Crypto, Mode=OneWay}"
+					d:Text="CRYPTO" Margin="5 0" VerticalAlignment="Center"
+					Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="18"/>
+				<Button 
+                    Margin="5 0" Padding="5 0" Height="28" FontFamily="Segoe MDL2 Assets"
+                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
+                    Click="FullScreen_btn_click">
+					<SymbolIcon Symbol="FullScreen"/>
+				</Button>
+			</StackPanel>
+
+			<StackPanel Orientation="Horizontal" Margin="0 0 5 0" RelativePanel.AlignRightWithPanel="True">
+				<TextBlock FontSize="20" FontWeight="Medium">
+					<Run Text="{x:Bind CoinModel.CurrentPrice, Mode=OneWay}" d:Text="val"/><!--
+					--><Run Text="{x:Bind CoinModel.Currency}" d:Text="€"/>
+				</TextBlock>
+
+				<TextBlock
+					FontSize="15" FontWeight="Light"
+					Foreground="{x:Bind CoinModel.DiffFG, Mode=OneWay, FallbackValue='Red'}"
+					Margin="3 0 0 0"
+					VerticalAlignment="Bottom">
+					<Run Text="{x:Bind CoinModel.CurrentDiffArrow, Mode=OneWay}" d:Text="▲"/><!--
+					--><Run Text="{x:Bind CoinModel.CurrentDiff, Mode=OneWay}" d:Text="0"/><!--
+					--><Run Text="%"/>
+				</TextBlock>
+			</StackPanel>
+
+		</RelativePanel>
 	</Grid>
 </Page>
