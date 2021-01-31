@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -82,7 +83,7 @@ namespace CryptoTracker {
 
             foreach (PurchaseClass purchase in PurchaseList) {
                 // this update the ObservableCollection itself
-                UpdatePurchase(purchase);
+                UpdatePurchaseAsync(purchase);
 
                 // create the diversification grid
                 ColumnDefinition col = new ColumnDefinition();
@@ -116,11 +117,11 @@ namespace CryptoTracker {
             total_worth.Text = _worth.ToString() + App.coinSymbol;
         }
 
-        internal PurchaseClass UpdatePurchase(PurchaseClass purchase) {
+        internal async Task<PurchaseClass> UpdatePurchaseAsync(PurchaseClass purchase) {
             string crypto = purchase.Crypto;
 
             if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
-                purchase.Current = CryptoCompare.GetPrice(crypto);
+                purchase.Current = await CryptoCompare.GetPriceAsync(crypto);
 
             var curr = purchase.Current;
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
@@ -230,14 +231,14 @@ namespace CryptoTracker {
             }
         }
 
-        private void DialogBtn_LostFocus(object sender, RoutedEventArgs e) {
+        private async void DialogBtn_LostFocus(object sender, RoutedEventArgs e) {
             // If we change the crypto, set the current price to 0 so everything updates
             if (sender.GetType().Name == "ComboBox")
                 NewPurchase[0].Current = 0;
 
             // If we have the coin and the quantity, we can update some properties
             if (!string.IsNullOrEmpty(NewPurchase[0].Crypto) && NewPurchase[0].CryptoQty > 0)
-                NewPurchase[0] = UpdatePurchase(NewPurchase[0]);
+                NewPurchase[0] = await UpdatePurchaseAsync(NewPurchase[0]);
         }
 
         private void DataGrid_Sorting(object sender, DataGridColumnEventArgs e) {

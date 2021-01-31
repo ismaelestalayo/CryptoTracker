@@ -147,9 +147,10 @@ namespace CryptoTracker {
         }
 
         // #########################################################################################
-        async private Task UpdateCoin() {
-            
-            mainTitleVal.Text = CryptoCompare.GetPrice(crypto).ToString() + App.coinSymbol;
+        private async Task UpdateCoin() {
+
+            var price = await CryptoCompare.GetPriceAsync(crypto);
+            mainTitleVal.Text = price.ToString() + App.coinSymbol;
             mainTitleVal.Visibility  = Visibility.Visible;
             mainTitleDiff.Visibility = Visibility.Visible;
 

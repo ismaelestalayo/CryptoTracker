@@ -137,7 +137,7 @@ namespace CryptoTracker.Views {
                 else
                     diff = "▲" + d.ToString() + "%";
 
-                homeCoinList[i]._priceCurr = CryptoCompare.GetPrice(c).ToString() + App.coinSymbol;
+                homeCoinList[i]._priceCurr = (await CryptoCompare.GetPriceAsync(c)).ToString() + App.coinSymbol;
                 homeCoinList[i]._priceDiff = diff;
 
                 // Sum total volume from historic
