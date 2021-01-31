@@ -24,26 +24,6 @@ namespace CryptoTracker.Helpers {
             return min;
         }
 
-        internal static float GetMaximumOfArray(List<float> historic) {
-            float max = historic[0];
-
-            foreach (float h in historic)
-                if (h > max)
-                    max = h;
-
-            return max;
-        }
-
-        internal static float GetMinimumOfArray(List<float> historic) {
-            float min = historic[0];
-
-            foreach (float h in historic)
-                if (h < min)
-                    min = h;
-
-            return min;
-        }
-
         internal static (float min, float max) GetMinMaxOfArray(List<float> historic) {
             float min = historic[0];
             float max = historic[0];
