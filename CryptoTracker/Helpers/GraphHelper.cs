@@ -44,7 +44,7 @@ namespace CryptoTracker.Helpers {
             return min;
         }
 
-        internal static Tuple<float, float> GetMinMaxOfArray(List<float> historic) {
+        internal static (float min, float max) GetMinMaxOfArray(List<float> historic) {
             float min = historic[0];
             float max = historic[0];
 
@@ -60,7 +60,7 @@ namespace CryptoTracker.Helpers {
             min -= (float)(diff * 0.2);
             max += (float)(diff * 0.1);
 
-            return Tuple.Create(min, max);
+            return (min, max);
         }
     }
 }
