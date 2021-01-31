@@ -97,8 +97,7 @@ namespace CryptoTracker.Views {
 			series.ItemsSource = chartData;
 
 			var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-			CoinModel.HistoricMin = MinMax.min;
-			CoinModel.HistoricMax = MinMax.max;
+			CoinModel.HistoricMinMax = MinMax;
 		}
 
         private async void FullScreen_btn_click(object sender, RoutedEventArgs e) {

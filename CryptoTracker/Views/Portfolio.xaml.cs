@@ -338,8 +338,8 @@ namespace CryptoTracker {
             series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
             series.ItemsSource = data;
             var MinMax = GraphHelper.GetMinMaxOfArray(data.Select(d => d.Value).ToList());
-            verticalAxis.Minimum = MinMax.min;
-            verticalAxis.Maximum = MinMax.max;
+            verticalAxis.Minimum = MinMax.Min;
+            verticalAxis.Maximum = MinMax.Max;
             dateTimeAxis = App.AdjustAxis(dateTimeAxis, currTimerange);
         }
 

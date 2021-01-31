@@ -24,7 +24,7 @@ namespace CryptoTracker.Helpers {
             return min;
         }
 
-        internal static (float min, float max) GetMinMaxOfArray(List<float> historic) {
+        internal static (float Min, float Max) GetMinMaxOfArray(List<float> historic) {
             float min = historic[0];
             float max = historic[0];
 

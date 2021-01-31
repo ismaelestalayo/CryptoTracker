@@ -41,8 +41,8 @@
 			<telerik:RadCartesianChart.VerticalAxis>
 				<telerik:LinearAxis
 					Visibility="Collapsed"
-					Minimum="{x:Bind CoinModel.HistoricMin, Mode=OneWay}"
-					Maximum="{x:Bind CoinModel.HistoricMax, Mode=OneWay}"/>
+					Minimum="{x:Bind CoinModel.HistoricMinMax.Item1, Mode=OneWay}"
+					Maximum="{x:Bind CoinModel.HistoricMinMax.Item2, Mode=OneWay}"/>
 			</telerik:RadCartesianChart.VerticalAxis>
 
 			<telerik:SplineAreaSeries

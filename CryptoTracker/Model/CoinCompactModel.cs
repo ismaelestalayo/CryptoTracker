@@ -50,20 +50,13 @@ namespace CryptoTracker.Model {
 		internal Color ChartFill2 {
 			get => _chartFill2;
 			set => SetProperty(ref _chartFill2, value);
-
 		}
 
-		private float _historicMin = 20000;
-		internal float HistoricMin {
-			get => _historicMin;
-			set => SetProperty(ref _historicMin, value);
-		}
-
-		private float _historicMax = 20000;
-		internal float HistoricMax {
-			get => _historicMax;
-			set => SetProperty(ref _historicMax, value);
-		}
+		private (float Min, float Max) _historicMinMax = (0, 100);
+        internal (float Min, float Max) HistoricMinMax {
+            get => _historicMinMax;
+            set => SetProperty(ref _historicMinMax, value);
+        }
 
 		private List<ChartData> _historicValues = new List<ChartData>();
 		internal List<ChartData> HistoricValues {
