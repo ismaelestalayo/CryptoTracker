@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CryptoTracker.Helpers {
     class GraphHelper {
@@ -41,6 +42,25 @@ namespace CryptoTracker.Helpers {
                     min = h;
 
             return min;
+        }
+
+        internal static Tuple<float, float> GetMinMaxOfArray(List<float> historic) {
+            float min = historic[0];
+            float max = historic[0];
+
+            foreach (float h in historic) {
+                if (h < min)
+                    min = h;
+                else if (h > max)
+                    max = h;
+            }
+
+            double diff = max - min;
+
+            min -= (float)(diff * 0.2);
+            max += (float)(diff * 0.1);
+
+            return Tuple.Create(min, max);
         }
     }
 }
