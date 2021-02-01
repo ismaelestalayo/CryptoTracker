@@ -6,27 +6,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:CryptoTracker.Model"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:views="using:CryptoTracker.Views"
-    xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     NavigationCacheMode="Enabled">
 
-    <Page.Resources>
-        <Style x:Key="CurrTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
-            <Setter Property="Text" Value="val€"/>
-            <Setter Property="FontWeight" Value="Light"/>
-        </Style>
-        <Style x:Key="DiffTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-            <Setter Property="Text" Value="▲0%"/>
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0, 2"/>
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
-        </Style>
-    </Page.Resources>
-
-    <!-- 
+	<!-- 
     #################################################################################################### -->
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0 0 0 5">
         <VisualStateManager.VisualStateGroups>
@@ -65,7 +50,7 @@
             </Grid.RowDefinitions>
             
             <!-- TIME RADIO BUTTONS-->
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0, 0, 0, -15" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0 0 0 -15" VerticalAlignment="Bottom">
                 <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
                 <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
                 <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
@@ -82,7 +67,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:HomeTile">
                         <Grid x:Name="PriceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0 5 -5 5" Height="210" CornerRadius="5" Opacity="{x:Bind _opacity, Mode=OneWay}">
+                              Margin="0 5 -5 5" Height="210" CornerRadius="5" Opacity="{x:Bind Opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -108,50 +93,71 @@
                             </Grid.ContextFlyout>
 
                             <controls:Loading 
-                                x:Name="LoadingControl"
-                                Width="700"
-                                Opacity="0.5" Grid.RowSpan="3">
+                                IsLoading="{x:Bind IsLoading, Mode=OneWay}"
+                                Width="700" Opacity="0.5" Grid.RowSpan="3">
                                 <ContentControl>
-                                    <ProgressBar 
-                                        IsIndeterminate="True" Width="500"
+                                    <ProgressBar
+										IsIndeterminate="True" Width="500"
                                         HorizontalAlignment="Center"
                                         Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
                                         Background="Transparent"/>
                                 </ContentControl>
                             </controls:Loading>
 
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" BorderBrush="{StaticResource BTC_color}" BorderThickness="0">
-                                <Image Name="coinLogo" Source="{x:Bind _iconSrc}" Width="25" Margin="2"/>
-								<TextBlock Name="coinName" Text="{x:Bind _cryptoName, Mode=OneWay}" Style="{ThemeResource TitleTextBlockStyle}" Margin="5, -2"/>
+							<StackPanel Orientation="Horizontal">
+                                <Image Name="coinLogo" Source="{x:Bind IconSrc}" Width="25" Margin="2"/>
+								<TextBlock Name="coinName" Text="{x:Bind CryptoName, Mode=OneWay}" Style="{ThemeResource TitleTextBlockStyle}" Margin="5 -2"/>
                             </StackPanel>
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 0">
-								<TextBlock Name="priceCurr" Text="{x:Bind _priceCurr, Mode=OneWay}" Style="{StaticResource CurrTextStyle}"/>
-                                <TextBlock Name="priceDiff" Text="{x:Bind _priceDiff, Mode=OneWay}" Foreground="{x:Bind _priceDiffFG, Mode=OneWay}" Style="{StaticResource DiffTextStyle}"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0">
+								<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
+									<Run Text="{x:Bind Price, Mode=OneWay}"/><!--
+									--><Run Text="{x:Bind Currency}" d:Text="€"/>
+								</TextBlock>
+								<TextBlock
+									Foreground="{x:Bind PriceDiffFG, Mode=OneWay}"
+									Margin="0 2"
+									VerticalAlignment="Bottom">
+									<Run Text="{x:Bind PriceDiffArrow, Mode=OneWay}" d:Text="▲"/><!--
+									--><Run Text="{x:Bind PriceDiff, Mode=OneWay}" d:Text="0"/><!--
+					                --><Run Text="%"/>
+								</TextBlock>
                             </StackPanel>
                             
                             <!-- PRICE CHART: -->
-                            <telerikChart:RadCartesianChart x:Name="PriceChart" Grid.Row="1">
-                                <telerikChart:RadCartesianChart.Grid>
-                                    <telerikChart:CartesianChartGrid MajorLinesVisibility="None"/>
-                                </telerikChart:RadCartesianChart.Grid>
+                            <telerik:RadCartesianChart Grid.Row="1">
+                                <telerik:RadCartesianChart.Grid>
+                                    <telerik:CartesianChartGrid MajorLinesVisibility="None"/>
+                                </telerik:RadCartesianChart.Grid>
 
-                                <telerikChart:RadCartesianChart.HorizontalAxis>
-                                    <telerikChart:DateTimeCategoricalAxis
-                                        Visibility="Collapsed"/>
-                                </telerikChart:RadCartesianChart.HorizontalAxis>
+                                <telerik:RadCartesianChart.HorizontalAxis>
+                                    <telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
+                                </telerik:RadCartesianChart.HorizontalAxis>
 
-                                <telerikChart:RadCartesianChart.VerticalAxis>
-                                    <telerikChart:LinearAxis
-                                        x:Name="VerticalAxis"
-                                        Visibility="Collapsed"
-                                        DesiredTickCount="5"
-                                        HorizontalLocation="Left"/>
-                                </telerikChart:RadCartesianChart.VerticalAxis>
+                                <telerik:RadCartesianChart.VerticalAxis>
+                                    <telerik:LinearAxis
+										Visibility="Collapsed"
+										Minimum="{x:Bind PricesMinMax.Item1, Mode=OneWay}"
+					                    Maximum="{x:Bind PricesMinMax.Item2, Mode=OneWay}"/>
+                                </telerik:RadCartesianChart.VerticalAxis>
 
-                                <telerikChart:SplineAreaSeries
-                                    StrokeThickness="1.25">
-                                </telerikChart:SplineAreaSeries>
-                            </telerikChart:RadCartesianChart>
+								<telerik:SplineAreaSeries
+									ItemsSource="{x:Bind ChartData, Mode=OneWay}"
+									Stroke="{x:Bind ChartStroke, Mode=OneWay}"
+									StrokeThickness="1.25">
+									<telerik:AreaSeries.Fill>
+										<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
+											<GradientStop Color="{x:Bind ChartFill1, Mode=OneWay}" Offset="0"/>
+											<GradientStop Color="{x:Bind ChartFill2, Mode=OneWay}" Offset="1."/>
+										</LinearGradientBrush>
+									</telerik:AreaSeries.Fill>
+									<telerik:SplineAreaSeries.CategoryBinding>
+										<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+									</telerik:SplineAreaSeries.CategoryBinding>
+									<telerik:SplineAreaSeries.ValueBinding>
+										<telerik:PropertyNameDataPointBinding PropertyName="Value"/>
+									</telerik:SplineAreaSeries.ValueBinding>
+								</telerik:SplineAreaSeries>
+                            </telerik:RadCartesianChart>
                         </Grid>
 
                     </DataTemplate>
@@ -174,7 +180,7 @@
                     <DataTemplate x:DataType="model:HomeTile">
                         <Grid x:Name="VolumeListView_Element" Height="210"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-                            Margin="-5 5 0 5" CornerRadius="5" Opacity="{x:Bind _opacity, Mode=OneWay}">
+                            Margin="-5 5 0 5" CornerRadius="5" Opacity="{x:Bind Opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -199,68 +205,49 @@
                                 </MenuFlyout>
                             </Grid.ContextFlyout>
 
-                            <Grid Margin="5, -2">
+                            <Grid Margin="5 -2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Volume 24h" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="ExtraLight" />
-
-                                <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <TextBlock Text="{x:Bind _volume24to, FallbackValue=0, Mode=TwoWay}" 
-                                               Style="{StaticResource CurrTextStyle}" 
-                                               HorizontalAlignment="Right"/>
-                                    
-                                    <TextBlock Visibility="Collapsed" 
-                                               Text="{x:Bind _volume24, FallbackValue=0, Mode=TwoWay}" 
-                                               Style="{StaticResource DiffTextStyle}" 
-                                               HorizontalAlignment="Right"/>
-                                </StackPanel>
-                            </Grid>
+								<TextBlock 
+									FontWeight="ExtraLight" 
+									Text="Volume"
+									Style="{ThemeResource TitleTextBlockStyle}"/>
+								<TextBlock
+									Grid.Column="1"
+									Style="{ThemeResource TitleTextBlockStyle}"
+									Text="{x:Bind Volume24to, FallbackValue=0, Mode=TwoWay}"/>
+							</Grid>
 
                             <!-- VOLUME CHART: -->
-                            <telerikChart:RadCartesianChart x:Name="volumeChart" Grid.Row="1">
-                                <telerikChart:BarSeries>
+                            <telerik:RadCartesianChart Grid.Row="1">
+								<telerik:BarSeries ItemsSource="{x:Bind ChartData, Mode=OneWay}">
 
-                                    <telerikChart:BarSeries.PointTemplate>
-                                        <DataTemplate>  <!-- TODO: change to x:Bind -->
-                                            <Rectangle Fill="{Binding DataItem.cc}"/>
-                                        </DataTemplate>
-                                    </telerikChart:BarSeries.PointTemplate>
+									<telerik:BarSeries.DefaultVisualStyle>
+										<Style TargetType="Border">
+											<Setter Property="Background" Value="{x:Bind ChartFill1, Mode=OneWay}"/>
+										</Style>
+									</telerik:BarSeries.DefaultVisualStyle>
 
-                                    <telerikChart:BarSeries.VerticalAxis>
-                                        <telerikChart:LinearAxis 
-                                            Visibility="Collapsed"/>
-                                    </telerikChart:BarSeries.VerticalAxis>
+									<telerik:BarSeries.VerticalAxis>
+                                        <telerik:LinearAxis Visibility="Collapsed"/>
+                                    </telerik:BarSeries.VerticalAxis>
 
-                                    <telerikChart:BarSeries.HorizontalAxis>
-                                        <telerikChart:DateTimeCategoricalAxis 
-                                            MajorTickTemplate="{StaticResource TransparentRect}"
-                                            Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                                            FontWeight="Light"
-                                            LineStyle="{StaticResource TransparentLine}"
-                                            VerticalLocation="Top"
-                                            Visibility="Collapsed"
-                                            LabelInterval="3"
-                                            LabelFormat="{}{0,0:HH}">
-                                            <telerikChart:DateTimeCategoricalAxis.LabelStyle>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Margin" Value="0, -5, 0, 0"/>
-                                                </Style>
-                                            </telerikChart:DateTimeCategoricalAxis.LabelStyle>
-                                        </telerikChart:DateTimeCategoricalAxis>
-                                    </telerikChart:BarSeries.HorizontalAxis>
+                                    <telerik:BarSeries.HorizontalAxis>
+										<telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
+									</telerik:BarSeries.HorizontalAxis>
 
-                                    <telerikChart:BarSeries.CategoryBinding>
-                                        <telerikChart:PropertyNameDataPointBinding PropertyName="Date"/>
-                                    </telerikChart:BarSeries.CategoryBinding>
+                                    <telerik:BarSeries.CategoryBinding>
+                                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+                                    </telerik:BarSeries.CategoryBinding>
 
-                                    <telerikChart:BarSeries.ValueBinding>
-                                        <telerikChart:PropertyNameDataPointBinding PropertyName="Volume"/>
-                                    </telerikChart:BarSeries.ValueBinding>
+                                    <telerik:BarSeries.ValueBinding>
+                                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+                                    </telerik:BarSeries.ValueBinding>
 
-                                </telerikChart:BarSeries>
-                            </telerikChart:RadCartesianChart>
+                                </telerik:BarSeries>
+                            </telerik:RadCartesianChart>
                         </Grid>
 
                     </DataTemplate>
@@ -273,7 +260,10 @@
                 </ListView.ItemContainerStyle>
             </ListView>
 
-            <StackPanel x:Name="EmptyPageWarning" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 150 0 0">
+            <StackPanel
+				x:Name="EmptyPageWarning"
+				Grid.Row="2" Grid.ColumnSpan="2"
+				HorizontalAlignment="Center" Margin="0 150 0 0">
                 <TextBlock HorizontalTextAlignment="Center">
                     <Run Text="Pin a coin from 'Top 100' with the 🤍 icon"/>
                 </TextBlock>

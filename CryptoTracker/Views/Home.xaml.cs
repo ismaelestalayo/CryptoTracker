@@ -2,22 +2,21 @@
 using CryptoTracker.Helpers;
 using CryptoTracker.Model;
 using Microsoft.AppCenter.Analytics;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
-using Telerik.UI.Xaml.Controls.Chart;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Views {
-    public sealed partial class Home : Page {
+	public sealed partial class Home : Page {
 
         static ObservableCollection<HomeTile> homeCoinList { get; set; }
-        private static string diff = "0";
         private static int limit = 1500;
         private static string timeSpan = "minute";
 
@@ -43,16 +42,15 @@ namespace CryptoTracker.Views {
             // First keep an updated list of coins
             await App.GetCoinList();
 
-            // Then update home-coin-tiles
-            for (int i = 0; i < App.pinnedCoins.Count; i++) {
-                try {
-                    await AddCoinHome(App.pinnedCoins[i]);
+			// Then update home-coin-tiles
+			try {
+				foreach (var coin in App.pinnedCoins)
+                    await AddCoinHome(coin);
+                for (int i = 0; i < App.pinnedCoins.Count; i++)
                     await UpdateCard(i);
-                } catch {
-                    
-                }
-            }
+            } catch {
 
+			}
             
         }
 
@@ -67,17 +65,13 @@ namespace CryptoTracker.Views {
             try {
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + iconPath));
             } catch (Exception) {
-                iconPath = "/Assets/Icons/iconNULL.png";
+
             }
 
             homeCoinList.Add(new HomeTile {
-                _cryptoName = crypto,
-                _priceDiff = diff,
-                _crypto = crypto,
-                _iconSrc = iconPath,
-                _timeSpan = timeSpan,
-                _limit = limit,
-                _opacity = 1,
+                CryptoName = crypto,
+                Crypto = crypto,
+                IconSrc = iconPath
             });
 
             // Update pinnedCoin list
@@ -96,129 +90,83 @@ namespace CryptoTracker.Views {
             }
         }
 
-        // #########################################################################################
-        //  Update all cards
-        internal async Task UpdateAllCards() {            
-            foreach (HomeTile homeTile in homeCoinList) {
-                homeTile._opacity = 0.33;
+        /// #########################################################################################
+        ///  Update all cards
+        internal async Task UpdateAllCards() {
+            foreach (var homeTile in homeCoinList) {
+                homeTile.Opacity = 0.33;
+                homeTile.IsLoading = true;
             }
-            for (int i = 0; i < homeCoinList.Count; i++) {
+            
+            for (int i = 0; i < homeCoinList.Count; i++)
                 await UpdateCard(i);
-                homeCoinList[i]._opacity = 1;
-            }
             
         }
 
         private async Task UpdateCard(int i) {
             
-            string c = App.pinnedCoins[i];
+            string crypto = App.pinnedCoins[i];
 
 			try {
-                // DATA:
-                await App.GetHisto(c, timeSpan, limit);
+                /// COLOR
+                SolidColorBrush colorBrush = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
+                if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
+                    colorBrush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
 
-                float oldestPrice;
-                float newestPrice;
-                if (App.historic != null) {
-                    oldestPrice = App.historic[0].Close;
-                    newestPrice = App.historic[App.historic.Count - 1].Close;
+                var color = colorBrush.Color;
+                homeCoinList[i].ChartFill1 = Color.FromArgb(62, color.R, color.G, color.B);
+                homeCoinList[i].ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
+                homeCoinList[i].ChartStroke = colorBrush;
+
+                /// DATA
+                homeCoinList[i].Price = await CryptoCompare.GetPriceAsync(crypto);
+                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeSpan, limit);
+
+                /// Create List of ChartData for the chart
+                var chartData = new List<ChartData>();
+				foreach (var h in histo) {
+					chartData.Add(new ChartData() {
+						Date = h.DateTime,
+						Value = h.Average,
+                        Volume = h.volumefrom,
+                        Color = color
+                    });
+				}
+                homeCoinList[i].ChartData = chartData;
+
+                double oldestPrice = histo[0].Average;
+				double newestPrice = histo[histo.Count - 1].Average;
+				double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
+
+                if (diff > 0) {
+                    homeCoinList[i].PriceDiff = diff;
+                    var brush = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
                 }
                 else {
-                    oldestPrice = 0;
-                    newestPrice = 0;
+                    diff = Math.Abs(diff);
+                    homeCoinList[i].PriceDiff = diff;
+                    var brush = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 }
 
-                float d = (float)Math.Round(((newestPrice / oldestPrice) - 1) * 100, 2);
-
-                if (d < 0) {
-                    d = Math.Abs(d);
-                    diff = "▼" + d.ToString() + "%";
-                }
-                else
-                    diff = "▲" + d.ToString() + "%";
-
-                homeCoinList[i]._priceCurr = (await CryptoCompare.GetPriceAsync(c)).ToString() + App.coinSymbol;
-                homeCoinList[i]._priceDiff = diff;
-
-                // Sum total volume from historic
+                /// Sum total volume from historic
                 double total1 = 0, total2 = 0;
-                App.historic.ForEach(x => total1 += x.Volumeto);
-                App.historic.ForEach(x => total2 += x.Volumefrom);
-                homeCoinList[i]._volume24 = total2.ToString();
-                homeCoinList[i]._volume24to = total1.ToString();
-
-                // #########################################################################################
-                // LOADING BAR
-                ListViewItem container = (ListViewItem)PriceListView.ContainerFromIndex(i);
-                if (container == null)
-                    return;
-                var loading = (container.ContentTemplateRoot as FrameworkElement)?.FindName("LoadingControl") as Loading;
-                loading.IsLoading = true;
-
-                // #########################################################################################
-                // COLOR
-                SolidColorBrush coinColorT, coinColor;
-                try {
-                    coinColorT = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_colorT"];
-                    coinColor = (SolidColorBrush)Application.Current.Resources[c.ToUpper() + "_color"];
-                }
-                catch (Exception) {
-                    coinColorT = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlackT"];
-                    coinColor = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
-                }
-
-                // #########################################################################################
-                // PRICE CHART
-
-                var PriceChart = (container.ContentTemplateRoot as FrameworkElement)?.FindName("PriceChart") as RadCartesianChart;
-                var verticalAxis = (container.ContentTemplateRoot as FrameworkElement)?.FindName("VerticalAxis") as LinearAxis;
-
-                await App.GetHisto(c, timeSpan, limit);
-                List<ChartData> priceData = new List<ChartData>();
-                verticalAxis.Minimum = GraphHelper.GetMinimum(App.historic);
-                verticalAxis.Maximum = GraphHelper.GetMaximum(App.historic);
-
-                for (int k = 0; k < App.historic.Count; ++k) {
-                    priceData.Add(new ChartData() {
-                        Date = App.historic[k].DateTime,
-                        Value = (App.historic[k].Low + App.historic[k].High) / 2,
-                        Low = App.historic[k].Low,
-                        High = App.historic[k].High,
-                        Open = App.historic[k].Open,
-                        Close = App.historic[k].Close,
-                        Volume = App.historic[k].Volumefrom
-                    });
-                }
-
-                SplineAreaSeries series = (SplineAreaSeries)PriceChart.Series[0];
-                series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-                series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-                series.ItemsSource = priceData;
-                series.Fill = coinColorT;
-                series.Stroke = coinColor;
-                var v = series.VerticalAxis;
-
-                // #########################################################################################
-                // VOLUME CHART
-                ListViewItem container2 = (ListViewItem)VolumeListView.ContainerFromIndex(i);
-                await App.GetHisto(c, "hour", 24);
-
-                List<ChartData> volumeData = new List<ChartData>();
-                for (int j = 0; j < 24; j++) {
-                    volumeData.Add(new ChartData() {
-                        Date = App.historic[j].DateTime,
-                        Volume = App.historic[j].Volumefrom,
-                        cc = coinColorT
-                    });
-                }
-
-                RadCartesianChart volumeChart = (container2.ContentTemplateRoot as FrameworkElement)?.FindName("volumeChart") as RadCartesianChart;
-                BarSeries barSeries = (BarSeries)volumeChart.Series[0];
-                barSeries.ItemsSource = volumeData;
-                var z = barSeries.DefaultVisualStyle;
+                histo.ForEach(x => total1 += x.volumeto);
+                histo.ForEach(x => total2 += x.volumefrom);
+                homeCoinList[i].Volume24 = App.ToKMB(total2) + App.coinSymbol;
+                homeCoinList[i].Volume24to = App.ToKMB(total1) + App.coinSymbol;
 
 
-                loading.IsLoading = false;
+
+                /// #########################################################################################
+                /// PRICE CHART
+
+                var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
+                homeCoinList[i].PricesMinMax = MinMax;
+                
+
+
+                homeCoinList[i].IsLoading = false;
+                homeCoinList[i].Opacity = 1;
             } catch (Exception e) {
                 Analytics.TrackEvent("UNHANDLED2: " + e.Message);
             }
@@ -261,7 +209,7 @@ namespace CryptoTracker.Views {
 
             }
 
-            UpdateAllCards();
+            await UpdateAllCards();
         }
 
         private void homeListView_Click(object sender, ItemClickEventArgs e) {
@@ -277,16 +225,16 @@ namespace CryptoTracker.Views {
             }
 
             var clickedItem = (HomeTile)e.ClickedItem;
-            this.Frame.Navigate(typeof(CoinDetails), clickedItem._crypto);
+            this.Frame.Navigate(typeof(CoinDetails), clickedItem.Crypto);
         }
 
         private void UnpinCoin(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext)._crypto;
+            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext).Crypto;
 
             RemoveCoinHome(crypto);
         }
         private void MoveCoinDown(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext)._crypto;
+            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext).Crypto;
             int n = App.pinnedCoins.IndexOf(crypto);
 
             if(n < homeCoinList.Count - 1) {
@@ -306,7 +254,7 @@ namespace CryptoTracker.Views {
             }
         }
         private void MoveCoinUp(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext)._crypto;
+            string crypto = ((HomeTile)((FrameworkElement)sender).DataContext).Crypto;
             int n = App.pinnedCoins.IndexOf(crypto);
 
             if (n != 0) {
