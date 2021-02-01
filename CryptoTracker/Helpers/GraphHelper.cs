@@ -40,6 +40,9 @@ namespace CryptoTracker.Helpers {
             min -= (float)(diff * 0.2);
             max += (float)(diff * 0.1);
 
+            if (min < 0)
+                min = 0;
+
             return (min, max);
         }
     }
