@@ -65,6 +65,7 @@ namespace CryptoTracker {
                         break;
                 }
 
+                coin = _coin;
 				switch (_coin) {
                     default:
                     case "EUR":
