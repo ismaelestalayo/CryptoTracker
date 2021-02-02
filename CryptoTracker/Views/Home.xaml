@@ -227,6 +227,7 @@
 									<telerik:BarSeries.DefaultVisualStyle>
 										<Style TargetType="Border">
 											<Setter Property="Background" Value="{x:Bind ChartFill1, Mode=OneWay}"/>
+											<Setter Property="BorderThickness" Value="3"/>
 										</Style>
 									</telerik:BarSeries.DefaultVisualStyle>
 
