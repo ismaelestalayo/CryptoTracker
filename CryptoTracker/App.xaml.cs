@@ -63,7 +63,8 @@ namespace CryptoTracker {
                         break;
                 }
 
-				switch (_coin) {
+                coin = _coin;
+                switch (_coin) {
                     default:
                     case "EUR":
                         coinSymbol = "€";
