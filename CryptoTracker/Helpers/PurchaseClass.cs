@@ -59,7 +59,7 @@ namespace CryptoTracker.Helpers {
             get { return _boughtAt; }
             set { _boughtAt = value; NotifyPropertyChanged(nameof(BoughtAt)); } }
 
-        private string _c { get; set; } = App.coinSymbol;
+        private string _c { get; set; } = App.currencySymbol;
         [DataMember()]
         public string c {
             get { return _c; }

@@ -113,8 +113,8 @@ namespace CryptoTracker {
             RadioButton r = new RadioButton { Content = currTimerange };
             TimerangeButton_Click(r, null);
 
-            total_invested.Text = _invested.ToString() + App.coinSymbol;
-            total_worth.Text = _worth.ToString() + App.coinSymbol;
+            total_invested.Text = _invested.ToString() + App.currencySymbol;
+            total_worth.Text = _worth.ToString() + App.currencySymbol;
         }
 
         internal async Task<PurchaseClass> UpdatePurchaseAsync(PurchaseClass purchase) {

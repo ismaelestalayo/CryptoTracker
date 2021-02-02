@@ -11,7 +11,7 @@ namespace CryptoTracker.Model {
         /// Basic data of a coin that stays invariable through time
         /// </summary>
         internal string CryptoName { get; set; } = "NULL";
-        internal string Currency { get; set; } = App.coinSymbol;
+        internal string Currency { get; set; } = App.currencySymbol;
         internal string Crypto { get; set; } = "NULL";
         internal string IconSrc { get; set; } = "/Assets/Icons/iconNULL.png";
 

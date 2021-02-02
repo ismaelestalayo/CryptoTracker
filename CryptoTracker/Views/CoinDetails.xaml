@@ -289,27 +289,27 @@
                                 <Run Text="Low (24h)" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind cdw.cd.market_data.low_24h.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                        Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="High (24h)" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind cdw.cd.market_data.high_24h.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                        Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                             </TextBlock>
 
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="All time low:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind cdw.cd.market_data.atl.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                        Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                                 <Run Text="{x:Bind helpers:Converters.ShortenDateTime(cdw.cd.market_data.atl_date.eur), Mode=OneWay}" FontWeight="Light" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}" FontSize="11"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="All time high:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind cdw.cd.market_data.ath.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                        Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                                 <Run Text="{x:Bind helpers:Converters.ShortenDateTime(cdw.cd.market_data.ath_date.eur), Mode=OneWay}" FontWeight="Light" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}" FontSize="11"/>
                             </TextBlock>
                         </controls:UniformGrid>
@@ -330,7 +330,7 @@
                                 <Run Text="Market Cap:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind cdw.cd.market_data.market_cap.eur, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}"
-                                     Foreground="Green"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                     Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                                 <Run Text="▲" Foreground="Green" FontWeight="Light" FontSize="11"/><Run 
                                     Text="{x:Bind cdw.cd.market_data.market_cap_change_percentage_24h, Mode=OneWay, FallbackValue=0}" Foreground="Green" FontWeight="Light" FontSize="11"/><Run
                                     Text="%" Foreground="Green" FontWeight="Light" FontSize="11"/>
@@ -351,7 +351,7 @@
                             <TextBlock Text="Volume 24h" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiBold" RelativePanel.AlignRightWithPanel="True">
                                 <Run Text="{x:Bind cdw.cd.market_data.total_volume.eur, Mode=OneWay, FallbackValue=0,
-                                    Converter={StaticResource StringFormatConverter}}"/><Run Text="{x:Bind coinSymbol, Mode=OneWay, FallbackValue=€}"/>
+                                    Converter={StaticResource StringFormatConverter}}"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}"/>
                             </TextBlock>
                         </RelativePanel>
 

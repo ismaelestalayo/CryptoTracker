@@ -152,8 +152,8 @@ namespace CryptoTracker.Views {
                 double total1 = 0, total2 = 0;
                 histo.ForEach(x => total1 += x.volumeto);
                 histo.ForEach(x => total2 += x.volumefrom);
-                homeCoinList[i].Volume24 = App.ToKMB(total2) + App.coinSymbol;
-                homeCoinList[i].Volume24to = App.ToKMB(total1) + App.coinSymbol;
+                homeCoinList[i].Volume24 = App.ToKMB(total2) + App.currencySymbol;
+                homeCoinList[i].Volume24to = App.ToKMB(total1) + App.currencySymbol;
 
 
 

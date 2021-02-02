@@ -29,7 +29,7 @@ namespace CryptoTracker.Views {
 			this.InitializeComponent();
 
 			CoinModel = new CoinCompactModel() {
-				Currency = App.coinSymbol
+				Currency = App.currencySymbol
 			};
 		}
 

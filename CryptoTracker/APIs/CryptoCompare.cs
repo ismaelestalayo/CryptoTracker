@@ -23,7 +23,7 @@ namespace CryptoTracker.APIs {
         }
 
         /* ###############################################################################################
-         * Gets the current price of a coin (in the currency set by App.coin)
+         * Gets the current price of a coin (in the currency set by App.currency)
          * 
          * Arguments: 
          * - crypto: BTC ETH...
@@ -32,7 +32,7 @@ namespace CryptoTracker.APIs {
         */
 
         internal static async Task<double> GetPriceAsync(string crypto, string market = "null") {
-            var currency = App.coin;
+            var currency = App.currency;
             string URL = string.Format("https://min-api.cryptocompare.com/data/price?fsym={0}&tsyms={1}", crypto, currency);
 
             if (market != "null")
@@ -59,7 +59,7 @@ namespace CryptoTracker.APIs {
         }
 
         /* ###############################################################################################
-         * Gets the current price of a coin (in the currency set by App.coin)
+         * Gets the current price of a coin (in the currency set by App.currency)
          * 
          * Arguments: 
          * - crypto: BTC ETH...
@@ -68,12 +68,12 @@ namespace CryptoTracker.APIs {
          * 
         */
         internal static async Task<List<HistoricPrice>> GetHistoricAsync(string crypto, string time, int limit) {
-            var coin = App.coin;
+            var currency = App.currency;
 
-            string URL = string.Format("https://min-api.cryptocompare.com/data/histo{0}?e=CCCAGG&fsym={1}&tsym={2}&limit={3}", time, crypto, coin, limit);
+            string URL = string.Format("https://min-api.cryptocompare.com/data/histo{0}?e=CCCAGG&fsym={1}&tsym={2}&limit={3}", time, crypto, currency, limit);
 
             if (limit == 0)
-                URL = string.Format("https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym={0}&tsym={1}&allData=true", crypto, coin);
+                URL = string.Format("https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym={0}&tsym={1}&allData=true", crypto, currency);
 
             
             try {
@@ -115,7 +115,7 @@ namespace CryptoTracker.APIs {
          * 
         */
         internal async static Task GetExchanges(string crypto) {
-            var currency = App.coin;
+            var currency = App.currency;
 
             var URL = string.Format("https://min-api.cryptocompare.com/data/top/exchanges?fsym={0}&tsym={1}&limit={2}", crypto, currency, 8);
 

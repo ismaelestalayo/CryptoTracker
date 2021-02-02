@@ -25,8 +25,8 @@ using Windows.UI.Xaml.Navigation;
 namespace CryptoTracker {
 	sealed partial class App : Application {
         
-        internal static string coin       = "EUR";
-        internal static string coinSymbol = "€";
+        internal static string currency       = "EUR";
+        internal static string currencySymbol = "€";
 
         internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
@@ -35,14 +35,14 @@ namespace CryptoTracker {
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
-            string _theme  = localSettings.Values["Theme"]?.ToString();
-            string _coin   = localSettings.Values["Coin"]?.ToString();
+            string _theme = localSettings.Values["Theme"]?.ToString();
+            string _currency = localSettings.Values["Currency"]?.ToString();
             string _pinned = localSettings.Values["Pinned"]?.ToString();
 
-            if (_theme == null || _coin == null || _pinned == null) {
+            if (_theme == null || _currency == null || _pinned == null) {
                 // Default: Windows theme, EUR and {BTC, ETH, LTC and XRP}
                 localSettings.Values["Theme"] = "Windows";
-                localSettings.Values["Coin"] = "EUR";
+                localSettings.Values["currency"] = "EUR";
                 localSettings.Values["Pinned"] = "BTC|ETH|LTC|XRP";
                 this.RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
                 pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC", "XRP" });
@@ -63,27 +63,27 @@ namespace CryptoTracker {
                         break;
                 }
 
-                coin = _coin;
-                switch (_coin) {
+                currency = _currency ;
+                switch (_currency ) {
                     default:
                     case "EUR":
-                        coinSymbol = "€";
+                        currencySymbol = "€";
                         break;
                     case "GBP":
-                        coinSymbol = "£";
+                        currencySymbol = "£";
                         break;
                     case "USD":
                     case "CAD":
                     case "AUD":
                     case "MXN":
-                        coinSymbol = "$";
+                        currencySymbol = "$";
                         break;
                     case "CNY":
                     case "JPY":
-                        coinSymbol = "¥";
+                        currencySymbol = "¥";
                         break;
                     case "INR":
-                        coinSymbol = "₹";
+                        currencySymbol = "₹";
                         break;
                 }
 			}
@@ -176,10 +176,10 @@ namespace CryptoTracker {
 
             //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
             string URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
-                + crypto + "&tsym=" + coin + "&limit=" + limit;
+                + crypto + "&tsym=" + currency + "&limit=" + limit;
 
             if (limit == 0)
-                URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + coin + "&allData=true";
+                URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + currency + "&allData=true";
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
@@ -212,10 +212,10 @@ namespace CryptoTracker {
 
             //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
             string URL = "https://min-api.cryptocompare.com/data/histo" + timeSpan + "?e=CCCAGG&fsym="
-                + crypto + "&tsym=" + coin + "&limit=" + limit;
+                + crypto + "&tsym=" + currency + "&limit=" + limit;
 
             if (limit == 0)
-                URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + coin + "&allData=true";
+                URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + currency + "&allData=true";
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
@@ -266,7 +266,7 @@ namespace CryptoTracker {
         //  (GET) top 100 coins (by marketcap)
         internal async static Task<List<Top100coin>> GetTop100() {
             int limit = 100;
-            String URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", coin, limit);
+            String URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", currency, limit);
 
             Uri uri = new Uri(URL);
             HttpClient httpClient = new HttpClient();
@@ -305,9 +305,9 @@ namespace CryptoTracker {
                                 Rank = (i + 1).ToString(),
                                 Name = data[i]["CoinInfo"]["FullName"].ToString() ?? "NULL",
                                 Symbol = symbol,
-                                Price = ToKMB((double)(data[i]["RAW"][coinn]["PRICE"] ?? "0")) + coinSymbol,
-                                Vol24 = ToKMB((double)(data[i]["RAW"][coinn]["TOTALVOLUME24HTO"] ?? "0")) + coinSymbol,
-                                MarketCap = ToKMB((double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0")) + coinSymbol,
+                                Price = ToKMB((double)(data[i]["RAW"][coinn]["PRICE"] ?? "0")) + currencySymbol,
+                                Vol24 = ToKMB((double)(data[i]["RAW"][coinn]["TOTALVOLUME24HTO"] ?? "0")) + currencySymbol,
+                                MarketCap = ToKMB((double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0")) + currencySymbol,
                                 MarketCapRaw = (double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0"),
                                 Change24h = change.ToString() + "%",
                                 ChangeFG = change < 0 ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelGreen"],
@@ -348,8 +348,8 @@ namespace CryptoTracker {
                 GlobalStats g = new GlobalStats();
                 g.ActiveCurrencies  = data["active_cryptocurrencies"].ToString();
                 g.BtcDominance      = Math.Round((double)data["market_cap_percentage"]["btc"], 2).ToString() + "%";
-                g.TotalVolume       = ToKMB((double)(data["total_volume"][coin.ToLower()] ?? data["total_volume"]["usd"])) + coinSymbol;
-                g.TotalMarketCap    = ToKMB((double)(data["total_market_cap"][coin.ToLower()] ?? data["total_market_cap"]["usd"])) + coinSymbol;
+                g.TotalVolume       = ToKMB((double)(data["total_volume"][currency.ToLower()] ?? data["total_volume"]["usd"])) + currencySymbol;
+                g.TotalMarketCap    = ToKMB((double)(data["total_market_cap"][currency.ToLower()] ?? data["total_market_cap"]["usd"])) + currencySymbol;
                 return g;
 
             } catch (Exception) {

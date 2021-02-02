@@ -47,8 +47,8 @@ namespace CryptoTracker {
         private static ThreadPoolTimer PeriodicTimer;
 
         internal string crypto { get; set; }
-        internal string coin = App.coin;
-        internal string coinSymbol = App.coinSymbol;
+        internal string currency = App.currency;
+        internal string currencySymbol = App.currencySymbol;
         public CoinDataWrapper cdw { get; set; }
 
         public CoinDetails() {
@@ -150,7 +150,7 @@ namespace CryptoTracker {
         private async Task UpdateCoin() {
 
             var price = await CryptoCompare.GetPriceAsync(crypto);
-            mainTitleVal.Text = price.ToString() + App.coinSymbol;
+            mainTitleVal.Text = price.ToString() + App.currencySymbol;
             mainTitleVal.Visibility  = Visibility.Visible;
             mainTitleDiff.Visibility = Visibility.Visible;
 

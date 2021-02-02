@@ -39,9 +39,9 @@ namespace CryptoTracker {
             var content = new TileContent() {
                 Visual = new TileVisual() {
 
-                    LockDetailedStatus1 = "BTC: " + "0" + App.coinSymbol,
-                    LockDetailedStatus2 = "ETH: " + "0" + App.coinSymbol,
-                    LockDetailedStatus3 = "LTC: " + "0" + App.coinSymbol,
+                    LockDetailedStatus1 = "BTC: " + "0" + App.currencySymbol,
+                    LockDetailedStatus2 = "ETH: " + "0" + App.currencySymbol,
+                    LockDetailedStatus3 = "LTC: " + "0" + App.currencySymbol,
 
                     TileMedium = new TileBinding() {
                         Content = new TileBindingContentAdaptive() {
@@ -51,7 +51,7 @@ namespace CryptoTracker {
                                 },
 
                                 new AdaptiveText(){
-                                    Text = price.ToString("N") + App.coinSymbol
+                                    Text = price.ToString("N") + App.currencySymbol
                                 },
 
                                 new AdaptiveText(){
@@ -74,7 +74,7 @@ namespace CryptoTracker {
                                 },
 
                                 new AdaptiveText(){
-                                    Text = price.ToString("N") + App.coinSymbol
+                                    Text = price.ToString("N") + App.currencySymbol
                                 },
 
                                 new AdaptiveText(){

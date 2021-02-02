@@ -131,8 +131,8 @@ namespace CryptoTracker {
             String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
             App.localSettings.Values["Coin"] = currency;
-            App.coin = currency;
-            App.coinSymbol = CurrencyHelper.CurrencyToSymbol(currency);
+            App.currency = currency;
+            App.currencySymbol = CurrencyHelper.CurrencyToSymbol(currency);
         }
 
         private async void UploadConfigButton_Click(object sender, RoutedEventArgs e) {
