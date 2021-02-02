@@ -216,10 +216,9 @@ namespace CryptoTracker.Helpers {
             string URL = string.Format("https://api.coingecko.com/api/v3/coins/{0}?localization=false&tickers=false&community_data=false&developer_data=false", coin);
             Uri uri = new Uri(URL);
 
-            HttpClient httpClient = new HttpClient();
-
+            
             try {
-                string response = await httpClient.GetStringAsync(uri);
+                string response = await App.Client.GetStringAsync(uri);
                 var coinData = JsonSerializer.Deserialize<CoinData>(response);
                 string descr = await App.GetCoinDescription(coinData.symbol.ToUpper(CultureInfo.InvariantCulture), 5).ConfigureAwait(true);
                 coinData.description.en = (!String.IsNullOrEmpty(descr)) ? descr : coinData.description.en.Split('\n')[0];
@@ -228,9 +227,6 @@ namespace CryptoTracker.Helpers {
             }
             catch (Exception ex) {
                 return new CoinData();
-            }
-            finally {
-                httpClient.Dispose();
             }
         }
     }

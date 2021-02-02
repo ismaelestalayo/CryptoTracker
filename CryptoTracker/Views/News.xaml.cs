@@ -104,12 +104,11 @@ namespace CryptoTracker.Views {
                 URL += string.Format("&categories={0}", string.Join(",", _filters));
             
             Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
 
 
             try {
-                httpResponse = await httpClient.GetAsync(uri);
+                httpResponse = await App.Client.GetAsync(uri);
                 httpResponse.EnsureSuccessStatusCode();
 
                 var response = await httpResponse.Content.ReadAsStringAsync();
@@ -125,21 +124,16 @@ namespace CryptoTracker.Views {
             } catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
             }
-            finally {
-                httpClient.Dispose();
-                httpResponse.Dispose();
-            }
         }
 
         private async Task<List<NewsCategories>> GetNewsCategories() {
             string URL = "https://min-api.cryptocompare.com/data/news/categories";
 
             Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
             List<NewsCategories> cat;
             try {
-                httpResponse = await httpClient.GetAsync(uri).ConfigureAwait(false);
+                httpResponse = await App.Client.GetAsync(uri).ConfigureAwait(false);
                 httpResponse.EnsureSuccessStatusCode();
 
                 var response = await httpResponse.Content.ReadAsStringAsync();
@@ -149,10 +143,6 @@ namespace CryptoTracker.Views {
             catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
                 cat = new List<NewsCategories>() { new NewsCategories() };
-            }
-            finally {
-                httpClient.Dispose();
-                httpResponse.Dispose();
             }
             return cat;
         }

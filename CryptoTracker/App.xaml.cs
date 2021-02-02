@@ -24,7 +24,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
 	sealed partial class App : Application {
-        
+        /// <summary>
+        /// Efficient socket usage
+        /// https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
+        /// </summary>
+        internal static HttpClient Client = new HttpClient();
+
         internal static string currency       = "EUR";
         internal static string currencySymbol = "€";
 
@@ -182,10 +187,9 @@ namespace CryptoTracker {
                 URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + currency + "&allData=true";
 
             Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
 
             try {
-                string response = await httpClient.GetStringAsync(uri);
+                string response = await Client.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
                 App.historic.Clear();
@@ -196,9 +200,6 @@ namespace CryptoTracker {
                 App.historic.Clear();
                 App.historic = JSONhistoric.HandleHistoricJSONnull(limit);
                 //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
-            }
-            finally{
-                httpClient.Dispose();
             }
         }
 
@@ -218,19 +219,15 @@ namespace CryptoTracker {
                 URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + currency + "&allData=true";
 
             Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
 
             try {
-                string response = await httpClient.GetStringAsync(uri);
+                string response = await Client.GetStringAsync(uri);
                 var data = JToken.Parse(response);
 
                 return JSONhistoric.HandleHistoricJSON(data);
             }
             catch (Exception) {
                 return JSONhistoric.HandleHistoricJSONnull(limit);
-            }
-            finally {
-                httpClient.Dispose();
             }
         }
 
@@ -269,14 +266,13 @@ namespace CryptoTracker {
             String URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", currency, limit);
 
             Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
             httpResponse.Headers.Add("X-CMC_PRO_API_KEY", "569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286");
 
             String response = "";
 
             try {
-                httpResponse = await httpClient.GetAsync(uri);
+                httpResponse = await Client.GetAsync(uri);
                 httpResponse.EnsureSuccessStatusCode();
 
                 response = await httpResponse.Content.ReadAsStringAsync();
@@ -332,13 +328,12 @@ namespace CryptoTracker {
             String URL = "https://api.coingecko.com/api/v3/global";
 
             Uri uri = new Uri(URL);
-            HttpClient httpClient = new HttpClient();
             HttpResponseMessage httpResponse = new HttpResponseMessage();
 
             String response = "";
 
             try {
-                httpResponse = await httpClient.GetAsync(uri);
+                httpResponse = await Client.GetAsync(uri);
                 httpResponse.EnsureSuccessStatusCode();
 
                 response = await httpResponse.Content.ReadAsStringAsync();
@@ -374,7 +369,7 @@ namespace CryptoTracker {
             }
         }
 
-        // ###############################################################################################
+        /// ###############################################################################################
         /// <summary>
         /// do NOT mess with async methods...
         /// 
@@ -383,24 +378,17 @@ namespace CryptoTracker {
         /// 
         /// </summary>
         internal static async Task<JToken> GetJSONAsync(Uri uri) {
-
-            using (var client = new HttpClient()) {
-                var jsonString = await client.GetStringAsync(uri).ConfigureAwait(false);
-                return JToken.Parse(jsonString);
-            }
+            var jsonString = await Client.GetStringAsync(uri).ConfigureAwait(false);
+            return JToken.Parse(jsonString);
         }
+
         // TODO: removing ConfigureAwait breaks everything... why?
-        // TODO: use a single HttpClient
         internal static async Task<string> GetStringAsync(Uri uri) {
-            using (var client = new HttpClient()) {
-                var s = await client.GetStringAsync(uri).ConfigureAwait(false);
-                return s;
-            }
+            return await Client.GetStringAsync(uri).ConfigureAwait(false);
         }
         internal static async Task<string> GetStringFromUrlAsync(string url) {
-            using (var client = new HttpClient()) {
-                return await client.GetStringAsync(new Uri(url)).ConfigureAwait(false);
-            }
+            return await Client.GetStringAsync(new Uri(url)).ConfigureAwait(false);
+
         }
 
         // ###############################################################################################
