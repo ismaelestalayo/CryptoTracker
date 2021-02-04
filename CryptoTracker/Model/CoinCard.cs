@@ -56,8 +56,8 @@ namespace CryptoTracker.Model {
         /// </summary>
         private SolidColorBrush _chartStroke = (SolidColorBrush)App.Current.Resources["Main_WhiteBlack"];
         private SolidColorBrush _priceDiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
-        private Color _chartFill1 = ((SolidColorBrush)App.Current.Resources["pastelGreen"]).Color;
-        private Color _chartFill2 = ((SolidColorBrush)App.Current.Resources["pastelGreen"]).Color;
+        private Color _chartFill1 = Color.FromArgb(64, 128, 128, 128);
+        private Color _chartFill2 = Color.FromArgb(64, 128, 128, 128);
         
         internal SolidColorBrush ChartStroke {
             get => _chartStroke;
