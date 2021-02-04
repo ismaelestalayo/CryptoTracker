@@ -93,10 +93,11 @@ namespace CryptoTracker.Views {
             string c = ((Top100coin)((FrameworkElement)((FrameworkElement)sender).Parent).DataContext).Symbol;
             if (!App.pinnedCoins.Contains(c)) {
                 App.pinnedCoins.Add(c);
-                Home.AddCoinHome(c);
+                //Home.AddCoinHome(c);
                 inAppNotification.Show(c + " pinned to home.", 2000);
             } else {
-                Home.RemoveCoinHome(c);
+                App.pinnedCoins.Remove(c);
+                //Home.RemoveCoinHome(c);
                 inAppNotification.Show(c + " unpinned from home.", 2000);
             }
 

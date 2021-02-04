@@ -267,12 +267,13 @@ namespace CryptoTracker {
             var c = crypto;
             if (!App.pinnedCoins.Contains(c)) {
                 App.pinnedCoins.Add(c);
-                Home.AddCoinHome(c);
+                //Home.AddCoinHome(c);
                 FavIcon.Content = "\uEB52";
                 inAppNotification.Show(c + " pinned to home.", 2000);
             }
             else {
-                Home.RemoveCoinHome(c);
+                //Home.RemoveCoinHome(c);
+                App.pinnedCoins.Remove(c);
                 FavIcon.Content = "\uEB51";
                 inAppNotification.Show(c + " unpinned from home.", 2000);
             }
