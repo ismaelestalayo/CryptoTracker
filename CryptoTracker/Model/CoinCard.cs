@@ -6,13 +6,14 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Model {
-    internal class HomeTile : ObservableObject {
+    public class CoinCard : ObservableObject {
         /// <summary>
         /// Basic data of a coin that stays invariable through time
         /// </summary>
-        internal string CryptoName { get; set; } = "NULL";
-        internal string Currency { get; set; } = App.currencySymbol;
         internal string Crypto { get; set; } = "NULL";
+        internal string CryptoFullName { get; set; } = "NULL";
+        internal string CryptoSymbol { get; set; } = "NULL";
+        internal string Currency { get; set; } = App.currencySymbol;
         internal string IconSrc { get; set; } = "/Assets/Icons/iconNULL.png";
 
         /// <summary>
@@ -25,7 +26,8 @@ namespace CryptoTracker.Model {
         internal bool IsLoading {
             get => _isLoading;
             set => SetProperty(ref _isLoading, value);
-        }        
+        }
+
         internal double Opacity {
             get => _opacity;
             set => SetProperty(ref _opacity, value);
@@ -57,12 +59,11 @@ namespace CryptoTracker.Model {
         private Color _chartFill1 = ((SolidColorBrush)App.Current.Resources["pastelGreen"]).Color;
         private Color _chartFill2 = ((SolidColorBrush)App.Current.Resources["pastelGreen"]).Color;
         
-
         internal SolidColorBrush ChartStroke {
             get => _chartStroke;
             set => SetProperty(ref _chartStroke, value);
         }
-        internal SolidColorBrush PriceDiffFG {
+        internal SolidColorBrush DiffFG {
             get => _priceDiffFG;
             set => SetProperty(ref _priceDiffFG, value);
         }
@@ -80,8 +81,8 @@ namespace CryptoTracker.Model {
         /// Basic data of a coin that varies over time
         /// </summary>
         private double _price = 0;
-        private double _priceDiff = 0;
-        private string _priceDiffArrow = "▲";
+        private double _diff = 0;
+        private string _diffArrow = "▲";
         private string _volume24 = "0";
         private string _volume24to = "0";
 
@@ -89,23 +90,23 @@ namespace CryptoTracker.Model {
             get => _price;
             set => SetProperty(ref _price, value);
         }
-        internal double PriceDiff {
-            get => _priceDiff;
+        internal double Diff {
+            get => _diff;
             set {
-                SetProperty(ref _priceDiff, value);
+                SetProperty(ref _diff, Math.Abs(value)); /// Save the absolute value
                 if (value > 0) {
-                    PriceDiffArrow = "▲";
-                    PriceDiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
+                    DiffArrow = "▲";
+                    DiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
                 }
                 else {
-                    PriceDiffArrow = "▼";
-                    PriceDiffFG = (SolidColorBrush)App.Current.Resources["pastelRed"];
+                    DiffArrow = "▼";
+                    DiffFG = (SolidColorBrush)App.Current.Resources["pastelRed"];
                 }
             }
-        }        
-        internal string PriceDiffArrow {
-            get => _priceDiffArrow;
-            set => SetProperty(ref _priceDiffArrow, value);
+        }
+        internal string DiffArrow {
+            get => _diffArrow;
+            set => SetProperty(ref _diffArrow, value);
         }
         internal string Volume24 {
             get => _volume24;
