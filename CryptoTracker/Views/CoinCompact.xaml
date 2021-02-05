@@ -5,8 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+	xmlns:viewModels="using:CryptoTracker.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<Page.DataContext>
+		<viewModels:CoinCompactViewModel x:Name="viewModel"/>
+	</Page.DataContext>
 
 	<Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
 		<Grid.RowDefinitions>
@@ -41,20 +46,26 @@
 			<telerik:RadCartesianChart.VerticalAxis>
 				<telerik:LinearAxis
 					Visibility="Collapsed"
-					Minimum="{x:Bind CoinModel.HistoricMinMax.Item1, Mode=OneWay}"
-					Maximum="{x:Bind CoinModel.HistoricMinMax.Item2, Mode=OneWay}"/>
+					Minimum="{x:Bind viewModel.CoinInfo.HistoricMinMax.Item1, Mode=OneWay}"
+					Maximum="{x:Bind viewModel.CoinInfo.HistoricMinMax.Item2, Mode=OneWay}"/>
 			</telerik:RadCartesianChart.VerticalAxis>
 
 			<telerik:SplineAreaSeries
 				ItemsSource="{Binding}"
-				Stroke="{x:Bind CoinModel.ChartStroke, Mode=OneWay}" 
+				Stroke="{x:Bind viewModel.CoinInfo.ChartStroke, Mode=OneWay}" 
 				StrokeThickness="1.5">
 				<telerik:AreaSeries.Fill>
 					<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-						<GradientStop Color="{x:Bind CoinModel.ChartFill1, Mode=OneWay}" Offset="0"/>
-						<GradientStop Color="{x:Bind CoinModel.ChartFill2, Mode=OneWay}" Offset="0.7"/>
+						<GradientStop Color="{x:Bind viewModel.CoinInfo.ChartFill1, Mode=OneWay}" Offset="0"/>
+						<GradientStop Color="{x:Bind viewModel.CoinInfo.ChartFill2, Mode=OneWay}" Offset="0.7"/>
 					</LinearGradientBrush>
 				</telerik:AreaSeries.Fill>
+				<telerik:SplineAreaSeries.CategoryBinding>
+					<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+				</telerik:SplineAreaSeries.CategoryBinding>
+				<telerik:SplineAreaSeries.ValueBinding>
+					<telerik:PropertyNameDataPointBinding PropertyName="Value"/>
+				</telerik:SplineAreaSeries.ValueBinding>
 			</telerik:SplineAreaSeries>
 		</telerik:RadCartesianChart>
 
@@ -66,7 +77,7 @@
 		<RelativePanel Grid.Row="1">
 			<StackPanel Orientation="Horizontal">
 				<TextBlock
-					Text="{x:Bind Path=CoinModel.Crypto, Mode=OneWay}"
+					Text="{x:Bind Path=viewModel.CoinInfo.Crypto, Mode=OneWay}"
 					d:Text="CRYPTO" Margin="5 0" VerticalAlignment="Center"
 					Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="18"/>
 				<Button 
@@ -79,17 +90,17 @@
 
 			<StackPanel Orientation="Horizontal" Margin="0 0 5 0" RelativePanel.AlignRightWithPanel="True">
 				<TextBlock FontSize="20" FontWeight="Medium">
-					<Run Text="{x:Bind CoinModel.CurrentPrice, Mode=OneWay}" d:Text="val"/><!--
-					--><Run Text="{x:Bind CoinModel.Currency}" d:Text="€"/>
+					<Run Text="{x:Bind viewModel.CoinInfo.CurrentPrice, Mode=OneWay}" d:Text="val"/><!--
+					--><Run Text="{x:Bind viewModel.CoinInfo.Currency}" d:Text="€"/>
 				</TextBlock>
 
 				<TextBlock
 					FontSize="15" FontWeight="Light"
-					Foreground="{x:Bind CoinModel.DiffFG, Mode=OneWay, FallbackValue='Red'}"
+					Foreground="{x:Bind viewModel.CoinInfo.DiffFG, Mode=OneWay, FallbackValue='Red'}"
 					Margin="3 0 0 0"
 					VerticalAlignment="Bottom">
-					<Run Text="{x:Bind CoinModel.CurrentDiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-					--><Run Text="{x:Bind CoinModel.CurrentDiff, Mode=OneWay}" d:Text="0"/><!--
+					<Run Text="{x:Bind viewModel.CoinInfo.CurrentDiffArrow, Mode=OneWay}" d:Text="▲"/><!--
+					--><Run Text="{x:Bind viewModel.CoinInfo.CurrentDiff, Mode=OneWay}" d:Text="0"/><!--
 					--><Run Text="%"/>
 				</TextBlock>
 			</StackPanel>

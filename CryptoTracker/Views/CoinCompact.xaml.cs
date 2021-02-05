@@ -23,35 +23,30 @@ namespace CryptoTracker.Views {
 	/// </summary>
 	public sealed partial class CoinCompact : Page {
 
-		internal CoinCompactModel CoinModel { get; set; }
-
 		public CoinCompact() {
 			this.InitializeComponent();
-
-			CoinModel = new CoinCompactModel() {
-				Currency = App.currencySymbol
-			};
 		}
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
 			// Page title
 			var crypto = e.Parameter?.ToString().ToUpper(CultureInfo.InvariantCulture) ?? "NULL";
-			CoinModel.Crypto = crypto;
+			viewModel.CoinInfo.Crypto = crypto;
 
 			// Crypto icon
 			var iconExists = File.Exists("Assets/Icons/icon" + crypto + ".png");
-			CoinModel.LogoSource = iconExists ? "ms-appx:///Assets/Icons/icon" + crypto + ".png" : "ms-appx:///Assets/Icons/iconNULL.png";
+			viewModel.CoinInfo.LogoSource = iconExists ? "ms-appx:///Assets/Icons/icon" + crypto + ".png" : "ms-appx:///Assets/Icons/iconNULL.png";
 
 			UpdateValues();
 		}
 
+		/// #########################################################################################
 		private async void UpdateValues() {
-			var crypto = CoinModel.Crypto;
+			var crypto = viewModel.CoinInfo.Crypto;
 
-			// Get current price
-			CoinModel.CurrentPrice = await CryptoCompare.GetPriceAsync(crypto);
+			/// Get current price
+			viewModel.CoinInfo.CurrentPrice = await CryptoCompare.GetPriceAsync(crypto);
 
-			// Get historic values
+			/// Get historic values
 			var histo = await CryptoCompare.GetHistoricAsync(crypto, "minute", 60);
 
 			var chartData = new List<ChartData>();
@@ -61,50 +56,47 @@ namespace CryptoTracker.Views {
 					Value = h.Average
 				});
 
-			// Calculate diff based on historic prices
+			/// Calculate diff based on historic prices
 			double oldestPrice = histo[0].Average;
 			double newestPrice = histo[histo.Count - 1].Average;
 			double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
 
-			CoinModel.CurrentDiff = diff;
+			viewModel.CoinInfo.CurrentDiff = diff;
 
 			if (diff > 0) {
-				CoinModel.CurrentDiff = diff;
-				CoinModel.CurrentDiffArrow = "▲";
+				viewModel.CoinInfo.CurrentDiff = diff;
+				viewModel.CoinInfo.CurrentDiffArrow = "▲";
 				var brush = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
 				var color = brush.Color;
-				CoinModel.DiffFG = brush;
-				CoinModel.ChartStroke = brush;
-				CoinModel.ChartFill1 = Color.FromArgb(62, color.R, color.G, color.B);
-				CoinModel.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
+				viewModel.CoinInfo.DiffFG = brush;
+				viewModel.CoinInfo.ChartStroke = brush;
+				viewModel.CoinInfo.ChartFill1 = Color.FromArgb(62, color.R, color.G, color.B);
+				viewModel.CoinInfo.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
 			}
 			else {
-				CoinModel.CurrentDiff = Math.Abs(diff);
-				CoinModel.CurrentDiffArrow = "▼";
+				viewModel.CoinInfo.CurrentDiff = Math.Abs(diff);
+				viewModel.CoinInfo.CurrentDiffArrow = "▼";
 				var brush = (SolidColorBrush)Application.Current.Resources["pastelRed"];
 				var color = brush.Color;
-				CoinModel.DiffFG = brush;
-				CoinModel.ChartStroke = brush;
-				CoinModel.ChartFill1 = Color.FromArgb(62, color.R, color.G, color.B);
-				CoinModel.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
+				viewModel.CoinInfo.DiffFG = brush;
+				viewModel.CoinInfo.ChartStroke = brush;
+				viewModel.CoinInfo.ChartFill1 = Color.FromArgb(62, color.R, color.G, color.B);
+				viewModel.CoinInfo.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
 			}
 
 
-			// Create the chart
+			/// Create the chart
 			var series = (SplineAreaSeries)HistoricChart.Series[0];
-			series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-			series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
 			series.ItemsSource = chartData;
 
-			var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-			CoinModel.HistoricMinMax = MinMax;
+			viewModel.CoinInfo.HistoricMinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
 		}
 
         private async void FullScreen_btn_click(object sender, RoutedEventArgs e) {
 			var view = ApplicationView.GetForCurrentView();
 
 			await view.TryEnterViewModeAsync(ApplicationViewMode.Default);
-			Frame.Navigate(typeof(CoinDetails), CoinModel.Crypto);
+			Frame.Navigate(typeof(CoinDetails), viewModel.CoinInfo.Crypto);
 		}
 	}
 }

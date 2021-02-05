@@ -5,9 +5,9 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Model {
-	internal class CoinCompactModel : ObservableObject {
+	public class CoinCompactModel : ObservableObject {
 		internal string Crypto { get; set; }
-		internal string Currency { get; set; }
+		internal string Currency { get; set; } = App.currency;
 
 		private double _currentPrice = 0;
 		internal double CurrentPrice {
