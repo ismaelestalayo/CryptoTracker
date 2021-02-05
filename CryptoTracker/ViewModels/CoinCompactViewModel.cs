@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace CryptoTracker.ViewModels {
 	public class CoinCompactViewModel : ObservableObject {
-		private CoinCompactModel _coinInfo = new CoinCompactModel();
+		private CoinCard _coinCard = new CoinCard();
 
-		public CoinCompactModel CoinInfo {
-			get => _coinInfo;
-			set => SetProperty(ref _coinInfo, value);
+		public CoinCard CoinCard {
+			get => _coinCard;
+			set => SetProperty(ref _coinCard, value);
 		}
 	}
 }

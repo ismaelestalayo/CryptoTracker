@@ -128,7 +128,6 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\CoinCompactModel.cs" />
     <Compile Include="Model\CoinCard.cs" />
     <Compile Include="ViewModels\CoinCompactViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
