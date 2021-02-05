@@ -1,7 +1,6 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
 using CryptoTracker.Model;
-using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,14 +20,14 @@ namespace CryptoTracker.Views {
         private static int limit = 1500;
         private static string timeSpan = "minute";
 
-
         public Home() {
             this.InitializeComponent();
+
+            UpdateCoinList();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) {
             InitHome();
-
             viewModel.CoinCards.CollectionChanged += HomeCoinList_CollectionChanged;
         }
 
@@ -36,21 +35,26 @@ namespace CryptoTracker.Views {
             EmptyPageWarning.Visibility = (((Collection<CoinCard>)sender).Count > 0) ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private async void InitHome() {
+        /// #########################################################################################
+        private async void UpdateCoinList() {
             /// First keep an updated list of coins
             await App.GetCoinList();
+        }
 
-			/// Then update Home coin cards
-			try {
+        private async void InitHome() {
+            /// See if there's any change
+            var pinned = App.pinnedCoins.ToList();
+            var current = viewModel.CoinCards.Select(x => x.Crypto).ToList();
+
+            // TODO: dont clear cards that haven't changed
+            if(!pinned.SequenceEqual(current)) {
+                viewModel.CoinCards.Clear();
 				foreach (var coin in App.pinnedCoins)
                     await AddCoinHome(coin);
+            }
 
-                for (int i = 0; i < App.pinnedCoins.Count; i++)
-                    await UpdateCard(i);
-            } catch {
-
-			}
-            
+            for (int i = 0; i < App.pinnedCoins.Count; i++)
+                await UpdateCard(i);
         }
 
         /// #########################################################################################
@@ -103,10 +107,9 @@ namespace CryptoTracker.Views {
         }
 
         private async Task UpdateCard(int i) {
-            
-            string crypto = App.pinnedCoins[i];
-
 			try {
+                string crypto = App.pinnedCoins[i];
+
                 /// Color
                 SolidColorBrush colorBrush = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
                 if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
@@ -152,8 +155,8 @@ namespace CryptoTracker.Views {
                 /// Show that loading is done
                 viewModel.CoinCards[i].IsLoading = false;
                 viewModel.CoinCards[i].Opacity = 1;
-            } catch (Exception e) {
-                Analytics.TrackEvent("UNHANDLED2: " + e.Message);
+            } catch (Exception) {
+
             }
             
         }
