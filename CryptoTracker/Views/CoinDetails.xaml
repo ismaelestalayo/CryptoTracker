@@ -8,11 +8,16 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
+	xmlns:viewModels="using:CryptoTracker.ViewModels"
     mc:Ignorable="d"
     Unloaded="Page_Unloaded"
     NavigationCacheMode="Disabled">
 
-    <Page.Resources>
+	<Page.DataContext>
+		<viewModels:CoinDetailsViewModel x:Name="viewModel"/>
+	</Page.DataContext>
+
+	<Page.Resources>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
             <Setter Property="Margin" Value="0, 8"/>
             <Setter Property="BorderBrush" Value="LightGray"/>
@@ -110,12 +115,13 @@
         #################################################################################################### -->
         <RelativePanel BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Orientation="Horizontal">
-                <Image
-                    x:Name="mainTitleLogo"  Source="/Assets/Icons/iconBTC.png" 
-                    Visibility="Collapsed" Margin="5"
-                    VerticalAlignment="Center" Width="25"/>
-                <TextBlock x:Name="mainTitle" Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
-                    VerticalAlignment="Stretch" Text="Title" FontWeight="Bold"/>
+                <Image Source="{x:Bind viewModel.CoinCard.IconSrc, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
+                    Margin="5" VerticalAlignment="Center" Width="25"/>
+				<TextBlock Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
+                    VerticalAlignment="Stretch" FontWeight="Bold">
+					<Run Text="{x:Bind viewModel.CoinCard.CryptoFullName}"/>
+					<Run Text="("/><Run Text="{x:Bind viewModel.CoinCard.Crypto}"/><Run Text=")"/>
+				</TextBlock>
                 <Button
                     Margin="5 0" Padding="5 0" Height="32" FontFamily="Segoe MDL2 Assets"
                     FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
@@ -129,15 +135,19 @@
 				</Button>
 			</StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="10, 0" RelativePanel.AlignRightWithPanel="True">
-                <TextBlock x:Name="mainTitleVal"
-                    Text="val€" FontSize="24"
-                    FontWeight="Medium"/>
+            <StackPanel Orientation="Horizontal" Margin="5 0" RelativePanel.AlignRightWithPanel="True">
+				<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
+					<Run Text="{x:Bind viewModel.CoinCard.Price, Mode=OneWay}" d:Text="0"/><!--
+					--><Run Text="{x:Bind viewModel.CoinCard.Currency}" d:Text="€"/>
+				</TextBlock>
 
-                <TextBlock x:Name="mainTitleDiff" 
-                    Text="0%" VerticalAlignment="Bottom"
-                    Margin="3 0 0 0"
-                    FontSize="18" FontWeight="Light"/>
+				<TextBlock
+					Foreground="{x:Bind viewModel.CoinCard.DiffFG, Mode=OneWay}"
+					Margin="0 2" VerticalAlignment="Bottom">
+					<Run Text="{x:Bind viewModel.CoinCard.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
+					--><Run Text="{x:Bind viewModel.CoinCard.Diff, Mode=OneWay}" d:Text="0"/><!--
+                    --><Run Text="%"/>
+				</TextBlock>
             </StackPanel>
 
         </RelativePanel>
@@ -152,9 +162,11 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <controls:Loading x:Name="LoadingControl" HorizontalAlignment="Center" VerticalAlignment="Center"
-                          Grid.RowSpan="2" Grid.ColumnSpan="2"
-                          Background="Transparent" Opacity="0.4">
+            <controls:Loading
+				IsLoading="{x:Bind viewModel.CoinCard.IsLoading, Mode=OneWay}"
+				HorizontalAlignment="Center" VerticalAlignment="Center"
+                Grid.RowSpan="2" Grid.ColumnSpan="2"
+                Background="Transparent" Opacity="0.4">
                 <ContentControl x:Name="LoadingContentControl">
                     <ProgressBar IsIndeterminate="True" Width="600"
                                  Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
@@ -162,26 +174,31 @@
                 </ContentControl>
             </controls:Loading>
 
-            <telerik:RadCartesianChart x:Name="PriceChart" Margin="-5 0 -25 0" Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
+            <telerik:RadCartesianChart
+				x:Name="PriceChart"
+				Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
+				Opacity="{x:Bind Opacity, Mode=OneWay}"
+				Margin="-5 0 -25 0">
 
                 <telerik:RadCartesianChart.Behaviors>
                     <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
-                        <telerik:ChartTrackBallBehavior.LineStyle>
-                            <Style TargetType="Polyline">
-                                <Setter Property="Stroke" Value="{StaticResource coinColor}"/>
-                                <Setter Property="StrokeThickness" Value="2"/>
-                            </Style>
-                        </telerik:ChartTrackBallBehavior.LineStyle>
-                        <telerik:ChartTrackBallBehavior.InfoStyle>
-                            <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                                <Setter Property="Background" Value="{StaticResource coinColorT}"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource coinColor}"/>
-                            </Style>
-                        </telerik:ChartTrackBallBehavior.InfoStyle>
-                    </telerik:ChartTrackBallBehavior>
-                    <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
-                </telerik:RadCartesianChart.Behaviors>
+						<telerik:ChartTrackBallBehavior.LineStyle>
+							<Style TargetType="Polyline">
+								<Setter Property="Stroke" Value="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"/>
+								<Setter Property="StrokeThickness" Value="0.5"/>
+								<Setter Property="StrokeDashArray" Value="3,4"/>
+							</Style>
+						</telerik:ChartTrackBallBehavior.LineStyle>
+						<telerik:ChartTrackBallBehavior.InfoStyle>
+							<Style TargetType="telerikPrimitives:TrackBallInfoControl">
+								<Setter Property="Background" Value="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"/>
+								<Setter Property="Foreground" Value="Black"/>
+								<Setter Property="BorderBrush" Value="{x:Bind viewModel.CoinCard.DiffFG, Mode=OneWay}"/>
+							</Style>
+						</telerik:ChartTrackBallBehavior.InfoStyle>
+					</telerik:ChartTrackBallBehavior>
+					<telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
+				</telerik:RadCartesianChart.Behaviors>
 
                 <telerik:RadCartesianChart.Grid>
                     <telerik:CartesianChartGrid MajorYLinesRenderMode="Inner"
@@ -189,50 +206,53 @@
                 </telerik:RadCartesianChart.Grid>
 
                 <telerik:RadCartesianChart.HorizontalAxis>
-                    <telerik:DateTimeContinuousAxis 
-						x:Name="dateTimeAxis"
+                    <telerik:DateTimeContinuousAxis
                         LabelOffset="1"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
                 </telerik:RadCartesianChart.HorizontalAxis>
 
                 <telerik:RadCartesianChart.VerticalAxis>
-                    <telerik:LinearAxis 
-                        x:Name="verticalAxis"
-                        Visibility="Collapsed"
-                        DesiredTickCount="5"
-                        HorizontalLocation="Left"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        FontWeight="Light" FontFamily="Segoe UI"
-                        Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}">
-                        <telerik:LinearAxis.LabelStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Width" Value="40"/>
-                                <Setter Property="Height" Value="20"/>
-                                <Setter Property="Padding" Value="0, 0, 0, 0"/>
-                                <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
-                            </Style>
-                        </telerik:LinearAxis.LabelStyle>
-                    </telerik:LinearAxis>
-                </telerik:RadCartesianChart.VerticalAxis>
+					<telerik:LinearAxis
+						Visibility="Collapsed"
+						Minimum="{x:Bind viewModel.CoinCard.PricesMinMax.Item1, Mode=OneWay}"
+                        Maximum="{x:Bind viewModel.CoinCard.PricesMinMax.Item2, Mode=OneWay}"/>
+				</telerik:RadCartesianChart.VerticalAxis>
 
-                <telerik:SplineAreaSeries
-                    Stroke="{StaticResource coinColor}" 
-					StrokeThickness="1" 
-					Fill="{StaticResource coinColorT}">
-                    <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+                <telerik:AreaSeries
+					ItemsSource="{x:Bind viewModel.CoinCard.ChartData, Mode=OneWay}"
+                    Stroke="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"
+					StrokeThickness="1">
+					<telerik:AreaSeries.Fill>
+						<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
+							<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill1, Mode=OneWay}" Offset="0"/>
+							<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill2, Mode=OneWay}" Offset="1."/>
+						</LinearGradientBrush>
+					</telerik:AreaSeries.Fill>
+					<telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding DataPoint.Value}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
-                                    <TextBlock Text=""/>
-                                </StackPanel>
-                                <TextBlock Text="{Binding DataPoint.Category}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
-                            </StackPanel>
+							<StackPanel
+								Background="{Binding Color, Mode=OneWay}"
+								
+								BorderThickness="7">
+								<StackPanel Orientation="Vertical">
+									<TextBlock
+										Text="{Binding DataPoint.Value}"
+										Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+										FontWeight="Bold" FontSize="16"/>
+									<TextBlock Text="{Binding DataPoint.Category}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
+								</StackPanel>
+							</StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                </telerik:SplineAreaSeries>
+
+					<telerik:AreaSeries.CategoryBinding>
+						<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+					</telerik:AreaSeries.CategoryBinding>
+					<telerik:AreaSeries.ValueBinding>
+						<telerik:PropertyNameDataPointBinding PropertyName="Value"/>
+					</telerik:AreaSeries.ValueBinding>
+				</telerik:AreaSeries>
             </telerik:RadCartesianChart>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
@@ -272,7 +292,7 @@
                         </RelativePanel>
 
                         <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                            <TextBlock Text="{x:Bind cdw.cd.description.en, Mode=OneWay}" TextWrapping="WrapWholeWords"
+							<TextBlock Text="{x:Bind viewModel.CoinInfo.description.en, Mode=OneWay}" TextWrapping="WrapWholeWords"
                                        TextAlignment="Justify" Opacity="0.8"/>
                         </ScrollViewer>
                     </Grid>
@@ -288,29 +308,31 @@
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="Low (24h)" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind cdw.cd.market_data.low_24h.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                <Run
+									Text="{x:Bind viewModel.CoinInfo.market_data.low_24h.eur, Mode=OneWay, FallbackValue=0}"
+									Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="High (24h)" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind cdw.cd.market_data.high_24h.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                <Run
+									Text="{x:Bind viewModel.CoinInfo.market_data.high_24h.eur, Mode=OneWay, FallbackValue=0}"
+                                    Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                             </TextBlock>
 
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="All time low:" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind cdw.cd.market_data.atl.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
-                                <Run Text="{x:Bind helpers:Converters.ShortenDateTime(cdw.cd.market_data.atl_date.eur), Mode=OneWay}" FontWeight="Light" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}" FontSize="11"/>
+                                <Run Text="{x:Bind viewModel.CoinInfo.market_data.atl.eur, Mode=OneWay, FallbackValue=0}"
+                                        Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                <Run Text="{x:Bind helpers:Converters.ShortenDateTime(viewModel.CoinInfo.market_data.atl_date.eur), Mode=OneWay}" FontWeight="Light" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}" FontSize="11"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="All time high:" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind cdw.cd.market_data.ath.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
-                                <Run Text="{x:Bind helpers:Converters.ShortenDateTime(cdw.cd.market_data.ath_date.eur), Mode=OneWay}" FontWeight="Light" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}" FontSize="11"/>
+                                <Run Text="{x:Bind viewModel.CoinInfo.market_data.ath.eur, Mode=OneWay, FallbackValue=0}"
+                                        Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                <Run Text="{x:Bind helpers:Converters.ShortenDateTime(viewModel.CoinInfo.market_data.ath_date.eur), Mode=OneWay}" FontWeight="Light" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}" FontSize="11"/>
                             </TextBlock>
                         </controls:UniformGrid>
                     </StackPanel>
@@ -321,7 +343,7 @@
                         <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
                             <TextBlock Text="Global Market" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiBold" RelativePanel.AlignRightWithPanel="True">
-                                <Run Text="#"/><Run Text="{x:Bind cdw.cd.market_cap_rank, Mode=OneWay, FallbackValue=0}"/>
+                                <Run Text="#"/><Run Text="{x:Bind viewModel.CoinInfo.market_cap_rank, Mode=OneWay, FallbackValue=0}"/>
                             </TextBlock>
                         </RelativePanel>
 
@@ -329,17 +351,17 @@
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="Market Cap:" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind cdw.cd.market_data.market_cap.eur, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}"
-                                     Foreground="Green"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                <Run Text="{x:Bind viewModel.CoinInfo.market_data.market_cap.eur, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}"
+                                     Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                                 <Run Text="▲" Foreground="Green" FontWeight="Light" FontSize="11"/><Run 
-                                    Text="{x:Bind cdw.cd.market_data.market_cap_change_percentage_24h, Mode=OneWay, FallbackValue=0}" Foreground="Green" FontWeight="Light" FontSize="11"/><Run
+                                    Text="{x:Bind viewModel.CoinInfo.market_data.market_cap_change_percentage_24h, Mode=OneWay, FallbackValue=0}" Foreground="Green" FontWeight="Light" FontSize="11"/><Run
                                     Text="%" Foreground="Green" FontWeight="Light" FontSize="11"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="Circulating supply" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind cdw.cd.market_data.circulating_supply, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}" Foreground="Green"/>
-                                <Run Text="{x:Bind crypto, Mode=OneWay}" Foreground="Green"/>
+                                <Run Text="{x:Bind viewModel.CoinInfo.market_data.circulating_supply, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}" Foreground="Green"/>
+                                <Run Text="{x:Bind viewModel.CoinCard.Crypto, Mode=OneWay}" Foreground="Green"/>
                             </TextBlock>
                         </controls:UniformGrid>
                     </StackPanel>
@@ -350,8 +372,8 @@
                         <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
                             <TextBlock Text="Volume 24h" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiBold" RelativePanel.AlignRightWithPanel="True">
-                                <Run Text="{x:Bind cdw.cd.market_data.total_volume.eur, Mode=OneWay, FallbackValue=0,
-                                    Converter={StaticResource StringFormatConverter}}"/><Run Text="{x:Bind currencySymbol, Mode=OneWay, FallbackValue=€}"/>
+                                <Run Text="{x:Bind viewModel.CoinInfo.market_data.total_volume.eur, Mode=OneWay, FallbackValue=0,
+                                    Converter={StaticResource StringFormatConverter}}"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}"/>
                             </TextBlock>
                         </RelativePanel>
 

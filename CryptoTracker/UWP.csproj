@@ -130,6 +130,7 @@
     </Compile>
     <Compile Include="Model\CoinCard.cs" />
     <Compile Include="ViewModels\CoinCompactViewModel.cs" />
+    <Compile Include="ViewModels\CoinDetailsViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="Views\CoinCompact.xaml.cs">
       <DependentUpon>CoinCompact.xaml</DependentUpon>
