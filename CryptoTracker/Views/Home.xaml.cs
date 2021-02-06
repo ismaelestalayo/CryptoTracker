@@ -116,7 +116,7 @@ namespace CryptoTracker.Views {
                     colorBrush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
 
                 var color = colorBrush.Color;
-                viewModel.CoinCards[i].ChartFill1 = Color.FromArgb(62, color.R, color.G, color.B);
+                viewModel.CoinCards[i].ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
                 viewModel.CoinCards[i].ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
                 viewModel.CoinCards[i].ChartStroke = colorBrush;
 

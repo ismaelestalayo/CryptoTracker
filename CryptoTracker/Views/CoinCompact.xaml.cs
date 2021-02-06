@@ -69,7 +69,7 @@ namespace CryptoTracker.Views {
 
 			viewModel.CoinCard.ChartStroke = brush;
 			var color = brush.Color;
-			viewModel.CoinCard.ChartFill1 = Color.FromArgb(62, color.R, color.G, color.B);
+			viewModel.CoinCard.ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
 			viewModel.CoinCard.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
 
 			viewModel.CoinCard.PricesMinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
