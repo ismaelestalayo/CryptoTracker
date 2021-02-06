@@ -10,7 +10,21 @@ namespace CryptoTracker.Model {
         /// <summary>
         /// Basic data of a coin that stays invariable through time
         /// </summary>
-        internal string Crypto { get; set; } = "NULL";
+        private string _crypto = "NULL";
+        internal string Crypto {
+            get => _crypto;
+            set {
+                SetProperty(ref _crypto, value);
+                IconSrc = string.Format("/Assets/Icons/icon{0}.png", value);
+                if (App.Current.Resources.ContainsKey(value + "_colorT")) {
+                    var brush = (SolidColorBrush)App.Current.Resources[value + "_color"];
+                    var color = brush.Color;
+                    ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
+                    ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
+                    ChartStroke = brush;
+                }
+            }
+        }
         internal string CryptoFullName { get; set; } = "NULL";
         internal string CryptoSymbol { get; set; } = "NULL";
         internal string Currency { get; set; } = App.currencySymbol;
@@ -25,7 +39,10 @@ namespace CryptoTracker.Model {
 
         internal bool IsLoading {
             get => _isLoading;
-            set => SetProperty(ref _isLoading, value);
+            set {
+                SetProperty(ref _isLoading, value);
+                Opacity = value ? 0.33 : 1;
+            }
         }
 
         internal double Opacity {
@@ -55,17 +72,17 @@ namespace CryptoTracker.Model {
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
         private SolidColorBrush _chartStroke = (SolidColorBrush)App.Current.Resources["Main_WhiteBlack"];
-        private SolidColorBrush _priceDiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
+        private SolidColorBrush _diffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
         private Color _chartFill1 = Color.FromArgb(64, 128, 128, 128);
-        private Color _chartFill2 = Color.FromArgb(64, 128, 128, 128);
+        private Color _chartFill2 = Color.FromArgb(16, 128, 128, 128);
         
         internal SolidColorBrush ChartStroke {
             get => _chartStroke;
             set => SetProperty(ref _chartStroke, value);
         }
         internal SolidColorBrush DiffFG {
-            get => _priceDiffFG;
-            set => SetProperty(ref _priceDiffFG, value);
+            get => _diffFG;
+            set => SetProperty(ref _diffFG, value);
         }
         internal Color ChartFill1 {
             get => _chartFill1;
