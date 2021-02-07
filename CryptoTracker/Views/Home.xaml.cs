@@ -96,10 +96,8 @@ namespace CryptoTracker.Views {
         /// #########################################################################################
         ///  Update all cards
         internal async Task UpdateAllCards() {
-            foreach (var homeCard in viewModel.CoinCards) {
-                homeCard.Opacity = 0.33;
+            foreach (var homeCard in viewModel.CoinCards)
                 homeCard.IsLoading = true;
-            }
             
             for (int i = 0; i < viewModel.CoinCards.Count; i++)
                 await UpdateCard(i);
@@ -110,28 +108,24 @@ namespace CryptoTracker.Views {
 			try {
                 string crypto = App.pinnedCoins[i];
 
-                /// Color
-                SolidColorBrush colorBrush = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
-                if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
-                    colorBrush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
-
-                var color = colorBrush.Color;
-                viewModel.CoinCards[i].ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
-                viewModel.CoinCards[i].ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
-                viewModel.CoinCards[i].ChartStroke = colorBrush;
-
-                /// Data
+                /// Get price
                 viewModel.CoinCards[i].Price = await CryptoCompare.GetPriceAsync(crypto);
-                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeSpan, limit);
 
-                /// Create List of ChartData for the chart
+                /// Colors
+                var brush = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
+                if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
+                    brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
+                viewModel.CoinCards[i].ChartStroke = brush;
+
+                /// Get Historic and create List of ChartData for the chart
+                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeSpan, limit);
                 var chartData = new List<ChartData>();
 				foreach (var h in histo) {
 					chartData.Add(new ChartData() {
 						Date = h.DateTime,
 						Value = h.Average,
                         Volume = h.volumefrom,
-                        Color = color
+                        Color = brush.Color
                     });
 				}
                 viewModel.CoinCards[i].ChartData = chartData;
@@ -140,6 +134,7 @@ namespace CryptoTracker.Views {
                 var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
                 viewModel.CoinCards[i].PricesMinMax = MinMax;
 
+                /// Calculate the price difference
                 double oldestPrice = histo[0].Average;
 				double newestPrice = histo[histo.Count - 1].Average;
 				double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
@@ -154,7 +149,6 @@ namespace CryptoTracker.Views {
 
                 /// Show that loading is done
                 viewModel.CoinCards[i].IsLoading = false;
-                viewModel.CoinCards[i].Opacity = 1;
             } catch (Exception) {
 
             }
