@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.System.Threading;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -22,9 +21,6 @@ namespace CryptoTracker {
         private static string timeSpan = "week";
         private static string timeUnit = "hour";
         private static ThreadPoolTimer PeriodicTimer;
-
-        private Color ChartTrackBall = Color.FromArgb(255, 180, 50, 180);
-        private SolidColorBrush ChartTrackBallBrush = new SolidColorBrush(Color.FromArgb(255, 180, 50, 180));
 
         public CoinDetails() {
             this.InitializeComponent();
