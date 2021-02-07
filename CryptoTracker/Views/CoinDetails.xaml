@@ -156,7 +156,7 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <Grid Grid.Row="2" Grid.Column="0">
+        <Grid Grid.Row="2" Grid.Column="0" Opacity="{x:Bind viewModel.CoinCard.Opacity, Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
@@ -166,18 +166,19 @@
 				IsLoading="{x:Bind viewModel.CoinCard.IsLoading, Mode=OneWay}"
 				HorizontalAlignment="Center" VerticalAlignment="Center"
                 Grid.RowSpan="2" Grid.ColumnSpan="2"
-                Background="Transparent" Opacity="0.4">
-                <ContentControl x:Name="LoadingContentControl">
-                    <ProgressBar IsIndeterminate="True" Width="600"
-                                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
-                                 Background="Transparent"/>
+                Background="Transparent">
+                <ContentControl>
+                    <ProgressBar
+						Background="Transparent"
+						IsIndeterminate="True"
+                        Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+						Width="600"/>
                 </ContentControl>
             </controls:Loading>
 
             <telerik:RadCartesianChart
 				x:Name="PriceChart"
 				Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-				Opacity="{x:Bind Opacity, Mode=OneWay}"
 				Margin="-5 0 -25 0">
 
                 <telerik:RadCartesianChart.Behaviors>
@@ -185,15 +186,15 @@
 						<telerik:ChartTrackBallBehavior.LineStyle>
 							<Style TargetType="Polyline">
 								<Setter Property="Stroke" Value="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"/>
-								<Setter Property="StrokeThickness" Value="0.5"/>
-								<Setter Property="StrokeDashArray" Value="3,4"/>
+								<Setter Property="StrokeThickness" Value="1"/>
+								<Setter Property="StrokeDashArray" Value="5,6"/>
 							</Style>
 						</telerik:ChartTrackBallBehavior.LineStyle>
 						<telerik:ChartTrackBallBehavior.InfoStyle>
 							<Style TargetType="telerikPrimitives:TrackBallInfoControl">
-								<Setter Property="Background" Value="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"/>
-								<Setter Property="Foreground" Value="Black"/>
-								<Setter Property="BorderBrush" Value="{x:Bind viewModel.CoinCard.DiffFG, Mode=OneWay}"/>
+								<Setter Property="Background" Value="{x:Bind viewModel.CoinCard.ChartFill2, Mode=OneWay}"/>
+								<Setter Property="BorderBrush" Value="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"/>
+								<Setter Property="BorderThickness" Value="1"/>
 							</Style>
 						</telerik:ChartTrackBallBehavior.InfoStyle>
 					</telerik:ChartTrackBallBehavior>
@@ -201,13 +202,19 @@
 				</telerik:RadCartesianChart.Behaviors>
 
                 <telerik:RadCartesianChart.Grid>
-                    <telerik:CartesianChartGrid MajorYLinesRenderMode="Inner"
-                        MajorLinesVisibility="X" MajorYLineStyle="{StaticResource ChartGridColor}"/>
+                    <telerik:CartesianChartGrid
+						MajorYLinesRenderMode="Inner"
+                        MajorLinesVisibility="X"
+						MajorYLineStyle="{StaticResource ChartGridColor}"/>
                 </telerik:RadCartesianChart.Grid>
 
                 <telerik:RadCartesianChart.HorizontalAxis>
                     <telerik:DateTimeContinuousAxis
                         LabelOffset="1"
+						LabelFormat="{x:Bind viewModel.ChartSyle.LabelFormat, Mode=OneWay}"
+						Minimum="{x:Bind viewModel.ChartSyle.Minimum, Mode=OneWay}"
+						MajorStep="{x:Bind viewModel.ChartSyle.MajorStep, Mode=OneWay}"
+						MajorStepUnit="{x:Bind viewModel.ChartSyle.MajorStepUnit, Mode=OneWay}"
 						FontWeight="Light" FontFamily="Segoe UI"
 						Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
                 </telerik:RadCartesianChart.HorizontalAxis>
@@ -231,16 +238,15 @@
 					</telerik:AreaSeries.Fill>
 					<telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                         <DataTemplate>
-							<StackPanel
-								Background="{Binding Color, Mode=OneWay}"
-								
-								BorderThickness="7">
-								<StackPanel Orientation="Vertical">
+							<StackPanel Padding="7 3" CornerRadius="30">
+								<StackPanel Orientation="Vertical" Padding="5 2">
 									<TextBlock
 										Text="{Binding DataPoint.Value}"
 										Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
 										FontWeight="Bold" FontSize="16"/>
-									<TextBlock Text="{Binding DataPoint.Category}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
+									<TextBlock
+										Text="{Binding DataPoint.Category}"
+										Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
 								</StackPanel>
 							</StackPanel>
                         </DataTemplate>

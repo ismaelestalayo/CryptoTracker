@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
+using CryptoTracker.Model;
 using CryptoTracker.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -439,9 +440,55 @@ namespace CryptoTracker {
             return DateTimeAxis;
         }
 
+        internal static ChartStyling AdjustLinearAxis(ChartStyling chartStyle, string timeSpan) {
+            switch (timeSpan) {
+                case "hour":
+                    chartStyle.LabelFormat = "{0:HH:mm}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
+                    chartStyle.MajorStep = 10;
+                    chartStyle.Minimum = DateTime.Now.AddHours(-1);
+                    break;
+
+                case "day":
+                    chartStyle.LabelFormat = "{0:HH:mm}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
+                    chartStyle.MajorStep = 6;
+                    chartStyle.Minimum = DateTime.Now.AddDays(-1);
+                    break;
+
+                case "week":
+                    chartStyle.LabelFormat = "{0:ddd d}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
+                    chartStyle.MajorStep = 1;
+                    chartStyle.Minimum = DateTime.Now.AddDays(-7);
+                    break;
+
+                case "month":
+                    chartStyle.LabelFormat = "{0:d/M}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
+                    chartStyle.MajorStep = 1;
+                    chartStyle.Minimum = DateTime.Now.AddMonths(-1);
+                    break;
+                case "year":
+                    chartStyle.LabelFormat = "{0:MMM}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
+                    chartStyle.MajorStep = 1;
+                    chartStyle.Minimum = DateTime.MinValue;
+                    break;
+
+                case "all":
+                    chartStyle.LabelFormat = "{0:MMM/yy}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
+                    chartStyle.MajorStep = 4;
+                    chartStyle.Minimum = DateTime.MinValue;
+                    break;
+            }
+            return chartStyle;
+        }
 
 
-	}
+
+    }
 
 }
 

@@ -19,7 +19,8 @@ using Windows.UI.Xaml.Navigation;
 namespace CryptoTracker {
 	public sealed partial class CoinDetails : Page {
         private static int limit = 168;
-        private static string timeSpan = "hour";
+        private static string timeSpan = "week";
+        private static string timeUnit = "hour";
         private static ThreadPoolTimer PeriodicTimer;
 
         private Color ChartTrackBall = Color.FromArgb(255, 180, 50, 180);
@@ -69,7 +70,7 @@ namespace CryptoTracker {
             TimeSpan period = TimeSpan.FromSeconds(30);
             PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-                    RadioButton r = new RadioButton { Content = timeSpan };
+                    RadioButton r = new RadioButton { Content = timeUnit };
                     if (timeSpan == "hour" && this.Frame.SourcePageType.Name == "CoinDetails")
                         TimerangeButton_Click(r, null);
                 });
@@ -90,7 +91,7 @@ namespace CryptoTracker {
         /// #########################################################################################
         internal async void UpdatePage() {
             viewModel.CoinCard.IsLoading = true;
-
+            
             await UpdateCoin();
             await Get24Volume();
             //CryptoCompare.GetExchanges(crypto);
@@ -101,18 +102,25 @@ namespace CryptoTracker {
             var crypto = viewModel.CoinCard.Crypto;
             viewModel.CoinCard.Price = await CryptoCompare.GetPriceAsync(crypto);
 
-            /// Get Historic and create List of ChartData for the chart
-            var histo = await CryptoCompare.GetHistoricAsync(crypto, timeSpan, limit);
+            /// Colors
+            var brush = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
+            if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
+                brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
+            viewModel.CoinCard.ChartStroke = brush;
+
+            /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
+            var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit);
             var chartData = new List<ChartData>();
             foreach (var h in histo) {
                 chartData.Add(new ChartData() {
-                    Color = viewModel.CoinCard.ChartStroke.Color,
+                    Color = brush.Color,
                     Date = h.DateTime,
                     Value = h.Average,
                     Volume = h.volumefrom
                 });
             }
             viewModel.CoinCard.ChartData = chartData;
+            viewModel.ChartSyle = App.AdjustLinearAxis(viewModel.ChartSyle, timeSpan);
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
@@ -147,34 +155,34 @@ namespace CryptoTracker {
             viewModel.CoinCard.IsLoading = true;
 
             RadioButton btn = sender as RadioButton;
-
-            switch (btn.Content) {
+            timeSpan = btn.Content.ToString();
+            switch (timeSpan) {
                 case "hour":
-                    timeSpan = "minute";
+                    timeUnit = "minute";
                     limit = 60;
                     break;
 
                 case "day":
-                    timeSpan = "minute";
+                    timeUnit = "minute";
                     limit = 1500;
                     break;
 
                 case "week":
-                    timeSpan = "hour";
+                    timeUnit = "hour";
                     limit = 168;
                     break;
 
                 case "month":
-                    timeSpan = "hour";
+                    timeUnit = "hour";
                     limit = 744;
                     break;
                 case "year":
-                    timeSpan = "day";
+                    timeUnit = "day";
                     limit = 365;
                     break;
 
                 case "all":
-                    timeSpan = "day";
+                    timeUnit = "day";
                     limit = 0;
                     break;
 
