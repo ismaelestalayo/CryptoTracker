@@ -99,7 +99,7 @@ namespace CryptoTracker {
             viewModel.CoinCard.Price = await CryptoCompare.GetPriceAsync(crypto);
 
             /// Colors
-            var brush = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
+            var brush = viewModel.CoinCard.ChartStroke;
             if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
                 brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
             viewModel.CoinCard.ChartStroke = brush;

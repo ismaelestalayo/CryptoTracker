@@ -182,7 +182,7 @@
 				Margin="-5 0 -25 0">
 
                 <telerik:RadCartesianChart.Behaviors>
-                    <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints">
+                    <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">
 						<telerik:ChartTrackBallBehavior.LineStyle>
 							<Style TargetType="Polyline">
 								<Setter Property="Stroke" Value="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"/>
@@ -232,13 +232,13 @@
 					StrokeThickness="1">
 					<telerik:AreaSeries.Fill>
 						<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-							<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill1, Mode=OneWay}" Offset="0"/>
+							<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill1, Mode=OneWay}" Offset="0.3"/>
 							<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill2, Mode=OneWay}" Offset="1."/>
 						</LinearGradientBrush>
 					</telerik:AreaSeries.Fill>
 					<telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                         <DataTemplate>
-							<StackPanel Padding="7 3" CornerRadius="30">
+							<StackPanel Padding="5 2">
 								<StackPanel Orientation="Vertical" Padding="5 2">
 									<TextBlock
 										Text="{Binding DataPoint.Value}"
@@ -251,6 +251,11 @@
 							</StackPanel>
                         </DataTemplate>
                     </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+					<telerik:ChartTrackBallBehavior.IntersectionTemplate>
+						<DataTemplate>
+							<Ellipse Width="7" Height="7" Fill="#907D7D7D" StrokeThickness="1"/>
+						</DataTemplate>
+					</telerik:ChartTrackBallBehavior.IntersectionTemplate>
 
 					<telerik:AreaSeries.CategoryBinding>
 						<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
