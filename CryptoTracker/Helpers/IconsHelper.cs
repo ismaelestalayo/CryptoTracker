@@ -7,9 +7,9 @@ namespace CryptoTracker.Helpers {
             string filename = "Assets/Icons/icon" + coin + ".png";
 
             if (!File.Exists(filename))
-                filename = "https://chasing-coins.com/coin/logo/" + coin;
-
-            return filename;
+                return "https://chasing-coins.com/api/v1/std/logo/" + coin;
+            else
+                return "/" + filename;
         }
     }
 }

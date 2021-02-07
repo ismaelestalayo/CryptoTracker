@@ -2,7 +2,6 @@
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
@@ -16,7 +15,7 @@ namespace CryptoTracker.Model {
             get => _crypto;
             set {
                 SetProperty(ref _crypto, value);
-                IconSrc = GetIcon(value);
+                IconSrc = IconsHelper.GetIcon(value);
             }
         }
         internal string CryptoFullName { get; set; } = "NULL";
@@ -131,16 +130,6 @@ namespace CryptoTracker.Model {
         internal string Volume24to {
             get => _volume24to;
             set => SetProperty(ref _volume24to, value);
-        }
-
-        /// #########################################################################################
-        private string GetIcon(string coin) {
-            string filename = "Assets/Icons/icon" + coin + ".png";
-
-            if (!File.Exists(filename))
-                return "/Assets/Icons/iconNULL.png";
-            else
-                return "/" + filename;
         }
     }
 }
