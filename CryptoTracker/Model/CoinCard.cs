@@ -16,13 +16,6 @@ namespace CryptoTracker.Model {
             set {
                 SetProperty(ref _crypto, value);
                 IconSrc = string.Format("/Assets/Icons/icon{0}.png", value);
-                if (App.Current.Resources.ContainsKey(value + "_colorT")) {
-                    var brush = (SolidColorBrush)App.Current.Resources[value + "_color"];
-                    var color = brush.Color;
-                    ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
-                    ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
-                    ChartStroke = brush;
-                }
             }
         }
         internal string CryptoFullName { get; set; } = "NULL";
@@ -78,7 +71,12 @@ namespace CryptoTracker.Model {
         
         internal SolidColorBrush ChartStroke {
             get => _chartStroke;
-            set => SetProperty(ref _chartStroke, value);
+            set {
+                SetProperty(ref _chartStroke, value);
+                var color = value.Color;
+                ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
+                ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
+            }
         }
         internal SolidColorBrush DiffFG {
             get => _diffFG;
