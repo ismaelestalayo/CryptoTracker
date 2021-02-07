@@ -122,8 +122,8 @@ namespace CryptoTracker {
             //l.UpdateLiveTile();
         }
 
-        // #########################################################################################
-        //  Navigation View
+        /// #########################################################################################
+        ///  Navigation View
         private void NavView_Loaded(object sender, RoutedEventArgs e) {
             // set the initial SelectedItem 
             NavView.SelectedItem = NavView.MenuItems[0];
@@ -189,7 +189,11 @@ namespace CryptoTracker {
             }
 
             ContentFrame.Navigate(page, null, dir);
-            
+        }
+
+        private void ContentFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e) {
+            var toPage = (e.SourcePageType).Name;
+            NavView.IsPaneVisible = (toPage == "CoinCompact") ? false : true;
         }
 
         // #########################################################################################
@@ -274,5 +278,5 @@ namespace CryptoTracker {
             
             
         }
-    }
+	}
 }
