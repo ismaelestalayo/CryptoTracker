@@ -91,8 +91,6 @@ namespace CryptoTracker {
             titleBar.ButtonForegroundColor = Color.FromArgb(255, 150, 150, 150);
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveForegroundColor = Color.FromArgb(127, 150, 150, 150);
-
-            //Window.Current.SetTitleBar(AppTitle);
         }
 
         // #########################################################################################
@@ -125,7 +123,7 @@ namespace CryptoTracker {
         /// #########################################################################################
         ///  Navigation View
         private void NavView_Loaded(object sender, RoutedEventArgs e) {
-            // set the initial SelectedItem 
+            /// set the initial SelectedItem 
             NavView.SelectedItem = NavView.MenuItems[0];
         }
 
@@ -144,9 +142,9 @@ namespace CryptoTracker {
                 selected = "Settings";
             else 
                 selected = ((ContentControl)args.SelectedItem).Content.ToString();
-            
-            // With ItemInvoked the navigation may have already been done
-            // so not to navigate twice, check the current page
+
+            /// With ItemInvoked the navigation may have already been done
+            /// so not to navigate twice, check the current page
             if (source != selected)
                 PagesNavigation(selected);
         }
@@ -183,7 +181,7 @@ namespace CryptoTracker {
                     break;
             }
 
-            // if it's the same page, override the default animation for one from the Bottom
+            ///if it's the same page, override the default animation for one from the Bottom
             if (samePage) { 
                 dir.Effect = SlideNavigationTransitionEffect.FromBottom;
             }
@@ -191,6 +189,7 @@ namespace CryptoTracker {
             ContentFrame.Navigate(page, null, dir);
         }
 
+        /// Hide NavigationView if navigating to the Compact Overlay view
         private void ContentFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e) {
             var toPage = (e.SourcePageType).Name;
             NavView.IsPaneVisible = (toPage == "CoinCompact") ? false : true;

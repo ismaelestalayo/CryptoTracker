@@ -35,7 +35,7 @@ namespace CryptoTracker {
                 new BitmapImage(new Uri("ms-appx:///Assets/Tile-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));
             
 
-            switch (App.localSettings.Values["Coin"]) {
+            switch (App.localSettings.Values["Currency"]) {
                 case "EUR":
                     EUR.IsSelected = true;
                     break;
@@ -64,7 +64,7 @@ namespace CryptoTracker {
                     INR.IsSelected = true;
                     break;
             }
-            CoinComboBox.PlaceholderText = App.localSettings.Values["Coin"].ToString();
+            CoinComboBox.PlaceholderText = App.localSettings.Values["Currency"].ToString();
 
             // Show feedback button
             if (Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.IsSupported()) {
@@ -130,7 +130,7 @@ namespace CryptoTracker {
             ComboBox c = sender as ComboBox;
             String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
-            App.localSettings.Values["Coin"] = currency;
+            App.localSettings.Values["Currency"] = currency;
             App.currency = currency;
             App.currencySymbol = CurrencyHelper.CurrencyToSymbol(currency);
         }

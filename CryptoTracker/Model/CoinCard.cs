@@ -2,11 +2,12 @@
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Model {
-    public class CoinCard : ObservableObject {
+	public class CoinCard : ObservableObject {
         /// <summary>
         /// Basic data of a coin that stays invariable through time
         /// </summary>
@@ -15,7 +16,7 @@ namespace CryptoTracker.Model {
             get => _crypto;
             set {
                 SetProperty(ref _crypto, value);
-                IconSrc = string.Format("/Assets/Icons/icon{0}.png", value);
+                IconSrc = GetIcon(value);
             }
         }
         internal string CryptoFullName { get; set; } = "NULL";
@@ -64,7 +65,7 @@ namespace CryptoTracker.Model {
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
-        private SolidColorBrush _chartStroke = (SolidColorBrush)App.Current.Resources["Main_WhiteBlack"];
+        private SolidColorBrush _chartStroke = (SolidColorBrush)App.Current.Resources["main_gray"];
         private SolidColorBrush _diffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
         private Color _chartFill1 = Color.FromArgb(64, 128, 128, 128);
         private Color _chartFill2 = Color.FromArgb(16, 128, 128, 128);
@@ -132,6 +133,14 @@ namespace CryptoTracker.Model {
             set => SetProperty(ref _volume24to, value);
         }
 
-        
+        /// #########################################################################################
+        private string GetIcon(string coin) {
+            string filename = "Assets/Icons/icon" + coin + ".png";
+
+            if (!File.Exists(filename))
+                return "/Assets/Icons/iconNULL.png";
+            else
+                return "/" + filename;
+        }
     }
 }

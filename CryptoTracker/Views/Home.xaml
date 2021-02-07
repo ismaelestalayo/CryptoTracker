@@ -111,8 +111,8 @@
                             </controls:Loading>
 
 							<StackPanel Orientation="Horizontal">
-                                <Image Name="coinLogo" Source="{x:Bind IconSrc}" Width="25" Margin="2"/>
-								<TextBlock Name="coinName" Text="{x:Bind Crypto, Mode=OneWay}" Style="{ThemeResource TitleTextBlockStyle}" Margin="5 -2"/>
+                                <Image Source="{x:Bind IconSrc}" Width="25" Margin="2"/>
+								<TextBlock Text="{x:Bind Crypto, Mode=OneWay}" Style="{ThemeResource TitleTextBlockStyle}" Margin="5 -2"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0">
 								<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
@@ -152,8 +152,8 @@
 									StrokeThickness="1.25">
 									<telerik:AreaSeries.Fill>
 										<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-											<GradientStop Color="{x:Bind ChartFill1, Mode=OneWay}" Offset="0"/>
-											<GradientStop Color="{x:Bind ChartFill2, Mode=OneWay}" Offset="1."/>
+											<GradientStop Color="{x:Bind ChartFill1, Mode=OneWay}" Offset="0.1"/>
+											<GradientStop Color="{x:Bind ChartFill2, Mode=OneWay}" Offset="1.1"/>
 										</LinearGradientBrush>
 									</telerik:AreaSeries.Fill>
 									<telerik:SplineAreaSeries.CategoryBinding>

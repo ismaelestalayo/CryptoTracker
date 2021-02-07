@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -73,8 +72,7 @@ namespace CryptoTracker.Views {
             }
 
             viewModel.CoinCards.Add(new CoinCard {
-                Crypto = crypto,
-                IconSrc = iconPath
+                Crypto = crypto
             });
 
             /// Update pinnedCoin list
@@ -112,7 +110,7 @@ namespace CryptoTracker.Views {
                 viewModel.CoinCards[i].Price = await CryptoCompare.GetPriceAsync(crypto);
 
                 /// Colors
-                var brush = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
+                var brush = viewModel.CoinCards[i].ChartStroke;
                 if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
                     brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
                 viewModel.CoinCards[i].ChartStroke = brush;
