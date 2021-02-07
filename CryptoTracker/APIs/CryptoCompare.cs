@@ -84,7 +84,7 @@ namespace CryptoTracker.APIs {
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
 
                 if (okey != "Success")
-                    return new List<HistoricPrice>(3);
+                    return new List<HistoricPrice>() { new HistoricPrice() };
                 
                 var data = ((JsonElement)response).GetProperty("Data").ToString();
                 var historic = JsonSerializer.Deserialize<List<HistoricPrice>>(data);
