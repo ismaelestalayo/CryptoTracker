@@ -179,6 +179,19 @@ namespace CryptoTracker.APIs {
                     });
                 }
 
+				for (int i = 0; i < top100.Count; i++) {
+                    var coin = top100[i];
+                    coin.CoinInfo.FavIcon = App.pinnedCoins.Contains(coin.CoinInfo.Name) ? "\uEB52" : "\uEB51";
+                    coin.CoinInfo.Rank = i;
+                    coin.CoinInfo.IconSrc = IconsHelper.GetIcon(coin.CoinInfo.Name);
+                }
+				foreach (var coin in top100) {
+                    int i = top100.IndexOf(coin);
+                    coin.CoinInfo.FavIcon = App.pinnedCoins.Contains(coin.CoinInfo.Name) ? "\uEB52" : "\uEB51";
+                    coin.CoinInfo.Rank = i;
+                    coin.CoinInfo.IconSrc = IconsHelper.GetIcon(coin.CoinInfo.Name);
+                }
+
                 return top100;
 
             }
