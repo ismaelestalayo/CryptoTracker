@@ -108,6 +108,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="APIs\CoinGecko.cs" />
     <Compile Include="APIs\CryptoCompare.cs" />
     <Compile Include="APIs\GitHub.cs" />
     <Compile Include="App.xaml.cs">
@@ -125,6 +126,9 @@
     <Compile Include="Helpers\JSONhistoric.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
+    <Compile Include="Model\GlobalStats.cs" />
+    <Compile Include="Model\Top100card.cs" />
+    <Compile Include="ViewModels\Top100ViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

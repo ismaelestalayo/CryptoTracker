@@ -1,15 +1,20 @@
 ﻿<Page
     x:Class="CryptoTracker.Views.Top100"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CryptoTracker.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	xmlns:viewModels="using:CryptoTracker.ViewModels"
+	xmlns:model="using:CryptoTracker.Model"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <Page.Resources>
+	<Page.DataContext>
+		<viewModels:Top100ViewModel x:Name="viewModel"/>
+	</Page.DataContext>
+
+	<Page.Resources>
         <Style TargetType="TextBlock" x:Key="a">
             <Setter Property="FontSize" Value="22"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -17,14 +22,15 @@
         </Style>
         <Style TargetType="TextBlock" x:Key="b">
             <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0 -5"/>
+            <Setter Property="Margin" Value="0 -5 0 0"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Opacity" Value="0.5"/>
         </Style>
     </Page.Resources>
 
     <!-- 
-    ################################################################################################### -->
+    ###################################################################################################
+	# TOP HEADER # -->
     <Grid Padding="5" >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -39,31 +45,50 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="0">
-                <TextBlock Text="BTC dominance" Style="{StaticResource b}"/>
-                <TextBlock Text="{Binding BtcDominance, FallbackValue=0}" Style="{StaticResource a}"/>
+			<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="0">
+				<TextBlock Style="{StaticResource a}" d:Text="100%">
+					<Run Text="{x:Bind viewModel.GlobalStats.BtcDominance, Mode=OneWay}"/><Run Text="%"/>
+				</TextBlock>
+				<TextBlock Text="BTC dom." Style="{StaticResource b}"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1">
-                <TextBlock Text="24h Vol" Style="{StaticResource b}"/>
-                <TextBlock Text="{Binding TotalVolume, FallbackValue=0}" Style="{StaticResource a}"/>
-            </StackPanel>
+                <TextBlock Style="{StaticResource a}" d:Text="0B€">
+					<Run Text="{x:Bind viewModel.GlobalStats.TotalVolume, Mode=OneWay}"/><!--
+					--><Run Text="{x:Bind viewModel.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
+				</TextBlock>
+				<TextBlock Text="24h Vol" Style="{StaticResource b}"/>
+			</StackPanel>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="2">
-                <TextBlock Text="Market Cap." Style="{StaticResource b}"/>
-                <TextBlock Text="{Binding TotalMarketCap, FallbackValue=0}" Style="{StaticResource a}"/>
-            </StackPanel>
+                <TextBlock Style="{StaticResource a}" d:Text="0B€">
+					<Run Text="{x:Bind viewModel.GlobalStats.TotalMarketCap, Mode=OneWay}"/><!--
+					--><Run Text="{x:Bind viewModel.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
+				</TextBlock>
+				<TextBlock Text="Mkt Cap." Style="{StaticResource b}"/>
+			</StackPanel>
         </Grid>
 
         <!-- 
-        ################################################################################################### -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" >
-            <ListView x:Name="top100ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_Click">
+        ###################################################################################################
+		# Top 100 List View # -->
+        <ScrollViewer Grid.Row="1"
+			HorizontalScrollBarVisibility="Disabled"
+			VerticalScrollBarVisibility="Hidden"
+            MaxWidth="600">
+			<ListView x:Name="top100ListView"
+				SelectionMode="None"
+				IsItemClickEnabled="True"
+				ItemClick="ListView_Click"
+				ItemsSource="{x:Bind viewModel.Top100cards, Mode=OneWay}">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid x:Name="listView_Element" Height="65"
+					<DataTemplate x:DataType="model:Top100card">
+                        <Grid x:Name="listView_Element"
+							Height="65"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                            Margin="0 3" MaxWidth="600" CornerRadius="5">
+                            Margin="0 3"
+							MaxWidth="600"
+							CornerRadius="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
@@ -72,48 +97,51 @@
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock 
+							<TextBlock 
                                 Grid.Column="0"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center" 
-                                Text="{Binding Rank, FallbackValue=0, Mode=TwoWay}" 
-                                Opacity="0.5"/>
+                                Opacity="0.5"
+								VerticalAlignment="Center" 
+								d:Text="#1">
+								<Run Text="#"/><!--
+								--><Run Text="{x:Bind CoinInfo.Rank, Mode=OneWay}"/>
+							</TextBlock>
 
-                            <Button
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                Content="{Binding FavIcon, Mode=OneWay}"
-                                FontFamily="Segoe MDL2 Assets"
-                                Background="Transparent"
-                                Click="Pin_click"/>
+							<Button
+								Background="Transparent"
+								Click="Pin_click"
+								Content="{x:Bind CoinInfo.FavIcon, Mode=OneWay}"
+								FontFamily="Segoe MDL2 Assets"
+								Grid.Column="1"
+								VerticalAlignment="Center"/>
 
-                            <Image 
+							<Image 
                                 Grid.Column="2" 
-                                Source="{Binding Src}" 
-                                Width="45" Visibility="Visible"/>
+                                Source="{x:Bind CoinInfo.IconSrc, Mode=OneWay}" 
+                                Width="45"
+								d:Source="/Assets/Icons/iconNULL.png"/>
 
-                            <Image Grid.Column="2" Width="45" Visibility="Visible">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{Binding LogoURL}" />
-                                </Image.Source>
-                            </Image>
-
-                            <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding Name, FallbackValue=NULL}" FontSize="20" FontWeight="SemiBold"/>
-                                <TextBlock Opacity="0.8">
-                                    <Run Text="{Binding Price}" FontSize="16"/>
-                                    <Run Text="{Binding Change24h, Mode=OneWay}" Foreground="{Binding ChangeFG}" FontSize="16" FontWeight="Medium"/>
+							<StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" VerticalAlignment="Center">
+                                <TextBlock d:Text="COIN"
+									Text="{x:Bind CoinInfo.Name, Mode=OneWay}"
+									FontSize="20" FontWeight="SemiBold"/>
+                                <TextBlock
+									Opacity="0.8"
+									d:Text="price (change)">
+                                    <Run Text="{x:Bind Raw.PRICE, Mode=OneWay}" FontSize="16"/>
+                                    <Run Text="{x:Bind Raw.CHANGE24HOUR, Mode=OneWay}"
+										 Foreground="{Binding ChangeFG}" FontSize="16" FontWeight="Medium"/>
                                 </TextBlock>
                             </StackPanel>
 
                             <StackPanel Grid.Column="4" VerticalAlignment="Center" Margin="10 0">
                                 <TextBlock FontWeight="Bold" HorizontalAlignment="Right" FontSize="15">
                                     <Run Text="Cap:"/>
-                                    <Run Text="{Binding MarketCap, FallbackValue=0}"/>
+                                    <Run Text="{x:Bind Raw.MKTCAP, FallbackValue=0}"/>
                                 </TextBlock>
                                 <TextBlock FontWeight="Light" HorizontalAlignment="Right" Opacity="0.7" FontSize="15">
                                     <Run Text="Vol:"/>
-                                    <Run Text="{Binding Vol24, FallbackValue=0}"/>
+                                    <Run Text="{x:Bind Raw.TOTALVOLUME24H, Mode=OneWay, FallbackValue=0}"/>
                                 </TextBlock>
                             </StackPanel>
                         </Grid>
@@ -127,7 +155,10 @@
 
                     </Style>
                 </ListView.ItemContainerStyle>
-            </ListView>
+				
+				<!-- For previsualization purposes -->
+				<d:Rectangle/>
+			</ListView>
 
         </ScrollViewer>
 
