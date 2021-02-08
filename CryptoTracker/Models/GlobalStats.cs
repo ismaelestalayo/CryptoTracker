@@ -1,4 +1,4 @@
-﻿namespace CryptoTracker.Model {
+﻿namespace CryptoTracker.Models {
 	public class GlobalStats {
         public string TotalMarketCap { get; set; }
         public string TotalVolume { get; set; }

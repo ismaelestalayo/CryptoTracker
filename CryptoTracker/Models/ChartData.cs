@@ -2,7 +2,7 @@
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.Helpers {
+namespace CryptoTracker.Models {
     // #########################################################################################
 	//  Object for plotting charts
 	public class ChartData {

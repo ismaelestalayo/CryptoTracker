@@ -2,7 +2,7 @@
 using System;
 using Telerik.Charting;
 
-namespace CryptoTracker.Model {
+namespace CryptoTracker.Models {
 	public class ChartStyling : ObservableObject {
         /// <summary>
         /// Attributes to adjust the axis to the plotted time interval

@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:CryptoTracker.Model"
+    xmlns:models="using:CryptoTracker.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
 	xmlns:viewModels="using:CryptoTracker.ViewModels"
@@ -71,7 +71,7 @@
             <ListView x:Name="PriceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
 					  ItemsSource="{x:Bind viewModel.CoinCards, Mode=OneWay}">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:CoinCard">
+                    <DataTemplate x:DataType="models:CoinCard">
                         <Grid x:Name="PriceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
                               Margin="0 5 -5 5" Height="210" CornerRadius="5" Opacity="{x:Bind Opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
@@ -183,7 +183,7 @@
             <ListView x:Name="VolumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
                       Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind viewModel.CoinCards, Mode=OneWay}">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:CoinCard">
+                    <DataTemplate x:DataType="models:CoinCard">
                         <Grid x:Name="VolumeListView_Element" Height="210"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
                             Margin="-5 5 0 5" CornerRadius="5" Opacity="{x:Bind Opacity, Mode=OneWay}">

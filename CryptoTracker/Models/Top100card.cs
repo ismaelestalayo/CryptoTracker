@@ -1,7 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
-namespace CryptoTracker.Model {
-
+namespace CryptoTracker.Models {
 	public class Top100card : ObservableObject{
         private CoinInfo _coinInfo;
         public CoinInfo CoinInfo {

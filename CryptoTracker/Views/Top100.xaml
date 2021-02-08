@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:viewModels="using:CryptoTracker.ViewModels"
-	xmlns:model="using:CryptoTracker.Model"
+	xmlns:models="using:CryptoTracker.Models"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
@@ -82,7 +82,7 @@
 				ItemClick="ListView_Click"
 				ItemsSource="{x:Bind viewModel.Top100cards, Mode=OneWay}">
                 <ListView.ItemTemplate>
-					<DataTemplate x:DataType="model:Top100card">
+					<DataTemplate x:DataType="models:Top100card">
                         <Grid x:Name="listView_Element"
 							Height="65"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 

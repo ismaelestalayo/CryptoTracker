@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.Model {
+namespace CryptoTracker.Models {
 	public class CoinCard : ObservableObject {
         /// <summary>
         /// Basic data of a coin that stays invariable through time
