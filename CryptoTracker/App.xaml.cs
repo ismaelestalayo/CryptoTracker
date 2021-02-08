@@ -175,34 +175,7 @@ namespace CryptoTracker {
         }
 
         // ###############################################################################################
-        //  (GET) Historic prices
-        internal async static Task GetHisto(string crypto, string time, int limit) {
-            if (crypto == "MIOTA")
-                crypto = "IOT";
-
-            //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
-            string URL = "https://min-api.cryptocompare.com/data/histo" + time + "?e=CCCAGG&fsym="
-                + crypto + "&tsym=" + currency + "&limit=" + limit;
-
-            if (limit == 0)
-                URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + currency + "&allData=true";
-
-            Uri uri = new Uri(URL);
-
-            try {
-                string response = await Client.GetStringAsync(uri);
-                var data = JToken.Parse(response);
-
-                App.historic.Clear();
-                App.historic = JSONhistoric.HandleHistoricJSON(data);
-                
-
-            } catch (Exception) {
-                App.historic.Clear();
-                App.historic = JSONhistoric.HandleHistoricJSONnull(limit);
-                //var dontWait = await new MessageDialog(ex.Message).ShowAsync();
-            }
-        }
+        //  (GET) Historic prices        
 
         internal async static Task<List<JSONhistoric>> GetHistoricalPrices(string crypto, string timeSpan) {
             if (crypto == "MIOTA")
@@ -261,99 +234,6 @@ namespace CryptoTracker {
         }
 
         // ###############################################################################################
-        //  (GET) top 100 coins (by marketcap)
-        internal async static Task<List<Top100coin>> GetTop100() {
-            int limit = 100;
-            String URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", currency, limit);
-
-            Uri uri = new Uri(URL);
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
-            httpResponse.Headers.Add("X-CMC_PRO_API_KEY", "569e637087fe54f3c739de6f8618187f805fb0a5f662f9179add6c027809c286");
-
-            String response = "";
-
-            try {
-                httpResponse = await Client.GetAsync(uri);
-                httpResponse.EnsureSuccessStatusCode();
-
-                response = await httpResponse.Content.ReadAsStringAsync();
-                var data = JToken.Parse(response);
-                data = data["Data"];
-
-                var coinn = ((JProperty)data[0]["RAW"].First).Name;
-                List<Top100coin> topCoins = new List<Top100coin>();
-
-                for (int i = 0; i < limit; i++) {
-                    var symbol = data[i]["CoinInfo"]["Name"].ToString();
-
-                    // There are some coins without RAW data
-                    if (data[i]["RAW"] == null){
-                        topCoins.Add(
-                           new Top100coin {
-                               Name = data[i]["CoinInfo"]["FullName"].ToString() ?? "NULL",
-                               Symbol = symbol,
-                               Src = string.Format("/Assets/Icons/icon{0}.png", symbol),
-                               FavIcon = pinnedCoins.Contains(symbol) ? "\uEB52" : "\uEB51"});
-                    }
-                    else {
-                        var change = Math.Round((float)(data[i]["RAW"][coinn]["CHANGEPCT24HOUR"] ?? 0), 3);
-                        topCoins.Add(
-                            new Top100coin {
-                                Rank = (i + 1).ToString(),
-                                Name = data[i]["CoinInfo"]["FullName"].ToString() ?? "NULL",
-                                Symbol = symbol,
-                                Price = ToKMB((double)(data[i]["RAW"][coinn]["PRICE"] ?? "0")) + currencySymbol,
-                                Vol24 = ToKMB((double)(data[i]["RAW"][coinn]["TOTALVOLUME24HTO"] ?? "0")) + currencySymbol,
-                                MarketCap = ToKMB((double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0")) + currencySymbol,
-                                MarketCapRaw = (double)(data[i]["RAW"][coinn]["MKTCAP"] ?? "0"),
-                                Change24h = change.ToString() + "%",
-                                ChangeFG = change < 0 ? (SolidColorBrush)Current.Resources["pastelRed"] : (SolidColorBrush)Current.Resources["pastelGreen"],
-                                Src = string.Format("/Assets/Icons/icon{0}.png", symbol),
-                                FavIcon = pinnedCoins.Contains(symbol) ? "\uEB52" : "\uEB51"
-                            });
-                    }
-                    
-                }
-
-                return topCoins;
-
-            } catch (Exception ex) {
-                await new MessageDialog(ex.Message).ShowAsync();
-                return new List<Top100coin>();
-            }
-        }
-
-        // ###############################################################################################
-        //  (GET) global stats
-        internal async static Task<GlobalStats> GetGlobalStats() {
-            String URL = "https://api.coingecko.com/api/v3/global";
-
-            Uri uri = new Uri(URL);
-            HttpResponseMessage httpResponse = new HttpResponseMessage();
-
-            String response = "";
-
-            try {
-                httpResponse = await Client.GetAsync(uri);
-                httpResponse.EnsureSuccessStatusCode();
-
-                response = await httpResponse.Content.ReadAsStringAsync();
-                var data = JToken.Parse(response);
-                data = data["data"];
-
-                GlobalStats g = new GlobalStats();
-                g.ActiveCurrencies  = data["active_cryptocurrencies"].ToString();
-                g.BtcDominance      = Math.Round((double)data["market_cap_percentage"]["btc"], 2).ToString() + "%";
-                g.TotalVolume       = ToKMB((double)(data["total_volume"][currency.ToLower()] ?? data["total_volume"]["usd"])) + currencySymbol;
-                g.TotalMarketCap    = ToKMB((double)(data["total_market_cap"][currency.ToLower()] ?? data["total_market_cap"]["usd"])) + currencySymbol;
-                return g;
-
-            } catch (Exception) {
-                //await new MessageDialog(ex.Message).ShowAsync();
-                return new GlobalStats();
-            }
-        }
-
         public static string ToKMB(double num) {
             if (num > 999999999) {
                 return num.ToString("0,,,.##B", CultureInfo.InvariantCulture);

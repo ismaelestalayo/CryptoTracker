@@ -1,4 +1,6 @@
 ﻿using CryptoTracker.Helpers;
+using CryptoTracker.Model;
+using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -142,6 +144,47 @@ namespace CryptoTracker.APIs {
             public double volume24hTo { get; set; } = 0;
             public double price { get; set; } = 0;
             public string exchangeGrade { get; set; } = "null";
+        }
+
+        /* ###############################################################################################
+         * Gets the top 100 coins (by marketcap)
+         * 
+         * Arguments: none
+         * 
+        */
+        internal async static Task<List<Top100card>> GetTop100() {
+            int limit = 100;
+            var currency = App.currency;
+
+            var URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", currency, limit);
+
+            try {
+                var responseString = await App.GetStringFromUrlAsync(URL);
+                var response = JsonSerializer.Deserialize<object>(responseString);
+
+                var data = ((JsonElement)response).GetProperty("Data");
+
+                var top100 = new List<Top100card>();
+				for (int i = 0; i < limit; i++) {
+                    var coinInfo = data[i].GetProperty("CoinInfo");
+                    var rawExists = data[i].TryGetProperty("RAW", out var raw);
+                    if (rawExists)
+                        raw = raw.GetProperty(currency.ToUpperInvariant());
+                    else
+                        raw = new JsonElement();
+
+                    top100.Add(new Top100card() {
+                        CoinInfo = JsonSerializer.Deserialize<CoinInfo>(coinInfo.ToString()),
+                        Raw = JsonSerializer.Deserialize<Raw>(raw.ToString())
+                    });
+                }
+
+                return top100;
+
+            }
+            catch (Exception ex) {
+                return new List<Top100card>();
+            }
         }
     }
 }
