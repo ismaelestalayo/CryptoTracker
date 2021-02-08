@@ -134,16 +134,7 @@ namespace CryptoTracker {
         
         async private Task Get24Volume() {
             var crypto = viewModel.CoinCard.Crypto;
-            await App.GetHisto(crypto, "hour", 24);
-
-            List<ChartData> data = new List<ChartData>();
-            for (int i = 0; i < 24; i++) {
-                data.Add(new ChartData() {
-                    Date   = App.historic[i].DateTime,
-                    Volume = App.historic[i].Volumefrom
-                });
-            }
-            this.volumeChart.DataContext = data;
+            // TODO: add volume chart
         }
 
         // #########################################################################################
