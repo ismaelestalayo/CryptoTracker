@@ -1,5 +1,5 @@
 ﻿using CryptoTracker.Helpers;
-using CryptoTracker.Model;
+using CryptoTracker.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace CryptoTracker.ViewModels {

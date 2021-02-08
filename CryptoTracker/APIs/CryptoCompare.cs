@@ -1,9 +1,7 @@
 ﻿using CryptoTracker.Helpers;
-using CryptoTracker.Model;
-using CryptoTracker.Views;
+using CryptoTracker.Models;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 

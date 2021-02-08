@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Helpers;
+using CryptoTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

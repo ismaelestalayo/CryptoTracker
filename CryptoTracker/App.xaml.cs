@@ -1,7 +1,6 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
-using CryptoTracker.Model;
-using CryptoTracker.Views;
+using CryptoTracker.Models;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;

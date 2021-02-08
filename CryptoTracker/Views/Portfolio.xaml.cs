@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
+using CryptoTracker.Models;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;

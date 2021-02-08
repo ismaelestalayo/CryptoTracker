@@ -1,4 +1,4 @@
-﻿using CryptoTracker.Model;
+﻿using CryptoTracker.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 

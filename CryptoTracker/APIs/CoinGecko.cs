@@ -1,4 +1,4 @@
-﻿using CryptoTracker.Model;
+﻿using CryptoTracker.Models;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;

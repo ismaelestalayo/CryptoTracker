@@ -1,5 +1,5 @@
 ﻿using CryptoTracker.APIs;
-using CryptoTracker.Model;
+using CryptoTracker.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

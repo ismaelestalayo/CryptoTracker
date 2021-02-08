@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
+using CryptoTracker.Models;
 using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
