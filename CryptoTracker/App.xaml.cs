@@ -232,23 +232,6 @@ namespace CryptoTracker {
             }
         }
 
-        // ###############################################################################################
-        public static string ToKMB(double num) {
-            if (num > 999999999) {
-                return num.ToString("0,,,.##B", CultureInfo.InvariantCulture);
-            } else
-            if (num > 999999) {
-                return num.ToString("0,,.##M", CultureInfo.InvariantCulture);
-            } else
-            if (num > 999) {
-                num = Math.Round(num, 2);
-                return num.ToString(CultureInfo.InvariantCulture);
-            } else {
-                num = Math.Round(num, 3);
-                return num.ToString(CultureInfo.InvariantCulture);
-            }
-        }
-
         /// ###############################################################################################
         /// <summary>
         /// do NOT mess with async methods...

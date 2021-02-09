@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Models;
+﻿using CryptoTracker.Helpers;
+using CryptoTracker.Models;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -28,8 +29,8 @@ namespace CryptoTracker.APIs {
                 );
 
                 stats.BtcDominance = Math.Round(btcDominance, 2);
-                stats.TotalVolume = App.ToKMB(totalVolume);
-                stats.TotalMarketCap = App.ToKMB(totalMarketCap);
+                stats.TotalVolume = NumberHelper.AddUnitPrefix(totalVolume);
+                stats.TotalMarketCap = NumberHelper.AddUnitPrefix(totalMarketCap);
                 stats.CurrencySymbol = App.currencySymbol;
                 return stats;
 

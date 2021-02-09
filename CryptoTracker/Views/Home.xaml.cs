@@ -142,8 +142,8 @@ namespace CryptoTracker.Views {
                 double total1 = 0, total2 = 0;
                 histo.ForEach(x => total1 += x.volumeto);
                 histo.ForEach(x => total2 += x.volumefrom);
-                viewModel.CoinCards[i].Volume24 = App.ToKMB(total2) + App.currencySymbol;
-                viewModel.CoinCards[i].Volume24to = App.ToKMB(total1) + App.currencySymbol;                
+                viewModel.CoinCards[i].Volume24 = NumberHelper.AddUnitPrefix(total2) + App.currencySymbol;
+                viewModel.CoinCards[i].Volume24to = NumberHelper.AddUnitPrefix(total1) + App.currencySymbol;                
 
                 /// Show that loading is done
                 viewModel.CoinCards[i].IsLoading = false;

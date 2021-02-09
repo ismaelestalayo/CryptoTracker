@@ -42,16 +42,8 @@ namespace CryptoTracker.APIs {
 
             try {
                 var data = await App.GetStringAsync(uri);
-
                 double price = double.Parse(data.Split(":")[1].Replace("}", ""));
-
-                if (price > 99)
-                    return Math.Round(price, 2);
-                else if (price > 10)
-                    return Math.Round(price, 4);
-                else
-                    return Math.Round(price, 6);
-
+                return NumberHelper.Rounder(price);
             }
             catch (Exception) {
                 return 0;
