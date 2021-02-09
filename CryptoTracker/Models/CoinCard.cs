@@ -46,8 +46,8 @@ namespace CryptoTracker.Models {
         /// <summary>
         /// List of ChartData containing the values for the chart
         /// </summary>
-        private List<ChartData> _chartData = new List<ChartData>() { new ChartData() { Value = 5, Date = DateTime.Today } };
-        internal List<ChartData> ChartData {
+        private List<ChartPoint> _chartData = new List<ChartPoint>() { new ChartPoint() { Value = 5, Date = DateTime.Today } };
+        internal List<ChartPoint> ChartData {
             get => _chartData;
             set => SetProperty(ref _chartData, value);
         }

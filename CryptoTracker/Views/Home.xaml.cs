@@ -117,9 +117,9 @@ namespace CryptoTracker.Views {
 
                 /// Get Historic and create List of ChartData for the chart
                 var histo = await CryptoCompare.GetHistoricAsync(crypto, timeSpan, limit);
-                var chartData = new List<ChartData>();
+                var chartData = new List<ChartPoint>();
 				foreach (var h in histo) {
-					chartData.Add(new ChartData() {
+					chartData.Add(new ChartPoint() {
 						Date = h.DateTime,
 						Value = h.Average,
                         Volume = h.volumefrom,

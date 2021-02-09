@@ -47,9 +47,9 @@ namespace CryptoTracker.Views {
 			/// Get historic values
 			var histo = await GetHistoricAsync(crypto, "minute", 60);
 
-			var chartData = new List<ChartData>();
+			var chartData = new List<ChartPoint>();
 			foreach (var h in histo)
-				chartData.Add(new ChartData() {
+				chartData.Add(new ChartPoint() {
 					Date = h.DateTime,
 					Value = h.Average
 				});

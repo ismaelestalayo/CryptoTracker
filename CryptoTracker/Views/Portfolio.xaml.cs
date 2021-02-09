@@ -327,9 +327,9 @@ namespace CryptoTracker {
                 prices_arr.Add(prices.Select(p => p[i]).Sum());
             }
 
-            List<ChartData> data = new List<ChartData>();
+            List<ChartPoint> data = new List<ChartPoint>();
             for (int i = 0; i < min_limit; ++i) {
-                data.Add(new ChartData {
+                data.Add(new ChartPoint {
                     Date = dates_arr[i],
                     Value = (float)prices_arr[i]
                 });
