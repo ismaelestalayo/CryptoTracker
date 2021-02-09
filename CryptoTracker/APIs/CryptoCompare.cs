@@ -147,6 +147,7 @@ namespace CryptoTracker.APIs {
             var currency = App.currency;
 
             var URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", currency, limit);
+            var top100 = new List<Top100card>();
 
             try {
                 var responseString = await App.GetStringFromUrlAsync(URL);
@@ -154,39 +155,37 @@ namespace CryptoTracker.APIs {
 
                 var data = ((JsonElement)response).GetProperty("Data");
 
-                var top100 = new List<Top100card>();
-				for (int i = 0; i < limit; i++) {
-                    var coinInfo = data[i].GetProperty("CoinInfo");
-                    var rawExists = data[i].TryGetProperty("RAW", out var raw);
+                for (int i = 0; i < limit; i++) {
+                    var _coinInfo = data[i].GetProperty("CoinInfo");
+                    var rawExists = data[i].TryGetProperty("RAW", out var _raw);
                     if (rawExists)
-                        raw = raw.GetProperty(currency.ToUpperInvariant());
+                        _raw = _raw.GetProperty(currency.ToUpperInvariant());
                     else
-                        raw = new JsonElement();
+                        _raw = new JsonElement();
+
+                    var coinInfo = JsonSerializer.Deserialize<CoinInfo>(_coinInfo.ToString());
+                    var raw = JsonSerializer.Deserialize<Raw>(_raw.ToString());
+
+                    /// quick fixes
+                    coinInfo.ImageUrl = IconsHelper.GetIcon(coinInfo.Name);
+                    coinInfo.Rank = i + 1;
+                    coinInfo.FavIcon = App.pinnedCoins.Contains(coinInfo.Name) ? "\uEB52" : "\uEB51";
+
+                    //raw.MKTCAP = NumberHelper.AddUnitPrefix(raw.MKTCAP);
+                    raw.PRICE = NumberHelper.Rounder(raw.PRICE);
+                    //raw.TOTALVOLUME24H = NumberHelper.AddUnitPrefix(raw.TOTALVOLUME24H);
 
                     top100.Add(new Top100card() {
-                        CoinInfo = JsonSerializer.Deserialize<CoinInfo>(coinInfo.ToString()),
-                        Raw = JsonSerializer.Deserialize<Raw>(raw.ToString())
+                        CoinInfo = coinInfo,
+                        Raw = raw
                     });
-                }
-
-				for (int i = 0; i < top100.Count; i++) {
-                    var coin = top100[i];
-                    coin.CoinInfo.FavIcon = App.pinnedCoins.Contains(coin.CoinInfo.Name) ? "\uEB52" : "\uEB51";
-                    coin.CoinInfo.Rank = i;
-                    coin.CoinInfo.IconSrc = IconsHelper.GetIcon(coin.CoinInfo.Name);
-                }
-				foreach (var coin in top100) {
-                    int i = top100.IndexOf(coin);
-                    coin.CoinInfo.FavIcon = App.pinnedCoins.Contains(coin.CoinInfo.Name) ? "\uEB52" : "\uEB51";
-                    coin.CoinInfo.Rank = i;
-                    coin.CoinInfo.IconSrc = IconsHelper.GetIcon(coin.CoinInfo.Name);
                 }
 
                 return top100;
 
             }
             catch (Exception ex) {
-                return new List<Top100card>();
+                return top100;
             }
         }
     }

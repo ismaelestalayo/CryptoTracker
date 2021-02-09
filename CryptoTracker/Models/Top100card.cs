@@ -23,7 +23,7 @@ namespace CryptoTracker.Models {
         public string AssetLaunchDate { get; set; }
         public double MaxSupply { get; set; }
         public int Type { get; set; }
-        public string IconSrc { get; set; }
+        public string ImageUrl { get; set; } = "/Assets/Icons/iconNULL.png";
         public int Rank { get; set; }
         
         private string _favIcon;

@@ -12,7 +12,6 @@ namespace CryptoTracker.Views {
 
         public Top100() {
             this.InitializeComponent();
-
             InitPage();
         }
 

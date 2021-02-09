@@ -15,17 +15,8 @@
 	</Page.DataContext>
 
 	<Page.Resources>
-        <Style TargetType="TextBlock" x:Key="a">
-            <Setter Property="FontSize" Value="22"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="TextBlock" x:Key="b">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0 -5 0 0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Opacity" Value="0.5"/>
-        </Style>
+        
+        
     </Page.Resources>
 
     <!-- 
@@ -39,35 +30,61 @@
 
         <Grid Padding="0 10" Margin="5" CornerRadius="5" MaxWidth="750"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
 
-			<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="0">
-				<TextBlock Style="{StaticResource a}" d:Text="100%">
-					<Run Text="{x:Bind viewModel.GlobalStats.BtcDominance, Mode=OneWay}"/><Run Text="%"/>
+			<Grid Grid.Row="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid.Resources>
+					<Style TargetType="TextBlock">
+						<Setter Property="FontSize" Value="22"/>
+						<Setter Property="FontWeight" Value="SemiBold"/>
+						<Setter Property="HorizontalAlignment" Value="Center"/>
+					</Style>
+				</Grid.Resources>
+
+				<TextBlock Grid.Column="0">
+					<Run Text="{x:Bind viewModel.GlobalStats.BtcDominance, Mode=OneWay}"
+						d:Text="100"/><Run Text="%"/>
 				</TextBlock>
-				<TextBlock Text="BTC dom." Style="{StaticResource b}"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1">
-                <TextBlock Style="{StaticResource a}" d:Text="0B€">
-					<Run Text="{x:Bind viewModel.GlobalStats.TotalVolume, Mode=OneWay}"/><!--
+				<TextBlock Grid.Column="1" d:Text="0B€">
+					<Run	Text="{x:Bind viewModel.GlobalStats.TotalVolume, Mode=OneWay}"/><!--
 					--><Run Text="{x:Bind viewModel.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
 				</TextBlock>
-				<TextBlock Text="24h Vol" Style="{StaticResource b}"/>
-			</StackPanel>
-
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="2">
-                <TextBlock Style="{StaticResource a}" d:Text="0B€">
-					<Run Text="{x:Bind viewModel.GlobalStats.TotalMarketCap, Mode=OneWay}"/><!--
+				<TextBlock Grid.Column="2" d:Text="0B€">
+					<Run	Text="{x:Bind viewModel.GlobalStats.TotalMarketCap, Mode=OneWay}"/><!--
 					--><Run Text="{x:Bind viewModel.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
 				</TextBlock>
-				<TextBlock Text="Mkt Cap." Style="{StaticResource b}"/>
-			</StackPanel>
-        </Grid>
+			</Grid>
+
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid.Resources>
+					<Style TargetType="TextBlock">
+						<Setter Property="FontSize" Value="16"/>
+						<Setter Property="Margin" Value="0 -5 0 0"/>
+						<Setter Property="HorizontalAlignment" Value="Center"/>
+						<Setter Property="Opacity" Value="0.5"/>
+					</Style>
+				</Grid.Resources>
+
+				<TextBlock Grid.Column="0" Text="BTC dom."/>
+				<TextBlock Grid.Column="1" Text="24h Vol"/>
+				<TextBlock Grid.Column="2" Text="Mkt Cap."/>
+			</Grid>
+		</Grid>
 
         <!-- 
         ###################################################################################################
@@ -113,11 +130,12 @@
 								Content="{x:Bind CoinInfo.FavIcon, Mode=OneWay}"
 								FontFamily="Segoe MDL2 Assets"
 								Grid.Column="1"
-								VerticalAlignment="Center"/>
+								VerticalAlignment="Center"
+								d:Content="x"/>
 
 							<Image 
                                 Grid.Column="2" 
-                                Source="{x:Bind CoinInfo.IconSrc, Mode=OneWay}" 
+                                Source="{x:Bind CoinInfo.ImageUrl, Mode=OneWay}" 
                                 Width="45"
 								d:Source="/Assets/Icons/iconNULL.png"/>
 
@@ -125,14 +143,17 @@
                                 <TextBlock d:Text="COIN"
 									Text="{x:Bind CoinInfo.Name, Mode=OneWay}"
 									FontSize="20" FontWeight="SemiBold"/>
-                                <TextBlock
-									Opacity="0.8"
-									d:Text="price (change)">
-                                    <Run Text="{x:Bind Raw.PRICE, Mode=OneWay}" FontSize="16"/>
-                                    <Run Text="{x:Bind Raw.CHANGE24HOUR, Mode=OneWay}"
-										 Foreground="{Binding ChangeFG}" FontSize="16" FontWeight="Medium"/>
-                                </TextBlock>
-                            </StackPanel>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock
+										Text="{x:Bind Raw.PRICE, Mode=OneWay}" FontSize="16"
+										Opacity="0.8"
+										d:Text="price (change)"/>
+									<TextBlock
+										Text="{x:Bind Raw.CHANGE24HOUR, Mode=OneWay}"
+										Foreground="{Binding ChangeFG}" FontSize="14" FontWeight="Medium"
+										VerticalAlignment="Bottom"/>
+								</StackPanel>
+							</StackPanel>
 
                             <StackPanel Grid.Column="4" VerticalAlignment="Center" Margin="10 0">
                                 <TextBlock FontWeight="Bold" HorizontalAlignment="Right" FontSize="15">
