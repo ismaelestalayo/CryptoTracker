@@ -72,8 +72,12 @@
 					  ItemsSource="{x:Bind viewModel.CoinCards, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:CoinCard">
-                        <Grid x:Name="PriceListView_Element" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                              Margin="0 5 -5 5" Height="210" CornerRadius="5" Opacity="{x:Bind Opacity, Mode=OneWay}">
+                        <Grid x:Name="PriceListView_Element"
+							Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+							CornerRadius="5"
+							Height="210"
+							Margin="0 5 -5 5"							
+							Opacity="{x:Bind Opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -99,8 +103,10 @@
                             </Grid.ContextFlyout>
 
                             <controls:Loading 
-                                IsLoading="{x:Bind IsLoading, Mode=OneWay}"
-                                Width="700" Opacity="0.5" Grid.RowSpan="3">
+                                Grid.RowSpan="3"
+								IsLoading="{x:Bind IsLoading, Mode=OneWay}"
+								Opacity="0.5"
+								Width="700">
                                 <ContentControl>
                                     <ProgressBar
 										IsIndeterminate="True" Width="500"
@@ -111,12 +117,20 @@
                             </controls:Loading>
 
 							<StackPanel Orientation="Horizontal">
-                                <Image Source="{x:Bind IconSrc}" Width="25" Margin="2"/>
-								<TextBlock Text="{x:Bind Crypto, Mode=OneWay}" Style="{ThemeResource TitleTextBlockStyle}" Margin="5 -2"/>
+                                <Image
+									Margin="2"
+									Source="{x:Bind IconSrc}"
+									Width="25"
+									d:Source="/Assets/Icons/iconNULL.png"/>
+								<TextBlock
+									Margin="5 -2"
+									Text="{x:Bind Crypto, Mode=OneWay}"
+									Style="{ThemeResource TitleTextBlockStyle}"
+									d:Text="XXX"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0">
 								<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
-									<Run Text="{x:Bind Price, Mode=OneWay}"/><!--
+									<Run Text="{x:Bind Price, Mode=OneWay}" d:Text="0"/><!--
 									--><Run Text="{x:Bind Currency}" d:Text="€"/>
 								</TextBlock>
 								<TextBlock
@@ -174,7 +188,10 @@
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     </Style>
                 </ListView.ItemContainerStyle>
-            </ListView>
+
+				<!-- For previsualization purposes -->
+				<d:Rectangle/>
+			</ListView>
 
             <!-- 
             ###########################################################################################################################
@@ -184,9 +201,12 @@
                       Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind viewModel.CoinCards, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:CoinCard">
-                        <Grid x:Name="VolumeListView_Element" Height="210"
+                        <Grid x:Name="VolumeListView_Element"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-                            Margin="-5 5 0 5" CornerRadius="5" Opacity="{x:Bind Opacity, Mode=OneWay}">
+							CornerRadius="5"
+							Height="210"
+                            Margin="-5 5 0 5"
+							Opacity="{x:Bind Opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -260,12 +280,12 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+				<ListView.ItemContainerStyle>
+					<Style TargetType="ListViewItem">
+						<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+					</Style>
+				</ListView.ItemContainerStyle>
+			</ListView>
 
             <StackPanel
 				x:Name="EmptyPageWarning"
