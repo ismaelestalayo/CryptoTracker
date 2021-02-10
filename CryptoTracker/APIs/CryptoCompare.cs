@@ -158,13 +158,15 @@ namespace CryptoTracker.APIs {
                 for (int i = 0; i < limit; i++) {
                     var _coinInfo = data[i].GetProperty("CoinInfo");
                     var rawExists = data[i].TryGetProperty("RAW", out var _raw);
-                    if (rawExists)
+
+                    Raw raw = new Raw();
+                    if (rawExists) {
                         _raw = _raw.GetProperty(currency.ToUpperInvariant());
-                    else
-                        _raw = new JsonElement();
+                        raw = JsonSerializer.Deserialize<Raw>(_raw.ToString());
+                    }
 
                     var coinInfo = JsonSerializer.Deserialize<CoinInfo>(_coinInfo.ToString());
-                    var raw = JsonSerializer.Deserialize<Raw>(_raw.ToString());
+                    
 
                     /// quick fixes
                     coinInfo.ImageUrl = IconsHelper.GetIcon(coinInfo.Name);
