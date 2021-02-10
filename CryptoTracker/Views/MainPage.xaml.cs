@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.APIs;
+using CryptoTracker.Constants;
 using CryptoTracker.Helpers;
 using CryptoTracker.Views;
 using System;
@@ -37,7 +38,7 @@ namespace CryptoTracker {
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
 
-                if (App.localSettings.Values["Theme"].Equals("Dark")) {
+                if (App.localSettings.Values[UserSettingsConstants.UserTheme].Equals("Dark")) {
                     statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23); //31 31 31
                     statusBar.BackgroundOpacity = 1;
                     statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
@@ -62,7 +63,7 @@ namespace CryptoTracker {
         }
 
         private void ColorValuesChanged(UISettings sender, object args) {
-            if (App.localSettings.Values["Theme"].Equals("Windows")){
+            if (App.localSettings.Values[UserSettingsConstants.UserTheme].Equals("Windows")){
                 var color = uiSettings.GetColorValue(UIColorType.Background);
                 switch (color.ToString()) {
                     case "#FF000000":

@@ -3,7 +3,6 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
@@ -16,6 +15,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using CryptoTracker.Constants;
 
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
@@ -30,12 +30,12 @@ namespace CryptoTracker {
             version = Package.Current.Id.Version;
             VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
-            ThemeComboBox.PlaceholderText = App.localSettings.Values["Theme"].ToString();
+            ThemeComboBox.PlaceholderText = App.localSettings.Values[UserSettingsConstants.UserTheme].ToString();
             FooterLogo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? 
                 new BitmapImage(new Uri("ms-appx:///Assets/Tile-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));
             
 
-            switch (App.localSettings.Values["Currency"]) {
+            switch (App.localSettings.Values[UserSettingsConstants.UserCurrency]) {
                 case "EUR":
                     EUR.IsSelected = true;
                     break;
@@ -64,7 +64,7 @@ namespace CryptoTracker {
                     INR.IsSelected = true;
                     break;
             }
-            CoinComboBox.PlaceholderText = App.localSettings.Values["Currency"].ToString();
+            CoinComboBox.PlaceholderText = App.localSettings.Values[UserSettingsConstants.UserCurrency].ToString();
 
             // Show feedback button
             if (Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.IsSupported()) {
@@ -130,7 +130,7 @@ namespace CryptoTracker {
             ComboBox c = sender as ComboBox;
             String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
-            App.localSettings.Values["Currency"] = currency;
+            App.localSettings.Values[UserSettingsConstants.UserCurrency] = currency;
             App.currency = currency;
             App.currencySymbol = CurrencyHelper.CurrencyToSymbol(currency);
         }
@@ -210,7 +210,7 @@ namespace CryptoTracker {
             ComboBox c = sender as ComboBox;
             var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
-            App.localSettings.Values["Theme"] = theme;
+            App.localSettings.Values[UserSettingsConstants.UserTheme] = theme;
             switch (theme) {
                 case "Light":
                     FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));

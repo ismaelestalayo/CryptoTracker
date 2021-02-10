@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.APIs;
+using CryptoTracker.Constants;
 using CryptoTracker.Helpers;
 using CryptoTracker.Models;
 using Microsoft.AppCenter;
@@ -7,7 +8,6 @@ using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Chart;
@@ -15,11 +15,9 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
@@ -40,15 +38,15 @@ namespace CryptoTracker {
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
-            string _theme = localSettings.Values["Theme"]?.ToString();
-            string _currency = localSettings.Values["Currency"]?.ToString();
-            string _pinned = localSettings.Values["Pinned"]?.ToString();
+            string _theme = localSettings.Values[UserSettingsConstants.UserTheme]?.ToString();
+            string _currency = localSettings.Values[UserSettingsConstants.UserCurrency]?.ToString();
+            string _pinned = localSettings.Values[UserSettingsConstants.UserPinnedCoins]?.ToString();
 
             if (_theme == null || _currency == null || _pinned == null) {
                 // Default: Windows theme, EUR and {BTC, ETH, LTC and XRP}
-                localSettings.Values["Theme"] = "Windows";
-                localSettings.Values["currency"] = "EUR";
-                localSettings.Values["Pinned"] = "BTC|ETH|LTC|XRP";
+                localSettings.Values[UserSettingsConstants.UserTheme] = "Windows";
+                localSettings.Values[UserSettingsConstants.UserCurrency] = "EUR";
+                localSettings.Values[UserSettingsConstants.UserPinnedCoins] = "BTC|ETH|LTC|XRP";
                 this.RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
                 pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC", "XRP" });
 			}
@@ -147,7 +145,7 @@ namespace CryptoTracker {
                     s += item + "|";
                 }
                 s = s.Remove(s.Length - 1);
-                App.localSettings.Values["Pinned"] = s;
+                App.localSettings.Values[UserSettingsConstants.UserPinnedCoins] = s;
             }
         }
 
