@@ -2,10 +2,14 @@
 using CryptoTracker.Constants;
 using CryptoTracker.Helpers;
 using CryptoTracker.Models;
+using CryptoTracker.Services;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Newtonsoft.Json.Linq;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -91,11 +95,17 @@ namespace CryptoTracker {
                 }
 			}
 
+            // Register services
+            Ioc.Default.ConfigureServices(
+                new ServiceCollection()
+                .AddSingleton(RestService.For<ICryptoCompare>("https://min-api.cryptocompare.com/"))
+                .BuildServiceProvider());
+
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.UnhandledException += OnUnhandledException;
-		}
+        }
 		// #########################################################################################
 		protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
