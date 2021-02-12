@@ -117,6 +117,7 @@
     <Compile Include="Constants\UserSettingsConstants.cs" />
     <Compile Include="Helpers\API_CoinGecko.cs" />
     <Compile Include="Helpers\NumberHelper.cs" />
+    <Compile Include="Models\BaseObservableObject.cs" />
     <Compile Include="Models\ChartPoint.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\CurrencyHelper.cs" />
