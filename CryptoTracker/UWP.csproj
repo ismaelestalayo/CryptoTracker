@@ -129,9 +129,13 @@
     <Compile Include="Helpers\JSONhistoric.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
+    <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\GlobalStats.cs" />
     <Compile Include="Models\Top100card.cs" />
     <Compile Include="Services\ICryptoCompare.cs" />
+    <Compile Include="UserControls\ChartFullControl.xaml.cs">
+      <DependentUpon>ChartFullControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Top100ViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -295,6 +299,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="UserControls\ChartFullControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
