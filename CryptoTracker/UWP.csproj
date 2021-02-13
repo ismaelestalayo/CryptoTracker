@@ -139,6 +139,9 @@
     <Compile Include="UserControls\ChartAreaFull.xaml.cs">
       <DependentUpon>ChartAreaFull.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ChartBars.xaml.cs">
+      <DependentUpon>ChartBars.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Top100ViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -307,6 +310,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ChartAreaFull.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ChartBars.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
