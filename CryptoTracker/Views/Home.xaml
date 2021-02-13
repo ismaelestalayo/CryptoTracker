@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:CryptoTracker.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	xmlns:local="using:CryptoTracker.UserControls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
 	xmlns:viewModels="using:CryptoTracker.ViewModels"
     mc:Ignorable="d"
@@ -69,15 +70,15 @@
             ############################################# PRICE LIST VIEW ######################################
             #################################################################################################### -->
             <ListView x:Name="PriceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
-					  ItemsSource="{x:Bind viewModel.CoinCards, Mode=OneWay}">
+					  ItemsSource="{x:Bind viewModel.PriceCards, Mode=OneWay}">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:CoinCard">
+                    <DataTemplate x:DataType="models:HomeCard">
                         <Grid x:Name="PriceListView_Element"
 							Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
 							CornerRadius="5"
 							Height="210"
 							Margin="0 5 -5 5"							
-							Opacity="{x:Bind Opacity, Mode=OneWay}">
+							Opacity="{x:Bind Info.Opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -104,7 +105,7 @@
 
                             <controls:Loading 
                                 Grid.RowSpan="3"
-								IsLoading="{x:Bind IsLoading, Mode=OneWay}"
+								IsLoading="{x:Bind Info.IsLoading, Mode=OneWay}"
 								Opacity="0.5"
 								Width="700">
                                 <ContentControl>
@@ -119,66 +120,34 @@
 							<StackPanel Orientation="Horizontal">
                                 <Image
 									Margin="2"
-									Source="{x:Bind IconSrc}"
+									Source="{x:Bind Info.Logo}"
 									Width="25"
 									d:Source="/Assets/Icons/iconNULL.png"/>
 								<TextBlock
 									Margin="5 -2"
-									Text="{x:Bind Crypto, Mode=OneWay}"
+									Text="{x:Bind Info.Name, Mode=OneWay}"
 									Style="{ThemeResource TitleTextBlockStyle}"
 									d:Text="XXX"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0">
 								<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
-									<Run Text="{x:Bind Price, Mode=OneWay}" d:Text="0"/><!--
-									--><Run Text="{x:Bind Currency}" d:Text="€"/>
+									<Run Text="{x:Bind Info.Price, Mode=OneWay}" d:Text="0"/><!--
+									--><Run Text="{x:Bind Info.Currency}" d:Text="€"/>
 								</TextBlock>
 								<TextBlock
-									Foreground="{x:Bind DiffFG, Mode=OneWay}"
+									Foreground="{x:Bind Info.DiffFG, Mode=OneWay}"
 									Margin="0 2"
 									VerticalAlignment="Bottom">
-									<Run Text="{x:Bind DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-									--><Run Text="{x:Bind Diff, Mode=OneWay}" d:Text="0"/><!--
+									<Run Text="{x:Bind Info.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
+									--><Run Text="{x:Bind Info.Diff, Mode=OneWay}" d:Text="0"/><!--
 					                --><Run Text="%"/>
 								</TextBlock>
                             </StackPanel>
                             
-                            <!-- PRICE CHART: -->
-                            <telerik:RadCartesianChart Grid.Row="1">
-                                <telerik:RadCartesianChart.Grid>
-                                    <telerik:CartesianChartGrid MajorLinesVisibility="None"/>
-                                </telerik:RadCartesianChart.Grid>
-
-                                <telerik:RadCartesianChart.HorizontalAxis>
-                                    <telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
-                                </telerik:RadCartesianChart.HorizontalAxis>
-
-                                <telerik:RadCartesianChart.VerticalAxis>
-                                    <telerik:LinearAxis
-										Visibility="Collapsed"
-										Minimum="{x:Bind PricesMinMax.Item1, Mode=OneWay}"
-					                    Maximum="{x:Bind PricesMinMax.Item2, Mode=OneWay}"/>
-                                </telerik:RadCartesianChart.VerticalAxis>
-
-								<telerik:SplineAreaSeries
-									ItemsSource="{x:Bind ChartData, Mode=OneWay}"
-									Stroke="{x:Bind ChartStroke, Mode=OneWay}"
-									StrokeThickness="1.25">
-									<telerik:AreaSeries.Fill>
-										<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-											<GradientStop Color="{x:Bind ChartFill1, Mode=OneWay}" Offset="0.1"/>
-											<GradientStop Color="{x:Bind ChartFill2, Mode=OneWay}" Offset="1.1"/>
-										</LinearGradientBrush>
-									</telerik:AreaSeries.Fill>
-									<telerik:SplineAreaSeries.CategoryBinding>
-										<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-									</telerik:SplineAreaSeries.CategoryBinding>
-									<telerik:SplineAreaSeries.ValueBinding>
-										<telerik:PropertyNameDataPointBinding PropertyName="Value"/>
-									</telerik:SplineAreaSeries.ValueBinding>
-								</telerik:SplineAreaSeries>
-                            </telerik:RadCartesianChart>
-                        </Grid>
+							<local:ChartArea
+								Grid.Row="1"
+								ChartModel="{x:Bind Chart, Mode=OneWay}"/>
+						</Grid>
 
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -198,15 +167,15 @@
             ####################################################### VOLUME LIST VIEW ##################################################
             ###################################################a######################################################################## -->
             <ListView x:Name="VolumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
-                      Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind viewModel.CoinCards, Mode=OneWay}">
+                      Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind viewModel.VolumeCards, Mode=OneWay}">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:CoinCard">
+                    <DataTemplate x:DataType="models:HomeCard">
                         <Grid x:Name="VolumeListView_Element"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
 							CornerRadius="5"
 							Height="210"
                             Margin="-5 5 0 5"
-							Opacity="{x:Bind Opacity, Mode=OneWay}">
+							Opacity="{x:Bind Info.Opacity, Mode=OneWay}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -243,39 +212,14 @@
 								<TextBlock
 									Grid.Column="1"
 									Style="{ThemeResource TitleTextBlockStyle}"
-									Text="{x:Bind Volume24to, FallbackValue=0, Mode=TwoWay}"/>
+									Text="{x:Bind Info.Volume, Mode=OneWay}"/>
 							</Grid>
 
                             <!-- VOLUME CHART: -->
-                            <telerik:RadCartesianChart Grid.Row="1">
-								<telerik:BarSeries ItemsSource="{x:Bind ChartData, Mode=OneWay}">
-
-									<telerik:BarSeries.DefaultVisualStyle>
-										<Style TargetType="Border">
-											<Setter Property="Background" Value="{x:Bind ChartFill1, Mode=OneWay}"/>
-											<Setter Property="BorderThickness" Value="3"/>
-										</Style>
-									</telerik:BarSeries.DefaultVisualStyle>
-
-									<telerik:BarSeries.VerticalAxis>
-                                        <telerik:LinearAxis Visibility="Collapsed"/>
-                                    </telerik:BarSeries.VerticalAxis>
-
-                                    <telerik:BarSeries.HorizontalAxis>
-										<telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
-									</telerik:BarSeries.HorizontalAxis>
-
-                                    <telerik:BarSeries.CategoryBinding>
-                                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                                    </telerik:BarSeries.CategoryBinding>
-
-                                    <telerik:BarSeries.ValueBinding>
-                                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                                    </telerik:BarSeries.ValueBinding>
-
-                                </telerik:BarSeries>
-                            </telerik:RadCartesianChart>
-                        </Grid>
+							<local:ChartBars
+								Grid.Row="1"
+								ChartModel="{x:Bind Chart, Mode=OneWay}"/>
+						</Grid>
 
                     </DataTemplate>
                 </ListView.ItemTemplate>

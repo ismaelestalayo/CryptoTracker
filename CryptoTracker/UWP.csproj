@@ -130,7 +130,9 @@
     <Compile Include="Helpers\LocalStorageHelper.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
     <Compile Include="Models\ChartModel.cs" />
+    <Compile Include="Models\Coin.cs" />
     <Compile Include="Models\GlobalStats.cs" />
+    <Compile Include="Models\HomeCard.cs" />
     <Compile Include="Models\Top100card.cs" />
     <Compile Include="Services\ICryptoCompare.cs" />
     <Compile Include="UserControls\ChartArea.xaml.cs">
