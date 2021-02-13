@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
-    public sealed partial class CoinDetails : Page {
+	public sealed partial class CoinDetails : Page {
         private static int limit = 168;
         private static string timeSpan = "week";
         private static string timeUnit = "hour";
@@ -38,11 +38,10 @@ namespace CryptoTracker {
 
                 // Page title
                 var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
-                viewModel.CoinCard.Crypto = crypto;
+                viewModel.Coin.Name = crypto;
 
                 var coin = App.coinList.Find(x => x.symbol == crypto);
-                viewModel.CoinCard.CryptoFullName = coin.name;
-                viewModel.CoinCard.CryptoSymbol = coin.symbol;
+                viewModel.Coin.FullName = coin.name;
 
                 FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
 
@@ -77,7 +76,7 @@ namespace CryptoTracker {
                 TimerangeButton_Click(r, null);
 
             } catch (Exception) {
-                viewModel.CoinCard.IsLoading = false;
+                viewModel.Coin.IsLoading = false;
                 //var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
@@ -86,7 +85,7 @@ namespace CryptoTracker {
         /// #########################################################################################
         /// #########################################################################################
         internal async void UpdatePage() {
-            viewModel.CoinCard.IsLoading = true;
+            viewModel.Coin.IsLoading = true;
             
             await UpdateCoin();
             await Get24Volume();
@@ -95,8 +94,8 @@ namespace CryptoTracker {
 
         /// #########################################################################################
         private async Task UpdateCoin() {
-            var crypto = viewModel.CoinCard.Crypto;
-            viewModel.CoinCard.Price = await CryptoCompare.GetPriceAsync(crypto);
+            var crypto = viewModel.Coin.Name;
+            viewModel.Coin.Price = await CryptoCompare.GetPriceAsync(crypto);
 
             /// Colors
             var brush = viewModel.ChartModel.ChartStroke;
@@ -130,20 +129,20 @@ namespace CryptoTracker {
             double oldestPrice = histo[0].Average;
             double newestPrice = histo[histo.Count - 1].Average;
             double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
-            viewModel.CoinCard.Diff = diff;
+            viewModel.Coin.Diff = diff;
 
-            viewModel.CoinCard.IsLoading = false;
+            viewModel.Coin.IsLoading = false;
         }
 
         
         async private Task Get24Volume() {
-            var crypto = viewModel.CoinCard.Crypto;
+            var crypto = viewModel.Coin.Name;
             // TODO: add volume chart
         }
 
         // #########################################################################################
         private void TimerangeButton_Click(object sender, RoutedEventArgs e) {
-            viewModel.CoinCard.IsLoading = true;
+            viewModel.Coin.IsLoading = true;
 
             RadioButton btn = sender as RadioButton;
             timeSpan = btn.Content.ToString();
@@ -182,7 +181,7 @@ namespace CryptoTracker {
         }
 
         private void PinCoin_btn(object sender, RoutedEventArgs e) {
-            var crypto = viewModel.CoinCard.Crypto;
+            var crypto = viewModel.Coin.Name;
             if (!App.pinnedCoins.Contains(crypto)) {
                 App.pinnedCoins.Add(crypto);
                 //Home.AddCoinHome(crypto);
@@ -198,7 +197,7 @@ namespace CryptoTracker {
         }
 
         private async void CompactOverlay_btn_click(object sender, RoutedEventArgs e) {
-            var crypto = viewModel.CoinCard.Crypto;
+            var crypto = viewModel.Coin.Name;
             var view = ApplicationView.GetForCurrentView();
 
             var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);

@@ -115,12 +115,12 @@
         #################################################################################################### -->
         <RelativePanel BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Orientation="Horizontal">
-                <Image Source="{x:Bind viewModel.CoinCard.IconSrc, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
+				<Image Source="{x:Bind viewModel.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
                     Margin="5" VerticalAlignment="Center" Width="25"/>
 				<TextBlock Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
                     VerticalAlignment="Stretch" FontWeight="Bold">
-					<Run Text="{x:Bind viewModel.CoinCard.CryptoFullName}"/>
-					<Run Text="("/><Run Text="{x:Bind viewModel.CoinCard.Crypto}"/><Run Text=")"/>
+					<Run Text="{x:Bind viewModel.Coin.FullName}"/>
+					<Run Text="("/><Run Text="{x:Bind viewModel.Coin.Name}"/><Run Text=")"/>
 				</TextBlock>
                 <Button
                     Margin="5 0" Padding="5 0" Height="32" FontFamily="Segoe MDL2 Assets"
@@ -137,15 +137,15 @@
 
             <StackPanel Orientation="Horizontal" Margin="5 0" RelativePanel.AlignRightWithPanel="True">
 				<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
-					<Run Text="{x:Bind viewModel.CoinCard.Price, Mode=OneWay}" d:Text="0"/><!--
-					--><Run Text="{x:Bind viewModel.CoinCard.Currency}" d:Text="€"/>
+					<Run Text="{x:Bind viewModel.Coin.Price, Mode=OneWay}" d:Text="0"/><!--
+					--><Run Text="{x:Bind viewModel.Coin.Currency}" d:Text="€"/>
 				</TextBlock>
 
 				<TextBlock
-					Foreground="{x:Bind viewModel.CoinCard.DiffFG, Mode=OneWay}"
+					Foreground="{x:Bind viewModel.Coin.DiffFG, Mode=OneWay}"
 					Margin="0 2" VerticalAlignment="Bottom">
-					<Run Text="{x:Bind viewModel.CoinCard.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-					--><Run Text="{x:Bind viewModel.CoinCard.Diff, Mode=OneWay}" d:Text="0"/><!--
+					<Run Text="{x:Bind viewModel.Coin.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
+					--><Run Text="{x:Bind viewModel.Coin.Diff, Mode=OneWay}" d:Text="0"/><!--
                     --><Run Text="%"/>
 				</TextBlock>
             </StackPanel>
@@ -156,14 +156,14 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <Grid Grid.Row="2" Grid.Column="0" Opacity="{x:Bind viewModel.CoinCard.Opacity, Mode=OneWay}">
+        <Grid Grid.Row="2" Grid.Column="0" Opacity="{x:Bind viewModel.Coin.Opacity, Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <controls:Loading
-				IsLoading="{x:Bind viewModel.CoinCard.IsLoading, Mode=OneWay}"
+				IsLoading="{x:Bind viewModel.Coin.IsLoading, Mode=OneWay}"
 				HorizontalAlignment="Center" VerticalAlignment="Center"
                 Grid.RowSpan="2" Grid.ColumnSpan="2"
                 Background="Transparent">
@@ -235,28 +235,28 @@
                                 <LineBreak/>
                                 <Run
 									Text="{x:Bind viewModel.CoinInfo.market_data.low_24h.eur, Mode=OneWay, FallbackValue=0}"
-									Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+									Foreground="Green"/><Run Text="{x:Bind viewModel.Coin.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="High (24h)" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run
 									Text="{x:Bind viewModel.CoinInfo.market_data.high_24h.eur, Mode=OneWay, FallbackValue=0}"
-                                    Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                    Foreground="Green"/><Run Text="{x:Bind viewModel.Coin.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                             </TextBlock>
 
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="All time low:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind viewModel.CoinInfo.market_data.atl.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                        Foreground="Green"/><Run Text="{x:Bind viewModel.Coin.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                                 <Run Text="{x:Bind helpers:Converters.ShortenDateTime(viewModel.CoinInfo.market_data.atl_date.eur), Mode=OneWay}" FontWeight="Light" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}" FontSize="11"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16">
                                 <Run Text="All time high:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind viewModel.CoinInfo.market_data.ath.eur, Mode=OneWay, FallbackValue=0}"
-                                        Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                        Foreground="Green"/><Run Text="{x:Bind viewModel.Coin.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                                 <Run Text="{x:Bind helpers:Converters.ShortenDateTime(viewModel.CoinInfo.market_data.ath_date.eur), Mode=OneWay}" FontWeight="Light" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}" FontSize="11"/>
                             </TextBlock>
                         </controls:UniformGrid>
@@ -277,7 +277,7 @@
                                 <Run Text="Market Cap:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind viewModel.CoinInfo.market_data.market_cap.eur, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}"
-                                     Foreground="Green"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
+                                     Foreground="Green"/><Run Text="{x:Bind viewModel.Coin.Currency, Mode=OneWay, FallbackValue=€}" Foreground="Green"/>
                                 <Run Text="▲" Foreground="Green" FontWeight="Light" FontSize="11"/><Run 
                                     Text="{x:Bind viewModel.CoinInfo.market_data.market_cap_change_percentage_24h, Mode=OneWay, FallbackValue=0}" Foreground="Green" FontWeight="Light" FontSize="11"/><Run
                                     Text="%" Foreground="Green" FontWeight="Light" FontSize="11"/>
@@ -286,7 +286,7 @@
                                 <Run Text="Circulating supply" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind viewModel.CoinInfo.market_data.circulating_supply, Mode=OneWay, FallbackValue=0, Converter={StaticResource StringFormatConverter}}" Foreground="Green"/>
-                                <Run Text="{x:Bind viewModel.CoinCard.Crypto, Mode=OneWay}" Foreground="Green"/>
+                                <Run Text="{x:Bind viewModel.Coin.Name, Mode=OneWay}" Foreground="Green"/>
                             </TextBlock>
                         </controls:UniformGrid>
                     </StackPanel>
@@ -298,7 +298,7 @@
                             <TextBlock Text="Volume 24h" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiBold" RelativePanel.AlignRightWithPanel="True">
                                 <Run Text="{x:Bind viewModel.CoinInfo.market_data.total_volume.eur, Mode=OneWay, FallbackValue=0,
-                                    Converter={StaticResource StringFormatConverter}}"/><Run Text="{x:Bind viewModel.CoinCard.Currency, Mode=OneWay, FallbackValue=€}"/>
+                                    Converter={StaticResource StringFormatConverter}}"/><Run Text="{x:Bind viewModel.Coin.Currency, Mode=OneWay, FallbackValue=€}"/>
                             </TextBlock>
                         </RelativePanel>
 
