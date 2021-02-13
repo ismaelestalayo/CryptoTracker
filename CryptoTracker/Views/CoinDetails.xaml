@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:CryptoTracker.Helpers"
+    xmlns:local="using:CryptoTracker.UserControls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
@@ -176,97 +177,11 @@
                 </ContentControl>
             </controls:Loading>
 
-            <telerik:RadCartesianChart
+			<local:ChartFullControl
 				x:Name="PriceChart"
-				Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-				Margin="-5 0 -25 0">
+				ChartModel="{x:Bind viewModel.ChartModel, Mode=OneWay}"/>
 
-                <telerik:RadCartesianChart.Behaviors>
-                    <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">
-						<telerik:ChartTrackBallBehavior.LineStyle>
-							<Style TargetType="Polyline">
-								<Setter Property="Stroke" Value="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"/>
-								<Setter Property="StrokeThickness" Value="1"/>
-								<Setter Property="StrokeDashArray" Value="5,6"/>
-							</Style>
-						</telerik:ChartTrackBallBehavior.LineStyle>
-						<telerik:ChartTrackBallBehavior.InfoStyle>
-							<Style TargetType="telerikPrimitives:TrackBallInfoControl">
-								<Setter Property="Background" Value="{x:Bind viewModel.CoinCard.ChartFill2, Mode=OneWay}"/>
-								<Setter Property="BorderBrush" Value="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"/>
-								<Setter Property="BorderThickness" Value="1"/>
-							</Style>
-						</telerik:ChartTrackBallBehavior.InfoStyle>
-					</telerik:ChartTrackBallBehavior>
-					<telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
-				</telerik:RadCartesianChart.Behaviors>
-
-                <telerik:RadCartesianChart.Grid>
-                    <telerik:CartesianChartGrid
-						MajorYLinesRenderMode="Inner"
-                        MajorLinesVisibility="X"
-						MajorYLineStyle="{StaticResource ChartGridColor}"/>
-                </telerik:RadCartesianChart.Grid>
-
-                <telerik:RadCartesianChart.HorizontalAxis>
-                    <telerik:DateTimeContinuousAxis
-                        LabelOffset="1"
-						LabelFormat="{x:Bind viewModel.ChartSyle.LabelFormat, Mode=OneWay}"
-						Minimum="{x:Bind viewModel.ChartSyle.Minimum, Mode=OneWay}"
-						MajorStep="{x:Bind viewModel.ChartSyle.MajorStep, Mode=OneWay}"
-						MajorStepUnit="{x:Bind viewModel.ChartSyle.MajorStepUnit, Mode=OneWay}"
-						FontWeight="Light" FontFamily="Segoe UI"
-						Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
-                </telerik:RadCartesianChart.HorizontalAxis>
-
-                <telerik:RadCartesianChart.VerticalAxis>
-					<telerik:LinearAxis
-						Visibility="Collapsed"
-						Minimum="{x:Bind viewModel.CoinCard.PricesMinMax.Item1, Mode=OneWay}"
-                        Maximum="{x:Bind viewModel.CoinCard.PricesMinMax.Item2, Mode=OneWay}"/>
-				</telerik:RadCartesianChart.VerticalAxis>
-
-                <telerik:AreaSeries
-					ItemsSource="{x:Bind viewModel.CoinCard.ChartData, Mode=OneWay}"
-                    Stroke="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}"
-					StrokeThickness="1">
-					<telerik:AreaSeries.Fill>
-						<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-							<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill1, Mode=OneWay}" Offset="0.3"/>
-							<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill2, Mode=OneWay}" Offset="1."/>
-						</LinearGradientBrush>
-					</telerik:AreaSeries.Fill>
-					<telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                        <DataTemplate>
-							<StackPanel Padding="5 2">
-								<StackPanel Orientation="Vertical" Padding="5 2">
-									<TextBlock
-										Text="{Binding DataPoint.Value}"
-										Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-										FontWeight="Bold" FontSize="16"/>
-									<TextBlock
-										Text="{Binding DataPoint.Category}"
-										Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
-								</StackPanel>
-							</StackPanel>
-                        </DataTemplate>
-                    </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-					<telerik:ChartTrackBallBehavior.IntersectionTemplate>
-						<DataTemplate>
-							<Ellipse Width="7" Height="7" Fill="#907D7D7D" StrokeThickness="1"/>
-						</DataTemplate>
-					</telerik:ChartTrackBallBehavior.IntersectionTemplate>
-
-					<telerik:AreaSeries.CategoryBinding>
-						<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-					</telerik:AreaSeries.CategoryBinding>
-					<telerik:AreaSeries.ValueBinding>
-						<telerik:PropertyNameDataPointBinding PropertyName="Value"/>
-					</telerik:AreaSeries.ValueBinding>
-				</telerik:AreaSeries>
-            </telerik:RadCartesianChart>
-
-            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+			<StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
                 <RadioButton GroupName="coin" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
                 <RadioButton GroupName="coin" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
 				<RadioButton GroupName="coin" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click" IsChecked="True"/>

@@ -17,10 +17,10 @@ namespace CryptoTracker.ViewModels {
 			set => SetProperty(ref _coinInfo, value);
 		}
 
-		private ChartStyling _chartSyle = new ChartStyling();
-		public ChartStyling ChartSyle {
-			get => _chartSyle;
-			set => SetProperty(ref _chartSyle, value);
+		private ChartModel chartModel = new ChartModel();
+		public ChartModel ChartModel {
+			get => chartModel;
+			set => SetProperty(ref chartModel, value);
 		}
 	}
 }

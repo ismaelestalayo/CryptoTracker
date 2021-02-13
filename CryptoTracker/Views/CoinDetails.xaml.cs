@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
-	public sealed partial class CoinDetails : Page {
+    public sealed partial class CoinDetails : Page {
         private static int limit = 168;
         private static string timeSpan = "week";
         private static string timeUnit = "hour";
@@ -34,9 +34,8 @@ namespace CryptoTracker {
             try {
                 var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
                 if (animation != null)
-                    animation.TryStart(PriceChart, new UIElement[]{ BottomCards } );
-                
-                
+                    animation.TryStart(PriceChart, new UIElement[] { BottomCards });
+
                 // Page title
                 var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
                 viewModel.CoinCard.Crypto = crypto;
@@ -100,10 +99,10 @@ namespace CryptoTracker {
             viewModel.CoinCard.Price = await CryptoCompare.GetPriceAsync(crypto);
 
             /// Colors
-            var brush = viewModel.CoinCard.ChartStroke;
+            var brush = viewModel.ChartModel.ChartStroke;
             if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
                 brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
-            viewModel.CoinCard.ChartStroke = brush;
+            viewModel.ChartModel.ChartStroke = brush;
 
             /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
             var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit);
@@ -116,12 +115,16 @@ namespace CryptoTracker {
                     Volume = h.volumefrom
                 });
             }
-            viewModel.CoinCard.ChartData = chartData;
-            viewModel.ChartSyle = App.AdjustLinearAxis(viewModel.ChartSyle, timeSpan);
+            viewModel.ChartModel.ChartData = chartData;
+            var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
+            viewModel.ChartModel.LabelFormat = temp.LabelFormat;
+            viewModel.ChartModel.Minimum = temp.Minimum;
+            viewModel.ChartModel.MajorStepUnit = temp.MajorStepUnit;
+            viewModel.ChartModel.MajorStep = temp.MajorStep;
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-            viewModel.CoinCard.PricesMinMax = MinMax;
+            viewModel.ChartModel.PricesMinMax = MinMax;
 
             /// Calculate the price difference
             double oldestPrice = histo[0].Average;
@@ -194,15 +197,15 @@ namespace CryptoTracker {
             }
         }
 
-		private async void CompactOverlay_btn_click(object sender, RoutedEventArgs e) {
+        private async void CompactOverlay_btn_click(object sender, RoutedEventArgs e) {
             var crypto = viewModel.CoinCard.Crypto;
             var view = ApplicationView.GetForCurrentView();
 
-			var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-			preferences.CustomSize = new Windows.Foundation.Size(350, 250);
+            var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+            preferences.CustomSize = new Windows.Foundation.Size(350, 250);
 
-			await view.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+            await view.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
             Frame.Navigate(typeof(CoinCompact), crypto, new SuppressNavigationTransitionInfo());
         }
-	}
+    }
 }
