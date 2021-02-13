@@ -46,18 +46,18 @@
 			<telerik:RadCartesianChart.VerticalAxis>
 				<telerik:LinearAxis
 					Visibility="Collapsed"
-					Minimum="{x:Bind viewModel.CoinCard.PricesMinMax.Item1, Mode=OneWay}"
-					Maximum="{x:Bind viewModel.CoinCard.PricesMinMax.Item2, Mode=OneWay}"/>
+					Minimum="{x:Bind viewModel.Card.Chart.PricesMinMax.Item1, Mode=OneWay}"
+					Maximum="{x:Bind viewModel.Card.Chart.PricesMinMax.Item2, Mode=OneWay}"/>
 			</telerik:RadCartesianChart.VerticalAxis>
 
 			<telerik:SplineAreaSeries
-				ItemsSource="{x:Bind viewModel.CoinCard.ChartData, Mode=OneWay}"
-				Stroke="{x:Bind viewModel.CoinCard.ChartStroke, Mode=OneWay}" 
+				ItemsSource="{x:Bind viewModel.Card.Chart.ChartData, Mode=OneWay}"
+				Stroke="{x:Bind viewModel.Card.Chart.ChartStroke, Mode=OneWay}" 
 				StrokeThickness="1.5">
 				<telerik:AreaSeries.Fill>
 					<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-						<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill1, Mode=OneWay}" Offset="0"/>
-						<GradientStop Color="{x:Bind viewModel.CoinCard.ChartFill2, Mode=OneWay}" Offset="0.7"/>
+						<GradientStop Color="{x:Bind viewModel.Card.Chart.ChartFill1, Mode=OneWay}" Offset="0"/>
+						<GradientStop Color="{x:Bind viewModel.Card.Chart.ChartFill2, Mode=OneWay}" Offset="0.7"/>
 					</LinearGradientBrush>
 				</telerik:AreaSeries.Fill>
 				<telerik:SplineAreaSeries.CategoryBinding>
@@ -77,7 +77,7 @@
 		<RelativePanel Grid.Row="1">
 			<StackPanel Orientation="Horizontal">
 				<TextBlock
-					Text="{x:Bind Path=viewModel.CoinCard.Crypto, Mode=OneWay}"
+					Text="{x:Bind viewModel.Card.Info.Name, Mode=OneWay}"
 					d:Text="CRYPTO" Margin="5 0" VerticalAlignment="Center"
 					Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="18"/>
 				<Button 
@@ -90,17 +90,17 @@
 
 			<StackPanel Orientation="Horizontal" Margin="0 0 5 0" RelativePanel.AlignRightWithPanel="True">
 				<TextBlock FontSize="20" FontWeight="Medium">
-					<Run Text="{x:Bind viewModel.CoinCard.Price, Mode=OneWay}" d:Text="val"/><!--
-					--><Run Text="{x:Bind viewModel.CoinCard.Currency}" d:Text="€"/>
+					<Run Text="{x:Bind viewModel.Card.Info.Price, Mode=OneWay}" d:Text="val"/><!--
+					--><Run Text="{x:Bind viewModel.Card.Info.Currency}" d:Text="€"/>
 				</TextBlock>
 
 				<TextBlock
 					FontSize="15" FontWeight="Light"
-					Foreground="{x:Bind viewModel.CoinCard.DiffFG, Mode=OneWay, FallbackValue='Red'}"
+					Foreground="{x:Bind viewModel.Card.Info.DiffFG, Mode=OneWay, FallbackValue='Red'}"
 					Margin="3 0 0 0"
 					VerticalAlignment="Bottom">
-					<Run Text="{x:Bind viewModel.CoinCard.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-					--><Run Text="{x:Bind viewModel.CoinCard.Diff, Mode=OneWay}" d:Text="0"/><!--
+					<Run Text="{x:Bind viewModel.Card.Info.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
+					--><Run Text="{x:Bind viewModel.Card.Info.Diff, Mode=OneWay}" d:Text="0"/><!--
 					--><Run Text="%"/>
 				</TextBlock>
 			</StackPanel>
