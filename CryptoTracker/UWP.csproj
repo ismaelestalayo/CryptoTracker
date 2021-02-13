@@ -133,8 +133,11 @@
     <Compile Include="Models\GlobalStats.cs" />
     <Compile Include="Models\Top100card.cs" />
     <Compile Include="Services\ICryptoCompare.cs" />
-    <Compile Include="UserControls\ChartFullControl.xaml.cs">
-      <DependentUpon>ChartFullControl.xaml</DependentUpon>
+    <Compile Include="UserControls\ChartArea.xaml.cs">
+      <DependentUpon>ChartArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ChartAreaFull.xaml.cs">
+      <DependentUpon>ChartAreaFull.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Top100ViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -299,7 +302,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="UserControls\ChartFullControl.xaml">
+    <Page Include="UserControls\ChartArea.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ChartAreaFull.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

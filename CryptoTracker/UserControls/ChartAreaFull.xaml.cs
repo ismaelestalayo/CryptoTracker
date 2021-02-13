@@ -1,20 +1,22 @@
 ﻿using CryptoTracker.Models;
+using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CryptoTracker.UserControls {
-	public sealed partial class ChartFullControl : UserControl {
-		public ChartFullControl() {
-			this.InitializeComponent();
-		}
+	public sealed partial class ChartAreaFull : UserControl {
+        public ChartAreaFull() {
+            this.InitializeComponent();
+        }
 
         public static readonly DependencyProperty ChartModelProperty =
         DependencyProperty.Register(
             nameof(ChartModel),
             typeof(ChartModel),
-            typeof(ChartFullControl),
+            typeof(ChartAreaFull),
             null);
 
         public ChartModel ChartModel {
