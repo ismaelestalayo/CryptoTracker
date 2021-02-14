@@ -61,6 +61,7 @@ namespace CryptoTracker.APIs {
         */
         internal static async Task<List<HistoricPrice>> GetHistoricAsync(string crypto, string time, int limit, int aggregate = 1) {
             var currency = App.currency;
+            var NullValue = new List<HistoricPrice>() { new HistoricPrice() { Average = 1, DateTime = DateTime.Today } };
 
             string URL = string.Format("https://min-api.cryptocompare.com/data/histo{0}?e=CCCAGG&fsym={1}&tsym={2}&limit={3}", time, crypto, currency, limit);
 
@@ -79,7 +80,7 @@ namespace CryptoTracker.APIs {
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
 
                 if (okey != "Success")
-                    return new List<HistoricPrice>() { new HistoricPrice() };
+                    return NullValue;
                 
                 var data = ((JsonElement)response).GetProperty("Data").ToString();
                 var historic = JsonSerializer.Deserialize<List<HistoricPrice>>(data);
@@ -92,11 +93,20 @@ namespace CryptoTracker.APIs {
                     h.DateTime = d;
                     h.Date = d.ToString();
                 }
+                
+                // if getting all history, remove null prices
+                if (limit == 0) {
+                    int i = historic.FindIndex(x => x.Average != 0);
+                    if (i != 0)
+                        historic.RemoveRange(0, i - 1);
+                }
+
+                    //historic = historic.FindAll(x => x.Average != 0);
 
                 return historic;
             }
             catch (Exception ex) {
-                return new List<HistoricPrice>(3);
+                return NullValue;
             }
         }
 
