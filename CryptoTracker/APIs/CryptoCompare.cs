@@ -59,10 +59,13 @@ namespace CryptoTracker.APIs {
          * - limit: 1 - 2000
          * 
         */
-        internal static async Task<List<HistoricPrice>> GetHistoricAsync(string crypto, string time, int limit) {
+        internal static async Task<List<HistoricPrice>> GetHistoricAsync(string crypto, string time, int limit, int aggregate = 1) {
             var currency = App.currency;
 
             string URL = string.Format("https://min-api.cryptocompare.com/data/histo{0}?e=CCCAGG&fsym={1}&tsym={2}&limit={3}", time, crypto, currency, limit);
+
+            if (aggregate != 1)
+                URL += string.Format("&aggregate={0}", aggregate);
 
             if (limit == 0)
                 URL = string.Format("https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym={0}&tsym={1}&allData=true", crypto, currency);
