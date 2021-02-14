@@ -178,7 +178,7 @@
 
 			<local:ChartAreaFull
 				x:Name="PriceChart"
-				ChartModel="{x:Bind viewModel.ChartModel, Mode=OneWay}"/>
+				ChartModel="{x:Bind viewModel.Chart, Mode=OneWay}"/>
 
 			<StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
                 <RadioButton GroupName="coin" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>

@@ -17,10 +17,10 @@ namespace CryptoTracker.ViewModels {
 			set => SetProperty(ref coin, value);
 		}
 
-		private ChartModel chartModel = new ChartModel();
-		public ChartModel ChartModel {
-			get => chartModel;
-			set => SetProperty(ref chartModel, value);
+		private ChartModel chart = new ChartModel();
+		public ChartModel Chart {
+			get => chart;
+			set => SetProperty(ref chart, value);
 		}
 	}
 }

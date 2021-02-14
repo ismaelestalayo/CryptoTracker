@@ -14,6 +14,7 @@ namespace CryptoTracker.Models {
             set {
                 SetProperty(ref name, value);
                 Logo = IconsHelper.GetIcon(value);
+                IsFav = App.pinnedCoins.Contains(value);
             }
         }
         internal string FullName { get; set; } = "NULL";

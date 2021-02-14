@@ -36,16 +36,30 @@ namespace CryptoTracker {
                 if (animation != null)
                     animation.TryStart(PriceChart, new UIElement[] { BottomCards });
 
-                // Page title
-                var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
-                viewModel.Coin.Name = crypto;
+                var type = (e.Parameter.GetType()).Name;
 
-                var coin = App.coinList.Find(x => x.symbol == crypto);
-                viewModel.Coin.FullName = coin.name;
+                if (type == "String") {
+                    // Page title
+                    var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
+                    viewModel.Coin.Name = crypto;
 
-                FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
+                    var coin = App.coinList.Find(x => x.symbol == crypto);
+                    viewModel.Coin.FullName = coin.name;
 
-                InitValues(coin);
+                    FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
+
+                    InitValuesFromZero(coin);
+                }
+				else if(type == nameof(HomeCard)) {
+                    viewModel.Chart = ((HomeCard)e.Parameter).Chart;
+                    viewModel.Coin = ((HomeCard)e.Parameter).Info;
+                    var c = viewModel.Coin;
+                    var coin = App.coinList.Find(x => x.symbol == c.Name);
+                    viewModel.Coin.FullName = coin.name;
+                    FavIcon.Content = viewModel.Coin.IsFav ? "\uEB52" : "\uEB51";
+                    // TODO: update info and market info
+                }
+
             }
             catch (Exception ex){
                 var message = "There was an error loading that coin. Try again later.";
@@ -58,7 +72,7 @@ namespace CryptoTracker {
                 PeriodicTimer.Cancel();
         }
 
-        private async void InitValues(CoinBasicInfo coin) {
+        private async void InitValuesFromZero(CoinBasicInfo coin) {
 
             viewModel.CoinInfo = await API_CoinGecko.GetCoin(coin.name);
 
@@ -77,7 +91,6 @@ namespace CryptoTracker {
 
             } catch (Exception) {
                 viewModel.Coin.IsLoading = false;
-                //var dontWait = new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 
@@ -98,10 +111,10 @@ namespace CryptoTracker {
             viewModel.Coin.Price = await CryptoCompare.GetPriceAsync(crypto);
 
             /// Colors
-            var brush = viewModel.ChartModel.ChartStroke;
+            var brush = viewModel.Chart.ChartStroke;
             if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
                 brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
-            viewModel.ChartModel.ChartStroke = brush;
+            viewModel.Chart.ChartStroke = brush;
 
             /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
             var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit);
@@ -114,16 +127,16 @@ namespace CryptoTracker {
                     Volume = h.volumefrom
                 });
             }
-            viewModel.ChartModel.ChartData = chartData;
+            viewModel.Chart.ChartData = chartData;
             var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
-            viewModel.ChartModel.LabelFormat = temp.LabelFormat;
-            viewModel.ChartModel.Minimum = temp.Minimum;
-            viewModel.ChartModel.MajorStepUnit = temp.MajorStepUnit;
-            viewModel.ChartModel.MajorStep = temp.MajorStep;
+            viewModel.Chart.LabelFormat = temp.LabelFormat;
+            viewModel.Chart.Minimum = temp.Minimum;
+            viewModel.Chart.MajorStepUnit = temp.MajorStepUnit;
+            viewModel.Chart.MajorStep = temp.MajorStep;
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-            viewModel.ChartModel.PricesMinMax = MinMax;
+            viewModel.Chart.PricesMinMax = MinMax;
 
             /// Calculate the price difference
             double oldestPrice = histo[0].Average;

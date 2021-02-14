@@ -16,12 +16,12 @@ namespace CryptoTracker.Views {
         /// <summary>
         /// Local variables
         /// </summary>
-        private static int limit = 1500;
-        private static string timeSpan = "minute";
+        private static int limit = 168;
+        private static string timeSpan = "week";
+        private static string timeUnit = "hour";
 
         public Home() {
             this.InitializeComponent();
-
             UpdateCoinList();
         }
 
@@ -68,14 +68,11 @@ namespace CryptoTracker.Views {
             String iconPath = "/Assets/Icons/icon" + crypto + ".png";
             try {
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + iconPath));
-            } catch (Exception) {
-
-            }
+            } catch (Exception) { }
 
             var h = new HomeCard() { Info = new Coin() { Name = crypto } };
             viewModel.PriceCards.Add(h);
             viewModel.VolumeCards.Add(h);
-
 
             /// Update pinnedCoin list
             App.UpdatePinnedCoins();
@@ -119,7 +116,7 @@ namespace CryptoTracker.Views {
                 viewModel.PriceCards[i].Chart.ChartStroke = brush;
 
                 /// Get Historic and create List of ChartData for the chart
-                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeSpan, limit);
+                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit);
                 var chartData = new List<ChartPoint>();
 				foreach (var h in histo) {
 					chartData.Add(new ChartPoint() {
@@ -130,6 +127,11 @@ namespace CryptoTracker.Views {
 				}
                 viewModel.PriceCards[i].Chart.ChartData = chartData;
                 viewModel.VolumeCards[i].Chart.ChartData = chartData;
+                var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
+                viewModel.PriceCards[i].Chart.LabelFormat = temp.LabelFormat;
+                viewModel.PriceCards[i].Chart.Minimum = temp.Minimum;
+                viewModel.PriceCards[i].Chart.MajorStepUnit = temp.MajorStepUnit;
+                viewModel.PriceCards[i].Chart.MajorStep = temp.MajorStep;
 
                 /// Calculate min-max to adjust axis
                 var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
@@ -157,34 +159,34 @@ namespace CryptoTracker.Views {
         /// #########################################################################################
         private async void ALL_TimerangeButton_Click(object sender, RoutedEventArgs e) {
             RadioButton btn = sender as RadioButton;
-
-            switch (btn.Content) {
+            timeSpan = btn.Content.ToString();
+            switch (timeSpan) {
                 case "hour":
-                    timeSpan = "minute";
+                    timeUnit = "minute";
                     limit = 60;
                     break;
 
                 case "day":
-                    timeSpan = "minute";
+                    timeUnit = "minute";
                     limit = 1500;
                     break;
 
                 case "week":
-                    timeSpan = "hour";
+                    timeUnit = "hour";
                     limit = 168;
                     break;
 
                 case "month":
-                    timeSpan = "hour";
+                    timeUnit = "hour";
                     limit = 744;
                     break;
                 case "year":
-                    timeSpan = "day";
+                    timeUnit = "day";
                     limit = 365;
                     break;
 
                 case "all":
-                    timeSpan = "day";
+                    timeUnit = "day";
                     limit = 0;
                     break;
 
@@ -205,8 +207,8 @@ namespace CryptoTracker.Views {
                     break;
             }
 
-            var crypto = ((HomeCard)e.ClickedItem).Info.Name;
-            this.Frame.Navigate(typeof(CoinDetails), crypto);
+            var card = ((HomeCard)e.ClickedItem);
+            this.Frame.Navigate(typeof(CoinDetails), card);
         }
 
         private void UnpinCoin(object sender, RoutedEventArgs e) {
