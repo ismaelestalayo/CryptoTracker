@@ -312,34 +312,57 @@ namespace CryptoTracker {
 
         internal static ChartStyling AdjustLinearAxis(ChartStyling chartStyle, string timeSpan) {
             switch (timeSpan) {
-                case "hour":
+                case "1h":
                     chartStyle.LabelFormat = "{0:HH:mm}";
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     chartStyle.MajorStep = 10;
                     chartStyle.Minimum = DateTime.Now.AddHours(-1);
                     break;
 
-                case "day":
+                case "4h":
+                    chartStyle.LabelFormat = "{0:HH:mm}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
+                    chartStyle.MajorStep = 30;
+                    chartStyle.Minimum = DateTime.Now.AddHours(-4);
+                    break;
+
+                case "1d":
                     chartStyle.LabelFormat = "{0:HH:mm}";
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    chartStyle.MajorStep = 6;
+                    chartStyle.MajorStep = 3;
                     chartStyle.Minimum = DateTime.Now.AddDays(-1);
                     break;
 
-                case "week":
+                case "3d":
+                    chartStyle.LabelFormat = "{0:HH:mm}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
+                    chartStyle.MajorStep = 6;
+                    chartStyle.Minimum = DateTime.Now.AddDays(-3);
+                    break;
+
+                default:
+                case "1w":
                     chartStyle.LabelFormat = "{0:ddd d}";
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     chartStyle.MajorStep = 1;
                     chartStyle.Minimum = DateTime.Now.AddDays(-7);
                     break;
 
-                case "month":
+                case "1m":
                     chartStyle.LabelFormat = "{0:d/M}";
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     chartStyle.MajorStep = 1;
                     chartStyle.Minimum = DateTime.Now.AddMonths(-1);
                     break;
-                case "year":
+
+                case "3m":
+                    chartStyle.LabelFormat = "{0:d/M}";
+                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
+                    chartStyle.MajorStep = 1;
+                    chartStyle.Minimum = DateTime.Now.AddMonths(-3);
+                    break;
+
+                case "1y":
                     chartStyle.LabelFormat = "{0:MMM}";
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     chartStyle.MajorStep = 1;
@@ -347,9 +370,9 @@ namespace CryptoTracker {
                     break;
 
                 case "all":
-                    chartStyle.LabelFormat = "{0:MMM/yy}";
+                    chartStyle.LabelFormat = "{0:MMM}";
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    chartStyle.MajorStep = 4;
+                    chartStyle.MajorStep = 6;
                     chartStyle.Minimum = DateTime.MinValue;
                     break;
             }
@@ -365,7 +388,7 @@ namespace CryptoTracker {
                     return ("minute", 240, 1);
 
                 case "1d":
-                    return ("minute", 300, 5); // 300 * 5 = 1440 minutes
+                    return ("minute", 1440, 5); // 300 * 5 = 1440 minutes
 
                 case "3d":
                     return ("hour", 72, 1); // 72 * 5 = 

@@ -180,15 +180,10 @@
 				x:Name="PriceChart"
 				ChartModel="{x:Bind viewModel.Chart, Mode=OneWay}"/>
 
-			<StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                <RadioButton GroupName="coin" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-                <RadioButton GroupName="coin" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-				<RadioButton GroupName="coin" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click" IsChecked="True"/>
-                <RadioButton GroupName="coin" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-                <RadioButton GroupName="coin" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-                <RadioButton GroupName="coin" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="TimerangeButton_Click"/>
-            </StackPanel>
-        </Grid>
+			<local:TimeRangeRadioButtons
+				Grid.Row="1"
+				Tapped="TimeRangeButtons_Tapped"/>
+		</Grid>
 
         <!-- 
         ####################################################################################################

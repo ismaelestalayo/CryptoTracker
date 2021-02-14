@@ -1,6 +1,7 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
 using CryptoTracker.Models;
+using CryptoTracker.UserControls;
 using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,14 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
-	public sealed partial class CoinDetails : Page {
+    public sealed partial class CoinDetails : Page {
+        /// Variables to get historic
         private static int limit = 168;
-        private static string timeSpan = "week";
+        private static int aggregate = 1;
+        private static string timeSpan = "1w";
         private static string timeUnit = "hour";
+
+        // Timer for auto-refresh
         private static ThreadPoolTimer PeriodicTimer;
 
         public CoinDetails() {
@@ -31,26 +36,23 @@ namespace CryptoTracker {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
+            /// Create the connected animation
+            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
+            if (animation != null)
+                animation.TryStart(PriceChart, new UIElement[] { BottomCards });
+
+            /// Create the 30sec auto-refresh
+            TimeSpan period = TimeSpan.FromSeconds(30);
+            PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                    if (timeUnit == "minute" && this.Frame.SourcePageType.Name == "CoinDetails")
+                        TimeRangeButtons_Tapped(null, null);
+                });
+            }, period);
+
             try {
-                var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
-                if (animation != null)
-                    animation.TryStart(PriceChart, new UIElement[] { BottomCards });
-
                 var type = (e.Parameter.GetType()).Name;
-
-                if (type == "String") {
-                    // Page title
-                    var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
-                    viewModel.Coin.Name = crypto;
-
-                    var coin = App.coinList.Find(x => x.symbol == crypto);
-                    viewModel.Coin.FullName = coin.name;
-
-                    FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
-
-                    InitValuesFromZero(coin);
-                }
-				else if(type == nameof(HomeCard)) {
+                if (type == nameof(HomeCard)) {
                     viewModel.Chart = ((HomeCard)e.Parameter).Chart;
                     viewModel.Coin = ((HomeCard)e.Parameter).Info;
                     var c = viewModel.Coin;
@@ -58,6 +60,16 @@ namespace CryptoTracker {
                     viewModel.Coin.FullName = coin.name;
                     FavIcon.Content = viewModel.Coin.IsFav ? "\uEB52" : "\uEB51";
                     // TODO: update info and market info
+                }
+                else {
+                    // Page title
+                    var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
+                    viewModel.Coin.Name = crypto;
+                    var coin = App.coinList.Find(x => x.symbol == crypto);
+                    viewModel.Coin.FullName = coin.name;
+                    FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
+
+                    InitValuesFromZero(coin);
                 }
 
             }
@@ -72,22 +84,12 @@ namespace CryptoTracker {
                 PeriodicTimer.Cancel();
         }
 
+        /// #########################################################################################
         private async void InitValuesFromZero(CoinBasicInfo coin) {
-
             viewModel.CoinInfo = await API_CoinGecko.GetCoin(coin.name);
 
-            TimeSpan period = TimeSpan.FromSeconds(30);
-            PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-                    RadioButton r = new RadioButton { Content = timeUnit };
-                    if (timeSpan == "hour" && this.Frame.SourcePageType.Name == "CoinDetails")
-                        TimerangeButton_Click(r, null);
-                });
-            }, period);
-
             try {
-                RadioButton r = new RadioButton { Content = timeSpan };
-                TimerangeButton_Click(r, null);
+                TimeRangeButtons_Tapped(null, null);
 
             } catch (Exception) {
                 viewModel.Coin.IsLoading = false;
@@ -117,7 +119,7 @@ namespace CryptoTracker {
             viewModel.Chart.ChartStroke = brush;
 
             /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
-            var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit);
+            var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
             var chartData = new List<ChartPoint>();
             foreach (var h in histo) {
                 chartData.Add(new ChartPoint() {
@@ -154,45 +156,6 @@ namespace CryptoTracker {
         }
 
         // #########################################################################################
-        private void TimerangeButton_Click(object sender, RoutedEventArgs e) {
-            viewModel.Coin.IsLoading = true;
-
-            RadioButton btn = sender as RadioButton;
-            timeSpan = btn.Content.ToString();
-            switch (timeSpan) {
-                case "hour":
-                    timeUnit = "minute";
-                    limit = 60;
-                    break;
-
-                case "day":
-                    timeUnit = "minute";
-                    limit = 1500;
-                    break;
-
-                case "week":
-                    timeUnit = "hour";
-                    limit = 168;
-                    break;
-
-                case "month":
-                    timeUnit = "hour";
-                    limit = 744;
-                    break;
-                case "year":
-                    timeUnit = "day";
-                    limit = 365;
-                    break;
-
-                case "all":
-                    timeUnit = "day";
-                    limit = 0;
-                    break;
-
-            }
-            UpdatePage();
-        }
-
         private void PinCoin_btn(object sender, RoutedEventArgs e) {
             var crypto = viewModel.Coin.Name;
             if (!App.pinnedCoins.Contains(crypto)) {
@@ -218,6 +181,17 @@ namespace CryptoTracker {
 
             await view.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
             Frame.Navigate(typeof(CoinCompact), crypto, new SuppressNavigationTransitionInfo());
+        }
+
+        private void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            if (sender != null)
+                timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
+            var t = App.TimeSpanParser(timeSpan);
+            limit = t.limit;
+            aggregate = t.aggregate;
+            timeUnit = t.timeUnit;
+
+            UpdatePage();
         }
     }
 }
