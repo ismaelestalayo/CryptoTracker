@@ -12,11 +12,12 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Views {
-	public sealed partial class Home : Page {
+    public sealed partial class Home : Page {
         /// <summary>
         /// Local variables
         /// </summary>
         private static int limit = 168;
+        private static int aggregate = 1;
         private static string timeSpan = "week";
         private static string timeUnit = "hour";
 
@@ -49,7 +50,7 @@ namespace CryptoTracker.Views {
             if(!pinned.SequenceEqual(current)) {
                 viewModel.PriceCards.Clear();
                 viewModel.VolumeCards.Clear();
-				foreach (var coin in App.pinnedCoins)
+                foreach (var coin in App.pinnedCoins)
                     await AddCoinHome(coin);
             }
 
@@ -103,7 +104,7 @@ namespace CryptoTracker.Views {
         }
 
         private async Task UpdateCard(int i) {
-			try {
+            try {
                 string crypto = App.pinnedCoins[i];
 
                 /// Get price
@@ -116,15 +117,15 @@ namespace CryptoTracker.Views {
                 viewModel.PriceCards[i].Chart.ChartStroke = brush;
 
                 /// Get Historic and create List of ChartData for the chart
-                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit);
+                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
                 var chartData = new List<ChartPoint>();
-				foreach (var h in histo) {
-					chartData.Add(new ChartPoint() {
-						Date = h.DateTime,
-						Value = h.Average,
+                foreach (var h in histo) {
+                    chartData.Add(new ChartPoint() {
+                        Date = h.DateTime,
+                        Value = h.Average,
                         Volume = h.volumefrom
                     });
-				}
+                }
                 viewModel.PriceCards[i].Chart.ChartData = chartData;
                 viewModel.VolumeCards[i].Chart.ChartData = chartData;
                 var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
@@ -139,17 +140,17 @@ namespace CryptoTracker.Views {
 
                 /// Calculate the price difference
                 double oldestPrice = histo[0].Average;
-				double newestPrice = histo[histo.Count - 1].Average;
-				double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
+                double newestPrice = histo[histo.Count - 1].Average;
+                double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
                 viewModel.PriceCards[i].Info.Diff = diff;
 
                 /// Sum total volume from historic
                 double total = 0;
                 histo.ForEach(x => total += x.volumeto);
-				viewModel.VolumeCards[i].Info.Volume = NumberHelper.AddUnitPrefix(total) + App.currencySymbol;
+                viewModel.VolumeCards[i].Info.Volume = NumberHelper.AddUnitPrefix(total) + App.currencySymbol;
 
-				/// Show that loading is done
-				viewModel.PriceCards[i].Info.IsLoading = false;
+                /// Show that loading is done
+                viewModel.PriceCards[i].Info.IsLoading = false;
             } catch (Exception) {
 
             }
@@ -157,44 +158,6 @@ namespace CryptoTracker.Views {
         }
 
         /// #########################################################################################
-        private async void ALL_TimerangeButton_Click(object sender, RoutedEventArgs e) {
-            RadioButton btn = sender as RadioButton;
-            timeSpan = btn.Content.ToString();
-            switch (timeSpan) {
-                case "hour":
-                    timeUnit = "minute";
-                    limit = 60;
-                    break;
-
-                case "day":
-                    timeUnit = "minute";
-                    limit = 1500;
-                    break;
-
-                case "week":
-                    timeUnit = "hour";
-                    limit = 168;
-                    break;
-
-                case "month":
-                    timeUnit = "hour";
-                    limit = 744;
-                    break;
-                case "year":
-                    timeUnit = "day";
-                    limit = 365;
-                    break;
-
-                case "all":
-                    timeUnit = "day";
-                    limit = 0;
-                    break;
-
-            }
-
-            await UpdateAllCards();
-        }
-
         private void homeListView_Click(object sender, ItemClickEventArgs e) {
             /// Connected animation
             switch ( ((ListView)sender).Name ) {
@@ -267,6 +230,16 @@ namespace CryptoTracker.Views {
                 /// Update pinnedCoin list
                 App.UpdatePinnedCoins();
             }
+        }
+
+        private async void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            timeSpan = ((UserControls.TimeRangeRadioButtons)sender).TimeSpan;
+            var t = App.TimeSpanParser(timeSpan);
+            limit = t.limit;
+            aggregate = t.aggregate;
+            timeUnit = t.timeUnit;
+
+            await UpdateAllCards();
         }
     }
 }

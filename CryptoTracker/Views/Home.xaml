@@ -53,18 +53,12 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            
-            <!-- TIME RADIO BUTTONS-->
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0 0 0 -15" VerticalAlignment="Bottom">
-                <RadioButton GroupName="Home" Content="hour"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-                <RadioButton GroupName="Home" Content="day"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-                <RadioButton GroupName="Home" Content="week"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="True"/>
-                <RadioButton GroupName="Home" Content="month" Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-                <RadioButton GroupName="Home" Content="year"  Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-                <RadioButton GroupName="Home" Content="all"   Style="{StaticResource timerangeRadioBtn}" Click="ALL_TimerangeButton_Click" IsChecked="False"/>
-            </StackPanel>
 
-            <!-- 
+			<local:TimeRangeRadioButtons
+				Grid.ColumnSpan="2"
+				Tapped="TimeRangeButtons_Tapped"/>
+			
+			<!-- 
             ####################################################################################################
             ############################################# PRICE LIST VIEW ######################################
             #################################################################################################### -->

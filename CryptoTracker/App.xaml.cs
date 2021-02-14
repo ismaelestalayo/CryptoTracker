@@ -356,7 +356,37 @@ namespace CryptoTracker {
             return chartStyle;
         }
 
+        internal static (string timeUnit, int limit, int aggregate) TimeSpanParser(string timeSpan) {
+            switch (timeSpan) {
+                case "1h":
+                    return ("minute", 60, 1);
 
+                case "4h":
+                    return ("minute", 240, 1);
+
+                case "1d":
+                    return ("minute", 300, 5); // 300 * 5 = 1440 minutes
+
+                case "3d":
+                    return ("hour", 72, 1); // 72 * 5 = 
+
+                default:
+                case "1w":
+                    return ("hour", 168, 1);
+
+                case "1m":
+                    return ("hour", 372, 2); // 744 hours in a month
+
+                case "3m":
+                    return ("day", 93, 1); // 744 hours in a month
+
+                case "1y":
+                    return ("day", 365, 1);
+
+                case "all":
+                    return ("day", 0, 1);
+            }
+        }
 
     }
 
