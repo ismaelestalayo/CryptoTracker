@@ -15,12 +15,12 @@
     </Style>
 
     <Style TargetType="Button" x:Key="Crypto_button_style">
-		<Setter Property="Background" Value="{ThemeResource SystemChromeDisabledHighColor}"/>
-		<Setter Property="BorderThickness" Value="0"/>
-		<Setter Property="Foreground" Value="{ThemeResource SystemBaseMediumHighColor}"/>
-		<Setter Property="Margin" Value="0 0 5 5"/>
-		<Setter Property="Padding" Value="23 7"/>
-		<Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}" />
+        <Setter Property="Background" Value="{ThemeResource SystemChromeDisabledHighColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemBaseMediumHighColor}"/>
+        <Setter Property="Margin" Value="0 0 5 5"/>
+        <Setter Property="Padding" Value="23 7"/>
+        <Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ButtonBase">
@@ -37,15 +37,15 @@
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ComboBoxBackgroundPointerOver}" />
-										</ObjectAnimationUsingKeyFrames>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ComboBoxBackgroundPointerOver}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
 
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemBaseMediumLowColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemBaseMediumLowColor}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -59,95 +59,14 @@
         </Setter>
     </Style>
 
-	<Style TargetType="ComboBox" x:Key="Crypto_comboBox_style">
-		<Setter Property="Background" Value="{ThemeResource SystemChromeDisabledHighColor}"/>
-		<Setter Property="Foreground" Value="{ThemeResource SystemBaseMediumHighColor}"/>
-		<Setter Property="BorderThickness" Value="0"/>
-		<Setter Property="CornerRadius" Value="3"/>
-		<Setter Property="Margin" Value="0 0 5 5"/>
-		<Setter Property="Padding" Value="23 7"/>
-		<Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}" />
-	</Style>
-
-	<Style TargetType="RadioButton" x:Key="timerangeRadioBtn">
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="MinHeight" Value="30"/>
-        <Setter Property="MinWidth" Value="60"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ButtonBase">
-                    <Grid Background="{TemplateBinding Background}">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-
-                                <VisualState x:Name="PointerOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonBackgroundPointerOver}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonBorderBrushPointerOver}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonBackgroundPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonBorderBrushPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DateTimePickerFlyoutButtonForegroundPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-
-                                <VisualState x:Name="Checked">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemChromeAltLowColor}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderThickness">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="0, 1" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter 
-                                x:Name="ContentPresenter"
-                                Margin="0, 10, 0, 20"
-                                Foreground="{ThemeResource ButtonForegroundThemeBrush}"
-                                FontWeight="Light"
-                                MinWidth="{TemplateBinding MinWidth}"
-                                MinHeight="{TemplateBinding MinHeight}"
-                                FontSize="{TemplateBinding FontSize}"
-                                VerticalAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                HorizontalAlignment="Center"
-                                HorizontalContentAlignment="Center"
-                                              
-                                Content="{TemplateBinding Content}"
-                                ContentTransitions="{TemplateBinding ContentTransitions}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style TargetType="ComboBox" x:Key="Crypto_comboBox_style">
+        <Setter Property="Background" Value="{ThemeResource SystemChromeDisabledHighColor}"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemBaseMediumHighColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="Margin" Value="0 0 5 5"/>
+        <Setter Property="Padding" Value="23 7"/>
+        <Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}" />
     </Style>
 
 </ResourceDictionary>
