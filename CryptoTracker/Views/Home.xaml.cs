@@ -13,12 +13,10 @@ using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Views {
     public sealed partial class Home : Page {
-        /// <summary>
-        /// Local variables
-        /// </summary>
+        /// Variables to get historic
         private static int limit = 168;
         private static int aggregate = 1;
-        private static string timeSpan = "week";
+        private static string timeSpan = "1w";
         private static string timeUnit = "hour";
 
         public Home() {

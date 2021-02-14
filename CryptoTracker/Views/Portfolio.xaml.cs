@@ -1,6 +1,7 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Helpers;
 using CryptoTracker.Models;
+using CryptoTracker.UserControls;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,14 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Telerik.UI.Xaml.Controls.Chart;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using static CryptoTracker.APIs.CryptoCompare;
 
 namespace CryptoTracker {
 
@@ -25,6 +27,11 @@ namespace CryptoTracker {
     }
 
     public partial class Portfolio : Page {
+        /// Variables to get historic
+        private static int limit = 168;
+        private static int aggregate = 1;
+        private static string timeSpan = "1w";
+        private static string timeUnit = "hour";
 
         internal static bool ForceRefresh { get; set; }
         internal static ObservableCollection<PurchaseClass> PurchaseList { get; set; }
@@ -33,7 +40,6 @@ namespace CryptoTracker {
         private int EditingPurchaseId { get; set; }
 
         private bool ShowingDetails = false;
-        private string currTimerange = "month";
 
         private double _invested = 0;
         private double _worth = 0;
@@ -44,38 +50,36 @@ namespace CryptoTracker {
             PurchaseList = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio").Result;
             Portfolio_dg.ItemsSource = PurchaseList;
 
-			PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
+            PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
             PurchaseList_CollectionChanged(null, null);
-
-            UpdatePortfolio();
         }
 
-		private void PurchaseList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+        private void PurchaseList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             PortfolioChartGrid.Visibility = (PurchaseList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
-		}
+        }
 
-		private void Page_Loaded(object sender, RoutedEventArgs e) {
-			RadioButton r = new RadioButton { Content = currTimerange };
-			TimerangeButton_Click(r, null);
-
+        private void Page_Loaded(object sender, RoutedEventArgs e) {
+            /// Check coinsArray is populated
             if (coinsArray.Count == 0) {
                 coinsArray = App.coinList.Select(x => x.symbol).ToList();
                 coinsArray.Sort((x, y) => x.CompareTo(y));
             }
-            
-
-            if (ForceRefresh) {
-				ForceRefresh = false;
-				UpdatePortfolio();
-				Portfolio_dg.ItemsSource = PurchaseList;
-			}
-		}
 
 
-		// ###############################################################################################
-		//  For sync all
-		internal void UpdatePortfolio() {
-            // empty diversification chart
+			//if (ForceRefresh) {
+			//	ForceRefresh = false;
+			//	UpdatePortfolio();
+			//	Portfolio_dg.ItemsSource = PurchaseList;
+			//}
+
+            UpdatePortfolio();
+        }
+
+
+        /// ###############################################################################################
+        ///  For sync all
+        internal void UpdatePortfolio() {
+            /// empty diversification chart
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
 
@@ -83,10 +87,10 @@ namespace CryptoTracker {
             _worth = 0;
 
             foreach (PurchaseClass purchase in PurchaseList) {
-                // this update the ObservableCollection itself
+                /// this update the ObservableCollection itself
                 UpdatePurchaseAsync(purchase);
 
-                // create the diversification grid
+                /// create the diversification grid
                 ColumnDefinition col = new ColumnDefinition();
                 col.Width = new GridLength(purchase.Worth, GridUnitType.Star);
                 PortfolioChartGrid.ColumnDefinitions.Add(col);
@@ -111,8 +115,7 @@ namespace CryptoTracker {
                 _worth += purchase.Worth;
             }
 
-            RadioButton r = new RadioButton { Content = currTimerange };
-            TimerangeButton_Click(r, null);
+            UpdatePortfolioChart();
 
             total_invested.Text = _invested.ToString() + App.currencySymbol;
             total_worth.Text = _worth.ToString() + App.currencySymbol;
@@ -185,8 +188,8 @@ namespace CryptoTracker {
             }
         }
 
-        // ###############################################################################################
-        // Add/Edit purchase dialog
+        /// ###############################################################################################
+        /// Add/Edit purchase dialog
         private void AddPurchase_click(object sender, RoutedEventArgs e) {
             NewPurchase = new ObservableCollection<PurchaseClass>() { new PurchaseClass() };
             TestRepeater.ItemsSource = NewPurchase;
@@ -242,6 +245,83 @@ namespace CryptoTracker {
                 NewPurchase[0] = await UpdatePurchaseAsync(NewPurchase[0]);
         }
 
+        private async void UpdatePortfolioChart() {
+            var nPurchases = PurchaseList.Count;
+            if (nPurchases == 0)
+                return;
+
+            /// Optimize by only getting historic for different cryptos
+            var uniqueCryptos = new HashSet<string>(PurchaseList.Select(x => x.Crypto)).ToList();
+            
+            /// Get historic for each unique crypto, get invested qty, and multiply
+            /// to get the worth of each crypto to the user's wallet
+            var cryptoQties = new List<double>();
+            var cryptoWorth = new List<List<double>>();
+            var histos = new List<List<HistoricPrice>>(nPurchases);
+            foreach (var crypto in uniqueCryptos) {
+                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
+                var cryptoQty = PurchaseList.Where(x => x.Crypto == crypto).Sum(x => x.CryptoQty);
+                cryptoWorth.Add(histo.Select(x => x.Average * cryptoQty).ToList());
+                histos.Add(histo);
+            }
+
+            /// There might be young cryptos that didnt exist in the past, so take the common minimum 
+            var minCommon = histos.Min(x => x.Count);
+            if (minCommon == 1)
+                return;
+
+            /// Check if all arrays are equal length, if not, remove the leading values
+            var sameLength = cryptoWorth.All(x => x.Count == cryptoWorth[0].Count);
+            if (!sameLength) {
+				for (int i = 0; i < histos.Count; i++) {
+                    histos[i] = histos[i].Skip(Math.Max(0, histos[i].Count() - minCommon)).ToList();
+                }
+            }
+
+
+            
+            var worth_arr = new List<double>();
+            var dates_arr = histos[0].Select(kk => kk.DateTime).ToList();
+            for (int i = 0; i < minCommon; i++) {
+                worth_arr.Add(cryptoWorth.Select(x => x[i]).Sum());
+
+            }
+
+            /// Create List for chart
+            var chartData = new List<ChartPoint>();
+            for (int i = 0; i < minCommon; i++) {
+                chartData.Add(new ChartPoint {
+                    Date = dates_arr.ElementAt(i),
+                    Value = (float)worth_arr[i]
+                });
+            }
+            viewModel.Chart.ChartData = chartData;
+            var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
+            viewModel.Chart.LabelFormat = temp.LabelFormat;
+            viewModel.Chart.Minimum = temp.Minimum;
+            viewModel.Chart.MajorStepUnit = temp.MajorStepUnit;
+            viewModel.Chart.MajorStep = temp.MajorStep;
+
+            /// Calculate min-max to adjust axis
+            var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
+            viewModel.Chart.PricesMinMax = MinMax;
+        }
+
+
+        private void TimeRangeButtons_Tapped(object sender, TappedRoutedEventArgs e) {
+            if (sender != null)
+                timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
+            var t = App.TimeSpanParser(timeSpan);
+            limit = t.limit;
+            aggregate = t.aggregate;
+            timeUnit = t.timeUnit;
+
+            UpdatePortfolio();
+        }
+
+
+        /// ###############################################################################################
+        /// Sorting
         private void DataGrid_Sorting(object sender, DataGridColumnEventArgs e) {
             if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
                 e.Column.SortDirection = DataGridSortDirection.Ascending;
@@ -252,42 +332,42 @@ namespace CryptoTracker {
                 case "Crypto":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
                         Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
-                                                                                        orderby item.Crypto ascending
-                                                                                        select item);
+                                                                                           orderby item.Crypto ascending
+                                                                                           select item);
                     else
                         Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
-                                                                                        orderby item.Crypto descending
-                                                                                        select item);
+                                                                                           orderby item.Crypto descending
+                                                                                           select item);
                     break;
                 case "Invested":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
                         Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
-                                                                                        orderby item.InvestedQty ascending
-                                                                                        select item);
+                                                                                           orderby item.InvestedQty ascending
+                                                                                           select item);
                     else
                         Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
-                                                                                        orderby item.InvestedQty descending
-                                                                                        select item);
+                                                                                           orderby item.InvestedQty descending
+                                                                                           select item);
                     break;
                 case "Worth":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
                         Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
-                                                                                        orderby item.Worth ascending
-                                                                                        select item);
+                                                                                           orderby item.Worth ascending
+                                                                                           select item);
                     else
                         Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
-                                                                                        orderby item.Worth descending
-                                                                                        select item);
+                                                                                           orderby item.Worth descending
+                                                                                           select item);
                     break;
                 case "Currently":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
                         Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
-                                                                                        orderby item.Current ascending
-                                                                                        select item);
-                    else 
+                                                                                           orderby item.Current ascending
+                                                                                           select item);
+                    else
                         Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseClass>(from item in PurchaseList
-                                                                                        orderby item.Current descending
-                                                                                        select item);
+                                                                                           orderby item.Current descending
+                                                                                           select item);
                     break;
             }
             foreach (var dgColumn in Portfolio_dg.Columns) {
@@ -296,54 +376,8 @@ namespace CryptoTracker {
             }
         }
 
-        private async void TimerangeButton_Click(object sender, RoutedEventArgs e) {
-            var nPurchases = PurchaseList.Count;
-            if (nPurchases == 0)
-                return;
-
-            RadioButton btn = sender as RadioButton;
-            currTimerange = btn.Content.ToString();
-
-            var t = App.ParseTimeSpan(currTimerange);
-            int limit = t.Item2;
-
-
-            var k = new List<List<JSONhistoric>>(nPurchases);
-            foreach (PurchaseClass purchase in PurchaseList) {
-                var hist = await App.GetHistoricalPrices(purchase.Crypto, currTimerange);
-                k.Add(hist);
-            }
-
-            var dates_arr = k[0].Select(kk => kk.DateTime).ToList();
-            var arr = k.Select(kk => kk.Select(kkk => kkk.High)).ToArray();
-            var prices = new List<List<double>>();
-            for (int i = 0; i < arr.Length; i++) {
-                prices.Add(arr[i].Select(a => a * PurchaseList[i].CryptoQty).ToList());
-            }
-
-            var prices_arr = new List<double>();
-            var min_limit = prices.Select(x => x.Count).Min();
-            for (int i = 0; i < min_limit; i++) {
-                prices_arr.Add(prices.Select(p => p[i]).Sum());
-            }
-
-            List<ChartPoint> data = new List<ChartPoint>();
-            for (int i = 0; i < min_limit; ++i) {
-                data.Add(new ChartPoint {
-                    Date = dates_arr[i],
-                    Value = (float)prices_arr[i]
-                });
-            }
-            var series = (SplineAreaSeries)PortfolioChart.Series[0];
-            series.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
-            series.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "Value" };
-            series.ItemsSource = data;
-            var MinMax = GraphHelper.GetMinMaxOfArray(data.Select(d => d.Value).ToList());
-            verticalAxis.Minimum = MinMax.Min;
-            verticalAxis.Maximum = MinMax.Max;
-            dateTimeAxis = App.AdjustAxis(dateTimeAxis, currTimerange);
-        }
-
+        /// ###############################################################################################
+        /// Grouping
         public class GroupInfoCollection<T> : ObservableCollection<T> {
             public object Key { get; set; }
 
@@ -352,12 +386,12 @@ namespace CryptoTracker {
             }
         }
 
-		private void dg_loadingRowGroup(object sender, DataGridRowGroupHeaderEventArgs e) {
+        private void dg_loadingRowGroup(object sender, DataGridRowGroupHeaderEventArgs e) {
             ICollectionViewGroup group = e.RowGroupHeader.CollectionViewGroup;
             e.RowGroupHeader.PropertyValue = ((GroupInfoCollection<PurchaseClass>)group.Group).Key.ToString();
         }
 
-		private void Grouping_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void Grouping_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var opt = ((ContentControl)((Selector)sender).SelectedItem).Content.ToString();
 
             if (PurchaseList == null || Portfolio_dg == null)
@@ -400,5 +434,5 @@ namespace CryptoTracker {
                 Portfolio_dg.ItemsSource = groupedItems.View;
             }
         }
-	}
+    }
 }
