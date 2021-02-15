@@ -21,7 +21,7 @@ using static CryptoTracker.APIs.CryptoCompare;
 
 namespace CryptoTracker {
 
-	public class SuggestionCoinList {
+    public class SuggestionCoinList {
         public string Icon { get; set; }
         public string Name { get; set; }
     }
@@ -54,8 +54,6 @@ namespace CryptoTracker {
             }
             vm.PurchaseList = purchaseList;
 
-            //Portfolio_dg.ItemsSource = vm.PurchaseList;
-
             vm.PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
             PurchaseList_CollectionChanged(null, null);
         }
@@ -70,18 +68,20 @@ namespace CryptoTracker {
             coinsArray.Sort((x, y) => x.CompareTo(y));
             vm.CoinsArray = new ObservableCollection<string>(coinsArray);
 
-			//if (ForceRefresh) {
-			//	ForceRefresh = false;
-			//	UpdatePortfolio();
-			//	Portfolio_dg.ItemsSource = PurchaseList;
-			//}
+            //if (ForceRefresh) {
+            //	ForceRefresh = false;
+            //	UpdatePortfolio();
+            //	Portfolio_dg.ItemsSource = PurchaseList;
+            //}
 
             UpdatePortfolio();
         }
 
+        /// ###############################################################################################
+        /// For retrocompatibility with old portfolios
         private ObservableCollection<PurchaseModel> OldPortfolioUpdater(ObservableCollection<PurchaseClass> purchases) {
             var purchaseList = new ObservableCollection<PurchaseModel>();
-			foreach (var p in purchases) {
+            foreach (var p in purchases) {
                 purchaseList.Add(new PurchaseModel() {
                     Crypto = p.Crypto,
                     CryptoLogo = p.CryptoLogo,
@@ -91,9 +91,9 @@ namespace CryptoTracker {
                     Exchange = p.Exchange,
                     InvestedQty = p.InvestedQty
                 });
-			}
+            }
             return purchaseList;
-		}
+        }
 
 
         /// ###############################################################################################
@@ -182,15 +182,15 @@ namespace CryptoTracker {
             var index = items.IndexOf(item);
             vm.PurchaseList.RemoveAt(index);
             UpdatePortfolio();
-            //SavePortfolio();
-            LocalStorageHelper.SaveObject(vm.PurchaseList, "portfolio");
+            
+            LocalStorageHelper.SaveObject(vm.PurchaseList, "purchaseList");
         }
 
 
         // ###############################################################################################
         internal void importPortfolio(ObservableCollection<PurchaseModel> portfolio) {
             vm.PurchaseList = new ObservableCollection<PurchaseModel>(portfolio);
-            LocalStorageHelper.SaveObject(vm.PurchaseList, "portfolio");
+            LocalStorageHelper.SaveObject(vm.PurchaseList, "purchaseList");
             ForceRefresh = true;
         }
 
@@ -240,16 +240,16 @@ namespace CryptoTracker {
                 else
                     vm.NewPurchase.CryptoLogo = "/" + logoURL;
 
-                if (sender.PrimaryButtonText == "Add") {
+                if (sender.PrimaryButtonText == "Add")
                     vm.PurchaseList.Add(vm.NewPurchase);
-                }
                 else if(sender.PrimaryButtonText == "Save") {
                     vm.PurchaseList.RemoveAt(EditingPurchaseId);
                     vm.PurchaseList.Insert(EditingPurchaseId, vm.NewPurchase);
                 }
+                
                 // Update and save
                 UpdatePortfolio();
-                LocalStorageHelper.SaveObject(vm.PurchaseList, "portfolio");
+                LocalStorageHelper.SaveObject(vm.PurchaseList, "purchaseList");
             }
         }
 
@@ -291,7 +291,7 @@ namespace CryptoTracker {
             /// Check if all arrays are equal length, if not, remove the leading values
             var sameLength = cryptoWorth.All(x => x.Count == cryptoWorth[0].Count);
             if (!sameLength) {
-				for (int i = 0; i < histos.Count; i++) {
+                for (int i = 0; i < histos.Count; i++) {
                     histos[i] = histos[i].Skip(Math.Max(0, histos[i].Count() - minCommon)).ToList();
                 }
             }
