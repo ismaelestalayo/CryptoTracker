@@ -135,75 +135,76 @@ namespace CryptoTracker {
             App.currencySymbol = CurrencyHelper.CurrencyToSymbol(currency);
         }
 
+        // TODO: bring back this functionality
         private async void UploadConfigButton_Click(object sender, RoutedEventArgs e) {
-            try {
-                var helper = new RoamingObjectStorageHelper();
-                var portfolio = Portfolio.PurchaseList;
+            //try {
+            //    var helper = new RoamingObjectStorageHelper();
+            //    var portfolio = Portfolio.PurchaseList;
 
-                if (portfolio == null || portfolio.Count == 0) {
-                    await new ContentDialog() {
-                        Title = "Empty portfolio",
-                        Content = "Your current portfolio is empty.",
-                        DefaultButton = ContentDialogButton.Primary,
-                        PrimaryButtonText = "Export",
-                        IsPrimaryButtonEnabled = false,
-                        CloseButtonText = "Cancel",
-                        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-                    }.ShowAsync();
-                }
+            //    if (portfolio == null || portfolio.Count == 0) {
+            //        await new ContentDialog() {
+            //            Title = "Empty portfolio",
+            //            Content = "Your current portfolio is empty.",
+            //            DefaultButton = ContentDialogButton.Primary,
+            //            PrimaryButtonText = "Export",
+            //            IsPrimaryButtonEnabled = false,
+            //            CloseButtonText = "Cancel",
+            //            RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+            //        }.ShowAsync();
+            //    }
 
-                else {
-                    ContentDialog exportDialog = new ContentDialog() {
-                        Title = $"Export {portfolio.Count} purchases?",
-                        Content = "This will create a backup of your current portfolio in the cloud.",
-                        DefaultButton = ContentDialogButton.Primary,
-                        PrimaryButtonText = "Export",
-                        CloseButtonText = "Cancel",
-                        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-                    };
-                    var response = await exportDialog.ShowAsync();
+            //    else {
+            //        ContentDialog exportDialog = new ContentDialog() {
+            //            Title = $"Export {portfolio.Count} purchases?",
+            //            Content = "This will create a backup of your current portfolio in the cloud.",
+            //            DefaultButton = ContentDialogButton.Primary,
+            //            PrimaryButtonText = "Export",
+            //            CloseButtonText = "Cancel",
+            //            RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+            //        };
+            //        var response = await exportDialog.ShowAsync();
 
-                    if (response == ContentDialogResult.Primary)
-                        await helper.SaveFileAsync(portfolioKey, portfolio);
-                }
-            } catch (Exception ex) {
-                await new MessageDialog("Error uploading your portfolio. Try again later.").ShowAsync();
-            }
+            //        if (response == ContentDialogResult.Primary)
+            //            await helper.SaveFileAsync(portfolioKey, portfolio);
+            //    }
+            //} catch (Exception ex) {
+            //    await new MessageDialog("Error uploading your portfolio. Try again later.").ShowAsync();
+            //}
         }
 
         private async void DownloadConfigButton_Click(object sender, RoutedEventArgs e) {
-            var helper = new RoamingObjectStorageHelper();
+            //var helper = new RoamingObjectStorageHelper();
 
-            // Read complex/large objects 
-            if (await helper.FileExistsAsync(portfolioKey)) {
-                var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseClass>>(portfolioKey);
+            //// Read complex/large objects 
+            //if (await helper.FileExistsAsync(portfolioKey)) {
+            //    var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseClass>>(portfolioKey);
 
-                ContentDialog importDialog = new ContentDialog() {
-                    Title = $"Import {obj.Count} purchases?",
-                    Content = "This will clear your current portfolio and download your backup.",
-                    DefaultButton = ContentDialogButton.Primary,
-                    PrimaryButtonText = "Import",
-                    CloseButtonText = "Cancel",
-                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-                };
+            //    ContentDialog importDialog = new ContentDialog() {
+            //        Title = $"Import {obj.Count} purchases?",
+            //        Content = "This will clear your current portfolio and download your backup.",
+            //        DefaultButton = ContentDialogButton.Primary,
+            //        PrimaryButtonText = "Import",
+            //        CloseButtonText = "Cancel",
+            //        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+            //    };
 
-                var response = await importDialog.ShowAsync();
+            //    var response = await importDialog.ShowAsync();
 
-                if (response == ContentDialogResult.Primary)
-                    Portfolio.importPortfolio(obj);
-            }
-            else {
-                ContentDialog importDialog = new ContentDialog() {
-                    Title = "No backup found.",
-                    Content = "You don't seem to have uploaded any portfolio before.",
-                    DefaultButton = ContentDialogButton.Primary,
-                    IsPrimaryButtonEnabled = false,
-                    PrimaryButtonText = "Import",
-                    CloseButtonText = "Cancel",
-                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-                };
-                await importDialog.ShowAsync();
-            }
+            //    if (response == ContentDialogResult.Primary)
+            //        Portfolio.importPortfolio(obj);
+            //}
+            //else {
+            //    ContentDialog importDialog = new ContentDialog() {
+            //        Title = "No backup found.",
+            //        Content = "You don't seem to have uploaded any portfolio before.",
+            //        DefaultButton = ContentDialogButton.Primary,
+            //        IsPrimaryButtonEnabled = false,
+            //        PrimaryButtonText = "Import",
+            //        CloseButtonText = "Cancel",
+            //        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+            //    };
+            //    await importDialog.ShowAsync();
+            //}
         }
 
         private void ThemeComboBox_changed(object sender, SelectionChangedEventArgs e) {
