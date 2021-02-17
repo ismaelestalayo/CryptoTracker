@@ -38,9 +38,6 @@ namespace CryptoTracker {
 
         private bool ShowingDetails = false;
 
-        private double _invested = 0;
-        private double _worth = 0;
-
         public Portfolio() {
             this.InitializeComponent();
 
@@ -59,7 +56,7 @@ namespace CryptoTracker {
         }
 
         private void PurchaseList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            PortfolioChartGrid.Visibility = (vm.PurchaseList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+            vm.NotEmptyPortfolio = vm.PurchaseList.Count > 0;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) {
@@ -103,8 +100,8 @@ namespace CryptoTracker {
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
 
-            _invested = 0;
-            _worth = 0;
+            vm.TotalInvested = 0;
+            vm.TotalWorth = 0;
 
             foreach (var purchase in vm.PurchaseList) {
                 /// this update the ObservableCollection itself
@@ -131,14 +128,11 @@ namespace CryptoTracker {
                 PortfolioChartGrid.Children.Add(s);
                 Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);
 
-                _invested += purchase.InvestedQty;
-                _worth += purchase.Worth;
+                vm.TotalInvested += purchase.InvestedQty;
+                vm.TotalWorth += purchase.Worth;
             }
 
             UpdatePortfolioChart();
-
-            total_invested.Text = _invested.ToString() + App.currencySymbol;
-            total_worth.Text = _worth.ToString() + App.currencySymbol;
         }
 
         internal async Task<PurchaseModel> UpdatePurchaseAsync(PurchaseModel purchase) {

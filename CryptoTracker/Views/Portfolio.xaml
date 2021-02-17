@@ -87,8 +87,8 @@
                     Margin="0 0 5 0"
                     ToolTipService.ToolTip="Add">
                     <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xE109;" FontSize="15" Margin="-10 0"/>
-                        <TextBlock Text="New purchase" Margin="0 0 0 0" VerticalAlignment="Center" Visibility="Collapsed"/>
+                        <FontIcon Glyph="&#xE109;" FontSize="15"/>
+                        <TextBlock Text="New purchase" Margin="10 0 0 0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
                 <ComboBox Width="150" SelectionChanged="Grouping_ComboBox_SelectionChanged"
@@ -304,8 +304,14 @@
                 </Style>
             </Grid.Resources>
             <TextBlock Grid.Column="0" TextAlignment="Center" Text="Total"/>
-            <TextBlock Grid.Column="2" TextAlignment="Center" Name="total_invested" />
-            <TextBlock Grid.Column="3" TextAlignment="Center" Name="total_worth"/>
+            <TextBlock Grid.Column="2" TextAlignment="Center">
+                <Run Text="{x:Bind vm.TotalInvested, Mode=OneWay}"/><!--
+                --><Run Text="{x:Bind vm.Currency, Mode=OneWay}"/>
+            </TextBlock>
+            <TextBlock Grid.Column="3" TextAlignment="Center">
+                <Run Text="{x:Bind vm.TotalWorth, Mode=OneWay}"/><!--
+                --><Run Text="{x:Bind vm.Currency, Mode=OneWay}"/>
+            </TextBlock>
         </Grid>
         
         <!-- Portfolio history chart -->
@@ -313,13 +319,13 @@
             x:Name="PortfolioChart"
             ChartModel="{x:Bind vm.Chart, Mode=OneWay}"
             Grid.Row="4"
-            Visibility="{Binding ElementName=PortfolioChartGrid, Path=Visibility}"/>
+            Visibility="{x:Bind vm.NotEmptyPortfolio, Mode=OneWay}"/>
 
         <!-- Timerange radio buttons -->
         <local:TimeRangeRadioButtons
             x:Name="TimerangeRadioButtons"
             Grid.Row="5"
-            Visibility="{Binding ElementName=PortfolioChartGrid, Path=Visibility}"
+            Visibility="{x:Bind vm.NotEmptyPortfolio, Mode=OneWay}"
             Margin="0 0 0 10"
             Tapped="TimeRangeButtons_Tapped"/>
 
