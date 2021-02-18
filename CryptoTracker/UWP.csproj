@@ -148,7 +148,9 @@
     <Compile Include="UserControls\TimeRangeRadioButtons.xaml.cs">
       <DependentUpon>TimeRangeRadioButtons.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PortfolioViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Top100ViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

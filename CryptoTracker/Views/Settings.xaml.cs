@@ -16,6 +16,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using CryptoTracker.Constants;
+using CryptoTracker.Models;
 
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
@@ -173,38 +174,41 @@ namespace CryptoTracker {
         }
 
         private async void DownloadConfigButton_Click(object sender, RoutedEventArgs e) {
-            //var helper = new RoamingObjectStorageHelper();
+            var helper = new RoamingObjectStorageHelper();
 
-            //// Read complex/large objects 
-            //if (await helper.FileExistsAsync(portfolioKey)) {
-            //    var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseClass>>(portfolioKey);
+            // Read complex/large objects 
+            if (await helper.FileExistsAsync(portfolioKey)) {
+                var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseModel>>(portfolioKey);
 
-            //    ContentDialog importDialog = new ContentDialog() {
-            //        Title = $"Import {obj.Count} purchases?",
-            //        Content = "This will clear your current portfolio and download your backup.",
-            //        DefaultButton = ContentDialogButton.Primary,
-            //        PrimaryButtonText = "Import",
-            //        CloseButtonText = "Cancel",
-            //        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-            //    };
+                ContentDialog importDialog = new ContentDialog() {
+                    Title = $"Import {obj.Count} purchases?",
+                    Content = "This will clear your current portfolio and download your backup.",
+                    DefaultButton = ContentDialogButton.Primary,
+                    PrimaryButtonText = "Import",
+                    CloseButtonText = "Cancel",
+                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                };
 
-            //    var response = await importDialog.ShowAsync();
+                var response = await importDialog.ShowAsync();
 
-            //    if (response == ContentDialogResult.Primary)
-            //        Portfolio.importPortfolio(obj);
-            //}
-            //else {
-            //    ContentDialog importDialog = new ContentDialog() {
-            //        Title = "No backup found.",
-            //        Content = "You don't seem to have uploaded any portfolio before.",
-            //        DefaultButton = ContentDialogButton.Primary,
-            //        IsPrimaryButtonEnabled = false,
-            //        PrimaryButtonText = "Import",
-            //        CloseButtonText = "Cancel",
-            //        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-            //    };
-            //    await importDialog.ShowAsync();
-            //}
+                if (response == ContentDialogResult.Primary) {
+                    vm.PurchaseList = obj;
+                    vm.InfoBarMessage("Informational", "", "Portfolio imported succesfully.");
+                }
+                    //Portfolio.importPortfolio(obj);
+            }
+            else {
+                ContentDialog importDialog = new ContentDialog() {
+                    Title = "No backup found.",
+                    Content = "You don't seem to have uploaded any portfolio before.",
+                    DefaultButton = ContentDialogButton.Primary,
+                    IsPrimaryButtonEnabled = false,
+                    PrimaryButtonText = "Import",
+                    CloseButtonText = "Cancel",
+                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                };
+                await importDialog.ShowAsync();
+            }
         }
 
         private void ThemeComboBox_changed(object sender, SelectionChangedEventArgs e) {

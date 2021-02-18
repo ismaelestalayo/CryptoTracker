@@ -6,7 +6,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cryptotracker="using:CryptoTracker"
     xmlns:helpers="using:CryptoTracker.Helpers"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:viewModels="using:CryptoTracker.ViewModels"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:MainPageViewModel x:Name="vm"/>
+    </Page.DataContext>
 
     <Page.Resources>
         <AcrylicBrush 
@@ -18,14 +25,9 @@
     <!-- 
     ################################################################################################### -->
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
         <NavigationView 
             x:Name="NavView" Background="{ThemeResource SystemChromeMediumColor}" 
-            Grid.RowSpan="2" Grid.Row="0" OverflowLabelMode="NoLabel"
+            Grid.RowSpan="2" OverflowLabelMode="NoLabel"
             IsBackButtonVisible="Collapsed" PaneDisplayMode="Top"
             Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked"
             SelectionChanged="NavView_SelectionChanged">
@@ -69,10 +71,10 @@
                         <RelativePanel Margin="-15 0 0 0">
                             <NavigationViewItem x:Name="SyncIcon" Icon="Sync" Tapped="NavView_Sync_Tapped" Visibility="Visible"/>
                             <ProgressRing x:Name="SyncLoading" IsActive="True" Height="24" Margin="10" Visibility="{x:Bind Path=helpers:Converters.InvertVisibility(SyncIcon.Visibility), Mode=OneWay}"/>
-                            
+
                         </RelativePanel>
                     </NavigationViewItem>
-                    
+
                 </StackPanel>
             </NavigationView.PaneFooter>
 
@@ -85,6 +87,15 @@
                 </Frame.ContentTransitions>
             </Frame>
         </NavigationView>
+
+        <muxc:TeachingTip
+	        Title="{x:Bind vm.InfoBarTitle, Mode=OneWay}"
+	        Subtitle="{x:Bind vm.InfoBarMessage, Mode=OneWay}"
+	        PreferredPlacement="Top"
+	        PlacementMargin="0 110"
+	        IsLightDismissEnabled="True"
+            IsOpen="{x:Bind vm.InfoBarOpened, Mode=OneWay}"/>
+
     </Grid>
 
 

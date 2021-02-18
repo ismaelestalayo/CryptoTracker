@@ -1,7 +1,6 @@
 ﻿using CryptoTracker.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using Windows.UI.Xaml;
 
 namespace CryptoTracker.ViewModels {
     public class PortfolioViewModel : ObservableObject {

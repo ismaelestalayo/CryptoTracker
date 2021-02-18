@@ -39,20 +39,7 @@ namespace CryptoTracker {
         private bool ShowingDetails = false;
 
         public Portfolio() {
-            this.InitializeComponent();
-
-            /// Get portfolio from LocalStorage
-            var purchaseList = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>("purchaseList").Result;
-            /// If it is empty, there might be an old portfolio in the old format
-            if (purchaseList.Count == 0) {
-                var temp = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio").Result;
-                if (temp.Count > 0)
-                    purchaseList = OldPortfolioUpdater(temp);
-            }
-            vm.PurchaseList = purchaseList;
-
-            vm.PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
-            PurchaseList_CollectionChanged(null, null);
+            this.InitializeComponent();   
         }
 
         private void PurchaseList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
@@ -64,6 +51,21 @@ namespace CryptoTracker {
             var coinsArray = App.coinList.Select(x => x.symbol).ToList();
             coinsArray.Sort((x, y) => x.CompareTo(y));
             vm.CoinsArray = new ObservableCollection<string>(coinsArray);
+
+
+            /// Get portfolio from LocalStorage
+            var purchaseList = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>("purchaseList").Result;
+            //vm.Test();
+            /// If it is empty, there might be an old portfolio in the old format
+            if (purchaseList.Count == 0) {
+                var temp = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio").Result;
+                if (temp.Count > 0)
+                    purchaseList = OldPortfolioUpdater(temp);
+            }
+            vm.PurchaseList = purchaseList;
+
+            vm.PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
+            //PurchaseList_CollectionChanged(null, null);
 
             //if (ForceRefresh) {
             //	ForceRefresh = false;
