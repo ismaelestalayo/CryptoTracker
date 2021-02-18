@@ -7,43 +7,43 @@
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     mc:Ignorable="d">
 
-	<telerik:RadCartesianChart
-		x:Name="Chart"
-		DataContext="{x:Bind ChartModel, Mode=OneWay}"
-		Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
+    <telerik:RadCartesianChart
+        x:Name="Chart"
+        DataContext="{x:Bind ChartModel, Mode=OneWay}"
+        Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
 
-		<telerik:RadCartesianChart.Grid>
-			<telerik:CartesianChartGrid MajorLinesVisibility="None"/>
-		</telerik:RadCartesianChart.Grid>
+        <telerik:RadCartesianChart.Grid>
+            <telerik:CartesianChartGrid MajorLinesVisibility="None"/>
+        </telerik:RadCartesianChart.Grid>
 
-		<telerik:RadCartesianChart.HorizontalAxis>
-			<telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
-		</telerik:RadCartesianChart.HorizontalAxis>
+        <telerik:RadCartesianChart.HorizontalAxis>
+            <telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
+        </telerik:RadCartesianChart.HorizontalAxis>
 
-		<telerik:RadCartesianChart.VerticalAxis>
-			<telerik:LinearAxis
-				Visibility="Collapsed"
-				Minimum="{x:Bind ChartModel.PricesMinMax.Item1, Mode=OneWay}"
+        <telerik:RadCartesianChart.VerticalAxis>
+            <telerik:LinearAxis
+                Visibility="Collapsed"
+                Minimum="{x:Bind ChartModel.PricesMinMax.Item1, Mode=OneWay}"
                 Maximum="{x:Bind ChartModel.PricesMinMax.Item2, Mode=OneWay}"/>
-		</telerik:RadCartesianChart.VerticalAxis>
+        </telerik:RadCartesianChart.VerticalAxis>
 
-		<telerik:AreaSeries
-			ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}"
+        <telerik:AreaSeries
+            ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}"
             Stroke="{x:Bind ChartModel.ChartStroke, Mode=OneWay}"
-			StrokeThickness="1">
-			<telerik:AreaSeries.Fill>
-				<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-					<GradientStop Color="{x:Bind ChartModel.ChartFill1, Mode=OneWay}" Offset="0.3"/>
-					<GradientStop Color="{x:Bind ChartModel.ChartFill2, Mode=OneWay}" Offset="1."/>
-				</LinearGradientBrush>
-			</telerik:AreaSeries.Fill>
+            StrokeThickness="1">
+            <telerik:AreaSeries.Fill>
+                <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
+                    <GradientStop Color="{x:Bind ChartModel.ChartFill1, Mode=OneWay}" Offset="0.3"/>
+                    <GradientStop Color="{x:Bind ChartModel.ChartFill2, Mode=OneWay}" Offset="1."/>
+                </LinearGradientBrush>
+            </telerik:AreaSeries.Fill>
 
-			<telerik:AreaSeries.CategoryBinding>
-				<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-			</telerik:AreaSeries.CategoryBinding>
-			<telerik:AreaSeries.ValueBinding>
-				<telerik:PropertyNameDataPointBinding PropertyName="Value"/>
-			</telerik:AreaSeries.ValueBinding>
-		</telerik:AreaSeries>
-	</telerik:RadCartesianChart>
+            <telerik:AreaSeries.CategoryBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+            </telerik:AreaSeries.CategoryBinding>
+            <telerik:AreaSeries.ValueBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Value"/>
+            </telerik:AreaSeries.ValueBinding>
+        </telerik:AreaSeries>
+    </telerik:RadCartesianChart>
 </UserControl>

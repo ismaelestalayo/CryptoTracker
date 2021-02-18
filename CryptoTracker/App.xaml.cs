@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Telerik.UI.Xaml.Controls.Chart;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -181,49 +180,6 @@ namespace CryptoTracker {
             }
         }
 
-        // ###############################################################################################
-        //  (GET) Historic prices        
-
-        internal async static Task<List<JSONhistoric>> GetHistoricalPrices(string crypto, string timeSpan) {
-            if (crypto == "MIOTA")
-                crypto = "IOT";
-
-            var tuple = ParseTimeSpan(timeSpan);
-            timeSpan = tuple.Item1;
-            int limit = tuple.Item2;
-
-            //CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex 
-            string URL = "https://min-api.cryptocompare.com/data/histo" + timeSpan + "?e=CCCAGG&fsym="
-                + crypto + "&tsym=" + currency + "&limit=" + limit;
-
-            if (limit == 0)
-                URL = "https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym=" + crypto + "&tsym=" + currency + "&allData=true";
-
-            Uri uri = new Uri(URL);
-
-            try {
-                string response = await Client.GetStringAsync(uri);
-                var data = JToken.Parse(response);
-
-                return JSONhistoric.HandleHistoricJSON(data);
-            }
-            catch (Exception) {
-                return JSONhistoric.HandleHistoricJSONnull(limit);
-            }
-        }
-
-        internal static Tuple<string, int> ParseTimeSpan(string timeSpan) {
-            switch (timeSpan) {
-                case "hour":    return Tuple.Create("minute", 60);
-                case "day":     return Tuple.Create("minute", 1500);
-                case "week":    return Tuple.Create("hour", 168);
-                case "month":   return Tuple.Create("hour", 744);
-                case "year":    return Tuple.Create("day", 365);
-                case "all":     return Tuple.Create("day", 0);
-                default:        return Tuple.Create("day", 7);
-            }
-        }
-
         
         // ###############################################################################################
         //  (GET) coin description
@@ -264,52 +220,6 @@ namespace CryptoTracker {
 
         // ###############################################################################################
         //  Adjust axis
-        internal static DateTimeContinuousAxis AdjustAxis(DateTimeContinuousAxis DateTimeAxis, string timeSpan) {
-            switch (timeSpan) {
-                case "hour":
-                    DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
-                    DateTimeAxis.MajorStep = 10;
-                    DateTimeAxis.Minimum = DateTime.Now.AddHours(-1);
-                    break;
-
-                case "day":
-                    DateTimeAxis.LabelFormat = "{0:HH:mm}";
-                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    DateTimeAxis.MajorStep = 6;
-                    DateTimeAxis.Minimum = DateTime.Now.AddDays(-1);
-                    break;
-
-                case "week":
-                    DateTimeAxis.LabelFormat = "{0:ddd d}";
-                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
-                    DateTimeAxis.MajorStep = 1;
-                    DateTimeAxis.Minimum = DateTime.Now.AddDays(-7);
-                    break;
-
-                case "month":
-                    DateTimeAxis.LabelFormat = "{0:d/M}";
-                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
-                    DateTimeAxis.MajorStep = 1;
-                    DateTimeAxis.Minimum = DateTime.Now.AddMonths(-1);
-                    break;
-                case "year":
-                    DateTimeAxis.LabelFormat = "{0:MMM}";
-                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    DateTimeAxis.MajorStep = 1;
-                    DateTimeAxis.Minimum = DateTime.MinValue;
-                    break;
-
-                case "all":
-                    DateTimeAxis.LabelFormat = "{0:MMM/yy}";
-                    DateTimeAxis.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    DateTimeAxis.MajorStep = 4;
-                    DateTimeAxis.Minimum = DateTime.MinValue;
-                    break;
-            }
-            return DateTimeAxis;
-        }
-
         internal static ChartStyling AdjustLinearAxis(ChartStyling chartStyle, string timeSpan) {
             switch (timeSpan) {
                 case "1h":
