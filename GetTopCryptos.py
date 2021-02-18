@@ -12,7 +12,7 @@ if (resp.ok):
     data = json.loads(resp.content)["data"]
 
     coins = sorted(data, key=lambda d: int(d["rank"]))
-    coins = coins[:500]
+    coins = coins[:600]
 
     KEYS = ["id", "name", "symbol", "rank"]
     coins = [{k: v for k, v in c.items() if k in KEYS} for c in coins]
