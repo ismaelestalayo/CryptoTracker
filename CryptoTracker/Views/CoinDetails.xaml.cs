@@ -26,7 +26,7 @@ namespace CryptoTracker {
         private static string timeSpan = "1w";
         private static string timeUnit = "hour";
 
-        // Timer for auto-refresh
+        /// Timer for auto-refresh
         private static ThreadPoolTimer PeriodicTimer;
 
         public CoinDetails() {
@@ -67,6 +67,9 @@ namespace CryptoTracker {
                     case nameof(CoinCompactViewModel):
                         vm.Chart = ((CoinCompactViewModel)e.Parameter).Chart;
                         vm.Coin = ((CoinCompactViewModel)e.Parameter).Info;
+                        timeSpan = vm.Chart.TimeSpan;
+                        (timeUnit, limit, aggregate) = App.TimeSpanParser(timeSpan);
+                        UpdateCoin();
                         break;
                     default:
                     case "string":
@@ -194,10 +197,9 @@ namespace CryptoTracker {
         private void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             if (sender != null)
                 timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
-            var t = App.TimeSpanParser(timeSpan);
-            limit = t.limit;
-            aggregate = t.aggregate;
-            timeUnit = t.timeUnit;
+            
+            (timeUnit, limit, aggregate) = App.TimeSpanParser(timeSpan);
+            vm.Chart.TimeSpan = timeSpan;
 
             UpdatePage();
         }
