@@ -5,18 +5,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-	xmlns:viewModels="using:CryptoTracker.ViewModels"
+	xmlns:viewModels="using:CryptoTracker.ViewModels" xmlns:local="using:CryptoTracker.UserControls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 	<Page.DataContext>
-		<viewModels:CoinCompactViewModel x:Name="viewModel"/>
+		<viewModels:CoinCompactViewModel x:Name="vm"/>
 	</Page.DataContext>
 
 	<Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="auto"/>
+			<RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
 
 		
@@ -26,85 +27,59 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-		<telerik:RadCartesianChart
-			x:Name="HistoricChart"
-			Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-			Grid.RowSpan="2">
-
-			<telerik:RadCartesianChart.HorizontalAxis>
-				<telerik:DateTimeContinuousAxis 
-					Visibility="Collapsed"
-                    LabelOffset="1"
-					LabelFormat="{}{0,0:HH:mm}"
-					MajorStep="240"
-					MaximumTicks="4"
-					MajorStepUnit="Minute"
-					FontWeight="Light" FontFamily="Segoe UI"
-					Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
-			</telerik:RadCartesianChart.HorizontalAxis>
-
-			<telerik:RadCartesianChart.VerticalAxis>
-				<telerik:LinearAxis
-					Visibility="Collapsed"
-					Minimum="{x:Bind viewModel.Card.Chart.PricesMinMax.Item1, Mode=OneWay}"
-					Maximum="{x:Bind viewModel.Card.Chart.PricesMinMax.Item2, Mode=OneWay}"/>
-			</telerik:RadCartesianChart.VerticalAxis>
-
-			<telerik:SplineAreaSeries
-				ItemsSource="{x:Bind viewModel.Card.Chart.ChartData, Mode=OneWay}"
-				Stroke="{x:Bind viewModel.Card.Chart.ChartStroke, Mode=OneWay}" 
-				StrokeThickness="1.5">
-				<telerik:AreaSeries.Fill>
-					<LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-						<GradientStop Color="{x:Bind viewModel.Card.Chart.ChartFill1, Mode=OneWay}" Offset="0"/>
-						<GradientStop Color="{x:Bind viewModel.Card.Chart.ChartFill2, Mode=OneWay}" Offset="0.7"/>
-					</LinearGradientBrush>
-				</telerik:AreaSeries.Fill>
-				<telerik:SplineAreaSeries.CategoryBinding>
-					<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-				</telerik:SplineAreaSeries.CategoryBinding>
-				<telerik:SplineAreaSeries.ValueBinding>
-					<telerik:PropertyNameDataPointBinding PropertyName="Value"/>
-				</telerik:SplineAreaSeries.ValueBinding>
-			</telerik:SplineAreaSeries>
-		</telerik:RadCartesianChart>
+        <local:ChartArea
+			x:Name="PriceChart"
+            Grid.Row="1"
+			Grid.RowSpan="2"
+			ChartModel="{x:Bind vm.Chart, Mode=OneWay}"/>
 
 
-		<!-- 
+        <!-- 
         ####################################################################################################
         ############################################### Page Title #########################################
         #################################################################################################### -->
-		<RelativePanel Grid.Row="1">
-			<StackPanel Orientation="Horizontal">
-				<TextBlock
-					Text="{x:Bind viewModel.Card.Info.Name, Mode=OneWay}"
-					d:Text="CRYPTO" Margin="5 0" VerticalAlignment="Center"
-					Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="18"/>
-				<Button 
-                    Margin="5 0" Padding="5 0" Height="28" FontFamily="Segoe MDL2 Assets"
-                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
-                    Click="FullScreen_btn_click">
-					<SymbolIcon Symbol="FullScreen"/>
-				</Button>
-			</StackPanel>
+        <RelativePanel VerticalAlignment="Top">
+            <Button
+                Background="Transparent"
+                CornerRadius="0"
+                Height="32"                
+				Click="FullScreen_btn_click"
+                Width="42">
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE740;" FontSize="14"/>
+            </Button>
 
-			<StackPanel Orientation="Horizontal" Margin="0 0 5 0" RelativePanel.AlignRightWithPanel="True">
-				<TextBlock FontSize="20" FontWeight="Medium">
-					<Run Text="{x:Bind viewModel.Card.Info.Price, Mode=OneWay}" d:Text="val"/><!--
-					--><Run Text="{x:Bind viewModel.Card.Info.Currency}" d:Text="€"/>
-				</TextBlock>
+            <TextBlock
+				d:Text="CRYPTO"
+                Margin="0 5"
+				RelativePanel.AlignHorizontalCenterWithPanel="True"
+				Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="18">
+                <Run Text="{x:Bind vm.Info.Name, Mode=OneWay}"/><!--
+                --><Run Text=":"/>
+                <Run Text="{x:Bind vm.Info.Price, Mode=OneWay}" FontWeight="Normal"/><!--
+                --><Run Text="{x:Bind vm.Info.Currency, Mode=OneWay}" FontWeight="Normal"/>
+            </TextBlock>
+        </RelativePanel>
 
-				<TextBlock
-					FontSize="15" FontWeight="Light"
-					Foreground="{x:Bind viewModel.Card.Info.DiffFG, Mode=OneWay, FallbackValue='Red'}"
-					Margin="3 0 0 0"
-					VerticalAlignment="Bottom">
-					<Run Text="{x:Bind viewModel.Card.Info.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-					--><Run Text="{x:Bind viewModel.Card.Info.Diff, Mode=OneWay}" d:Text="0"/><!--
-					--><Run Text="%"/>
-				</TextBlock>
-			</StackPanel>
+        <TextBlock
+            FontSize="15" FontWeight="Light"
+			Foreground="{x:Bind vm.Info.DiffFG, Mode=OneWay, FallbackValue='Red'}"
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+			Margin="0 -5"
+            VerticalAlignment="Top">
+			<Run Text="{x:Bind vm.Info.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
+			--><Run Text="{x:Bind vm.Info.Diff, Mode=OneWay}" d:Text="0"/><!--
+			--><Run Text="%"/>
+        </TextBlock>
 
-		</RelativePanel>
+
+        <RelativePanel Grid.Row="2">
+            <local:TimeRangeRadioButtons
+				FullRange="False"
+				Grid.Row="1" RelativePanel.AlignHorizontalCenterWithPanel="True"
+				Margin="10 -7"
+				TimeSpan="{x:Bind vm.Chart.TimeSpan, Mode=OneWay}"
+				Tapped="TimeRangeButtons_Tapped"/>
+        </RelativePanel>
 	</Grid>
 </Page>

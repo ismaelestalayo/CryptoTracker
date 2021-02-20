@@ -1,10 +1,14 @@
 ﻿using CryptoTracker.Helpers;
 using CryptoTracker.Models;
+using CryptoTracker.UserControls;
+using CryptoTracker.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Windows.System.Threading;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,32 +18,69 @@ using static CryptoTracker.APIs.CryptoCompare;
 
 
 namespace CryptoTracker.Views {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class CoinCompact : Page {
+		/// Variables to get historic
+		private static int limit = 168;
+		private static int aggregate = 1;
+		private static string timeSpan = "4h";
+		private static string timeUnit = "minute";
+
+		private List<string> timeSpans = new List<string>{"1h", "4h", "1d"};
+
+		/// Timer for auto-refresh
+		private static ThreadPoolTimer PeriodicTimer;
 
 		public CoinCompact() {
 			this.InitializeComponent();
 		}
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-			/// Page title
-			var crypto = e.Parameter?.ToString().ToUpper(CultureInfo.InvariantCulture) ?? "NULL";
-			viewModel.Card.Info.Name = crypto;
+			var type = (e.Parameter.GetType()).Name;
 
-			UpdateValues();
+			switch (type) {
+				case nameof(CoinDetailsViewModel):
+					vm.Chart = ((CoinDetailsViewModel)e.Parameter).Chart;
+					vm.Info = ((CoinDetailsViewModel)e.Parameter).Coin;
+					vm.Chart.TimeSpan = vm.Chart.TimeSpan;
+					if (!timeSpans.Contains(vm.Chart.TimeSpan)) {
+						(timeUnit, limit, aggregate) = App.TimeSpanParser(timeSpan);
+						vm.Chart.TimeSpan = timeSpan;
+						UpdateValues();
+					}
+					else
+						timeSpan = vm.Chart.TimeSpan;
+
+					break;
+				default:
+				case "string":
+					var crypto = e.Parameter?.ToString().ToUpper(CultureInfo.InvariantCulture) ?? "NULL";
+					vm.Info.Name = crypto;
+					UpdateValues();
+					break;
+            }
+
+			/// Create the 30sec auto-refresh
+			TimeSpan period = TimeSpan.FromSeconds(20);
+			PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+				await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+					TimeRangeButtons_Tapped(null, null);
+				});
+			}, period);
 		}
 
-		/// #########################################################################################
-		private async void UpdateValues() {
-			var crypto = viewModel.Card.Info.Name;
+        protected override void OnNavigatedFrom(NavigationEventArgs e) {
+			PeriodicTimer.Cancel();
+        }
+
+        /// #########################################################################################
+        private async void UpdateValues() {
+			var crypto = vm.Info.Name;
 
 			/// Get current price
-			viewModel.Card.Info.Price = await GetPriceAsync(crypto);
+			vm.Info.Price = await GetPriceAsync(crypto);
 
 			/// Get historic values
-			var histo = await GetHistoricAsync(crypto, "minute", 60);
+			var histo = await GetHistoricAsync(crypto, timeUnit, limit, aggregate);
 
 			var chartData = new List<ChartPoint>();
 			foreach (var h in histo)
@@ -47,14 +88,14 @@ namespace CryptoTracker.Views {
 					Date = h.DateTime,
 					Value = h.Average
 				});
-			viewModel.Card.Chart.ChartData = chartData;
+			vm.Chart.ChartData = chartData;
 
 			/// Calculate diff based on historic prices
 			double oldestPrice = histo[0].Average;
 			double newestPrice = histo[histo.Count - 1].Average;
 			double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
 
-			viewModel.Card.Info.Diff = diff;
+			vm.Info.Diff = diff;
 
 			SolidColorBrush brush;
 			if (diff > 0)
@@ -62,19 +103,29 @@ namespace CryptoTracker.Views {
 			else
 				brush = ((SolidColorBrush)Application.Current.Resources["pastelRed"]);
 
-			viewModel.Card.Chart.ChartStroke = brush;
+			vm.Chart.ChartStroke = brush;
 			var color = brush.Color;
-			viewModel.Card.Chart.ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
-			viewModel.Card.Chart.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
+			vm.Chart.ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
+			vm.Chart.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
 
-			viewModel.Card.Chart.PricesMinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
+			vm.Chart.PricesMinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
 		}
 
         private async void FullScreen_btn_click(object sender, RoutedEventArgs e) {
 			var view = ApplicationView.GetForCurrentView();
 
 			await view.TryEnterViewModeAsync(ApplicationViewMode.Default);
-			Frame.Navigate(typeof(CoinDetails), viewModel.Card.Info.Name);
+			Frame.Navigate(typeof(CoinDetails), vm);
 		}
-	}
+
+        private void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+			if (sender != null)
+				timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
+
+			(timeUnit, limit, aggregate) = App.TimeSpanParser(timeSpan);
+			vm.Chart.TimeSpan = timeSpan;
+
+			UpdateValues();
+		}
+    }
 }

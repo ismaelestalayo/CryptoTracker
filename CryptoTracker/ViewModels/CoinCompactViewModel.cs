@@ -4,10 +4,16 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 namespace CryptoTracker.ViewModels {
 	public class CoinCompactViewModel : ObservableObject {
 
-		private HomeCard card = new HomeCard();
-		public HomeCard Card {
-			get => card;
-			set => SetProperty(ref card, value);
+		private Coin info = new Coin();
+		public Coin Info {
+			get => info;
+			set => SetProperty(ref info, value);
+		}
+
+		private ChartModel chart = new ChartModel();
+		public ChartModel Chart {
+			get => chart;
+			set => SetProperty(ref chart, value);
 		}
 	}
 }
