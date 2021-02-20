@@ -26,5 +26,11 @@ namespace CryptoTracker.UserControls {
                 }
 			}
 		}
+
+		private bool fullRange = true;
+		public bool FullRange {
+			get => fullRange;
+			set => fullRange = value;
+		}
 	}
 }
