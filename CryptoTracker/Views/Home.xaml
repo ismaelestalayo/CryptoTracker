@@ -55,7 +55,7 @@
             </Grid.RowDefinitions>
 
 			<local:TimeRangeRadioButtons
-				Grid.ColumnSpan="2"
+				Grid.ColumnSpan="2" TimeSpan="1w"
 				Tapped="TimeRangeButtons_Tapped"/>
 			
 			<!-- 

@@ -76,5 +76,14 @@ namespace CryptoTracker.Models {
             get => _minimum;
             set => SetProperty(ref _minimum, value);
         }
-	}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string timeSpan = "1w";
+        internal string TimeSpan {
+            get => timeSpan;
+            set => SetProperty(ref timeSpan, value);
+        }
+    }
 }

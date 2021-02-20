@@ -2,6 +2,7 @@
 using CryptoTracker.Helpers;
 using CryptoTracker.Models;
 using CryptoTracker.UserControls;
+using CryptoTracker.ViewModels;
 using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
@@ -52,24 +53,31 @@ namespace CryptoTracker {
 
             try {
                 var type = (e.Parameter.GetType()).Name;
-                if (type == nameof(HomeCard)) {
-                    viewModel.Chart = ((HomeCard)e.Parameter).Chart;
-                    viewModel.Coin = ((HomeCard)e.Parameter).Info;
-                    var c = viewModel.Coin;
-                    var coin = App.coinList.Find(x => x.symbol == c.Name);
-                    viewModel.Coin.FullName = coin.name;
-                    FavIcon.Content = viewModel.Coin.IsFav ? "\uEB52" : "\uEB51";
-                    // TODO: update info and market info
-                }
-                else {
-                    // Page title
-                    var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
-                    viewModel.Coin.Name = crypto;
-                    var coin = App.coinList.Find(x => x.symbol == crypto);
-                    viewModel.Coin.FullName = coin.name;
-                    FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
+                switch (type) {
+                    case nameof(HomeCard):
+                        viewModel.Chart = ((HomeCard)e.Parameter).Chart;
+                        viewModel.Coin = ((HomeCard)e.Parameter).Info;
+                        viewModel.TimeSpan = viewModel.Chart.TimeSpan;
 
-                    InitValuesFromZero(coin);
+                        var coin = App.coinList.Find(x => x.symbol == viewModel.Coin.Name);
+                        viewModel.Coin.FullName = coin.name;
+                        FavIcon.Content = viewModel.Coin.IsFav ? "\uEB52" : "\uEB51";
+                        // TODO: update info and market info
+                        break;
+                    case nameof(CoinCompactViewModel):
+                        viewModel.Chart = ((CoinCompactViewModel)e.Parameter).Chart;
+                        viewModel.Coin = ((CoinCompactViewModel)e.Parameter).Info;
+                        break;
+                    default:
+                    case "string":
+                        var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
+                        viewModel.Coin.Name = crypto;
+                        var _coin = App.coinList.Find(x => x.symbol == crypto);
+                        viewModel.Coin.FullName = _coin?.name ?? "NULL";
+                        FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
+
+                        InitValuesFromZero(_coin);
+                        break;
                 }
 
             }
@@ -180,7 +188,7 @@ namespace CryptoTracker {
             preferences.CustomSize = new Windows.Foundation.Size(350, 250);
 
             await view.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
-            Frame.Navigate(typeof(CoinCompact), crypto, new SuppressNavigationTransitionInfo());
+            Frame.Navigate(typeof(CoinCompact), viewModel, new SuppressNavigationTransitionInfo());
         }
 
         private void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {

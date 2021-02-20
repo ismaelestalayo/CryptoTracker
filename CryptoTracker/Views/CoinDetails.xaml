@@ -181,7 +181,7 @@
 				ChartModel="{x:Bind viewModel.Chart, Mode=OneWay}"/>
 
 			<local:TimeRangeRadioButtons
-				Grid.Row="1"
+				Grid.Row="1" TimeSpan="{x:Bind viewModel.TimeSpan, Mode=OneWay}"
 				Tapped="TimeRangeButtons_Tapped"/>
 		</Grid>
 

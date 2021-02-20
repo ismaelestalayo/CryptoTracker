@@ -108,6 +108,9 @@ namespace CryptoTracker.Views {
                 /// Get price
                 viewModel.PriceCards[i].Info.Price = await CryptoCompare.GetPriceAsync(crypto);
 
+                /// Save the current timeSpan for navigating to another page
+                viewModel.PriceCards[i].Chart.TimeSpan = timeSpan;
+
                 /// Colors
                 var brush = viewModel.PriceCards[i].Chart.ChartStroke;
                 if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
