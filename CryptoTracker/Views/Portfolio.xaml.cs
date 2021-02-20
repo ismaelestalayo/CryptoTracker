@@ -43,7 +43,7 @@ namespace CryptoTracker {
         }
 
         private void PurchaseList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            vm.NotEmptyPortfolio = vm.PurchaseList.Count > 0;
+            vm.PopulatedPortfolio = vm.PurchaseList.Count > 0;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) {
@@ -51,21 +51,10 @@ namespace CryptoTracker {
             var coinsArray = App.coinList.Select(x => x.symbol).ToList();
             coinsArray.Sort((x, y) => x.CompareTo(y));
             vm.CoinsArray = new ObservableCollection<string>(coinsArray);
-
-
-            /// Get portfolio from LocalStorage
-            var purchaseList = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>("purchaseList").Result;
-            //vm.Test();
-            /// If it is empty, there might be an old portfolio in the old format
-            if (purchaseList.Count == 0) {
-                var temp = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio").Result;
-                if (temp.Count > 0)
-                    purchaseList = OldPortfolioUpdater(temp);
-            }
-            vm.PurchaseList = purchaseList;
+            vm.PurchaseList = RetrievePortfolio();
 
             vm.PurchaseList.CollectionChanged += PurchaseList_CollectionChanged;
-            //PurchaseList_CollectionChanged(null, null);
+            PurchaseList_CollectionChanged(null, null);
 
             //if (ForceRefresh) {
             //	ForceRefresh = false;
@@ -77,10 +66,21 @@ namespace CryptoTracker {
         }
 
         /// ###############################################################################################
-        /// For retrocompatibility with old portfolios
-        private ObservableCollection<PurchaseModel> OldPortfolioUpdater(ObservableCollection<PurchaseClass> purchases) {
-            var purchaseList = new ObservableCollection<PurchaseModel>();
-            foreach (var p in purchases) {
+        /// Get portfolio from LocalStorage
+        internal ObservableCollection<PurchaseModel> RetrievePortfolio() {
+            var purchaseList = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>("purchaseList").Result;
+
+            if (purchaseList.Count > 0)
+                return purchaseList;
+
+            /// If it is empty, there might be an old portfolio in the old format and key
+            var oldPurchases = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio").Result;
+            if (oldPurchases.Count < 0)
+                return new ObservableCollection<PurchaseModel>();
+
+            /// For retrocompatibility with old portfolios
+            purchaseList = new ObservableCollection<PurchaseModel>();
+            foreach (var p in oldPurchases) {
                 purchaseList.Add(new PurchaseModel() {
                     Crypto = p.Crypto,
                     CryptoLogo = p.CryptoLogo,
@@ -97,19 +97,20 @@ namespace CryptoTracker {
 
         /// ###############################################################################################
         ///  For sync all
-        internal void UpdatePortfolio() {
-            /// empty diversification chart
+        internal async void UpdatePortfolio() {
+            /// empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
-
             vm.TotalInvested = 0;
             vm.TotalWorth = 0;
 
-            foreach (var purchase in vm.PurchaseList) {
-                /// this update the ObservableCollection itself
-                UpdatePurchaseAsync(purchase);
+            for (int i = 0; i < vm.PurchaseList.Count; i++) {
+                var purchase = vm.PurchaseList[i];
 
-                /// create the diversification grid
+                // Update the purchase details first
+                await UpdatePurchaseAsync(purchase);
+
+                /// Create the diversification grid
                 ColumnDefinition col = new ColumnDefinition();
                 col.Width = new GridLength(purchase.Worth, GridUnitType.Star);
                 PortfolioChartGrid.ColumnDefinitions.Add(col);
@@ -132,9 +133,69 @@ namespace CryptoTracker {
 
                 vm.TotalInvested += purchase.InvestedQty;
                 vm.TotalWorth += purchase.Worth;
+            }            
+
+            await UpdatePortfolioChart();
+        }
+
+        /// <summary>
+        /// Update the chart of the historic values of the portfolio
+        /// </summary>
+        private async Task UpdatePortfolioChart() {
+            var nPurchases = vm.PurchaseList.Count;
+            if (nPurchases == 0)
+                return;
+
+            /// Optimize by only getting historic for different cryptos
+            var uniqueCryptos = new HashSet<string>(vm.PurchaseList.Select(x => x.Crypto)).ToList();
+
+            /// Get historic for each unique crypto, get invested qty, and multiply
+            /// to get the worth of each crypto to the user's wallet
+            var cryptoQties = new List<double>();
+            var cryptoWorth = new List<List<double>>();
+            var histos = new List<List<HistoricPrice>>(nPurchases);
+            foreach (var crypto in uniqueCryptos) {
+                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
+                var cryptoQty = vm.PurchaseList.Where(x => x.Crypto == crypto).Sum(x => x.CryptoQty);
+                cryptoWorth.Add(histo.Select(x => x.Average * cryptoQty).ToList());
+                histos.Add(histo);
             }
 
-            UpdatePortfolioChart();
+            /// There might be young cryptos that didnt exist in the past, so take the common minimum 
+            var minCommon = histos.Min(x => x.Count);
+            if (minCommon == 1)
+                return;
+
+            /// Check if all arrays are equal length, if not, remove the leading values
+            var sameLength = cryptoWorth.All(x => x.Count == cryptoWorth[0].Count);
+            if (!sameLength)
+                for (int i = 0; i < histos.Count; i++)
+                    histos[i] = histos[i].Skip(Math.Max(0, histos[i].Count() - minCommon)).ToList();
+
+
+            var worth_arr = new List<double>();
+            var dates_arr = histos[0].Select(kk => kk.DateTime).ToList();
+            for (int i = 0; i < minCommon; i++)
+                worth_arr.Add(cryptoWorth.Select(x => x[i]).Sum());
+
+            /// Create List for chart
+            var chartData = new List<ChartPoint>();
+            for (int i = 0; i < minCommon; i++) {
+                chartData.Add(new ChartPoint {
+                    Date = dates_arr.ElementAt(i),
+                    Value = (float)worth_arr[i]
+                });
+            }
+            vm.Chart.ChartData = chartData;
+            var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
+            vm.Chart.LabelFormat = temp.LabelFormat;
+            vm.Chart.Minimum = temp.Minimum;
+            vm.Chart.MajorStepUnit = temp.MajorStepUnit;
+            vm.Chart.MajorStep = temp.MajorStep;
+
+            /// Calculate min-max to adjust axis
+            var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
+            vm.Chart.PricesMinMax = MinMax;
         }
 
         internal async Task<PurchaseModel> UpdatePurchaseAsync(PurchaseModel purchase) {
@@ -183,11 +244,15 @@ namespace CryptoTracker {
         }
 
 
-        // ###############################################################################################
-        internal void importPortfolio(ObservableCollection<PurchaseModel> portfolio) {
+        /// ###############################################################################################
+        internal void SetPortfolio(ObservableCollection<PurchaseModel> portfolio) {
             vm.PurchaseList = new ObservableCollection<PurchaseModel>(portfolio);
             LocalStorageHelper.SaveObject(vm.PurchaseList, "purchaseList");
             ForceRefresh = true;
+        }
+
+        internal static async Task<ObservableCollection<PurchaseModel>> GetPortfolioAsync() {
+            return await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>("purchaseList");
         }
 
         private void ToggleDetails_click(object sender, RoutedEventArgs e) {
@@ -257,68 +322,6 @@ namespace CryptoTracker {
             // If we have the coin and the quantity, we can update some properties
             if (!string.IsNullOrEmpty(vm.NewPurchase.Crypto) && vm.NewPurchase.CryptoQty > 0)
                 vm.NewPurchase = await UpdatePurchaseAsync(vm.NewPurchase);
-        }
-
-        private async void UpdatePortfolioChart() {
-            var nPurchases = vm.PurchaseList.Count;
-            if (nPurchases == 0)
-                return;
-
-            /// Optimize by only getting historic for different cryptos
-            var uniqueCryptos = new HashSet<string>(vm.PurchaseList.Select(x => x.Crypto)).ToList();
-            
-            /// Get historic for each unique crypto, get invested qty, and multiply
-            /// to get the worth of each crypto to the user's wallet
-            var cryptoQties = new List<double>();
-            var cryptoWorth = new List<List<double>>();
-            var histos = new List<List<HistoricPrice>>(nPurchases);
-            foreach (var crypto in uniqueCryptos) {
-                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
-                var cryptoQty = vm.PurchaseList.Where(x => x.Crypto == crypto).Sum(x => x.CryptoQty);
-                cryptoWorth.Add(histo.Select(x => x.Average * cryptoQty).ToList());
-                histos.Add(histo);
-            }
-
-            /// There might be young cryptos that didnt exist in the past, so take the common minimum 
-            var minCommon = histos.Min(x => x.Count);
-            if (minCommon == 1)
-                return;
-
-            /// Check if all arrays are equal length, if not, remove the leading values
-            var sameLength = cryptoWorth.All(x => x.Count == cryptoWorth[0].Count);
-            if (!sameLength) {
-                for (int i = 0; i < histos.Count; i++) {
-                    histos[i] = histos[i].Skip(Math.Max(0, histos[i].Count() - minCommon)).ToList();
-                }
-            }
-
-
-            
-            var worth_arr = new List<double>();
-            var dates_arr = histos[0].Select(kk => kk.DateTime).ToList();
-            for (int i = 0; i < minCommon; i++) {
-                worth_arr.Add(cryptoWorth.Select(x => x[i]).Sum());
-
-            }
-
-            /// Create List for chart
-            var chartData = new List<ChartPoint>();
-            for (int i = 0; i < minCommon; i++) {
-                chartData.Add(new ChartPoint {
-                    Date = dates_arr.ElementAt(i),
-                    Value = (float)worth_arr[i]
-                });
-            }
-            vm.Chart.ChartData = chartData;
-            var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
-            vm.Chart.LabelFormat = temp.LabelFormat;
-            vm.Chart.Minimum = temp.Minimum;
-            vm.Chart.MajorStepUnit = temp.MajorStepUnit;
-            vm.Chart.MajorStep = temp.MajorStep;
-
-            /// Calculate min-max to adjust axis
-            var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-            vm.Chart.PricesMinMax = MinMax;
         }
 
 

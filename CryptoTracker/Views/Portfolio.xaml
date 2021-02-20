@@ -62,7 +62,7 @@
         ############################################################################################################### -->
         <Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 10 7 5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="36"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -71,12 +71,11 @@
                 Background="Transparent" BorderThickness="0"
                 CornerRadius="5"
                 Grid.Row="0"
-                Height="32"
                 Margin="0 4 0 0"
                 VerticalAlignment="Center">
-                <d:StackPanel Width="1500" HorizontalAlignment="Left" Background="Goldenrod"/>
-                <d:StackPanel Width="250" HorizontalAlignment="Left" Background="IndianRed"/>
-                <d:StackPanel Width="100" HorizontalAlignment="Left" Background="MediumPurple"/>
+                <d:StackPanel Height="32" Width="1500" HorizontalAlignment="Left" Background="Goldenrod"/>
+                <d:StackPanel Height="32" Width="250" HorizontalAlignment="Left" Background="IndianRed"/>
+                <d:StackPanel Height="32" Width="100" HorizontalAlignment="Left" Background="MediumPurple"/>
             </Grid>
 
 
@@ -319,13 +318,13 @@
             x:Name="PortfolioChart"
             ChartModel="{x:Bind vm.Chart, Mode=OneWay}"
             Grid.Row="4"
-            Visibility="{x:Bind vm.NotEmptyPortfolio, Mode=OneWay}"/>
+            Visibility="{x:Bind vm.PopulatedPortfolio, Mode=OneWay}"/>
 
         <!-- Timerange radio buttons -->
         <local:TimeRangeRadioButtons
             x:Name="TimerangeRadioButtons"
             Grid.Row="5"
-            Visibility="{x:Bind vm.NotEmptyPortfolio, Mode=OneWay}"
+            Visibility="{x:Bind vm.PopulatedPortfolio, Mode=OneWay}"
             Margin="0 0 0 10"
             Tapped="TimeRangeButtons_Tapped"/>
 
@@ -339,7 +338,7 @@
             CloseButtonText="Cancel"
             DefaultButton="Primary"
             Margin="5 0 5 0"
-            d:Visibility="Visible">
+            d:Visibility="Collapsed">
             <controls:UniformGrid
                 Columns="3"
                 Rows="3"

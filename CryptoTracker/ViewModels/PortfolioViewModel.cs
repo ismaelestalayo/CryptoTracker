@@ -1,11 +1,26 @@
 ﻿using CryptoTracker.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.ViewModels {
-    public class PortfolioViewModel : ObservableObject {
+    public class PortfolioViewModel : ObservableRecipient {
 
-		private ObservableCollection<PurchaseModel> purchaseList = new ObservableCollection<PurchaseModel>();
+		public PortfolioViewModel() {
+			Messenger.Register<PortfolioViewModel, PortfolioMessage>(this, (r, m) => {
+				PurchaseList = m.Value;
+			});
+		}
+
+		//protected override void OnActivated() {
+		//	Messenger.Register<PortfolioViewModel, PortfolioMessage>(this, (r, m) => {
+		//		PurchaseList = m.Value;
+		//	});
+		//}
+
+        private ObservableCollection<PurchaseModel> purchaseList = new ObservableCollection<PurchaseModel>();
 		public ObservableCollection<PurchaseModel> PurchaseList {
 			get => purchaseList;
 			set => SetProperty(ref purchaseList, value);
@@ -50,10 +65,11 @@ namespace CryptoTracker.ViewModels {
 			set => SetProperty(ref totalWorth, value);
 		}
 
-		private bool notEmptyPortfolio = true;
-		public bool NotEmptyPortfolio {
-			get => notEmptyPortfolio;
-			set => SetProperty(ref notEmptyPortfolio, value);
+		// To toggle the visibility of certain elements
+		private bool populatedPortfolio = false;
+		public bool PopulatedPortfolio {
+			get => populatedPortfolio;
+			set => SetProperty(ref populatedPortfolio, value);
 		}
 	}
 }
