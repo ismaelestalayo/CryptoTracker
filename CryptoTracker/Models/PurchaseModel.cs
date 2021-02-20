@@ -6,16 +6,11 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Models {
+    /// <summary>
+    /// Had to not implement ObservableObject to make it serializable
+    /// </summary>
     [DataContract()]
     public class PurchaseModel : INotifyPropertyChanged {
-
-        private void SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null) {
-            if (newValue.Equals(field))
-                return;
-            field = newValue;
-            NotifyPropertyChanged(propertyName);
-        }
-
         public PurchaseModel() { }
 
         private bool isComplete = false;
@@ -50,7 +45,7 @@ namespace CryptoTracker.Models {
             set => SetProperty(ref date, value);
         }
 
-        private string exchange;
+        private string exchange = "";
         [DataMember()]
         public string Exchange {
             get => exchange;
@@ -112,6 +107,18 @@ namespace CryptoTracker.Models {
         public double Worth {
             get => worth;
             set => SetProperty(ref worth, value);
+        }
+
+        /// <summary>
+        /// Similar SetProperty to that of the WCT's MVVM approach
+        /// </summary>
+        private void SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null) {
+            if (newValue == null)
+                return;
+            if (field == null || !newValue.Equals(field)) {
+                field = newValue;
+                NotifyPropertyChanged(propertyName);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
