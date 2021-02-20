@@ -263,6 +263,7 @@
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-200.png" />
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-400.png" />
     <None Include=".editorconfig" />
+    <Content Include="Assets\confetti.json" />
     <None Include="Package.xml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\Tiles and stuff\Tile-Large.scale-100.png" />

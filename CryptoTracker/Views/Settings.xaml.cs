@@ -1,28 +1,27 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.Constants;
+using CryptoTracker.Helpers;
+using CryptoTracker.Models;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
 using Windows.Services.Store;
 using Windows.System;
 using Windows.UI;
-using System.Collections.ObjectModel;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
-using CryptoTracker.Constants;
-using CryptoTracker.Models;
 
 namespace CryptoTracker {
     public sealed partial class Settings : Page {
 
         private PackageVersion version;
-        private readonly String portfolioKey = "portfolio";
 
         public Settings() {
             this.InitializeComponent();            
@@ -110,15 +109,22 @@ namespace CryptoTracker {
 
         // ###############################################################################################
         public async Task<bool> ShowRatingReviewDialog() {
-            StoreSendRequestResult result = await StoreRequestHelper.SendRequestAsync(
-                StoreContext.GetDefault(), 16, String.Empty);
+            StoreContext _storeContext = StoreContext.GetDefault(); ;
+            StoreRateAndReviewResult result = await _storeContext.RequestRateAndReviewAppAsync();
 
-            if (result.ExtendedError == null) {
-                JObject jsonObject = JObject.Parse(result.Response);
-                if (jsonObject.SelectToken("status").ToString() == "success") {
-                    // The customer rated or reviewed the app.
-                    return true;
-                }
+            switch (result.Status) {
+                case StoreRateAndReviewStatus.Succeeded:
+                    await LottiePlayer.PlayAsync(0, 1, false);
+                    break;
+                case StoreRateAndReviewStatus.CanceledByUser:
+                    await LottiePlayer.PlayAsync(0, 1, false);
+                    break;
+                case StoreRateAndReviewStatus.Error:
+                case StoreRateAndReviewStatus.NetworkError:
+                    await new MessageDialog("Something went wrong.").ShowAsync();
+                    break;
+                default:
+                    break;
             }
 
             // There was an error with the request, or the customer chose not to
@@ -136,69 +142,73 @@ namespace CryptoTracker {
             App.currencySymbol = CurrencyHelper.CurrencyToSymbol(currency);
         }
 
-        // TODO: bring back this functionality
-        private async void UploadConfigButton_Click(object sender, RoutedEventArgs e) {
-            //try {
-            //    var helper = new RoamingObjectStorageHelper();
-            //    var portfolio = Portfolio.PurchaseList;
+        private async void UploadPortfolio_Click(object sender, RoutedEventArgs e) {            
+            try {
+                var helper = new RoamingObjectStorageHelper();
+                var portfolio = await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>(UserSettingsConstants.UserPortfolio);
+                
+                if (portfolio == null || portfolio.Count == 0) {
+                    await new ContentDialog() {
+                        Title = "Empty portfolio",
+                        Content = "Your current portfolio is empty. Add a purchase before uploading it to the cloud.",
+                        DefaultButton = ContentDialogButton.Primary,
+                        PrimaryButtonText = "Export",
+                        IsPrimaryButtonEnabled = false,
+                        CloseButtonText = "Cancel",
+                        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                    }.ShowAsync();
+                }
 
-            //    if (portfolio == null || portfolio.Count == 0) {
-            //        await new ContentDialog() {
-            //            Title = "Empty portfolio",
-            //            Content = "Your current portfolio is empty.",
-            //            DefaultButton = ContentDialogButton.Primary,
-            //            PrimaryButtonText = "Export",
-            //            IsPrimaryButtonEnabled = false,
-            //            CloseButtonText = "Cancel",
-            //            RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-            //        }.ShowAsync();
-            //    }
+                else {
+                    var response = await new ContentDialog() {
+                        Title = $"Export {portfolio.Count} purchases?",
+                        Content = "This will create a backup of your current portfolio in the cloud.",
+                        DefaultButton = ContentDialogButton.Primary,
+                        PrimaryButtonText = "Export",
+                        CloseButtonText = "Cancel",
+                        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                    }.ShowAsync();
 
-            //    else {
-            //        ContentDialog exportDialog = new ContentDialog() {
-            //            Title = $"Export {portfolio.Count} purchases?",
-            //            Content = "This will create a backup of your current portfolio in the cloud.",
-            //            DefaultButton = ContentDialogButton.Primary,
-            //            PrimaryButtonText = "Export",
-            //            CloseButtonText = "Cancel",
-            //            RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-            //        };
-            //        var response = await exportDialog.ShowAsync();
-
-            //        if (response == ContentDialogResult.Primary)
-            //            await helper.SaveFileAsync(portfolioKey, portfolio);
-            //    }
-            //} catch (Exception ex) {
-            //    await new MessageDialog("Error uploading your portfolio. Try again later.").ShowAsync();
-            //}
+                    if (response == ContentDialogResult.Primary)
+                        await helper.SaveFileAsync(UserSettingsConstants.UserPortfolio, portfolio);
+                }
+            }
+            catch (Exception ex) {
+                await new MessageDialog("Error uploading your portfolio. Try again later.").ShowAsync();
+                await new ContentDialog() {
+                    Title = "Error uploading your portfolio.",
+                    Content = $"Please, try again later. Error: {ex}",
+                    DefaultButton = ContentDialogButton.Close,
+                    PrimaryButtonText = "Export",
+                    IsPrimaryButtonEnabled = false,
+                    CloseButtonText = "Cancel",
+                    RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
+                }.ShowAsync();
+            }
         }
 
-        private async void DownloadConfigButton_Click(object sender, RoutedEventArgs e) {
+        private async void DownloadPortfolio_Click(object sender, RoutedEventArgs e) {
             var helper = new RoamingObjectStorageHelper();
+            
+            if (await helper.FileExistsAsync(UserSettingsConstants.UserPortfolio)) {
+                var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseModel>>(UserSettingsConstants.UserPortfolio);
 
-            // Read complex/large objects 
-            if (await helper.FileExistsAsync(portfolioKey)) {
-                var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseModel>>(portfolioKey);
-
-                ContentDialog importDialog = new ContentDialog() {
+                var response = await new ContentDialog() {
                     Title = $"Import {obj.Count} purchases?",
                     Content = "This will clear your current portfolio and download your backup.",
                     DefaultButton = ContentDialogButton.Primary,
                     PrimaryButtonText = "Import",
                     CloseButtonText = "Cancel",
                     RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-                };
-
-                var response = await importDialog.ShowAsync();
+                }.ShowAsync();
 
                 if (response == ContentDialogResult.Primary) {
-                    vm.PurchaseList = obj;
-                    vm.InfoBarMessage("Informational", "", "Portfolio imported succesfully.");
+                    LocalStorageHelper.SaveObject(obj, UserSettingsConstants.UserPortfolio);
+                    vm.InAppNotification("Informational", "", "Portfolio imported succesfully.");
                 }
-                    //Portfolio.importPortfolio(obj);
             }
             else {
-                ContentDialog importDialog = new ContentDialog() {
+                await new ContentDialog() {
                     Title = "No backup found.",
                     Content = "You don't seem to have uploaded any portfolio before.",
                     DefaultButton = ContentDialogButton.Primary,
@@ -206,8 +216,7 @@ namespace CryptoTracker {
                     PrimaryButtonText = "Import",
                     CloseButtonText = "Cancel",
                     RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
-                };
-                await importDialog.ShowAsync();
+                }.ShowAsync();
             }
         }
 
