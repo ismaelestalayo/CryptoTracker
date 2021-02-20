@@ -16,6 +16,15 @@ namespace CryptoTracker.UserControls {
 		private string timeSpan = "1w";
 		public string TimeSpan {
 			get => timeSpan;
+			set {
+                foreach (var children in ((Panel)this.Content).Children) {
+					if (children.GetType() == typeof(RadioButton)) {
+						var a = children as RadioButton;
+						if (a.Content.ToString() == value)
+							a.IsChecked = true;
+					}
+                }
+			}
 		}
 	}
 }
