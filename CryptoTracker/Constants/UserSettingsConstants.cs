@@ -6,5 +6,6 @@
 		public const string UserTheme = "Theme";
 		public const string UserCurrency = "Currency";
 		public const string UserPinnedCoins = "Pinned";
+		public const string UserPortfolio = "Portfolio";
 	}
 }

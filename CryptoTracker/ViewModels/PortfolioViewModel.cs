@@ -10,7 +10,7 @@ namespace CryptoTracker.ViewModels {
 
 		public PortfolioViewModel() {
 			Messenger.Register<PortfolioViewModel, PortfolioMessage>(this, (r, m) => {
-				PurchaseList = m.Value;
+				Portfolio = m.Value;
 			});
 		}
 
@@ -20,10 +20,10 @@ namespace CryptoTracker.ViewModels {
 		//	});
 		//}
 
-        private ObservableCollection<PurchaseModel> purchaseList = new ObservableCollection<PurchaseModel>();
-		public ObservableCollection<PurchaseModel> PurchaseList {
-			get => purchaseList;
-			set => SetProperty(ref purchaseList, value);
+        private ObservableCollection<PurchaseModel> portfolio = new ObservableCollection<PurchaseModel>();
+		public ObservableCollection<PurchaseModel> Portfolio {
+			get => portfolio;
+			set => SetProperty(ref portfolio, value);
 		}
 
 		private PurchaseModel newPurchase = new PurchaseModel();

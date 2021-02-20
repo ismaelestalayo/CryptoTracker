@@ -62,7 +62,7 @@
         ############################################################################################################### -->
         <Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 10 7 5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="34"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -120,7 +120,7 @@
                 GridLinesVisibility="Horizontal"
                 HeadersVisibility="Column" HorizontalAlignment="Stretch"
                 HorizontalGridLinesBrush="{ThemeResource SystemChromeDisabledHighColor}"
-                ItemsSource="{x:Bind vm.PurchaseList, Mode=OneWay}"
+                ItemsSource="{x:Bind vm.Portfolio, Mode=OneWay}"
                 LoadingRowGroup="dg_loadingRowGroup"
                 Margin="0"
                 RowBackground="Transparent" RowDetailsVisibilityMode="Collapsed"
@@ -135,7 +135,7 @@
                 </controls:DataGrid.RowGroupHeaderStyles>
 
                 <controls:DataGrid.Columns>
-                    <controls:DataGridTemplateColumn Header="Crypto" Width="*">
+                    <controls:DataGridTemplateColumn Header="Crypto" Width="1.2*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0 5">
