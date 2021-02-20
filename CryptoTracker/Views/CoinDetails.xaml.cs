@@ -55,25 +55,25 @@ namespace CryptoTracker {
                 var type = (e.Parameter.GetType()).Name;
                 switch (type) {
                     case nameof(HomeCard):
-                        viewModel.Chart = ((HomeCard)e.Parameter).Chart;
-                        viewModel.Coin = ((HomeCard)e.Parameter).Info;
-                        viewModel.TimeSpan = viewModel.Chart.TimeSpan;
+                        vm.Chart = ((HomeCard)e.Parameter).Chart;
+                        vm.Coin = ((HomeCard)e.Parameter).Info;
+                        vm.Chart.TimeSpan = vm.Chart.TimeSpan;
 
-                        var coin = App.coinList.Find(x => x.symbol == viewModel.Coin.Name);
-                        viewModel.Coin.FullName = coin.name;
-                        FavIcon.Content = viewModel.Coin.IsFav ? "\uEB52" : "\uEB51";
+                        var coin = App.coinList.Find(x => x.symbol == vm.Coin.Name);
+                        vm.Coin.FullName = coin.name;
+                        FavIcon.Content = vm.Coin.IsFav ? "\uEB52" : "\uEB51";
                         // TODO: update info and market info
                         break;
                     case nameof(CoinCompactViewModel):
-                        viewModel.Chart = ((CoinCompactViewModel)e.Parameter).Chart;
-                        viewModel.Coin = ((CoinCompactViewModel)e.Parameter).Info;
+                        vm.Chart = ((CoinCompactViewModel)e.Parameter).Chart;
+                        vm.Coin = ((CoinCompactViewModel)e.Parameter).Info;
                         break;
                     default:
                     case "string":
                         var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
-                        viewModel.Coin.Name = crypto;
+                        vm.Coin.Name = crypto;
                         var _coin = App.coinList.Find(x => x.symbol == crypto);
-                        viewModel.Coin.FullName = _coin?.name ?? "NULL";
+                        vm.Coin.FullName = _coin?.name ?? "NULL";
                         FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
 
                         InitValuesFromZero(_coin);
@@ -94,13 +94,13 @@ namespace CryptoTracker {
 
         /// #########################################################################################
         private async void InitValuesFromZero(CoinBasicInfo coin) {
-            viewModel.CoinInfo = await API_CoinGecko.GetCoin(coin.name);
+            vm.CoinInfo = await API_CoinGecko.GetCoin(coin.name);
 
             try {
                 TimeRangeButtons_Tapped(null, null);
 
             } catch (Exception) {
-                viewModel.Coin.IsLoading = false;
+                vm.Coin.IsLoading = false;
             }
         }
 
@@ -108,7 +108,7 @@ namespace CryptoTracker {
         /// #########################################################################################
         /// #########################################################################################
         internal async void UpdatePage() {
-            viewModel.Coin.IsLoading = true;
+            vm.Coin.IsLoading = true;
             
             await UpdateCoin();
             await Get24Volume();
@@ -117,14 +117,14 @@ namespace CryptoTracker {
 
         /// #########################################################################################
         private async Task UpdateCoin() {
-            var crypto = viewModel.Coin.Name;
-            viewModel.Coin.Price = await CryptoCompare.GetPriceAsync(crypto);
+            var crypto = vm.Coin.Name;
+            vm.Coin.Price = await CryptoCompare.GetPriceAsync(crypto);
 
             /// Colors
-            var brush = viewModel.Chart.ChartStroke;
+            var brush = vm.Chart.ChartStroke;
             if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
                 brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
-            viewModel.Chart.ChartStroke = brush;
+            vm.Chart.ChartStroke = brush;
 
             /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
             var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
@@ -137,35 +137,35 @@ namespace CryptoTracker {
                     Volume = h.volumefrom
                 });
             }
-            viewModel.Chart.ChartData = chartData;
+            vm.Chart.ChartData = chartData;
             var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
-            viewModel.Chart.LabelFormat = temp.LabelFormat;
-            viewModel.Chart.Minimum = temp.Minimum;
-            viewModel.Chart.MajorStepUnit = temp.MajorStepUnit;
-            viewModel.Chart.MajorStep = temp.MajorStep;
+            vm.Chart.LabelFormat = temp.LabelFormat;
+            vm.Chart.Minimum = temp.Minimum;
+            vm.Chart.MajorStepUnit = temp.MajorStepUnit;
+            vm.Chart.MajorStep = temp.MajorStep;
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-            viewModel.Chart.PricesMinMax = MinMax;
+            vm.Chart.PricesMinMax = MinMax;
 
             /// Calculate the price difference
             double oldestPrice = histo[0].Average;
             double newestPrice = histo[histo.Count - 1].Average;
             double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
-            viewModel.Coin.Diff = diff;
+            vm.Coin.Diff = diff;
 
-            viewModel.Coin.IsLoading = false;
+            vm.Coin.IsLoading = false;
         }
 
         
         async private Task Get24Volume() {
-            var crypto = viewModel.Coin.Name;
+            var crypto = vm.Coin.Name;
             // TODO: add volume chart
         }
 
         // #########################################################################################
         private void PinCoin_btn(object sender, RoutedEventArgs e) {
-            var crypto = viewModel.Coin.Name;
+            var crypto = vm.Coin.Name;
             if (!App.pinnedCoins.Contains(crypto)) {
                 App.pinnedCoins.Add(crypto);
                 //Home.AddCoinHome(crypto);
@@ -181,14 +181,14 @@ namespace CryptoTracker {
         }
 
         private async void CompactOverlay_btn_click(object sender, RoutedEventArgs e) {
-            var crypto = viewModel.Coin.Name;
+            var crypto = vm.Coin.Name;
             var view = ApplicationView.GetForCurrentView();
 
             var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
             preferences.CustomSize = new Windows.Foundation.Size(350, 250);
 
             await view.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
-            Frame.Navigate(typeof(CoinCompact), viewModel, new SuppressNavigationTransitionInfo());
+            Frame.Navigate(typeof(CoinCompact), vm, new SuppressNavigationTransitionInfo());
         }
 
         private void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
