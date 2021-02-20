@@ -1,12 +1,22 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
-using System;
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Models {
-	[DataContractAttribute()]
-    public class PurchaseModel : ObservableObject {
+    [DataContract()]
+    public class PurchaseModel : INotifyPropertyChanged {
+
+        private void SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null) {
+            if (newValue.Equals(field))
+                return;
+            field = newValue;
+            NotifyPropertyChanged(propertyName);
+        }
+
+        public PurchaseModel() { }
 
         private bool isComplete = false;
         public bool IsComplete {
@@ -102,6 +112,13 @@ namespace CryptoTracker.Models {
         public double Worth {
             get => worth;
             set => SetProperty(ref worth, value);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "") {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+
         }
     }
 }
