@@ -25,6 +25,11 @@
     <!-- 
     ################################################################################################### -->
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
         <NavigationView 
             x:Name="NavView" Background="{ThemeResource SystemChromeMediumColor}" 
             Grid.RowSpan="2" OverflowLabelMode="NoLabel"
@@ -87,6 +92,8 @@
                 </Frame.ContentTransitions>
             </Frame>
         </NavigationView>
+
+        <StackPanel x:Name="CustomAppTitleBar" Background="Transparent"/>
 
         <muxc:TeachingTip
 	        Title="{x:Bind vm.InfoBarTitle, Mode=OneWay}"

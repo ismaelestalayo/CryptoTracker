@@ -92,6 +92,7 @@ namespace CryptoTracker {
             titleBar.ButtonForegroundColor = Color.FromArgb(255, 150, 150, 150);
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveForegroundColor = Color.FromArgb(127, 150, 150, 150);
+            Window.Current.SetTitleBar(CustomAppTitleBar);
         }
 
         // #########################################################################################
@@ -194,6 +195,7 @@ namespace CryptoTracker {
         private void ContentFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e) {
             var toPage = (e.SourcePageType).Name;
             NavView.IsPaneVisible = (toPage == "CoinCompact") ? false : true;
+            CustomAppTitleBar.Margin = (toPage == "CoinCompact") ? new Thickness(46, 0, 0, 0) : new Thickness(0);
         }
 
         // #########################################################################################
