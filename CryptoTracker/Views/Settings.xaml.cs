@@ -3,7 +3,6 @@ using CryptoTracker.Helpers;
 using CryptoTracker.Models;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.Helpers;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;

@@ -8,7 +8,6 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using Newtonsoft.Json.Linq;
 using Refit;
 using System;
 using System.Collections.Generic;
@@ -36,7 +35,6 @@ namespace CryptoTracker {
 
         internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
-        internal static List<JSONhistoric> historic = new List<JSONhistoric>();
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
@@ -204,11 +202,6 @@ namespace CryptoTracker {
         /// http://blog.stephencleary.com/2012/07/dont-block-on-async-code.html
         /// 
         /// </summary>
-        internal static async Task<JToken> GetJSONAsync(Uri uri) {
-            var jsonString = await Client.GetStringAsync(uri).ConfigureAwait(false);
-            return JToken.Parse(jsonString);
-        }
-
         // TODO: removing ConfigureAwait breaks everything... why?
         internal static async Task<string> GetStringAsync(Uri uri) {
             return await Client.GetStringAsync(uri).ConfigureAwait(false);
