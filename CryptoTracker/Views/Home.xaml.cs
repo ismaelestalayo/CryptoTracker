@@ -129,7 +129,7 @@ namespace CryptoTracker.Views {
                 }
                 viewModel.PriceCards[i].Chart.ChartData = chartData;
                 viewModel.VolumeCards[i].Chart.ChartData = chartData;
-                var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
+                var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
                 viewModel.PriceCards[i].Chart.LabelFormat = temp.LabelFormat;
                 viewModel.PriceCards[i].Chart.Minimum = temp.Minimum;
                 viewModel.PriceCards[i].Chart.MajorStepUnit = temp.MajorStepUnit;
@@ -235,7 +235,7 @@ namespace CryptoTracker.Views {
 
         private async void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             timeSpan = ((UserControls.TimeRangeRadioButtons)sender).TimeSpan;
-            (timeUnit, limit, aggregate) = App.TimeSpanParser(timeSpan);
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser(timeSpan);
 
             await UpdateAllCards();
         }

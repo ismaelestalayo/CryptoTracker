@@ -43,7 +43,7 @@ namespace CryptoTracker.Views {
 					vm.Info = ((CoinDetailsViewModel)e.Parameter).Coin;
 					vm.Chart.TimeSpan = vm.Chart.TimeSpan;
 					if (!timeSpans.Contains(vm.Chart.TimeSpan)) {
-						(timeUnit, limit, aggregate) = App.TimeSpanParser(timeSpan);
+						(timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser(timeSpan);
 						vm.Chart.TimeSpan = timeSpan;
 						UpdateValues();
 					}
@@ -122,7 +122,7 @@ namespace CryptoTracker.Views {
 			if (sender != null)
 				timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
 
-			(timeUnit, limit, aggregate) = App.TimeSpanParser(timeSpan);
+			(timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser(timeSpan);
 			vm.Chart.TimeSpan = timeSpan;
 
 			UpdateValues();
