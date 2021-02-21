@@ -21,6 +21,7 @@ namespace CryptoTracker {
     public sealed partial class Settings : Page {
 
         private PackageVersion version;
+        private string PortfolioKey = "Portfolio";
 
         public Settings() {
             this.InitializeComponent();            
@@ -29,12 +30,12 @@ namespace CryptoTracker {
             version = Package.Current.Id.Version;
             VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
-            ThemeComboBox.PlaceholderText = App.localSettings.Values[UserSettingsConstants.UserTheme].ToString();
+            ThemeComboBox.PlaceholderText = App.localSettings.Values[UserSettingsConstants.Theme].ToString();
             FooterLogo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? 
                 new BitmapImage(new Uri("ms-appx:///Assets/Tile-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));
             
 
-            switch (App.localSettings.Values[UserSettingsConstants.UserCurrency]) {
+            switch (App.localSettings.Values[UserSettingsConstants.Currency]) {
                 case "EUR":
                     EUR.IsSelected = true;
                     break;
@@ -63,7 +64,7 @@ namespace CryptoTracker {
                     INR.IsSelected = true;
                     break;
             }
-            CoinComboBox.PlaceholderText = App.localSettings.Values[UserSettingsConstants.UserCurrency].ToString();
+            CoinComboBox.PlaceholderText = App.localSettings.Values[UserSettingsConstants.Currency].ToString();
 
             // Show feedback button
             if (Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.IsSupported()) {
@@ -136,7 +137,7 @@ namespace CryptoTracker {
             ComboBox c = sender as ComboBox;
             String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
-            App.localSettings.Values[UserSettingsConstants.UserCurrency] = currency;
+            App.localSettings.Values[UserSettingsConstants.Currency] = currency;
             App.currency = currency;
             App.currencySymbol = CurrencyHelper.CurrencyToSymbol(currency);
         }
@@ -144,7 +145,7 @@ namespace CryptoTracker {
         private async void UploadPortfolio_Click(object sender, RoutedEventArgs e) {            
             try {
                 var helper = new RoamingObjectStorageHelper();
-                var portfolio = await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>(UserSettingsConstants.UserPortfolio);
+                var portfolio = await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>(PortfolioKey);
                 
                 if (portfolio == null || portfolio.Count == 0) {
                     await new ContentDialog() {
@@ -169,7 +170,7 @@ namespace CryptoTracker {
                     }.ShowAsync();
 
                     if (response == ContentDialogResult.Primary)
-                        await helper.SaveFileAsync(UserSettingsConstants.UserPortfolio, portfolio);
+                        await helper.SaveFileAsync(PortfolioKey, portfolio);
                 }
             }
             catch (Exception ex) {
@@ -189,8 +190,8 @@ namespace CryptoTracker {
         private async void DownloadPortfolio_Click(object sender, RoutedEventArgs e) {
             var helper = new RoamingObjectStorageHelper();
             
-            if (await helper.FileExistsAsync(UserSettingsConstants.UserPortfolio)) {
-                var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseModel>>(UserSettingsConstants.UserPortfolio);
+            if (await helper.FileExistsAsync(PortfolioKey)) {
+                var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseModel>>(PortfolioKey);
 
                 var response = await new ContentDialog() {
                     Title = $"Import {obj.Count} purchases?",
@@ -202,7 +203,7 @@ namespace CryptoTracker {
                 }.ShowAsync();
 
                 if (response == ContentDialogResult.Primary) {
-                    LocalStorageHelper.SaveObject(obj, UserSettingsConstants.UserPortfolio);
+                    LocalStorageHelper.SaveObject(obj, PortfolioKey);
                     vm.InAppNotification("Informational", "", "Portfolio imported succesfully.");
                 }
             }
@@ -223,7 +224,7 @@ namespace CryptoTracker {
             ComboBox c = sender as ComboBox;
             var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
-            App.localSettings.Values[UserSettingsConstants.UserTheme] = theme;
+            App.localSettings.Values[UserSettingsConstants.Theme] = theme;
             switch (theme) {
                 case "Light":
                     FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));

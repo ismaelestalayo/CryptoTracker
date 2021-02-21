@@ -134,6 +134,7 @@
     <Compile Include="Models\PurchaseModel.cs" />
     <Compile Include="Models\Top100card.cs" />
     <Compile Include="Services\ICryptoCompare.cs" />
+    <Compile Include="Services\LocalSettings.cs" />
     <Compile Include="UserControls\ChartArea.xaml.cs">
       <DependentUpon>ChartArea.xaml</DependentUpon>
     </Compile>

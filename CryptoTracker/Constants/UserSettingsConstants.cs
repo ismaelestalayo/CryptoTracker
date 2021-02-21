@@ -1,11 +1,21 @@
-﻿namespace CryptoTracker.Constants {
+﻿using System.Collections.Generic;
+
+namespace CryptoTracker.Constants {
 	/// <summary>
 	/// Class with key constants for user settings
 	/// </summary>
 	public class UserSettingsConstants {
-		public const string UserTheme = "Theme";
-		public const string UserCurrency = "Currency";
-		public const string UserPinnedCoins = "Pinned";
-		public const string UserPortfolio = "Portfolio";
+		public const string Theme = "Theme";
+		public const string Currency = "Currency";
+		public const string PinnedCoins = "Pinned";
+
+		/// <summary>
+		/// Default settings
+		/// </summary>
+		public static readonly Dictionary<string, object> Defaults = new Dictionary<string, object>(){
+			{ Theme, "Windows" },
+			{ Currency, "EUR" },
+			{ PinnedCoins, "BTC|ETH|LTC|XRP" }
+		};
 	}
 }

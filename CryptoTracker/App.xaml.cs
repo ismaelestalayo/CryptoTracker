@@ -33,66 +33,58 @@ namespace CryptoTracker {
         internal static string currency       = "EUR";
         internal static string currencySymbol = "€";
 
+        private LocalSettings _LocalSettings = new LocalSettings(); 
+
         internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
 
         internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
-            string _theme = localSettings.Values[UserSettingsConstants.UserTheme]?.ToString();
-            string _currency = localSettings.Values[UserSettingsConstants.UserCurrency]?.ToString();
-            string _pinned = localSettings.Values[UserSettingsConstants.UserPinnedCoins]?.ToString();
+            string _theme = _LocalSettings.Get<string>(UserSettingsConstants.Theme);
+            string _currency = _LocalSettings.Get<string>(UserSettingsConstants.Currency);
+            string _pinned = _LocalSettings.Get<string>(UserSettingsConstants.PinnedCoins);
+			
+            pinnedCoins = new List<string>(_pinned.Split(new char[] { '|' }));
+            pinnedCoins.Remove("");
 
-            if (_theme == null || _currency == null || _pinned == null) {
-                // Default: Windows theme, EUR and {BTC, ETH, LTC and XRP}
-                localSettings.Values[UserSettingsConstants.UserTheme] = "Windows";
-                localSettings.Values[UserSettingsConstants.UserCurrency] = "EUR";
-                localSettings.Values[UserSettingsConstants.UserPinnedCoins] = "BTC|ETH|LTC|XRP";
-                this.RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
-                pinnedCoins = new List<string>(new string[] { "BTC", "ETH", "LTC", "XRP" });
-			}
-			else {
-                pinnedCoins = new List<string>(_pinned.Split(new char[] { '|' }));
-                pinnedCoins.Remove("");
+            switch (_theme) {
+				case "Light":
+					RequestedTheme = ApplicationTheme.Light;
+					break;
+				case "Dark":
+					RequestedTheme = ApplicationTheme.Dark;
+					break;
+                default:
+                    RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                    break;
+            }
 
-                switch (_theme) {
-					case "Light":
-						RequestedTheme = ApplicationTheme.Light;
-						break;
-					case "Dark":
-						RequestedTheme = ApplicationTheme.Dark;
-						break;
-                    default:
-                        RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
-                        break;
-                }
+            currency = _currency ;
+            switch (_currency ) {
+                default:
+                case "EUR":
+                    currencySymbol = "€";
+                    break;
+                case "GBP":
+                    currencySymbol = "£";
+                    break;
+                case "USD":
+                case "CAD":
+                case "AUD":
+                case "MXN":
+                    currencySymbol = "$";
+                    break;
+                case "CNY":
+                case "JPY":
+                    currencySymbol = "¥";
+                    break;
+                case "INR":
+                    currencySymbol = "₹";
+                    break;
+            }
 
-                currency = _currency ;
-                switch (_currency ) {
-                    default:
-                    case "EUR":
-                        currencySymbol = "€";
-                        break;
-                    case "GBP":
-                        currencySymbol = "£";
-                        break;
-                    case "USD":
-                    case "CAD":
-                    case "AUD":
-                    case "MXN":
-                        currencySymbol = "$";
-                        break;
-                    case "CNY":
-                    case "JPY":
-                        currencySymbol = "¥";
-                        break;
-                    case "INR":
-                        currencySymbol = "₹";
-                        break;
-                }
-			}
-
-            // Register services
+            /// Register services
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 .AddSingleton(RestService.For<ICryptoCompare>("https://min-api.cryptocompare.com/"))
@@ -152,7 +144,7 @@ namespace CryptoTracker {
                     s += item + "|";
                 }
                 s = s.Remove(s.Length - 1);
-                App.localSettings.Values[UserSettingsConstants.UserPinnedCoins] = s;
+                App.localSettings.Values[UserSettingsConstants.PinnedCoins] = s;
             }
         }
 
@@ -210,110 +202,6 @@ namespace CryptoTracker {
             return await Client.GetStringAsync(new Uri(url)).ConfigureAwait(false);
 
         }
-
-        // ###############################################################################################
-        //  Adjust axis
-        internal static ChartStyling AdjustLinearAxis(ChartStyling chartStyle, string timeSpan) {
-            switch (timeSpan) {
-                case "1h":
-                    chartStyle.LabelFormat = "{0:HH:mm}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
-                    chartStyle.MajorStep = 10;
-                    chartStyle.Minimum = DateTime.Now.AddHours(-1);
-                    break;
-
-                case "4h":
-                    chartStyle.LabelFormat = "{0:HH:mm}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
-                    chartStyle.MajorStep = 30;
-                    chartStyle.Minimum = DateTime.Now.AddHours(-4);
-                    break;
-
-                case "1d":
-                    chartStyle.LabelFormat = "{0:HH:mm}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    chartStyle.MajorStep = 3;
-                    chartStyle.Minimum = DateTime.Now.AddDays(-1);
-                    break;
-
-                case "3d":
-                    chartStyle.LabelFormat = "{0:HH:mm}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    chartStyle.MajorStep = 6;
-                    chartStyle.Minimum = DateTime.Now.AddDays(-3);
-                    break;
-
-                default:
-                case "1w":
-                    chartStyle.LabelFormat = "{0:ddd d}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
-                    chartStyle.MajorStep = 1;
-                    chartStyle.Minimum = DateTime.Now.AddDays(-7);
-                    break;
-
-                case "1m":
-                    chartStyle.LabelFormat = "{0:d/M}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
-                    chartStyle.MajorStep = 1;
-                    chartStyle.Minimum = DateTime.Now.AddMonths(-1);
-                    break;
-
-                case "3m":
-                    chartStyle.LabelFormat = "{0:d/M}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
-                    chartStyle.MajorStep = 1;
-                    chartStyle.Minimum = DateTime.Now.AddMonths(-3);
-                    break;
-
-                case "1y":
-                    chartStyle.LabelFormat = "{0:MMM}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    chartStyle.MajorStep = 1;
-                    chartStyle.Minimum = DateTime.MinValue;
-                    break;
-
-                case "all":
-                    chartStyle.LabelFormat = "{0:MMM}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    chartStyle.MajorStep = 6;
-                    chartStyle.Minimum = DateTime.MinValue;
-                    break;
-            }
-            return chartStyle;
-        }
-
-        internal static (string timeUnit, int limit, int aggregate) TimeSpanParser(string timeSpan) {
-            switch (timeSpan) {
-                case "1h":
-                    return ("minute", 60, 1);
-
-                case "4h":
-                    return ("minute", 240, 1);
-
-                case "1d":
-                    return ("minute", 1440, 5); // 300 * 5 = 1440 minutes
-
-                case "3d":
-                    return ("hour", 72, 1); // 72 * 5 = 
-
-                default:
-                case "1w":
-                    return ("hour", 168, 1);
-
-                case "1m":
-                    return ("hour", 372, 2); // 744 hours in a month
-
-                case "3m":
-                    return ("day", 93, 1); // 744 hours in a month
-
-                case "1y":
-                    return ("day", 365, 1);
-
-                case "all":
-                    return ("day", 0, 1);
-            }
-        }
-
     }
 
 }

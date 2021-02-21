@@ -34,7 +34,7 @@ namespace CryptoTracker {
         private static string timeSpan = "1w";
         private static string timeUnit = "hour";
 
-        private string PortfolioKey = UserSettingsConstants.UserPortfolio;
+        private string PortfolioKey = "Portfolio";
 
         internal static bool ForceRefresh { get; set; }
         private int EditingPurchaseId { get; set; }
@@ -190,7 +190,7 @@ namespace CryptoTracker {
                 });
             }
             vm.Chart.ChartData = chartData;
-            var temp = App.AdjustLinearAxis(new ChartStyling(), timeSpan);
+            var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
             vm.Chart.LabelFormat = temp.LabelFormat;
             vm.Chart.Minimum = temp.Minimum;
             vm.Chart.MajorStepUnit = temp.MajorStepUnit;
@@ -322,7 +322,7 @@ namespace CryptoTracker {
             if (sender != null)
                 timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
 
-            (timeUnit, limit, aggregate) = App.TimeSpanParser(timeSpan);
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser(timeSpan);
             UpdatePortfolio();
         }
 
