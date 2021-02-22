@@ -1,5 +1,4 @@
 ﻿using CryptoTracker.APIs;
-using CryptoTracker.Constants;
 using CryptoTracker.Helpers;
 using CryptoTracker.Models;
 using CryptoTracker.UserControls;
@@ -45,19 +44,12 @@ namespace CryptoTracker {
             this.InitializeComponent();   
         }
 
-        private void Portfolio_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            vm.PopulatedPortfolio = vm.Portfolio.Count > 0;
-        }
-
         private void Page_Loaded(object sender, RoutedEventArgs e) {
             /// Populate list of coins
             var coinsArray = App.coinList.Select(x => x.symbol).ToList();
             coinsArray.Sort((x, y) => x.CompareTo(y));
             vm.CoinsArray = new ObservableCollection<string>(coinsArray);
             vm.Portfolio = RetrievePortfolio();
-
-            vm.Portfolio.CollectionChanged += Portfolio_CollectionChanged;
-            Portfolio_CollectionChanged(null, null);
 
             //if (ForceRefresh) {
             //	ForceRefresh = false;

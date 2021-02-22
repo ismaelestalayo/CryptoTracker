@@ -46,6 +46,9 @@
             <Setter Property="Margin" Value="15 0 50 0"/>
         </Style>
         <helpers:DateTimeShortener x:Key="DateTimeShortener"/>
+        <helpers:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
+        <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
+        <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
@@ -62,7 +65,7 @@
         ############################################################################################################### -->
         <Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 10 7 5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="34"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -71,8 +74,10 @@
                 Background="Transparent" BorderThickness="0"
                 CornerRadius="5"
                 Grid.Row="0"
+                Height="34"
                 Margin="0 4 0 0"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+                Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}">
                 <d:StackPanel Height="32" Width="1500" HorizontalAlignment="Left" Background="Goldenrod"/>
                 <d:StackPanel Height="32" Width="250" HorizontalAlignment="Left" Background="IndianRed"/>
                 <d:StackPanel Height="32" Width="100" HorizontalAlignment="Left" Background="MediumPurple"/>
@@ -111,7 +116,8 @@
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0">
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0"
+            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}">
             <controls:DataGrid
                 x:Name="Portfolio_dg"
                 AutoGenerateColumns="False" BorderThickness="0"
@@ -286,9 +292,38 @@
             </controls:DataGrid>
         </ScrollViewer>
 
+        <StackPanel Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Top" Margin="0 50 0 0"
+            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
+            <controls:DropShadowPanel
+                BlurRadius="10"
+                ShadowOpacity="0.3"
+                OffsetX="3"
+                OffsetY="3"
+                Color="#000000"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                IsMasked="True">
+                <Image
+                    MaxWidth="500" Stretch="Uniform"
+                    Source="/Assets/stockPrices.png"/>
+            </controls:DropShadowPanel>
+            
+            <TextBlock
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                Text="Your portfolio is empty."
+                Style="{ThemeResource SubtitleTextBlockStyle}"/>
+            <TextBlock
+                FontWeight="Light"
+                HorizontalAlignment="Center"
+                Text="Try adding a purchase." Opacity="0.7"
+                Style="{ThemeResource ListViewTextBlock}"/>
+        </StackPanel>
+
 
         <!-- Total portfolio values -->
-        <Grid Grid.Row="2" Margin="0 5 0 50" Height="32">
+        <Grid Grid.Row="2" Margin="0 5 0 50" Height="32"
+            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -318,13 +353,13 @@
             x:Name="PortfolioChart"
             ChartModel="{x:Bind vm.Chart, Mode=OneWay}"
             Grid.Row="4"
-            Visibility="{x:Bind vm.PopulatedPortfolio, Mode=OneWay}"/>
+            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}"/>
 
         <!-- Timerange radio buttons -->
         <local:TimeRangeRadioButtons
             x:Name="TimerangeRadioButtons"
             Grid.Row="5"
-            Visibility="{x:Bind vm.PopulatedPortfolio, Mode=OneWay}"
+            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}"
             Margin="0 0 0 10"
             Tapped="TimeRangeButtons_Tapped"/>
 

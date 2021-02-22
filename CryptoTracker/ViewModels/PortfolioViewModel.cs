@@ -64,12 +64,5 @@ namespace CryptoTracker.ViewModels {
 			get => totalWorth;
 			set => SetProperty(ref totalWorth, value);
 		}
-
-		// To toggle the visibility of certain elements
-		private bool populatedPortfolio = false;
-		public bool PopulatedPortfolio {
-			get => populatedPortfolio;
-			set => SetProperty(ref populatedPortfolio, value);
-		}
 	}
 }

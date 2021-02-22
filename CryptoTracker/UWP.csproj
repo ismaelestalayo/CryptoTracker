@@ -224,6 +224,7 @@
     <Content Include="Assets\Icons\iconXMR.png" />
     <Content Include="Assets\Icons\iconXRP.png" />
     <Content Include="Assets\Icons\iconZRX.png" />
+    <Content Include="Assets\stockPrices.png" />
     <Content Include="Assets\Tile-D.png" />
     <Content Include="Assets\Tile-L.png" />
     <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-16.png" />
