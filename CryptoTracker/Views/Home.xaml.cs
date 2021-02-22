@@ -25,13 +25,14 @@ namespace CryptoTracker.Views {
         /// Timer for auto-refresh
         private static ThreadPoolTimer PeriodicTimer;
 
+
         public Home() {
             this.InitializeComponent();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             /// First keep an updated list of coins
-            await App.GetCoinList().ConfigureAwait(false);
+            await App.GetCoinList();
 
             InitHome();
             viewModel.PriceCards.CollectionChanged += HomeCoinList_CollectionChanged;
@@ -65,7 +66,7 @@ namespace CryptoTracker.Views {
                 viewModel.PriceCards.Clear();
                 viewModel.VolumeCards.Clear();
                 foreach (var coin in App.pinnedCoins)
-                    await AddCoinHome(coin);
+                    AddCoinHome(coin);
             }
 
             for (int i = 0; i < App.pinnedCoins.Count; i++)
@@ -75,16 +76,7 @@ namespace CryptoTracker.Views {
         /// #########################################################################################
         /// Add/remove coins from Home
         // TODO: make static so Top100 can add/remove coins
-        internal async Task AddCoinHome(string crypto) {
-
-            if (crypto == "MIOTA")
-                crypto = "IOT";
-
-            String iconPath = "/Assets/Icons/icon" + crypto + ".png";
-            try {
-                var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://" + iconPath));
-            } catch (Exception) { }
-
+        internal void AddCoinHome(string crypto) {
             var h = new HomeCard() { Info = new Coin() { Name = crypto } };
             viewModel.PriceCards.Add(h);
             viewModel.VolumeCards.Add(h);
@@ -114,7 +106,6 @@ namespace CryptoTracker.Views {
             
             for (int i = 0; i < viewModel.PriceCards.Count; i++)
                 await UpdateCard(i);
-            
         }
 
         private async Task UpdateCard(int i) {
@@ -168,9 +159,7 @@ namespace CryptoTracker.Views {
 
                 /// Show that loading is done
                 viewModel.PriceCards[i].Info.IsLoading = false;
-            } catch (Exception) {
-
-            }
+            } catch (Exception) {  }
             
         }
 
@@ -201,21 +190,13 @@ namespace CryptoTracker.Views {
             int n = App.pinnedCoins.IndexOf(crypto);
 
             if(n < viewModel.PriceCards.Count - 1) {
-                var tmpName = App.pinnedCoins[n];
-                App.pinnedCoins[n] = App.pinnedCoins[n + 1];
-                App.pinnedCoins[n + 1] = tmpName;
+                /// Swap downwards the N card
+                (App.pinnedCoins[n + 1], App.pinnedCoins[n]) = (App.pinnedCoins[n], App.pinnedCoins[n + 1]);
+                (viewModel.PriceCards[n + 1], viewModel.PriceCards[n]) = (viewModel.PriceCards[n], viewModel.PriceCards[n + 1]);
+                (viewModel.VolumeCards[n + 1], viewModel.VolumeCards[n]) = (viewModel.VolumeCards[n], viewModel.VolumeCards[n + 1]);
 
-                /// Save in a temporal variable the first card, and swap
-                var tmpCard = viewModel.PriceCards[n];
-                viewModel.PriceCards[n] = viewModel.PriceCards[n + 1];
-                viewModel.PriceCards[n + 1] = tmpCard;
-
-                tmpCard = viewModel.VolumeCards[n];
-                viewModel.VolumeCards[n] = viewModel.VolumeCards[n + 1];
-                viewModel.VolumeCards[n + 1] = tmpCard;
-
-                //PriceListView.UpdateLayout();
-                //VolumeListView.UpdateLayout();
+                PriceListView.UpdateLayout();
+                VolumeListView.UpdateLayout();
                 //UpdateCard(n);
 
                 /// Update pinnedCoin list
@@ -227,21 +208,13 @@ namespace CryptoTracker.Views {
             int n = App.pinnedCoins.IndexOf(crypto);
 
             if (n != 0) {
-                var tmpName = App.pinnedCoins[n];
-                App.pinnedCoins[n] = App.pinnedCoins[n - 1];
-                App.pinnedCoins[n - 1] = tmpName;
+                /// Swap upwards the N card
+                (App.pinnedCoins[n], App.pinnedCoins[n-1]) = (App.pinnedCoins[n-1], App.pinnedCoins[n]);
+                (viewModel.PriceCards[n], viewModel.PriceCards[n-1]) = (viewModel.PriceCards[n-1], viewModel.PriceCards[n]);
+                (viewModel.VolumeCards[n], viewModel.VolumeCards[n-1]) = (viewModel.VolumeCards[n-1], viewModel.VolumeCards[n]);
 
-                /// Save in a temporal variable the first card, and swap
-                var tmpCard = viewModel.PriceCards[n];
-                viewModel.PriceCards[n] = viewModel.PriceCards[n - 1];
-                viewModel.PriceCards[n + 1] = tmpCard;
-
-                tmpCard = viewModel.VolumeCards[n];
-                viewModel.VolumeCards[n] = viewModel.VolumeCards[n - 1];
-                viewModel.VolumeCards[n - 1] = tmpCard;
-
-                //PriceListView.UpdateLayout();
-                //VolumeListView.UpdateLayout();
+                PriceListView.UpdateLayout();
+                VolumeListView.UpdateLayout();
                 //UpdateCard(n);
 
                 /// Update pinnedCoin list
