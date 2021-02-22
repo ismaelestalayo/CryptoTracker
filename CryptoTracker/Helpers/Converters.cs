@@ -1,11 +1,10 @@
-﻿using Windows.UI.Xaml;
-using System;
-using Windows.UI.Xaml.Data;
+﻿using System;
 using System.Globalization;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
 
 namespace CryptoTracker.Helpers {
     static class Converters {
-        public static Visibility InvertVisibility(Visibility value) => value == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
         public static string ShortenDateTime(DateTime date) => date.ToShortDateString();
 
@@ -32,8 +31,32 @@ namespace CryptoTracker.Helpers {
         }
     }
 
+    public class VisibilityInverter : IValueConverter {
+        public object Convert(object value, Type targetType, object param, string language)  => (Visibility)value == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        public object ConvertBack(object value, Type targetType, object param, string language) => (Visibility)value == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+    }
+
+    public class ListCountToVisibilityInvertedConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object param, string language) {
+            return ((int)value) == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object param, string language) {
+            return ((int)value) == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+    public class ListCountToVisibilityConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object param, string language) {
+            return ((int)value) == 0 ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object param, string language) {
+            return ((int)value) == 0 ? Visibility.Collapsed : Visibility.Visible;
+        }
+    }
+
     public class StringFormatConverter : IValueConverter {
-        public object Convert(object value, Type targetType, object parameter, string language) {
+        public object Convert(object value, Type targetType, object param, string language) {
             try {
                 var str = value.ToString();
                 var num = double.Parse(str);
@@ -47,11 +70,11 @@ namespace CryptoTracker.Helpers {
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object param, string language) => throw new NotImplementedException();
     }
 
     public class DateTimeShortener : IValueConverter {
-        public object Convert(object value, Type targetType, object parameter, string language) => ((DateTimeOffset)value).DateTime.ToShortDateString();
-        public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
+        public object Convert(object value, Type targetType, object param, string language) => ((DateTimeOffset)value).DateTime.ToShortDateString();
+        public object ConvertBack(object value, Type targetType, object param, string language) => throw new NotImplementedException();
     }
 }

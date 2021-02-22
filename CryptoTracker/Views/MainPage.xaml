@@ -20,6 +20,7 @@
             x:Key="NavigationViewTopPaneBackground" BackgroundSource="HostBackdrop" 
             TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity="0.9"
             FallbackColor="{ThemeResource SystemChromeMediumLowColor}"/>
+        <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
     </Page.Resources>
     
     <!-- 
@@ -71,12 +72,18 @@
             <!-- FOOTER -->
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
-                    <NavigationViewItem Icon="Find"  Visibility="{x:Bind Path=helpers:Converters.InvertVisibility(CoinAutoSuggestBox.Visibility), Mode=OneWay}"  Tapped="NavView_Search_Tapped"/>
+                    <NavigationViewItem
+                        Icon="Find" Tapped="NavView_Search_Tapped"
+                        Visibility="{x:Bind CoinAutoSuggestBox.Visibility, Mode=OneWay, Converter={StaticResource VisibilityInverter}}"/>
                     <NavigationViewItem>
                         <RelativePanel Margin="-15 0 0 0">
-                            <NavigationViewItem x:Name="SyncIcon" Icon="Sync" Tapped="NavView_Sync_Tapped" Visibility="Visible"/>
-                            <ProgressRing x:Name="SyncLoading" IsActive="True" Height="24" Margin="10" Visibility="{x:Bind Path=helpers:Converters.InvertVisibility(SyncIcon.Visibility), Mode=OneWay}"/>
-
+                            <NavigationViewItem
+                                x:Name="SyncIcon" Icon="Sync"
+                                Tapped="NavView_Sync_Tapped" Visibility="Visible"/>
+                            <ProgressRing
+                                x:Name="SyncLoading" IsActive="True"
+                                Height="24" Margin="10" Width="28"
+                                Visibility="{x:Bind SyncIcon.Visibility, Mode=OneWay, Converter={StaticResource VisibilityInverter}}"/>
                         </RelativePanel>
                     </NavigationViewItem>
 
