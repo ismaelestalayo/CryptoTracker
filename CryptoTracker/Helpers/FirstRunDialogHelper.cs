@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Views;
+﻿using CryptoTracker.Constants;
+using CryptoTracker.Views;
 using System;
 using System.Threading.Tasks;
 
@@ -7,14 +8,13 @@ namespace CryptoTracker.Helpers {
 
         internal static async Task ShowIfAppropriateAsync() {
 
-            var _new = App.localSettings.Values["newUser"]?.ToString();
+            var NewUser = App._LocalSettings.Get<bool>(UserSettingsConstants.IsNewUser);
 
-            if (_new == null) {
+            if (NewUser) {
                 var dialog = new FirstRunDialog();
                 await dialog.ShowAsync();
-                App.localSettings.Values["newUser"] = "false";
+                App._LocalSettings.Set(UserSettingsConstants.IsNewUser, "false");
             }
-
         }
     }
 }

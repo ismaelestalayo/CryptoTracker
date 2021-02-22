@@ -75,7 +75,6 @@ namespace CryptoTracker.Views {
 
         /// #########################################################################################
         /// Add/remove coins from Home
-        // TODO: make static so Top100 can add/remove coins
         internal void AddCoinHome(string crypto) {
             var h = new HomeCard() { Info = new Coin() { Name = crypto } };
             viewModel.PriceCards.Add(h);

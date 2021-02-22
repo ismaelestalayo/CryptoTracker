@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.Constants;
+using CryptoTracker.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -32,8 +33,8 @@ namespace CryptoTracker.APIs {
                 //coinList.Sort((x, y) => x.Symbol.CompareTo(y.Symbol));
 
                 // Save on Local Storage, and save the Date
-                LocalStorageHelper.SaveObject(coins, "coinList");
-                App.localSettings.Values["coinListDate"] = DateTime.Today.ToOADate();
+                LocalStorageHelper.SaveObject(coins, "CoinList");
+                App._LocalSettings.Set(UserSettingsConstants.CoinListDate, DateTime.Today.ToOADate());
 
                 return coins;
             }

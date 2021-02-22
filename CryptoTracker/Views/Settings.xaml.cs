@@ -30,12 +30,12 @@ namespace CryptoTracker {
             version = Package.Current.Id.Version;
             VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
-            ThemeComboBox.PlaceholderText = App.localSettings.Values[UserSettingsConstants.Theme].ToString();
+            ThemeComboBox.PlaceholderText = App._LocalSettings.Get<string>(UserSettingsConstants.Theme);
             FooterLogo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? 
                 new BitmapImage(new Uri("ms-appx:///Assets/Tile-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));
-            
 
-            switch (App.localSettings.Values[UserSettingsConstants.Currency]) {
+            var currency = App._LocalSettings.Get<string>(UserSettingsConstants.Currency);
+            switch (currency) {
                 case "EUR":
                     EUR.IsSelected = true;
                     break;
@@ -64,7 +64,7 @@ namespace CryptoTracker {
                     INR.IsSelected = true;
                     break;
             }
-            CoinComboBox.PlaceholderText = App.localSettings.Values[UserSettingsConstants.Currency].ToString();
+            CoinComboBox.PlaceholderText = currency;
 
             // Show feedback button
             if (Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.IsSupported()) {
@@ -137,7 +137,7 @@ namespace CryptoTracker {
             ComboBox c = sender as ComboBox;
             String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
-            App.localSettings.Values[UserSettingsConstants.Currency] = currency;
+            App._LocalSettings.Set(UserSettingsConstants.Currency, currency);
             App.currency = currency;
             App.currencySymbol = CurrencyHelper.CurrencyToSymbol(currency);
         }
@@ -224,7 +224,7 @@ namespace CryptoTracker {
             ComboBox c = sender as ComboBox;
             var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
-            App.localSettings.Values[UserSettingsConstants.Theme] = theme;
+            App._LocalSettings.Set(UserSettingsConstants.Theme, theme);
             switch (theme) {
                 case "Light":
                     FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));

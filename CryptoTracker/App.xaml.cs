@@ -33,12 +33,10 @@ namespace CryptoTracker {
         internal static string currency       = "EUR";
         internal static string currencySymbol = "€";
 
-        private LocalSettings _LocalSettings = new LocalSettings(); 
+        internal static LocalSettings _LocalSettings = new LocalSettings(); 
 
         internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
-
-        internal static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
             string _theme = _LocalSettings.Get<string>(UserSettingsConstants.Theme);
@@ -144,7 +142,7 @@ namespace CryptoTracker {
                     s += item + "|";
                 }
                 s = s.Remove(s.Length - 1);
-                App.localSettings.Values[UserSettingsConstants.PinnedCoins] = s;
+                App._LocalSettings.Set(UserSettingsConstants.PinnedCoins, s);
             }
         }
 
@@ -154,20 +152,18 @@ namespace CryptoTracker {
         */
         internal async static Task GetCoinList() {
             // check cache before sending an unnecesary request
-            if (localSettings.Values["coinListDate"] != null) {
-                DateTime lastUpdate = DateTime.FromOADate((double)localSettings.Values["coinListDate"]);
-                var days = DateTime.Today.CompareTo(lastUpdate);
+            var date = _LocalSettings.Get<double>(UserSettingsConstants.CoinListDate);
+            
+            DateTime lastUpdate = DateTime.FromOADate((double)date);
+            var days = DateTime.Today.CompareTo(lastUpdate);
 
-				coinList = await LocalStorageHelper.ReadObject<List<CoinBasicInfo>>("coinList");
+			coinList = await LocalStorageHelper.ReadObject<List<CoinBasicInfo>>("CoinList");
 
-				// if empty list OR old cache -> refresh
-				if (coinList.Count == 0 || days > 7) {
-                    coinList = await GitHub.GetAllCoins();
-                }
-            }
-			else {
+			// if empty list OR old cache -> refresh
+			if (coinList.Count == 0 || days > 7) {
                 coinList = await GitHub.GetAllCoins();
             }
+            
         }
 
         
