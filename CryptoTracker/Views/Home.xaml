@@ -126,7 +126,7 @@
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0">
 								<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
 									<Run Text="{x:Bind Info.Price, Mode=OneWay}" d:Text="0"/><!--
-									--><Run Text="{x:Bind Info.Currency}" d:Text="€"/>
+									--><Run Text="{x:Bind Info.Currency, Mode=OneWay}" d:Text="€"/>
 								</TextBlock>
 								<TextBlock
 									Foreground="{x:Bind Info.DiffFG, Mode=OneWay}"
