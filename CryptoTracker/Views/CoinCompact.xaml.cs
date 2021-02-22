@@ -59,8 +59,8 @@ namespace CryptoTracker.Views {
 					break;
             }
 
-			/// Create the 30sec auto-refresh
-			TimeSpan period = TimeSpan.FromSeconds(20);
+			/// Create the auto-refresh timer
+			TimeSpan period = TimeSpan.FromSeconds(30);
 			PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
 				await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
 					TimeRangeButtons_Tapped(null, null);
@@ -68,12 +68,12 @@ namespace CryptoTracker.Views {
 			}, period);
 		}
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e) {
-			PeriodicTimer.Cancel();
-        }
+		private void Page_Unloaded(object sender, RoutedEventArgs e) {
+			PeriodicTimer?.Cancel();
+		}
 
-        /// #########################################################################################
-        private async void UpdateValues() {
+		/// #########################################################################################
+		private async void UpdateValues() {
 			var crypto = vm.Info.Name;
 
 			/// Get current price

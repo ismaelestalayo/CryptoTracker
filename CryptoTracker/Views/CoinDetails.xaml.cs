@@ -42,11 +42,11 @@ namespace CryptoTracker {
             if (animation != null)
                 animation.TryStart(PriceChart, new UIElement[] { BottomCards });
 
-            /// Create the 30sec auto-refresh
+            /// Create the auto-refresh timer
             TimeSpan period = TimeSpan.FromSeconds(30);
             PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-                    if (timeUnit == "minute" && this.Frame.SourcePageType.Name == "CoinDetails")
+                    if (timeUnit == "minute")
                         TimeRangeButtons_Tapped(null, null);
                 });
             }, period);
@@ -91,8 +91,7 @@ namespace CryptoTracker {
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e) {
-            if (PeriodicTimer != null)
-                PeriodicTimer.Cancel();
+            PeriodicTimer?.Cancel();
         }
 
         /// #########################################################################################

@@ -10,6 +10,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
+    Unloaded="Page_Unloaded"
     NavigationCacheMode="Enabled">
 
 	<Page.DataContext>

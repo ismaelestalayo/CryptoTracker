@@ -7,9 +7,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker.Views {
     public sealed partial class Home : Page {
@@ -19,14 +22,32 @@ namespace CryptoTracker.Views {
         private static string timeSpan = "1w";
         private static string timeUnit = "hour";
 
+        /// Timer for auto-refresh
+        private static ThreadPoolTimer PeriodicTimer;
+
         public Home() {
             this.InitializeComponent();
-            UpdateCoinList();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) {
+        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            /// First keep an updated list of coins
+            await App.GetCoinList().ConfigureAwait(false);
+
             InitHome();
             viewModel.PriceCards.CollectionChanged += HomeCoinList_CollectionChanged;
+
+            /// Create the auto-refresh timer
+            TimeSpan period = TimeSpan.FromSeconds(30);
+            PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                    if (timeUnit == "minute")
+                        TimeRangeButtons_Tapped(null, null);
+                });
+            }, period);
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e) {
+            PeriodicTimer?.Cancel();
         }
 
         private void HomeCoinList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
@@ -34,11 +55,6 @@ namespace CryptoTracker.Views {
         }
 
         /// #########################################################################################
-        private async void UpdateCoinList() {
-            /// First keep an updated list of coins
-            await App.GetCoinList();
-        }
-
         private async void InitHome() {
             /// See if there's any change
             var pinned = App.pinnedCoins.ToList();
