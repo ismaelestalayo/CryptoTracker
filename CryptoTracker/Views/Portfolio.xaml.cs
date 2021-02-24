@@ -50,12 +50,6 @@ namespace CryptoTracker {
             vm.CoinsArray = new ObservableCollection<string>(coinsArray);
             vm.Portfolio = RetrievePortfolio();
 
-            //if (ForceRefresh) {
-            //	ForceRefresh = false;
-            //	UpdatePortfolio();
-            //	Portfolio_dg.ItemsSource = Portfolio;
-            //}
-
             UpdatePortfolio();
         }
 
@@ -132,9 +126,8 @@ namespace CryptoTracker {
             await UpdatePortfolioChart();
         }
 
-        /// <summary>
+        /// ###############################################################################################
         /// Update the chart of the historic values of the portfolio
-        /// </summary>
         private async Task UpdatePortfolioChart() {
             var nPurchases = vm.Portfolio.Count;
             if (nPurchases == 0)
@@ -192,6 +185,8 @@ namespace CryptoTracker {
             vm.Chart.PricesMinMax = MinMax;
         }
 
+        /// ###############################################################################################
+        ///  Calculate a purchase's profit and worth live
         internal async Task<PurchaseModel> UpdatePurchaseAsync(PurchaseModel purchase) {
             string crypto = purchase.Crypto;
 
@@ -201,7 +196,7 @@ namespace CryptoTracker {
             var curr = purchase.Current;
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
 
-            // If the user has also filled the invested quantity, we can calculate everything else
+            /// If the user has also filled the invested quantity, we can calculate everything else
             if (purchase.InvestedQty > 0) {
                 double priceBought = (1 / purchase.CryptoQty) * purchase.InvestedQty;
                 priceBought = Math.Round(priceBought, 4);
@@ -215,11 +210,11 @@ namespace CryptoTracker {
                 purchase.Profit = Math.Round(Math.Abs(earningz), 2);
                 purchase.ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
             }
-            
             return purchase;
         }
 
-        // ###############################################################################################
+        /// ###############################################################################################
+        /// A purchase's right click ContextFlyout
         private void GoToCoinPortfolio_Click(object sender, RoutedEventArgs e) {
             var menu = sender as MenuFlyoutItem;
             var item = menu.DataContext as PurchaseModel;
