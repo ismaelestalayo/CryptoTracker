@@ -109,13 +109,13 @@ namespace CryptoTracker.Models {
             get => _diff;
             set {
                 SetProperty(ref _diff, Math.Abs(value)); /// Save the absolute value
-                if (value > 0) {
-                    DiffArrow = "▲";
-                    DiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
-                }
-                else {
+                if (value < 0) {
                     DiffArrow = "▼";
                     DiffFG = (SolidColorBrush)App.Current.Resources["pastelRed"];
+                }
+                else {
+                    DiffArrow = "▲";
+                    DiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
                 }
             }
         }

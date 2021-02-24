@@ -378,7 +378,7 @@
             CloseButtonText="Cancel"
             DefaultButton="Primary"
             Margin="5 0 5 0"
-            d:Visibility="Collapsed">
+            d:Visibility="Visible">
             <controls:UniformGrid
                 Columns="3"
                 Rows="3"
@@ -386,17 +386,14 @@
                 VerticalAlignment="Top">
                 <!-- Row 1 -->
                 <ComboBox
-                    Header="Crypto"
+                    Header="Crypto" IsEditable="True"
                     ItemsSource="{x:Bind vm.CoinsArray, Mode=OneWay}"
-                    IsEditable="True"
                     LostFocus="DialogBtn_LostFocus"
-                    Margin="0 0 5 0"
-                    PlaceholderText="Coin"
+                    Margin="0 0 5 0" PlaceholderText="Coin"
                     SelectedValue="{x:Bind vm.NewPurchase.Crypto, Mode=TwoWay}"
                     Width="130"/>
                 <muxc:NumberBox
-                    AcceptsExpression="True"
-                    Header="Amount"
+                    AcceptsExpression="True" Header="Amount"
                     LostFocus="DialogBtn_LostFocus"
                     Margin="0 0 5 0" Minimum="0"
                     PlaceholderText="0"

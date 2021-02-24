@@ -197,7 +197,7 @@ namespace CryptoTracker {
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
 
             /// If the user has also filled the invested quantity, we can calculate everything else
-            if (purchase.InvestedQty > 0) {
+            if (purchase.InvestedQty >= 0) {
                 double priceBought = (1 / purchase.CryptoQty) * purchase.InvestedQty;
                 priceBought = Math.Round(priceBought, 4);
 
@@ -210,6 +210,9 @@ namespace CryptoTracker {
                 purchase.Profit = Math.Round(Math.Abs(earningz), 2);
                 purchase.ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
             }
+            if (purchase.InvestedQty == 0)
+                purchase.Delta = 0;
+
             return purchase;
         }
 
@@ -276,7 +279,7 @@ namespace CryptoTracker {
         }
 
         private void PurchaseDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
-            if (string.IsNullOrEmpty(vm.NewPurchase.Crypto) || vm.NewPurchase.CryptoQty <= 0 || vm.NewPurchase.InvestedQty <= 0) {
+            if (string.IsNullOrEmpty(vm.NewPurchase.Crypto) || vm.NewPurchase.CryptoQty <= 0 || vm.NewPurchase.InvestedQty < 0) {
                 args.Cancel = true;
                 new MessageDialog("You must fill Crypto, Amount and Invested fields.").ShowAsync();
             }
