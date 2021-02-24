@@ -31,9 +31,8 @@ namespace CryptoTracker {
             // Clear the current tile
             //TileUpdateManager.CreateTileUpdaterForApplication().Clear();            
 
-            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop") {
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
                 CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            }
 
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();

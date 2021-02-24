@@ -97,6 +97,7 @@ namespace CryptoTracker {
 		protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
 
+            // Do not repeat app initialization when the Window already has content
             if (rootFrame == null) {
                 rootFrame = new Frame();
 
@@ -110,9 +111,11 @@ namespace CryptoTracker {
             }
 
             if (e.PrelaunchActivated == false) {
-                if (rootFrame.Content == null) {
+                Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
+
+                // Navigate to the root page if one isn't loaded already
+                if (rootFrame.Content == null)
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
 
                 ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size(900, 550));
                 Window.Current.Activate();
