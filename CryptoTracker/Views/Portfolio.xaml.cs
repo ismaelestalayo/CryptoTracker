@@ -6,7 +6,6 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -227,14 +226,23 @@ namespace CryptoTracker {
             this.Frame.Navigate(typeof(CoinDetails), item.Crypto);
         }
 
+        private void DuplicatePurchase_Click(object sender, RoutedEventArgs e) {
+            var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
+            var i = vm.Portfolio.IndexOf(purchase);
+            vm.Portfolio.Insert(i, purchase);
+            /// Update the page and save the new portfolio
+            UpdatePortfolio();
+            LocalStorageHelper.SaveObject(vm.Portfolio, PortfolioKey);
+        }
+
         private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
             var menu = sender as MenuFlyoutItem;
             var item = menu.DataContext as PurchaseModel;
             var items = Portfolio_dg.ItemsSource.Cast<PurchaseModel>().ToList();
             var index = items.IndexOf(item);
             vm.Portfolio.RemoveAt(index);
+            /// Update the page and save the new portfolio
             UpdatePortfolio();
-            
             LocalStorageHelper.SaveObject(vm.Portfolio, PortfolioKey);
         }
 
@@ -292,8 +300,8 @@ namespace CryptoTracker {
                     vm.Portfolio.RemoveAt(EditingPurchaseId);
                     vm.Portfolio.Insert(EditingPurchaseId, vm.NewPurchase);
                 }
-                
-                // Update and save
+
+                /// Update the page and save the new portfolio
                 UpdatePortfolio();
                 LocalStorageHelper.SaveObject(vm.Portfolio, PortfolioKey);
             }

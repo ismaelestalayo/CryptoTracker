@@ -211,6 +211,11 @@
                                             <SymbolIcon Symbol="Edit"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Duplicate" Click="DuplicatePurchase_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="Copy"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
                                         <MenuFlyoutItem.Icon>
                                             <SymbolIcon Symbol="Delete"/>
