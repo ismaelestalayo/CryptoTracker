@@ -18,7 +18,7 @@ namespace CryptoTracker.Constants {
 			{ Theme, "Windows" },
 			{ Currency, "EUR" },
 			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
-			{ CoinListDate,  0 },
+			{ CoinListDate,  (double)0 },
 			{ IsNewUser, true }
 		};
 	}
