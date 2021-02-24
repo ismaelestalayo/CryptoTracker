@@ -17,15 +17,5 @@ namespace CryptoTracker.ViewModels {
 			var tuple = new Tuple<string, string, string>(severity, title, message);
 			Messenger.Send(new NotificationMessage(tuple));
 		}
-
-		internal void Test() {
-			Messenger.Send(new PortfolioMessage(PurchaseList));
-		}
 	}
-
-	public sealed class PortfolioMessage : ValueChangedMessage<ObservableCollection<PurchaseModel>> {
-		public PortfolioMessage(ObservableCollection<PurchaseModel> portfolio) : base(portfolio) {
-		}
-	}
-
 }

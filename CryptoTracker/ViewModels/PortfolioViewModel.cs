@@ -1,24 +1,11 @@
 ﻿using CryptoTracker.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Messaging;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.ViewModels {
     public class PortfolioViewModel : ObservableRecipient {
 
-		public PortfolioViewModel() {
-			Messenger.Register<PortfolioViewModel, PortfolioMessage>(this, (r, m) => {
-				Portfolio = m.Value;
-			});
-		}
-
-		//protected override void OnActivated() {
-		//	Messenger.Register<PortfolioViewModel, PortfolioMessage>(this, (r, m) => {
-		//		PurchaseList = m.Value;
-		//	});
-		//}
+		public PortfolioViewModel() {  }
 
         private ObservableCollection<PurchaseModel> portfolio = new ObservableCollection<PurchaseModel>();
 		public ObservableCollection<PurchaseModel> Portfolio {
