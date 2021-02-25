@@ -3,7 +3,6 @@ using CryptoTracker.Helpers;
 using CryptoTracker.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.System.Threading;
@@ -23,22 +22,12 @@ namespace CryptoTracker.Views {
         /// Timer for auto-refresh
         private static ThreadPoolTimer PeriodicTimer;
 
-        private bool AppIsActive = false;
 
         public Home() {
             this.InitializeComponent();
-            Window.Current.VisibilityChanged += WindowVisibilityChangedEventHandler;
-        }
-
-        void WindowVisibilityChangedEventHandler(object sender, VisibilityChangedEventArgs e) {
-            // Perform operations that should take place when the application becomes visible rather than
-            // when it is prelaunched, such as building a what's new feed
-            AppIsActive = e.Visible;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            if (!AppIsActive)
-                return;
             /// First keep an updated list of coins
             await App.GetCoinList();
 
