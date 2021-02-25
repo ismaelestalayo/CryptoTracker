@@ -91,7 +91,7 @@
 		# Top 100 List View # -->
         <ScrollViewer Grid.Row="1"
 			HorizontalScrollBarVisibility="Disabled"
-			VerticalScrollBarVisibility="Hidden"
+			VerticalScrollBarVisibility="Auto"
             MaxWidth="600">
 			<ListView x:Name="top100ListView"
 				SelectionMode="None"

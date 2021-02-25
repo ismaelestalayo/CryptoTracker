@@ -24,7 +24,7 @@
         <BitmapImage x:Key="DefaultBitmapImage" UriSource="ms-appx:///Assets/Icons/iconNULL.png"/>
     </Page.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="5 5 0 0">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="5 5 0 0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

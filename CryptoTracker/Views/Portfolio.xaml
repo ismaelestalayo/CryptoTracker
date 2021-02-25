@@ -116,7 +116,7 @@
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0"
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0"
             Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}">
             <controls:DataGrid
                 x:Name="Portfolio_dg"
