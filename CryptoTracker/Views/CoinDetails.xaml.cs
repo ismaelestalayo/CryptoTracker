@@ -68,7 +68,7 @@ namespace CryptoTracker {
                         vm.Chart = ((CoinCompactViewModel)e.Parameter).Chart;
                         vm.Coin = ((CoinCompactViewModel)e.Parameter).Info;
                         timeSpan = vm.Chart.TimeSpan;
-                        (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser(timeSpan);
+                        (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
                         UpdateCoin();
                         break;
                     default:
@@ -197,7 +197,7 @@ namespace CryptoTracker {
             if (sender != null)
                 timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
             
-            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser(timeSpan);
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
             vm.Chart.TimeSpan = timeSpan;
 
             UpdatePage();

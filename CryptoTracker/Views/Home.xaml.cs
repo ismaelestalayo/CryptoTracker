@@ -218,7 +218,7 @@ namespace CryptoTracker.Views {
 
         private async void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             timeSpan = ((UserControls.TimeRangeRadioButtons)sender).TimeSpan;
-            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser(timeSpan);
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
 
             await UpdateAllCards();
         }

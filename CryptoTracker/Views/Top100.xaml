@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
 	<Page.DataContext>
-		<viewModels:Top100ViewModel x:Name="viewModel"/>
+		<viewModels:Top100ViewModel x:Name="vm"/>
 	</Page.DataContext>
 
 	<Page.Resources>
@@ -51,16 +51,16 @@
 				</Grid.Resources>
 
 				<TextBlock Grid.Column="0">
-					<Run Text="{x:Bind viewModel.GlobalStats.BtcDominance, Mode=OneWay}"
+					<Run Text="{x:Bind vm.GlobalStats.BtcDominance, Mode=OneWay}"
 						d:Text="100"/><Run Text="%"/>
 				</TextBlock>
 				<TextBlock Grid.Column="1" d:Text="0B€">
-					<Run	Text="{x:Bind viewModel.GlobalStats.TotalVolume, Mode=OneWay}"/><!--
-					--><Run Text="{x:Bind viewModel.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
+					<Run	Text="{x:Bind vm.GlobalStats.TotalVolume, Mode=OneWay}"/><!--
+					--><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
 				</TextBlock>
 				<TextBlock Grid.Column="2" d:Text="0B€">
-					<Run	Text="{x:Bind viewModel.GlobalStats.TotalMarketCap, Mode=OneWay}"/><!--
-					--><Run Text="{x:Bind viewModel.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
+					<Run	Text="{x:Bind vm.GlobalStats.TotalMarketCap, Mode=OneWay}"/><!--
+					--><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
 				</TextBlock>
 			</Grid>
 
@@ -97,7 +97,7 @@
 				SelectionMode="None"
 				IsItemClickEnabled="True"
 				ItemClick="ListView_Click"
-				ItemsSource="{x:Bind viewModel.Top100cards, Mode=OneWay}">
+				ItemsSource="{x:Bind vm.Top100cards, Mode=OneWay}">
                 <ListView.ItemTemplate>
 					<DataTemplate x:DataType="models:Top100card">
                         <Grid x:Name="listView_Element"

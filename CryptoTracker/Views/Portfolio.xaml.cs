@@ -320,7 +320,7 @@ namespace CryptoTracker {
             if (sender != null)
                 timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
 
-            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser(timeSpan);
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
             UpdatePortfolio();
         }
 

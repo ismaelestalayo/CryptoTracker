@@ -5,9 +5,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace CryptoTracker.Views {
 
-	// #########################################################################################
-	// #########################################################################################
-	// #########################################################################################
 	public sealed partial class Top100 : Page {
 
         public Top100() {
@@ -17,10 +14,10 @@ namespace CryptoTracker.Views {
 
         // #########################################################################################
         private async void InitPage() {
-            viewModel.GlobalStats = await CoinGecko.GetGlobalStats();
+            vm.GlobalStats = await CoinGecko.GetGlobalStats();
 
             var topCoins = await CryptoCompare.GetTop100();
-            viewModel.Top100cards = topCoins;
+            vm.Top100cards = topCoins;
 			//topCoins.Sort((x, y) => y.MarketCapRaw.CompareTo(x.MarketCapRaw));
         }
 
@@ -38,11 +35,9 @@ namespace CryptoTracker.Views {
             var c = card.CoinInfo.Name;
             if (!App.pinnedCoins.Contains(c)) {
                 App.pinnedCoins.Add(c);
-                //Home.AddCoinHome(c);
                 inAppNotification.Show(c + " pinned to home.", 2000);
             } else {
                 App.pinnedCoins.Remove(c);
-                //Home.RemoveCoinHome(c);
                 inAppNotification.Show(c + " unpinned from home.", 2000);
             }
             card.CoinInfo.FavIcon = card.CoinInfo.FavIcon.Equals("\uEB51") ? "\uEB52" : "\uEB51";

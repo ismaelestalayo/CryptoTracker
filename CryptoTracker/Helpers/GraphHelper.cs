@@ -32,8 +32,8 @@ namespace CryptoTracker.Helpers {
         /// <summary>
         /// Parse TimeSpan from RadioButtons to values for GetHistoric
         /// </summary>
-        internal static (string timeUnit, int limit, int aggregate) TimeSpanParser(string timeSpan) {
-            return new Dictionary<string, (string timeUnit, int limit, int aggregate)>(){
+        internal static readonly Dictionary<string, (string, int, int)> TimeSpanParser =
+            new Dictionary<string, (string, int, int)>() {
                 { "1h",  ("minute",   60, 1) }, // 1 h ----------->   60 mins
                 { "4h",  ("minute",  240, 1) }, // 4 h = 60 * 4 -->  240 mins
                 { "1d",  ("minute", 1440, 5) }, // 1 d = 60 * 24 -> 1440 mins (300 * 5)
@@ -43,8 +43,7 @@ namespace CryptoTracker.Helpers {
                 { "3m",  ("day",      93, 1) }, // 3 m = 31 * 3 -->   93 days
                 { "1y",  ("day",     365, 1) }, // 1 y ----------->  365 days
                 { "all", ("day",       0, 1) }
-            }[timeSpan];
-        }
+            };
 
         /// <summary>
         /// Adjust a chart's axis 

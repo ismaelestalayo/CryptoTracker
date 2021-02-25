@@ -1,7 +1,6 @@
 ﻿using CryptoTracker.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
-using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 using System;
 using System.Collections.ObjectModel;
 
