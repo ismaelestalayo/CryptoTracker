@@ -59,28 +59,7 @@ namespace CryptoTracker {
             }
 
             currency = _currency ;
-            switch (_currency ) {
-                default:
-                case "EUR":
-                    currencySymbol = "€";
-                    break;
-                case "GBP":
-                    currencySymbol = "£";
-                    break;
-                case "USD":
-                case "CAD":
-                case "AUD":
-                case "MXN":
-                    currencySymbol = "$";
-                    break;
-                case "CNY":
-                case "JPY":
-                    currencySymbol = "¥";
-                    break;
-                case "INR":
-                    currencySymbol = "₹";
-                    break;
-            }
+            currencySymbol = CurrencyHelper.GetCurrencySymbol(_currency);
 
             /// Register services
             Ioc.Default.ConfigureServices(

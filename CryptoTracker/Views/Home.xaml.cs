@@ -113,6 +113,7 @@ namespace CryptoTracker.Views {
         private async Task UpdateCard(int i) {
             try {
                 string crypto = App.pinnedCoins[i];
+                vm.PriceCards[i].Info.Currency = App.currencySymbol;
 
                 /// Get price
                 vm.PriceCards[i].Info.Price = await CryptoCompare.GetPriceAsync(crypto);

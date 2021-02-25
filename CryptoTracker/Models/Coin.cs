@@ -18,9 +18,14 @@ namespace CryptoTracker.Models {
             }
         }
         internal string FullName { get; set; } = "NULL";
-        internal string Currency { get; set; } = App.currencySymbol;
         internal string Logo { get; set; } = "/Assets/Icons/iconNULL.png";
         internal bool IsFav { get; set; } = false;
+
+        private string currency = App.currencySymbol;
+        internal string Currency {
+            get => currency;
+            set => SetProperty(ref currency, value);
+        }
 
         /// <summary>
         /// To indicate that data is loading, change the opacity of the charts

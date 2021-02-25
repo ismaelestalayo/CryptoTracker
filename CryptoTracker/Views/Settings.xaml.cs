@@ -126,7 +126,6 @@ namespace CryptoTracker {
                 default:
                     break;
             }
-
             // There was an error with the request, or the customer chose not to
             // rate or review the app.
             return false;
@@ -135,11 +134,11 @@ namespace CryptoTracker {
         // ###############################################################################################
         private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
             ComboBox c = sender as ComboBox;
-            String currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
+            var currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
             App._LocalSettings.Set(UserSettingsConstants.Currency, currency);
             App.currency = currency;
-            App.currencySymbol = CurrencyHelper.CurrencyToSymbol(currency);
+            App.currencySymbol = CurrencyHelper.GetCurrencySymbol(currency);
         }
 
         private async void UploadPortfolio_Click(object sender, RoutedEventArgs e) {            

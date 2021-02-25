@@ -1,37 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CryptoTracker.Helpers {
     class CurrencyHelper {
-
-        public static string CurrencyToSymbol(string currency) {
-
-            switch (currency) {
-                case "EUR":
-                    return "€";
-                case "GBP":
-                    return "£";
-                case "USD":
-                case "CAD":
-                case "AUD":
-                case "MXN":
-                    return "$";
-                case "CNY":
-                case "JPY":
-                    return "¥";
-                case "INR":
-                    return "₹";
-
-                case "BTC":
-                    return "Ƀ";
-                case "ETH":
-                    return "Ξ";
-                case "LTC":
-                    return "Ł";
-
-
-                default:
-                    return "ERR";
-            }
+        internal static string GetCurrencySymbol(string currency) {
+            string symbol;
+            return CurrencyToSymbol.TryGetValue(currency, out symbol) ? symbol : "€";
         }
+
+        private static readonly Dictionary<string, string> CurrencyToSymbol = new Dictionary<string, string>() {
+            { "EUR",  "€" },
+            { "GBP",  "$" },
+            { "USD",  "$" },
+            { "CAD",  "$" },
+            { "AUD",  "$" },
+            { "MXN",  "$" },
+            { "CNY",  "¥" },
+            { "JPY",  "¥" },
+            { "INR",  "₹" },
+        };
     }
 }
