@@ -15,8 +15,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 using Windows.UI;
+using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -102,6 +102,7 @@ namespace CryptoTracker {
             AppCenter.Start("37e61258-8639-47d6-9f6a-d47d54cd8ad5", typeof(Analytics), typeof(Crashes));
 #endif
             }
+            SetJumpList();
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
@@ -113,10 +114,34 @@ namespace CryptoTracker {
             deferral.Complete();
         }
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e) {
-            Analytics.TrackEvent("UNHANDLED1: " + e.Message);
+            Analytics.TrackEvent("UNHANDLED-APP: " + e.Message);
         }
 
         // ###############################################################################################
+        /// Set the JumpList of the app
+        private async Task SetJumpList() {
+            if (!JumpList.IsSupported())
+                return;
+
+            var jumpList = await JumpList.LoadCurrentAsync();
+            jumpList.Items.Clear();
+
+            JumpListItem taskItem;
+            taskItem = JumpListItem.CreateWithArguments("/Portfolio", "Portfolio");
+            taskItem.Description = "Check your crypto-portfolio.";
+            taskItem.DisplayName = "Portfolio";
+            taskItem.Logo = new Uri("ms-appx:///Assets/Icons/Portfolio.png");
+            jumpList.Items.Add(taskItem);
+
+            taskItem = JumpListItem.CreateWithArguments("/News", "News");
+            taskItem.Description = "See the latest news.";
+            taskItem.DisplayName = "News";
+            taskItem.Logo = new Uri("ms-appx:///Assets/Icons/News.png");
+            jumpList.Items.Add(taskItem);
+
+            await jumpList.SaveAsync();
+        }
+
         internal static void UpdatePinnedCoins() {
             if (App.pinnedCoins.Count > 0) { 
                 string s = "";

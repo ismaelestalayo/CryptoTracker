@@ -6,16 +6,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 namespace CryptoTracker {
     public sealed partial class MainPage : Page {
@@ -60,6 +63,21 @@ namespace CryptoTracker {
             // Extend acrylic
             ExtendAcrylicIntoTitleBar();
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            
+            var param = e.Parameter;
+            switch (param) {
+                case "/Portfolio":
+                    NavView.SelectedItem = NavView.MenuItems[3];
+                    break;
+                default:
+                    NavView.SelectedItem = NavView.MenuItems[0];
+                    break;
+            }
+        }
+
+        
 
         private void ColorValuesChanged(UISettings sender, object args) {
             if ((App._LocalSettings.Get<string>(UserSettingsConstants.Theme) == "Windows")) {
@@ -123,11 +141,6 @@ namespace CryptoTracker {
 
         /// #########################################################################################
         ///  Navigation View
-        private void NavView_Loaded(object sender, RoutedEventArgs e) {
-            /// set the initial SelectedItem 
-            NavView.SelectedItem = NavView.MenuItems[0];
-        }
-
         private void NavView_Sync_Tapped(object sender, TappedRoutedEventArgs e) {
             UpdateButton_Click(sender, e);
         }

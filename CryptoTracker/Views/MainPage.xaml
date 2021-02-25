@@ -8,7 +8,6 @@
     xmlns:helpers="using:CryptoTracker.Helpers"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:viewModels="using:CryptoTracker.ViewModels"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -35,14 +34,19 @@
             x:Name="NavView" Background="{ThemeResource SystemChromeMediumColor}" 
             Grid.RowSpan="2" OverflowLabelMode="NoLabel"
             IsBackButtonVisible="Collapsed" PaneDisplayMode="Top"
-            Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked"
+            ItemInvoked="NavView_ItemInvoked"
             SelectionChanged="NavView_SelectionChanged">
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Home"         Content="Home"      Tag="home"/>
-                <NavigationViewItem Icon="AllApps"      Content="Top 100"   Tag="top"/>
-                <NavigationViewItem Icon="PreviewLink"  Content="News"      Tag="news"/>
-                <NavigationViewItem Icon="Contact"      Content="Portfolio" Tag="portfolio"/>
+                <NavigationViewItem Icon="Home" Content="Home" Tag="home" FontWeight="Light"/>
+                <NavigationViewItem Icon="AllApps" Content="Top 100" Tag="top" FontWeight="Light"/>
+                <NavigationViewItem Icon="PreviewLink"  Content="News" Tag="news" FontWeight="Light"/>
+                <NavigationViewItem Content="Portfolio" Tag="portfolio" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <!--<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEB4E;" />-->
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEAFC;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <!-- SEARCH -->

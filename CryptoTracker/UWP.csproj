@@ -223,6 +223,8 @@
     <Content Include="Assets\Icons\iconXMR.png" />
     <Content Include="Assets\Icons\iconXRP.png" />
     <Content Include="Assets\Icons\iconZRX.png" />
+    <Content Include="Assets\Icons\News.png" />
+    <Content Include="Assets\Icons\Portfolio.png" />
     <Content Include="Assets\stockPrices.png" />
     <Content Include="Assets\Tile-D.png" />
     <Content Include="Assets\Tile-L.png" />
