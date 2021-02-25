@@ -188,7 +188,7 @@
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0">
             <controls:DataGrid
                 x:Name="Portfolio_dg"
                 AutoGenerateColumns="False" BorderThickness="0"

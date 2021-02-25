@@ -57,7 +57,7 @@
 
         <!-- 
         ################################################################################################### -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" >
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
             <ListView x:Name="top100ListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_Click">
                 <ListView.ItemTemplate>
                     <DataTemplate>

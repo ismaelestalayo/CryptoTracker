@@ -14,33 +14,32 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
                 <Image x:Name="logo" Source="/Assets/AppIcon-D.png" Width="35" Height="35" Margin="0 0 10 0"/>
-                <TextBlock x:Name="Title" VerticalAlignment="Center" Text="Welcome to CryptoTracker X.X.X" FontSize="22"/>
+                <TextBlock x:Name="Title" VerticalAlignment="Center" Text="Welcome to CryptoTracker X.X.X" FontSize="22" FontWeight="SemiBold"/>
             </StackPanel>
 
-            <TextBlock TextWrapping="WrapWholeWords">
+            <TextBlock
+                FontSize="16" FontWeight="SemiBold"
+                TextWrapping="WrapWholeWords"
+                CharacterSpacing="15">
                 <Run Text="New in this version: &#x1F680; &#x0a;"/>
                 
-                <Run FontWeight="ExtraLight"
-                     Text="• Now supports up to 500 cryptos.
-					 &#x0a; • You can now sort your purchases.
-					 &#x0a; • Improved reliability and speed.
-					 &#x0a; • Top100 is correctly sorted by MarketCap.
-					 &#x0a; • Bug fixes.
+                <Run FontWeight="Light"
+                     Text="• Scrollbars visible for better accessibility.
                      "/> 
                 <LineBreak/>
+                <LineBreak/>
+                
+                <Run FontWeight="Light">
+                    I'm working on a big v6.0 update that will launch in a few months,
+                    so send me an email with any feature request (and if you want to know
+                    what's coming, keep an eye on my Twitter.
+                </Run> <LineBreak/>
                 
                 <LineBreak/>
-                <Run FontWeight="ExtraLight"
+                <Run FontWeight="Light"
                      Text="Thanks for installing CryptoTracker.
-                     &#x0a;Made with 🖤 by Ismael."/> <LineBreak/>
+                     &#x0a; Made with 🖤 by Ismael."/> <LineBreak/>
                 
-                <LineBreak/>
-                <Run FontWeight="ExtraLight" FontStyle="Italic">
-                    For bugs or suggestions, be sure to reach me through
-                    email, Twitter or the Windows Store (contact on the settings page).
-                </Run>
-                
-                <LineBreak/>
                 <LineBreak/>
                 <Hyperlink Foreground="Gray" NavigateUri="https://ismaelestalayo.com/privacy">
                     Privacy Policy

@@ -28,7 +28,7 @@
 
     <!-- 
     #################################################################################################### -->
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0 0 0 5">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 0 0 5">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
