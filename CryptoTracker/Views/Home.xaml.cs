@@ -33,7 +33,7 @@ namespace CryptoTracker.Views {
         void WindowVisibilityChangedEventHandler(object sender, VisibilityChangedEventArgs e) {
             // Perform operations that should take place when the application becomes visible rather than
             // when it is prelaunched, such as building a what's new feed
-            AppIsActive = true;
+            AppIsActive = e.Visible;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
@@ -43,7 +43,6 @@ namespace CryptoTracker.Views {
             await App.GetCoinList();
 
             InitHome();
-            viewModel.PriceCards.CollectionChanged += HomeCoinList_CollectionChanged;
 
             /// Create the auto-refresh timer
             TimeSpan period = TimeSpan.FromSeconds(30);
@@ -59,20 +58,16 @@ namespace CryptoTracker.Views {
             PeriodicTimer?.Cancel();
         }
 
-        private void HomeCoinList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
-            EmptyPageWarning.Visibility = (((Collection<HomeCard>)sender).Count > 0) ? Visibility.Collapsed : Visibility.Visible;
-        }
-
         /// #########################################################################################
         private async void InitHome() {
             /// See if there's any change
             var pinned = App.pinnedCoins.ToList();
-            var current = viewModel.PriceCards.Select(x => x.Info.Name).ToList();
+            var current = vm.PriceCards.Select(x => x.Info.Name).ToList();
 
             // TODO: dont clear cards that haven't changed
             if(!pinned.SequenceEqual(current)) {
-                viewModel.PriceCards.Clear();
-                viewModel.VolumeCards.Clear();
+                vm.PriceCards.Clear();
+                vm.VolumeCards.Clear();
                 foreach (var coin in App.pinnedCoins)
                     AddCoinHome(coin);
             }
@@ -85,8 +80,8 @@ namespace CryptoTracker.Views {
         /// Add/remove coins from Home
         internal void AddCoinHome(string crypto) {
             var h = new HomeCard() { Info = new Coin() { Name = crypto } };
-            viewModel.PriceCards.Add(h);
-            viewModel.VolumeCards.Add(h);
+            vm.PriceCards.Add(h);
+            vm.VolumeCards.Add(h);
 
             /// Update pinnedCoin list
             App.UpdatePinnedCoins();
@@ -97,8 +92,8 @@ namespace CryptoTracker.Views {
                 var n = App.pinnedCoins.IndexOf(crypto);
 
                 App.pinnedCoins.RemoveAt(n);
-                viewModel.PriceCards.RemoveAt(n);
-                viewModel.VolumeCards.RemoveAt(n);
+                vm.PriceCards.RemoveAt(n);
+                vm.VolumeCards.RemoveAt(n);
 
                 /// Update pinnedCoin list
                 App.UpdatePinnedCoins();
@@ -108,10 +103,10 @@ namespace CryptoTracker.Views {
         /// #########################################################################################
         ///  Update all cards
         internal async Task UpdateAllCards() {
-            foreach (var homeCard in viewModel.PriceCards)
+            foreach (var homeCard in vm.PriceCards)
                 homeCard.Info.IsLoading = true;
             
-            for (int i = 0; i < viewModel.PriceCards.Count; i++)
+            for (int i = 0; i < vm.PriceCards.Count; i++)
                 await UpdateCard(i);
         }
 
@@ -120,16 +115,16 @@ namespace CryptoTracker.Views {
                 string crypto = App.pinnedCoins[i];
 
                 /// Get price
-                viewModel.PriceCards[i].Info.Price = await CryptoCompare.GetPriceAsync(crypto);
+                vm.PriceCards[i].Info.Price = await CryptoCompare.GetPriceAsync(crypto);
 
                 /// Save the current timeSpan for navigating to another page
-                viewModel.PriceCards[i].Chart.TimeSpan = timeSpan;
+                vm.PriceCards[i].Chart.TimeSpan = timeSpan;
 
                 /// Colors
-                var brush = viewModel.PriceCards[i].Chart.ChartStroke;
+                var brush = vm.PriceCards[i].Chart.ChartStroke;
                 if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
                     brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
-                viewModel.PriceCards[i].Chart.ChartStroke = brush;
+                vm.PriceCards[i].Chart.ChartStroke = brush;
 
                 /// Get Historic and create List of ChartData for the chart
                 var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
@@ -141,31 +136,31 @@ namespace CryptoTracker.Views {
                         Volume = h.volumefrom
                     });
                 }
-                viewModel.PriceCards[i].Chart.ChartData = chartData;
-                viewModel.VolumeCards[i].Chart.ChartData = chartData;
+                vm.PriceCards[i].Chart.ChartData = chartData;
+                vm.VolumeCards[i].Chart.ChartData = chartData;
                 var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
-                viewModel.PriceCards[i].Chart.LabelFormat = temp.LabelFormat;
-                viewModel.PriceCards[i].Chart.Minimum = temp.Minimum;
-                viewModel.PriceCards[i].Chart.MajorStepUnit = temp.MajorStepUnit;
-                viewModel.PriceCards[i].Chart.MajorStep = temp.MajorStep;
+                vm.PriceCards[i].Chart.LabelFormat = temp.LabelFormat;
+                vm.PriceCards[i].Chart.Minimum = temp.Minimum;
+                vm.PriceCards[i].Chart.MajorStepUnit = temp.MajorStepUnit;
+                vm.PriceCards[i].Chart.MajorStep = temp.MajorStep;
 
                 /// Calculate min-max to adjust axis
                 var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-                viewModel.PriceCards[i].Chart.PricesMinMax = MinMax;
+                vm.PriceCards[i].Chart.PricesMinMax = MinMax;
 
                 /// Calculate the price difference
                 double oldestPrice = histo[0].Average;
                 double newestPrice = histo[histo.Count - 1].Average;
                 double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
-                viewModel.PriceCards[i].Info.Diff = diff;
+                vm.PriceCards[i].Info.Diff = diff;
 
                 /// Sum total volume from historic
                 double total = 0;
                 histo.ForEach(x => total += x.volumeto);
-                viewModel.VolumeCards[i].Info.Volume = NumberHelper.AddUnitPrefix(total) + App.currencySymbol;
+                vm.VolumeCards[i].Info.Volume = NumberHelper.AddUnitPrefix(total) + App.currencySymbol;
 
                 /// Show that loading is done
-                viewModel.PriceCards[i].Info.IsLoading = false;
+                vm.PriceCards[i].Info.IsLoading = false;
             } catch (Exception) {  }
             
         }
@@ -196,11 +191,11 @@ namespace CryptoTracker.Views {
             string crypto = ((HomeCard)((FrameworkElement)sender).DataContext).Info.Name;
             int n = App.pinnedCoins.IndexOf(crypto);
 
-            if(n < viewModel.PriceCards.Count - 1) {
+            if(n < vm.PriceCards.Count - 1) {
                 /// Swap downwards the N card
                 (App.pinnedCoins[n + 1], App.pinnedCoins[n]) = (App.pinnedCoins[n], App.pinnedCoins[n + 1]);
-                (viewModel.PriceCards[n + 1], viewModel.PriceCards[n]) = (viewModel.PriceCards[n], viewModel.PriceCards[n + 1]);
-                (viewModel.VolumeCards[n + 1], viewModel.VolumeCards[n]) = (viewModel.VolumeCards[n], viewModel.VolumeCards[n + 1]);
+                (vm.PriceCards[n + 1], vm.PriceCards[n]) = (vm.PriceCards[n], vm.PriceCards[n + 1]);
+                (vm.VolumeCards[n + 1], vm.VolumeCards[n]) = (vm.VolumeCards[n], vm.VolumeCards[n + 1]);
 
                 /// Update pinnedCoin list
                 App.UpdatePinnedCoins();
@@ -213,8 +208,8 @@ namespace CryptoTracker.Views {
             if (n != 0) {
                 /// Swap upwards the N card
                 (App.pinnedCoins[n], App.pinnedCoins[n-1]) = (App.pinnedCoins[n-1], App.pinnedCoins[n]);
-                (viewModel.PriceCards[n], viewModel.PriceCards[n-1]) = (viewModel.PriceCards[n-1], viewModel.PriceCards[n]);
-                (viewModel.VolumeCards[n], viewModel.VolumeCards[n-1]) = (viewModel.VolumeCards[n-1], viewModel.VolumeCards[n]);
+                (vm.PriceCards[n], vm.PriceCards[n-1]) = (vm.PriceCards[n-1], vm.PriceCards[n]);
+                (vm.VolumeCards[n], vm.VolumeCards[n-1]) = (vm.VolumeCards[n-1], vm.VolumeCards[n]);
 
                 /// Update pinnedCoin list
                 App.UpdatePinnedCoins();

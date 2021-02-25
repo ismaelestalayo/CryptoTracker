@@ -8,14 +8,21 @@
     xmlns:local="using:CryptoTracker.UserControls"
     xmlns:viewModels="using:CryptoTracker.ViewModels"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:helpers="using:CryptoTracker.Helpers"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded"
     NavigationCacheMode="Enabled">
 
 	<Page.DataContext>
-		<viewModels:HomeViewModel x:Name="viewModel"/>
+		<viewModels:HomeViewModel x:Name="vm"/>
 	</Page.DataContext>
+
+    <Page.Resources>
+        <helpers:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
+        <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
+        <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
+    </Page.Resources>
 
 	<!-- 
     #################################################################################################### -->
@@ -64,7 +71,7 @@
             ############################################# PRICE LIST VIEW ######################################
             #################################################################################################### -->
             <ListView x:Name="PriceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
-					  ItemsSource="{x:Bind viewModel.PriceCards, Mode=OneWay}">
+					  ItemsSource="{x:Bind vm.PriceCards, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HomeCard">
                         <Grid x:Name="PriceListView_Element"
@@ -161,7 +168,7 @@
             ####################################################### VOLUME LIST VIEW ##################################################
             ###################################################a######################################################################## -->
             <ListView x:Name="VolumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
-                      Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind viewModel.VolumeCards, Mode=OneWay}">
+                      Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind vm.VolumeCards, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HomeCard">
                         <Grid x:Name="VolumeListView_Element"
@@ -226,11 +233,11 @@
 			</ListView>
 
             <StackPanel
-				x:Name="EmptyPageWarning"
 				Grid.Row="2" Grid.ColumnSpan="2"
-				HorizontalAlignment="Center" Margin="0 150 0 0">
+				HorizontalAlignment="Center" Margin="0 150 0 0"
+                Visibility="{x:Bind vm.PriceCards.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
                 <TextBlock HorizontalTextAlignment="Center">
-                    <Run Text="Pin a coin from 'Top 100' with the 🤍 icon"/>
+                    <Run Text="Favourite a coin from 'Top 100' with the 🤍 icon"/>
                 </TextBlock>
             </StackPanel>
         </Grid>
