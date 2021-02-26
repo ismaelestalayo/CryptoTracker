@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    MaxHeight="60">
+    MaxHeight="60"
+    d:Width="460"
+    d:Height="60">
 
     <UserControl.Resources>
         <Style TargetType="RadioButton" x:Key="timerangeRadioButtons">
