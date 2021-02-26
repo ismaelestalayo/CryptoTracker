@@ -1,0 +1,48 @@
+﻿<UserControl
+    x:Class="CryptoTracker.UserControls.Notification"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="150"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="InfoBarBorderBrush" Color="DodgerBlue"/>
+                    <Thickness x:Key="InfoBarBorderThickness">0 5 0 0</Thickness>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <controls:DropShadowPanel
+        BlurRadius="25"
+        ShadowOpacity="0.25"
+        OffsetX="2"
+        OffsetY="2"
+        Color="#000000"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        IsMasked="True">
+        <muxc:InfoBar
+            d:Title="Notification title" d:Content="Notification message. &#x0a;" d:IsOpen="True"
+            Title="{x:Bind Title, Mode=OneWay}"
+            IsOpen="{x:Bind IsOpen, Mode=OneWay}"
+            Severity="Informational"
+            MinWidth="250"
+            Padding="10">
+            <muxc:InfoBar.Content>
+                <TextBlock>
+                    <Run Text="{x:Bind Message, Mode=OneWay}"/>
+                    <Run Text="&#x0a;"/>
+                </TextBlock>
+            </muxc:InfoBar.Content>
+        </muxc:InfoBar>
+    </controls:DropShadowPanel>
+</UserControl>

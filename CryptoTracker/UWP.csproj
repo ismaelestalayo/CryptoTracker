@@ -143,6 +143,9 @@
     <Compile Include="UserControls\ChartBars.xaml.cs">
       <DependentUpon>ChartBars.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Notification.xaml.cs">
+      <DependentUpon>Notification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TimeRangeRadioButtons.xaml.cs">
       <DependentUpon>TimeRangeRadioButtons.xaml</DependentUpon>
     </Compile>
@@ -324,6 +327,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ChartBars.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Notification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

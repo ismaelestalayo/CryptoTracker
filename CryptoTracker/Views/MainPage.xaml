@@ -7,6 +7,7 @@
     xmlns:cryptotracker="using:CryptoTracker"
     xmlns:helpers="using:CryptoTracker.Helpers"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:local="using:CryptoTracker.UserControls"
     xmlns:viewModels="using:CryptoTracker.ViewModels"
     mc:Ignorable="d">
 
@@ -106,13 +107,22 @@
 
         <StackPanel x:Name="CustomAppTitleBar" Background="Transparent"/>
 
-        <muxc:TeachingTip
+        <!--<muxc:TeachingTip
+            d:Title="Notification title" d:Subtitle="Notification message" d:IsOpen="True"
 	        Title="{x:Bind vm.InfoBarTitle, Mode=OneWay}"
 	        Subtitle="{x:Bind vm.InfoBarMessage, Mode=OneWay}"
 	        PreferredPlacement="Top"
 	        PlacementMargin="0 110"
 	        IsLightDismissEnabled="True"
-            IsOpen="{x:Bind vm.InfoBarOpened, Mode=OneWay}"/>
+            BorderBrush="DodgerBlue" BorderThickness="0 4 0 0"
+            IsOpen="{x:Bind vm.InfoBarOpened, Mode=OneWay}"/>-->
+
+        <local:Notification
+            IsOpen="{x:Bind vm.InfoBarOpened, Mode=OneWay}"
+            Margin="10 50"
+            Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
+            Message="{x:Bind vm.InfoBarMessage, Mode=OneWay}"
+            Title="{x:Bind vm.InfoBarTitle, Mode=OneWay}"/>
 
     </Grid>
 
