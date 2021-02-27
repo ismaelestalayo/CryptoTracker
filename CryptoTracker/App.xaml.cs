@@ -123,23 +123,27 @@ namespace CryptoTracker {
             if (!JumpList.IsSupported())
                 return;
 
-            var jumpList = await JumpList.LoadCurrentAsync();
-            jumpList.Items.Clear();
+            try {
+                var jumpList = await JumpList.LoadCurrentAsync();
+                jumpList.Items.Clear();
 
-            JumpListItem taskItem;
-            taskItem = JumpListItem.CreateWithArguments("/Portfolio", "Portfolio");
-            taskItem.Description = "Check your crypto-portfolio.";
-            taskItem.DisplayName = "Portfolio";
-            taskItem.Logo = new Uri("ms-appx:///Assets/Icons/Portfolio.png");
-            jumpList.Items.Add(taskItem);
+                JumpListItem taskItem;
+                taskItem = JumpListItem.CreateWithArguments("/Portfolio", "Portfolio");
+                taskItem.Description = "Check your crypto-portfolio.";
+                taskItem.DisplayName = "Portfolio";
+                taskItem.Logo = new Uri("ms-appx:///Assets/Icons/Portfolio.png");
+                jumpList.Items.Add(taskItem);
 
-            taskItem = JumpListItem.CreateWithArguments("/News", "News");
-            taskItem.Description = "See the latest news.";
-            taskItem.DisplayName = "News";
-            taskItem.Logo = new Uri("ms-appx:///Assets/Icons/News.png");
-            jumpList.Items.Add(taskItem);
+                taskItem = JumpListItem.CreateWithArguments("/News", "News");
+                taskItem.Description = "See the latest news.";
+                taskItem.DisplayName = "News";
+                taskItem.Logo = new Uri("ms-appx:///Assets/Icons/News.png");
+                jumpList.Items.Add(taskItem);
 
-            await jumpList.SaveAsync();
+                await jumpList.SaveAsync();
+            } catch (Exception ex) {
+                Analytics.TrackEvent($"JUMPLIST_ERROR: {ex}");
+            }
         }
 
         internal static void UpdatePinnedCoins() {
