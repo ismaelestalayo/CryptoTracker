@@ -33,7 +33,7 @@
         <muxc:InfoBar
             d:Title="Notification title" d:Content="Notification message. &#x0a;" d:IsOpen="True"
             Title="{x:Bind Title, Mode=OneWay}"
-            IsOpen="{x:Bind IsOpen, Mode=OneWay}"
+            IsOpen="{x:Bind IsOpen, Mode=OneWay}" Closed="InfoBar_Closed"
             Severity="Informational"
             MinWidth="250"
             Padding="10">

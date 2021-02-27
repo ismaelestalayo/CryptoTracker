@@ -1,10 +1,14 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.System.Threading;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CryptoTracker.UserControls {
     public sealed partial class Notification : UserControl {
+
+        private ThreadPoolTimer PeriodicTimer;
         public Notification() {
             this.InitializeComponent();
         }
@@ -42,7 +46,21 @@ namespace CryptoTracker.UserControls {
 
         public bool IsOpen {
             get => (bool)GetValue(IsOpenProperty);
-            set => SetValue(IsOpenProperty, value);
+            set {
+                SetValue(IsOpenProperty, value);
+                if (value) {
+                    PeriodicTimer = ThreadPoolTimer.CreateTimer(async (source) => {
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                            if (IsOpen)
+                                IsOpen = false;
+                        });
+                    }, TimeSpan.FromSeconds(4));
+                }
+            }
+        }
+
+        private void InfoBar_Closed(Microsoft.UI.Xaml.Controls.InfoBar sender, Microsoft.UI.Xaml.Controls.InfoBarClosedEventArgs args) {
+            IsOpen = false;
         }
     }
 }
