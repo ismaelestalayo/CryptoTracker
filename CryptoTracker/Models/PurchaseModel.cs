@@ -52,6 +52,13 @@ namespace CryptoTracker.Models {
             set => SetProperty(ref exchange, value);
         }
 
+        private string notes = "";
+        [DataMember()]
+        public string Notes {
+            get => notes;
+            set => SetProperty(ref notes, value);
+        }
+
         private double investedQty = 0;
         [DataMember()]
         public double InvestedQty {
@@ -125,7 +132,6 @@ namespace CryptoTracker.Models {
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "") {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-
         }
     }
 }
