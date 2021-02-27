@@ -38,6 +38,12 @@ namespace CryptoTracker.ViewModels {
             get => infoBarOpened;
             set => SetProperty(ref infoBarOpened, value);
         }
+
+        private bool infoBarTemporary = true;
+        public bool InfoBarTemporary {
+            get => infoBarTemporary;
+            set => SetProperty(ref infoBarTemporary, value);
+        }
     }
 
     public sealed class NotificationMessage : ValueChangedMessage<Tuple<string, string, string>> {

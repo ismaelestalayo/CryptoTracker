@@ -31,16 +31,17 @@
         HorizontalAlignment="Center"
         IsMasked="True">
         <muxc:InfoBar
-            d:Title="Notification title" d:Content="Notification message. &#x0a;" d:IsOpen="True"
+            d:Title="Welcome to CryptoTracker v6.0.0" d:Content="Notification message. &#x0a;" d:IsOpen="True"
             Title="{x:Bind Title, Mode=OneWay}"
             IsOpen="{x:Bind IsOpen, Mode=OneWay}" Closed="InfoBar_Closed"
             Severity="Informational"
+            MaxWidth="400"
             MinWidth="250"
             Padding="10">
             <muxc:InfoBar.Content>
-                <TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords">
                     <Run Text="{x:Bind Message, Mode=OneWay}"/>
-                    <Run Text="&#x0a;"/>
+                    <!--<Run Text="&#x0a;"/>-->
                 </TextBlock>
             </muxc:InfoBar.Content>
         </muxc:InfoBar>

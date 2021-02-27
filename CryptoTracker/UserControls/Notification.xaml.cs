@@ -46,16 +46,21 @@ namespace CryptoTracker.UserControls {
 
         public bool IsOpen {
             get => (bool)GetValue(IsOpenProperty);
+            set => SetValue(IsOpenProperty, value);
+        }
+
+        private bool temporary = true;
+        public bool Temporary {
+            get => temporary;
             set {
-                SetValue(IsOpenProperty, value);
-                if (value) {
+                temporary = value;
+                if (temporary)
                     PeriodicTimer = ThreadPoolTimer.CreateTimer(async (source) => {
                         await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                             if (IsOpen)
                                 IsOpen = false;
                         });
                     }, TimeSpan.FromSeconds(4));
-                }
             }
         }
 
