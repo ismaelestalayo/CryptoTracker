@@ -118,7 +118,7 @@
             IsOpen="{x:Bind vm.InfoBarOpened, Mode=OneWay}"/>-->
 
         <local:Notification
-            IsOpen="{x:Bind vm.InfoBarOpened, Mode=OneWay}"
+            IsOpen="{x:Bind vm.InfoBarOpened, Mode=TwoWay}"
             Margin="10 50"
             Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
             Message="{x:Bind vm.InfoBarMessage, Mode=OneWay}"
