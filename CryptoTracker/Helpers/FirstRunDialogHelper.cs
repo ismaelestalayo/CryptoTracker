@@ -13,7 +13,7 @@ namespace CryptoTracker.Helpers {
             if (NewUser) {
                 var dialog = new FirstRunDialog();
                 await dialog.ShowAsync();
-                App._LocalSettings.Set(UserSettingsConstants.IsNewUser, "false");
+                App._LocalSettings.Set(UserSettingsConstants.IsNewUser, false);
             }
         }
     }
