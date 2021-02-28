@@ -10,6 +10,7 @@ namespace CryptoTracker.Constants {
 		public const string PinnedCoins = "Pinned";
 		public const string IsNewUser = "NewUser";
 		public const string CoinListDate = "CoinListDate";
+		public const string LastVersion = "LastVersion";
 
 		/// <summary>
 		/// Default settings
@@ -19,7 +20,8 @@ namespace CryptoTracker.Constants {
 			{ Currency, "EUR" },
 			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
 			{ CoinListDate,  (double)0 },
-			{ IsNewUser, true }
+			{ IsNewUser, true },
+			{ LastVersion, "0.0.0" }
 		};
 	}
 }

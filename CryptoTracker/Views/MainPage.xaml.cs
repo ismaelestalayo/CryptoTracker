@@ -1,11 +1,13 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Constants;
 using CryptoTracker.Helpers;
+using CryptoTracker.UserControls;
 using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -51,19 +53,13 @@ namespace CryptoTracker {
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
             }
 
-            // Subscribe to light/dark theme change event
+            /// Subscribe to light/dark theme change event
             uiSettings.ColorValuesChanged += ColorValuesChanged;
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            FirstRunDialogHelper.ShowIfAppropriateAsync();
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-
-            // Extend acrylic
             ExtendAcrylicIntoTitleBar();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            
+        protected override async void OnNavigatedTo(NavigationEventArgs e) {
             var param = e.Parameter;
             switch (param) {
                 case "/Portfolio":
@@ -73,9 +69,34 @@ namespace CryptoTracker {
                     NavView.SelectedItem = NavView.MenuItems[0];
                     break;
             }
+            await FirstRunDialogHelper.ShowIfAppropriateAsync();
+            ShowChangelog();
         }
 
-        
+        /// <summary>
+        /// Show FirstRunDialog to new users, and a notification with the changelog.
+        /// </summary>
+        private void ShowChangelog() {
+            var v = Package.Current.Id.Version;
+            var version = $"{v.Major}.{v.Minor}.{v.Build}";
+            if (version == )
+            vm.InfoBarTitle = $"Welcome to CryptoTracker v{version}";
+            vm.InfoBarMessage = "🚀New in this version: \n";
+
+            List<string> changelog = new List<string>() {
+                "Faster launch",
+                "Polished UI",
+                "More granular charts (1h/4h/1d...)",
+                "Added automatic refresh of 30secs",
+                "Coins: New Compact Overlay",
+                "Portfolio: ability to clone and add notes to purchases"
+            };
+            foreach (var change in changelog)
+                vm.InfoBarMessage += $"  • {change} \n";
+
+            vm.InfoBarTemporary = false;
+            vm.InfoBarOpened = true;
+        }
 
         private void ColorValuesChanged(UISettings sender, object args) {
             if ((App._LocalSettings.Get<string>(UserSettingsConstants.Theme) == "Windows")) {
@@ -194,22 +215,21 @@ namespace CryptoTracker {
             }
 
             ///if it's the same page, override the default animation for one from the Bottom
-            if (samePage) { 
+            if (samePage)
                 dir.Effect = SlideNavigationTransitionEffect.FromBottom;
-            }
 
             ContentFrame.Navigate(page, null, dir);
         }
 
         /// Hide NavigationView if navigating to the Compact Overlay view
-        private void ContentFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e) {
+        private void ContentFrame_Navigating(object sender, NavigatingCancelEventArgs e) {
             var toPage = (e.SourcePageType).Name;
             NavView.IsPaneVisible = (toPage == "CoinCompact") ? false : true;
             CustomAppTitleBar.Margin = (toPage == "CoinCompact") ? new Thickness(46, 0, 0, 0) : new Thickness(0);
         }
 
-        // #########################################################################################
-        //  AutoSuggest-Box
+        /// #######################################################################################
+        ///  AutoSuggest-Box
         private void AutoSuggestBox_TextChanged(AutoSuggestBox box, AutoSuggestBoxTextChangedEventArgs args) {
             // Only get results when it was a user typing, 
             // otherwise assume the value got filled in by TextMemberPath 
@@ -249,7 +269,7 @@ namespace CryptoTracker {
                 CoinAutoSuggestBox.Focus(FocusState.Programmatic);
         }
 
-        // #########################################################################################
+        /// #######################################################################################
         private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
             var filtered = App.coinList.Where(x => x.symbol.Contains(box.Text)).ToList(); // || x.FullName.Contains(box.Text)
             List<SuggestionCoinList> list = new List<SuggestionCoinList>();
@@ -259,12 +279,11 @@ namespace CryptoTracker {
                     Name = coin.symbol
                 });
             }
-
             return list;
         }
 
-        // #########################################################################################
-        //  Search button
+        /// #######################################################################################
+        ///  Search button
         private void NavView_Search_Tapped(object sender, TappedRoutedEventArgs e) {
             CoinAutoSuggestBox.Visibility = Visibility.Visible;
             CoinAutoSuggestBox.Focus(FocusState.Programmatic);
@@ -276,12 +295,8 @@ namespace CryptoTracker {
             
             selected = ((ContentControl)sender.SelectedItem).Content?.ToString();
             
-            if (selected == null) {
-                if (args.IsSettingsInvoked)
-                    selected = "Settings";
-                else
-                    selected = "Null";
-            }
+            if (selected == null)
+                selected = (args.IsSettingsInvoked) ? "Settings" : "Null";
 
             // CoinDetails and the WebView are loaded on the current NavigationViewTab
             // so the user can go back by clicking the same tab itself
