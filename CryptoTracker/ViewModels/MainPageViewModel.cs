@@ -12,8 +12,9 @@ namespace CryptoTracker.ViewModels {
 
         protected override void OnActivated() {
             Messenger.Register<MainPageViewModel, NotificationMessage>(this, (r, m) => {
+                InfoBarTitle = m.Value.Item1;
                 InfoBarMessage = m.Value.Item2;
-                InfoBarTitle = m.Value.Item3;
+                InfoBarTemporary = m.Value.Item3;
             });
         }
 
@@ -46,8 +47,8 @@ namespace CryptoTracker.ViewModels {
         }
     }
 
-    public sealed class NotificationMessage : ValueChangedMessage<Tuple<string, string, string>> {
-        public NotificationMessage(Tuple<string, string, string> tuple) : base(tuple) {
+    public sealed class NotificationMessage : ValueChangedMessage<Tuple<string, string, bool>> {
+        public NotificationMessage(Tuple<string, string, bool> tuple) : base(tuple) {
         }
     }
 }

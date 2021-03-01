@@ -8,6 +8,8 @@ using Windows.UI.Xaml.Controls;
 namespace CryptoTracker.UserControls {
     public sealed partial class Notification : UserControl {
 
+        private int MessageHeight = 0;
+
         private ThreadPoolTimer PeriodicTimer;
         public Notification() {
             this.InitializeComponent();
@@ -41,7 +43,10 @@ namespace CryptoTracker.UserControls {
 
         public string Message {
             get => (string)GetValue(MessageProperty);
-            set => SetValue(MessageProperty, value);
+            set {
+                SetValue(MessageProperty, value);
+                MessageHeight = (value == "") ? 0 : 19;
+            }
         }
 
         public bool IsOpen {
