@@ -76,12 +76,15 @@ namespace CryptoTracker {
         /// <summary>
         /// Show FirstRunDialog to new users, and a notification with the changelog.
         /// </summary>
-        private void ShowChangelog() {
+        private async void ShowChangelog() {
             var v = Package.Current.Id.Version;
             var version = $"{v.Major}.{v.Minor}.{v.Build}";
-            if (version == )
-            vm.InfoBarTitle = $"Welcome to CryptoTracker v{version}";
-            vm.InfoBarMessage = "🚀New in this version: \n";
+            
+            var lastVersion = App._LocalSettings.Get<string>(UserSettingsConstants.LastVersion);
+            if (version == lastVersion)
+                return;
+            vm.InfoBarTitle = $"Welcome to CryptoTracker v{version} 🚀";
+            vm.InfoBarMessage = "New in this version:\n";
 
             List<string> changelog = new List<string>() {
                 "Faster launch",
@@ -96,6 +99,7 @@ namespace CryptoTracker {
 
             vm.InfoBarTemporary = false;
             vm.InfoBarOpened = true;
+            App._LocalSettings.Set(UserSettingsConstants.LastVersion, version);
         }
 
         private void ColorValuesChanged(UISettings sender, object args) {
