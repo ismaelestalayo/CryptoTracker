@@ -9,6 +9,7 @@
     xmlns:ex="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:views="using:CryptoTracker.Views"
     NavigationCacheMode="Enabled"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -36,7 +37,12 @@
                 PlaceholderText="Filter categories"
                 QueryIcon="{ex:SymbolIconSource Symbol=Find}"
                 MaxHeight="104" HorizontalAlignment="Left"
-                TextMemberPath="Text" TokenDelimiter=",">
+                TextMemberPath="Text" TokenDelimiter=","
+                TokenItemAdded="TokenItemAdded"
+                TokenItemRemoving="TokenItemRemoved"
+                TextChanged="TextChanged"
+                TokenItemAdding="TokenItemCreating"
+                Tapped="TokenBox_Tapped">
                 <controls:TokenizingTextBox.SuggestedItemTemplate>
                     <DataTemplate x:DataType="views:NewsCategories">
                         <StackPanel Orientation="Horizontal">

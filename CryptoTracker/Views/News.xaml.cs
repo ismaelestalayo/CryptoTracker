@@ -1,6 +1,5 @@
 ﻿using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Controls;
-using Microsoft.Toolkit.Uwp.UI.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +11,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace CryptoTracker.Views {
-	// ###############################################################################################
-	/// <summary>
-	/// News items for the AdaptiveGridView
-	/// </summary>
-	public class NewsItem {
+    // ###############################################################################################
+    /// <summary>
+    /// News items for the AdaptiveGridView
+    /// </summary>
+    public class NewsItem {
         public int Type { get; set; }
         public string Message { get; set; }
         public List<object> Promoted { get; set; }
@@ -73,25 +72,13 @@ namespace CryptoTracker.Views {
             GetNews();
             _acv = new AdvancedCollectionView(_categories, false);
             _acv.SortDescriptions.Add(new SortDescription(nameof(NewsCategories.categoryName), SortDirection.Ascending));
-
-            Loaded += (sender, e) => { this.OnXamlRendered(this); };
         }
-        
 
-        public void OnXamlRendered(FrameworkElement control) {
 
-            if (control.FindChildByName("CategoriesTokenBox") is TokenizingTextBox ttb) {
-                _ttb = ttb;
-                _ttb.TokenItemAdded += TokenItemAdded;
-                _ttb.TokenItemRemoving += TokenItemRemoved;
-                _ttb.TextChanged += TextChanged;
-                _ttb.TokenItemAdding += TokenItemCreating;
-                _ttb.Tapped += TokenBox_Tapped;
-
-                _acv.Filter = item => !_ttb.Items.Contains(item) && (item as NewsCategories).categoryName.Contains(_ttb.Text, StringComparison.CurrentCultureIgnoreCase);
-
-                _ttb.SuggestedItemsSource = _acv;
-            }
+        private void Page_Loaded(object sender, RoutedEventArgs e) {
+            _ttb = CategoriesTokenBox;
+            _acv.Filter = item => !_ttb.Items.Contains(item) && (item as NewsCategories).categoryName.Contains(_ttb.Text, StringComparison.CurrentCultureIgnoreCase);
+            _ttb.SuggestedItemsSource = _acv;
         }
 
         // ###############################################################################################
@@ -174,11 +161,11 @@ namespace CryptoTracker.Views {
             }
         }
 
-        private void TokenItemCreating(object sender, TokenItemAddingEventArgs e) {
+        private void TokenItemCreating(TokenizingTextBox sender, TokenItemAddingEventArgs args) {
             // Take the user's text and convert it to our data type (if we have a matching one).
-            e.Item = _categories.FirstOrDefault((item) => item.categoryName.Contains(e.TokenText, StringComparison.CurrentCultureIgnoreCase));
-            if (e.Item == null)
-                e.Cancel = true;
+            args.Item = _categories.FirstOrDefault((item) => item.categoryName.Contains(args.TokenText, StringComparison.CurrentCultureIgnoreCase));
+            if (args.Item == null)
+                args.Cancel = true;
         }
 
         private void TokenBox_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
