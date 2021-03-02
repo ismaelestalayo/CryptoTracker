@@ -191,8 +191,8 @@
         #################################################################################################### -->
 
         <ScrollViewer Grid.Row="3" Margin="0 0 0 5">
-            
-            
+
+
             <Grid x:Name="BottomCards">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -200,7 +200,7 @@
                 </Grid.RowDefinitions>
 
                 <controls:UniformGrid Grid.Row="0" x:Name="UniformGrid" Rows="3" Columns="2" Height="700">
-                    
+
                     <!-- Info card -->
                     <Grid x:Name="InfoCard" Style="{ThemeResource CardGrid}" Grid.RowSpan="2" Grid.ColumnSpan="1">
                         <Grid.RowDefinitions>
@@ -212,7 +212,7 @@
                         </RelativePanel>
 
                         <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-							<TextBlock Text="{x:Bind vm.CoinInfo.description.en, Mode=OneWay}" TextWrapping="WrapWholeWords"
+                            <TextBlock Text="{x:Bind vm.CoinInfo.description.en, Mode=OneWay}" TextWrapping="WrapWholeWords"
                                        TextAlignment="Justify" Opacity="0.8"/>
                         </ScrollViewer>
                     </Grid>
@@ -256,7 +256,7 @@
                             </TextBlock>
                         </controls:UniformGrid>
                     </StackPanel>
-                    
+
 
                     <!-- Global Market card -->
                     <StackPanel Style="{ThemeResource CardStackPanel}">
@@ -285,7 +285,7 @@
                             </TextBlock>
                         </controls:UniformGrid>
                     </StackPanel>
-                    
+
 
                     <!-- Volume card -->
                     <StackPanel Style="{ThemeResource CardStackPanel}" Grid.ColumnSpan="3">
@@ -378,13 +378,6 @@
 
             </Grid>
         </ScrollViewer>
-        
-        <controls:InAppNotification 
-            x:Name="inAppNotification"
-            Grid.Row="4" ShowDismissButton="False"
-            AnimationDuration="00:00:00.300"
-            VerticalOffset="100" HorizontalOffset="0"
-            StackMode="StackInFront" CornerRadius="7"/>
 
     </Grid>
 </Page>

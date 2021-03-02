@@ -203,7 +203,7 @@ namespace CryptoTracker {
 
                 if (response == ContentDialogResult.Primary) {
                     LocalStorageHelper.SaveObject(obj, PortfolioKey);
-                    vm.InAppNotification("Informational", "", "Portfolio imported succesfully.");
+                    vm.InAppNotification("Portfolio imported succesfully.");
                 }
             }
             else {

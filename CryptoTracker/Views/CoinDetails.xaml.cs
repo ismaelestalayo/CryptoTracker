@@ -172,13 +172,13 @@ namespace CryptoTracker {
                 App.pinnedCoins.Add(crypto);
                 //Home.AddCoinHome(crypto);
                 FavIcon.Content = "\uEB52";
-                inAppNotification.Show(crypto + " pinned to home.", 2000);
+                vm.InAppNotification($"{crypto} pinned to home.");
             }
             else {
                 //Home.RemoveCoinHome(crypto);
                 App.pinnedCoins.Remove(crypto);
                 FavIcon.Content = "\uEB51";
-                inAppNotification.Show(crypto + " unpinned from home.", 2000);
+                vm.InAppNotification($"{crypto} unpinned from home.");
             }
         }
 
