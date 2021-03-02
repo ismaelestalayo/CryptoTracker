@@ -7,10 +7,16 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:ex="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:models="using:CryptoTracker.Models"
     xmlns:views="using:CryptoTracker.Views"
+    xmlns:viewModels="using:CryptoTracker.ViewModels"
     NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:NewsViewModel x:Name="vm"/>
+    </Page.DataContext>
 
     <Page.Resources>
         <DataTemplate x:Key="StringDataTemplate" x:DataType="x:String">
@@ -44,14 +50,14 @@
                 TokenItemAdding="TokenItemCreating"
                 Tapped="TokenBox_Tapped">
                 <controls:TokenizingTextBox.SuggestedItemTemplate>
-                    <DataTemplate x:DataType="views:NewsCategories">
+                    <DataTemplate x:DataType="models:NewsCategories">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{x:Bind categoryName}" Padding="4 0 0 0"/>
                         </StackPanel>
                     </DataTemplate>
                 </controls:TokenizingTextBox.SuggestedItemTemplate>
                 <controls:TokenizingTextBox.TokenItemTemplate>
-                    <DataTemplate x:DataType="views:NewsCategories">
+                    <DataTemplate x:DataType="models:NewsCategories">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{x:Bind categoryName}" Padding="4 0 0 0"/>
                         </StackPanel>
@@ -60,10 +66,11 @@
             </controls:TokenizingTextBox>
 
             <controls:AdaptiveGridView x:Name="NewsAdaptiveGridView" OneRowModeEnabled="False"
+                ItemsSource="{x:Bind vm.News, Mode=OneWay}"
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
-                ItemClick="NewsAdaptiveGridView_Click" Grid.Row="1">
+                ItemClick="NewsItem_Click" Grid.Row="1">
                 <controls:AdaptiveGridView.ItemTemplate>
-                    <DataTemplate x:DataType="views:NewsData">
+                    <DataTemplate x:DataType="models:NewsData">
                         <Grid x:Name="GridView_Element" Background="{ThemeResource CustomInAppAcrylic}"
                               Margin="1 2" CornerRadius="5">
 

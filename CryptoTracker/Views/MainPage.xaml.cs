@@ -153,7 +153,7 @@ namespace CryptoTracker {
                     break;
                 case "News":
                     var p3 = (News)ContentFrame.Content;
-                    p3.GetNews();
+                    p3.UpdateNews();
                     break;
             }
 

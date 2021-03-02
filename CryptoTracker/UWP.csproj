@@ -130,6 +130,7 @@
     <Compile Include="Models\Coin.cs" />
     <Compile Include="Models\GlobalStats.cs" />
     <Compile Include="Models\HomeCard.cs" />
+    <Compile Include="Models\NewsItem.cs" />
     <Compile Include="Models\PurchaseModel.cs" />
     <Compile Include="Models\Top100card.cs" />
     <Compile Include="Services\ICryptoCompare.cs" />
@@ -150,6 +151,7 @@
       <DependentUpon>TimeRangeRadioButtons.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\NewsViewModel.cs" />
     <Compile Include="ViewModels\PortfolioViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Top100ViewModel.cs" />
@@ -440,7 +442,7 @@
       <Version>14332.0.2</Version>
     </PackageReference>
     <PackageReference Include="Refit">
-      <Version>6.0.15</Version>
+      <Version>6.0.24</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.Serialization.Formatters">
       <Version>4.3.0</Version>
@@ -449,7 +451,7 @@
       <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
-      <Version>1.0.2.2</Version>
+      <Version>1.0.2.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

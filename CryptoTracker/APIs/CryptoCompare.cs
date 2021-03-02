@@ -2,25 +2,12 @@
 using CryptoTracker.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CryptoTracker.APIs {
 	class CryptoCompare {
-
-        public class HistoricPrice {
-            public int time { get; set; }
-            public float high { get; set; } = 0;
-            public float low { get; set; } = 0;
-            public float open { get; set; } = 0;
-            public float close { get; set; } = 0;
-            public float volumefrom { get; set; } = 0;
-            public float volumeto { get; set; } = 0;
-
-            internal float Average { get; set; } = 0;
-            internal string Date { get; set; }
-            internal DateTime DateTime { get; set; }
-        }
 
         /* ###############################################################################################
          * Gets the current price of a coin (in the currency set by App.currency)
@@ -73,8 +60,7 @@ namespace CryptoTracker.APIs {
 
             
             try {
-                var responseString = await App.GetStringAsync(new Uri(URL));
-
+                var responseString = await App.GetStringFromUrlAsync(URL);
                 var response = JsonSerializer.Deserialize<object>(responseString);
 
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
@@ -108,6 +94,20 @@ namespace CryptoTracker.APIs {
             catch (Exception ex) {
                 return NullValue;
             }
+        }
+
+        public class HistoricPrice {
+            public int time { get; set; }
+            public float high { get; set; } = 0;
+            public float low { get; set; } = 0;
+            public float open { get; set; } = 0;
+            public float close { get; set; } = 0;
+            public float volumefrom { get; set; } = 0;
+            public float volumeto { get; set; } = 0;
+
+            internal float Average { get; set; } = 0;
+            internal string Date { get; set; }
+            internal DateTime DateTime { get; set; }
         }
 
 
@@ -179,7 +179,6 @@ namespace CryptoTracker.APIs {
                     }
 
                     var coinInfo = JsonSerializer.Deserialize<CoinInfo>(_coinInfo.ToString());
-                    
 
                     /// quick fixes
                     coinInfo.ImageUrl = IconsHelper.GetIcon(coinInfo.Name);
@@ -195,13 +194,53 @@ namespace CryptoTracker.APIs {
                         Raw = raw
                     });
                 }
-
                 return top100;
-
             }
             catch (Exception ex) {
                 return top100;
             }
         }
+
+        /* ###############################################################################################
+         * Gets the latest news or its categories
+         * 
+         * Arguments:
+         * - filters: 
+         * 
+        */
+        internal async static Task<List<NewsData>> GetNews(List<string> filters) {
+            string URL = "https://min-api.cryptocompare.com/data/v2/news/?lang=EN";
+            if (filters.Count > 0)
+                URL += string.Format("&categories={0}", string.Join(",", filters));
+
+            try {
+                var responseString = await App.GetStringFromUrlAsync(URL);
+
+                var news = JsonSerializer.Deserialize<NewsResponse>(responseString);
+                foreach (NewsData n in news.Data) {
+                    n.categorylist = n.categories.Split('|').ToList();
+                    if (n.categorylist.Count > 3)
+                        n.categorylist = n.categorylist.GetRange(1, 3);
+                }
+                return news.Data;
+            }
+            catch (Exception ex) {
+                return new List<NewsData>();
+            }
+        }
+
+        internal async static Task<List<NewsCategories>> GetNewsCategories() {
+            string URL = "https://min-api.cryptocompare.com/data/news/categories";
+
+            List<NewsCategories> categories;
+            try {
+                var responseString = await App.GetStringFromUrlAsync(URL);
+                return JsonSerializer.Deserialize<List<NewsCategories>>(responseString);
+            }
+            catch (Exception ex) {
+                return new List<NewsCategories>() { new NewsCategories() };
+            }
+        }
+
     }
 }
