@@ -418,7 +418,7 @@
       <Version>10.1901.28001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit">
-      <Version>7.0.0-preview1</Version>
+      <Version>7.0.0-preview5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Mvvm">
       <Version>7.0.0-preview5</Version>
@@ -427,10 +427,10 @@
       <Version>7.0.0-preview5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
-      <Version>6.1.1</Version>
+      <Version>7.0.0-preview5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>6.1.1</Version>
+      <Version>7.0.0-preview5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
       <Version>7.0.0-preview5</Version>

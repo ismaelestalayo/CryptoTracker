@@ -8,7 +8,6 @@
     xmlns:viewModels="using:CryptoTracker.ViewModels"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-    xmlns:ex="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
@@ -38,10 +37,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <controls:TokenizingTextBox
-                x:Name="CategoriesTokenBox" Grid.Row="0" MinWidth="270"
+                x:Name="CategoriesTokenBox" Grid.Row="0" MinWidth="270" MaxWidth="350"
                 Margin="2 5 0 10" BorderThickness="0" Background="{ThemeResource SystemAltHighColor}"
                 PlaceholderText="Filter categories"
-                QueryIcon="{ex:SymbolIconSource Symbol=Find}"
+                QueryIcon="{ui:SymbolIconSource Symbol=Find}"
                 MaxHeight="104" HorizontalAlignment="Left"
                 TextMemberPath="Text" TokenDelimiter=","
                 TokenItemAdded="TokenItemAdded"
