@@ -424,7 +424,7 @@
       <Version>7.0.0-preview5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>6.1.1</Version>
+      <Version>7.0.0-preview5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
       <Version>6.1.1</Version>
@@ -436,7 +436,7 @@
       <Version>7.0.0-preview5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Lottie">
-      <Version>6.1.0</Version>
+      <Version>7.0.0-preview4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.5.0</Version>
