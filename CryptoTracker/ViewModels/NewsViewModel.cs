@@ -11,5 +11,8 @@ namespace CryptoTracker.ViewModels {
             get => news;
             set => SetProperty(ref news, value);
         }
+
+        public List<NewsCategories> Categories { get; set; }
+        public List<string> Filters { get; set; } = new List<string>();
     }
 }
