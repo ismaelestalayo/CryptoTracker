@@ -7,6 +7,7 @@
     xmlns:models="using:CryptoTracker.Models"
     xmlns:viewModels="using:CryptoTracker.ViewModels"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     xmlns:ex="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Enabled"
@@ -46,7 +47,6 @@
                 TokenItemAdded="TokenItemAdded"
                 TokenItemRemoving="TokenItemRemoved"
                 TextChanged="TextChanged"
-                TokenItemAdding="TokenItemCreating"
                 Tapped="TokenBox_Tapped">
                 <controls:TokenizingTextBox.SuggestedItemTemplate>
                     <DataTemplate x:DataType="models:NewsCategories">

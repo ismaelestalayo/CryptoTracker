@@ -65,13 +65,6 @@ namespace CryptoTracker.Views {
             }
         }
 
-        private void TokenItemCreating(TokenizingTextBox sender, TokenItemAddingEventArgs args) {
-            // Take the user's text and convert it to our data type (if we have a matching one).
-            args.Item = vm.Categories.FirstOrDefault((item) => item.categoryName.Contains(args.TokenText, StringComparison.CurrentCultureIgnoreCase));
-            if (args.Item == null)
-                args.Cancel = true;
-        }
-
         private void TokenBox_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             _ttb.Focus(FocusState.Programmatic); // Give focus back to type another filter
         }
