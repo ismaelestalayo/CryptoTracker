@@ -8,6 +8,7 @@
 	xmlns:viewModels="using:CryptoTracker.ViewModels"
 	xmlns:models="using:CryptoTracker.Models"
     NavigationCacheMode="Required"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
 	<Page.DataContext>

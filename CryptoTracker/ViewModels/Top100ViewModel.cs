@@ -3,20 +3,21 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CryptoTracker.ViewModels {
     public class Top100ViewModel : ObservableRecipient {
 
-        private GlobalStats _globalStats;
+        private GlobalStats globalStats = new GlobalStats();
         public GlobalStats GlobalStats {
-            get => _globalStats;
-            set => SetProperty(ref _globalStats, value);
+            get => globalStats;
+            set => SetProperty(ref globalStats, value);
         }
 
-        private List<Top100card> _top100cards;
+        private List<Top100card> top100cards = Enumerable.Repeat(new Top100card(), 30).ToList();
         public List<Top100card> Top100cards {
-            get => _top100cards;
-            set => SetProperty(ref _top100cards, value);
+            get => top100cards;
+            set => SetProperty(ref top100cards, value);
         }
 
         public void InAppNotification(string title, string message = "", bool temporary = true) {

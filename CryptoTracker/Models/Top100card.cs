@@ -2,13 +2,13 @@
 
 namespace CryptoTracker.Models {
 	public class Top100card : ObservableObject{
-        private CoinInfo _coinInfo;
+        private CoinInfo _coinInfo = new CoinInfo();
         public CoinInfo CoinInfo {
             get => _coinInfo;
             set => SetProperty(ref _coinInfo, value);
         }
 
-        private Raw _raw;
+        private Raw _raw = new Raw();
         public Raw Raw {
             get => _raw;
             set => SetProperty(ref _raw, value);
