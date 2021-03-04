@@ -96,7 +96,6 @@ namespace CryptoTracker {
             foreach (var change in changelog)
                 vm.InfoBarMessage += $"  • {change} \n";
 
-            vm.InfoBarTemporary = false;
             vm.InfoBarOpened = true;
             App._LocalSettings.Set(UserSettingsConstants.LastVersion, version);
         }

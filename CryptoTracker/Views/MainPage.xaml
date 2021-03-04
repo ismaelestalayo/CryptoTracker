@@ -120,7 +120,6 @@
             Margin="10 50"
             Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
             Message="{x:Bind vm.InfoBarMessage, Mode=OneWay}"
-            Temporary="{x:Bind vm.InfoBarTemporary, Mode=OneWay}"
             Title="{x:Bind vm.InfoBarTitle, Mode=OneWay}"/>
     </Grid>
 

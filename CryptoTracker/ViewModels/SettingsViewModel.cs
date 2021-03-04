@@ -12,8 +12,8 @@ namespace CryptoTracker.ViewModels {
 			set => SetProperty(ref purchaseList, value);
 		}
 
-		public void InAppNotification(string title, string message = "", bool temporary = true) {
-			var tuple = new Tuple<string, string, bool>(title, message, temporary);
+		public void InAppNotification(string title, string message = "") {
+			var tuple = new Tuple<string, string>(title, message);
 			Messenger.Send(new NotificationMessage(tuple));
 		}
 	}

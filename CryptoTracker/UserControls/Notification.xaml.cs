@@ -3,38 +3,27 @@ using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CryptoTracker.UserControls {
     public sealed partial class Notification : UserControl {
 
-        private int MessageHeight = 0;
-
         private ThreadPoolTimer PeriodicTimer;
+
         public Notification() {
             this.InitializeComponent();
         }
 
         public static readonly DependencyProperty TitleProperty =
-        DependencyProperty.Register(
-            nameof(Title),
-            typeof(string),
-            typeof(string),
-            null);
+            DependencyProperty.Register(nameof(Title), typeof(string), typeof(string), null);
 
         public static readonly DependencyProperty MessageProperty =
-        DependencyProperty.Register(
-            nameof(Message),
-            typeof(string),
-            typeof(string),
-            null);
+            DependencyProperty.Register(nameof(Message), typeof(string), typeof(string), null);
 
         public static readonly DependencyProperty IsOpenProperty =
-        DependencyProperty.Register(
-            nameof(IsOpen),
-            typeof(bool),
-            typeof(bool),
-            null);
+            DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(bool), null);
+
+        public static readonly DependencyProperty MessageHeightProperty =
+            DependencyProperty.Register(nameof(IsOpen), typeof(double), typeof(double), null);
 
         public string Title {
             get => (string)GetValue(TitleProperty);
@@ -45,7 +34,13 @@ namespace CryptoTracker.UserControls {
             get => (string)GetValue(MessageProperty);
             set {
                 SetValue(MessageProperty, value);
-                MessageHeight = (value == "") ? 0 : 19;
+                MessageHeight = (value == "") ? 0 : double.NaN;
+                if (value == "")
+                    ThreadPoolTimer.CreateTimer(async (source) => {
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                            IsOpen = false;
+                        });
+                    }, TimeSpan.FromSeconds(3));
             }
         }
 
@@ -54,19 +49,9 @@ namespace CryptoTracker.UserControls {
             set => SetValue(IsOpenProperty, value);
         }
 
-        private bool temporary = true;
-        public bool Temporary {
-            get => temporary;
-            set {
-                temporary = value;
-                if (temporary)
-                    PeriodicTimer = ThreadPoolTimer.CreateTimer(async (source) => {
-                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                            if (IsOpen)
-                                IsOpen = false;
-                        });
-                    }, TimeSpan.FromSeconds(4));
-            }
+        internal double MessageHeight {
+            get => (double)GetValue(MessageHeightProperty);
+            set => SetValue(MessageHeightProperty, value);
         }
 
         private void InfoBar_Closed(Microsoft.UI.Xaml.Controls.InfoBar sender, Microsoft.UI.Xaml.Controls.InfoBarClosedEventArgs args) {

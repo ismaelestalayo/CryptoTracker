@@ -14,7 +14,6 @@ namespace CryptoTracker.ViewModels {
             Messenger.Register<MainPageViewModel, NotificationMessage>(this, (r, m) => {
                 InfoBarTitle = m.Value.Item1;
                 InfoBarMessage = m.Value.Item2;
-                InfoBarTemporary = m.Value.Item3;
             });
         }
 
@@ -39,16 +38,10 @@ namespace CryptoTracker.ViewModels {
             get => infoBarOpened;
             set => SetProperty(ref infoBarOpened, value);
         }
-
-        private bool infoBarTemporary = true;
-        public bool InfoBarTemporary {
-            get => infoBarTemporary;
-            set => SetProperty(ref infoBarTemporary, value);
-        }
     }
 
-    public sealed class NotificationMessage : ValueChangedMessage<Tuple<string, string, bool>> {
-        public NotificationMessage(Tuple<string, string, bool> tuple) : base(tuple) {
+    public sealed class NotificationMessage : ValueChangedMessage<Tuple<string, string>> {
+        public NotificationMessage(Tuple<string, string> tuple) : base(tuple) {
         }
     }
 }
