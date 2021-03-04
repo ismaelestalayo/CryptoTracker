@@ -227,6 +227,7 @@ namespace CryptoTracker {
         /// Hide NavigationView if navigating to the Compact Overlay view
         private void ContentFrame_Navigating(object sender, NavigatingCancelEventArgs e) {
             var toPage = (e.SourcePageType).Name;
+            App.CurrentPage = toPage;
             NavView.IsPaneVisible = (toPage == "CoinCompact") ? false : true;
             CustomAppTitleBar.Margin = (toPage == "CoinCompact") ? new Thickness(46, 0, 0, 0) : new Thickness(0);
         }

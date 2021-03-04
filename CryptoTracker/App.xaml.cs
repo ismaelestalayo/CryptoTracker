@@ -32,8 +32,8 @@ namespace CryptoTracker {
         internal static string currency       = "EUR";
         internal static string currencySymbol = "€";
 
-        internal static LocalSettings _LocalSettings = new LocalSettings(); 
-
+        internal static LocalSettings _LocalSettings = new LocalSettings();
+        internal static string CurrentPage = "";
         internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
 
@@ -113,7 +113,7 @@ namespace CryptoTracker {
             deferral.Complete();
         }
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e) {
-            Analytics.TrackEvent("UNHANDLED-APP: " + e.Message);
+            Analytics.TrackEvent($"UNHANDLED-{CurrentPage}: " + e.Message);
         }
 
         // ###############################################################################################
