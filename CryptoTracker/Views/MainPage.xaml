@@ -43,7 +43,6 @@
                 <NavigationViewItem Icon="PreviewLink"  Content="News" Tag="news" FontWeight="Light"/>
                 <NavigationViewItem Content="Portfolio" Tag="portfolio" FontWeight="Light">
                     <NavigationViewItem.Icon>
-                        <!--<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEB4E;" />-->
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEAFC;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
@@ -106,7 +105,7 @@
 
         <StackPanel x:Name="CustomAppTitleBar" Background="Transparent"/>
 
-        <!--<muxc:TeachingTip
+        <!--<controls:TeachingTip
             d:Title="Notification title" d:Subtitle="Notification message" d:IsOpen="True"
 	        Title="{x:Bind vm.InfoBarTitle, Mode=OneWay}"
 	        Subtitle="{x:Bind vm.InfoBarMessage, Mode=OneWay}"
@@ -123,7 +122,6 @@
             Message="{x:Bind vm.InfoBarMessage, Mode=OneWay}"
             Temporary="{x:Bind vm.InfoBarTemporary, Mode=OneWay}"
             Title="{x:Bind vm.InfoBarTitle, Mode=OneWay}"/>
-
     </Grid>
 
 

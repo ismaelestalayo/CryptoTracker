@@ -94,13 +94,13 @@
 			HorizontalScrollBarVisibility="Disabled"
 			VerticalScrollBarVisibility="Auto"
             MaxWidth="600">
-			<ListView x:Name="top100ListView"
+            <ListView x:Name="top100ListView"
 				SelectionMode="None"
 				IsItemClickEnabled="True"
 				ItemClick="ListView_Click"
 				ItemsSource="{x:Bind vm.Top100cards, Mode=OneWay}">
                 <ListView.ItemTemplate>
-					<DataTemplate x:DataType="models:Top100card">
+                    <DataTemplate x:DataType="models:Top100card">
                         <Grid x:Name="listView_Element"
 							Height="65"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
@@ -115,7 +115,7 @@
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
 
-							<TextBlock 
+                            <TextBlock 
                                 Grid.Column="0"
                                 HorizontalAlignment="Center"
                                 Opacity="0.5"
@@ -123,9 +123,9 @@
 								d:Text="#1">
 								<Run Text="#"/><!--
 								--><Run Text="{x:Bind CoinInfo.Rank, Mode=OneWay}"/>
-							</TextBlock>
+                            </TextBlock>
 
-							<Button
+                            <Button
 								Background="Transparent"
 								Click="Pin_click"
 								Content="{x:Bind CoinInfo.FavIcon, Mode=OneWay}"
@@ -134,62 +134,66 @@
 								VerticalAlignment="Center"
 								d:Content="x"/>
 
-							<Image 
+                            <Image 
                                 Grid.Column="2" 
                                 Source="{x:Bind CoinInfo.ImageUrl, Mode=OneWay}" 
                                 Width="45"
 								d:Source="/Assets/Icons/iconNULL.png"/>
 
-							<StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" VerticalAlignment="Center">
                                 <TextBlock d:Text="COIN"
 									Text="{x:Bind CoinInfo.Name, Mode=OneWay}"
 									FontSize="20" FontWeight="SemiBold"/>
-								<StackPanel Orientation="Horizontal">
-									<TextBlock
-										Text="{x:Bind Raw.PRICE, Mode=OneWay}" FontSize="16"
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+										FontSize="16"
 										Opacity="0.8"
-										d:Text="price (change)"/>
-									<TextBlock
-										Text="{x:Bind Raw.CHANGE24HOUR, Mode=OneWay}"
-										Foreground="{Binding ChangeFG}" FontSize="14" FontWeight="Medium"
-										VerticalAlignment="Bottom"/>
-								</StackPanel>
-							</StackPanel>
+										d:Text="price (change)">
+                                        <Run Text="{x:Bind Raw.PRICE, Mode=OneWay}"/><!--
+                                        --><Run Text="{x:Bind CoinInfo.Currency, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock
+										Foreground="{x:Bind CoinInfo.ChangeFG, Mode=OneWay}"
+                                        FontSize="14" FontWeight="Medium"
+                                        Margin="5 0"
+										VerticalAlignment="Bottom">
+                                        <Run Text="{x:Bind Raw.CHANGEPCT24HOUR, Mode=OneWay}"/><!--
+                                        --><Run Text="%"/>
+                                        <Run Text="{x:Bind Raw.CHANGE24HOUR, Mode=OneWay}"/><!--
+                                        --><Run Text="€"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
 
                             <StackPanel Grid.Column="4" VerticalAlignment="Center" Margin="10 0">
                                 <TextBlock FontWeight="Bold" HorizontalAlignment="Right" FontSize="15">
                                     <Run Text="Cap:"/>
-                                    <Run Text="{x:Bind Raw.MKTCAP, FallbackValue=0}"/>
+                                    <Run Text="{x:Bind CoinInfo.MarketCap, Mode=OneWay}"/><!--
+                                    --><Run Text="{x:Bind CoinInfo.Currency, Mode=OneWay}"/>
                                 </TextBlock>
                                 <TextBlock FontWeight="Light" HorizontalAlignment="Right" Opacity="0.7" FontSize="15">
                                     <Run Text="Vol:"/>
-                                    <Run Text="{x:Bind Raw.TOTALVOLUME24H, Mode=OneWay, FallbackValue=0}"/>
+                                    <Run Text="{x:Bind CoinInfo.Volume, Mode=OneWay}"/><!--
+                                    --><Run Text="{x:Bind CoinInfo.Currency, Mode=OneWay}"/>
                                 </TextBlock>
                             </StackPanel>
                         </Grid>
 
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                
+
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
 
                     </Style>
                 </ListView.ItemContainerStyle>
-				
-				<!-- For previsualization purposes -->
-				<d:Rectangle/>
-			</ListView>
+
+                <!-- For previsualization purposes -->
+                <d:Rectangle/>
+            </ListView>
 
         </ScrollViewer>
-
-        <controls:InAppNotification 
-            x:Name="inAppNotification"
-            Grid.Row="1" ShowDismissButton="False"
-            AnimationDuration="00:00:00.300"
-            VerticalOffset="100" HorizontalOffset="0"
-            StackMode="StackInFront" CornerRadius="7"/>
 
     </Grid>
 </Page>

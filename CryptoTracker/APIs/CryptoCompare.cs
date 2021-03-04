@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.APIs {
 	class CryptoCompare {
@@ -170,24 +171,27 @@ namespace CryptoTracker.APIs {
 
                 for (int i = 0; i < limit; i++) {
                     var _coinInfo = data[i].GetProperty("CoinInfo");
-                    var rawExists = data[i].TryGetProperty("RAW", out var _raw);
+                    var coinInfo = JsonSerializer.Deserialize<CoinInfo>(_coinInfo.ToString());
 
                     Raw raw = new Raw();
+                    var rawExists = data[i].TryGetProperty("RAW", out var _raw);
                     if (rawExists) {
                         _raw = _raw.GetProperty(currency.ToUpperInvariant());
                         raw = JsonSerializer.Deserialize<Raw>(_raw.ToString());
                     }
 
-                    var coinInfo = JsonSerializer.Deserialize<CoinInfo>(_coinInfo.ToString());
+                    
 
                     /// quick fixes
                     coinInfo.ImageUrl = IconsHelper.GetIcon(coinInfo.Name);
                     coinInfo.Rank = i + 1;
                     coinInfo.FavIcon = App.pinnedCoins.Contains(coinInfo.Name) ? "\uEB52" : "\uEB51";
-
-                    //raw.MKTCAP = NumberHelper.AddUnitPrefix(raw.MKTCAP);
+                    coinInfo.ChangeFG = (raw.CHANGE24HOUR < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
+                    coinInfo.MarketCap = NumberHelper.AddUnitPrefix(raw.MKTCAP);
+                    coinInfo.Volume = NumberHelper.AddUnitPrefix(raw.TOTALVOLUME24HTO);
+                    raw.CHANGEPCT24HOUR = NumberHelper.Rounder(raw.CHANGEPCT24HOUR);
+                    raw.CHANGE24HOUR = NumberHelper.Rounder(raw.CHANGE24HOUR);
                     raw.PRICE = NumberHelper.Rounder(raw.PRICE);
-                    //raw.TOTALVOLUME24H = NumberHelper.AddUnitPrefix(raw.TOTALVOLUME24H);
 
                     top100.Add(new Top100card() {
                         CoinInfo = coinInfo,
