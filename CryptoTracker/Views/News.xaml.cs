@@ -35,14 +35,13 @@ namespace CryptoTracker.Views {
         /// ###############################################################################################
         internal async Task UpdateNews() {
             NewsAdaptiveGridView.IsItemClickEnabled = false;
-            vm.News = Enumerable.Repeat(new NewsData(), 30).ToList();
             vm.News = await CryptoCompare.GetNews(vm.Filters);
             NewsAdaptiveGridView.IsItemClickEnabled = true;
         }
 
         private void NewsItem_Click(object sender, ItemClickEventArgs e) {
             NewsAdaptiveGridView.PrepareConnectedAnimation("toWebView", e.ClickedItem, "GridView_Element");
-            this.Frame.Navigate(typeof(WebVieww), ((NewsData)e.ClickedItem).url);
+            this.Frame.Navigate(typeof(WebVieww), ((NewsData)e.ClickedItem));
         }
 
         /// ###############################################################################################

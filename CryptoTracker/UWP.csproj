@@ -155,6 +155,7 @@
     <Compile Include="ViewModels\PortfolioViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Top100ViewModel.cs" />
+    <Compile Include="ViewModels\WebViewViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
