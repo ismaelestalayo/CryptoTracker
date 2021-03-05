@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     mc:Ignorable="d"
     d:DesignHeight="150"
     d:DesignWidth="400">
@@ -43,6 +44,9 @@
                     <Run Text="{x:Bind Message, Mode=OneWay, FallbackValue=''}"/>
                 </TextBlock>
             </muxc:InfoBar.Content>
+            <muxc:InfoBar.IconSource>
+                <muxc:FontIconSource FontFamily="Segoe UI Emoji" Glyph="&#x1F680;" FontSize="15"/>
+            </muxc:InfoBar.IconSource>
         </muxc:InfoBar>
     </controls:DropShadowPanel>
 </UserControl>

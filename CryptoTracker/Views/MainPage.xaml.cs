@@ -82,18 +82,10 @@ namespace CryptoTracker {
             var lastVersion = App._LocalSettings.Get<string>(UserSettingsConstants.LastVersion);
             if (version == lastVersion)
                 return;
-            vm.InfoBarTitle = $"Welcome to CryptoTracker v{version} 🚀";
+            vm.InfoBarTitle = $"Welcome to CryptoTracker v{version}";
             vm.InfoBarMessage = "New in this version:\n";
 
-            List<string> changelog = new List<string>() {
-                "Faster launch",
-                "Polished UI",
-                "More granular charts (1h/4h/1d...)",
-                "Added automatic refresh of 30secs",
-                "Coins: New Compact Overlay",
-                "Portfolio: ability to clone and add notes to purchases"
-            };
-            foreach (var change in changelog)
+            foreach (var change in Changelogs.CurrentChangelog)
                 vm.InfoBarMessage += $"  • {change} \n";
 
             vm.InfoBarOpened = true;

@@ -114,6 +114,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Constants\Changelogs.cs" />
     <Compile Include="Constants\UserSettingsConstants.cs" />
     <Compile Include="Helpers\API_CoinGecko.cs" />
     <Compile Include="Helpers\NumberHelper.cs" />
