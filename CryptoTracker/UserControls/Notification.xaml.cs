@@ -7,8 +7,6 @@ using Windows.UI.Xaml.Controls;
 namespace CryptoTracker.UserControls {
     public sealed partial class Notification : UserControl {
 
-        private ThreadPoolTimer PeriodicTimer;
-
         public Notification() {
             this.InitializeComponent();
         }
@@ -27,7 +25,15 @@ namespace CryptoTracker.UserControls {
 
         public string Title {
             get => (string)GetValue(TitleProperty);
-            set => SetValue(TitleProperty, value);
+            set {
+                SetValue(TitleProperty, value);
+                if (Message == "")
+                    ThreadPoolTimer.CreateTimer(async (source) => {
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                            IsOpen = false;
+                        });
+                    }, TimeSpan.FromSeconds(3));
+            }
         }
 
         public string Message {
@@ -35,12 +41,6 @@ namespace CryptoTracker.UserControls {
             set {
                 SetValue(MessageProperty, value);
                 MessageHeight = (value == "") ? 0 : double.NaN;
-                if (value == "")
-                    ThreadPoolTimer.CreateTimer(async (source) => {
-                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                            IsOpen = false;
-                        });
-                    }, TimeSpan.FromSeconds(3));
             }
         }
 
