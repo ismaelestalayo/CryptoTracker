@@ -68,12 +68,11 @@ namespace CryptoTracker {
                     NavView.SelectedItem = NavView.MenuItems[0];
                     break;
             }
-            await FirstRunDialogHelper.ShowIfAppropriateAsync();
             ShowChangelog();
         }
 
         /// <summary>
-        /// Show FirstRunDialog to new users, and a notification with the changelog.
+        /// Show a notification with the changelog to new users.
         /// </summary>
         private async void ShowChangelog() {
             var v = Package.Current.Id.Version;
