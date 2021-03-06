@@ -115,20 +115,24 @@
         #################################################################################################### -->
         <RelativePanel BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Orientation="Horizontal">
-				<Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
+				<Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconNULL.png" 
                     Margin="5" VerticalAlignment="Center" Width="25"/>
-				<TextBlock Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
+				<TextBlock
+                    d:Text="COIN"
+                    Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
                     VerticalAlignment="Stretch" FontWeight="Bold">
 					<Run Text="{x:Bind vm.Coin.FullName}"/>
 					<Run Text="("/><Run Text="{x:Bind vm.Coin.Name}"/><Run Text=")"/>
 				</TextBlock>
                 <Button
-                    Margin="5 0" Padding="5 0" Height="32" FontFamily="Segoe MDL2 Assets"
+                    d:Content="&#xEB51;"
+                    Margin="5 0" Padding="5 0" Height="32" FontFamily="{StaticResource FluentIconFont}"
                     FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
                     x:Name="FavIcon" Click="PinCoin_btn"/>
 
-				<Button 
-                    Margin="5 0" Padding="5 0" Height="32" FontFamily="Segoe MDL2 Assets"
+				<Button
+                    d:Visibility="Visible"
+                    Margin="5 0" Padding="5 0" Height="32" FontFamily="{StaticResource FluentIconFont}"
                     FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
                     x:Name="CompactOverlay_btn" Click="CompactOverlay_btn_click" Visibility="Collapsed">
 					<SymbolIcon Symbol="BackToWindow"/>

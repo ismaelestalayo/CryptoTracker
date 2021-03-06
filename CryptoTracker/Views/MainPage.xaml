@@ -36,14 +36,25 @@
             IsBackButtonVisible="Collapsed" PaneDisplayMode="Top"
             ItemInvoked="NavView_ItemInvoked"
             SelectionChanged="NavView_SelectionChanged">
-
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Home" Content="Home" Tag="home" FontWeight="Light"/>
-                <NavigationViewItem Icon="AllApps" Content="Top 100" Tag="top" FontWeight="Light"/>
-                <NavigationViewItem Icon="PreviewLink"  Content="News" Tag="news" FontWeight="Light"/>
+                <NavigationViewItem Content="Home" Tag="home" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE10F;"/> <!-- Home -->
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Top 100" Tag="top" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE179;"/> <!-- All Apps -->
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem  Content="News" Tag="news" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE12A;"/> <!-- Preview link -->
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem Content="Portfolio" Tag="portfolio" FontWeight="Light">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEAFC;" />
+                        <FontIcon Glyph="&#xEAFC;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
@@ -76,20 +87,27 @@
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
                     <NavigationViewItem
-                        Icon="Find" Tapped="NavView_Search_Tapped"
-                        Visibility="{x:Bind CoinAutoSuggestBox.Visibility, Mode=OneWay, Converter={StaticResource VisibilityInverter}}"/>
+                        Tapped="NavView_Search_Tapped"
+                        Visibility="{x:Bind CoinAutoSuggestBox.Visibility, Mode=OneWay, Converter={StaticResource VisibilityInverter}}">
+                        <NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xE11A;"/> <!-- Find -->
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
                     <NavigationViewItem>
                         <RelativePanel Margin="-15 0 0 0">
                             <NavigationViewItem
-                                x:Name="SyncIcon" Icon="Sync"
-                                Tapped="NavView_Sync_Tapped" Visibility="Visible"/>
+                                x:Name="SyncIcon"
+                                Tapped="NavView_Sync_Tapped">
+                                <NavigationViewItem.Icon>
+                                    <FontIcon Glyph="&#xE117;"/> <!-- Find -->
+                                </NavigationViewItem.Icon>
+                            </NavigationViewItem>
                             <ProgressRing
                                 x:Name="SyncLoading" IsActive="True"
                                 Height="24" Margin="10" Width="28"
                                 Visibility="{x:Bind SyncIcon.Visibility, Mode=OneWay, Converter={StaticResource VisibilityInverter}}"/>
                         </RelativePanel>
                     </NavigationViewItem>
-
                 </StackPanel>
             </NavigationView.PaneFooter>
 

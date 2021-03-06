@@ -15,11 +15,12 @@
             <SolidColorBrush x:Key="coinColor" Color="#2A2A2A"/>
             <SolidColorBrush x:Key="coinColorT" Color="#2A2A2A" Opacity="0.4"/>
             
+            <FontFamily x:Key="FluentIconFont">/Assets/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
             <!-- Manually override default "Segoe MDL2 Assets" font-->
-            <Style TargetType="FontIcon" x:Key="SymbolThemeFontFamily">
-                <Setter Property="FontFamily" Value="/Assets/SegoeFluentIcons.ttf#Segoe Fluent Icons"/>
+            <Style TargetType="FontIcon">
+                <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
             </Style>
-            <FontFamily x:Key="FluentIcon">/Assets/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
+            
 
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">

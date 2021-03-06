@@ -21,13 +21,13 @@
         </Style>
 
         <Style TargetType="FontIcon" x:Key="ClassFontIcon">
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
-            <Setter Property="Margin" Value="0 0 10 0"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="FontFamily" Value="{StaticResource FluentIcon}"/>
+            <Setter Property="Margin" Value="0 0 10 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
-            <Setter Property="TextLineBounds" Value="Tight"></Setter>
-            <Setter Property="Margin" Value="0 10"></Setter>
+            <Setter Property="TextLineBounds" Value="Tight"/>
+            <Setter Property="Margin" Value="0 10"/>
         </Style>
     </Page.Resources>
 

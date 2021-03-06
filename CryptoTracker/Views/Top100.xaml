@@ -126,13 +126,13 @@
                             </TextBlock>
 
                             <Button
+                                d:Content="&#xEB51;"
 								Background="Transparent"
 								Click="Pin_click"
 								Content="{x:Bind CoinInfo.FavIcon, Mode=OneWay}"
-								FontFamily="Segoe MDL2 Assets"
+								FontFamily="{StaticResource FluentIconFont}"
 								Grid.Column="1"
-								VerticalAlignment="Center"
-								d:Content="x"/>
+								VerticalAlignment="Center"/>
 
                             <Image 
                                 Grid.Column="2" 
