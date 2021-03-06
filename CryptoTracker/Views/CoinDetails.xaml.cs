@@ -115,6 +115,8 @@ namespace CryptoTracker {
             await UpdateCoin();
             await Get24Volume();
             //CryptoCompare.GetExchanges(crypto);
+
+            LiveTile.UpdateLiveTile(PriceChart);
         }
 
         /// #########################################################################################

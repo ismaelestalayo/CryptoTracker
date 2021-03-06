@@ -147,8 +147,6 @@ namespace CryptoTracker {
             }
 
             SyncIcon.Visibility = Visibility.Visible;
-            //LiveTile l = new LiveTile();
-            //l.UpdateLiveTile();
         }
 
         /// #########################################################################################

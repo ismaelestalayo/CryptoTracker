@@ -321,8 +321,7 @@
             <TextBlock
                 FontWeight="Light" FontSize="16"
                 HorizontalAlignment="Center"
-                Text="Try adding a purchase." Opacity="0.7"
-                Style="{ThemeResource ListViewTextBlock}"/>
+                Text="Try adding a purchase." Opacity="0.7"/>
         </StackPanel>
 
 
