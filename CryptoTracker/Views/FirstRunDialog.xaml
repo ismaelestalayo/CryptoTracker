@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="380"
+    d:DesignHeight="400"
     d:DesignWidth="550"
     CornerRadius="4"
     PrimaryButtonText="Ok">
@@ -24,15 +24,16 @@
                 <Run Text="New in this version: &#x1F680; &#x0a;"/>
                 
                 <Run FontWeight="Light"
-                     Text="• Scrollbars visible for better accessibility.
+                     Text="• Fixed Portfolio scrollbar.
                      "/> 
                 <LineBreak/>
                 <LineBreak/>
                 
                 <Run FontWeight="Light">
                     I'm working on a big v6.0 update that will launch in a few months,
-                    so send me an email with any feature request (and if you want to know
-                    what's coming, keep an eye on my Twitter.
+                    so send me an email with any feature request or if you want to be
+                    part of the beta testing. (And keep an eye on my Twitter to see 
+                    what's coming.)
                 </Run> <LineBreak/>
                 
                 <LineBreak/>
