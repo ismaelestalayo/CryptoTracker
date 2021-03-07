@@ -27,60 +27,60 @@ namespace CryptoTracker.Helpers {
     }
 
     public class CurrencyDoubleArray {
-        public double aed { get; set; }
-        public double ars { get; set; }
-        public double aud { get; set; }
-        public double bch { get; set; }
-        public double bdt { get; set; }
-        public double bhd { get; set; }
-        public double bmd { get; set; }
-        public double bnb { get; set; }
-        public double brl { get; set; }
-        public double btc { get; set; }
-        public double cad { get; set; }
-        public double chf { get; set; }
-        public double clp { get; set; }
-        public double cny { get; set; }
-        public double czk { get; set; }
-        public double dkk { get; set; }
-        public double eos { get; set; }
-        public double eth { get; set; }
-        public double eur { get; set; }
-        public double gbp { get; set; }
-        public double hkd { get; set; }
-        public double huf { get; set; }
-        public double idr { get; set; }
-        public double ils { get; set; }
-        public double inr { get; set; }
-        public double jpy { get; set; }
-        public double krw { get; set; }
-        public double kwd { get; set; }
-        public double lkr { get; set; }
-        public double ltc { get; set; }
-        public double mmk { get; set; }
-        public double mxn { get; set; }
-        public double myr { get; set; }
-        public double nok { get; set; }
-        public double nzd { get; set; }
-        public double php { get; set; }
-        public double pkr { get; set; }
-        public double pln { get; set; }
-        public double rub { get; set; }
-        public double sar { get; set; }
-        public double sek { get; set; }
-        public double sgd { get; set; }
-        public double thb { get; set; }
-        public double twd { get; set; }
-        public double uah { get; set; }
-        public double usd { get; set; }
-        public double vef { get; set; }
-        public double vnd { get; set; }
-        public double xag { get; set; }
-        public double xau { get; set; }
-        public double xdr { get; set; }
-        public double xlm { get; set; }
-        public double xrp { get; set; }
-        public double zar { get; set; }
+        public double aed { get; set; } = 0;
+        public double ars { get; set; } = 0;
+        public double aud { get; set; } = 0;
+        public double bch { get; set; } = 0;
+        public double bdt { get; set; } = 0;
+        public double bhd { get; set; } = 0;
+        public double bmd { get; set; } = 0;
+        public double bnb { get; set; } = 0;
+        public double brl { get; set; } = 0;
+        public double btc { get; set; } = 0;
+        public double cad { get; set; } = 0;
+        public double chf { get; set; } = 0;
+        public double clp { get; set; } = 0;
+        public double cny { get; set; } = 0;
+        public double czk { get; set; } = 0;
+        public double dkk { get; set; } = 0;
+        public double eos { get; set; } = 0;
+        public double eth { get; set; } = 0;
+        public double eur { get; set; } = 0;
+        public double gbp { get; set; } = 0;
+        public double hkd { get; set; } = 0;
+        public double huf { get; set; } = 0;
+        public double idr { get; set; } = 0;
+        public double ils { get; set; } = 0;
+        public double inr { get; set; } = 0;
+        public double jpy { get; set; } = 0;
+        public double krw { get; set; } = 0;
+        public double kwd { get; set; } = 0;
+        public double lkr { get; set; } = 0;
+        public double ltc { get; set; } = 0;
+        public double mmk { get; set; } = 0;
+        public double mxn { get; set; } = 0;
+        public double myr { get; set; } = 0;
+        public double nok { get; set; } = 0;
+        public double nzd { get; set; } = 0;
+        public double php { get; set; } = 0;
+        public double pkr { get; set; } = 0;
+        public double pln { get; set; } = 0;
+        public double rub { get; set; } = 0;
+        public double sar { get; set; } = 0;
+        public double sek { get; set; } = 0;
+        public double sgd { get; set; } = 0;
+        public double thb { get; set; } = 0;
+        public double twd { get; set; } = 0;
+        public double uah { get; set; } = 0;
+        public double usd { get; set; } = 0;
+        public double vef { get; set; } = 0;
+        public double vnd { get; set; } = 0;
+        public double xag { get; set; } = 0;
+        public double xau { get; set; } = 0;
+        public double xdr { get; set; } = 0;
+        public double xlm { get; set; } = 0;
+        public double xrp { get; set; } = 0;
+        public double zar { get; set; } = 0;
     }
 
     public class CurrencyDateArray {
