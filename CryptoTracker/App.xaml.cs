@@ -10,10 +10,12 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.System.UserProfile;
 using Windows.UI;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
@@ -36,6 +38,8 @@ namespace CryptoTracker {
         internal static string CurrentPage = "";
         internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
         internal static List<string> pinnedCoins;
+
+        internal static CultureInfo UserCulture = new CultureInfo(GlobalizationPreferences.Languages[0]);
 
         public App() {
             string _theme = _LocalSettings.Get<string>(UserSettingsConstants.Theme);

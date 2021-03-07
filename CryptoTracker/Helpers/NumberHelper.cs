@@ -5,20 +5,18 @@ namespace CryptoTracker.Helpers {
 	class NumberHelper {
         public static string AddUnitPrefix(double num) {
             if (num > 999999999) {
-                return num.ToString("0,,,.##B", CultureInfo.InvariantCulture);
+                return num.ToString("0,,,.##B", App.UserCulture);
             }
-            else
-            if (num > 999999) {
-                return num.ToString("0,,.##M", CultureInfo.InvariantCulture);
+            else if (num > 999999) {
+                return num.ToString("0,,.##M", App.UserCulture);
             }
-            else
-            if (num > 999) {
+            else if (num > 999) {
                 num = Math.Round(num, 2);
-                return num.ToString(CultureInfo.InvariantCulture);
+                return num.ToString(App.UserCulture);
             }
             else {
                 num = Math.Round(num, 3);
-                return num.ToString(CultureInfo.InvariantCulture);
+                return num.ToString(App.UserCulture);
             }
         }
 

@@ -8,6 +8,14 @@ namespace CryptoTracker.Helpers {
         public static string ShortenDateTime(DateTime date) => date.ToShortDateString();
     }
 
+    public class GeneralNumberConverter : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => ((double)val).ToString("N", App.UserCulture);
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
     public class VisibilityInverter : IValueConverter {
         public object Convert(object value, Type targetType, object param, string language)  => (Visibility)value == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         public object ConvertBack(object value, Type targetType, object param, string language) => throw new NotImplementedException();

@@ -22,6 +22,7 @@
         <helpers:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
         <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
         <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
+        <helpers:GeneralNumberConverter x:Key="GeneralConv"/>
     </Page.Resources>
 
 	<!-- 
@@ -132,7 +133,8 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0">
 								<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
-									<Run Text="{x:Bind Info.Price, Mode=OneWay}" d:Text="0"/><!--
+									<Run Text="{x:Bind Info.Price, Mode=OneWay,
+                                        Converter={StaticResource GeneralConv}}" d:Text="0"/><!--
 									--><Run Text="{x:Bind Info.Currency, Mode=OneWay}" d:Text="€"/>
 								</TextBlock>
 								<TextBlock
