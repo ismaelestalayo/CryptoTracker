@@ -36,7 +36,7 @@ namespace CryptoTracker {
                 CompactOverlay_btn.Visibility = Visibility.Visible;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
+        protected override async void OnNavigatedTo(NavigationEventArgs e) {
             /// Create the connected animation
             var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
             if (animation != null)
@@ -62,6 +62,7 @@ namespace CryptoTracker {
                         var coin = App.coinList.Find(x => x.symbol == vm.Coin.Name);
                         vm.Coin.FullName = coin.name;
                         FavIcon.Content = vm.Coin.IsFav ? "\uEB52" : "\uEB51";
+                        vm.CoinInfo = await API_CoinGecko.GetCoin(coin.name);
                         // TODO: update info and market info
                         break;
                     case nameof(CoinCompactViewModel):
@@ -69,7 +70,7 @@ namespace CryptoTracker {
                         vm.Coin = ((CoinCompactViewModel)e.Parameter).Info;
                         timeSpan = vm.Chart.TimeSpan;
                         (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
-                        UpdateCoin();
+                        await UpdateCoin();
                         break;
                     default:
                     case "string":
@@ -85,7 +86,7 @@ namespace CryptoTracker {
 
             }
             catch (Exception ex){
-                var message = "There was an error loading that coin. Try again later.";
+                var message = $"There was an error loading that coin. Try again later.\n\n{ex.Message}";
                 new MessageDialog(message).ShowAsync();
             }
         }
