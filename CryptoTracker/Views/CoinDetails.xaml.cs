@@ -115,8 +115,6 @@ namespace CryptoTracker {
             await UpdateCoin();
             await Get24Volume();
             //CryptoCompare.GetExchanges(crypto);
-
-            LiveTile.UpdateLiveTile(PriceChart);
         }
 
         /// #########################################################################################
@@ -168,7 +166,7 @@ namespace CryptoTracker {
         }
 
         // #########################################################################################
-        private void PinCoin_btn(object sender, RoutedEventArgs e) {
+        private void FavCoin_btn(object sender, RoutedEventArgs e) {
             var crypto = vm.Coin.Name;
             if (!App.pinnedCoins.Contains(crypto)) {
                 App.pinnedCoins.Add(crypto);
@@ -203,6 +201,12 @@ namespace CryptoTracker {
             vm.Chart.TimeSpan = timeSpan;
 
             UpdatePage();
+        }
+
+        private void PinCoin_btn_click(object sender, RoutedEventArgs e) {
+            bool check = (bool)PinCoin_togglebtn.IsChecked;
+            LiveTile.UpdateLiveTile(PriceChart);
+            PinCoin_togglebtn.Content = check ? new FontIcon() { Glyph = "&#xE840;" } : new FontIcon() { Glyph = "&#xE196;" };
         }
     }
 }

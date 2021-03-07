@@ -115,10 +115,10 @@
         #################################################################################################### -->
         <RelativePanel BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Orientation="Horizontal">
-				<Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconNULL.png" 
+				<Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
                     Margin="5" VerticalAlignment="Center" Width="25"/>
 				<TextBlock
-                    d:Text="COIN"
+                    d:Text="Bitcoin (BTC)"
                     Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
                     VerticalAlignment="Stretch" FontWeight="Bold">
 					<Run Text="{x:Bind vm.Coin.FullName}"/>
@@ -128,16 +128,22 @@
                     d:Content="&#xEB51;"
                     Margin="5 0" Padding="5 0" Height="32" FontFamily="{StaticResource FluentIconFont}"
                     FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
-                    x:Name="FavIcon" Click="PinCoin_btn"/>
-
-				<Button
+                    x:Name="FavIcon" Click="FavCoin_btn"/>
+                <ToggleButton
+                    x:Name="PinCoin_togglebtn"
+                    Margin="5 0" Padding="5 0" Height="32"
+                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
+                    Click="PinCoin_btn_click">
+                    <FontIcon Glyph="&#xE840;"/>
+                </ToggleButton>
+                <Button
                     d:Visibility="Visible"
                     Margin="5 0" Padding="5 0" Height="32" FontFamily="{StaticResource FluentIconFont}"
                     FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
                     x:Name="CompactOverlay_btn" Click="CompactOverlay_btn_click" Visibility="Collapsed">
-					<SymbolIcon Symbol="BackToWindow"/>
-				</Button>
-			</StackPanel>
+                    <SymbolIcon Symbol="BackToWindow"/>
+                </Button>
+            </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5 0" RelativePanel.AlignRightWithPanel="True">
 				<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
