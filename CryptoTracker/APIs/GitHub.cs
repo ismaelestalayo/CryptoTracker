@@ -8,10 +8,10 @@ using Windows.UI.Popups;
 
 namespace CryptoTracker.APIs {
 	public class CoinBasicInfo {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string symbol { get; set; }
-        public int rank { get; set; }
+        public int id { get; set; } = 0;
+        public string name { get; set; } = "NULL";
+        public string symbol { get; set; } = "NULL";
+        public int rank { get; set; } = 0;
     }
 
     class GitHub {
