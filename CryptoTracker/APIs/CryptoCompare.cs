@@ -206,6 +206,38 @@ namespace CryptoTracker.APIs {
         }
 
         /* ###############################################################################################
+         * Gets the top 100 coins (by marketcap)
+         * 
+         * Arguments: none
+         * 
+        */
+        internal async static Task<Raw> GetCoinStats(string crypto) {
+            var currency = App.currency.ToUpperInvariant();
+            crypto = crypto.ToUpperInvariant();
+
+            var URL = string.Format("https://min-api.cryptocompare.com/data/pricemultifull?fsyms={0}&tsyms={1}&e=CCCAGG",
+                crypto, currency);
+
+            try {
+                var responseString = await App.GetStringFromUrlAsync(URL);
+                var response = JsonSerializer.Deserialize<object>(responseString);
+                var data = ((JsonElement)response).GetProperty("RAW").GetProperty(crypto).GetProperty(currency);
+                var raw = JsonSerializer.Deserialize<Raw>(data.ToString());
+
+                /// quick fixes
+                raw.PRICE = NumberHelper.Rounder(raw.PRICE);
+                raw.CHANGEPCT24HOUR = NumberHelper.Rounder(raw.CHANGEPCT24HOUR);
+                raw.CHANGE24HOUR = NumberHelper.Rounder(raw.CHANGE24HOUR);
+                raw.PRICE = NumberHelper.Rounder(raw.PRICE);
+                
+                return raw;
+            }
+            catch (Exception ex) {
+                return new Raw();
+            }
+        }
+
+        /* ###############################################################################################
          * Gets the latest news or its categories
          * 
          * Arguments:
