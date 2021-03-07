@@ -45,7 +45,7 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Margin" Value="15 0 50 0"/>
         </Style>
-        <helpers:DateTimeShortener x:Key="DateTimeShortener"/>
+        <helpers:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
         <helpers:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
         <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
         <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
@@ -278,7 +278,7 @@
                             <!-- Third Row-->
                             <TextBlock Grid.Row="2" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Date:"/>
                             <TextBlock Grid.Row="2" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Date, Mode=OneWay, Converter={StaticResource DateTimeShortener}}"/>
+                                <Run Text="{Binding Date, Mode=OneWay, Converter={StaticResource DateOffsetShortener}}"/>
                             </TextBlock>
 
                             <TextBlock Grid.Row="2" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Exchange:"/>
