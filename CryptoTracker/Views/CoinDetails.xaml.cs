@@ -37,6 +37,10 @@ namespace CryptoTracker {
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
+            /// If list is empty
+            if (App.coinList.Count == 0)
+                await App.GetCoinList();
+
             /// Create the connected animation
             var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
             if (animation != null)
@@ -61,9 +65,8 @@ namespace CryptoTracker {
 
                         var coin = App.coinList.Find(x => x.symbol == vm.Coin.Name);
                         vm.Coin.FullName = coin.name;
-                        FavIcon.Content = vm.Coin.IsFav ? "\uEB52" : "\uEB51";
+                        Fav_btn.Content = vm.Coin.IsFav ? "\uEB52" : "\uEB51";
                         vm.CoinInfo = await API_CoinGecko.GetCoin(coin.name);
-                        // TODO: update info and market info
                         break;
                     case nameof(CoinCompactViewModel):
                         vm.Chart = ((CoinCompactViewModel)e.Parameter).Chart;
@@ -76,9 +79,9 @@ namespace CryptoTracker {
                     case "string":
                         var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
                         vm.Coin.Name = crypto;
-                        var _coin = App.coinList.Find(x => x.symbol == crypto);
+                        var _coin = App.coinList.Find(x => x.symbol == crypto) ?? new CoinBasicInfo();
                         vm.Coin.FullName = _coin?.name ?? "NULL";
-                        FavIcon.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
+                        Fav_btn.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
 
                         InitValuesFromZero(_coin);
                         break;
@@ -167,18 +170,18 @@ namespace CryptoTracker {
         }
 
         // #########################################################################################
-        private void FavCoin_btn(object sender, RoutedEventArgs e) {
+        private void FavCoin_click(object sender, RoutedEventArgs e) {
             var crypto = vm.Coin.Name;
             if (!App.pinnedCoins.Contains(crypto)) {
                 App.pinnedCoins.Add(crypto);
                 //Home.AddCoinHome(crypto);
-                FavIcon.Content = "\uEB52";
+                Fav_btn.Content = "\uEB52";
                 vm.InAppNotification($"{crypto} pinned to home.");
             }
             else {
                 //Home.RemoveCoinHome(crypto);
                 App.pinnedCoins.Remove(crypto);
-                FavIcon.Content = "\uEB51";
+                Fav_btn.Content = "\uEB51";
                 vm.InAppNotification($"{crypto} unpinned from home.");
             }
         }
@@ -204,10 +207,14 @@ namespace CryptoTracker {
             UpdatePage();
         }
 
-        private void PinCoin_btn_click(object sender, RoutedEventArgs e) {
-            bool check = (bool)PinCoin_togglebtn.IsChecked;
-            LiveTile.UpdateLiveTile(PriceChart);
-            PinCoin_togglebtn.Content = check ? new FontIcon() { Glyph = "&#xE840;" } : new FontIcon() { Glyph = "&#xE196;" };
+        private async void PinCoin_click(object sender, RoutedEventArgs e) {
+            var kk = new ChartArea() { ChartModel = vm.Chart };
+            kk.ChartModel.ChartStroke = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
+            kk.Opacity = 0;
+            MainGrid.Children.Add(kk);
+            await LiveTileHelper.AddSecondaryTile(vm.Coin.Name, kk);
+            MainGrid.Children.Remove(kk);
+            //PinCoin_togglebtn.Content = check ? new FontIcon() { Glyph = "&#xE840;" } : new FontIcon() { Glyph = "&#xE196;" };
         }
     }
 }

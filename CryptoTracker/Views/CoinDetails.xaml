@@ -126,17 +126,17 @@
 					<Run Text="("/><Run Text="{x:Bind vm.Coin.Name}"/><Run Text=")"/>
 				</TextBlock>
                 <Button
-                    d:Content="&#xEB51;"
+                    x:Name="Fav_btn" d:Content="&#xEB51;"
+                    Click="FavCoin_click"
                     Margin="5 0" Padding="5 0" Height="32" FontFamily="{StaticResource FluentIconFont}"
-                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
-                    x:Name="FavIcon" Click="FavCoin_btn"/>
-                <ToggleButton
-                    x:Name="PinCoin_togglebtn"
+                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"/>
+                <Button
+                    x:Name="Pin_btn"
+                    Click="PinCoin_click"
                     Margin="5 0" Padding="5 0" Height="32"
-                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
-                    Click="PinCoin_btn_click">
+                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center">
                     <FontIcon Glyph="&#xE840;"/>
-                </ToggleButton>
+                </Button>
                 <Button
                     d:Visibility="Visible"
                     Margin="5 0" Padding="5 0" Height="32" FontFamily="{StaticResource FluentIconFont}"
