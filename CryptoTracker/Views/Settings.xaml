@@ -19,12 +19,6 @@
             <Setter Property="FontWeight" Value="ExtraLight"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
-
-        <Style TargetType="FontIcon" x:Key="ClassFontIcon">
-            <Setter Property="FontFamily" Value="{StaticResource FluentIcon}"/>
-            <Setter Property="Margin" Value="0 0 10 0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
         <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="TextLineBounds" Value="Tight"/>
             <Setter Property="Margin" Value="0 10"/>
@@ -58,7 +52,7 @@
                 <!-- CURRENCY
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon  Glyph="&#xE909;" Style="{ThemeResource ClassFontIcon}"/>
+                    <FontIcon  Glyph="&#xE909;" Margin="0 0 10 0"/>
                     <TextBlock Text="Currency" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
@@ -84,7 +78,7 @@
                 <!-- APPEARANCE
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon Glyph="&#xE703;" Style="{ThemeResource ClassFontIcon}"/>
+                    <FontIcon Glyph="&#xE703;" Margin="0 0 10 0"/>
                     <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
                 
@@ -101,7 +95,7 @@
                 <!-- CLOUD SYNC
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon Glyph="&#xE753;" Style="{ThemeResource ClassFontIcon}"/>
+                    <FontIcon Glyph="&#xE753;" Margin="0 0 10 0"/>
                     <TextBlock Text="Cloud sync" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
@@ -123,7 +117,7 @@
                 <!-- FEEDBACK
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon Glyph="&#xE724;" Style="{ThemeResource ClassFontIcon}"/>
+                    <FontIcon Glyph="&#xE724;" Margin="0 0 10 0"/>
                     <TextBlock Text="Feedback" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
@@ -155,7 +149,7 @@
                 <!-- MENTION
                 /////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 5">
-                    <FontIcon Glyph="&#xE90A;" Style="{ThemeResource ClassFontIcon}"/>
+                    <FontIcon Glyph="&#xE90A;" Margin="0 0 10 0"/>
                     <TextBlock Text="Mention" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
 
