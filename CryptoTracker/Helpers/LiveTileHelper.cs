@@ -1,47 +1,45 @@
-﻿using NotificationsExtensions;
+﻿using CryptoTracker.APIs;
+using NotificationsExtensions;
 using NotificationsExtensions.Tiles;
 using System;
+using System.Globalization;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.UI.Notifications;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.StartScreen;
-using System.Threading.Tasks;
-using CryptoTracker.APIs;
-using System.Globalization;
 
 namespace CryptoTracker {
-    class LiveTile {
+    class LiveTileHelper {
 
-        public static async void UpdateLiveTile(UIElement chart) {
+        public static async Task AddSecondaryTile(string crypto, UIElement chart) {
 
             try {
-                //var rtb = new RenderTargetBitmap();
-                //await rtb.RenderAsync(chart);
-                //var pixelBuffer = await rtb.GetPixelsAsync();
-                //var pixels = pixelBuffer.ToArray();
-                //var displayInformation = DisplayInformation.GetForCurrentView();
+                var rtb = new RenderTargetBitmap();
+                await rtb.RenderAsync(chart);
+                var pixelBuffer = await rtb.GetPixelsAsync();
+                var pixels = pixelBuffer.ToArray();
+                var displayInformation = DisplayInformation.GetForCurrentView();
 
-                //var file = await ApplicationData.Current.LocalFolder.CreateFileAsync("testImage.png", CreationCollisionOption.ReplaceExisting);
-                //using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
-                //    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-                //    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
-                //                         BitmapAlphaMode.Premultiplied,
-                //                         (uint)rtb.PixelWidth,
-                //                         (uint)rtb.PixelHeight,
-                //                         displayInformation.RawDpiX,
-                //                         displayInformation.RawDpiY,
-                //                         pixels);
-                //    await encoder.FlushAsync();
-                //}
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{crypto}.png", CreationCollisionOption.ReplaceExisting);
+                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
+                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+                    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
+                                         BitmapAlphaMode.Premultiplied,
+                                         (uint)rtb.PixelWidth,
+                                         (uint)rtb.PixelHeight,
+                                         displayInformation.RawDpiX,
+                                         displayInformation.RawDpiY,
+                                         pixels);
+                    await encoder.FlushAsync();
+                }
 
-                //SendStockTileNotification("ETH", 1462, 5.65, DateTime.Now);
-
-                await PinSecondaryTile("ETH");
+                await PinSecondaryTile(crypto);
 
             }
             catch (Exception ex) {
@@ -49,7 +47,8 @@ namespace CryptoTracker {
             }
         }
 
-        internal static void SendStockTileNotification(string crypto, double price, double diff, DateTime dateUpdated) {
+        internal static void PinPrimaryTile(string crypto) {
+            //var dateUpdated = DateTime.Now;
             XmlDocument content = GeneratePortfolioTile();
             TileNotification notification = new TileNotification(content) { Tag = crypto };
             TileUpdateManager.CreateTileUpdaterForApplication().Update(notification);
@@ -59,7 +58,6 @@ namespace CryptoTracker {
             var content = new TileContent() {
                 Visual = new TileVisual() {
                     TileMedium = new TileBinding() {
-                        Arguments = "portfolio",
                         Branding = TileBranding.Logo,
                         Content = new TileBindingContentAdaptive() {
                             Children = {
@@ -111,15 +109,18 @@ namespace CryptoTracker {
             return content.GetXml();
         }
 
-        /// ###################################################################
+
+        /// <summary>
+        /// Pin a secondary tile for a specific coin
+        /// </summary>
         private static async Task PinSecondaryTile(string crypto) {
             XmlDocument content = await GenerateCoinTile(crypto);
             TileNotification notification = new TileNotification(content) { Tag = crypto };
             TileUpdateManager.CreateTileUpdaterForSecondaryTile(crypto).Update(notification);
         }
 
+        /// Generate the XML
         private static async Task<XmlDocument> GenerateCoinTile(string crypto) {
-
             var raw = await CryptoCompare.GetCoinStats(crypto);
             var price = raw.PRICE;
             var diff24 = raw.CHANGEPCT24HOUR;
@@ -133,14 +134,14 @@ namespace CryptoTracker {
             SecondaryTile tile = new SecondaryTile(
                 crypto,
                 "CryptoTracker",
-                crypto,
-                new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Small.scale-400_altform-colorful_theme-light.png"),
+                $"/tile-{crypto}",
+                new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Medium.scale-100.png"),
                 TileSize.Wide310x150);
             tile.VisualElements.ShowNameOnSquare150x150Logo = true;
-            tile.VisualElements.ShowNameOnSquare310x310Logo = true;
-            tile.VisualElements.ShowNameOnWide310x150Logo = true;
-            //tile.Logo = new Uri("ms-appx:///Assets/AppIcon-D.png");
-            
+            tile.VisualElements.ShowNameOnSquare310x310Logo = false;
+            tile.VisualElements.ShowNameOnWide310x150Logo = false;
+            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
+
             bool isPinned = await tile.RequestCreateAsync();
             //if (!isPinned)
             //    return;
@@ -149,6 +150,7 @@ namespace CryptoTracker {
             nfi.NumberGroupSeparator = "";
             var content = new TileContent() {
                 Visual = new TileVisual() {
+                    Branding = TileBranding.Logo,
                     TileSmall = new TileBinding() {
                         Content = new TileBindingContentAdaptive() {
                             Children = {
@@ -161,12 +163,8 @@ namespace CryptoTracker {
                                     Text = price.ToString("G5", nfi),
                                     HintStyle = AdaptiveTextStyle.CaptionSubtle,
                                     HintAlign = AdaptiveTextAlign.Right
-                                },
-                            }
-                        }
-                    },
+                                }, } } },
                     TileMedium = new TileBinding() {
-                        Arguments = crypto,
                         Branding = TileBranding.None,
                         Content = new TileBindingContentAdaptive() {
                             Children = {
@@ -191,8 +189,7 @@ namespace CryptoTracker {
                                                 new AdaptiveText() {
                                                     Text = percent1h,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                }
-                                            }
+                                                } }
                                         },
                                         new AdaptiveSubgroup() {
                                             Children = {
@@ -205,67 +202,42 @@ namespace CryptoTracker {
                                                     Text = percent24h,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle,
                                                     HintAlign = AdaptiveTextAlign.Right
-                                                }
-                                            }
-                                        },
-                                    }
-                                },
-                                //new AdaptiveText() {
-                                //    Text = $"24h: {percent24h}",
-                                //    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                //},
-                                //new AdaptiveText() {
-                                //    Text = $"1h: {percent1h}",
-                                //    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                //}
-                            }
-                        }
-                    },
+                                                } } }, } } } } },
                     TileWide = new TileBinding() {
+                        Branding = TileBranding.None,
                         Content = new TileBindingContentAdaptive() {
                             BackgroundImage = new TileBackgroundImage() {
-                                Source = $"{ApplicationData.Current.LocalFolder.Path}/testImage.png",
+                                Source = $"{ApplicationData.Current.LocalFolder.Path}/tile-{crypto}.png",
                                 HintCrop = TileBackgroundImageCrop.None
                             },
+                            TextStacking = TileTextStacking.Top,
                             Children = {
                                 new AdaptiveGroup() {
                                     Children = {
                                         new AdaptiveSubgroup() {
-                                            HintWeight = 1,
-                                            HintTextStacking = AdaptiveSubgroupTextStacking.Center,
                                             Children = {
                                                 new AdaptiveText() {
-                                                    Text = "20%",
-                                                    HintAlign = AdaptiveTextAlign.Left,
-                                                    HintStyle = AdaptiveTextStyle.BaseSubtle
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = "ETH",
+                                                    Text = crypto,
                                                     HintAlign = AdaptiveTextAlign.Left,
                                                     HintStyle = AdaptiveTextStyle.Base
                                                 },
-                                            }
-                                        },
+                                                new AdaptiveText() {
+                                                    Text = $"{arrow11}1h: {percent1h}",
+                                                    HintAlign = AdaptiveTextAlign.Left,
+                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
+                                                }, } },
                                         new AdaptiveSubgroup() {
-                                            HintWeight = 1,
-                                            HintTextStacking = AdaptiveSubgroupTextStacking.Bottom,
                                             Children = {
                                                 new AdaptiveText() {
-                                                    Text = "20%",
-                                                    HintAlign = AdaptiveTextAlign.Right,
-                                                    HintStyle = AdaptiveTextStyle.BaseSubtle
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = "1520€",
+                                                    Text = price.ToString("N") + App.currencySymbol,
                                                     HintAlign = AdaptiveTextAlign.Right,
                                                     HintStyle = AdaptiveTextStyle.Base
                                                 },
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                                                new AdaptiveText() {
+                                                    Text = $"{arrow24}24h: {percent24h}",
+                                                    HintAlign = AdaptiveTextAlign.Right,
+                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
+                                                }, } } } } } }
                     }
                 }
             };

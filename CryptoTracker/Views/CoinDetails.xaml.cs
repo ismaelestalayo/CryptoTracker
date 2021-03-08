@@ -4,6 +4,8 @@ using CryptoTracker.Models;
 using CryptoTracker.UserControls;
 using CryptoTracker.ViewModels;
 using CryptoTracker.Views;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -208,12 +210,34 @@ namespace CryptoTracker {
         }
 
         private async void PinCoin_click(object sender, RoutedEventArgs e) {
-            var kk = new ChartArea() { ChartModel = vm.Chart };
-            kk.ChartModel.ChartStroke = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
-            kk.Opacity = 0;
-            MainGrid.Children.Add(kk);
-            await LiveTileHelper.AddSecondaryTile(vm.Coin.Name, kk);
-            MainGrid.Children.Remove(kk);
+            //var kk = new ChartArea() { ChartModel = vm.Chart };
+            //kk.ChartModel.ChartStroke = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
+            //kk.Opacity = 0;
+            //MainGrid.Children.Add(kk);
+            //await LiveTileHelper.AddSecondaryTile(vm.Coin.Name, kk);
+            //MainGrid.Children.Remove(kk);
+
+            //CanvasDevice device = CanvasDevice.GetSharedDevice();
+            //CanvasRenderTarget offscreen = new CanvasRenderTarget(device, 310, 150, 96);
+            //var canvas = new CanvasControl();
+            //canvas.Content = kk;
+            
+
+            //using (CanvasDrawingSession ds = offscreen.CreateDrawingSession()) {
+            //    ds.Clear(Windows.UI.Colors.Green);
+                
+            //}
+
+            var rtb = new Windows.UI.Xaml.Media.Imaging.RenderTargetBitmap();
+            //try {
+            //    await rtb.RenderAsync(PriceChart);
+            //    await rtb.RenderAsync(kk);
+            //}
+            //catch (Exception ex) {
+            //    var z = ex.Message;
+            //}
+
+            await LiveTileHelper.AddSecondaryTile(vm.Coin.Name, WideTile);
             //PinCoin_togglebtn.Content = check ? new FontIcon() { Glyph = "&#xE840;" } : new FontIcon() { Glyph = "&#xE196;" };
         }
     }
