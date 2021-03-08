@@ -26,6 +26,8 @@ namespace CryptoTracker {
         private int CurrentTabIndex = 0;
         readonly UISettings uiSettings = new UISettings();
 
+        private string Redirect = "";
+
         // ###############################################################################################
         public MainPage() {
             this.InitializeComponent();
@@ -59,7 +61,12 @@ namespace CryptoTracker {
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
-            var param = e.Parameter;
+            var param = e.Parameter.ToString();
+            
+            /// User clicked in a Live Tile
+            if (param.StartsWith("/tile-"))
+                Redirect = param.Split("-")[1];
+
             switch (param) {
                 case "/Portfolio":
                     NavView.SelectedItem = NavView.MenuItems[3];
@@ -209,7 +216,11 @@ namespace CryptoTracker {
             if (samePage)
                 dir.Effect = SlideNavigationTransitionEffect.FromBottom;
 
-            ContentFrame.Navigate(page, null, dir);
+            /// Redirect to a coin's page from a Live Tile
+            if (toPage == "Home" && Redirect != "")
+                ContentFrame.Navigate(typeof(CoinDetails), Redirect, dir);
+            else
+                ContentFrame.Navigate(page, null, dir);
         }
 
         /// Hide NavigationView if navigating to the Compact Overlay view
