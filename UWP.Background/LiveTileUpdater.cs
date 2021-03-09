@@ -17,9 +17,9 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace UWP.Background {
     class LiveTileUpdater {
 
-        public static async Task AddSecondaryTile(string crypto, UIElement chart) {
+        public static async Task AddSecondaryTile(string crypto, UIElement chart = null) {
 
-            try {
+            if (chart != null) {
                 var rtb = new RenderTargetBitmap();
                 await rtb.RenderAsync(chart);
                 var pixelBuffer = await rtb.GetPixelsAsync();
@@ -39,31 +39,24 @@ namespace UWP.Background {
                     await encoder.FlushAsync();
                 }
             }
-            catch (Exception ex) {
-                var z = ex.Message;
-            }
-            await PinSecondaryTile(crypto);
-        }
 
-        /// <summary>
-        /// Pin a secondary tile for a specific coin
-        /// </summary>
-        private static async Task PinSecondaryTile(string crypto) {
             XmlDocument content = await GenerateCoinTile(crypto);
             TileNotification notification = new TileNotification(content) { Tag = crypto };
             TileUpdateManager.CreateTileUpdaterForSecondaryTile(crypto).Update(notification);
         }
 
+
         /// Generate the XML
         private static async Task<XmlDocument> GenerateCoinTile(string crypto) {
             //var raw = await CryptoCompare.GetCoinStats(crypto);
             var price = 1533.18; // raw.PRICE;
-            var diff24 = 4.3; // raw.CHANGEPCT24HOUR;
-            var diff11 = 0.28; // raw.CHANGEPCTHOUR;
-            var arrow24 = diff24 < 0 ? "▼" : "▲";
-            var arrow11 = diff11 < 0 ? "▼" : "▲";
-            string percent24h = $"{Math.Abs(diff24):N}%";
-            string percent1h = $"{Math.Abs(diff11):N}%";
+            var diff1 = 4.3; // raw.CHANGEPCT24HOUR;
+            var diff2 = 0.28; // raw.CHANGEPCTHOUR;
+
+            var arrow1d = diff1 < 0 ? "▼" : "▲";
+            var arrow1h = diff2 < 0 ? "▼" : "▲";
+            var diff1h = new Tuple<string, string>(arrow1h, $"{Math.Abs(diff1):N}%");
+            var diff1d = new Tuple<string, string>(arrow1d, $"{Math.Abs(diff2):N}%");
             string currencySymbol = "€";
 
             // Initialize the tile with required arguments
@@ -78,110 +71,10 @@ namespace UWP.Background {
             tile.VisualElements.ShowNameOnWide310x150Logo = false;
             tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
 
-            //bool isPinned = await tile.RequestCreateAsync();
-            //if (!isPinned)
-            //    return;
+            if (!SecondaryTile.Exists(crypto))
+                await tile.RequestCreateAsync();
 
-            NumberFormatInfo nfi = new CultureInfo(CultureInfo.CurrentCulture.LCID).NumberFormat;
-            nfi.NumberGroupSeparator = "";
-            var content = new TileContent() {
-                Visual = new TileVisual() {
-                    Branding = TileBranding.Logo,
-                    TileSmall = new TileBinding() {
-                        Content = new TileBindingContentAdaptive() {
-                            Children = {
-                                new AdaptiveText() {
-                                    Text = crypto,
-                                    HintStyle = AdaptiveTextStyle.Caption,
-                                    HintAlign = AdaptiveTextAlign.Right
-                                },
-                                new AdaptiveText() {
-                                    Text = price.ToString("G5", nfi),
-                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
-                                    HintAlign = AdaptiveTextAlign.Right
-                                }, } } },
-                    TileMedium = new TileBinding() {
-                        Branding = TileBranding.None,
-                        Content = new TileBindingContentAdaptive() {
-                            Children = {
-                                new AdaptiveText() {
-                                    Text = crypto,
-                                    HintStyle = AdaptiveTextStyle.Base,
-                                    HintAlign = AdaptiveTextAlign.Right
-                                },
-                                new AdaptiveText() {
-                                    Text = price.ToString("N") + currencySymbol,
-                                    HintStyle = AdaptiveTextStyle.Body,
-                                    HintAlign = AdaptiveTextAlign.Right
-                                },
-                                new AdaptiveGroup() {
-                                    Children = {
-                                        new AdaptiveSubgroup() {
-                                            Children = {
-                                                new AdaptiveText() {
-                                                    Text = $"{arrow11}1h",
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = percent1h,
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                } }
-                                        },
-                                        new AdaptiveSubgroup() {
-                                            Children = {
-                                                new AdaptiveText() {
-                                                    Text = $"{arrow24}24h",
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
-                                                    HintAlign = AdaptiveTextAlign.Right
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = percent24h,
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
-                                                    HintAlign = AdaptiveTextAlign.Right
-                                                } } }, } } } } },
-                    TileWide = new TileBinding() {
-                        Branding = TileBranding.None,
-                        Content = new TileBindingContentAdaptive() {
-                            BackgroundImage = new TileBackgroundImage() {
-                                Source = $"{ApplicationData.Current.LocalFolder.Path}/tile-{crypto}.png",
-                                HintCrop = TileBackgroundImageCrop.None
-                            },
-                            TextStacking = TileTextStacking.Top,
-                            Children = {
-                                new AdaptiveGroup() {
-                                    Children = {
-                                        new AdaptiveSubgroup() {
-                                            Children = {
-                                                new AdaptiveText() {
-                                                    Text = crypto,
-                                                    HintAlign = AdaptiveTextAlign.Left,
-                                                    HintStyle = AdaptiveTextStyle.Base
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = $"{arrow11}1h: {percent1h}",
-                                                    HintAlign = AdaptiveTextAlign.Left,
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = DateTime.Now.ToShortTimeString(),
-                                                    HintAlign = AdaptiveTextAlign.Left,
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                },
-                                            } },
-                                        new AdaptiveSubgroup() {
-                                            Children = {
-                                                new AdaptiveText() {
-                                                    Text = price.ToString("N") + currencySymbol,
-                                                    HintAlign = AdaptiveTextAlign.Right,
-                                                    HintStyle = AdaptiveTextStyle.Base
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = $"{arrow24}24h: {percent24h}",
-                                                    HintAlign = AdaptiveTextAlign.Right,
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                },
-                                            } } } } } } } } };
-            return content.GetXml();
+            return LiveTileGenerator.SecondaryTile(crypto, currencySymbol, price, diff1h, diff1d);
         }
 
     }

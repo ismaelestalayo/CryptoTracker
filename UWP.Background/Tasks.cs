@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.ApplicationModel.Background;
+using Windows.UI.StartScreen;
 
 namespace UWP.Background {
     public sealed class Tasks : IBackgroundTask {
@@ -7,10 +8,10 @@ namespace UWP.Background {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
             try {
-                await LiveTileUpdater.AddSecondaryTile("ETH", null);
+                var tiles = await SecondaryTile.FindAllAsync();
+                foreach (var tile in tiles)
+                    await LiveTileUpdater.AddSecondaryTile(tile.TileId, null);
 
-                //TileNotification notification = new TileNotification(template) { Tag = "ETH" };
-                //TileUpdateManager.CreateTileUpdaterForSecondaryTile("ETH").Update(notification);
             }
             catch (Exception ex) {
                 var z = ex.Message;
