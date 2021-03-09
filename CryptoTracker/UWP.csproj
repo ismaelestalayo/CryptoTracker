@@ -466,6 +466,12 @@
   <ItemGroup>
     <Folder Include="Converters\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UWP.Background\UWP.Background.csproj">
+      <Project>{d8608452-343a-4dab-acf3-af7f81947652}</Project>
+      <Name>UWP.Background</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

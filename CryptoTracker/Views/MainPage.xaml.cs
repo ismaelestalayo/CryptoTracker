@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -27,6 +28,8 @@ namespace CryptoTracker {
         readonly UISettings uiSettings = new UISettings();
 
         private string Redirect = "";
+        private string taskName = "BackgroundTask";
+        private string taskEntryPoint = "UWP.Background.Tasks";
 
         // ###############################################################################################
         public MainPage() {
@@ -60,7 +63,9 @@ namespace CryptoTracker {
             ExtendAcrylicIntoTitleBar();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e) {
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            this.RegisterBackgroundTask();
+
             var param = e.Parameter.ToString();
             
             /// User clicked in a Live Tile
@@ -76,6 +81,24 @@ namespace CryptoTracker {
                     break;
             }
             ShowChangelog();
+        }
+
+        private async void RegisterBackgroundTask() {
+            var backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
+            if (backgroundAccessStatus == BackgroundAccessStatus.AllowedSubjectToSystemPolicy ||
+                backgroundAccessStatus == BackgroundAccessStatus.AlwaysAllowed) {
+                foreach (var task in BackgroundTaskRegistration.AllTasks) {
+                    if (task.Value.Name == taskName) {
+                        task.Value.Unregister(true);
+                    }
+                }
+
+                BackgroundTaskBuilder taskBuilder = new BackgroundTaskBuilder();
+                taskBuilder.Name = taskName;
+                taskBuilder.TaskEntryPoint = taskEntryPoint;
+                taskBuilder.SetTrigger(new TimeTrigger(15, false));
+                var registration = taskBuilder.Register();
+            }
         }
 
         /// <summary>
