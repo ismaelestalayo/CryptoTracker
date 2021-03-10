@@ -1,8 +1,4 @@
-﻿//using CryptoTracker.APIs;
-using NotificationsExtensions;
-using NotificationsExtensions.Tiles;
-using System;
-using System.Globalization;
+﻿using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
@@ -17,7 +13,8 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace UWP.Background {
     class LiveTileUpdater {
 
-        public static async Task AddSecondaryTile(string crypto, UIElement chart = null) {
+        /// #############################################################################
+        public static async Task UpdateSecondaryTile(string crypto, UIElement chart = null) {
 
             if (chart != null) {
                 var rtb = new RenderTargetBitmap();
@@ -26,7 +23,8 @@ namespace UWP.Background {
                 var pixels = pixelBuffer.ToArray();
                 var displayInformation = DisplayInformation.GetForCurrentView();
 
-                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{crypto}.png", CreationCollisionOption.ReplaceExisting);
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{crypto}.png",
+                    CreationCollisionOption.ReplaceExisting);
                 using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
                     var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
                     encoder.SetPixelData(BitmapPixelFormat.Bgra8,

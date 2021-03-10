@@ -105,7 +105,7 @@ namespace UWP.Background {
                                                     HintStyle = AdaptiveTextStyle.Base
                                                 },
                                                 new AdaptiveText() {
-                                                    Text = $"{diff24h.Item1}24h: {diff24h.Item1}",
+                                                    Text = $"{diff24h.Item1}24h: {diff24h.Item2}",
                                                     HintAlign = AdaptiveTextAlign.Right,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
                                                 },

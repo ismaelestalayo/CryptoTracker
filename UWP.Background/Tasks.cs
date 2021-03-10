@@ -7,15 +7,18 @@ namespace UWP.Background {
         public async void Run(IBackgroundTaskInstance taskInstance) {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
-            try {
-                var tiles = await SecondaryTile.FindAllAsync();
-                foreach (var tile in tiles)
-                    await LiveTileUpdater.AddSecondaryTile(tile.TileId, null);
+            // TODO: update Primary Tile
+            var tiles = await SecondaryTile.FindAllAsync();
+            foreach (var tile in tiles) {
+                try {
+                    await LiveTileUpdater.UpdateSecondaryTile(tile.TileId, null);
+                }
+                catch (Exception ex) {
+                    var z = ex.Message;
+                }
+            }
 
-            }
-            catch (Exception ex) {
-                var z = ex.Message;
-            }
+            // TODO: check price alerts
 
             deferral.Complete();
         }
