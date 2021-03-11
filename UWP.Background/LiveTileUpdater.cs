@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Graphics.Display;
@@ -46,10 +48,10 @@ namespace UWP.Background {
 
         /// Generate the XML
         private static async Task<XmlDocument> GenerateCoinTile(string crypto) {
-            //var raw = await CryptoCompare.GetCoinStats(crypto);
-            var price = 1533.18; // raw.PRICE;
-            var diff1 = 4.3; // raw.CHANGEPCT24HOUR;
-            var diff2 = 0.28; // raw.CHANGEPCTHOUR;
+            var raw = await GetCoinStats(crypto);
+            var price = raw.PRICE;
+            var diff1 = raw.CHANGEPCT24HOUR;
+            var diff2 =  raw.CHANGEPCTHOUR;
 
             var arrow1d = diff1 < 0 ? "▼" : "▲";
             var arrow1h = diff2 < 0 ? "▼" : "▲";
@@ -75,5 +77,77 @@ namespace UWP.Background {
             return LiveTileGenerator.SecondaryTile(crypto, currencySymbol, price, diff1h, diff1d);
         }
 
+
+        internal async static Task<Raw> GetCoinStats(string crypto) {
+            // TODO: see user settings
+            var currency = "EUR";
+            crypto = crypto.ToUpperInvariant();
+
+            var URL = string.Format("https://min-api.cryptocompare.com/data/pricemultifull?fsyms={0}&tsyms={1}&e=CCCAGG",
+                crypto, currency);
+
+            try {
+                var client = new HttpClient();
+                var responseString= await client.GetStringAsync(new Uri(URL));
+
+                var response = JsonSerializer.Deserialize<object>(responseString);
+                var data = ((JsonElement)response).GetProperty("RAW").GetProperty(crypto).GetProperty(currency);
+                var raw = JsonSerializer.Deserialize<Raw>(data.ToString());
+
+                /// quick fixes
+                raw.PRICE = Rounder(raw.PRICE);
+                raw.CHANGEPCT24HOUR = Rounder(raw.CHANGEPCT24HOUR);
+                raw.CHANGE24HOUR = Rounder(raw.CHANGE24HOUR);
+                raw.PRICE = Rounder(raw.PRICE);
+
+                return raw;
+            }
+            catch (Exception ex) {
+                return new Raw();
+            }
+        }
+        public static double Rounder(double price) {
+            if (Math.Abs(price) > 99)
+                return Math.Round(price, 2);
+            else if (Math.Abs(price) > 10)
+                return Math.Round(price, 3);
+            else if (Math.Abs(price) > 1)
+                return Math.Round(price, 4);
+            else
+                return Math.Round(price, 6);
+        }
+
+        public class Raw {
+            public string TYPE { get; set; }
+            public string MARKET { get; set; }
+            public string FROMSYMBOL { get; set; }
+            public string TOSYMBOL { get; set; }
+            public double PRICE { get; set; } = 0;
+            public double MEDIAN { get; set; } = 0;
+            public double VOLUME24HOUR { get; set; } = 0;
+            public double VOLUME24HOURTO { get; set; } = 0;
+
+            public double OPEN24HOUR { get; set; } = 0;
+            public double HIGH24HOUR { get; set; } = 0;
+            public double LOW24HOUR { get; set; } = 0;
+
+            public double VOLUMEHOUR { get; set; } = 0;
+            public double VOLUMEHOURTO { get; set; } = 0;
+            public double OPENHOUR { get; set; } = 0;
+            public double HIGHHOUR { get; set; } = 0;
+            public double LOWHOUR { get; set; } = 0;
+
+            public double CHANGE24HOUR { get; set; } = 0;
+            public double CHANGEPCT24HOUR { get; set; } = 0;
+            public double CHANGEDAY { get; set; } = 0;
+            public double CHANGEPCTDAY { get; set; } = 0;
+            public double CHANGEHOUR { get; set; } = 0;
+            public double CHANGEPCTHOUR { get; set; } = 0;
+
+            public double SUPPLY { get; set; } = 0;
+            public double MKTCAP { get; set; } = 0;
+            public double TOTALVOLUME24H { get; set; } = 0;
+            public double TOTALVOLUME24HTO { get; set; } = 0;
+        }
     }
 }
