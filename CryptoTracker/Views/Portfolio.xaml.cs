@@ -18,8 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using static CryptoTracker.APIs.CryptoCompare;
 
-namespace CryptoTracker {
-
+namespace CryptoTracker.Views {
     public class SuggestionCoinList {
         public string Icon { get; set; }
         public string Name { get; set; }

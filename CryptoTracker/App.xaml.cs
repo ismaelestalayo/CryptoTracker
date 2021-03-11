@@ -2,6 +2,7 @@
 using CryptoTracker.Constants;
 using CryptoTracker.Helpers;
 using CryptoTracker.Services;
+using CryptoTracker.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;

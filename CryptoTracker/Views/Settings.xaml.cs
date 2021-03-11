@@ -1,10 +1,7 @@
 ﻿using CryptoTracker.Constants;
 using CryptoTracker.Helpers;
-using CryptoTracker.Models;
 using Microsoft.AppCenter.Analytics;
-using Microsoft.Toolkit.Uwp.Helpers;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
@@ -17,7 +14,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace CryptoTracker {
+namespace CryptoTracker.Views {
     public sealed partial class Settings : Page {
 
         private PackageVersion version;

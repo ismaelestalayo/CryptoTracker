@@ -1,7 +1,6 @@
 ﻿using CryptoTracker.APIs;
 using CryptoTracker.Constants;
 using CryptoTracker.Helpers;
-using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,7 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace CryptoTracker {
+namespace CryptoTracker.Views {
     public sealed partial class MainPage : Page {
 
         private readonly ObservableCollection<string> suggestions = new ObservableCollection<string>();
