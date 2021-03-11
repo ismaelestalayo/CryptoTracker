@@ -15,7 +15,9 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace UWP.Background {
     class LiveTileUpdater {
 
-        /// #############################################################################
+        internal static string currency = (string)ApplicationData.Current.LocalSettings.Values["Currency"];
+        internal static string currencySymbol = "X";
+
         public static async Task UpdateSecondaryTile(string crypto, UIElement chart = null) {
 
             if (chart != null) {
@@ -57,7 +59,6 @@ namespace UWP.Background {
             var arrow1h = diff2 < 0 ? "▼" : "▲";
             var diff1h = new Tuple<string, string>(arrow1h, $"{Math.Abs(diff1):N}%");
             var diff1d = new Tuple<string, string>(arrow1d, $"{Math.Abs(diff2):N}%");
-            string currencySymbol = "€";
 
             // Initialize the tile with required arguments
             SecondaryTile tile = new SecondaryTile(
@@ -79,10 +80,6 @@ namespace UWP.Background {
 
 
         internal async static Task<Raw> GetCoinStats(string crypto) {
-            // TODO: see user settings
-            var currency = "EUR";
-            crypto = crypto.ToUpperInvariant();
-
             var URL = string.Format("https://min-api.cryptocompare.com/data/pricemultifull?fsyms={0}&tsyms={1}&e=CCCAGG",
                 crypto, currency);
 

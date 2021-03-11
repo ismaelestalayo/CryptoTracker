@@ -133,10 +133,14 @@
     <PackageReference Include="NotificationsExtensions.Win10">
       <Version>14332.0.2</Version>
     </PackageReference>
+    <PackageReference Include="Refit">
+      <Version>6.0.24</Version>
+    </PackageReference>
     <PackageReference Include="System.Text.Json">
       <Version>5.0.1</Version>
     </PackageReference>
   </ItemGroup>
+  <Import Project="..\Shared\Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
