@@ -7,7 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWP", "UWP.csproj", "{7E2C3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWP.Background", "..\UWP.Background\UWP.Background.csproj", "{D8608452-343A-4DAB-ACF3-AF7F81947652}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "..\Shared\Shared.shproj", "{B90008AC-866D-4FB9-AD43-BDFA00B7441D}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\Shared\Shared.projitems*{b90008ac-866d-4fb9-ad43-bdfa00b7441d}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
