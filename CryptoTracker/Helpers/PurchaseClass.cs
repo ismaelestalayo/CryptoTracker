@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using Windows.UI.Xaml.Media;
 using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Helpers {
     [DataContractAttribute()]

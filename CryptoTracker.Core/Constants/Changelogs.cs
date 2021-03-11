@@ -26,5 +26,5 @@ namespace CryptoTracker.Core.Constants {
 		};
 
 		public static readonly List<string> CurrentChangelog = LatestChangelogs["6.0.0"];
-}
+	}
 }

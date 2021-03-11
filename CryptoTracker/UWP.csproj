@@ -461,9 +461,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CryptoTracker.Core\CryptoTracker.Core.csproj">
       <Project>{43654647-d1e1-40bc-902a-c29310f4dc6e}</Project>

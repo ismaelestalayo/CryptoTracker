@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Globalization;
 
 namespace CryptoTracker.Helpers {
-	class NumberHelper {
+    class NumberHelper {
         public static string AddUnitPrefix(double num) {
             if (num > 999999999) {
                 return num.ToString("0,,,.##B", App.UserCulture);
