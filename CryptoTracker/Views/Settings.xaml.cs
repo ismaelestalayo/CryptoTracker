@@ -1,4 +1,4 @@
-﻿using CryptoTracker.Constants;
+﻿using CryptoTracker.Core.Constants;
 using CryptoTracker.Helpers;
 using Microsoft.AppCenter.Analytics;
 using System;

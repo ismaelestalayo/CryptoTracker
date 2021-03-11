@@ -1,4 +1,4 @@
-﻿using CryptoTracker.Constants;
+﻿using CryptoTracker.Core.Constants;
 using Windows.Storage;
 
 namespace CryptoTracker.Services {

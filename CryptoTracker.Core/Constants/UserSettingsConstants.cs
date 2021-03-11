@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CryptoTracker.Constants {
+namespace CryptoTracker.Core.Constants {
 	/// <summary>
 	/// Class with key constants for user settings
 	/// </summary>

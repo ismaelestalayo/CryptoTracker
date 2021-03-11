@@ -1,5 +1,5 @@
 ﻿using CryptoTracker.APIs;
-using CryptoTracker.Constants;
+using CryptoTracker.Core.Constants;
 using CryptoTracker.Helpers;
 using CryptoTracker.Services;
 using CryptoTracker.Views;

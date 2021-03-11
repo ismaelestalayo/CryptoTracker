@@ -1,4 +1,4 @@
-﻿using CryptoTracker.Constants;
+﻿using CryptoTracker.Core.Constants;
 using CryptoTracker.Helpers;
 using System;
 using System.Collections.Generic;
