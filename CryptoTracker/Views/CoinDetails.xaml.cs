@@ -7,12 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UWP.Background;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
@@ -196,7 +198,7 @@ namespace CryptoTracker.Views {
             Frame.Navigate(typeof(CoinCompact), vm, new SuppressNavigationTransitionInfo());
         }
 
-        private void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+        private void TimeRangeButtons_Tapped(object sender, TappedRoutedEventArgs e) {
             if (sender != null)
                 timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
             
@@ -225,17 +227,11 @@ namespace CryptoTracker.Views {
                 
             //}
 
-            var rtb = new Windows.UI.Xaml.Media.Imaging.RenderTargetBitmap();
-            //try {
-            //    await rtb.RenderAsync(PriceChart);
-            //    await rtb.RenderAsync(kk);
-            //}
-            //catch (Exception ex) {
-            //    var z = ex.Message;
-            //}
+            //var rtb = new Windows.UI.Xaml.Media.Imaging.RenderTargetBitmap();
 
-            await LiveTileHelper.AddSecondaryTile(vm.Coin.Name, WideTile);
-            //PinCoin_togglebtn.Content = check ? new FontIcon() { Glyph = "&#xE840;" } : new FontIcon() { Glyph = "&#xE196;" };
+            await LiveTileUpdater.AddSecondaryTile(vm.Coin.Name, WideTile);
+
+            //Pin_btn.Content = check ? new FontIcon() { Glyph = "&#xE840;" } : new FontIcon() { Glyph = "&#xE196;" };
         }
     }
 }

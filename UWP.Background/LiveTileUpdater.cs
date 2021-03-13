@@ -4,6 +4,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
+using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -13,12 +14,19 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace UWP.Background {
-    class LiveTileUpdater {
+    public sealed class LiveTileUpdater {
 
         internal static string currency = (string)ApplicationData.Current.LocalSettings.Values["Currency"];
         internal static string currencySymbol = "X";
 
-        public static async Task UpdateSecondaryTile(string crypto, UIElement chart = null) {
+        /// <summary>
+        /// Cant have Public methods returning Task in a Windows Runtime Component:
+        /// </summary>
+        public static IAsyncAction AddSecondaryTile(string crypto, UIElement chart) {
+            return UpdateSecondaryTile(crypto, chart).AsAsyncAction();
+        }
+
+        internal static async Task UpdateSecondaryTile(string crypto, UIElement chart = null) {
 
             if (chart != null) {
                 var rtb = new RenderTargetBitmap();
@@ -113,38 +121,37 @@ namespace UWP.Background {
             else
                 return Math.Round(price, 6);
         }
+    }
+    public sealed class Raw {
+        public string TYPE { get; set; }
+        public string MARKET { get; set; }
+        public string FROMSYMBOL { get; set; }
+        public string TOSYMBOL { get; set; }
+        public double PRICE { get; set; } = 0;
+        public double MEDIAN { get; set; } = 0;
+        public double VOLUME24HOUR { get; set; } = 0;
+        public double VOLUME24HOURTO { get; set; } = 0;
 
-        public class Raw {
-            public string TYPE { get; set; }
-            public string MARKET { get; set; }
-            public string FROMSYMBOL { get; set; }
-            public string TOSYMBOL { get; set; }
-            public double PRICE { get; set; } = 0;
-            public double MEDIAN { get; set; } = 0;
-            public double VOLUME24HOUR { get; set; } = 0;
-            public double VOLUME24HOURTO { get; set; } = 0;
+        public double OPEN24HOUR { get; set; } = 0;
+        public double HIGH24HOUR { get; set; } = 0;
+        public double LOW24HOUR { get; set; } = 0;
 
-            public double OPEN24HOUR { get; set; } = 0;
-            public double HIGH24HOUR { get; set; } = 0;
-            public double LOW24HOUR { get; set; } = 0;
+        public double VOLUMEHOUR { get; set; } = 0;
+        public double VOLUMEHOURTO { get; set; } = 0;
+        public double OPENHOUR { get; set; } = 0;
+        public double HIGHHOUR { get; set; } = 0;
+        public double LOWHOUR { get; set; } = 0;
 
-            public double VOLUMEHOUR { get; set; } = 0;
-            public double VOLUMEHOURTO { get; set; } = 0;
-            public double OPENHOUR { get; set; } = 0;
-            public double HIGHHOUR { get; set; } = 0;
-            public double LOWHOUR { get; set; } = 0;
+        public double CHANGE24HOUR { get; set; } = 0;
+        public double CHANGEPCT24HOUR { get; set; } = 0;
+        public double CHANGEDAY { get; set; } = 0;
+        public double CHANGEPCTDAY { get; set; } = 0;
+        public double CHANGEHOUR { get; set; } = 0;
+        public double CHANGEPCTHOUR { get; set; } = 0;
 
-            public double CHANGE24HOUR { get; set; } = 0;
-            public double CHANGEPCT24HOUR { get; set; } = 0;
-            public double CHANGEDAY { get; set; } = 0;
-            public double CHANGEPCTDAY { get; set; } = 0;
-            public double CHANGEHOUR { get; set; } = 0;
-            public double CHANGEPCTHOUR { get; set; } = 0;
-
-            public double SUPPLY { get; set; } = 0;
-            public double MKTCAP { get; set; } = 0;
-            public double TOTALVOLUME24H { get; set; } = 0;
-            public double TOTALVOLUME24HTO { get; set; } = 0;
-        }
+        public double SUPPLY { get; set; } = 0;
+        public double MKTCAP { get; set; } = 0;
+        public double TOTALVOLUME24H { get; set; } = 0;
+        public double TOTALVOLUME24HTO { get; set; } = 0;
     }
 }
