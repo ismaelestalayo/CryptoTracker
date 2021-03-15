@@ -140,12 +140,6 @@
       <Version>5.0.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CryptoTracker.Core\CryptoTracker.Core.csproj">
-      <Project>{43654647-d1e1-40bc-902a-c29310f4dc6e}</Project>
-      <Name>CryptoTracker.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

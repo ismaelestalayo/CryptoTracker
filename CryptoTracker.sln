@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWP", "CryptoTracker\UWP.csproj", "{7E2C342E-1D50-499B-9006-7CD6AC674534}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWP", "UWP\UWP.csproj", "{7E2C342E-1D50-499B-9006-7CD6AC674534}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWP.Background", "UWP.Background\UWP.Background.csproj", "{D8608452-343A-4DAB-ACF3-AF7F81947652}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoTracker.Core", "CryptoTracker.Core\CryptoTracker.Core.csproj", "{43654647-D1E1-40BC-902A-C29310F4DC6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,26 +69,6 @@ Global
 		{D8608452-343A-4DAB-ACF3-AF7F81947652}.Release|x64.Build.0 = Release|x64
 		{D8608452-343A-4DAB-ACF3-AF7F81947652}.Release|x86.ActiveCfg = Release|x86
 		{D8608452-343A-4DAB-ACF3-AF7F81947652}.Release|x86.Build.0 = Release|x86
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|ARM.Build.0 = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|x64.Build.0 = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Debug|x86.Build.0 = Debug|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|ARM.ActiveCfg = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|ARM.Build.0 = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|ARM64.Build.0 = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|x64.ActiveCfg = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|x64.Build.0 = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|x86.ActiveCfg = Release|Any CPU
-		{43654647-D1E1-40BC-902A-C29310F4DC6E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -116,6 +116,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Constants\Changelogs.cs" />
+    <Compile Include="Constants\UserSettingsConstants.cs" />
     <Compile Include="Helpers\API_CoinGecko.cs" />
     <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Models\ChartPoint.cs" />
@@ -462,10 +464,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\CryptoTracker.Core\CryptoTracker.Core.csproj">
-      <Project>{43654647-d1e1-40bc-902a-c29310f4dc6e}</Project>
-      <Name>CryptoTracker.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UWP.Background\UWP.Background.csproj">
       <Project>{d8608452-343a-4dab-acf3-af7f81947652}</Project>
       <Name>UWP.Background</Name>
