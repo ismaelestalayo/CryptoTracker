@@ -1,8 +1,8 @@
-﻿using CryptoTracker.Models;
+﻿using UWP.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
-namespace CryptoTracker.ViewModels {
+namespace UWP.ViewModels {
 	public class HomeViewModel : ObservableObject {
 
 		private ObservableCollection<HomeCard> priceCards = new ObservableCollection<HomeCard>();

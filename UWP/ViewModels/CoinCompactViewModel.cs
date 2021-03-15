@@ -1,7 +1,7 @@
-﻿using CryptoTracker.Models;
+﻿using UWP.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
-namespace CryptoTracker.ViewModels {
+namespace UWP.ViewModels {
 	public class CoinCompactViewModel : ObservableObject {
 
 		private Coin info = new Coin();

@@ -1,7 +1,7 @@
-﻿using CryptoTracker.APIs;
-using CryptoTracker.Helpers;
-using CryptoTracker.Models;
-using CryptoTracker.UserControls;
+﻿using UWP.APIs;
+using UWP.Helpers;
+using UWP.Models;
+using UWP.UserControls;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -16,9 +16,9 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using static CryptoTracker.APIs.CryptoCompare;
+using static UWP.APIs.CryptoCompare;
 
-namespace CryptoTracker.Views {
+namespace UWP.Views {
     public class SuggestionCoinList {
         public string Icon { get; set; }
         public string Name { get; set; }

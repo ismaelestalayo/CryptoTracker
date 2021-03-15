@@ -1,5 +1,5 @@
-﻿using CryptoTracker.Core.Constants;
-using CryptoTracker.Helpers;
+﻿using UWP.Core.Constants;
+using UWP.Helpers;
 using Microsoft.AppCenter.Analytics;
 using System;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace CryptoTracker.Views {
+namespace UWP.Views {
     public sealed partial class Settings : Page {
 
         private PackageVersion version;

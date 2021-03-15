@@ -1,6 +1,6 @@
-﻿using CryptoTracker.APIs;
-using CryptoTracker.Helpers;
-using CryptoTracker.Models;
+﻿using UWP.APIs;
+using UWP.Helpers;
+using UWP.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.Views {
+namespace UWP.Views {
     public sealed partial class Home : Page {
         /// Variables to get historic
         private static int limit = 168;

@@ -1,4 +1,4 @@
-﻿using CryptoTracker.Models;
+﻿using UWP.Models;
 using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace CryptoTracker.Views {
+namespace UWP.Views {
     public sealed partial class WebVieww : Page {
         public WebVieww() {
             this.InitializeComponent();

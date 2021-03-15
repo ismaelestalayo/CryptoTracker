@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace CryptoTracker.Helpers {
+namespace UWP.Helpers {
     /*
         Class with the functions to read/write from/to Local Storage
         

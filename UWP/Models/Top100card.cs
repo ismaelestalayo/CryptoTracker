@@ -1,7 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.Models {
+namespace UWP.Models {
 	public class Top100card : ObservableObject{
         private CoinInfo _coinInfo = new CoinInfo();
         public CoinInfo CoinInfo {

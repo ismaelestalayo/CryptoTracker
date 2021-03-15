@@ -1,11 +1,11 @@
-﻿using CryptoTracker.Models;
+﻿using UWP.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CryptoTracker.ViewModels {
+namespace UWP.ViewModels {
     public class Top100ViewModel : ObservableRecipient {
 
         private GlobalStats globalStats = new GlobalStats();

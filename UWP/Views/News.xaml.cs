@@ -1,5 +1,5 @@
-﻿using CryptoTracker.APIs;
-using CryptoTracker.Models;
+﻿using UWP.APIs;
+using UWP.Models;
 using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace CryptoTracker.Views {
+namespace UWP.Views {
 
     public sealed partial class News : Page {
         /// Private variables

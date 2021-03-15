@@ -1,8 +1,8 @@
-﻿using CryptoTracker.Models;
+﻿using UWP.Models;
 using System;
 using System.Collections.Generic;
 
-namespace CryptoTracker.Helpers {
+namespace UWP.Helpers {
     class GraphHelper {
         internal static (float Min, float Max) GetMinMaxOfArray(List<float> historic) {
             if (historic.Count == 0)

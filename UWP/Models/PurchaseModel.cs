@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.Models {
+namespace UWP.Models {
     /// <summary>
     /// Had to not implement ObservableObject to make it serializable
     /// </summary>

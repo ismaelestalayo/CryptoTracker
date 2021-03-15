@@ -1,7 +1,7 @@
 ﻿using Refit;
 using System.Threading.Tasks;
 
-namespace CryptoTracker.Services {
+namespace UWP.Services {
 	public interface ICryptoCompare {
 
 		[Get("/data/histominute?e=CCCAGG&fsym={crypto}&tsym={currency}&limit={limit}")]

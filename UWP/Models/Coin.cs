@@ -1,9 +1,9 @@
-﻿using CryptoTracker.Helpers;
+﻿using UWP.Helpers;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.Models {
+namespace UWP.Models {
 	public class Coin : ObservableObject {
         /// <summary>
         /// Basic data of a coin that stays invariable through time

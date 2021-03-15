@@ -1,10 +1,10 @@
-﻿using CryptoTracker.APIs;
-using CryptoTracker.Models;
+﻿using UWP.APIs;
+using UWP.Models;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace CryptoTracker.Views {
+namespace UWP.Views {
 
     public sealed partial class Top100 : Page {
 

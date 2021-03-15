@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace CryptoTracker.Helpers {
+namespace UWP.Helpers {
     class IconsHelper {
 
         public static string GetIcon(string coin) {

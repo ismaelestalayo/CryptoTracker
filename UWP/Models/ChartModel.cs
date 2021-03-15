@@ -5,7 +5,7 @@ using Telerik.Charting;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.Models {
+namespace UWP.Models {
 	public class ChartModel : ObservableObject {
         /// <summary>
         /// List of ChartData containing the values for the chart

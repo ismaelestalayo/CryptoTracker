@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryptoTracker.Helpers {
+namespace UWP.Helpers {
     class NumberHelper {
         public static string AddUnitPrefix(double num) {
             if (num > 999999999) {

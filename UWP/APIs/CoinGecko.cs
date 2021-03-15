@@ -1,10 +1,10 @@
-﻿using CryptoTracker.Helpers;
-using CryptoTracker.Models;
+﻿using UWP.Helpers;
+using UWP.Models;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace CryptoTracker.APIs {
+namespace UWP.APIs {
 	class CoinGecko {
 
         internal async static Task<GlobalStats> GetGlobalStats() {

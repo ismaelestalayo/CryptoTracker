@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace CryptoTracker.Helpers {
+namespace UWP.Helpers {
 
 	public class Description {
         public string en { get; set; } = "No description.\n";

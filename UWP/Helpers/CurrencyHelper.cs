@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CryptoTracker.Helpers {
+namespace UWP.Helpers {
     class CurrencyHelper {
         internal static string GetCurrencySymbol(string currency) {
             string symbol;

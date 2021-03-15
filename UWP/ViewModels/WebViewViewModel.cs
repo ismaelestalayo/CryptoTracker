@@ -1,8 +1,8 @@
-﻿using CryptoTracker.Models;
+﻿using UWP.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 
-namespace CryptoTracker.ViewModels {
+namespace UWP.ViewModels {
     class WebViewViewModel : ObservableObject {
         
         private NewsData news = new NewsData();

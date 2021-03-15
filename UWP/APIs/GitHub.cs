@@ -1,12 +1,12 @@
-﻿using CryptoTracker.Core.Constants;
-using CryptoTracker.Helpers;
+﻿using UWP.Core.Constants;
+using UWP.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 
-namespace CryptoTracker.APIs {
+namespace UWP.APIs {
 	public class CoinBasicInfo {
         public int id { get; set; } = 0;
         public string name { get; set; } = "NULL";

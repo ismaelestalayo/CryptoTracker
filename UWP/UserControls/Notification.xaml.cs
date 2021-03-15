@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 
-namespace CryptoTracker.UserControls {
+namespace UWP.UserControls {
     public sealed partial class Notification : UserControl {
 
         public Notification() {

@@ -3,7 +3,7 @@ using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 using System;
 
-namespace CryptoTracker.ViewModels {
+namespace UWP.ViewModels {
     public class MainPageViewModel : ObservableRecipient {
 
         public MainPageViewModel() {

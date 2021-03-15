@@ -1,6 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
-namespace CryptoTracker.Models {
+namespace UWP.Models {
 	public class HomeCard : ObservableObject {
 		private Coin info = new Coin();
 		public Coin Info {

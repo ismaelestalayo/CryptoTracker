@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.Helpers {
+namespace UWP.Helpers {
     [DataContractAttribute()]
     internal class PurchaseClass : INotifyPropertyChanged {
 

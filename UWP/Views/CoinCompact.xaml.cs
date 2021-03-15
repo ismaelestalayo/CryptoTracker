@@ -1,7 +1,7 @@
-﻿using CryptoTracker.Helpers;
-using CryptoTracker.Models;
-using CryptoTracker.UserControls;
-using CryptoTracker.ViewModels;
+﻿using UWP.Helpers;
+using UWP.Models;
+using UWP.UserControls;
+using UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,10 +14,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using static CryptoTracker.APIs.CryptoCompare;
+using static UWP.APIs.CryptoCompare;
 
 
-namespace CryptoTracker.Views {
+namespace UWP.Views {
 	public sealed partial class CoinCompact : Page {
 		/// Variables to get historic
 		private static int limit = 168;

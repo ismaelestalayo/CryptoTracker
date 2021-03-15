@@ -3,7 +3,7 @@ using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace CryptoTracker.Helpers {
+namespace UWP.Helpers {
     /// Numbers
     public class GeneralNumberConverter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)

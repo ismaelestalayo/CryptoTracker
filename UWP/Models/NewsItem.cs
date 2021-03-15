@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CryptoTracker.Models {
+namespace UWP.Models {
     /// <summary>
     /// News items for the AdaptiveGridView
     /// </summary>

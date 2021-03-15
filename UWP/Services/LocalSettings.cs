@@ -1,7 +1,7 @@
-﻿using CryptoTracker.Core.Constants;
+﻿using UWP.Core.Constants;
 using Windows.Storage;
 
-namespace CryptoTracker.Services {
+namespace UWP.Services {
     /// <summary>
     /// Class for storing and retrieving user settings from
     /// application data settings storage.

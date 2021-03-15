@@ -1,8 +1,8 @@
-﻿using CryptoTracker.APIs;
-using CryptoTracker.Core.Constants;
-using CryptoTracker.Helpers;
-using CryptoTracker.Services;
-using CryptoTracker.Views;
+﻿using UWP.APIs;
+using UWP.Core.Constants;
+using UWP.Helpers;
+using UWP.Services;
+using UWP.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -24,7 +24,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace CryptoTracker {
+namespace UWP {
 	sealed partial class App : Application {
         /// <summary>
         /// Efficient socket usage

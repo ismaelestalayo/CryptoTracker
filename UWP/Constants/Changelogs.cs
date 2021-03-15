@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CryptoTracker.Core.Constants {
+namespace UWP.Core.Constants {
     /// <summary>
 	/// Class with the changelogs of the latest versions
 	/// </summary>

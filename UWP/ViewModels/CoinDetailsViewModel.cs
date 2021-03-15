@@ -1,10 +1,10 @@
-﻿using CryptoTracker.Helpers;
-using CryptoTracker.Models;
+﻿using UWP.Helpers;
+using UWP.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 
-namespace CryptoTracker.ViewModels {
+namespace UWP.ViewModels {
 	class CoinDetailsViewModel : ObservableRecipient {
 
 		private CoinData _coinInfo = new CoinData();

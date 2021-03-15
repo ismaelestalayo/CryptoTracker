@@ -1,5 +1,5 @@
-﻿using CryptoTracker.Helpers;
-using CryptoTracker.Models;
+﻿using UWP.Helpers;
+using UWP.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
 
-namespace CryptoTracker.APIs {
+namespace UWP.APIs {
 	class CryptoCompare {
 
         /* ###############################################################################################

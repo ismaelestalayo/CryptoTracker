@@ -1,10 +1,10 @@
-﻿using CryptoTracker.Models;
+﻿using UWP.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
 
-namespace CryptoTracker.ViewModels {
+namespace UWP.ViewModels {
     class SettingsViewModel : ObservableRecipient {
 		private ObservableCollection<PurchaseModel> purchaseList = new ObservableCollection<PurchaseModel>();
 		public ObservableCollection<PurchaseModel> PurchaseList {
