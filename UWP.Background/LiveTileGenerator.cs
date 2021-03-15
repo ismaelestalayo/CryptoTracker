@@ -8,7 +8,7 @@ using Windows.Storage;
 namespace UWP.Background {
     class LiveTileGenerator {
         public static XmlDocument SecondaryTile(string crypto, string currencySymbol, double price,
-            Tuple<string, string> diff1h, Tuple<string, string> diff24h) {
+            Tuple<string, string> diff1d, Tuple<string, string> diff7d) {
             NumberFormatInfo nfi = new CultureInfo(CultureInfo.CurrentCulture.LCID).NumberFormat;
             return new TileContent() {
                 Visual = new TileVisual() {
@@ -46,23 +46,23 @@ namespace UWP.Background {
                                         new AdaptiveSubgroup() {
                                             Children = {
                                                 new AdaptiveText() {
-                                                    Text = $"{diff1h.Item1}1h",
+                                                    Text = $"{diff1d.Item1}1d",
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
                                                 },
                                                 new AdaptiveText() {
-                                                    Text = diff1h.Item2,
+                                                    Text = diff1d.Item2,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
                                                 } }
                                         },
                                         new AdaptiveSubgroup() {
                                             Children = {
                                                 new AdaptiveText() {
-                                                    Text = $"{diff24h.Item1}24h",
+                                                    Text = $"{diff7d.Item1}1w",
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle,
                                                     HintAlign = AdaptiveTextAlign.Right
                                                 },
                                                 new AdaptiveText() {
-                                                    Text = diff24h.Item2,
+                                                    Text = diff7d.Item2,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle,
                                                     HintAlign = AdaptiveTextAlign.Right
                                                 }
@@ -87,7 +87,7 @@ namespace UWP.Background {
                                                     HintStyle = AdaptiveTextStyle.Base
                                                 },
                                                 new AdaptiveText() {
-                                                    Text = $"{diff1h.Item1}1h: {diff1h.Item2}",
+                                                    Text = $"{diff1d.Item1}1d: {diff1d.Item2}",
                                                     HintAlign = AdaptiveTextAlign.Left,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
                                                 },
@@ -105,7 +105,7 @@ namespace UWP.Background {
                                                     HintStyle = AdaptiveTextStyle.Base
                                                 },
                                                 new AdaptiveText() {
-                                                    Text = $"{diff24h.Item1}24h: {diff24h.Item2}",
+                                                    Text = $"{diff7d.Item1}1w: {diff7d.Item2}",
                                                     HintAlign = AdaptiveTextAlign.Right,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
                                                 },

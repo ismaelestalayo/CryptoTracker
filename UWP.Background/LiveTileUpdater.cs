@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
@@ -58,15 +56,17 @@ namespace UWP.Background {
 
         /// Generate the XML
         private static async Task<XmlDocument> GenerateCoinTile(string crypto) {
-            var raw = await GetCoinStats(crypto);
-            var price = raw.PRICE;
-            var diff1 = raw.CHANGEPCT24HOUR;
-            var diff2 =  raw.CHANGEPCTHOUR;
+            var hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
+            var count = hist.Count - 1;
 
-            var arrow1d = diff1 < 0 ? "▼" : "▲";
-            var arrow1h = diff2 < 0 ? "▼" : "▲";
-            var diff1h = new Tuple<string, string>(arrow1h, $"{Math.Abs(diff1):N}%");
-            var diff1d = new Tuple<string, string>(arrow1d, $"{Math.Abs(diff2):N}%");
+            var price = Rounder(hist[count].Average);
+            var _diff1d = ((price - hist[count - 25].Average) / price) * 100;
+            var _diff7d = ((price - hist[0].Average) / price) * 100;
+
+            var arrow1d = _diff1d < 0 ? "▼" : "▲";
+            var arrow7d = _diff7d < 0 ? "▼" : "▲";
+            var diff1d = new Tuple<string, string>(arrow1d, $"{Math.Abs(_diff1d):N}%");
+            var diff7d = new Tuple<string, string>(arrow7d, $"{Math.Abs(_diff7d):N}%");
 
             // Initialize the tile with required arguments
             SecondaryTile tile = new SecondaryTile(
@@ -83,34 +83,9 @@ namespace UWP.Background {
             if (!SecondaryTile.Exists(crypto))
                 await tile.RequestCreateAsync();
 
-            return LiveTileGenerator.SecondaryTile(crypto, currencySymbol, price, diff1h, diff1d);
+            return LiveTileGenerator.SecondaryTile(crypto, currencySymbol, price, diff1d, diff7d);
         }
 
-
-        internal async static Task<Raw> GetCoinStats(string crypto) {
-            var URL = string.Format("https://min-api.cryptocompare.com/data/pricemultifull?fsyms={0}&tsyms={1}&e=CCCAGG",
-                crypto, currency);
-
-            try {
-                var client = new HttpClient();
-                var responseString= await client.GetStringAsync(new Uri(URL));
-
-                var response = JsonSerializer.Deserialize<object>(responseString);
-                var data = ((JsonElement)response).GetProperty("RAW").GetProperty(crypto).GetProperty(currency);
-                var raw = JsonSerializer.Deserialize<Raw>(data.ToString());
-
-                /// quick fixes
-                raw.PRICE = Rounder(raw.PRICE);
-                raw.CHANGEPCT24HOUR = Rounder(raw.CHANGEPCT24HOUR);
-                raw.CHANGE24HOUR = Rounder(raw.CHANGE24HOUR);
-                raw.PRICE = Rounder(raw.PRICE);
-
-                return raw;
-            }
-            catch (Exception ex) {
-                return new Raw();
-            }
-        }
         public static double Rounder(double price) {
             if (Math.Abs(price) > 99)
                 return Math.Round(price, 2);
@@ -121,37 +96,5 @@ namespace UWP.Background {
             else
                 return Math.Round(price, 6);
         }
-    }
-    public sealed class Raw {
-        public string TYPE { get; set; }
-        public string MARKET { get; set; }
-        public string FROMSYMBOL { get; set; }
-        public string TOSYMBOL { get; set; }
-        public double PRICE { get; set; } = 0;
-        public double MEDIAN { get; set; } = 0;
-        public double VOLUME24HOUR { get; set; } = 0;
-        public double VOLUME24HOURTO { get; set; } = 0;
-
-        public double OPEN24HOUR { get; set; } = 0;
-        public double HIGH24HOUR { get; set; } = 0;
-        public double LOW24HOUR { get; set; } = 0;
-
-        public double VOLUMEHOUR { get; set; } = 0;
-        public double VOLUMEHOURTO { get; set; } = 0;
-        public double OPENHOUR { get; set; } = 0;
-        public double HIGHHOUR { get; set; } = 0;
-        public double LOWHOUR { get; set; } = 0;
-
-        public double CHANGE24HOUR { get; set; } = 0;
-        public double CHANGEPCT24HOUR { get; set; } = 0;
-        public double CHANGEDAY { get; set; } = 0;
-        public double CHANGEPCTDAY { get; set; } = 0;
-        public double CHANGEHOUR { get; set; } = 0;
-        public double CHANGEPCTHOUR { get; set; } = 0;
-
-        public double SUPPLY { get; set; } = 0;
-        public double MKTCAP { get; set; } = 0;
-        public double TOTALVOLUME24H { get; set; } = 0;
-        public double TOTALVOLUME24HTO { get; set; } = 0;
     }
 }

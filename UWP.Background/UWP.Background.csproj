@@ -121,6 +121,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GetHistoDupe.cs" />
     <Compile Include="LiveTileGenerator.cs" />
     <Compile Include="LiveTileUpdater.cs" />
     <Compile Include="Tasks.cs" />
