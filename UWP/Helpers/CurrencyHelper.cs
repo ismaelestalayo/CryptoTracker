@@ -8,15 +8,16 @@ namespace UWP.Helpers {
         }
 
         private static readonly Dictionary<string, string> CurrencyToSymbol = new Dictionary<string, string>() {
-            { "EUR",  "€" },
-            { "GBP",  "$" },
-            { "USD",  "$" },
-            { "CAD",  "$" },
             { "AUD",  "$" },
-            { "MXN",  "$" },
+            { "BRL", "R$"},
+            { "CAD",  "$" },
             { "CNY",  "¥" },
-            { "JPY",  "¥" },
+            { "EUR",  "€" },
+            { "GBP",  "£" },
             { "INR",  "₹" },
+            { "JPY",  "¥" },
+            { "MXN",  "$" },
+            { "USD",  "$" },
         };
     }
 }
