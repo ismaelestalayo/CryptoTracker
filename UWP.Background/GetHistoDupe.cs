@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Net.Http;
+using UWP.Services;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace UWP.Background {
 
@@ -26,16 +28,11 @@ namespace UWP.Background {
 
         internal static async Task<List<HistoricPrice>> GetWeeklyHistAsync(string crypto) {
             var currency = "EUR";
-            
             var NullValue = new List<HistoricPrice>() { new HistoricPrice() { Average = 1, DateTime = DateTime.Today } };
 
-            string URL = string.Format("https://min-api.cryptocompare.com/data/histohour?e=CCCAGG&fsym={0}&tsym={1}&limit={2}",
-                crypto, currency, 168);
-
-
             try {
-                var responseString = await Client.GetStringAsync(new Uri(URL));
-                var response = JsonSerializer.Deserialize<object>(responseString);
+                var resp = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric("hour", crypto, currency, 168);
+                var response = JsonSerializer.Deserialize<object>(resp.ToString());
 
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
 

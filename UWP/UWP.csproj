@@ -134,7 +134,6 @@
     <Compile Include="Models\NewsItem.cs" />
     <Compile Include="Models\PurchaseModel.cs" />
     <Compile Include="Models\Top100card.cs" />
-    <Compile Include="Services\ICryptoCompare.cs" />
     <Compile Include="Services\LocalSettings.cs" />
     <Compile Include="UserControls\ChartArea.xaml.cs">
       <DependentUpon>ChartArea.xaml</DependentUpon>
@@ -467,6 +466,10 @@
     <ProjectReference Include="..\UWP.Background\UWP.Background.csproj">
       <Project>{d8608452-343a-4dab-acf3-af7f81947652}</Project>
       <Name>UWP.Background</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UWP.Shared\UWP.Shared.csproj">
+      <Project>{67c2d48d-12d5-4785-b1a1-d9b86bde45fe}</Project>
+      <Name>UWP.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
