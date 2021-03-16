@@ -120,8 +120,11 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Constants\Changelogs.cs" />
+    <Compile Include="Constants\UserSettingsConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ICryptoCompare.cs" />
+    <Compile Include="Services\LocalSettings.cs" />
     <EmbeddedResource Include="Properties\UWP.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
