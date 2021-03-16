@@ -32,8 +32,8 @@ namespace UWP {
         /// </summary>
         internal static HttpClient Client = new HttpClient();
 
-        internal static string currency       = "EUR";
-        internal static string currencySymbol = "€";
+        internal static string currency;
+        internal static string currencySymbol;
 
         internal static LocalSettings _LocalSettings = new LocalSettings();
         internal static string CurrentPage = "";
@@ -43,8 +43,8 @@ namespace UWP {
         internal static CultureInfo UserCulture = new CultureInfo(GlobalizationPreferences.Languages[0]);
 
         public App() {
+            currency = _LocalSettings.Get<string>(UserSettingsConstants.Currency);
             string _theme = _LocalSettings.Get<string>(UserSettingsConstants.Theme);
-            string _currency = _LocalSettings.Get<string>(UserSettingsConstants.Currency);
             string _pinned = _LocalSettings.Get<string>(UserSettingsConstants.PinnedCoins);
 			
             pinnedCoins = new List<string>(_pinned.Split(new char[] { '|' }));
@@ -62,13 +62,13 @@ namespace UWP {
                     break;
             }
 
-            currency = _currency ;
-            currencySymbol = CurrencyHelper.GetCurrencySymbol(_currency);
+            currencySymbol = CurrencyHelper.GetCurrencySymbol(currency);
 
             /// Register services
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 .AddSingleton(RestService.For<ICryptoCompare>("https://min-api.cryptocompare.com/"))
+                .AddTransient<LocalSettings>()
                 .BuildServiceProvider());
 
 

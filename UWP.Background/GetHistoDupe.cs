@@ -1,9 +1,9 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using UWP.Core.Constants;
 using UWP.Services;
 
 namespace UWP.Background {
@@ -24,10 +24,10 @@ namespace UWP.Background {
 
     class GetHistoDupe {
 
-        internal static HttpClient Client = new HttpClient();
+        private LocalSettings localSettings = new LocalSettings();
 
         internal static async Task<List<HistoricPrice>> GetWeeklyHistAsync(string crypto) {
-            var currency = "EUR";
+            var currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
             var NullValue = new List<HistoricPrice>() { new HistoricPrice() { Average = 1, DateTime = DateTime.Today } };
 
             try {
@@ -35,7 +35,6 @@ namespace UWP.Background {
                 var response = JsonSerializer.Deserialize<object>(resp.ToString());
 
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
-
                 if (okey != "Success")
                     return NullValue;
 
