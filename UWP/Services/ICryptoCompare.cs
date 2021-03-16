@@ -4,16 +4,9 @@ using System.Threading.Tasks;
 namespace UWP.Services {
 	public interface ICryptoCompare {
 
-		[Get("/data/histominute?e=CCCAGG&fsym={crypto}&tsym={currency}&limit={limit}")]
-		Task<object> GetHistoricMinutely(string crypto, string currency, int limit);
+		[Get("/data/histo{time}?e=CCCAGG&fsym={crypto}&tsym={currency}&limit={limit}")]
+		Task<object> GetHistoric(string time, string crypto, string currency, int limit, int aggregate = 1);
 
-		[Get("/data/histohour?e=CCCAGG&fsym={crypto}&tsym={currency}&limit={limit}")]
-		Task<object> GetHistoricHourly(string crypto, string currency, int limit);
-
-		[Get("/data/histoday?e=CCCAGG&fsym={crypto}&tsym={currency}&limit={limit}")]
-		Task<object> GetHistoricDaily(string crypto, string currency, int limit);
-
-		
 
 	}
 }
