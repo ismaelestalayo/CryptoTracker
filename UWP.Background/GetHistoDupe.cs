@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Net.Http;
 using UWP.Services;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace UWP.Background {
 

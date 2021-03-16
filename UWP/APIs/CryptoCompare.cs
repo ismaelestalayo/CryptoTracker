@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using UWP.Services;
 
 namespace UWP.APIs {
 	class CryptoCompare {
@@ -21,19 +23,14 @@ namespace UWP.APIs {
 
         internal static async Task<double> GetPriceAsync(string crypto, string market = "null") {
             var currency = App.currency;
-            string URL = string.Format("https://min-api.cryptocompare.com/data/price?fsym={0}&tsyms={1}", crypto, currency);
 
-            if (market != "null")
-                URL += "&e=" + market;
-
-            Uri uri = new Uri(URL);
-
+            // TODO: useful to have multiple markets?
             try {
-                var data = await App.GetStringAsync(uri);
+                var data = await Ioc.Default.GetService<ICryptoCompare>().GetPrice(crypto, currency);
                 double price = double.Parse(data.Split(":")[1].Replace("}", ""));
                 return NumberHelper.Rounder(price);
             }
-            catch (Exception) {
+            catch (Exception ex) {
                 return 0;
             }
         }
@@ -51,21 +48,16 @@ namespace UWP.APIs {
             var currency = App.currency;
             var NullValue = new List<HistoricPrice>() { new HistoricPrice() { Average = 1, DateTime = DateTime.Today } };
 
-            string URL = string.Format("https://min-api.cryptocompare.com/data/histo{0}?e=CCCAGG&fsym={1}&tsym={2}&limit={3}", time, crypto, currency, limit);
-
-            if (aggregate != 1)
-                URL += string.Format("&aggregate={0}", aggregate);
-
-            if (limit == 0)
-                URL = string.Format("https://min-api.cryptocompare.com/data/histoday?e=CCCAGG&fsym={0}&tsym={1}&allData=true", crypto, currency);
-
-            
+            object resp;
             try {
-                var responseString = await App.GetStringFromUrlAsync(URL);
-                var response = JsonSerializer.Deserialize<object>(responseString);
+                if (limit == 0)
+                    resp = await Ioc.Default.GetService<ICryptoCompare>().GetHistoricAll(time, crypto, currency);
+                else
+                    resp = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric(time, crypto, currency, limit, aggregate);
+
+                var response = JsonSerializer.Deserialize<object>(resp.ToString());
 
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
-
                 if (okey != "Success")
                     return NullValue;
                 
@@ -88,11 +80,10 @@ namespace UWP.APIs {
                         historic.RemoveRange(0, i - 1);
                 }
 
-                    //historic = historic.FindAll(x => x.Average != 0);
-
                 return historic;
             }
             catch (Exception ex) {
+                var z = ex.Message;
                 return NullValue;
             }
         }
@@ -123,12 +114,9 @@ namespace UWP.APIs {
         internal async static Task GetExchanges(string crypto) {
             var currency = App.currency;
 
-            var URL = string.Format("https://min-api.cryptocompare.com/data/top/exchanges?fsym={0}&tsym={1}&limit={2}", crypto, currency, 8);
-
             try {
-                var responseString = await App.GetStringFromUrlAsync(URL);
-
-                var response = JsonSerializer.Deserialize<object>(responseString);
+                var resp = await Ioc.Default.GetService<ICryptoCompare>().GetExchanges(crypto, currency, 8);
+                var response = JsonSerializer.Deserialize<object>(resp.ToString());
 
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
 
@@ -160,12 +148,11 @@ namespace UWP.APIs {
             int limit = 100;
             var currency = App.currency;
 
-            var URL = string.Format("https://min-api.cryptocompare.com/data/top/totalvolfull?tsym={0}&limit={1}", currency, limit);
             var top100 = new List<Top100card>();
 
             try {
-                var responseString = await App.GetStringFromUrlAsync(URL);
-                var response = JsonSerializer.Deserialize<object>(responseString);
+                var resp = await Ioc.Default.GetService<ICryptoCompare>().GetTop100(currency, limit);
+                var response = JsonSerializer.Deserialize<object>(resp.ToString());
 
                 var data = ((JsonElement)response).GetProperty("Data");
 
@@ -206,7 +193,8 @@ namespace UWP.APIs {
         }
 
         /* ###############################################################################################
-         * Gets the top 100 coins (by marketcap)
+         * Gets a coin's stats
+         * TODO: unused endpoint
          * 
          * Arguments: none
          * 
@@ -215,12 +203,10 @@ namespace UWP.APIs {
             var currency = App.currency.ToUpperInvariant();
             crypto = crypto.ToUpperInvariant();
 
-            var URL = string.Format("https://min-api.cryptocompare.com/data/pricemultifull?fsyms={0}&tsyms={1}&e=CCCAGG",
-                crypto, currency);
-
             try {
-                var responseString = await App.GetStringFromUrlAsync(URL);
-                var response = JsonSerializer.Deserialize<object>(responseString);
+                var resp = await Ioc.Default.GetService<ICryptoCompare>().GetCoinStats(crypto, currency);
+                var response = JsonSerializer.Deserialize<object>(resp.ToString());
+
                 var data = ((JsonElement)response).GetProperty("RAW").GetProperty(crypto).GetProperty(currency);
                 var raw = JsonSerializer.Deserialize<Raw>(data.ToString());
 
@@ -245,14 +231,12 @@ namespace UWP.APIs {
          * 
         */
         internal async static Task<List<NewsData>> GetNews(List<string> filters) {
-            string URL = "https://min-api.cryptocompare.com/data/v2/news/?lang=EN";
-            if (filters.Count > 0)
-                URL += string.Format("&categories={0}", string.Join(",", filters));
+            string categories = (filters.Count == 0) ? null : string.Join(",", filters);
 
+            object resp;
             try {
-                var responseString = await App.GetStringFromUrlAsync(URL);
-
-                var news = JsonSerializer.Deserialize<NewsResponse>(responseString);
+                resp = await Ioc.Default.GetService<ICryptoCompare>().GetNews(categories);
+                var news = JsonSerializer.Deserialize<NewsResponse>(resp.ToString());
                 foreach (NewsData n in news.Data) {
                     n.categorylist = n.categories.Split('|').ToList();
                     if (n.categorylist.Count > 3)
@@ -266,12 +250,9 @@ namespace UWP.APIs {
         }
 
         internal async static Task<List<NewsCategories>> GetNewsCategories() {
-            string URL = "https://min-api.cryptocompare.com/data/news/categories";
-
-            List<NewsCategories> categories;
             try {
-                var responseString = await App.GetStringFromUrlAsync(URL);
-                return JsonSerializer.Deserialize<List<NewsCategories>>(responseString);
+                var resp = await Ioc.Default.GetService<ICryptoCompare>().GetNewsCategories();
+                return JsonSerializer.Deserialize<List<NewsCategories>>(resp.ToString());
             }
             catch (Exception ex) {
                 return new List<NewsCategories>() { new NewsCategories() };
