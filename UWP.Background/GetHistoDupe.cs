@@ -24,10 +24,10 @@ namespace UWP.Background {
 
     class GetHistoDupe {
 
-        private LocalSettings localSettings = new LocalSettings();
+        private static LocalSettings localSettings = new LocalSettings();
 
         internal static async Task<List<HistoricPrice>> GetWeeklyHistAsync(string crypto) {
-            var currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
+            var currency = localSettings.Get<string>(UserSettingsConstants.Currency);
             var NullValue = new List<HistoricPrice>() { new HistoricPrice() { Average = 1, DateTime = DateTime.Today } };
 
             try {
