@@ -1,8 +1,11 @@
-﻿using UWP.Helpers;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using UWP.Core.Constants;
+using UWP.Services;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
@@ -15,12 +18,13 @@ namespace UWP.Models {
             get => _crypto;
             set {
                 SetProperty(ref _crypto, value);
-                IconSrc = IconsHelper.GetIcon(value);
+                // TODO
+                //IconSrc = IconsHelper.GetIcon(value);
             }
         }
         internal string CryptoFullName { get; set; } = "NULL";
         internal string CryptoSymbol { get; set; } = "NULL";
-        internal string Currency { get; set; } = App.currencySymbol;
+        internal string Currency { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
         internal string IconSrc { get; set; } = "/Assets/Icons/iconNULL.png";
 
         /// <summary>
@@ -64,8 +68,8 @@ namespace UWP.Models {
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
-        private SolidColorBrush _chartStroke = (SolidColorBrush)App.Current.Resources["main_gray"];
-        private SolidColorBrush _diffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
+        private SolidColorBrush _chartStroke = (SolidColorBrush)Application.Current.Resources["main_gray"];
+        private SolidColorBrush _diffFG = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
         private Color _chartFill1 = Color.FromArgb(64, 128, 128, 128);
         private Color _chartFill2 = Color.FromArgb(16, 128, 128, 128);
         
@@ -111,11 +115,11 @@ namespace UWP.Models {
                 SetProperty(ref _diff, Math.Abs(value)); /// Save the absolute value
                 if (value < 0) {
                     DiffArrow = "▼";
-                    DiffFG = (SolidColorBrush)App.Current.Resources["pastelRed"];
+                    DiffFG = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 }
                 else {
                     DiffArrow = "▲";
-                    DiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
+                    DiffFG = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
                 }
             }
         }

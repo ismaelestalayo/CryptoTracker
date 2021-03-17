@@ -1,7 +1,11 @@
-﻿using UWP.Helpers;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using UWP.Services;
+using UWP.Core.Constants;
+using System.Linq;
 
 namespace UWP.Models {
 	public class Coin : ObservableObject {
@@ -9,20 +13,22 @@ namespace UWP.Models {
         /// Basic data of a coin that stays invariable through time
         /// </summary>
         private string name = "NULL";
-        internal string Name {
+        public string Name {
             get => name;
             set {
                 SetProperty(ref name, value);
-                Logo = IconsHelper.GetIcon(value);
-                IsFav = App.pinnedCoins.Contains(value);
+                // TODO
+                //Logo = IconsHelper.GetIcon(value);
+                var coinList = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.PinnedCoins);
+                IsFav = coinList.Split("|").ToList().Contains(value);
             }
         }
-        internal string FullName { get; set; } = "NULL";
-        internal string Logo { get; set; } = "/Assets/Icons/iconNULL.png";
-        internal bool IsFav { get; set; } = false;
+        public string FullName { get; set; } = "NULL";
+        public string Logo { get; set; } = "/Assets/Icons/iconNULL.png";
+        public bool IsFav { get; set; } = false;
 
-        private string currency = App.currencySymbol;
-        internal string Currency {
+        private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
+        public string Currency {
             get => currency;
             set => SetProperty(ref currency, value);
         }
@@ -34,7 +40,7 @@ namespace UWP.Models {
         private bool isLoading = false;
         private double opacity = 1;
 
-        internal bool IsLoading {
+        public bool IsLoading {
             get => isLoading;
             set {
                 SetProperty(ref isLoading, value);
@@ -42,7 +48,7 @@ namespace UWP.Models {
             }
         }
 
-        internal double Opacity {
+        public double Opacity {
             get => opacity;
             set => SetProperty(ref opacity, value);
         }
@@ -50,8 +56,8 @@ namespace UWP.Models {
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
-        private SolidColorBrush diffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
-        internal SolidColorBrush DiffFG {
+        private SolidColorBrush diffFG = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
+        public SolidColorBrush DiffFG {
             get => diffFG;
             set => SetProperty(ref diffFG, value);
         }
@@ -65,29 +71,29 @@ namespace UWP.Models {
         private string diffArrow = "▲";
         private string volume = "0";
 
-        internal double Price {
+        public double Price {
             get => price;
             set => SetProperty(ref price, value);
         }
-        internal double Diff {
+        public double Diff {
             get => diff;
             set {
                 SetProperty(ref diff, Math.Abs(value)); /// Save the absolute value
                 if (value > 0) {
                     DiffArrow = "▲";
-                    DiffFG = (SolidColorBrush)App.Current.Resources["pastelGreen"];
+                    DiffFG = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
                 }
                 else {
                     DiffArrow = "▼";
-                    DiffFG = (SolidColorBrush)App.Current.Resources["pastelRed"];
+                    DiffFG = (SolidColorBrush)Application.Current.Resources["pastelRed"];
                 }
             }
         }
-        internal string DiffArrow {
+        public string DiffArrow {
             get => diffArrow;
             set => SetProperty(ref diffArrow, value);
         }
-        internal string Volume {
+        public string Volume {
             get => volume;
             set => SetProperty(ref volume, value);
         }

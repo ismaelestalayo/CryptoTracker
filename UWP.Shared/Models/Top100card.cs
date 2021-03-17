@@ -1,4 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using UWP.Core.Constants;
+using UWP.Services;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
@@ -28,16 +31,16 @@ namespace UWP.Models {
         public int Rank { get; set; }
         
         private string _favIcon;
-        internal string FavIcon {
+        public string FavIcon {
             get => _favIcon;
             set => SetProperty(ref _favIcon, value);
         }
 
         // manually added attributes
-        internal string Currency { get; set; } = App.currencySymbol;
-        internal string MarketCap { get; set; } = "0";
-        internal string Volume { get; set; } = "0";
-        internal Brush ChangeFG { get; set; }
+        public string Currency { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
+        public string MarketCap { get; set; } = "0";
+        public string Volume { get; set; } = "0";
+        public Brush ChangeFG { get; set; }
     }
 
     public class Raw {

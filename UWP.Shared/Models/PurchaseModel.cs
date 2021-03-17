@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using UWP.Core.Constants;
+using UWP.Services;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
@@ -78,7 +81,7 @@ namespace UWP.Models {
             set => SetProperty(ref boughtAt, value);
         }
 
-        private string currency = App.currencySymbol;
+        private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
         [DataMember()]
         public string Currency {
             get => currency;

@@ -68,6 +68,7 @@ namespace UWP {
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 .AddSingleton(RestService.For<ICryptoCompare>("https://min-api.cryptocompare.com/"))
+                .AddTransient<LocalSettings>()
                 .BuildServiceProvider());
 
 

@@ -118,20 +118,12 @@
     </Compile>
     <Compile Include="Helpers\API_CoinGecko.cs" />
     <Compile Include="Helpers\NumberHelper.cs" />
-    <Compile Include="Models\ChartPoint.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\CurrencyHelper.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
-    <Compile Include="Models\ChartModel.cs" />
-    <Compile Include="Models\Coin.cs" />
-    <Compile Include="Models\GlobalStats.cs" />
-    <Compile Include="Models\HomeCard.cs" />
-    <Compile Include="Models\NewsItem.cs" />
-    <Compile Include="Models\PurchaseModel.cs" />
-    <Compile Include="Models\Top100card.cs" />
     <Compile Include="UserControls\ChartArea.xaml.cs">
       <DependentUpon>ChartArea.xaml</DependentUpon>
     </Compile>
@@ -156,8 +148,6 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChartStyling.cs" />
-    <Compile Include="Models\CoinCard.cs" />
     <Compile Include="ViewModels\CoinCompactViewModel.cs" />
     <Compile Include="ViewModels\CoinDetailsViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
