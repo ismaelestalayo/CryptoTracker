@@ -1,11 +1,11 @@
-﻿using UWP.Helpers;
-using UWP.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
+using UWP.Models;
+using static UWP.APIs.CoinGecko;
 
 namespace UWP.ViewModels {
-	class CoinDetailsViewModel : ObservableRecipient {
+    class CoinDetailsViewModel : ObservableRecipient {
 
 		private CoinData _coinInfo = new CoinData();
 		public CoinData CoinInfo {

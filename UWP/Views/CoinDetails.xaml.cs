@@ -67,7 +67,7 @@ namespace UWP.Views {
                         var coin = App.coinList.Find(x => x.symbol == vm.Coin.Name);
                         vm.Coin.FullName = coin.name;
                         Fav_btn.Content = vm.Coin.IsFav ? "\uEB52" : "\uEB51";
-                        vm.CoinInfo = await API_CoinGecko.GetCoin(coin.name);
+                        vm.CoinInfo = await CoinGecko.GetCoin(coin.name);
                         break;
                     case nameof(CoinCompactViewModel):
                         vm.Chart = ((CoinCompactViewModel)e.Parameter).Chart;
@@ -101,7 +101,7 @@ namespace UWP.Views {
 
         /// #########################################################################################
         private async void InitValuesFromZero(CoinBasicInfo coin) {
-            vm.CoinInfo = await API_CoinGecko.GetCoin(coin.name);
+            vm.CoinInfo = await CoinGecko.GetCoin(coin.name);
 
             try {
                 TimeRangeButtons_Tapped(null, null);
