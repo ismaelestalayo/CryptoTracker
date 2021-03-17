@@ -1,18 +1,13 @@
-﻿using UWP.Core.Constants;
-using UWP.Helpers;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
+using UWP.Core.Constants;
+using UWP.Helpers;
+using UWP.Services;
 using Windows.UI.Popups;
 
 namespace UWP.APIs {
-	public class CoinBasicInfo {
-        public int id { get; set; } = 0;
-        public string name { get; set; } = "NULL";
-        public string symbol { get; set; } = "NULL";
-        public int rank { get; set; } = 0;
-    }
 
     class GitHub {
         /*
@@ -23,12 +18,8 @@ namespace UWP.APIs {
          */
         internal async static Task<List<CoinBasicInfo>> GetAllCoins() {
 
-            Uri uri = new Uri("https://raw.githubusercontent.com/ismaelestalayo/CryptoTracker/API/CoinList.json");
-
             try {
-                var data = await App.GetStringAsync(uri);
-
-                var coins = JsonSerializer.Deserialize<List<CoinBasicInfo>>(data);
+                var coins = await Ioc.Default.GetService<IGithub>().GetAllCoins();
 
                 //coinList.Sort((x, y) => x.Symbol.CompareTo(y.Symbol));
 

@@ -1,10 +1,10 @@
-﻿using UWP.APIs;
-using UWP.Core.Constants;
-using UWP.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using UWP.Core.Constants;
+using UWP.Helpers;
+using UWP.Services;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
