@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Refit;
+using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UWP.Services;
 using Windows.ApplicationModel.Background;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
@@ -16,6 +20,12 @@ namespace UWP.Background {
 
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
+            /// Register services (Background task can't access services from the UWP)
+            Ioc.Default.ConfigureServices(
+                new ServiceCollection()
+                .AddSingleton(RestService.For<ICryptoCompare>("https://min-api.cryptocompare.com/"))
+                .AddTransient<LocalSettings>()
+                .BuildServiceProvider());
 
             Grid mainGrid = new Grid();
             TextBlock tText = new TextBlock() {
