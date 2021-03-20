@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using UWP.Models;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
-using Windows.Graphics.Display;
-using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace UWP.Background {
     public sealed class LiveTileUpdater {
 
         internal static string currency = (string)ApplicationData.Current.LocalSettings.Values["Currency"];
         internal static string currencySymbol = "X";
+        internal static List<HistoricPrice> hist;
 
         /// <summary>
         /// Cant have Public methods returning Task in a Windows Runtime Component:
@@ -25,27 +24,19 @@ namespace UWP.Background {
         }
 
         internal static async Task UpdateSecondaryTile(string crypto, UIElement chart = null) {
+            hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
 
-            if (chart != null) {
-                var rtb = new RenderTargetBitmap();
-                await rtb.RenderAsync(chart);
-                var pixelBuffer = await rtb.GetPixelsAsync();
-                var pixels = pixelBuffer.ToArray();
-                var displayInformation = DisplayInformation.GetForCurrentView();
-
-                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{crypto}.png",
-                    CreationCollisionOption.ReplaceExisting);
-                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
-                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-                    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
-                                         BitmapAlphaMode.Premultiplied,
-                                         (uint)rtb.PixelWidth,
-                                         (uint)rtb.PixelHeight,
-                                         displayInformation.RawDpiX,
-                                         displayInformation.RawDpiY,
-                                         pixels);
-                    await encoder.FlushAsync();
-                }
+            if (false) {
+                await Renderer.RenderAsync(chart, "test1");
+            } else {
+                var chartData = new List<ChartPoint>();
+                foreach (var h in hist)
+                    chartData.Add(new ChartPoint() {
+                        Date = h.DateTime,
+                        Value = h.Average
+                    });
+                var z = new ChartModel();
+                z.ChartData = chartData;
             }
 
             XmlDocument content = await GenerateCoinTile(crypto);
@@ -56,7 +47,6 @@ namespace UWP.Background {
 
         /// Generate the XML
         private static async Task<XmlDocument> GenerateCoinTile(string crypto) {
-            var hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
             var count = hist.Count - 1;
 
             var price = Rounder(hist[count].Average);
