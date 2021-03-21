@@ -124,7 +124,6 @@
     <Compile Include="GetHistoDupe.cs" />
     <Compile Include="LiveTileGenerator.cs" />
     <Compile Include="LiveTileUpdater.cs" />
-    <Compile Include="Renderer.cs" />
     <Compile Include="Tasks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

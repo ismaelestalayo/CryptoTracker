@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using UWP.Models;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
+using Windows.Graphics.Display;
+using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Shapes;
 
 namespace UWP.Background {
     public sealed class LiveTileUpdater {
@@ -27,19 +34,7 @@ namespace UWP.Background {
 
         internal static async Task UpdateSecondaryTile(string crypto, UIElement chart = null) {
             hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
-
-            if (false) {
-                await Renderer.RenderAsync(chart, "test1");
-            } else {
-                var chartData = new List<ChartPoint>();
-                foreach (var h in hist)
-                    chartData.Add(new ChartPoint() {
-                        Date = h.DateTime,
-                        Value = h.Average
-                    });
-                var z = new ChartModel();
-                z.ChartData = chartData;
-            }
+            await RenderTileSVG();
 
             XmlDocument content = await GenerateCoinTile(crypto);
             TileNotification notification = new TileNotification(content) { Tag = crypto };
@@ -87,6 +82,50 @@ namespace UWP.Background {
                 return Math.Round(price, 4);
             else
                 return Math.Round(price, 6);
+        }
+
+        private static async Task RenderTileSVG() {
+            var polyline = new Polyline();
+            polyline.Stroke = new SolidColorBrush(Windows.UI.Colors.Red);
+            polyline.StrokeThickness = 2;
+
+            var points = new PointCollection();
+            int i = 0;
+            var ordered = hist.OrderByDescending(x => x.Average);
+            double min = ordered.LastOrDefault().Average;
+            double max = ordered.FirstOrDefault().Average;
+            foreach (var h in hist)
+                points.Add(new Point(2*i++, 150 - (150 * ((h.Average - min) / (max - min)))));
+            polyline.Points = points;
+
+            //var grid = new Grid();
+            //grid.Children.Add(polyline);
+            //polyline.Height = 150;
+            //polyline.Width = 300;
+
+            try {
+                var rtb = new RenderTargetBitmap();
+                await rtb.RenderAsync(polyline);
+                var pixelBuffer = await rtb.GetPixelsAsync();
+                var pixels = pixelBuffer.ToArray();
+                var displayInformation = DisplayInformation.GetForCurrentView();
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"testSVG.png",
+                    CreationCollisionOption.ReplaceExisting);
+                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
+                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+                    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
+                                         BitmapAlphaMode.Premultiplied,
+                                         (uint)rtb.PixelWidth,
+                                         (uint)rtb.PixelHeight,
+                                         displayInformation.RawDpiX,
+                                         displayInformation.RawDpiY,
+                                         pixels);
+                    await encoder.FlushAsync();
+                }
+            }
+            catch (Exception ex) {
+                var z = ex.Message;
+            }
         }
     }
 }
