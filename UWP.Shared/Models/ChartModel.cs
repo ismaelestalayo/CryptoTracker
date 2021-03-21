@@ -29,7 +29,7 @@ namespace UWP.Models {
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
-        private SolidColorBrush _chartStroke = (SolidColorBrush)Application.Current.Resources["main_gray"];
+        private SolidColorBrush _chartStroke = new SolidColorBrush(Color.FromArgb(127, 127, 127, 127));
         private Color _chartFill1 = Color.FromArgb(64, 128, 128, 128);
         private Color _chartFill2 = Color.FromArgb(16, 128, 128, 128);
 

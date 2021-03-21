@@ -18,6 +18,8 @@ namespace UWP.Background {
 
         /// <summary>
         /// Cant have Public methods returning Task in a Windows Runtime Component:
+        /// 
+        /// https://marcominerva.wordpress.com/2013/03/21/how-to-expose-async-methods-in-a-windows-runtime-component/
         /// </summary>
         public static IAsyncAction AddSecondaryTile(string crypto, UIElement chart) {
             return UpdateSecondaryTile(crypto, chart).AsAsyncAction();
