@@ -5,24 +5,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	xmlns:viewModels="using:UWP.ViewModels"
-	xmlns:models="using:UWP.Models"
+    xmlns:viewModels="using:UWP.ViewModels"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:models="using:UWP.Models"
     NavigationCacheMode="Required"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
-	<Page.DataContext>
-		<viewModels:Top100ViewModel x:Name="vm"/>
-	</Page.DataContext>
+    <Page.DataContext>
+        <viewModels:Top100ViewModel x:Name="vm"/>
+    </Page.DataContext>
 
-	<Page.Resources>
+    <Page.Resources>
         
         
     </Page.Resources>
 
     <!-- 
     ###################################################################################################
-	# TOP HEADER # -->
+    # TOP HEADER # -->
     <Grid Padding="5" >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -31,137 +32,150 @@
 
         <Grid Padding="0 10" Margin="5" CornerRadius="5" MaxWidth="750"
               Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="auto"/>
-			</Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-			<Grid Grid.Row="0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-				<Grid.Resources>
-					<Style TargetType="TextBlock">
-						<Setter Property="FontSize" Value="22"/>
-						<Setter Property="FontWeight" Value="SemiBold"/>
-						<Setter Property="HorizontalAlignment" Value="Center"/>
-					</Style>
-				</Grid.Resources>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="22"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </Grid.Resources>
 
-				<TextBlock Grid.Column="0">
-					<Run Text="{x:Bind vm.GlobalStats.BtcDominance, Mode=OneWay}"
-						d:Text="100"/><Run Text="%"/>
-				</TextBlock>
-				<TextBlock Grid.Column="1" d:Text="0B€">
-					<Run	Text="{x:Bind vm.GlobalStats.TotalVolume, Mode=OneWay}"/><!--
-					--><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
-				</TextBlock>
-				<TextBlock Grid.Column="2" d:Text="0B€">
-					<Run	Text="{x:Bind vm.GlobalStats.TotalMarketCap, Mode=OneWay}"/><!--
-					--><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
-				</TextBlock>
-			</Grid>
+                <TextBlock Grid.Column="0">
+                    <Run Text="{x:Bind vm.GlobalStats.BtcDominance, Mode=OneWay}"
+                        d:Text="100"/><Run Text="%"/>
+                </TextBlock>
+                <TextBlock Grid.Column="1" d:Text="0B€">
+                    <Run	Text="{x:Bind vm.GlobalStats.TotalVolume, Mode=OneWay}"/><!--
+                    --><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock Grid.Column="2" d:Text="0B€">
+                    <Run	Text="{x:Bind vm.GlobalStats.TotalMarketCap, Mode=OneWay}"/><!--
+                    --><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol, Mode=OneWay}"/>
+                </TextBlock>
+            </Grid>
 
-			<Grid Grid.Row="1">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-				<Grid.Resources>
-					<Style TargetType="TextBlock">
-						<Setter Property="FontSize" Value="16"/>
-						<Setter Property="Margin" Value="0 -5 0 0"/>
-						<Setter Property="HorizontalAlignment" Value="Center"/>
-						<Setter Property="Opacity" Value="0.5"/>
-					</Style>
-				</Grid.Resources>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="0 -5 0 0"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Style>
+                </Grid.Resources>
 
-				<TextBlock Grid.Column="0" Text="BTC dom."/>
-				<TextBlock Grid.Column="1" Text="24h Vol"/>
-				<TextBlock Grid.Column="2" Text="Mkt Cap."/>
-			</Grid>
-		</Grid>
+                <TextBlock Grid.Column="0" Text="BTC dom."/>
+                <TextBlock Grid.Column="1" Text="24h Vol"/>
+                <TextBlock Grid.Column="2" Text="Mkt Cap."/>
+            </Grid>
+        </Grid>
 
         <!-- 
         ###################################################################################################
-		# Top 100 List View # -->
+        # Top 100 List View # -->
         <ScrollViewer Grid.Row="1"
-			HorizontalScrollBarVisibility="Disabled"
-			VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto"
             MaxWidth="600">
             <ListView x:Name="top100ListView"
-				SelectionMode="None"
-				IsItemClickEnabled="True"
-				ItemClick="ListView_Click"
-				ItemsSource="{x:Bind vm.Top100cards, Mode=OneWay}">
+                SelectionMode="None"
+                IsItemClickEnabled="True"
+                ItemClick="ListView_Click"
+                ItemsSource="{x:Bind vm.Top100cards, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Top100card">
                         <Grid x:Name="listView_Element"
-							Height="65"
+                            Height="65"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
                             Margin="0 3"
-							MaxWidth="600"
-							CornerRadius="5">
+                            MaxWidth="600"
+                            CornerRadius="5">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="6*"/>
-                                <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock 
                                 Grid.Column="0"
                                 HorizontalAlignment="Center"
                                 Opacity="0.5"
-								VerticalAlignment="Center" 
-								d:Text="#1">
-								<Run Text="#"/><!--
-								--><Run Text="{x:Bind CoinInfo.Rank, Mode=OneWay}"/>
+                                VerticalAlignment="Center" 
+                                d:Text="#1">
+                                <Run Text="#"/><!--
+                                --><Run Text="{x:Bind CoinInfo.Rank, Mode=OneWay}"/>
                             </TextBlock>
 
                             <Button
                                 d:Content="&#xEB51;"
-								Background="Transparent"
-								Click="Pin_click"
-								Content="{x:Bind CoinInfo.FavIcon, Mode=OneWay}"
-								FontFamily="{StaticResource FluentIconFont}"
-								Grid.Column="1"
-								VerticalAlignment="Center"/>
+                                Background="Transparent"
+                                Click="Pin_click"
+                                Content="{x:Bind CoinInfo.FavIcon, Mode=OneWay}"
+                                FontFamily="{StaticResource FluentIconFont}"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"/>
 
                             <Image 
                                 Grid.Column="2" 
                                 Source="{x:Bind CoinInfo.ImageUrl, Mode=OneWay}" 
                                 Width="45"
-								d:Source="/Assets/Icons/iconNULL.png"/>
-
+                                d:Source="/Assets/Icons/iconNULL.png"/>
+                            
                             <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10 5" VerticalAlignment="Center">
-                                <TextBlock d:Text="COIN"
-									Text="{x:Bind CoinInfo.Name, Mode=OneWay}"
-									FontSize="20" FontWeight="SemiBold"/>
+                                <TextBlock
+                                    d:Text="COIN"
+                                    Height="30"
+                                    FontSize="20" FontWeight="SemiBold"
+                                    Text="{x:Bind CoinInfo.Name, Mode=OneWay}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
-										FontSize="16"
-										Opacity="0.8"
-										d:Text="price (change)">
+                                        FontWeight="SemiBold"
+                                        FontSize="16"
+										Opacity="0.7"
+                                        HorizontalAlignment="Right">
                                         <Run Text="{x:Bind Raw.PRICE, Mode=OneWay}"/><!--
                                         --><Run Text="{x:Bind CoinInfo.CurrencySymbol, Mode=OneWay}"/>
                                     </TextBlock>
-                                    <TextBlock
-										Foreground="{x:Bind CoinInfo.ChangeFG, Mode=OneWay}"
-                                        FontSize="14" FontWeight="Medium"
+                                    
+                                    <Grid
+                                        CornerRadius="5"
+                                        HorizontalAlignment="Right"
                                         Margin="5 0"
-										VerticalAlignment="Bottom">
+                                        VerticalAlignment="Bottom">
+                                        <Border Background="{x:Bind CoinInfo.ChangeFG, Mode=OneWay}" Opacity="0.15"/>
+                                        <Border>
+                                            <Border.Background>
+                                                <media:BackdropSaturationBrush Saturation="0.6"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock
+                                            Foreground="{x:Bind CoinInfo.ChangeFG, Mode=OneWay}"
+                                            FontSize="13" FontWeight="Medium"
+                                            Padding="5 0 5 2">
                                         <Run Text="{x:Bind Raw.CHANGEPCT24HOUR, Mode=OneWay}"/><!--
                                         --><Run Text="%"/>
-                                        <Run Text="{x:Bind Raw.CHANGE24HOUR, Mode=OneWay}"/><!--
-                                        --><Run Text="€"/>
-                                    </TextBlock>
+                                        </TextBlock>
+                                    </Grid>
                                 </StackPanel>
                             </StackPanel>
 

@@ -176,7 +176,7 @@ namespace UWP.APIs {
                     coinInfo.ChangeFG = (raw.CHANGE24HOUR < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
                     coinInfo.MarketCap = NumberHelper.AddUnitPrefix(raw.MKTCAP);
                     coinInfo.Volume = NumberHelper.AddUnitPrefix(raw.TOTALVOLUME24HTO);
-                    raw.CHANGEPCT24HOUR = NumberHelper.Rounder(raw.CHANGEPCT24HOUR);
+                    raw.CHANGEPCT24HOUR = Math.Round(raw.CHANGEPCT24HOUR, 2);
                     raw.CHANGE24HOUR = NumberHelper.Rounder(raw.CHANGE24HOUR);
                     raw.PRICE = NumberHelper.Rounder(raw.PRICE);
 
