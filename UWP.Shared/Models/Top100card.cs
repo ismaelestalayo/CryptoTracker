@@ -2,6 +2,7 @@
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using UWP.Core.Constants;
 using UWP.Services;
+using UWP.Shared.Constants;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
@@ -38,6 +39,7 @@ namespace UWP.Models {
 
         // manually added attributes
         public string Currency { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
+        public string CurrencySymbol { get; set; } = Currencies.GetCurrencySymbol(Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency));
         public string MarketCap { get; set; } = "0";
         public string Volume { get; set; } = "0";
         public Brush ChangeFG { get; set; }

@@ -150,7 +150,7 @@
 										Opacity="0.8"
 										d:Text="price (change)">
                                         <Run Text="{x:Bind Raw.PRICE, Mode=OneWay}"/><!--
-                                        --><Run Text="{x:Bind CoinInfo.Currency, Mode=OneWay}"/>
+                                        --><Run Text="{x:Bind CoinInfo.CurrencySymbol, Mode=OneWay}"/>
                                     </TextBlock>
                                     <TextBlock
 										Foreground="{x:Bind CoinInfo.ChangeFG, Mode=OneWay}"
@@ -169,12 +169,12 @@
                                 <TextBlock FontWeight="Bold" HorizontalAlignment="Right" FontSize="15">
                                     <Run Text="Cap:"/>
                                     <Run Text="{x:Bind CoinInfo.MarketCap, Mode=OneWay}"/><!--
-                                    --><Run Text="{x:Bind CoinInfo.Currency, Mode=OneWay}"/>
+                                    --><Run Text="{x:Bind CoinInfo.CurrencySymbol, Mode=OneWay}"/>
                                 </TextBlock>
                                 <TextBlock FontWeight="Light" HorizontalAlignment="Right" Opacity="0.7" FontSize="15">
                                     <Run Text="Vol:"/>
                                     <Run Text="{x:Bind CoinInfo.Volume, Mode=OneWay}"/><!--
-                                    --><Run Text="{x:Bind CoinInfo.Currency, Mode=OneWay}"/>
+                                    --><Run Text="{x:Bind CoinInfo.CurrencySymbol, Mode=OneWay}"/>
                                 </TextBlock>
                             </StackPanel>
                         </Grid>

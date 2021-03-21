@@ -23,6 +23,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using UWP.Shared.Constants;
 
 namespace UWP {
 	sealed partial class App : Application {
@@ -62,7 +63,7 @@ namespace UWP {
                     break;
             }
 
-            currencySymbol = CurrencyHelper.GetCurrencySymbol(currency);
+            currencySymbol = Currencies.GetCurrencySymbol(currency);
 
             /// Register services
             Ioc.Default.ConfigureServices(

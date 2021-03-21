@@ -1,8 +1,8 @@
-﻿using UWP.Core.Constants;
-using UWP.Helpers;
-using Microsoft.AppCenter.Analytics;
+﻿using Microsoft.AppCenter.Analytics;
 using System;
 using System.Threading.Tasks;
+using UWP.Core.Constants;
+using UWP.Shared.Constants;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
 using Windows.Services.Store;
@@ -135,7 +135,7 @@ namespace UWP.Views {
 
             App._LocalSettings.Set(UserSettingsConstants.Currency, currency);
             App.currency = currency;
-            App.currencySymbol = CurrencyHelper.GetCurrencySymbol(currency);
+            App.currencySymbol = Currencies.GetCurrencySymbol(currency);
         }
 
         private async void UploadPortfolio_Click(object sender, RoutedEventArgs e) {            

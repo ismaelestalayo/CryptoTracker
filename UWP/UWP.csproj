@@ -118,7 +118,6 @@
     </Compile>
     <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Helpers\Converters.cs" />
-    <Compile Include="Helpers\CurrencyHelper.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
