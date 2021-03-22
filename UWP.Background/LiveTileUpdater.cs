@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using UWP.Shared.Constants;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
@@ -34,7 +36,7 @@ namespace UWP.Background {
 
         internal static async Task UpdateSecondaryTile(string crypto, UIElement chart = null) {
             hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
-            await RenderTileSVG();
+            await RenderTileSVG(crypto);
 
             XmlDocument content = await GenerateCoinTile(crypto);
             TileNotification notification = new TileNotification(content) { Tag = crypto };
@@ -84,32 +86,37 @@ namespace UWP.Background {
                 return Math.Round(price, 6);
         }
 
-        private static async Task RenderTileSVG() {
+        private static async Task RenderTileSVG(string crypto) {
             var polyline = new Polyline();
-            polyline.Stroke = new SolidColorBrush(Windows.UI.Colors.Red);
-            polyline.StrokeThickness = 2;
+            polyline.Stroke = ColorConstants.GetBrush($"{crypto}_color");
+            polyline.Fill = ColorConstants.GetBrush($"{crypto}_color", 20);
+            polyline.FillRule = FillRule.Nonzero;
+            polyline.StrokeThickness = 0.5;
+            polyline.VerticalAlignment = VerticalAlignment.Bottom;
 
             var points = new PointCollection();
             int i = 0;
             var ordered = hist.OrderByDescending(x => x.Average);
             double min = ordered.LastOrDefault().Average;
             double max = ordered.FirstOrDefault().Average;
-            foreach (var h in hist)
-                points.Add(new Point(2*i++, 150 - (150 * ((h.Average - min) / (max - min)))));
+            foreach (var h in hist.GetRange(hist.Count - 150, 150))
+                points.Add(new Point(2 * ++i, 90 - (90 * ((h.Average - min) / (max - min)))));
+            points.Add(new Point(2 * i, 80 ));
+            points.Add(new Point(0, 80));
             polyline.Points = points;
 
-            //var grid = new Grid();
-            //grid.Children.Add(polyline);
-            //polyline.Height = 150;
-            //polyline.Width = 300;
+            var grid = new Grid() { Width = 300, Height = 150, Background = new SolidColorBrush(Color.FromArgb(0, 128, 128, 128)) };
+            polyline.VerticalAlignment = VerticalAlignment.Bottom;
+            grid.Children.Add(polyline);
+            
 
             try {
                 var rtb = new RenderTargetBitmap();
-                await rtb.RenderAsync(polyline);
+                await rtb.RenderAsync(grid);
                 var pixelBuffer = await rtb.GetPixelsAsync();
                 var pixels = pixelBuffer.ToArray();
                 var displayInformation = DisplayInformation.GetForCurrentView();
-                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"testSVG.png",
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{crypto}.png",
                     CreationCollisionOption.ReplaceExisting);
                 using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
                     var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
