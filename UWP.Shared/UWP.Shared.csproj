@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Constants\Changelogs.cs" />
+    <Compile Include="Constants\ColorConstants.cs" />
     <Compile Include="Constants\Currencies.cs" />
     <Compile Include="Constants\UserSettingsConstants.cs" />
     <Compile Include="Models\ChartModel.cs" />
