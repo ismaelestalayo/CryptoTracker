@@ -73,7 +73,8 @@ namespace UWP.Background {
                         Content = new TileBindingContentAdaptive() {
                             BackgroundImage = new TileBackgroundImage() {
                                 Source = $"{ApplicationData.Current.LocalFolder.Path}/tile-{crypto}.png",
-                                HintCrop = TileBackgroundImageCrop.None
+                                HintCrop = TileBackgroundImageCrop.None,
+                                HintOverlay = 0
                             },
                             TextStacking = TileTextStacking.Top,
                             Children = {

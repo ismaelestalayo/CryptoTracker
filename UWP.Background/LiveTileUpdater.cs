@@ -12,6 +12,7 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.StartScreen;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -68,6 +69,11 @@ namespace UWP.Background {
             tile.VisualElements.ShowNameOnSquare310x310Logo = false;
             tile.VisualElements.ShowNameOnWide310x150Logo = false;
             tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
+            //tile.VisualElements.ForegroundText = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ForegroundText.Light : ForegroundText.Dark;
+            //tile.VisualElements.BackgroundColor = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? Colors.White : Colors.Black;
+
+            tile.VisualElements.ForegroundText = ForegroundText.Dark;
+            tile.ForegroundText = ForegroundText.Dark;
 
             if (!SecondaryTile.Exists(crypto))
                 await tile.RequestCreateAsync();
@@ -101,8 +107,8 @@ namespace UWP.Background {
             double max = ordered.FirstOrDefault().Average;
             foreach (var h in hist.GetRange(hist.Count - 150, 150))
                 points.Add(new Point(2 * ++i, 90 - (90 * ((h.Average - min) / (max - min)))));
-            points.Add(new Point(2 * i, 80 ));
-            points.Add(new Point(0, 80));
+            points.Add(new Point(2 * i, 90 ));
+            points.Add(new Point(0, 90));
             polyline.Points = points;
 
             var grid = new Grid() { Width = 300, Height = 150, Background = new SolidColorBrush(Color.FromArgb(0, 128, 128, 128)) };
