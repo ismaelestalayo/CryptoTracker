@@ -110,7 +110,8 @@ namespace UWP.Background {
                                                     HintAlign = AdaptiveTextAlign.Right,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
                                                 },
-                                            } } } } } } } }
+                                            } } } } }
+                        } } }
             }.GetXml();
         }
     }

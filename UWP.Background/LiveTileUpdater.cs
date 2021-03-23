@@ -12,7 +12,6 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.StartScreen;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -69,8 +68,7 @@ namespace UWP.Background {
             tile.VisualElements.ShowNameOnSquare310x310Logo = false;
             tile.VisualElements.ShowNameOnWide310x150Logo = false;
             tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
-            //tile.VisualElements.ForegroundText = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ForegroundText.Light : ForegroundText.Dark;
-            //tile.VisualElements.BackgroundColor = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? Colors.White : Colors.Black;
+            tile.VisualElements.Square44x44Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
 
             tile.VisualElements.ForegroundText = ForegroundText.Dark;
             tile.ForegroundText = ForegroundText.Dark;
@@ -110,11 +108,31 @@ namespace UWP.Background {
             points.Add(new Point(2 * i, 90 ));
             points.Add(new Point(0, 90));
             polyline.Points = points;
-
-            var grid = new Grid() { Width = 300, Height = 150, Background = new SolidColorBrush(Color.FromArgb(0, 128, 128, 128)) };
             polyline.VerticalAlignment = VerticalAlignment.Bottom;
+
+            var grid = new Grid() {
+                Background = new SolidColorBrush(Color.FromArgb(0, 128, 128, 128)),
+                Width = 300, Height = 150,
+            };
             grid.Children.Add(polyline);
-            
+
+            //grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            //grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            //grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(150, GridUnitType.Star)});
+
+            //var row1 = new Grid() { Padding = new Thickness(7, 2, 7, 2) };
+            //row1.Children.Add(new TextBlock() { Text = "CRYPTO", FontWeight = FontWeights.Bold });
+            //row1.Children.Add(new TextBlock() { Text = "XX.YYY€", FontWeight = FontWeights.Bold, HorizontalAlignment = HorizontalAlignment.Right});
+            //var row2 = new Grid() { Padding = new Thickness(7, 2, 7, 2)};
+            //row2.Children.Add(new TextBlock() { Text = "▲1d: 6.27%", FontWeight = FontWeights.ExtraLight, Opacity = 0.7});
+            //row2.Children.Add(new TextBlock() { Text = "▲1w: 2.82%", FontWeight = FontWeights.ExtraLight, Opacity = 0.7, HorizontalAlignment = HorizontalAlignment.Right });
+
+            //Grid.SetRow(row1, 0);
+            //Grid.SetRow(row2, 1);
+            //Grid.SetRowSpan(polyline, 3);
+            //grid.Children.Add(polyline);
+            //grid.Children.Add(row1);
+            //grid.Children.Add(row2);
 
             try {
                 var rtb = new RenderTargetBitmap();
