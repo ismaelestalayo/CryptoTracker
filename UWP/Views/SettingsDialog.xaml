@@ -1,0 +1,67 @@
+﻿<ContentDialog
+    x:Class="CryptoTracker.Views.SettingsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Yellow"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="LightGreen"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="White"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="Orange"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="Pink"/>
+        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{ThemeResource ContentDialogContentForegroundBrush}"/>        
+    </ContentDialog.Resources>
+
+    <NavigationView
+        Background="{ThemeResource ContentDialogContentForegroundBrush}"
+        IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
+        IsSettingsVisible="False" IsPaneOpen="True"
+        PaneDisplayMode="Left" OpenPaneLength="150"
+        >
+        
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="General" Tag="home" FontWeight="Light">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE10F;"/>
+                    <!-- Home -->
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            
+            <NavigationViewItem Content="Appearance" Tag="top" FontWeight="Light">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE2B1;"/>
+                    <!-- All Apps -->
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            
+            <NavigationViewItem  Content="Tiles" Tag="news" FontWeight="Light">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xECA5;"/>
+                    <!-- Preview link -->
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            
+            <NavigationViewItem Content="Changelog" Tag="portfolio" FontWeight="Light">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE14C;"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+
+            <NavigationViewItem Content="Feedback" Tag="portfolio" FontWeight="Light">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE789;"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+
+            <NavigationViewItem Content="About" Tag="portfolio" FontWeight="Light">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE946;"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+    </NavigationView>
+</ContentDialog>
