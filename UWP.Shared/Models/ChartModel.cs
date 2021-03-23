@@ -20,8 +20,8 @@ namespace UWP.Models {
         /// <summary>
         /// Tuple with the minimum and maximum value to adjust the chart
         /// </summary>
-        private (float Min, float Max) _pricesMinMax = (0, 100);
-        public (float Min, float Max) PricesMinMax {
+        private (double Min, double Max) _pricesMinMax = (0, 100);
+        public (double Min, double Max) PricesMinMax {
             get => _pricesMinMax;
             set => SetProperty(ref _pricesMinMax, value);
         }

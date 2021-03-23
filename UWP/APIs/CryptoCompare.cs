@@ -90,14 +90,14 @@ namespace UWP.APIs {
 
         public class HistoricPrice {
             public int time { get; set; }
-            public float high { get; set; } = 0;
-            public float low { get; set; } = 0;
-            public float open { get; set; } = 0;
-            public float close { get; set; } = 0;
-            public float volumefrom { get; set; } = 0;
-            public float volumeto { get; set; } = 0;
+            public double high { get; set; } = 0;
+            public double low { get; set; } = 0;
+            public double open { get; set; } = 0;
+            public double close { get; set; } = 0;
+            public double volumefrom { get; set; } = 0;
+            public double volumeto { get; set; } = 0;
 
-            internal float Average { get; set; } = 0;
+            internal double Average { get; set; } = 0;
             internal string Date { get; set; }
             internal DateTime DateTime { get; set; }
         }
