@@ -75,7 +75,7 @@
                                 ContentTransitions="{TemplateBinding ContentTransitions}"
                                 CornerRadius="4"
                                 FontSize="13"
-                                Height="23"
+                                Height="21"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 Margin="2 0"
