@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using UWP.Core.Constants;
+using UWP.Services;
 using UWP.Shared.Constants;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
@@ -21,9 +23,9 @@ using Windows.UI.Xaml.Shapes;
 
 namespace UWP.Background {
     public sealed class LiveTileUpdater {
-
-        internal static string currency = (string)ApplicationData.Current.LocalSettings.Values["Currency"];
-        internal static string currencySymbol = "X";
+        private static LocalSettings localSettings = new LocalSettings();
+        internal static string currency = localSettings.Get<string>(UserSettingsConstants.Currency);
+        internal static string currencySymbol = Currencies.GetCurrencySymbol(currency);
         internal static List<HistoricPrice> hist;
 
         /// <summary>
@@ -31,11 +33,11 @@ namespace UWP.Background {
         /// 
         /// https://marcominerva.wordpress.com/2013/03/21/how-to-expose-async-methods-in-a-windows-runtime-component/
         /// </summary>
-        public static IAsyncAction AddSecondaryTile(string crypto, UIElement chart) {
-            return UpdateSecondaryTile(crypto, chart).AsAsyncAction();
+        public static IAsyncAction AddSecondaryTile(string crypto) {
+            return UpdateSecondaryTile(crypto).AsAsyncAction();
         }
 
-        internal static async Task UpdateSecondaryTile(string crypto, UIElement chart = null) {
+        internal static async Task UpdateSecondaryTile(string crypto) {
             hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
             await RenderTileSVG(crypto);
 
@@ -53,8 +55,8 @@ namespace UWP.Background {
             var _diff1d = ((price - hist[count - 25].Average) / price) * 100;
             var _diff7d = ((price - hist[0].Average) / price) * 100;
 
-            var arrow1d = _diff1d < 0 ? "▼" : "▲";
-            var arrow7d = _diff7d < 0 ? "▼" : "▲";
+            var arrow1d = _diff1d < 0 ? "24h: ▼" : "24h: ▲";
+            var arrow7d = _diff7d < 0 ? " 7d: ▼" : " 7d: ▲";
             var diff1d = new Tuple<string, string>(arrow1d, $"{Math.Abs(_diff1d):N}%");
             var diff7d = new Tuple<string, string>(arrow7d, $"{Math.Abs(_diff7d):N}%");
 

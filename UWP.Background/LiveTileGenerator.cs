@@ -18,7 +18,7 @@ namespace UWP.Background {
                             Children = {
                                 new AdaptiveText() {
                                     Text = crypto,
-                                    HintStyle = AdaptiveTextStyle.Caption,
+                                    HintStyle = AdaptiveTextStyle.Body,
                                     HintAlign = AdaptiveTextAlign.Right
                                 },
                                 new AdaptiveText() {
@@ -41,32 +41,17 @@ namespace UWP.Background {
                                     HintStyle = AdaptiveTextStyle.Body,
                                     HintAlign = AdaptiveTextAlign.Right
                                 },
-                                new AdaptiveGroup() {
-                                    Children = {
-                                        new AdaptiveSubgroup() {
-                                            Children = {
-                                                new AdaptiveText() {
-                                                    Text = $"{diff1d.Item1}1d",
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = diff1d.Item2,
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                } }
-                                        },
-                                        new AdaptiveSubgroup() {
-                                            Children = {
-                                                new AdaptiveText() {
-                                                    Text = $"{diff7d.Item1}1w",
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
+                                new AdaptiveText() {
+                                    Text = $"{diff1d.Item1}{diff1d.Item2}",
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
                                                     HintAlign = AdaptiveTextAlign.Right
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = diff7d.Item2,
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
-                                                    HintAlign = AdaptiveTextAlign.Right
-                                                }
-                                            } }, } } } }
+                                },
+                                new AdaptiveText() {
+                                    Text = $"{diff7d.Item1}{diff7d.Item2}",
+                                    HintStyle = AdaptiveTextStyle.CaptionSubtle,
+                                    HintAlign = AdaptiveTextAlign.Right
+                                }
+                            } }
                     },
                     TileWide = new TileBinding() {
                         Branding = TileBranding.None,
@@ -88,12 +73,7 @@ namespace UWP.Background {
                                                     HintStyle = AdaptiveTextStyle.Base
                                                 },
                                                 new AdaptiveText() {
-                                                    Text = $"{diff1d.Item1}1d: {diff1d.Item2}",
-                                                    HintAlign = AdaptiveTextAlign.Left,
-                                                    HintStyle = AdaptiveTextStyle.CaptionSubtle
-                                                },
-                                                new AdaptiveText() {
-                                                    Text = DateTime.Now.ToShortTimeString(),
+                                                    Text = $"{diff1d.Item1}{diff1d.Item2}",
                                                     HintAlign = AdaptiveTextAlign.Left,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
                                                 },
@@ -106,7 +86,7 @@ namespace UWP.Background {
                                                     HintStyle = AdaptiveTextStyle.Base
                                                 },
                                                 new AdaptiveText() {
-                                                    Text = $"{diff7d.Item1}1w: {diff7d.Item2}",
+                                                    Text = $"{diff7d.Item1}{diff7d.Item2}",
                                                     HintAlign = AdaptiveTextAlign.Right,
                                                     HintStyle = AdaptiveTextStyle.CaptionSubtle
                                                 },

@@ -27,7 +27,7 @@ namespace UWP.Background {
             var tiles = await SecondaryTile.FindAllAsync();
             foreach (var tile in tiles) {
                 try {
-                    await LiveTileUpdater.UpdateSecondaryTile(tile.TileId, null);
+                    await LiveTileUpdater.UpdateSecondaryTile(tile.TileId);
                 }
                 catch (Exception ex) {
                     var z = ex.Message;
