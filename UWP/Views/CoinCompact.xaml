@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-	xmlns:viewModels="using:UWP.ViewModels" xmlns:local="using:UWP.UserControls"
+    xmlns:local="using:UWP.UserControls"
+    xmlns:viewModels="using:UWP.ViewModels"
     mc:Ignorable="d"
     Unloaded="Page_Unloaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -56,7 +56,7 @@
 				Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="18">
                 <Run Text="{x:Bind vm.Info.Name, Mode=OneWay}"/><!--
                 --><Run Text=":"/>
-                <Run Text="{x:Bind vm.Info.Price, Mode=OneWay}" FontWeight="Normal"/><!--
+                <Run Text="{x:Bind vm.Info.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}" FontWeight="Normal"/><!--
                 --><Run Text="{x:Bind vm.Info.Currency, Mode=OneWay}" FontWeight="Normal"/>
             </TextBlock>
         </RelativePanel>

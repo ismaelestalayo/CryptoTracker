@@ -27,6 +27,8 @@ namespace UWP.Views {
         private static int aggregate = 1;
         private static string timeSpan = "1w";
         private static string timeUnit = "hour";
+        private double low = 0;
+        private double high = 0;
 
         /// Timer for auto-refresh
         private static ThreadPoolTimer PeriodicTimer;
@@ -154,7 +156,9 @@ namespace UWP.Views {
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-            vm.Chart.PricesMinMax = MinMax;
+            low = MinMax.Min;
+            high = MinMax.Max;
+            vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max);
 
             /// Calculate the price difference
             double oldestPrice = histo[0].Average;

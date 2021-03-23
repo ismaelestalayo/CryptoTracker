@@ -1,31 +1,27 @@
 ﻿using UWP.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UWP.Helpers {
     class GraphHelper {
         internal static (double Min, double Max) GetMinMaxOfArray(List<double> historic) {
             if (historic.Count == 0)
                 return (0, 10);
-			
-            double min = historic[0];
-            double max = historic[0];
 
-            foreach (double h in historic) {
-                if (h < min)
-                    min = h;
-                else if (h > max)
-                    max = h;
-            }
-
-            double diff = max - min;
-
-            min -= (double)(diff * 0.2);
-            max += (double)(diff * 0.1);
+            double min = historic.ToArray().Min();
+            double max = historic.ToArray().Max();
 
             if (min < 0)
-                min = 0;
+                min = 0;            
 
+            return (min, max);
+        }
+
+        internal static (double Min, double Max) OffsetMinMaxForChart(double min, double max, double offMin = 0.15, double offMax = 0.07) {
+            double diff = max - min;
+            min -= (double)(diff * offMin);
+            max += (double)(diff * offMax);
             return (min, max);
         }
 

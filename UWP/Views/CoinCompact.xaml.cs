@@ -108,7 +108,8 @@ namespace UWP.Views {
 			vm.Chart.ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
 			vm.Chart.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
 
-			vm.Chart.PricesMinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
+			var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
+			vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max, 0.25);
 		}
 
         private async void FullScreen_btn_click(object sender, RoutedEventArgs e) {

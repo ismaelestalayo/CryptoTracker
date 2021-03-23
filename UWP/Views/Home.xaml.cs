@@ -136,7 +136,7 @@ namespace UWP.Views {
 
                 /// Calculate min-max to adjust axis
                 var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-                vm.PriceCards[i].Chart.PricesMinMax = MinMax;
+                vm.PriceCards[i].Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max);
 
                 /// Calculate the price difference
                 double oldestPrice = histo[0].Average;

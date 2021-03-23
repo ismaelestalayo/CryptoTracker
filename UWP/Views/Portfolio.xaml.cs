@@ -181,7 +181,7 @@ namespace UWP.Views {
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-            vm.Chart.PricesMinMax = MinMax;
+            vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max);
         }
 
         /// ###############################################################################################
