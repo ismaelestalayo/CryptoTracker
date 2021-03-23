@@ -193,7 +193,7 @@ namespace UWP.Views {
             var view = ApplicationView.GetForCurrentView();
 
             var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-            preferences.CustomSize = new Windows.Foundation.Size(350, 250);
+            preferences.CustomSize = new Windows.Foundation.Size(350, 200);
 
             await view.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
             Frame.Navigate(typeof(CoinCompact), vm, new SuppressNavigationTransitionInfo());
