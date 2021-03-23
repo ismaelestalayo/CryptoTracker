@@ -187,17 +187,10 @@
                 </ContentControl>
             </controls:Loading>
 
-			<local:ChartAreaFull
+            <local:ChartAreaFull
 				x:Name="PriceChart"
 				ChartModel="{x:Bind vm.Chart, Mode=OneWay}"/>
-
-            <Grid
-                x:Name="WideTile" Background="Transparent"
-                Height="150" Width="310" Opacity="10">
-                <local:ChartArea
-				    x:Name="PriceChartTile" VerticalAlignment="Bottom" Height="100"
-				    ChartModel="{x:Bind vm.Chart, Mode=OneWay}"/>
-            </Grid>
+            
             <local:TimeRangeRadioButtons
 				Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan, Mode=OneWay}"
 				Tapped="TimeRangeButtons_Tapped"/>

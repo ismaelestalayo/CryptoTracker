@@ -230,7 +230,7 @@ namespace UWP.Views {
 
             //var rtb = new Windows.UI.Xaml.Media.Imaging.RenderTargetBitmap();
 
-            await LiveTileUpdater.AddSecondaryTile(vm.Coin.Name, WideTile);
+            await LiveTileUpdater.AddSecondaryTile(vm.Coin.Name);
 
             //Pin_btn.Content = check ? new FontIcon() { Glyph = "&#xE840;" } : new FontIcon() { Glyph = "&#xE196;" };
         }
