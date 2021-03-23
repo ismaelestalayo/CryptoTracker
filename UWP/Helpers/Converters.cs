@@ -7,7 +7,14 @@ namespace UWP.Helpers {
     /// Numbers
     public class GeneralNumberConverter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
-            => ((double)val).ToString("N", App.UserCulture);
+            => ((double)val).ToString("N", App.UserCulture).TrimEnd('0').Trim(',');
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
+    public class NumberPrefixConverter : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => NumberHelper.AddUnitPrefix((double)val);
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
