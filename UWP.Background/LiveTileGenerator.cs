@@ -18,7 +18,7 @@ namespace UWP.Background {
                             Children = {
                                 new AdaptiveText() {
                                     Text = crypto,
-                                    HintStyle = AdaptiveTextStyle.Body,
+                                    HintStyle = AdaptiveTextStyle.Base,
                                     HintAlign = AdaptiveTextAlign.Right
                                 },
                                 new AdaptiveText() {
