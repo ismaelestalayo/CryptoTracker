@@ -101,6 +101,9 @@
     <SolidColorBrush x:Key="XRP_color"		    Color="#1277A8"/>
     <SolidColorBrush x:Key="XRP_colorT"		    Color="#1277A8" Opacity="0.4"/>
 
+    <SolidColorBrush x:Key="XTZ_color"		    Color="#2c7df7"/>
+    <SolidColorBrush x:Key="XTZ_colorT"		    Color="#2c7df7" Opacity="0.4"/>
+
     <SolidColorBrush x:Key="ZRX_color"          Color="#404040"/>
     <SolidColorBrush x:Key="ZRX_colorT"         Color="#404040" Opacity="0.4"/> 
 </ResourceDictionary>

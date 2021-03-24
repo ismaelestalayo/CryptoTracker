@@ -56,6 +56,7 @@ namespace UWP.Shared.Constants {
             { "XLM_color",  ParseHex("#00B6E7") },
             { "XMR_color",  ParseHex("#EE5922") },
             { "XRP_color",  ParseHex("#1277A8") },
+            { "XTZ_color",  ParseHex("#2c7df7") },
             { "ZRX_color",  ParseHex("#404040") },
 
             { "NULL_color",  ParseHex("#7D7D7D") }
