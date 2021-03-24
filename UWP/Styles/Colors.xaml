@@ -6,8 +6,8 @@
 	<SolidColorBrush x:Key="main_grayT"         Color="#7D7D7D" Opacity="0.4"/>
 
 
-	<SolidColorBrush x:Key="ADA_color"          Color="#091a26"/>
-    <SolidColorBrush x:Key="ADA_colorT"         Color="#091a26" Opacity="0.4"/>
+	<SolidColorBrush x:Key="ADA_color"          Color="#0033ad"/>
+    <SolidColorBrush x:Key="ADA_colorT"         Color="#0033ad" Opacity="0.4"/>
 
     <SolidColorBrush x:Key="BCH_color"          Color="#F08B16"/>
     <SolidColorBrush x:Key="BCH_colorT"         Color="#F08B16" Opacity="0.4"/>

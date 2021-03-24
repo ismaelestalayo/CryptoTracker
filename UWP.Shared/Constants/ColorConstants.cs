@@ -24,7 +24,7 @@ namespace UWP.Shared.Constants {
         }
 
         private static readonly Dictionary<string, Color> ColorDict = new Dictionary<string, Color>() {
-            { "ADA_color",  ParseHex("#091a26") },
+            { "ADA_color",  ParseHex("#0033ad") },
             { "BCH_color",  ParseHex("#F08B16") },
             { "BCN_color",  ParseHex("#FF3E89") },
             { "BNB_color",  ParseHex("#FFBB0C") },
