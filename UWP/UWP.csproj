@@ -219,6 +219,7 @@
     <Content Include="Assets\Icons\iconXLM.png" />
     <Content Include="Assets\Icons\iconXMR.png" />
     <Content Include="Assets\Icons\iconXRP.png" />
+    <Content Include="Assets\Icons\iconXTZ.png" />
     <Content Include="Assets\Icons\iconZRX.png" />
     <Content Include="Assets\Icons\News.png" />
     <Content Include="Assets\Icons\Portfolio.png" />

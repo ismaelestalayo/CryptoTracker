@@ -299,7 +299,8 @@ namespace UWP.Views {
 
         /// #######################################################################################
         private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinList.Where(x => x.symbol.Contains(box.Text)).ToList(); // || x.FullName.Contains(box.Text)
+            var filtered = App.coinList.Where(x =>
+                x.symbol.Contains(box.Text) || x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
             List<SuggestionCoinList> list = new List<SuggestionCoinList>();
             foreach (CoinBasicInfo coin in filtered) {
                 list.Add(new SuggestionCoinList {
