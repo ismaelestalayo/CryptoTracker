@@ -62,10 +62,13 @@
     <SolidColorBrush x:Key="ONT_color"          Color="#00a6c0"/>
     <SolidColorBrush x:Key="ONT_colorT"         Color="#00a6c0" Opacity="0.4"/> 
 
+    <SolidColorBrush x:Key="UNI_color"          Color="#ff007a"/>
+    <SolidColorBrush x:Key="UNI_colorT"         Color="#ff007a" Opacity="0.4"/>
+
     <SolidColorBrush x:Key="USDT_color"         Color="#26A17B"/>
     <SolidColorBrush x:Key="USDT_colorT"        Color="#26A17B" Opacity="0.4"/>
 
-	<SolidColorBrush x:Key="USDC_color"         Color="#0076ce"/>
+    <SolidColorBrush x:Key="USDC_color"         Color="#0076ce"/>
 	<SolidColorBrush x:Key="USDC_colorT"        Color="#0076ce" Opacity="0.4"/>
 
 	<SolidColorBrush x:Key="TRX_color"          Color="#E60815"/>
