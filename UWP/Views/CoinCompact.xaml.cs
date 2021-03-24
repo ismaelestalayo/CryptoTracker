@@ -39,8 +39,10 @@ namespace UWP.Views {
 
 			switch (type) {
 				case nameof(CoinDetailsViewModel):
-					vm.Chart = ((CoinDetailsViewModel)e.Parameter).Chart;
-					vm.Info = ((CoinDetailsViewModel)e.Parameter).Coin;
+					var coinDetailsVM = (CoinDetailsViewModel)e.Parameter;
+					vm.CoinDetailsVM = coinDetailsVM;
+					vm.Chart = coinDetailsVM.Chart;
+					vm.Info = coinDetailsVM.Coin;
 					vm.Chart.TimeSpan = vm.Chart.TimeSpan;
 					if (!timeSpans.Contains(vm.Chart.TimeSpan)) {
 						(timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
@@ -116,7 +118,7 @@ namespace UWP.Views {
 			var view = ApplicationView.GetForCurrentView();
 
 			await view.TryEnterViewModeAsync(ApplicationViewMode.Default);
-			Frame.Navigate(typeof(CoinDetails), vm);
+			Frame.Navigate(typeof(CoinDetails), vm.CoinDetailsVM);
 		}
 
         private void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {

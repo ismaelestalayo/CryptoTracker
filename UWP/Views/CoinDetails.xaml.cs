@@ -72,9 +72,8 @@ namespace UWP.Views {
                         Fav_btn.Content = vm.Coin.IsFav ? "\uEB52" : "\uEB51";
                         vm.CoinInfo = await CoinGecko.GetCoin(coin.name);
                         break;
-                    case nameof(CoinCompactViewModel):
-                        vm.Chart = ((CoinCompactViewModel)e.Parameter).Chart;
-                        vm.Coin = ((CoinCompactViewModel)e.Parameter).Info;
+                    case nameof(CoinDetailsViewModel):
+                        vm = (CoinDetailsViewModel)e.Parameter;
                         timeSpan = vm.Chart.TimeSpan;
                         (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
                         await UpdateCoin();
@@ -121,7 +120,7 @@ namespace UWP.Views {
             vm.Coin.IsLoading = true;
             
             await UpdateCoin();
-            await Get24Volume();
+            //await Get24Volume();
             //CryptoCompare.GetExchanges(crypto);
         }
 

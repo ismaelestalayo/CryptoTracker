@@ -2,7 +2,7 @@
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace UWP.ViewModels {
-	public class CoinCompactViewModel : ObservableObject {
+	class CoinCompactViewModel : ObservableObject {
 
 		private Coin info = new Coin();
 		public Coin Info {
@@ -14,6 +14,12 @@ namespace UWP.ViewModels {
 		public ChartModel Chart {
 			get => chart;
 			set => SetProperty(ref chart, value);
+		}
+
+		private CoinDetailsViewModel coinDetailsVM;
+		public CoinDetailsViewModel CoinDetailsVM {
+			get => coinDetailsVM;
+			set => SetProperty(ref coinDetailsVM, value);
 		}
 	}
 }
