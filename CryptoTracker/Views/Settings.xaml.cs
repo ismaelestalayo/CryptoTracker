@@ -93,7 +93,7 @@ namespace CryptoTracker {
             Analytics.TrackEvent("mailButton_Click");
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));
-            emailMessage.Subject = "Feedback for CryptoTracker v" + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Revision);
+            emailMessage.Subject = "Feedback for CryptoTracker v" + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
             emailMessage.Body = "<Insert here suggestions/bugs/feature requests...> \n\n";
 
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);

@@ -18,13 +18,13 @@
             </StackPanel>
 
             <TextBlock
-                FontSize="16" FontWeight="SemiBold"
-                TextWrapping="WrapWholeWords"
-                CharacterSpacing="15">
-                <Run Text="New in this version: &#x1F680; &#x0a;"/>
+                FontSize="14" FontWeight="SemiBold"
+                TextWrapping="WrapWholeWords">
+                <Run Text="New in this version: &#x1F680; &#x0a;" FontWeight="Bold"/>
                 
                 <Run FontWeight="Light"
-                     Text="• Fixed Portfolio scrollbar.
+                     Text=" •  Added 10 new crypto icons.
+                     &#x0a;  •  Fixed email's subject.
                      "/> 
                 <LineBreak/>
                 <LineBreak/>
