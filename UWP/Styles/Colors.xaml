@@ -9,6 +9,9 @@
     <SolidColorBrush x:Key="ADA_color"          Color="#0033ad"/>
     <SolidColorBrush x:Key="ADA_colorT"         Color="#0033ad" Opacity="0.4"/>
 
+    <SolidColorBrush x:Key="BAT_color"          Color="#ff5000"/>
+    <SolidColorBrush x:Key="BAT_colorT"         Color="#ff5000" Opacity="0.4"/>
+
     <SolidColorBrush x:Key="BCH_color"          Color="#92c458"/>
     <SolidColorBrush x:Key="BCH_colorT"         Color="#92c458" Opacity="0.4"/>
 
@@ -80,6 +83,9 @@
     <SolidColorBrush x:Key="TRX_color"          Color="#E60815"/>
     <SolidColorBrush x:Key="TRX_colorT"         Color="#E60815" Opacity="0.4"/>
 
+    <SolidColorBrush x:Key="VET_color"          Color="#15bdff"/>
+    <SolidColorBrush x:Key="VET_colorT"         Color="#15bdff" Opacity="0.4"/>
+
     <SolidColorBrush x:Key="XEM_color"          Color="#20B5AC"/>
     <SolidColorBrush x:Key="XEM_colorT"         Color="#20B5AC" Opacity="0.4"/>
 
@@ -92,6 +98,6 @@
     <SolidColorBrush x:Key="XRP_color"		    Color="#1277A8"/>
     <SolidColorBrush x:Key="XRP_colorT"		    Color="#1277A8" Opacity="0.4"/>
 
-    <SolidColorBrush x:Key="ZRX_color"          Color="#131313"/>
-    <SolidColorBrush x:Key="ZRX_colorT"         Color="#131313" Opacity="0.4"/> 
+    <SolidColorBrush x:Key="ZRX_color"          Color="#404040"/>
+    <SolidColorBrush x:Key="ZRX_colorT"         Color="#404040" Opacity="0.4"/> 
 </ResourceDictionary>
