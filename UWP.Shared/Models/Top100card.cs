@@ -38,8 +38,8 @@ namespace UWP.Models {
         }
 
         // manually added attributes
-        public string Currency { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
-        public string CurrencySymbol { get; set; } = Currencies.GetCurrencySymbol(Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency));
+        public string Currency { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
+        public string CurrencySymbol { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.CurrencySymbol);
         public string MarketCap { get; set; } = "0";
         public string Volume { get; set; } = "0";
         public Brush ChangeFG { get; set; }

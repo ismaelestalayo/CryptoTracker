@@ -81,7 +81,7 @@ namespace UWP.Models {
             set => SetProperty(ref boughtAt, value);
         }
 
-        private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
+        private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
         [DataMember()]
         public string Currency {
             get => currency;

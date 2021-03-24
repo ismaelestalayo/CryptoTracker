@@ -135,7 +135,7 @@
 								<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
 									<Run Text="{x:Bind Info.Price, Mode=OneWay,
                                         Converter={StaticResource GeneralConv}}" d:Text="0"/><!--
-									--><Run Text="{x:Bind Info.Currency, Mode=OneWay}" d:Text="€"/>
+									--><Run Text="{x:Bind Info.CurrencySym, Mode=OneWay}" d:Text="€"/>
 								</TextBlock>
 								<TextBlock
 									Foreground="{x:Bind Info.DiffFG, Mode=OneWay}"

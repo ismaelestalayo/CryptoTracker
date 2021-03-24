@@ -43,7 +43,7 @@ namespace UWP.Views {
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
 
-                if (App._LocalSettings.Get<string>(UserSettingsConstants.Theme) == "Dark") {
+                if (App._LocalSettings.Get<string>(UserSettings.Theme) == "Dark") {
                     statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23); //31 31 31
                     statusBar.BackgroundOpacity = 1;
                     statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
@@ -108,7 +108,7 @@ namespace UWP.Views {
             var v = Package.Current.Id.Version;
             var version = $"{v.Major}.{v.Minor}.{v.Build}";
             
-            var lastVersion = App._LocalSettings.Get<string>(UserSettingsConstants.LastVersion);
+            var lastVersion = App._LocalSettings.Get<string>(UserSettings.LastVersion);
             if (version == lastVersion)
                 return;
             vm.InfoBarTitle = $"Welcome to CryptoTracker v{version}";
@@ -118,11 +118,11 @@ namespace UWP.Views {
                 vm.InfoBarMessage += $"  • {change} \n";
 
             vm.InfoBarOpened = true;
-            App._LocalSettings.Set(UserSettingsConstants.LastVersion, version);
+            App._LocalSettings.Set(UserSettings.LastVersion, version);
         }
 
         private void ColorValuesChanged(UISettings sender, object args) {
-            if ((App._LocalSettings.Get<string>(UserSettingsConstants.Theme) == "Windows")) {
+            if ((App._LocalSettings.Get<string>(UserSettings.Theme) == "Windows")) {
                 var color = uiSettings.GetColorValue(UIColorType.Background);
                 switch (color.ToString()) {
                     case "#FF000000":

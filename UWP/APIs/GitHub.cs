@@ -25,7 +25,7 @@ namespace UWP.APIs {
 
                 // Save on Local Storage, and save the Date
                 LocalStorageHelper.SaveObject(coins, "CoinList");
-                App._LocalSettings.Set(UserSettingsConstants.CoinListDate, DateTime.Today.ToOADate());
+                App._LocalSettings.Set(UserSettings.CoinListDate, DateTime.Today.ToOADate());
 
                 return coins;
             }

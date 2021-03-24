@@ -10,7 +10,7 @@ namespace UWP.Services {
 
         public T Get<T>(string settingKey) {
             object result = ApplicationData.Current.LocalSettings.Values[settingKey];
-            return result == null ? (T)UserSettingsConstants.Defaults[settingKey] : (T)result;
+            return result == null ? (T)UserSettings.Defaults[settingKey] : (T)result;
         }
 
         public void Set<T>(string settingKey, T value) {

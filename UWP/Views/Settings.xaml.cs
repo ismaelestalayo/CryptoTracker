@@ -27,11 +27,11 @@ namespace UWP.Views {
             version = Package.Current.Id.Version;
             VersionTextBlock.Text = "Version: " + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
-            ThemeComboBox.PlaceholderText = App._LocalSettings.Get<string>(UserSettingsConstants.Theme);
+            ThemeComboBox.PlaceholderText = App._LocalSettings.Get<string>(UserSettings.Theme);
             FooterLogo.Source = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? 
                 new BitmapImage(new Uri("ms-appx:///Assets/Tile-L.png")) : new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));
 
-            var currency = App._LocalSettings.Get<string>(UserSettingsConstants.Currency);
+            var currency = App._LocalSettings.Get<string>(UserSettings.Currency);
             switch (currency) {
                 case "EUR":
                     EUR.IsSelected = true;
@@ -132,10 +132,13 @@ namespace UWP.Views {
         private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
             ComboBox c = sender as ComboBox;
             var currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
+            var currencySym = Currencies.GetCurrencySymbol(currency);
 
-            App._LocalSettings.Set(UserSettingsConstants.Currency, currency);
+            App._LocalSettings.Set(UserSettings.Currency, currency);
+            App._LocalSettings.Set(UserSettings.CurrencySymbol, currencySym);
+            
             App.currency = currency;
-            App.currencySymbol = Currencies.GetCurrencySymbol(currency);
+            App.currencySymbol = currencySym;
         }
 
         private async void UploadPortfolio_Click(object sender, RoutedEventArgs e) {            
@@ -220,7 +223,7 @@ namespace UWP.Views {
             ComboBox c = sender as ComboBox;
             var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
-            App._LocalSettings.Set(UserSettingsConstants.Theme, theme);
+            App._LocalSettings.Set(UserSettings.Theme, theme);
             switch (theme) {
                 case "Light":
                     FooterLogo.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tile-D.png"));

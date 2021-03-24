@@ -24,8 +24,8 @@ using Windows.UI.Xaml.Shapes;
 namespace UWP.Background {
     public sealed class LiveTileUpdater {
         private static LocalSettings localSettings = new LocalSettings();
-        internal static string currency = localSettings.Get<string>(UserSettingsConstants.Currency);
-        internal static string currencySymbol = Currencies.GetCurrencySymbol(currency);
+        internal static string currency = localSettings.Get<string>(UserSettings.Currency);
+        internal static string currencySymbol = localSettings.Get<string>(UserSettings.CurrencySymbol);
         internal static List<HistoricPrice> hist;
 
         /// <summary>

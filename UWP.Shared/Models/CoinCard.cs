@@ -24,7 +24,7 @@ namespace UWP.Models {
         }
         internal string CryptoFullName { get; set; } = "NULL";
         internal string CryptoSymbol { get; set; } = "NULL";
-        internal string Currency { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
+        internal string Currency { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
         internal string IconSrc { get; set; } = "/Assets/Icons/iconNULL.png";
 
         /// <summary>

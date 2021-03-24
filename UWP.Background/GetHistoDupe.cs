@@ -27,7 +27,7 @@ namespace UWP.Background {
         private static LocalSettings localSettings = new LocalSettings();
 
         internal static async Task<List<HistoricPrice>> GetWeeklyHistAsync(string crypto) {
-            var currency = localSettings.Get<string>(UserSettingsConstants.Currency);
+            var currency = localSettings.Get<string>(UserSettings.Currency);
             var NullValue = new List<HistoricPrice>() { new HistoricPrice() { Average = 1, DateTime = DateTime.Today } };
 
             try {

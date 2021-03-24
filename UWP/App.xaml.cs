@@ -44,9 +44,10 @@ namespace UWP {
         internal static CultureInfo UserCulture = new CultureInfo(GlobalizationPreferences.Languages[0]);
 
         public App() {
-            currency = _LocalSettings.Get<string>(UserSettingsConstants.Currency);
-            string _theme = _LocalSettings.Get<string>(UserSettingsConstants.Theme);
-            string _pinned = _LocalSettings.Get<string>(UserSettingsConstants.PinnedCoins);
+            currency = _LocalSettings.Get<string>(UserSettings.Currency);
+            currencySymbol = _LocalSettings.Get<string>(UserSettings.CurrencySymbol);
+            string _theme = _LocalSettings.Get<string>(UserSettings.Theme);
+            string _pinned = _LocalSettings.Get<string>(UserSettings.PinnedCoins);
 			
             pinnedCoins = new List<string>(_pinned.Split(new char[] { '|' }));
             pinnedCoins.Remove("");
@@ -59,11 +60,10 @@ namespace UWP {
 					RequestedTheme = ApplicationTheme.Dark;
 					break;
                 default:
-                    RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                    RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
+                        ApplicationTheme.Dark : ApplicationTheme.Light;
                     break;
             }
-
-            currencySymbol = Currencies.GetCurrencySymbol(currency);
 
             /// Register services
             Ioc.Default.ConfigureServices(
@@ -160,7 +160,7 @@ namespace UWP {
                     s += item + "|";
                 }
                 s = s.Remove(s.Length - 1);
-                App._LocalSettings.Set(UserSettingsConstants.PinnedCoins, s);
+                App._LocalSettings.Set(UserSettings.PinnedCoins, s);
             }
         }
 
@@ -170,7 +170,7 @@ namespace UWP {
         */
         internal async static Task GetCoinList() {
             // check cache before sending an unnecesary request
-            var date = _LocalSettings.Get<double>(UserSettingsConstants.CoinListDate);
+            var date = _LocalSettings.Get<double>(UserSettings.CoinListDate);
             
             DateTime lastUpdate = DateTime.FromOADate((double)date);
             var days = DateTime.Today.CompareTo(lastUpdate);

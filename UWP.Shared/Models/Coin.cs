@@ -19,7 +19,7 @@ namespace UWP.Models {
                 SetProperty(ref name, value);
                 // TODO
                 //Logo = IconsHelper.GetIcon(value);
-                var coinList = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.PinnedCoins);
+                var coinList = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.PinnedCoins);
                 IsFav = coinList.Split("|").ToList().Contains(value);
             }
         }
@@ -27,10 +27,10 @@ namespace UWP.Models {
         public string Logo { get; set; } = "/Assets/Icons/iconNULL.png";
         public bool IsFav { get; set; } = false;
 
-        private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettingsConstants.Currency);
-        public string Currency {
-            get => currency;
-            set => SetProperty(ref currency, value);
+        private string currencySym = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.CurrencySymbol);
+        public string CurrencySym {
+            get => currencySym;
+            set => SetProperty(ref currencySym, value);
         }
 
         /// <summary>

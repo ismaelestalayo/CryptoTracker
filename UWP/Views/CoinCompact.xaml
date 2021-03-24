@@ -57,7 +57,7 @@
                 <Run Text="{x:Bind vm.Info.Name, Mode=OneWay}"/><!--
                 --><Run Text=":"/>
                 <Run Text="{x:Bind vm.Info.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}" FontWeight="Normal"/><!--
-                --><Run Text="{x:Bind vm.Info.Currency, Mode=OneWay}" FontWeight="Normal"/>
+                --><Run Text="{x:Bind vm.Info.CurrencySym, Mode=OneWay}" FontWeight="Normal"/>
             </TextBlock>
         </RelativePanel>
 
