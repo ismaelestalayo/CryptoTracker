@@ -66,14 +66,15 @@ namespace UWP.Views {
             this.RegisterBackgroundTask();
 
             var param = e.Parameter.ToString();
-            
-            /// User clicked in a Live Tile
             if (param.StartsWith("/tile-"))
                 Redirect = param.Split("-")[1];
 
             switch (param) {
                 case "/Portfolio":
                     NavView.SelectedItem = NavView.MenuItems[3];
+                    break;
+                case "/News":
+                    NavView.SelectedItem = NavView.MenuItems[2];
                     break;
                 default:
                     NavView.SelectedItem = NavView.MenuItems[0];
@@ -238,9 +239,11 @@ namespace UWP.Views {
             if (samePage)
                 dir.Effect = SlideNavigationTransitionEffect.FromBottom;
 
-            /// Redirect to a coin's page from a Live Tile
-            if (toPage == "Home" && Redirect != "")
+            /// Redirect to a coin's page from a Live Tile (and clear Redirect as it's a one-time)
+            if (toPage == "Home" && Redirect != "") {
                 ContentFrame.Navigate(typeof(CoinDetails), Redirect, dir);
+                Redirect = "";
+            }
             else
                 ContentFrame.Navigate(page, null, dir);
         }
