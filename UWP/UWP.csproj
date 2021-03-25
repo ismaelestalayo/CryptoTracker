@@ -159,6 +159,9 @@
       <DependentUpon>Portfolio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\SettingsDialogGeneral.xaml.cs">
+      <DependentUpon>SettingsDialogGeneral.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -349,6 +352,10 @@
     <Page Include="Views\Portfolio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsDialogGeneral.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings.xaml">
       <SubType>Designer</SubType>

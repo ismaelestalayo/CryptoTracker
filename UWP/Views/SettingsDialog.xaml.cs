@@ -11,10 +11,15 @@ namespace CryptoTracker.Views {
     public sealed partial class SettingsDialog : ContentDialog {
         /// Store a refrence to Rectangle to later unregester the event handler
         private Rectangle _lockRectangle;
-        public SettingsDialog() {
+        public SettingsDialog(string initialPage = "General") {
             this.InitializeComponent();
 
-            this.SettingsFrame.Navigate(typeof(Settings));
+            switch (initialPage) {
+                default:
+                case "General":
+                    this.SettingsFrame.Navigate(typeof(SettingsDialogGeneral));
+                    break;
+            }
         }
 
         protected override void OnApplyTemplate() {

@@ -1,0 +1,115 @@
+﻿<Page
+    x:Class="UWP.Views.SettingsDialogGeneral"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:UWP.ViewModels"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:SettingsViewModel x:Name="vm"/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontWeight" Value="ExtraLight"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
+            <Setter Property="TextLineBounds" Value="Tight"/>
+            <Setter Property="Margin" Value="0 10"/>
+        </Style>
+    </Page.Resources>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////// -->
+    <ScrollViewer
+        BorderThickness="0.2 0 0 0" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
+        Padding="20 15 0 0" >
+        <ScrollViewer.Resources>
+            <Style TargetType="FontIcon">
+                <Setter Property="Margin" Value="0 8 15 0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="Margin" Value="0 0 0 10"/>
+            </Style>
+        </ScrollViewer.Resources>
+
+        <StackPanel>
+            <!-- CURRENCY -->
+            <StackPanel Orientation="Horizontal">
+                <FontIcon Glyph="&#xE909;"/>
+                <StackPanel>
+                    <TextBlock Text="Currency" Style="{ThemeResource ClassTitle}"/>
+                    <TextBlock 
+                        Text="Choose the currency in which to to show prices. &#x0a;(Pages need to be updated manually.)"
+                        Style="{ThemeResource ClassLabel}"/>
+                    <ComboBox x:Name="CoinComboBox" PlaceholderText="Coin" BorderThickness="1"
+                        SelectionChanged="CoinBox_changed" Margin="0 5 0 0">
+                        <ComboBoxItem Content="EUR (€)" Name="EUR"/>
+                        <ComboBoxItem Content="USD ($)" Name="USD"/>
+                        <ComboBoxItem Content="GBP (£)" Name="GBP"/>
+                        <ComboBoxItem Content="CAD ($)" Name="CAD"/>
+                        <ComboBoxItem Content="AUD ($)" Name="AUD"/>
+                        <ComboBoxItem Content="MXN ($)" Name="MXN"/>
+                        <ComboBoxItem Content="CNY (¥)" Name="CNY"/>
+                        <ComboBoxItem Content="JPY (¥)" Name="JPY"/>
+                        <ComboBoxItem Content="INR (₹)" Name="INR"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- CURRENCY -->
+            <StackPanel Orientation="Horizontal">
+                <FontIcon Glyph="&#xE121;"/>
+                <StackPanel>
+                    <TextBlock Text="Auto-refresh" Style="{ThemeResource ClassTitle}"/>
+                    <TextBlock 
+                        Text="Home, Details and Compact Overlay automatically refresh. &#x0a;(Charts update minutely because of the API's granularity.)"
+                        Style="{ThemeResource ClassLabel}"/>
+                    <ComboBox PlaceholderText="Refresh" BorderThickness="1"
+                        SelectionChanged="CoinBox_changed" Margin="0 5 0 0">
+                        <ComboBoxItem Content="30 sec" Name="refresh30"/>
+                        <ComboBoxItem Content="60 sec" Name="refresh60"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- APPEARANCE -->
+            <StackPanel Orientation="Horizontal">
+                <FontIcon Glyph="&#xE703;"/>
+                <StackPanel>
+                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
+                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
+                    <ComboBox x:Name="ThemeComboBox"
+                        PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed">
+                        <ComboBoxItem Content="Light" Name="Light"/>
+                        <ComboBoxItem Content="Dark" Name="Dark"/>
+                        <ComboBoxItem Content="Windows" Name="Windows"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- CLOUD SYNC -->
+            <StackPanel Orientation="Horizontal">
+                <FontIcon Glyph="&#xE753;"/>
+                <StackPanel>
+                    <TextBlock Text="Cloud sync" Style="{ThemeResource ClassTitle}"/>
+                    <TextBlock Text="Sync your portfolio with OneDrive with just a click." Style="{ThemeResource ClassLabel}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Upload"
+                                Style="{ThemeResource Crypto_button_style}" 
+                                Click="UploadPortfolio_Click"/>
+                        <Button Content="Download"
+                                Style="{ThemeResource Crypto_button_style}"
+                                Click="DownloadPortfolio_Click">
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
