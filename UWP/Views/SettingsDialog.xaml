@@ -7,44 +7,36 @@
     mc:Ignorable="d">
 
     <ContentDialog.Resources>
-        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>
-        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Yellow"/>
-        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="LightGreen"/>
-        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="White"/>
-        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="Orange"/>
-        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="Pink"/>
-        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{ThemeResource ContentDialogContentForegroundBrush}"/>        
+        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{ThemeResource ContentDialogBackground}"/>
+        <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource ContentDialogBackground}"/>
     </ContentDialog.Resources>
 
     <NavigationView
-        Background="{ThemeResource ContentDialogContentForegroundBrush}"
+        Background="{ThemeResource ContentDialogBackground}"
         IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
         IsSettingsVisible="False" IsPaneOpen="True"
         PaneDisplayMode="Left" OpenPaneLength="150"
-        >
-        
+        HorizontalAlignment="Stretch">
+
         <NavigationView.MenuItems>
             <NavigationViewItem Content="General" Tag="home" FontWeight="Light">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE10F;"/>
-                    <!-- Home -->
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            
+
             <NavigationViewItem Content="Appearance" Tag="top" FontWeight="Light">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE2B1;"/>
-                    <!-- All Apps -->
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            
+
             <NavigationViewItem  Content="Tiles" Tag="news" FontWeight="Light">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xECA5;"/>
-                    <!-- Preview link -->
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            
+
             <NavigationViewItem Content="Changelog" Tag="portfolio" FontWeight="Light">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE14C;"/>
@@ -63,5 +55,13 @@
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
         </NavigationView.MenuItems>
+
+        <Frame x:Name="SettingsFrame" Navigating="ContentFrame_Navigating">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
     </NavigationView>
 </ContentDialog>
