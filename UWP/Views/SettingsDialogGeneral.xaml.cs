@@ -150,19 +150,23 @@ namespace UWP.Views {
             ComboBox c = sender as ComboBox;
             var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
 
+            var parentFrame = (Frame)Window.Current.Content;
+            var parentDialog = (FrameworkElement)((FrameworkElement)((FrameworkElement)this.Parent).Parent).Parent;
+
             App._LocalSettings.Set(UserSettings.Theme, theme);
             switch (theme) {
                 case "Light":
-                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
+                    parentFrame.RequestedTheme = ElementTheme.Light;
+                    parentDialog.RequestedTheme = ElementTheme.Light;
                     break;
                 case "Dark":
-                    ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
+                    parentFrame.RequestedTheme = ElementTheme.Dark;
+                    parentDialog.RequestedTheme = ElementTheme.Dark;
                     break;
                 case "Windows":
-                    if (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black)
-                        ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Dark;
-                    else
-                        ((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
+                    bool isDark = new UISettings().GetColorValue(UIColorType.Background) == Colors.Black;
+                    parentFrame.RequestedTheme = isDark ? ElementTheme.Dark : ElementTheme.Light;
+                    parentDialog.RequestedTheme = isDark ? ElementTheme.Dark : ElementTheme.Light;
                     break;
             }
         }

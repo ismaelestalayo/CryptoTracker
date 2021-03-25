@@ -1,4 +1,8 @@
-﻿using UWP.Views;
+﻿using UWP;
+using UWP.Core.Constants;
+using UWP.Views;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -13,6 +17,20 @@ namespace CryptoTracker.Views {
         private Rectangle _lockRectangle;
         public SettingsDialog(string initialPage = "General") {
             this.InitializeComponent();
+
+            var currentTheme = App._LocalSettings.Get<string>(UserSettings.Theme);
+            switch (currentTheme) {
+                case "Light":
+                    this.RequestedTheme = ElementTheme.Light;
+                    break;
+                case "Dark":
+                    this.RequestedTheme = ElementTheme.Dark;
+                    break;
+                case "Windows":
+                    this.RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
+                        ElementTheme.Dark : ElementTheme.Light;
+                    break;
+            }
 
             switch (initialPage) {
                 default:

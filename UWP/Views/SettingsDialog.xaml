@@ -10,12 +10,13 @@
         <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{ThemeResource ContentDialogBackground}"/>
         <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource ContentDialogBackground}"/>
     </ContentDialog.Resources>
+    
 
     <NavigationView
         Background="{ThemeResource ContentDialogBackground}"
         IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
         IsSettingsVisible="False" IsPaneOpen="True"
-        PaneDisplayMode="Left" OpenPaneLength="150"
+        PaneDisplayMode="Left" OpenPaneLength="140"
         HorizontalAlignment="Stretch">
 
         <NavigationView.MenuItems>
