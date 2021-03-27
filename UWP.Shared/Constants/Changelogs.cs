@@ -12,8 +12,10 @@ namespace UWP.Core.Constants {
 				new List<string>(){
 					"Faster launch",
 					"Polished UI",
+					"Pin any coin as a Live Tile",
 					"More granular charts (1h/4h/1d...)",
 					"Added automatic refresh of 30secs",
+					"Support for Jump Lists",
 					"Coins: New Compact Overlay",
 					"Portfolio: ability to clone and add notes to purchases" }
 				},
