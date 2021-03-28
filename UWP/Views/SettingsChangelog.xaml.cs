@@ -16,8 +16,17 @@ namespace UWP.Views {
             this.InitializeComponent();
             version = Package.Current.Id.Version;
 
-            ThemeComboBox.PlaceholderText = App._LocalSettings.Get<string>(UserSettings.Theme);
-
+            
+            foreach (var changelog in Changelogs.LatestChangelogs) {
+                var changes = Changelogs.FormatChangelog(changelog.Value);
+                var s = new StackPanel() {
+                    Children = {
+                        new TextBlock(){ Text = changelog.Key, Style = Resources["ClassTitle"] as Style },
+                        new TextBlock(){ Text = changes, Style = Resources["ClassLabel"] as Style }
+                    }
+                };
+                ChangeLogList.Children.Add(s);
+            }
         }
 
 

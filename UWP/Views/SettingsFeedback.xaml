@@ -5,6 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:UWP.ViewModels"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
     d:Height="600"
     d:Width="500"
     mc:Ignorable="d">
@@ -22,48 +24,81 @@
         <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="TextLineBounds" Value="Tight"/>
             <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="TextWrapping" Value="WrapWholeWords"/>
         </Style>
+        
+        <Style TargetType="FontIcon">
+            <Setter Property="Margin" Value="0 8 15 0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="0 0 0 10"/>
+            <Setter Property="MaxWidth" Value="350"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer
         BorderThickness="0.2 0 0 0" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
-        Padding="20 15 0 0" >
-        <ScrollViewer.Resources>
-            <Style TargetType="FontIcon">
-                <Setter Property="Margin" Value="0 8 15 0"/>
-                <Setter Property="VerticalAlignment" Value="Top"/>
-            </Style>
-            <Style TargetType="StackPanel">
-                <Setter Property="Margin" Value="0 0 0 10"/>
-            </Style>
-        </ScrollViewer.Resources>
+        Padding="20 15 0 0">
 
         <StackPanel>
-            <!-- APPEARANCE -->
+            <Canvas>
+                <Border Height="600" Width="500">
+                    <!--AnimatedVisualPlayer with AutoPlay-->
+                    <muxc:AnimatedVisualPlayer x:Name="LottiePlayer" AutoPlay="False">
+                        <!--LottieVisualSource with JSON UriSource-->
+                        <lottie:LottieVisualSource UriSource="ms-appx:///Assets/confetti.json"/>
+                    </muxc:AnimatedVisualPlayer>
+                </Border>
+            </Canvas>
+            
+            <!-- REVIEW -->
             <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE703;"/>
+                <FontIcon Glyph="&#xE134;"/>
                 <StackPanel>
-                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
-                    <ComboBox x:Name="ThemeComboBox"
-                        PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed">
-                        <ComboBoxItem Content="Light" Name="Light"/>
-                        <ComboBoxItem Content="Dark" Name="Dark"/>
-                        <ComboBoxItem Content="Windows" Name="Windows"/>
-                    </ComboBox>
+                    <TextBlock Text="Review" Style="{ThemeResource ClassTitle}"/>
+                    <TextBlock Text="Take a minute and leave a review on the Store."/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Rating" Click="RatingButton_Click"
+                                Style="{ThemeResource Crypto_button_style}"/>
+                        <Button Content="Review" Click="ReviewButton_Click"
+                                Style="{ThemeResource Crypto_button_style}"/>
+                    </StackPanel>
+
+                    <TextBlock Text="I would love to hear your thoughts about the app."/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="MailButton_Click" Content="Email"
+                                Style="{ThemeResource Crypto_button_style}" ToolTipService.ToolTip="ismael.em@outlook.com"/>
+                        <Button Click="TwitterButton_Click" Content="Twitter"
+                                Style="{ThemeResource Crypto_button_style}" ToolTipService.ToolTip="@ismaelestalayo"/>
+                        <Button Content="Feedback Hub" x:Name="feedbackButton" Click="FeedbackButton_Click"
+                                Style="{ThemeResource Crypto_button_style}"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
 
-            <!-- APPEARANCE -->
+            <!-- DONATE -->
             <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE703;"/>
+                <FontIcon Glyph="&#xE7EE;"/>
                 <StackPanel>
-                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
+                    <TextBlock Text="Donate" Style="{ThemeResource ClassTitle}"/>
+
+
+                    <TextBlock
+                        Text="I have been developing this app since August 2017, so if
+                        you really love my app and want to support it, you can donate here:"/>
+                    <StackPanel>
+                        <Button
+                            Click="PaypalButton_Click" Content="Paypal"
+                            Style="{ThemeResource Crypto_button_style}"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
+
         </StackPanel>
     </ScrollViewer>
 </Page>

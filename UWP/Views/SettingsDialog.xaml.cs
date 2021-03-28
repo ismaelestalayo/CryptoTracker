@@ -74,7 +74,7 @@ namespace CryptoTracker.Views {
             switch (page) {
                 default:
                 case "General":
-                    this.SettingsFrame.Navigate(typeof(SettingsDialogGeneral));
+                    this.SettingsFrame.Navigate(typeof(SettingsGeneral));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[0];
                     break;
                 case "Appearance":
@@ -82,7 +82,7 @@ namespace CryptoTracker.Views {
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[1];
                     break;
                 case "Tiles":
-                    this.SettingsFrame.Navigate(typeof(SettingsAppearance));
+                    this.SettingsFrame.Navigate(typeof(Settings));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[2];
                     break;
                 case "Changelog":

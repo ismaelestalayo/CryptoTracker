@@ -4,59 +4,63 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:Height="400"
-    d:Width="400"
     mc:Ignorable="d">
 
     <ContentDialog.Resources>
         <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{ThemeResource ContentDialogBackground}"/>
         <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource ContentDialogBackground}"/>
-        <Thickness x:Key="ContentDialogPadding">12</Thickness>
-        <x:Double x:Key="ContentDialogMaxWidth">600</x:Double>
+        <Thickness x:Key="ContentDialogPadding">12, 12, 0, 12</Thickness>
+        <x:Double x:Key="ContentDialogMaxWidth">630</x:Double>
     </ContentDialog.Resources>
-    
+
 
     <NavigationView
         x:Name="SettingsNavView"
         Background="{ThemeResource ContentDialogBackground}"
         IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
         IsSettingsVisible="False" IsPaneOpen="True"
-        PaneDisplayMode="Left" OpenPaneLength="140"
-        HorizontalAlignment="Stretch"
+        PaneDisplayMode="Left" OpenPaneLength="150"
+        Height="560" Width="560"
         SelectionChanged="NavView_SelectionChanged">
+        <NavigationView.Resources>
+            <Style TargetType="NavigationViewItem">
+                <Setter Property="FontWeight" Value="Light"/>
+                <Setter Property="Padding" Value="0 0 0 4"/>
+            </Style>
+        </NavigationView.Resources>
 
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="General" Tag="home" FontWeight="Light">
+            <NavigationViewItem Content="General" Tag="home">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE10F;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem Content="Appearance" Tag="top" FontWeight="Light">
+            <NavigationViewItem Content="Appearance" Tag="top">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE2B1;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem  Content="Tiles" Tag="news" FontWeight="Light">
+            <NavigationViewItem  Content="Tiles" Tag="news">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xECA5;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem Content="Changelog" Tag="portfolio" FontWeight="Light">
+            <NavigationViewItem Content="Changelog" Tag="portfolio">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE14C;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem Content="Feedback" Tag="portfolio" FontWeight="Light">
+            <NavigationViewItem Content="Feedback" Tag="portfolio">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE789;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem Content="About" Tag="portfolio" FontWeight="Light">
+            <NavigationViewItem Content="About" Tag="portfolio">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE946;"/>
                 </NavigationViewItem.Icon>
@@ -70,5 +74,14 @@
                 </TransitionCollection>
             </Frame.ContentTransitions>
         </Frame>
+
+        <NavigationView.PaneFooter>
+            <NavigationViewItem Content="CryptoTracker 6.0.0" FontWeight="Normal" Padding="-5 0">
+                <!--<NavigationViewItem.Icon>
+                    <BitmapIcon UriSource="/Assets/AppIcon-D.png"/>
+                    --><!--<Image x:Name="FooterLogoo" Source="/Assets/Tile-D.png" Margin="0"/>--><!--
+                </NavigationViewItem.Icon>-->
+            </NavigationViewItem>
+        </NavigationView.PaneFooter>
     </NavigationView>
 </ContentDialog>

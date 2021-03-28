@@ -41,29 +41,14 @@
         </ScrollViewer.Resources>
 
         <StackPanel>
-            <!-- APPEARANCE -->
+            <!-- CHANGELOGS -->
             <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE703;"/>
-                <StackPanel>
-                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
-                    <ComboBox x:Name="ThemeComboBox"
-                        PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed">
-                        <ComboBoxItem Content="Light" Name="Light"/>
-                        <ComboBoxItem Content="Dark" Name="Dark"/>
-                        <ComboBoxItem Content="Windows" Name="Windows"/>
-                    </ComboBox>
+                <FontIcon Glyph="&#xE14C;"/>
+                <StackPanel x:Name="ChangeLogList">
+                    <d:TextBlock Text="X.Y.Z" Style="{ThemeResource ClassTitle}"/>
                 </StackPanel>
             </StackPanel>
-
-            <!-- APPEARANCE -->
-            <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE703;"/>
-                <StackPanel>
-                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
-                </StackPanel>
-            </StackPanel>
+            
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -23,45 +23,50 @@
             <Setter Property="TextLineBounds" Value="Tight"/>
             <Setter Property="Margin" Value="0 10"/>
         </Style>
+
+        <Style TargetType="FontIcon">
+            <Setter Property="Margin" Value="0 8 15 0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="0 0 0 10"/>
+        </Style>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer
         BorderThickness="0.2 0 0 0" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
-        Padding="20 15 0 0" >
-        <ScrollViewer.Resources>
-            <Style TargetType="FontIcon">
-                <Setter Property="Margin" Value="0 8 15 0"/>
-                <Setter Property="VerticalAlignment" Value="Top"/>
-            </Style>
-            <Style TargetType="StackPanel">
-                <Setter Property="Margin" Value="0 0 0 10"/>
-            </Style>
-        </ScrollViewer.Resources>
+        Padding="20 15 0 0">
 
         <StackPanel>
-            <!-- APPEARANCE -->
+            <!-- MENTION -->
             <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE703;"/>
+                <FontIcon Glyph="&#xE90A;"/>
                 <StackPanel>
-                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
-                    <ComboBox x:Name="ThemeComboBox"
-                        PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed">
-                        <ComboBoxItem Content="Light" Name="Light"/>
-                        <ComboBoxItem Content="Dark" Name="Dark"/>
-                        <ComboBoxItem Content="Windows" Name="Windows"/>
-                    </ComboBox>
+                    <TextBlock Text="Mention" Style="{ThemeResource ClassTitle}"/>
+                    <TextBlock>
+                        <Run Text="Data provided by"/>
+                        <Hyperlink Foreground="Gray" NavigateUri="https://www.cryptocompare.com/api" >
+                            CryptoCompare API
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="Crypto Tracker's"/>
+                        <Hyperlink Foreground="Gray" NavigateUri="https://ismaelestalayo.com/privacy">
+                            Privacy policy
+                        </Hyperlink>
+                    </TextBlock>
                 </StackPanel>
             </StackPanel>
 
-            <!-- APPEARANCE -->
+            <!-- ABOUT ME -->
             <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE703;"/>
+                <FontIcon Glyph=""/>
                 <StackPanel>
-                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
+                    <TextBlock Text="About me" Style="{ThemeResource ClassTitle}"/>
+                    <TextBlock Text="eee"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

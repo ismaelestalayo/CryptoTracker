@@ -1,8 +1,11 @@
-﻿using UWP.Core.Constants;
-using UWP.Shared.Constants;
+﻿using Microsoft.AppCenter.Analytics;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.UI;
-using Windows.UI.ViewManagement;
+using Windows.ApplicationModel.Email;
+using Windows.Services.Store;
+using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -10,54 +13,66 @@ namespace UWP.Views {
     public sealed partial class SettingsFeedback : Page {
 
         private PackageVersion version;
-        private string PortfolioKey = "Portfolio";
 
         public SettingsFeedback() {
             this.InitializeComponent();
+
             version = Package.Current.Id.Version;
-
-            ThemeComboBox.PlaceholderText = App._LocalSettings.Get<string>(UserSettings.Theme);
-
         }
 
+        private async void FeedbackButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("feedbackButton_Click");
+            var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
+            await launcher.LaunchAsync();
+        }
+        private async void RatingButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("ratingButton_Click");
+            await ShowRatingReviewDialog();
+        }
+        private async void ReviewButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("reviewButton_Click");
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9n3b47hbvblc"));
+        }
+        private async void MailButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("mailButton_Click");
+            EmailMessage emailMessage = new EmailMessage();
+            emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));
+            emailMessage.Subject = "Feedback for CryptoTracker v" + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+            emailMessage.Body = "<Insert here suggestions/bugs/feature requests...> \n\n";
+
+            await EmailManager.ShowComposeNewEmailAsync(emailMessage);
+        }
+        private async void TwitterButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("twitterButton_Click");
+            await Launcher.LaunchUriAsync(new Uri("https://twitter.com/ismaelestalayo"));
+        }
+        private async void PaypalButton_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("paypalButton_Click");
+            await Launcher.LaunchUriAsync(new Uri("https://paypal.me/ismaelEstalayo"));
+        }
 
         // ###############################################################################################
-        private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
-            ComboBox c = sender as ComboBox;
-            var currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
-            var currencySym = Currencies.GetCurrencySymbol(currency);
+        public async Task<bool> ShowRatingReviewDialog() {
+            StoreContext _storeContext = StoreContext.GetDefault(); ;
+            StoreRateAndReviewResult result = await _storeContext.RequestRateAndReviewAppAsync();
 
-            App._LocalSettings.Set(UserSettings.Currency, currency);
-            App._LocalSettings.Set(UserSettings.CurrencySymbol, currencySym);
-            
-            App.currency = currency;
-            App.currencySymbol = currencySym;
-        }
-
-        private void ThemeComboBox_changed(object sender, SelectionChangedEventArgs e) {
-            ComboBox c = sender as ComboBox;
-            var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
-
-            var parentFrame = (Frame)Window.Current.Content;
-            var parentDialog = (FrameworkElement)((FrameworkElement)((FrameworkElement)this.Parent).Parent).Parent;
-
-            App._LocalSettings.Set(UserSettings.Theme, theme);
-            switch (theme) {
-                case "Light":
-                    parentFrame.RequestedTheme = ElementTheme.Light;
-                    parentDialog.RequestedTheme = ElementTheme.Light;
+            switch (result.Status) {
+                case StoreRateAndReviewStatus.Succeeded:
+                    await LottiePlayer.PlayAsync(0, 1, false);
                     break;
-                case "Dark":
-                    parentFrame.RequestedTheme = ElementTheme.Dark;
-                    parentDialog.RequestedTheme = ElementTheme.Dark;
+                case StoreRateAndReviewStatus.CanceledByUser:
+                    await LottiePlayer.PlayAsync(0, 1, false);
                     break;
-                case "Windows":
-                    bool isDark = new UISettings().GetColorValue(UIColorType.Background) == Colors.Black;
-                    parentFrame.RequestedTheme = isDark ? ElementTheme.Dark : ElementTheme.Light;
-                    parentDialog.RequestedTheme = isDark ? ElementTheme.Dark : ElementTheme.Light;
+                case StoreRateAndReviewStatus.Error:
+                case StoreRateAndReviewStatus.NetworkError:
+                    await new MessageDialog("Something went wrong.").ShowAsync();
+                    break;
+                default:
                     break;
             }
+            // There was an error with the request, or the customer chose not to
+            // rate or review the app.
+            return false;
         }
-        
     }
 }
