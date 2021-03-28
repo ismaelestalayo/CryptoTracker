@@ -28,5 +28,12 @@ namespace UWP.Core.Constants {
 		};
 
 		public static readonly List<string> CurrentChangelog = LatestChangelogs["6.0.0"];
+
+		public static string FormatChangelog(List<string> changelog) {
+			string message = "";
+			foreach (var change in changelog)
+				message += $"  • {change} \n";
+			return message;
+		}
 	}
 }
