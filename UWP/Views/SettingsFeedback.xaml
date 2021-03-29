@@ -18,13 +18,13 @@
     <Page.Resources>
         <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="FontWeight" Value="ExtraLight"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
             <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="MaxWidth" Value="350"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="TextLineBounds" Value="Tight"/>
             <Setter Property="Margin" Value="0 10"/>
-            <Setter Property="TextWrapping" Value="WrapWholeWords"/>
         </Style>
         
         <Style TargetType="FontIcon">
@@ -33,10 +33,9 @@
         </Style>
         <Style TargetType="StackPanel">
             <Setter Property="Margin" Value="0 0 0 10"/>
-            <Setter Property="MaxWidth" Value="350"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
         <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
@@ -45,9 +44,9 @@
         BorderThickness="0.2 0 0 0" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
         Padding="20 15 0 0">
 
-        <StackPanel>
+        <StackPanel MaxWidth="500">
             <Canvas>
-                <Border Height="600" Width="500">
+                <Border Height="560">
                     <!--AnimatedVisualPlayer with AutoPlay-->
                     <muxc:AnimatedVisualPlayer x:Name="LottiePlayer" AutoPlay="False">
                         <!--LottieVisualSource with JSON UriSource-->
@@ -75,26 +74,36 @@
                                 Style="{ThemeResource Crypto_button_style}" ToolTipService.ToolTip="ismael.em@outlook.com"/>
                         <Button Click="TwitterButton_Click" Content="Twitter"
                                 Style="{ThemeResource Crypto_button_style}" ToolTipService.ToolTip="@ismaelestalayo"/>
-                        <Button Content="Feedback Hub" x:Name="feedbackButton" Click="FeedbackButton_Click"
-                                Style="{ThemeResource Crypto_button_style}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
 
             <!-- DONATE -->
             <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE7EE;"/>
+                <!--<FontIcon Glyph="&#xE8C7;"/>-->
+                <Path
+                    Margin="0 8 15 0"
+                    Stroke="{ThemeResource SystemChromeAltLowColor}" StrokeThickness="1.25"
+                    Data="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
                 <StackPanel>
                     <TextBlock Text="Donate" Style="{ThemeResource ClassTitle}"/>
-
-
                     <TextBlock
                         Text="I have been developing this app since August 2017, so if
-                        you really love my app and want to support it, you can donate here:"/>
-                    <StackPanel>
-                        <Button
-                            Click="PaypalButton_Click" Content="Paypal"
-                            Style="{ThemeResource Crypto_button_style}"/>
+                        you really love my app and want to support it, you can donate in multiple ways:"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="Donation_Paypal_Click" Content="Paypal"/>
+                        <Button Click="Donation_Kofi_Click" Content="Ko-fi"/>
+                        <Button Click="Donation_ETH_Click" Content="ETH">
+                            <Button.Flyout>
+                                <Flyout Placement="Bottom">
+                                    <StackPanel>
+                                        <TextBlock Text="ETH address:"/>
+                                        <TextBlock Text="0xE1D40ce30E257af4753e607f7F4a4feC8900E3cD" IsTextSelectionEnabled="True"/>
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

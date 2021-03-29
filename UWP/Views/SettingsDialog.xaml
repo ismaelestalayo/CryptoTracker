@@ -76,7 +76,10 @@
         </Frame>
 
         <NavigationView.PaneFooter>
-            <NavigationViewItem Content="CryptoTracker 6.0.0" FontWeight="Normal" Padding="-5 0">
+            <NavigationViewItem
+                d:Content="CryptoTracker 6.0.0"
+                x:Name="FooterVersion" IsEnabled="False"
+                Content="CryptoTracker 6.0.0" FontWeight="Normal" Padding="-5 0">
                 <!--<NavigationViewItem.Icon>
                     <BitmapIcon UriSource="/Assets/AppIcon-D.png"/>
                     --><!--<Image x:Name="FooterLogoo" Source="/Assets/Tile-D.png" Margin="0"/>--><!--

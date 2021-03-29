@@ -16,13 +16,13 @@
     <Page.Resources>
         <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="FontWeight" Value="ExtraLight"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
             <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="MaxWidth" Value="350"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="TextLineBounds" Value="Tight"/>
             <Setter Property="Margin" Value="0 10"/>
-            <Setter Property="TextWrapping" Value="WrapWholeWords"/>
         </Style>
 
         <Style TargetType="FontIcon">
@@ -31,10 +31,9 @@
         </Style>
         <Style TargetType="StackPanel">
             <Setter Property="Margin" Value="0 0 0 10"/>
-            <Setter Property="MaxWidth" Value="350"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
         <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////

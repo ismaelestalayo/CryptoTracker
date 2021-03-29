@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Email;
 using Windows.Services.Store;
 using Windows.System;
@@ -20,11 +21,6 @@ namespace UWP.Views {
             version = Package.Current.Id.Version;
         }
 
-        private async void FeedbackButton_Click(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("feedbackButton_Click");
-            var launcher = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault();
-            await launcher.LaunchAsync();
-        }
         private async void RatingButton_Click(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("ratingButton_Click");
             await ShowRatingReviewDialog();
@@ -46,12 +42,26 @@ namespace UWP.Views {
             Analytics.TrackEvent("twitterButton_Click");
             await Launcher.LaunchUriAsync(new Uri("https://twitter.com/ismaelestalayo"));
         }
-        private async void PaypalButton_Click(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("paypalButton_Click");
+
+        /// #######################################################################################
+        private async void Donation_Paypal_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("donation-paypal");
             await Launcher.LaunchUriAsync(new Uri("https://paypal.me/ismaelEstalayo"));
         }
 
-        // ###############################################################################################
+        private async void Donation_Kofi_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("donation-Kofi");
+            await Launcher.LaunchUriAsync(new Uri("https://ko-fi.com/ismaelestalayo"));
+        }
+
+        private void Donation_ETH_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("donation-ETH");
+            DataPackage dataPackage = new DataPackage();
+            dataPackage.RequestedOperation = DataPackageOperation.Copy;
+            dataPackage.SetText("0xE1D40ce30E257af4753e607f7F4a4feC8900E3cD");
+        }
+
+        /// #######################################################################################
         public async Task<bool> ShowRatingReviewDialog() {
             StoreContext _storeContext = StoreContext.GetDefault(); ;
             StoreRateAndReviewResult result = await _storeContext.RequestRateAndReviewAppAsync();
@@ -61,7 +71,6 @@ namespace UWP.Views {
                     await LottiePlayer.PlayAsync(0, 1, false);
                     break;
                 case StoreRateAndReviewStatus.CanceledByUser:
-                    await LottiePlayer.PlayAsync(0, 1, false);
                     break;
                 case StoreRateAndReviewStatus.Error:
                 case StoreRateAndReviewStatus.NetworkError:
@@ -74,5 +83,7 @@ namespace UWP.Views {
             // rate or review the app.
             return false;
         }
+
+        
     }
 }

@@ -1,12 +1,14 @@
 ﻿using UWP;
 using UWP.Core.Constants;
 using UWP.Views;
+using Windows.ApplicationModel;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -17,25 +19,31 @@ namespace CryptoTracker.Views {
         private Rectangle _lockRectangle;
 
         public SettingsDialog(string initialPage = "General") {
-            this.InitializeComponent();
+            InitializeComponent();
 
             var currentTheme = App._LocalSettings.Get<string>(UserSettings.Theme);
             switch (currentTheme) {
                 case "Light":
-                    this.RequestedTheme = ElementTheme.Light;
+                    RequestedTheme = ElementTheme.Light;
                     break;
                 case "Dark":
-                    this.RequestedTheme = ElementTheme.Dark;
+                    RequestedTheme = ElementTheme.Dark;
                     break;
+                default:
                 case "Windows":
-                    this.RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
+                    RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
                         ElementTheme.Dark : ElementTheme.Light;
                     break;
             }
 
+            var version = Package.Current.Id.Version;
+            FooterVersion.Content = string.Format("CryptoTracker {0}.{1}.{2}",
+                version.Major, version.Minor, version.Build);
             NavigateFrame(initialPage);
         }
 
+        /// #######################################################################################
+        /// Light dismiss functionality
         protected override void OnApplyTemplate() {
             base.OnApplyTemplate();
 
@@ -55,7 +63,8 @@ namespace CryptoTracker.Views {
             _lockRectangle.Tapped -= OnLockRectangleTapped;
         }
 
-        private void ContentFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e) {
+        /// #######################################################################################
+        private void ContentFrame_Navigating(object sender, NavigatingCancelEventArgs e) {
             var z = sender;
             var toPage = (e.SourcePageType).Name;
         }
@@ -74,27 +83,27 @@ namespace CryptoTracker.Views {
             switch (page) {
                 default:
                 case "General":
-                    this.SettingsFrame.Navigate(typeof(SettingsGeneral));
+                    SettingsFrame.Navigate(typeof(SettingsGeneral));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[0];
                     break;
                 case "Appearance":
-                    this.SettingsFrame.Navigate(typeof(SettingsAppearance));
+                    SettingsFrame.Navigate(typeof(SettingsAppearance));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[1];
                     break;
                 case "Tiles":
-                    this.SettingsFrame.Navigate(typeof(Settings));
+                    SettingsFrame.Navigate(typeof(Settings));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[2];
                     break;
                 case "Changelog":
-                    this.SettingsFrame.Navigate(typeof(SettingsChangelog));
+                    SettingsFrame.Navigate(typeof(SettingsChangelog));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[3];
                     break;
                 case "Feedback":
-                    this.SettingsFrame.Navigate(typeof(SettingsFeedback));
+                    SettingsFrame.Navigate(typeof(SettingsFeedback));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[4];
                     break;
                 case "About":
-                    this.SettingsFrame.Navigate(typeof(SettingsAbout));
+                    SettingsFrame.Navigate(typeof(SettingsAbout));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[5];
                     break;
             }
