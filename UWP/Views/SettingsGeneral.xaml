@@ -50,7 +50,9 @@
                     <TextBlock Text="Currency" Style="{ThemeResource ClassTitle}"/>
                     <TextBlock 
                         Text="Choose the currency in which to to show prices. (Pages need to be updated manually.)"/>
-                    <ComboBox x:Name="CoinComboBox" PlaceholderText="Coin" BorderThickness="1"
+                    <ComboBox
+                        x:Name="CoinComboBox" PlaceholderText="Coin" BorderThickness="1"
+                        Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                         SelectionChanged="CoinBox_changed" Margin="0 5 0 0">
                         <ComboBoxItem Content="EUR (€)" Name="EUR"/>
                         <ComboBoxItem Content="USD ($)" Name="USD"/>
@@ -73,8 +75,10 @@
                     <TextBlock 
                         Text="Home, Details and Compact Overlay automatically refresh.
                         &#x0a;(Charts update minutely because of the API's granularity.)"/>
-                    <ComboBox PlaceholderText="Refresh" BorderThickness="1"
-                        SelectionChanged="CoinBox_changed" Margin="0 5 0 0">
+                    <ComboBox
+                        BorderThickness="1"
+                        Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                        Margin="0 5 0 0">
                         <ComboBoxItem Content="30 sec" Name="refresh30"/>
                         <ComboBoxItem Content="60 sec" Name="refresh60"/>
                     </ComboBox>
@@ -88,12 +92,12 @@
                     <TextBlock Text="Cloud sync" Style="{ThemeResource ClassTitle}"/>
                     <TextBlock Text="Sync your portfolio with OneDrive with just a click."/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Upload"
-                                Style="{ThemeResource Crypto_button_style}" 
-                                Click="UploadPortfolio_Click"/>
-                        <Button Content="Download"
-                                Style="{ThemeResource Crypto_button_style}"
-                                Click="DownloadPortfolio_Click">
+                        <Button
+                            Content="Upload"
+                            Click="UploadPortfolio_Click"/>
+                        <Button
+                            Content="Download"
+                            Click="DownloadPortfolio_Click">
                         </Button>
                     </StackPanel>
                 </StackPanel>

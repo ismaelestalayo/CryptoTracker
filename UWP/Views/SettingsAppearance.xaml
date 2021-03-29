@@ -48,7 +48,7 @@
                 <FontIcon Glyph="&#xE703;"/>
                 <StackPanel>
                     <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
+                    <TextBlock Text="Theme"/>
                     <ComboBox x:Name="ThemeComboBox"
                         PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed">
                         <ComboBoxItem Content="Light" Name="Light"/>
@@ -58,12 +58,12 @@
                 </StackPanel>
             </StackPanel>
 
-            <!-- APPEARANCE -->
+            <!-- COLORS -->
             <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE703;"/>
+                <FontIcon Glyph="&#xE9D2;"/>
                 <StackPanel>
-                    <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="Theme" Style="{ThemeResource ClassLabel}"/>
+                    <TextBlock Text="Colors" Style="{ThemeResource ClassTitle}"/>
+                    <TextBlock Text="Theme"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

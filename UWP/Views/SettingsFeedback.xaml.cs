@@ -21,15 +21,15 @@ namespace UWP.Views {
             version = Package.Current.Id.Version;
         }
 
-        private async void RatingButton_Click(object sender, RoutedEventArgs e) {
+        private async void Feedback_Rating(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("ratingButton_Click");
             await ShowRatingReviewDialog();
         }
-        private async void ReviewButton_Click(object sender, RoutedEventArgs e) {
+        private async void Feedback_Review(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("reviewButton_Click");
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9n3b47hbvblc"));
         }
-        private async void MailButton_Click(object sender, RoutedEventArgs e) {
+        private async void Feedback_Mail(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("mailButton_Click");
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));
@@ -44,17 +44,17 @@ namespace UWP.Views {
         }
 
         /// #######################################################################################
-        private async void Donation_Paypal_Click(object sender, RoutedEventArgs e) {
+        private async void Donation_Paypal(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("donation-paypal");
             await Launcher.LaunchUriAsync(new Uri("https://paypal.me/ismaelEstalayo"));
         }
 
-        private async void Donation_Kofi_Click(object sender, RoutedEventArgs e) {
+        private async void Donation_Kofi(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("donation-Kofi");
             await Launcher.LaunchUriAsync(new Uri("https://ko-fi.com/ismaelestalayo"));
         }
 
-        private void Donation_ETH_Click(object sender, RoutedEventArgs e) {
+        private void Donation_ETH(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("donation-ETH");
             DataPackage dataPackage = new DataPackage();
             dataPackage.RequestedOperation = DataPackageOperation.Copy;
