@@ -1,6 +1,5 @@
 ﻿using UWP.APIs;
 using UWP.Models;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -9,15 +8,10 @@ namespace UWP.Views {
     public sealed partial class Top100 : Page {
 
         public Top100() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            await InitPage();
-        }
-
-        // #########################################################################################
-        private async Task InitPage() {
             vm.GlobalStats = await CoinGecko.GetGlobalStats();
             vm.Top100cards = await CryptoCompare.GetTop100();
         }
@@ -31,7 +25,7 @@ namespace UWP.Views {
         }
 
         private void Pin_click(object sender, RoutedEventArgs e) {
-            var card = ((Top100card)((FrameworkElement)sender).DataContext);
+            var card = (Top100card)((FrameworkElement)sender).DataContext;
             var crypto = card.CoinInfo.Name;
             if (!App.pinnedCoins.Contains(crypto)) {
                 App.pinnedCoins.Add(crypto);

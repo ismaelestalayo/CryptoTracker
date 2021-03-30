@@ -167,11 +167,8 @@ namespace UWP.APIs {
                         raw = JsonSerializer.Deserialize<Raw>(_raw.ToString());
                     }
 
-                    
-
                     /// quick fixes
                     coinInfo.ImageUrl = IconsHelper.GetIcon(coinInfo.Name);
-                    coinInfo.Rank = i + 1;
                     coinInfo.FavIcon = App.pinnedCoins.Contains(coinInfo.Name) ? "\uEB52" : "\uEB51";
                     coinInfo.ChangeFG = (raw.CHANGE24HOUR < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
                     coinInfo.MarketCap = NumberHelper.AddUnitPrefix(raw.MKTCAP);
@@ -185,6 +182,9 @@ namespace UWP.APIs {
                         Raw = raw
                     });
                 }
+                top100.Sort((x, y) => y.Raw.MKTCAP.CompareTo(x.Raw.MKTCAP));
+                for (int i = 0; i < limit; i++)
+                    top100[i].CoinInfo.Rank = i;
                 return top100;
             }
             catch (Exception ex) {
