@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UWP.APIs;
 using UWP.Background;
@@ -9,7 +10,12 @@ using UWP.Models;
 using UWP.Services;
 using UWP.UserControls;
 using UWP.ViewModels;
+using Windows.Foundation;
+using Windows.Graphics.Display;
+using Windows.Graphics.Imaging;
+using Windows.Storage;
 using Windows.System.Threading;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -18,7 +24,9 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 
 namespace UWP.Views {
     public sealed partial class CoinDetails : Page {
@@ -34,7 +42,7 @@ namespace UWP.Views {
         private static ThreadPoolTimer PeriodicTimer;
 
         public CoinDetails() {
-            this.InitializeComponent();
+            InitializeComponent();
 
             if (ApplicationView.GetForCurrentView().IsViewModeSupported(ApplicationViewMode.CompactOverlay))
                 CompactOverlay_btn.Visibility = Visibility.Visible;
@@ -213,25 +221,34 @@ namespace UWP.Views {
         }
 
         private async void PinCoin_click(object sender, RoutedEventArgs e) {
-            //var kk = new ChartArea() { ChartModel = vm.Chart };
-            //kk.ChartModel.ChartStroke = (SolidColorBrush)Application.Current.Resources["Main_WhiteBlack"];
-            //kk.Opacity = 0;
-            //MainGrid.Children.Add(kk);
-            //await LiveTileHelper.AddSecondaryTile(vm.Coin.Name, kk);
-            //MainGrid.Children.Remove(kk);
+            var grid = await LiveTileGenerator.SecondaryTileGridOperation(vm.Coin.Name);
 
-            //CanvasDevice device = CanvasDevice.GetSharedDevice();
-            //CanvasRenderTarget offscreen = new CanvasRenderTarget(device, 310, 150, 96);
-            //var canvas = new CanvasControl();
-            //canvas.Content = kk;
-            
-
-            //using (CanvasDrawingSession ds = offscreen.CreateDrawingSession()) {
-            //    ds.Clear(Windows.UI.Colors.Green);
-                
-            //}
-
-            //var rtb = new Windows.UI.Xaml.Media.Imaging.RenderTargetBitmap();
+            try {
+                RenderTargetBitmap rtb = new RenderTargetBitmap();
+                BottomCards.Children.Add(grid);
+                grid.Opacity = 0;
+                await rtb.RenderAsync(grid);
+                BottomCards.Children.Remove(grid);
+                var pixelBuffer = await rtb.GetPixelsAsync();
+                var pixels = pixelBuffer.ToArray();
+                var displayInformation = DisplayInformation.GetForCurrentView();
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{vm.Coin.Name}.png",
+                    CreationCollisionOption.ReplaceExisting);
+                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
+                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+                    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
+                                         BitmapAlphaMode.Premultiplied,
+                                         (uint)rtb.PixelWidth,
+                                         (uint)rtb.PixelHeight,
+                                         displayInformation.RawDpiX,
+                                         displayInformation.RawDpiY,
+                                         pixels);
+                    await encoder.FlushAsync();
+                }
+            }
+            catch (Exception ex) {
+                var z = ex.Message;
+            }
 
             await LiveTileUpdater.AddSecondaryTile(vm.Coin.Name);
 
