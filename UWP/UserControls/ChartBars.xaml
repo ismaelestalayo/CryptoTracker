@@ -1,45 +1,45 @@
 ﻿<UserControl
     x:Class="UWP.UserControls.ChartBars"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UWP.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-	mc:Ignorable="d"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+    mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-	<telerik:RadCartesianChart
-		x:Name="Chart"
-		DataContext="{x:Bind ChartModel, Mode=OneWay}"
-		Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
+    <telerik:RadCartesianChart
+        x:Name="Chart"
+        DataContext="{x:Bind ChartModel, Mode=OneWay}"
+        Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
+        Margin="-7 -3">
 
-		<telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}">
+        <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}">
 
-			<telerik:BarSeries.DefaultVisualStyle>
-				<Style TargetType="Border">
-					<Setter Property="Background" Value="{x:Bind ChartModel.ChartFill1, Mode=OneWay}"/>
-					<Setter Property="BorderThickness" Value="3"/>
-				</Style>
-			</telerik:BarSeries.DefaultVisualStyle>
+            <telerik:BarSeries.DefaultVisualStyle>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="{x:Bind ChartModel.ChartFill1, Mode=OneWay}"/>
+                    <Setter Property="BorderThickness" Value="3"/>
+                </Style>
+            </telerik:BarSeries.DefaultVisualStyle>
 
-			<telerik:BarSeries.VerticalAxis>
-				<telerik:LinearAxis Visibility="Collapsed"/>
-			</telerik:BarSeries.VerticalAxis>
+            <telerik:BarSeries.VerticalAxis>
+                <telerik:LinearAxis Visibility="Collapsed"/>
+            </telerik:BarSeries.VerticalAxis>
 
-			<telerik:BarSeries.HorizontalAxis>
-				<telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
-			</telerik:BarSeries.HorizontalAxis>
+            <telerik:BarSeries.HorizontalAxis>
+                <telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
+            </telerik:BarSeries.HorizontalAxis>
 
-			<telerik:BarSeries.CategoryBinding>
-				<telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-			</telerik:BarSeries.CategoryBinding>
+            <telerik:BarSeries.CategoryBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+            </telerik:BarSeries.CategoryBinding>
 
-			<telerik:BarSeries.ValueBinding>
-				<telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-			</telerik:BarSeries.ValueBinding>
+            <telerik:BarSeries.ValueBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
+            </telerik:BarSeries.ValueBinding>
 
-		</telerik:BarSeries>
-	</telerik:RadCartesianChart>
+        </telerik:BarSeries>
+    </telerik:RadCartesianChart>
 </UserControl>
