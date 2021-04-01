@@ -6,6 +6,7 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using UWP.Services;
 using UWP.Core.Constants;
 using System.Linq;
+using Windows.UI.StartScreen;
 
 namespace UWP.Models {
 	public class Coin : ObservableObject {
@@ -25,7 +26,27 @@ namespace UWP.Models {
         }
         public string FullName { get; set; } = "NULL";
         public string Logo { get; set; } = "/Assets/Icons/iconNULL.png";
-        public bool IsFav { get; set; } = false;
+
+
+        private bool isFav  = false;
+        private bool isPin = false;
+        public bool IsFav {
+            get => isFav;
+            set {
+                if (SetProperty(ref isFav, value))
+                    OnPropertyChanged("FavIcon");
+            }
+        }
+        public bool IsPin {
+            get => isPin;
+            set {
+                if (SetProperty(ref isPin, value))
+                    OnPropertyChanged("PinIcon");
+            }
+        }
+
+        public string FavIcon => IsFav ? "\xEB52" : "\xEB51";
+        public string PinIcon => IsPin ? "\xE77A" : "\xE840";
 
         private string currencySym = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.CurrencySymbol);
         public string CurrencySym {
