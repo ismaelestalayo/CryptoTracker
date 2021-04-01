@@ -10,14 +10,13 @@ using UWP.Models;
 using UWP.Services;
 using UWP.UserControls;
 using UWP.ViewModels;
-using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.System.Threading;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,7 +25,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
 
 namespace UWP.Views {
     public sealed partial class CoinDetails : Page {
@@ -77,7 +75,6 @@ namespace UWP.Views {
 
                         var coin = App.coinList.Find(x => x.symbol == vm.Coin.Name);
                         vm.Coin.FullName = coin.name;
-                        Fav_btn.Content = vm.Coin.IsFav ? "\uEB52" : "\uEB51";
                         vm.CoinInfo = await CoinGecko.GetCoin(coin.name);
                         break;
                     case nameof(CoinDetailsViewModel):
@@ -92,12 +89,10 @@ namespace UWP.Views {
                         vm.Coin.Name = crypto;
                         var _coin = App.coinList.Find(x => x.symbol == crypto) ?? new CoinBasicInfo();
                         vm.Coin.FullName = _coin?.name ?? "NULL";
-                        Fav_btn.Content = App.pinnedCoins.Contains(crypto) ? "\uEB52" : "\uEB51";
 
                         InitValuesFromZero(_coin);
                         break;
                 }
-
             }
             catch (Exception ex){
                 var message = $"There was an error loading that coin. Try again later.\n\n{ex.Message}";
@@ -185,17 +180,63 @@ namespace UWP.Views {
         // #########################################################################################
         private void FavCoin_click(object sender, RoutedEventArgs e) {
             var crypto = vm.Coin.Name;
+            vm.Coin.IsFav = !vm.Coin.IsFav;
             if (!App.pinnedCoins.Contains(crypto)) {
                 App.pinnedCoins.Add(crypto);
                 //Home.AddCoinHome(crypto);
-                Fav_btn.Content = "\uEB52";
                 vm.InAppNotification($"{crypto} pinned to home.");
             }
             else {
                 //Home.RemoveCoinHome(crypto);
                 App.pinnedCoins.Remove(crypto);
-                Fav_btn.Content = "\uEB51";
                 vm.InAppNotification($"{crypto} unpinned from home.");
+            }
+        }
+
+        private async void PinCoin_click(object sender, RoutedEventArgs e) {
+            bool success;
+            if (vm.Coin.IsPin) {
+                success = await LiveTileUpdater.RemoveSecondaryTileAction(vm.Coin.Name);
+                if (success) {
+                    vm.Coin.IsPin = false;
+                    vm.InAppNotification($"Unpinned {vm.Coin.Name} from start screen");
+                }
+            }
+            else {
+                var grid = await LiveTileGenerator.SecondaryTileGridOperation(vm.Coin.Name);
+
+                try {
+                    RenderTargetBitmap rtb = new RenderTargetBitmap();
+                    BottomCards.Children.Add(grid);
+                    grid.Opacity = 0;
+                    await rtb.RenderAsync(grid);
+                    BottomCards.Children.Remove(grid);
+                    var pixelBuffer = await rtb.GetPixelsAsync();
+                    var pixels = pixelBuffer.ToArray();
+                    var displayInformation = DisplayInformation.GetForCurrentView();
+                    var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{vm.Coin.Name}.png",
+                        CreationCollisionOption.ReplaceExisting);
+                    using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
+                        var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+                        encoder.SetPixelData(BitmapPixelFormat.Bgra8,
+                                             BitmapAlphaMode.Premultiplied,
+                                             (uint)rtb.PixelWidth,
+                                             (uint)rtb.PixelHeight,
+                                             displayInformation.RawDpiX,
+                                             displayInformation.RawDpiY,
+                                             pixels);
+                        await encoder.FlushAsync();
+                    }
+                }
+                catch (Exception ex) {
+                    var z = ex.Message;
+                }
+
+                success = await LiveTileUpdater.AddSecondaryTileAction(vm.Coin.Name);
+                if (success) {
+                    vm.Coin.IsPin = true;
+                    vm.InAppNotification($"Pinned {vm.Coin.Name} to start screen");
+                }
             }
         }
 
@@ -213,46 +254,11 @@ namespace UWP.Views {
         private void TimeRangeButtons_Tapped(object sender, TappedRoutedEventArgs e) {
             if (sender != null)
                 timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
-            
+
             (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
             vm.Chart.TimeSpan = timeSpan;
 
             UpdatePage();
-        }
-
-        private async void PinCoin_click(object sender, RoutedEventArgs e) {
-            var grid = await LiveTileGenerator.SecondaryTileGridOperation(vm.Coin.Name);
-
-            try {
-                RenderTargetBitmap rtb = new RenderTargetBitmap();
-                BottomCards.Children.Add(grid);
-                grid.Opacity = 0;
-                await rtb.RenderAsync(grid);
-                BottomCards.Children.Remove(grid);
-                var pixelBuffer = await rtb.GetPixelsAsync();
-                var pixels = pixelBuffer.ToArray();
-                var displayInformation = DisplayInformation.GetForCurrentView();
-                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{vm.Coin.Name}.png",
-                    CreationCollisionOption.ReplaceExisting);
-                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
-                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-                    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
-                                         BitmapAlphaMode.Premultiplied,
-                                         (uint)rtb.PixelWidth,
-                                         (uint)rtb.PixelHeight,
-                                         displayInformation.RawDpiX,
-                                         displayInformation.RawDpiY,
-                                         pixels);
-                    await encoder.FlushAsync();
-                }
-            }
-            catch (Exception ex) {
-                var z = ex.Message;
-            }
-
-            await LiveTileUpdater.AddSecondaryTile(vm.Coin.Name);
-
-            //Pin_btn.Content = check ? new FontIcon() { Glyph = "&#xE840;" } : new FontIcon() { Glyph = "&#xE196;" };
         }
     }
 }

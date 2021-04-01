@@ -116,6 +116,16 @@
         ############################################### Page Title #########################################
         #################################################################################################### -->
         <RelativePanel BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+            <RelativePanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Padding" Value="5 0"/>
+                    <Setter Property="Margin" Value="5 0"/>
+                    <Setter Property="Height" Value="32"/>
+                    <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
+                    <Setter Property="FontSize" Value="20"/>
+                </Style>
+            </RelativePanel.Resources>
             <StackPanel Orientation="Horizontal">
 				<Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
                     Margin="5" VerticalAlignment="Center" Width="25"/>
@@ -126,25 +136,11 @@
 					<Run Text="{x:Bind vm.Coin.FullName}"/>
 					<Run Text="("/><Run Text="{x:Bind vm.Coin.Name}"/><Run Text=")"/>
 				</TextBlock>
+                <Button d:Content="&#xEB51;" Click="FavCoin_click" Content="{x:Bind vm.Coin.FavIcon, Mode=OneWay}"/>
+                <Button d:Content="&#xE840;" Click="PinCoin_click" Content="{x:Bind vm.Coin.PinIcon, Mode=OneWay}"/>
                 <Button
-                    x:Name="Fav_btn" d:Content="&#xEB51;"
-                    Click="FavCoin_click"
-                    Margin="5 0" Padding="5 0" Height="32" FontFamily="{StaticResource FluentIconFont}"
-                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"/>
-                <Button
-                    x:Name="Pin_btn"
-                    Click="PinCoin_click"
-                    Margin="5 0" Padding="5 0" Height="32"
-                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center">
-                    <FontIcon Glyph="&#xE840;"/>
-                </Button>
-                <Button
-                    d:Visibility="Visible"
-                    Margin="5 0" Padding="5 0" Height="32" FontFamily="{StaticResource FluentIconFont}"
-                    FontSize="23" Background="Transparent" VerticalContentAlignment="Center"
-                    x:Name="CompactOverlay_btn" Click="CompactOverlay_btn_click" Visibility="Collapsed">
-                    <SymbolIcon Symbol="BackToWindow"/>
-                </Button>
+                    d:Visibility="Visible" x:Name="CompactOverlay_btn"
+                    Content="&#xE1D8;" Click="CompactOverlay_btn_click" Visibility="Collapsed"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5 0" RelativePanel.AlignRightWithPanel="True">

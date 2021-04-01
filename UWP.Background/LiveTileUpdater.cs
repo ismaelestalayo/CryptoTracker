@@ -28,19 +28,54 @@ namespace UWP.Background {
         /// 
         /// https://marcominerva.wordpress.com/2013/03/21/how-to-expose-async-methods-in-a-windows-runtime-component/
         /// </summary>
-        public static IAsyncAction AddSecondaryTile(string crypto) {
-            return UpdateSecondaryTile(crypto).AsAsyncAction();
+        public static IAsyncOperation<bool> AddSecondaryTileAction(string crypto) {
+            return AddSecondaryTile(crypto).AsAsyncOperation();
         }
 
-        
+        public static IAsyncOperation<bool> RemoveSecondaryTileAction(string crypto) {
+            return RemoveSecondaryTile(crypto).AsAsyncOperation();
+        }
 
-        internal static async Task UpdateSecondaryTile(string crypto) {
+        /// #######################################################################################
+        internal static async Task<bool> RemoveSecondaryTile(string crypto) {
+            var tiles = await SecondaryTile.FindAllAsync();
+            var tile = tiles.First(t => t.TileId.Equals(crypto, StringComparison.InvariantCultureIgnoreCase));
+            if (tile != null)
+                return await tile.RequestDeleteAsync();
+            else
+                return false;
+        }
+
+        internal static async Task<bool> AddSecondaryTile(string crypto) {
             hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
             await RenderTileSVG(crypto);
+
+            // Initialize the tile with required arguments
+            SecondaryTile tile = new SecondaryTile(
+                crypto,
+                "CryptoTracker",
+                $"/tile-{crypto}",
+                new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Medium.scale-100.png"),
+                TileSize.Wide310x150);
+            tile.VisualElements.ShowNameOnSquare150x150Logo = true;
+            tile.VisualElements.ShowNameOnSquare310x310Logo = false;
+            tile.VisualElements.ShowNameOnWide310x150Logo = false;
+            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
+            tile.VisualElements.Square44x44Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
+
+            tile.VisualElements.ForegroundText = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black)
+                ? ForegroundText.Light : ForegroundText.Dark;
+
+            if (!SecondaryTile.Exists(crypto))
+                if (!await tile.RequestCreateAsync())
+                    return false;
+            else
+                await tile.UpdateAsync();
 
             XmlDocument content = await GenerateCoinTile(crypto);
             TileNotification notification = new TileNotification(content) { Tag = crypto };
             TileUpdateManager.CreateTileUpdaterForSecondaryTile(crypto).Update(notification);
+            return true;
         }
 
 
@@ -56,26 +91,6 @@ namespace UWP.Background {
             var arrow7d = _diff7d < 0 ? " 7d: ▼" : " 7d: ▲";
             var diff1d = new Tuple<string, string>(arrow1d, $"{Math.Abs(_diff1d):N}%");
             var diff7d = new Tuple<string, string>(arrow7d, $"{Math.Abs(_diff7d):N}%");
-
-            // Initialize the tile with required arguments
-            SecondaryTile tile = new SecondaryTile(
-                crypto,
-                "CryptoTracker",
-                $"/tile-{crypto}",
-                new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Medium.scale-100.png"),
-                TileSize.Wide310x150);
-            tile.VisualElements.ShowNameOnSquare150x150Logo = true;
-            tile.VisualElements.ShowNameOnSquare310x310Logo = false;
-            tile.VisualElements.ShowNameOnWide310x150Logo = false;
-            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
-            tile.VisualElements.Square44x44Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
-
-            tile.VisualElements.ForegroundText = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ? ForegroundText.Light : ForegroundText.Dark;
-
-            if (!SecondaryTile.Exists(crypto))
-                await tile.RequestCreateAsync();
-            else
-                await tile.UpdateAsync();
 
             return LiveTileGenerator.SecondaryTileXML(crypto, currencySymbol, price, diff1d, diff7d);
         }
