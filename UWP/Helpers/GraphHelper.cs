@@ -11,9 +11,7 @@ namespace UWP.Helpers {
 
             double min = historic.ToArray().Min();
             double max = historic.ToArray().Max();
-
-            if (min < 0)
-                min = 0;            
+            min = (min < 0) ? 0 : min;
 
             return (min, max);
         }
@@ -22,6 +20,8 @@ namespace UWP.Helpers {
             double diff = max - min;
             min -= (double)(diff * offMin);
             max += (double)(diff * offMax);
+
+            min = (min < 0) ? 0 : min;
             return (min, max);
         }
 

@@ -5,7 +5,6 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UWP.Core.Constants;
 using UWP.Services;
-using UWP.Shared.Constants;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -15,11 +14,7 @@ using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Shapes;
 
 namespace UWP.Background {
     public sealed class LiveTileUpdater {
