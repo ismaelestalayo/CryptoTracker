@@ -89,7 +89,7 @@ namespace UWP.Background {
                                     HintAlign = AdaptiveTextAlign.Right
                                 },
                                 new AdaptiveText() {
-                                    Text = price.ToString("N") + currencySymbol,
+                                    Text = $"{price}{currencySymbol}",
                                     HintStyle = AdaptiveTextStyle.Body,
                                     HintAlign = AdaptiveTextAlign.Right
                                 },
@@ -133,7 +133,7 @@ namespace UWP.Background {
                                         new AdaptiveSubgroup() {
                                             Children = {
                                                 new AdaptiveText() {
-                                                    Text = price.ToString("N") + currencySymbol,
+                                                    Text = $"{price}{currencySymbol}",
                                                     HintAlign = AdaptiveTextAlign.Right,
                                                     HintStyle = AdaptiveTextStyle.Base
                                                 },
