@@ -1,12 +1,14 @@
-﻿using UWP.APIs;
-using UWP.Helpers;
-using UWP.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UWP.APIs;
+using UWP.Background;
+using UWP.Helpers;
+using UWP.Models;
 using Windows.System.Threading;
 using Windows.UI.Core;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -61,8 +63,13 @@ namespace UWP.Views {
                     AddCoinHome(coin);
             }
 
-            for (int i = 0; i < App.pinnedCoins.Count; i++)
+            var tiles = await SecondaryTile.FindAllAsync();
+            for (int i = 0; i < App.pinnedCoins.Count; i++) {
                 await UpdateCard(i);
+                vm.PriceCards[i].Info.IsPin = tiles.Any(tile => tile.TileId == App.pinnedCoins[i]);
+                vm.VolumeCards[i].Info.IsPin = tiles.Any(tile => tile.TileId == App.pinnedCoins[i]);
+            }
+
         }
 
         /// #########################################################################################
@@ -155,7 +162,8 @@ namespace UWP.Views {
             
         }
 
-        /// #########################################################################################
+        /// #######################################################################################
+        /// (Left/Right) Click handlers
         private void homeListView_Click(object sender, ItemClickEventArgs e) {
             /// Connected animation
             switch ( ((ListView)sender).Name ) {
@@ -172,10 +180,24 @@ namespace UWP.Views {
             this.Frame.Navigate(typeof(CoinDetails), card);
         }
 
-        private void UnpinCoin(object sender, RoutedEventArgs e) {
+        private void UnfavCoin(object sender, RoutedEventArgs e) {
+            string crypto = ((HomeCard)((FrameworkElement)sender).DataContext).Info.Name;
+            RemoveCoinHome(crypto);
+        }
+        private async void PinUnpinCoin(object sender, RoutedEventArgs e) {
             string crypto = ((HomeCard)((FrameworkElement)sender).DataContext).Info.Name;
 
-            RemoveCoinHome(crypto);
+            bool success = false;
+            if (((HomeCard)((FrameworkElement)sender).DataContext).Info.IsPin)
+                success = await LiveTileUpdater.RemoveSecondaryTileAction(crypto);
+            else
+                success = await LiveTileUpdater.AddSecondaryTileAction(crypto);
+
+            if (success) {
+                var card = vm.PriceCards.First(c => c.Info.Name == crypto);
+                int i = vm.PriceCards.IndexOf(card);
+                vm.PriceCards[i].Info.IsPin = !vm.PriceCards[i].Info.IsPin;
+            }
         }
         private void MoveCoinDown(object sender, RoutedEventArgs e) {
             string crypto = ((HomeCard)((FrameworkElement)sender).DataContext).Info.Name;
@@ -206,6 +228,7 @@ namespace UWP.Views {
             }
         }
 
+        /// #######################################################################################
         private async void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             timeSpan = ((UserControls.TimeRangeRadioButtons)sender)?.TimeSpan ?? timeSpan;
             (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];

@@ -19,6 +19,14 @@ namespace UWP.Helpers {
             => throw new NotImplementedException();
     }
 
+    /// Bool
+    public class BoolInverseToVisibility : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => ((bool)val) ? Visibility.Collapsed : Visibility.Visible;
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
     /// Dates
     public class DateTimeFormatter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
@@ -43,8 +51,10 @@ namespace UWP.Helpers {
 
     /// Others
     public class VisibilityInverter : IValueConverter {
-        public object Convert(object val, Type targetType, object param, string lang)  => (Visibility)val == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        public object ConvertBack(object val, Type targetType, object param, string lang) => throw new NotImplementedException();
+        public object Convert(object val, Type targetType, object param, string lang)
+            => (Visibility)val == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
     }
 
     public class ListCountToVisibilityInvertedConverter : IValueConverter {

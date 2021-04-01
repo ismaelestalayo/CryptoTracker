@@ -4,11 +4,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:helpers="using:UWP.Helpers"
     xmlns:models="using:UWP.Models"
     xmlns:local="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:helpers="using:UWP.Helpers"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded"
@@ -23,6 +23,7 @@
         <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
         <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
         <helpers:GeneralNumberConverter x:Key="GeneralConv"/>
+        <helpers:BoolInverseToVisibility x:Key="BoolInverse2Visibility"/>
     </Page.Resources>
 
 	<!-- 
@@ -87,19 +88,30 @@
                             </Grid.RowDefinitions>
                             <Grid.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="Unpin" Click="UnpinCoin">
+                                    <MenuFlyoutItem Text="Un-favourite" Click="UnfavCoin">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA92;" />
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xEA92;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Unpin from start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin, Mode=OneWay}">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE77A;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Pin to start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin,
+                                        Mode=OneWay, Converter={StaticResource BoolInverse2Visibility}}">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE840;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Move up" Click="MoveCoinUp">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74A;" />
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE74A;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Move down" Click="MoveCoinDown">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74B;" />
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE74B;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                 </MenuFlyout>
@@ -185,19 +197,30 @@
                             </Grid.RowDefinitions>
                             <Grid.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="Unpin" Click="UnpinCoin">
+                                    <MenuFlyoutItem Text="Un-favourite" Click="UnfavCoin">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA92;" />
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xEA92;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Unpin from start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin, Mode=OneWay}">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE77A;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Pin to start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin,
+                                        Mode=OneWay, Converter={StaticResource BoolInverse2Visibility}}">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE840;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Move up" Click="MoveCoinUp">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74A;" />
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE74A;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Move down" Click="MoveCoinDown">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74B;" />
+                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE74B;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                 </MenuFlyout>
@@ -236,11 +259,16 @@
 
             <StackPanel
 				Grid.Row="2" Grid.ColumnSpan="2"
-				HorizontalAlignment="Center" Margin="0 150 0 0"
+				HorizontalAlignment="Center" Margin="0 250 0 0"
                 Visibility="{x:Bind vm.PriceCards.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
-                <TextBlock HorizontalTextAlignment="Center">
-                    <Run Text="Favourite a coin from 'Top 100' with the 🤍 icon"/>
-                </TextBlock>
+                <TextBlock
+                    FontWeight="Bold" HorizontalAlignment="Center"
+                    Text="You have no favourite coins"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                <TextBlock
+                    FontWeight="Light" FontSize="16"
+                    HorizontalAlignment="Center"
+                    Text="Try adding one with the heart icon" Opacity="0.7"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>
