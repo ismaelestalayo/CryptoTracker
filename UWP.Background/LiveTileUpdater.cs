@@ -39,7 +39,8 @@ namespace UWP.Background {
         /// #######################################################################################
         internal static async Task<bool> RemoveSecondaryTile(string crypto) {
             var tiles = await SecondaryTile.FindAllAsync();
-            var tile = tiles.First(t => t.TileId.Equals(crypto, StringComparison.InvariantCultureIgnoreCase));
+            var tile = tiles.FirstOrDefault(t => t.TileId.Equals(crypto));
+            
             if (tile != null)
                 return await tile.RequestDeleteAsync();
             else

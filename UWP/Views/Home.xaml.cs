@@ -185,18 +185,23 @@ namespace UWP.Views {
             RemoveCoinHome(crypto);
         }
         private async void PinUnpinCoin(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeCard)((FrameworkElement)sender).DataContext).Info.Name;
+            var card = (HomeCard)((FrameworkElement)sender).DataContext;
+            string crypto = card.Info.Name;
 
+            var priceCard = vm.PriceCards.FirstOrDefault(c => c.Info.Name == crypto);
+            if (priceCard == null)
+                return;
+
+            int i = vm.PriceCards.IndexOf(priceCard);
             bool success = false;
-            if (((HomeCard)((FrameworkElement)sender).DataContext).Info.IsPin)
+            if (card.Info.IsPin) {
                 success = await LiveTileUpdater.RemoveSecondaryTileAction(crypto);
-            else
+                vm.PriceCards[i].Info.IsPin = false;
+            }
+            else {
                 success = await LiveTileUpdater.AddSecondaryTileAction(crypto);
-
-            if (success) {
-                var card = vm.PriceCards.First(c => c.Info.Name == crypto);
-                int i = vm.PriceCards.IndexOf(card);
-                vm.PriceCards[i].Info.IsPin = !vm.PriceCards[i].Info.IsPin;
+                if (success)
+                    vm.PriceCards[i].Info.IsPin = true;
             }
         }
         private void MoveCoinDown(object sender, RoutedEventArgs e) {

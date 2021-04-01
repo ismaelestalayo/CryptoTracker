@@ -197,10 +197,10 @@ namespace UWP.Views {
             bool success;
             if (vm.Coin.IsPin) {
                 success = await LiveTileUpdater.RemoveSecondaryTileAction(vm.Coin.Name);
-                if (success) {
-                    vm.Coin.IsPin = false;
+                /// reset it even if it fails
+                vm.Coin.IsPin = false;
+                if (success)
                     vm.InAppNotification($"Unpinned {vm.Coin.Name} from start screen");
-                }
             }
             else {
                 var grid = await LiveTileGenerator.SecondaryTileGridOperation(vm.Coin.Name);
