@@ -197,11 +197,14 @@ namespace UWP.Views {
             if (card.Info.IsPin) {
                 success = await LiveTileUpdater.RemoveSecondaryTileAction(crypto);
                 vm.PriceCards[i].Info.IsPin = false;
+                vm.InAppNotification($"Unpinned {crypto} from start screen.");
             }
             else {
                 success = await LiveTileUpdater.AddSecondaryTileAction(crypto);
-                if (success)
+                if (success) {
                     vm.PriceCards[i].Info.IsPin = true;
+                    vm.InAppNotification($"Pinned {crypto} to start screen.");
+                }
             }
         }
         private void MoveCoinDown(object sender, RoutedEventArgs e) {

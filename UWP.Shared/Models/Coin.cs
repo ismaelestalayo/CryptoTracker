@@ -1,15 +1,14 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
-using System;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using UWP.Services;
-using UWP.Core.Constants;
+using System;
 using System.Linq;
-using Windows.UI.StartScreen;
+using UWP.Core.Constants;
+using UWP.Services;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
-	public class Coin : ObservableObject {
+    public class Coin : ObservableObject {
         /// <summary>
         /// Basic data of a coin that stays invariable through time
         /// </summary>
