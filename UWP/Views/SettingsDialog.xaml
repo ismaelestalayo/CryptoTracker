@@ -30,37 +30,37 @@
         </NavigationView.Resources>
 
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="General" Tag="home">
+            <NavigationViewItem Content="General">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE10F;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem Content="Appearance" Tag="top">
+            <NavigationViewItem Content="Appearance">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE2B1;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem  Content="Tiles" Tag="news">
+            <NavigationViewItem  Content="Alerts">
                 <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xECA5;"/>
+                    <FontIcon Glyph="&#xEA8F;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem Content="Changelog" Tag="portfolio">
+            <NavigationViewItem Content="Changelog">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE14C;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem Content="Feedback" Tag="portfolio">
+            <NavigationViewItem Content="Feedback">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE789;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem Content="About" Tag="portfolio">
+            <NavigationViewItem Content="About">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE946;"/>
                 </NavigationViewItem.Icon>

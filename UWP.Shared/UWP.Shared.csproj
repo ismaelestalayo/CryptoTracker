@@ -126,6 +126,7 @@
     <Compile Include="Constants\UserSettings.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\ChartPoint.cs" />
+    <Compile Include="Models\Alert.cs" />
     <Compile Include="Models\ChartStyling.cs" />
     <Compile Include="Models\Coin.cs" />
     <Compile Include="Models\CoinCard.cs" />

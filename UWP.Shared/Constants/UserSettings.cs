@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UWP.Models;
 
 namespace UWP.Core.Constants {
 	/// <summary>
@@ -12,6 +13,7 @@ namespace UWP.Core.Constants {
 		public const string IsNewUser = "NewUser";
 		public const string CoinListDate = "CoinListDate";
 		public const string LastVersion = "LastVersion";
+		public const string Alerts = "Alerts";
 
 		/// <summary>
 		/// Default settings
@@ -23,7 +25,10 @@ namespace UWP.Core.Constants {
 			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
 			{ CoinListDate,  (double)0 },
 			{ IsNewUser, true },
-			{ LastVersion, "0.0.0" }
+			{ LastVersion, "0.0.0" },
+			{ Alerts, new List<Alert>(){
+				new Alert(){ Crypto = "ETH", Mode = "percentage", Threshold = 1750 }
+			} },
 		};
 	}
 }
