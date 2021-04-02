@@ -135,13 +135,13 @@
       <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Mvvm">
-      <Version>7.0.0</Version>
+      <Version>7.0.1</Version>
     </PackageReference>
     <PackageReference Include="NotificationsExtensions.Win10">
       <Version>14332.0.2</Version>
     </PackageReference>
     <PackageReference Include="Refit">
-      <Version>6.0.24</Version>
+      <Version>6.0.38</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Json">
       <Version>5.0.1</Version>
