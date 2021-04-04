@@ -35,10 +35,10 @@ namespace UWP.ViewModels {
 		/// <summary>
 		/// Single variables for the page
 		/// </summary>
-		private string currency = App.currencySymbol;
-		public string Currency {
-			get => currency;
-			set => SetProperty(ref currency, value);
+		private string currencySym = App.currencySymbol;
+		public string CurrencySymbol {
+			get => currencySym;
+			set => SetProperty(ref currencySym, value);
 		}
 
 		private double totalInvested = 0;

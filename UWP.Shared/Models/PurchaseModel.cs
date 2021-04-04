@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using UWP.Core.Constants;
 using UWP.Services;
+using UWP.Shared.Constants;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
@@ -86,6 +87,10 @@ namespace UWP.Models {
         public string Currency {
             get => currency;
             set => SetProperty(ref currency, value);
+        }
+
+        public string CurrencySymbol {
+            get => Currencies.GetCurrencySymbol(currency);
         }
 
         private string arrow = "▲";

@@ -166,7 +166,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding Current, Mode=OneWay}"/>
-                                    <TextBlock Text="{Binding Currency, Mode=OneWay}"      />
+                                    <TextBlock Text="{Binding CurrencySymbol, Mode=OneWay}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -177,7 +177,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding InvestedQty, Mode=OneWay}"/>
-                                    <TextBlock Text="{Binding Currency, Mode=OneWay}"/>
+                                    <TextBlock Text="{Binding CurrencySymbol, Mode=OneWay}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -189,7 +189,7 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding Arrow, Mode=OneWay}" Margin="4 0" Foreground="{Binding ProfitFG, Mode=OneWay}"/>
                                     <TextBlock Text="{Binding Worth, Mode=OneWay}"/>
-                                    <TextBlock Text="{Binding Currency, Mode=OneWay}"/>
+                                    <TextBlock Text="{Binding CurrencySymbol, Mode=OneWay}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -248,12 +248,12 @@
                             <TextBlock Grid.Row="0" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Buy price:"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
                                 <Run Text="{Binding BoughtAt, Mode=OneWay}"/><!--
-                                --><Run Text="{Binding Currency, Mode=OneWay}"/>
+                                --><Run Text="{Binding CurrencySymbol, Mode=OneWay}"/>
                             </TextBlock>
 
                             <TextBlock Grid.Row="0" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Currently:"/>
                             <TextBlock Grid.Row="0" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Current, Mode=OneWay}"/><Run Text="{Binding Currency, Mode=OneWay}"/>
+                                <Run Text="{Binding Current, Mode=OneWay}"/><Run Text="{Binding CurrencySymbol, Mode=OneWay}"/>
                                 <Run Foreground="{Binding ProfitFG}" Text="{Binding Arrow, Mode=OneWay}"/><!--
                                 --><Run Foreground="{Binding ProfitFG}" Text="{Binding Delta, Mode=OneWay}"/><!--
                                 --><Run Foreground="{Binding ProfitFG}" Text="%"/>
@@ -263,15 +263,15 @@
                             <!-- Second Row-->
                             <TextBlock Grid.Row="1" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Cost:"/>
                             <TextBlock Grid.Row="1" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding InvestedQty, Mode=OneWay}"/><Run Text="{Binding Currency, Mode=OneWay}"/>
+                                <Run Text="{Binding InvestedQty, Mode=OneWay}"/><Run Text="{Binding CurrencySymbol, Mode=OneWay}"/>
                             </TextBlock>
 
                             <TextBlock Grid.Row="1" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Worth:"/>
                             <TextBlock Grid.Row="1" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Worth, Mode=OneWay}"/><Run Text="{Binding Currency, Mode=OneWay}"/>
+                                <Run Text="{Binding Worth, Mode=OneWay}"/><Run Text="{Binding CurrencySymbol, Mode=OneWay}"/>
                                 <Run Foreground="{Binding ProfitFG}" Text="{Binding Arrow, Mode=OneWay}"/><!--
                                 --><Run Foreground="{Binding ProfitFG}" Text="{Binding Profit, Mode=OneWay}"/><!--
-                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding Currency, Mode=OneWay}"/>
+                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding CurrencySymbol, Mode=OneWay}"/>
                             </TextBlock>
 
 
@@ -344,11 +344,11 @@
             <TextBlock Grid.Column="0" TextAlignment="Center" Text="Total"/>
             <TextBlock Grid.Column="2" TextAlignment="Center">
                 <Run Text="{x:Bind vm.TotalInvested, Mode=OneWay}"/><!--
-                --><Run Text="{x:Bind vm.Currency, Mode=OneWay}"/>
+                --><Run Text="{x:Bind vm.CurrencySymbol, Mode=OneWay}"/>
             </TextBlock>
             <TextBlock Grid.Column="3" TextAlignment="Center">
                 <Run Text="{x:Bind vm.TotalWorth, Mode=OneWay}"/><!--
-                --><Run Text="{x:Bind vm.Currency, Mode=OneWay}"/>
+                --><Run Text="{x:Bind vm.CurrencySymbol, Mode=OneWay}"/>
             </TextBlock>
         </Grid>
         
@@ -441,7 +441,7 @@
                         <TextBlock
                             Foreground="{ThemeResource TextControlForegroundDisabled}">
                             <Run Text="{x:Bind vm.NewPurchase.Worth, Mode=OneWay}"/><!--
-                            --><Run Text="{x:Bind vm.NewPurchase.Currency, Mode=OneWay}"/>
+                            --><Run Text="{x:Bind vm.NewPurchase.CurrencySymbol, Mode=OneWay}"/>
                         </TextBlock>
                     </StackPanel>
                 </controls:HeaderedContentControl>
@@ -458,7 +458,7 @@
                         <TextBlock
                             Foreground="{x:Bind vm.NewPurchase.ProfitFG, Mode=OneWay, FallbackValue='Gray'}">
                             <Run Text="{x:Bind vm.NewPurchase.Profit, Mode=OneWay}"/><!--
-                            --><Run Text="{x:Bind vm.NewPurchase.Currency, Mode=OneWay}"/>
+                            --><Run Text="{x:Bind vm.NewPurchase.CurrencySymbol, Mode=OneWay}"/>
                         </TextBlock>
                     </StackPanel>
                 </controls:HeaderedContentControl>
