@@ -61,17 +61,12 @@
             </TextBlock>
         </RelativePanel>
 
-        <TextBlock
-            FontSize="15" FontWeight="Light"
-			Foreground="{x:Bind vm.Info.DiffFG, Mode=OneWay, FallbackValue='Red'}"
+        <local:DiffTextBlock
+            Diff="{x:Bind vm.Info.Diff, Mode=OneWay}"
+            DiffFg="{x:Bind vm.Info.DiffFG, Mode=OneWay}"
             Grid.Row="1"
-            HorizontalAlignment="Center"
-			Margin="0 -5"
-            VerticalAlignment="Top">
-			<Run Text="{x:Bind vm.Info.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-			--><Run Text="{x:Bind vm.Info.Diff, Mode=OneWay}" d:Text="0"/><!--
-			--><Run Text="%"/>
-        </TextBlock>
+            VerticalAlignment="Top"
+            Margin="0 -2"/>
 
 
         <RelativePanel Grid.Row="2">

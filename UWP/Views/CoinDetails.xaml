@@ -144,18 +144,16 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5 0" RelativePanel.AlignRightWithPanel="True">
-				<TextBlock Style="{ThemeResource TitleTextBlockStyle}">
+                <TextBlock Style="{ThemeResource TitleTextBlockStyle}">
 					<Run Text="{x:Bind vm.Coin.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}" d:Text="0"/><!--
 					--><Run Text="{x:Bind vm.Coin.CurrencySym}" d:Text="€"/>
-				</TextBlock>
-
-				<TextBlock
-					Foreground="{x:Bind vm.Coin.DiffFG, Mode=OneWay}"
-					Margin="0 2" VerticalAlignment="Bottom">
-					<Run Text="{x:Bind vm.Coin.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-					--><Run Text="{x:Bind vm.Coin.Diff, Mode=OneWay}" d:Text="0"/><!--
-                    --><Run Text="%"/>
-				</TextBlock>
+                </TextBlock>
+                
+                <local:DiffTextBlock
+                    Diff="{x:Bind vm.Coin.Diff, Mode=OneWay}"
+                    DiffFg="{x:Bind vm.Coin.DiffFG, Mode=OneWay}"
+                    VerticalAlignment="Bottom"
+                    Margin="0 2"/>
             </StackPanel>
 
         </RelativePanel>

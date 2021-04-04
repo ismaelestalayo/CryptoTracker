@@ -42,7 +42,7 @@ namespace UWP.Models {
         public string CurrencySymbol { get; set; } = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.CurrencySymbol);
         public string MarketCap { get; set; } = "0";
         public string Volume { get; set; } = "0";
-        public Brush ChangeFG { get; set; }
+        public SolidColorBrush ChangeFG { get; set; }
     }
 
     public class Raw {

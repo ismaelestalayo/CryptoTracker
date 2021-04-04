@@ -149,14 +149,11 @@
                                         Converter={StaticResource GeneralConv}}" d:Text="0"/><!--
 									--><Run Text="{x:Bind Info.CurrencySym, Mode=OneWay}" d:Text="€"/>
 								</TextBlock>
-								<TextBlock
-									Foreground="{x:Bind Info.DiffFG, Mode=OneWay}"
-									Margin="0 2"
-									VerticalAlignment="Bottom">
-									<Run Text="{x:Bind Info.DiffArrow, Mode=OneWay}" d:Text="▲"/><!--
-									--><Run Text="{x:Bind Info.Diff, Mode=OneWay}" d:Text="0"/><!--
-					                --><Run Text="%"/>
-								</TextBlock>
+                                <local:DiffTextBlock
+                                    Diff="{x:Bind Info.Diff, Mode=OneWay}"
+                                    DiffFg="{x:Bind Info.DiffFG, Mode=OneWay}"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0 2"/>
                             </StackPanel>
                             
 							<local:ChartArea

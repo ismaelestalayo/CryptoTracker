@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
     xmlns:models="using:UWP.Models"
-    xmlns:viewModels="using:UWP.ViewModels"
+    xmlns:viewModels="using:UWP.ViewModels" xmlns:local="using:UWP.UserControls"
     NavigationCacheMode="Required"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
@@ -150,26 +150,12 @@
                                         <Run Text="{x:Bind Raw.PRICE, Mode=OneWay}"/><!--
                                         --><Run Text="{x:Bind CoinInfo.CurrencySymbol, Mode=OneWay}"/>
                                     </TextBlock>
-                                    
-                                    <Grid
-                                        CornerRadius="5"
-                                        HorizontalAlignment="Right"
-                                        Margin="5 0"
-                                        VerticalAlignment="Bottom">
-                                        <Border Background="{x:Bind CoinInfo.ChangeFG, Mode=OneWay}" Opacity="0.15"/>
-                                        <Border>
-                                            <Border.Background>
-                                                <media:BackdropSaturationBrush Saturation="0.6"/>
-                                            </Border.Background>
-                                        </Border>
-                                        <TextBlock
-                                            Foreground="{x:Bind CoinInfo.ChangeFG, Mode=OneWay}"
-                                            FontSize="13" FontWeight="Medium"
-                                            Padding="5 0 5 2">
-                                        <Run Text="{x:Bind Raw.CHANGEPCT24HOUR, Mode=OneWay}"/><!--
-                                        --><Run Text="%"/>
-                                        </TextBlock>
-                                    </Grid>
+
+                                    <local:DiffTextBlock
+                                        Diff="{x:Bind Raw.CHANGEPCT24HOUR, Mode=OneWay}"
+                                        DiffFg="{x:Bind CoinInfo.ChangeFG, Mode=OneWay}"
+                                        VerticalAlignment="Bottom"
+                                        Margin="0 2"/>
                                 </StackPanel>
                             </StackPanel>
 

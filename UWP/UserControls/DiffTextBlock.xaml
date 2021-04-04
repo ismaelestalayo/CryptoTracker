@@ -1,0 +1,35 @@
+﻿<UserControl
+    x:Class="UWP.UserControls.DiffTextBlock"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    mc:Ignorable="d"
+    d:DesignHeight="50"
+    d:DesignWidth="100">
+
+    <Grid
+        CornerRadius="5"
+        HorizontalAlignment="Center"
+        Margin="5 0 0 0"
+        VerticalAlignment="Center">
+        <Border
+            d:Background="#00ff00"
+            Background="{x:Bind DiffFg, Mode=OneWay}" Opacity="0.15"/>
+        <Border>
+            <Border.Background>
+                <media:BackdropSaturationBrush Saturation="0.6"/>
+            </Border.Background>
+        </Border>
+        <TextBlock
+            d:Text="▲15%"
+            Foreground="{x:Bind DiffFg, Mode=OneWay}"
+            FontSize="13" FontWeight="SemiBold"
+            Padding="5 0 5 2">
+            <Run Text="{x:Bind DiffArrow, Mode=OneWay}"/><!--
+            --><Run Text="{x:Bind Diff, Mode=OneWay}"/><!--
+            --><Run Text="%"/>
+        </TextBlock>
+    </Grid>
+</UserControl>
