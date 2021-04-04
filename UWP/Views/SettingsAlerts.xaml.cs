@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using UWP.Background;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
@@ -10,19 +10,19 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace UWP.Views {
-    public sealed partial class Alerts : Page {
+    public sealed partial class SettingsAlerts : Page {
 
         private static LocalSettings localSettings = new LocalSettings();
         private static string currency = localSettings.Get<string>(UserSettings.Currency);
         private static string currencySym = Currencies.GetCurrencySymbol(currency);
-        private List<Alert> alerts;
+        private ObservableCollection<Alert> alerts { get; set; }
 
-        public Alerts() {
+        public SettingsAlerts() {
             this.InitializeComponent();
         }
 
         private new async void Loaded(object sender, RoutedEventArgs e) {
-            alerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
+            alerts = await LocalStorageHelper.ReadObject<ObservableCollection<Alert>>(UserStorage.Alerts);
         }
 
         private new void Unloaded(object sender, RoutedEventArgs e) {
@@ -46,7 +46,6 @@ namespace UWP.Views {
 
         private void Delete_alert(object sender, RoutedEventArgs e) {
             var z = sender;
-            AlertsManager.DeleteAlert();
         }
     }
 }

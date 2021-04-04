@@ -85,6 +85,10 @@ namespace CryptoTracker.Views {
                     SettingsFrame.Navigate(typeof(SettingsAppearance));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[1];
                     break;
+                case "Alerts":
+                    SettingsFrame.Navigate(typeof(SettingsAlerts));
+                    SettingsNavView.SelectedItem = SettingsNavView.MenuItems[2];
+                    break;
                 case "Changelog":
                     SettingsFrame.Navigate(typeof(SettingsChangelog));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[3];

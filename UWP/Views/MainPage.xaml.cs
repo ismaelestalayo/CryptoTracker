@@ -222,21 +222,16 @@ namespace UWP.Views {
                     page = typeof(News);
                     CurrentTabIndex = 2;
                     break;
-                case "Alerts":
-                    dir.Effect = (CurrentTabIndex > 3) ? SlideNavigationTransitionEffect.FromLeft : SlideNavigationTransitionEffect.FromRight;
-                    page = typeof(Alerts);
-                    CurrentTabIndex = 3;
-                    break;
                 case "Portfolio":
-                    dir.Effect = (CurrentTabIndex > 4) ? SlideNavigationTransitionEffect.FromLeft : SlideNavigationTransitionEffect.FromRight;
+                    dir.Effect = (CurrentTabIndex > 3) ? SlideNavigationTransitionEffect.FromLeft : SlideNavigationTransitionEffect.FromRight;
                     page = typeof(Portfolio);
-                    CurrentTabIndex = 4;
+                    CurrentTabIndex = 3;
                     break;
 
                 case "Settings":
                     dir.Effect = SlideNavigationTransitionEffect.FromRight;
                     page = typeof(Settings);
-                    CurrentTabIndex = 5;
+                    CurrentTabIndex = 4;
                     break;
             }
 

@@ -42,6 +42,12 @@
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
+            <NavigationViewItem Content="Alerts">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xEA8F;"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+
             <NavigationViewItem Content="Changelog">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE14C;"/>
