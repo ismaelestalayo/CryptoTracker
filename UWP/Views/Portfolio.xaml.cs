@@ -229,7 +229,7 @@ namespace UWP.Views {
             vm.Portfolio.Insert(i, purchase);
             /// Update the page and save the new portfolio
             UpdatePortfolio();
-            LocalStorageHelper.SaveObject(vm.Portfolio, PortfolioKey);
+            LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
         }
 
         private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
@@ -240,7 +240,7 @@ namespace UWP.Views {
             vm.Portfolio.RemoveAt(index);
             /// Update the page and save the new portfolio
             UpdatePortfolio();
-            LocalStorageHelper.SaveObject(vm.Portfolio, PortfolioKey);
+            LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
         }
 
 
@@ -300,7 +300,7 @@ namespace UWP.Views {
 
                 /// Update the page and save the new portfolio
                 UpdatePortfolio();
-                LocalStorageHelper.SaveObject(vm.Portfolio, PortfolioKey);
+                LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
             }
         }
 

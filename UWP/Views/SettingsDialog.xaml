@@ -42,12 +42,6 @@
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
 
-            <NavigationViewItem  Content="Alerts">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xEA8F;"/>
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-
             <NavigationViewItem Content="Changelog">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE14C;"/>
@@ -67,7 +61,7 @@
             </NavigationViewItem>
         </NavigationView.MenuItems>
 
-        <Frame x:Name="SettingsFrame" Navigating="ContentFrame_Navigating">
+        <Frame x:Name="SettingsFrame">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>

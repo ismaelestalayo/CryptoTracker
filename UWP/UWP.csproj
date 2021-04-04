@@ -159,8 +159,8 @@
       <DependentUpon>Portfolio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\SettingsAlerts.xaml.cs">
-      <DependentUpon>SettingsAlerts.xaml</DependentUpon>
+    <Compile Include="Views\Alerts.xaml.cs">
+      <DependentUpon>Alerts.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsAbout.xaml.cs">
       <DependentUpon>SettingsAbout.xaml</DependentUpon>
@@ -368,7 +368,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsAlerts.xaml">
+    <Page Include="Views\Alerts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

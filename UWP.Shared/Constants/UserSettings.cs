@@ -13,7 +13,6 @@ namespace UWP.Core.Constants {
 		public const string IsNewUser = "NewUser";
 		public const string CoinListDate = "CoinListDate";
 		public const string LastVersion = "LastVersion";
-		public const string Alerts = "Alerts";
 
 		/// <summary>
 		/// Default settings
@@ -26,9 +25,12 @@ namespace UWP.Core.Constants {
 			{ CoinListDate,  (double)0 },
 			{ IsNewUser, true },
 			{ LastVersion, "0.0.0" },
-			{ Alerts, new List<Alert>(){
-				new Alert(){ Crypto = "ETH", Mode = "percentage", Threshold = 1750 }
-			} },
 		};
+	}
+
+	public class UserStorage {
+		public const string Alerts = "Alerts";
+		public const string Portfolio = "Portfolio";
+
 	}
 }

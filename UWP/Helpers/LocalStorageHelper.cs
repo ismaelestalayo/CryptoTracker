@@ -11,7 +11,7 @@ namespace UWP.Helpers {
         Used generic types so it can work with any object type.
     */
     class LocalStorageHelper {
-        public static async void SaveObject<T>(T obj, string key) {
+        public static async void SaveObject<T>(string key, T obj) {
             try {
                 StorageFile savedStuffFile =
                     await ApplicationData.Current.LocalFolder.CreateFileAsync(key, CreationCollisionOption.ReplaceExisting);

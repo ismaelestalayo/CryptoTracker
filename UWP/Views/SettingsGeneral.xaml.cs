@@ -107,7 +107,7 @@ namespace UWP.Views {
 
         private async void DownloadPortfolio_Click(object sender, RoutedEventArgs e) {
             //var helper = new RoamingObjectStorageHelper();
-            
+
             //if (await helper.FileExistsAsync(PortfolioKey)) {
             //    var obj = await helper.ReadFileAsync<ObservableCollection<PurchaseModel>>(PortfolioKey);
 
@@ -121,7 +121,7 @@ namespace UWP.Views {
             //    }.ShowAsync();
 
             //    if (response == ContentDialogResult.Primary) {
-            //        LocalStorageHelper.SaveObject(obj, PortfolioKey);
+            //        LocalStorageHelper.SaveObject(PortfolioKey, obj);
             //        vm.InAppNotification("Portfolio imported succesfully.");
             //    }
             //}
@@ -136,6 +136,6 @@ namespace UWP.Views {
             //        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
             //    }.ShowAsync();
             //}
-        }        
+        }
     }
 }

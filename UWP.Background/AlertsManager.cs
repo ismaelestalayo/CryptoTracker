@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UWP.Core.Constants;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Constants;
 
 namespace UWP.Background {
-    class AlertsManager {
+    public sealed class AlertsManager {
         private static LocalSettings localSettings = new LocalSettings();
+        private static string currency = localSettings.Get<string>(UserSettings.Currency);
+        private static string currencySym = Currencies.GetCurrencySymbol(currency);
 
-        internal static void test() {
-            var currency = localSettings.Get<string>(UserSettings.Currency);
-        }
 
-        public static void CreateAlert(Alert alert) {
-            var alerts = localSettings.Get<List<Alert>>(UserSettings.Alerts);
-            alerts.Add(alert);
-            localSettings.Set(UserSettings.Alerts, alerts);
-        }
+        
 
         public static void ChangeAlertState() {
+
+        }
+
+        public static void DeleteAlert() {
 
         }
     }

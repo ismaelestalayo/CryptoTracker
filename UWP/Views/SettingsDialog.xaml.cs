@@ -64,11 +64,6 @@ namespace CryptoTracker.Views {
         }
 
         /// #######################################################################################
-        private void ContentFrame_Navigating(object sender, NavigatingCancelEventArgs e) {
-            var z = sender;
-            var toPage = (e.SourcePageType).Name;
-        }
-
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
             string source;
             
@@ -89,10 +84,6 @@ namespace CryptoTracker.Views {
                 case "Appearance":
                     SettingsFrame.Navigate(typeof(SettingsAppearance));
                     SettingsNavView.SelectedItem = SettingsNavView.MenuItems[1];
-                    break;
-                case "Alerts":
-                    SettingsFrame.Navigate(typeof(SettingsAlerts));
-                    SettingsNavView.SelectedItem = SettingsNavView.MenuItems[2];
                     break;
                 case "Changelog":
                     SettingsFrame.Navigate(typeof(SettingsChangelog));

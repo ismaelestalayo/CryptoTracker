@@ -52,6 +52,11 @@
                         <FontIcon Glyph="&#xE12A;"/> <!-- Preview link -->
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem Content="Alerts" Tag="alerts" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEA8F;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem Content="Portfolio" Tag="portfolio" FontWeight="Light">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xEAFC;" />
