@@ -88,7 +88,8 @@
                 <StackPanel Orientation="Horizontal">
                     <NavigationViewItem
                         Tapped="NavView_Search_Tapped"
-                        Visibility="{x:Bind CoinAutoSuggestBox.Visibility, Mode=OneWay, Converter={StaticResource VisibilityInverter}}">
+                        Visibility="{x:Bind CoinAutoSuggestBox.Visibility, Mode=OneWay, Converter={StaticResource VisibilityInverter}}"
+                        ToolTipService.ToolTip="Search">
                         <NavigationViewItem.Icon>
                             <FontIcon Glyph="&#xE11A;"/> <!-- Find -->
                         </NavigationViewItem.Icon>
@@ -97,7 +98,8 @@
                         <RelativePanel Margin="-15 0 0 0">
                             <NavigationViewItem
                                 x:Name="SyncIcon"
-                                Tapped="NavView_Sync_Tapped">
+                                Tapped="NavView_Sync_Tapped"
+                                ToolTipService.ToolTip="Refresh">
                                 <NavigationViewItem.Icon>
                                     <FontIcon Glyph="&#xE117;"/> <!-- Find -->
                                 </NavigationViewItem.Icon>
