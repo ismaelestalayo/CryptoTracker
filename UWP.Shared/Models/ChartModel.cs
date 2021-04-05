@@ -11,71 +11,71 @@ namespace UWP.Models {
         /// <summary>
         /// List of ChartData containing the values for the chart
         /// </summary>
-        private List<ChartPoint> _chartData = new List<ChartPoint>() { new ChartPoint() { Value = 5, Date = DateTime.Today } };
+        private List<ChartPoint> chartData = new List<ChartPoint>() { new ChartPoint() { Value = 5, Date = DateTime.Today } };
         public List<ChartPoint> ChartData {
-            get => _chartData;
-            set => SetProperty(ref _chartData, value);
+            get => chartData;
+            set => SetProperty(ref chartData, value);
         }
 
         /// <summary>
         /// Tuple with the minimum and maximum value to adjust the chart
         /// </summary>
-        private (double Min, double Max) _pricesMinMax = (0, 100);
+        private (double Min, double Max) pricesMinMax = (0, 100);
         public (double Min, double Max) PricesMinMax {
-            get => _pricesMinMax;
-            set => SetProperty(ref _pricesMinMax, value);
+            get => pricesMinMax;
+            set => SetProperty(ref pricesMinMax, value);
         }
 
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
-        private SolidColorBrush _chartStroke = new SolidColorBrush(Color.FromArgb(127, 127, 127, 127));
-        private Color _chartFill1 = Color.FromArgb(64, 128, 128, 128);
-        private Color _chartFill2 = Color.FromArgb(16, 128, 128, 128);
+        private SolidColorBrush chartStroke = new SolidColorBrush(Color.FromArgb(127, 127, 127, 127));
+        private Color chartFill1 = Color.FromArgb(64, 128, 128, 128);
+        private Color chartFill2 = Color.FromArgb(16, 128, 128, 128);
 
         public SolidColorBrush ChartStroke {
-            get => _chartStroke;
+            get => chartStroke;
             set {
-                SetProperty(ref _chartStroke, value);
+                SetProperty(ref chartStroke, value);
                 var color = value.Color;
                 ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
                 ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
             }
         }
         public Color ChartFill1 {
-            get => _chartFill1;
-            set => SetProperty(ref _chartFill1, value);
+            get => chartFill1;
+            set => SetProperty(ref chartFill1, value);
         }
         public Color ChartFill2 {
-            get => _chartFill2;
-            set => SetProperty(ref _chartFill2, value);
+            get => chartFill2;
+            set => SetProperty(ref chartFill2, value);
         }
 
         /// <summary>
         /// Attributes to adjust the axis to the plotted time interval
         /// </summary>
-        private string _labelFormat = "{0:HH:mm}";
+        private string labelFormat = "{0:HH:mm}";
         public string LabelFormat {
-            get => _labelFormat;
-            set => SetProperty(ref _labelFormat, value);
+            get => labelFormat;
+            set => SetProperty(ref labelFormat, value);
         }
 
-        private TimeInterval _majorStepUnit = TimeInterval.Minute;
+        private TimeInterval majorStepUnit = TimeInterval.Minute;
         public TimeInterval MajorStepUnit {
-            get => _majorStepUnit;
-            set => SetProperty(ref _majorStepUnit, value);
+            get => majorStepUnit;
+            set => SetProperty(ref majorStepUnit, value);
         }
 
-        private int _majorStep = 10;
+        private int majorStep = 10;
         public int MajorStep {
-            get => _majorStep;
-            set => SetProperty(ref _majorStep, value);
+            get => majorStep;
+            set => SetProperty(ref majorStep, value);
         }
 
-        private DateTime _minimum = DateTime.Now.AddHours(-1);
+        private DateTime minimum = DateTime.Now.AddHours(-1);
         public DateTime Minimum {
-            get => _minimum;
-            set => SetProperty(ref _minimum, value);
+            get => minimum;
+            set => SetProperty(ref minimum, value);
         }
 
         /// <summary>

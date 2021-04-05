@@ -14,7 +14,7 @@ namespace UWP.UserControls {
         DependencyProperty.Register(
             nameof(ChartModel),
             typeof(ChartModel),
-            typeof(ChartArea),
+            typeof(ChartModel),
             null);
 
         public ChartModel ChartModel {
