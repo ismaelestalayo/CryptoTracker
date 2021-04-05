@@ -1,16 +1,13 @@
-﻿using UWP.Models;
-using Windows.UI;
+﻿using System.Linq;
+using UWP.Helpers;
+using UWP.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace UWP.UserControls {
     public sealed partial class ChartAreaFull : UserControl {
-
-        //private SolidColorBrush brush = new SolidColorBrush(Colors.Gray);
-        //private Color color = Colors.Gray;
 
         public ChartAreaFull() {
             this.InitializeComponent();

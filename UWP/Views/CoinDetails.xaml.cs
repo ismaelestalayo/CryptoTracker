@@ -142,7 +142,6 @@ namespace UWP.Views {
             var chartData = new List<ChartPoint>();
             foreach (var h in histo) {
                 chartData.Add(new ChartPoint() {
-                    Color = brush.Color,
                     Date = h.DateTime,
                     Value = h.Average,
                     Volume = h.volumefrom
@@ -160,6 +159,7 @@ namespace UWP.Views {
             low = MinMax.Min;
             high = MinMax.Max;
             vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max);
+            vm.Chart.VolumeMax = GraphHelper.GetMaxOfVolume(chartData);
 
             /// Calculate the price difference
             double oldestPrice = histo[0].Average;

@@ -16,6 +16,10 @@ namespace UWP.Helpers {
             return (min, max);
         }
 
+        internal static double GetMaxOfVolume(List<ChartPoint> historic) {
+            return 4 * historic.Select(x => x.Volume).ToList().Max();
+        }
+
         internal static (double Min, double Max) OffsetMinMaxForChart(double min, double max, double offMin = 0.15, double offMax = 0.07) {
             double diff = max - min;
             min -= (double)(diff * offMin);

@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using Telerik.Charting;
 using Windows.UI;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
-	public class ChartModel : ObservableObject {
+    public class ChartModel : ObservableObject {
         /// <summary>
         /// List of ChartData containing the values for the chart
         /// </summary>
@@ -24,6 +23,12 @@ namespace UWP.Models {
         public (double Min, double Max) PricesMinMax {
             get => pricesMinMax;
             set => SetProperty(ref pricesMinMax, value);
+        }
+
+        private double volumeMax = 0;
+        public double VolumeMax {
+            get => volumeMax;
+            set => SetProperty(ref volumeMax, value);
         }
 
         /// <summary>

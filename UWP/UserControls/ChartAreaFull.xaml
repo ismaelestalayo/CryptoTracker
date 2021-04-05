@@ -4,18 +4,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:helpers="using:UWP.Helpers"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
+    xmlns:helpers="using:UWP.Helpers"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <!--<SolidColorBrush x:Key="Test1" Color="{x:Bind ChartModel.ChartFill1, Mode=OneWay}"/>
-        <SolidColorBrush x:Key="Test2" Color="{x:Bind ChartModel.ChartFill2, Mode=OneWay}"/>-->
         <helpers:DateTimeFormatter x:Key="DateFormatter"/>
 
-        <SolidColorBrush x:Key="ChartFill1" x:Name="fill1" Color="{x:Bind ChartModel.ChartFill1, Mode=OneWay}"/>
-        <SolidColorBrush x:Key="ChartFill2" x:Name="fill2" Color="{x:Bind ChartModel.ChartFill2, Mode=OneWay}"/>
+        <SolidColorBrush x:Key="ChartFill1" Color="{x:Bind ChartModel.ChartFill1, Mode=OneWay}"/>
+        <SolidColorBrush x:Key="ChartFill2" Color="{x:Bind ChartModel.ChartFill2, Mode=OneWay}"/>
+        <SolidColorBrush x:Key="ChartStroke" Color="{x:Bind ChartModel.ChartStroke.Color, Mode=OneWay}"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
@@ -35,7 +34,7 @@
                 <telerik:ChartTrackBallBehavior.InfoStyle>
                     <Style TargetType="telerikPrimitives:TrackBallInfoControl">
                         <Setter Property="Background" Value="{StaticResource ChartFill2}"/>
-                        <Setter Property="BorderBrush" Value="{x:Bind ChartModel.ChartStroke, Mode=OneWay}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource ChartStroke}"/>
                         <Setter Property="BorderThickness" Value="1"/>
                     </Style>
                 </telerik:ChartTrackBallBehavior.InfoStyle>
@@ -70,7 +69,7 @@
 
         <telerik:RadCartesianChart.Series>
             <!-- VOLUME - BAR SERIES -->
-            <telerik:BarSeries x:Name="BarSeries" ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}">
+            <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}">
                 <telerik:BarSeries.DefaultVisualStyle>
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="{StaticResource ChartFill1}"/>
@@ -82,7 +81,7 @@
                 </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                 
                 <telerik:BarSeries.VerticalAxis>
-                    <telerik:LinearAxis Visibility="Collapsed"/>
+                    <telerik:LinearAxis Visibility="Collapsed" Maximum="{x:Bind ChartModel.VolumeMax, Mode=OneWay}"/>
                 </telerik:BarSeries.VerticalAxis>
                 <telerik:BarSeries.HorizontalAxis>
                     <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
@@ -113,13 +112,13 @@
                         <StackPanel Padding="5 2">
                             <StackPanel Orientation="Vertical" Padding="5 2">
                                 <TextBlock
-                                Text="{Binding DataPoint.Value, Converter={StaticResource NumberFormatter}}"
-                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                                FontWeight="SemiBold" FontSize="16"/>
+                                    Text="{Binding DataPoint.Value, Converter={StaticResource NumberFormatter}}"
+                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+                                    FontWeight="Normal" FontSize="16"/>
                                 <TextBlock
-                                Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
-                                FontSize="12" Opacity="0.5"
-                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
+                                    Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
+                                    FontSize="12" Opacity="0.5"
+                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
