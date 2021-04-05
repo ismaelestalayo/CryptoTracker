@@ -129,13 +129,13 @@
             <StackPanel Orientation="Horizontal">
 				<Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
                     Margin="5" VerticalAlignment="Center" Width="25"/>
-				<TextBlock
+                <TextBlock
                     d:Text="Bitcoin (BTC)"
                     Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
                     VerticalAlignment="Stretch" FontWeight="Bold">
 					<Run Text="{x:Bind vm.Coin.FullName}"/>
 					<Run Text="("/><Run Text="{x:Bind vm.Coin.Name}"/><Run Text=")"/>
-				</TextBlock>
+                </TextBlock>
                 <Button
                     d:Content="&#xEB51;"
                     Click="FavCoin_click"
@@ -321,65 +321,7 @@
                             </TextBlock>
                         </controls:UniformGrid>
                     </StackPanel>
-
-
-                    <!-- Volume card -->
-                    <StackPanel Style="{ThemeResource CardStackPanel}" Grid.ColumnSpan="3">
-                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Volume 24h" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiBold" RelativePanel.AlignRightWithPanel="True">
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.total_volume.eur, Mode=OneWay,
-                                    Converter={StaticResource StringFormatConverter}}"/><Run Text="{x:Bind vm.Coin.CurrencySym,
-                                    Mode=OneWay}"/>
-                            </TextBlock>
-                        </RelativePanel>
-
-                        <StackPanel Margin="10 0">
-                            <telerik:RadCartesianChart Height="140">
-                                <telerik:BarSeries
-                                    x:Name="volumeChart"
-                                    x:FieldModifier="internal"
-                                    ItemsSource="{Binding}">
-
-                                    <telerik:BarSeries.PointTemplate>
-                                        <DataTemplate>
-                                            <Border Background="{StaticResource coinColorT}"/>
-                                        </DataTemplate>
-                                    </telerik:BarSeries.PointTemplate>
-
-                                    <telerik:BarSeries.VerticalAxis>
-                                        <telerik:LinearAxis Visibility="Collapsed" HorizontalLocation="Right"/>
-                                    </telerik:BarSeries.VerticalAxis>
-
-                                    <telerik:BarSeries.HorizontalAxis>
-                                        <telerik:DateTimeCategoricalAxis 
-                                            MajorTickTemplate="{StaticResource TransparentRect}"
-                                            Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                                            FontWeight="Light"
-                                            LineStyle="{StaticResource TransparentLine}"
-                                            VerticalLocation="Bottom"
-                                            LabelInterval="2"
-                                            LabelFormat="{}{0,0:HH}">
-                                            <telerik:DateTimeCategoricalAxis.LabelStyle>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Margin" Value="0, -5, 0, 0"/>
-                                                </Style>
-                                            </telerik:DateTimeCategoricalAxis.LabelStyle>
-                                        </telerik:DateTimeCategoricalAxis>
-                                    </telerik:BarSeries.HorizontalAxis>
-
-                                    <telerik:BarSeries.CategoryBinding>
-                                        <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                                    </telerik:BarSeries.CategoryBinding>
-
-                                    <telerik:BarSeries.ValueBinding>
-                                        <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
-                                    </telerik:BarSeries.ValueBinding>
-
-                                </telerik:BarSeries>
-                            </telerik:RadCartesianChart>
-                        </StackPanel>
-                    </StackPanel>
+                    
                 </controls:UniformGrid>
 
 
