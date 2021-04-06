@@ -1,0 +1,150 @@
+﻿<UserControl
+    x:Class="UWP.UserControls.ChartCandles"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
+    xmlns:helpers="using:UWP.Helpers"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <helpers:DateTimeFormatter x:Key="DateFormatter"/>
+    </UserControl.Resources>
+
+    <telerik:RadCartesianChart
+        x:Name="Chart"
+        Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
+        Margin="-5 0 -25 0">
+
+        <telerik:RadCartesianChart.Behaviors>
+            <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">
+                <telerik:ChartTrackBallBehavior.LineStyle>
+                    <Style TargetType="Polyline">
+                        <Setter Property="Stroke" Value="{x:Bind ChartModel.ChartStroke, Mode=OneWay}"/>
+                        <Setter Property="StrokeThickness" Value="1"/>
+                        <Setter Property="StrokeDashArray" Value="5,6"/>
+                    </Style>
+                </telerik:ChartTrackBallBehavior.LineStyle>
+                <telerik:ChartTrackBallBehavior.InfoStyle>
+                    <Style TargetType="telerikPrimitives:TrackBallInfoControl">
+                        <Setter Property="Background" Value="#30808080"/>
+                        <Setter Property="BorderBrush" Value="#808080"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                    </Style>
+                </telerik:ChartTrackBallBehavior.InfoStyle>
+            </telerik:ChartTrackBallBehavior>
+            <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
+        </telerik:RadCartesianChart.Behaviors>
+
+        <telerik:RadCartesianChart.Grid>
+            <telerik:CartesianChartGrid
+                MajorYLinesRenderMode="Inner"
+                MajorLinesVisibility="X"
+                MajorYLineStyle="{StaticResource ChartGridColor}"/>
+        </telerik:RadCartesianChart.Grid>
+
+        <telerik:RadCartesianChart.HorizontalAxis>
+            <telerik:DateTimeCategoricalAxis
+                FontWeight="Light" FontFamily="Segoe UI"
+                Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                LabelFormat="{x:Bind ChartModel.LabelFormat, Mode=OneWay}"
+                LabelOffset="1"/>
+            <!--
+                MajorStep="{x:Bind ChartModel.MajorStep, Mode=OneWay}"
+                MajorStepUnit="{x:Bind ChartModel.MajorStepUnit, Mode=OneWay}"
+                Minimum="{x:Bind ChartModel.Minimum, Mode=OneWay}"
+            -->
+        </telerik:RadCartesianChart.HorizontalAxis>
+
+        <telerik:RadCartesianChart.VerticalAxis>
+            <telerik:LinearAxis
+                Visibility="Collapsed"
+                Minimum="{x:Bind ChartModel.PricesMinMax.Item1, Mode=OneWay}"
+                Maximum="{x:Bind ChartModel.PricesMinMax.Item2, Mode=OneWay}"/>
+        </telerik:RadCartesianChart.VerticalAxis>
+
+        <telerik:CandlestickSeries
+            ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}">
+            <telerik:CandlestickSeries.DefaultVisualStyle>
+                <Style TargetType="telerik:Candlestick">
+                    <Setter Property="MinHeight" Value="1"/>
+                    <Setter Property="MaxWidth" Value="40"/>
+                    <Setter Property="StrokeThickness" Value="1"/>
+                    <Setter Property="UpFill" Value="#6000ff00"/>
+                    <Setter Property="UpStroke" Value="Green"/>
+                    <Setter Property="DownStroke" Value="Red"/>
+                    <Setter Property="DownFill" Value="#60ff0000"/>
+                </Style>
+            </telerik:CandlestickSeries.DefaultVisualStyle>
+
+            <telerik:CandlestickSeries.HorizontalAxis>
+                <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
+            </telerik:CandlestickSeries.HorizontalAxis>
+
+            <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+                <DataTemplate>
+                    <StackPanel Padding="5 2">
+                        <StackPanel Orientation="Vertical" Padding="5 2">
+                            <TextBlock
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+                                FontWeight="Normal" FontSize="14">
+                                <Run Text="High:"/>
+                                <Run Text="{Binding DataPoint.High, Mode=OneWay, Converter={StaticResource NumberFormatter}}"/>
+                            </TextBlock>
+                            <TextBlock
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+                                FontWeight="Normal" FontSize="14">
+                                <Run Text="Low:"/>
+                                <Run Text="{Binding DataPoint.Low, Mode=OneWay, Converter={StaticResource NumberFormatter}}"/>
+                            </TextBlock>
+                            <TextBlock
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+                                FontWeight="Normal" FontSize="14">
+                                <Run Text="Open:"/>
+                                <Run Text="{Binding DataPoint.Open, Converter={StaticResource NumberFormatter}}"/>
+                            </TextBlock>
+                            <TextBlock
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+                                FontWeight="Normal" FontSize="14">
+                                <Run Text="Close:"/>
+                                <Run Text="{Binding DataPoint.Close, Converter={StaticResource NumberFormatter}}"/>
+                            </TextBlock>
+                            <TextBlock
+                                Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
+                                FontSize="12" Opacity="0.5"
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
+
+            <telerik:ChartTrackBallBehavior.IntersectionTemplate>
+                <DataTemplate>
+                    <Ellipse Width="7" Height="7" Fill="#A07D7D7D" StrokeThickness="1"/>
+                </DataTemplate>
+            </telerik:ChartTrackBallBehavior.IntersectionTemplate>
+
+            <telerik:CandlestickSeries.CategoryBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+            </telerik:CandlestickSeries.CategoryBinding>
+            <telerik:CandlestickSeries.HighBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="High"/>
+            </telerik:CandlestickSeries.HighBinding>
+            <telerik:CandlestickSeries.LowBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Low"/>
+            </telerik:CandlestickSeries.LowBinding>
+
+
+            <telerik:CandlestickSeries.OpenBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Open"/>
+            </telerik:CandlestickSeries.OpenBinding>
+            <telerik:CandlestickSeries.CloseBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Close"/>
+            </telerik:CandlestickSeries.CloseBinding>
+
+        </telerik:CandlestickSeries>
+        
+    </telerik:RadCartesianChart>
+</UserControl>

@@ -125,6 +125,9 @@
     <Compile Include="UserControls\ChartArea.xaml.cs">
       <DependentUpon>ChartArea.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ChartCandles.xaml.cs">
+      <DependentUpon>ChartCandles.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ChartAreaFull.xaml.cs">
       <DependentUpon>ChartAreaFull.xaml</DependentUpon>
     </Compile>
@@ -336,6 +339,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="UserControls\ChartArea.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ChartCandles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
