@@ -25,6 +25,12 @@ namespace UWP.ViewModels {
 			set => SetProperty(ref chart, value);
 		}
 
+		private bool showCandles = false;
+		public bool ShowCandles {
+			get => showCandles;
+			set => SetProperty(ref showCandles, value);
+		}
+
 		public void InAppNotification(string title, string message = "") {
 			var tuple = new Tuple<string, string>(title, message);
 			Messenger.Send(new NotificationMessage(tuple));

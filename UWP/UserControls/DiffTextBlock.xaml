@@ -15,7 +15,7 @@
         Margin="5 0 0 0"
         VerticalAlignment="Center">
         <Border
-            d:Background="#00ff00"
+            d:Background="#00aa00"
             Background="{x:Bind DiffFg, Mode=OneWay}" Opacity="0.15"/>
         <Border>
             <Border.Background>
@@ -24,6 +24,7 @@
         </Border>
         <TextBlock
             d:Text="▲15%"
+            d:Foreground="#00aa00"
             Foreground="{x:Bind DiffFg, Mode=OneWay}"
             FontSize="13" FontWeight="SemiBold"
             Padding="5 0 5 2">

@@ -17,6 +17,16 @@
     </Page.DataContext>
 
     <Page.Resources>
+        <Style TargetType="Button" x:Key="IconBtn">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Opacity" Value="0.75"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="5 0"/>
+            <Setter Property="Margin" Value="5 0"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
             <Setter Property="Margin" Value="0, 8"/>
             <Setter Property="BorderBrush" Value="LightGray"/>
@@ -115,16 +125,6 @@
         ############################################### Page Title #########################################
         #################################################################################################### -->
         <RelativePanel BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
-            <RelativePanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Padding" Value="5 0"/>
-                    <Setter Property="Margin" Value="5 0"/>
-                    <Setter Property="Height" Value="32"/>
-                    <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
-                    <Setter Property="FontSize" Value="20"/>
-                </Style>
-            </RelativePanel.Resources>
             <StackPanel Orientation="Horizontal">
                 <Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
                     Margin="5" VerticalAlignment="Center" Width="25"/>
@@ -139,17 +139,20 @@
                     d:Content="&#xEB51;"
                     Click="FavCoin_click"
                     Content="{x:Bind vm.Coin.FavIcon, Mode=OneWay}"
-                    ToolTipService.ToolTip="Toggle favourite"/>
+                    ToolTipService.ToolTip="Toggle favourite"
+                    Style="{StaticResource IconBtn}"/>
                 <Button
                     d:Content="&#xE840;"
                     Click="PinCoin_click"
                     Content="{x:Bind vm.Coin.PinIcon, Mode=OneWay}"
-                    ToolTipService.ToolTip="Toggle pin to start screen"/>
+                    ToolTipService.ToolTip="Toggle pin to start screen"
+                    Style="{StaticResource IconBtn}"/>
                 <Button
                     d:Visibility="Visible" x:Name="CompactOverlay_btn"
                     Content="&#xE1D8;" Click="CompactOverlay_btn_click"
                     Visibility="Collapsed"
-                    ToolTipService.ToolTip="Compact overlay"/>
+                    ToolTipService.ToolTip="Compact overlay"
+                    Style="{StaticResource IconBtn}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5 0" RelativePanel.AlignRightWithPanel="True">
@@ -193,20 +196,42 @@
 
             <local:ChartAreaFull
                 x:Name="PriceChart"
-                ChartModel="{x:Bind vm.Chart, Mode=OneWay}"/>
-            
-            <local:TimeRangeRadioButtons
-                Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan, Mode=OneWay}"
-                Margin="0 5 0 0"
-                Tapped="TimeRangeButtons_Tapped"/>
+                ChartModel="{x:Bind vm.Chart, Mode=OneWay}"
+                ShowCandles="{x:Bind vm.ShowCandles, Mode=OneWay}"/>
+
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5 0">
+                <Button
+                    Content="&#xE9D2;"
+                    Click="ShowCandles_Click"
+                    Style="{StaticResource IconBtn}"/>
+                <local:TimeRangeRadioButtons
+                    Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan, Mode=OneWay}"
+                    HorizontalAlignment="Center"
+                    Tapped="TimeRangeButtons_Tapped"/>
+                <Button Content="&#xE92D;" HorizontalAlignment="Right" Style="{StaticResource IconBtn}"/>
+            </Grid>
         </Grid>
 
         <!-- 
         ####################################################################################################
         ############################################## Bottom Cards ########################################
         #################################################################################################### -->
+        
+        <Pivot Grid.Row="3" MaxWidth="700" BorderBrush="Black" BorderThickness="2" Margin="0 5">
+            <PivotItem Header="Overview">
 
+            </PivotItem>
+            
+            <PivotItem Header="Alerts">
 
+            </PivotItem>
+
+            <PivotItem Header="Portfolio">
+
+            </PivotItem>
+        </Pivot>
+
+        <ScrollViewer Grid.Row="3" Margin="0 0 0 5" Visibility="Collapsed">
 
             <Grid x:Name="BottomCards">
                 <Grid.RowDefinitions>

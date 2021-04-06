@@ -263,5 +263,9 @@ namespace UWP.Views {
 
             UpdatePage();
         }
+
+        private void ShowCandles_Click(object sender, RoutedEventArgs e) {
+            vm.ShowCandles = !vm.ShowCandles;
+        }
     }
 }

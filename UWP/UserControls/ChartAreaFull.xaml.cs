@@ -20,9 +20,21 @@ namespace UWP.UserControls {
             typeof(ChartAreaFull),
             null);
 
+        public static readonly DependencyProperty ShowCandlesProperty =
+        DependencyProperty.Register(
+            nameof(ShowCandles),
+            typeof(bool),
+            typeof(ChartAreaFull),
+            null);
+
         public ChartModel ChartModel {
             get => (ChartModel)GetValue(ChartModelProperty);
             set => SetValue(ChartModelProperty, value);
+        }
+
+        public bool ShowCandles {
+            get => (bool)GetValue(ShowCandlesProperty);
+            set => SetValue(ShowCandlesProperty, value);
         }
     }
 }
