@@ -144,7 +144,11 @@ namespace UWP.Views {
                 chartData.Add(new ChartPoint() {
                     Date = h.DateTime,
                     Value = h.Average,
-                    Volume = h.volumefrom
+                    Volume = h.volumefrom,
+                    High = h.high,
+                    Low = h.low,
+                    Open = h.open,
+                    Close = h.close
                 });
             }
             vm.Chart.ChartData = chartData;
