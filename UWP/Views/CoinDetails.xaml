@@ -25,7 +25,7 @@
             <Setter Property="Margin" Value="5 0"/>
             <Setter Property="Height" Value="32"/>
             <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="22"/>
         </Style>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
             <Setter Property="Margin" Value="0, 8"/>
@@ -124,17 +124,25 @@
         ####################################################################################################
         ############################################### Page Title #########################################
         #################################################################################################### -->
-        <RelativePanel BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+        <Grid BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
-                    Margin="5" VerticalAlignment="Center" Width="25"/>
-                <TextBlock
-                    d:Text="Bitcoin (BTC)"
-                    Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
-                    VerticalAlignment="Stretch" FontWeight="Bold">
-                    <Run Text="{x:Bind vm.Coin.FullName}"/>
-                    <Run Text="("/><Run Text="{x:Bind vm.Coin.Name}"/><Run Text=")"/>
-                </TextBlock>
+                    Margin="10 0 15 0" VerticalAlignment="Center" Width="32"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock
+                        d:Text="Bitcoin"
+                        Text="{x:Bind vm.Coin.FullName}"
+                        Margin="0 0 0 -7"
+                        FontWeight="SemiBold"
+                        Style="{StaticResource TitleTextBlockStyle}"
+                        VerticalAlignment="Stretch"/>
+                    <TextBlock
+                        FontWeight="Normal"
+                        d:Text="BTC #1"
+                        Text="{x:Bind vm.Coin.Name}"
+                        Opacity="0.5"
+                        VerticalAlignment="Stretch"/>
+                </StackPanel>
                 <Button
                     d:Content="&#xEB51;"
                     Click="FavCoin_click"
@@ -155,20 +163,22 @@
                     Style="{StaticResource IconBtn}"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="5 0" RelativePanel.AlignRightWithPanel="True">
-                <TextBlock Style="{ThemeResource TitleTextBlockStyle}">
-                    <Run Text="{x:Bind vm.Coin.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}" d:Text="0"/><!--
-                    --><Run Text="{x:Bind vm.Coin.CurrencySym}" d:Text="€"/>
+            <StackPanel Orientation="Horizontal" Margin="5 0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock
+                    d:Text="1000€"
+                    FontWeight="SemiBold"
+                    Style="{ThemeResource TitleTextBlockStyle}">
+                    <Run Text="{x:Bind vm.Coin.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}"/><!--
+                    --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                 </TextBlock>
                 
                 <local:DiffTextBlock
                     Diff="{x:Bind vm.Coin.Diff, Mode=OneWay}"
                     DiffFg="{x:Bind vm.Coin.DiffFG, Mode=OneWay}"
-                    VerticalAlignment="Bottom"
-                    Margin="0 2"/>
+                    Margin="0 7 0 0"/>
             </StackPanel>
 
-        </RelativePanel>
+        </Grid>
 
         <!-- 
         ####################################################################################################

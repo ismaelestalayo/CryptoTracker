@@ -26,7 +26,7 @@
             d:Text="▲15%"
             d:Foreground="#00aa00"
             Foreground="{x:Bind DiffFg, Mode=OneWay}"
-            FontSize="13" FontWeight="SemiBold"
+            FontSize="14" FontWeight="SemiBold"
             Padding="5 0 5 2">
             <Run Text="{x:Bind DiffArrow, Mode=OneWay}"/><!--
             --><Run Text="{x:Bind Diff, Mode=OneWay}"/><!--

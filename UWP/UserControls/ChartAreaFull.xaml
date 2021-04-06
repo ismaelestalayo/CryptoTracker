@@ -167,23 +167,15 @@
                                     FontWeight="Normal" FontSize="14">
                                     <Run Text="H/L:"/>
                                     <Run Text="{Binding DataPoint.High, Mode=OneWay, Converter={StaticResource NumberFormatter}}"/>
-                                </TextBlock>
-                                <TextBlock
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                                    FontWeight="Normal" FontSize="14">
-                                    <Run Text="Low:"/>
+                                    <Run Text="-"/>
                                     <Run Text="{Binding DataPoint.Low, Mode=OneWay, Converter={StaticResource NumberFormatter}}"/>
                                 </TextBlock>
                                 <TextBlock
                                     Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
                                     FontWeight="Normal" FontSize="14">
-                                    <Run Text="Open:"/>
+                                    <Run Text="O/C:"/>
                                     <Run Text="{Binding DataPoint.Open, Converter={StaticResource NumberFormatter}}"/>
-                                </TextBlock>
-                                <TextBlock
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                                    FontWeight="Normal" FontSize="14">
-                                    <Run Text="Close:"/>
+                                    <Run Text="-"/>
                                     <Run Text="{Binding DataPoint.Close, Converter={StaticResource NumberFormatter}}"/>
                                 </TextBlock>
                                 <TextBlock
