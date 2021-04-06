@@ -169,7 +169,8 @@ namespace UWP.Views {
             for (int i = 0; i < minCommon; i++) {
                 chartData.Add(new ChartPoint {
                     Date = dates_arr.ElementAt(i),
-                    Value = (float)worth_arr[i]
+                    Value = (float)worth_arr[i],
+                    Volume = 0
                 });
             }
             vm.Chart.ChartData = chartData;
@@ -183,6 +184,8 @@ namespace UWP.Views {
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
             vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max);
+            vm.Chart.VolumeMax = GraphHelper.GetMaxOfVolume(chartData);
+            vm.Chart.VolumeMax = (vm.Chart.VolumeMax == 0) ? 10 : vm.Chart.VolumeMax;
         }
 
         /// ###############################################################################################
