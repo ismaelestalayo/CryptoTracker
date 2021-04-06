@@ -12,11 +12,11 @@
     Unloaded="Page_Unloaded"
     NavigationCacheMode="Disabled">
 
-	<Page.DataContext>
-		<viewModels:CoinDetailsViewModel x:Name="vm"/>
-	</Page.DataContext>
+    <Page.DataContext>
+        <viewModels:CoinDetailsViewModel x:Name="vm"/>
+    </Page.DataContext>
 
-	<Page.Resources>
+    <Page.Resources>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
             <Setter Property="Margin" Value="0, 8"/>
             <Setter Property="BorderBrush" Value="LightGray"/>
@@ -126,14 +126,14 @@
                 </Style>
             </RelativePanel.Resources>
             <StackPanel Orientation="Horizontal">
-				<Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
+                <Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
                     Margin="5" VerticalAlignment="Center" Width="25"/>
                 <TextBlock
                     d:Text="Bitcoin (BTC)"
                     Padding="0 0 0 3" Style="{StaticResource TitleTextBlockStyle}"
                     VerticalAlignment="Stretch" FontWeight="Bold">
-					<Run Text="{x:Bind vm.Coin.FullName}"/>
-					<Run Text="("/><Run Text="{x:Bind vm.Coin.Name}"/><Run Text=")"/>
+                    <Run Text="{x:Bind vm.Coin.FullName}"/>
+                    <Run Text="("/><Run Text="{x:Bind vm.Coin.Name}"/><Run Text=")"/>
                 </TextBlock>
                 <Button
                     d:Content="&#xEB51;"
@@ -154,8 +154,8 @@
 
             <StackPanel Orientation="Horizontal" Margin="5 0" RelativePanel.AlignRightWithPanel="True">
                 <TextBlock Style="{ThemeResource TitleTextBlockStyle}">
-					<Run Text="{x:Bind vm.Coin.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}" d:Text="0"/><!--
-					--><Run Text="{x:Bind vm.Coin.CurrencySym}" d:Text="€"/>
+                    <Run Text="{x:Bind vm.Coin.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}" d:Text="0"/><!--
+                    --><Run Text="{x:Bind vm.Coin.CurrencySym}" d:Text="€"/>
                 </TextBlock>
                 
                 <local:DiffTextBlock
@@ -178,34 +178,34 @@
             </Grid.RowDefinitions>
 
             <controls:Loading
-				IsLoading="{x:Bind vm.Coin.IsLoading, Mode=OneWay}"
-				HorizontalAlignment="Center" VerticalAlignment="Center"
+                IsLoading="{x:Bind vm.Coin.IsLoading, Mode=OneWay}"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
                 Grid.RowSpan="2" Grid.ColumnSpan="2"
                 Background="Transparent">
                 <ContentControl>
                     <ProgressBar
-						Background="Transparent"
-						IsIndeterminate="True"
+                        Background="Transparent"
+                        IsIndeterminate="True"
                         Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-						Width="600"/>
+                        Width="600"/>
                 </ContentControl>
             </controls:Loading>
 
             <local:ChartAreaFull
-				x:Name="PriceChart"
-				ChartModel="{x:Bind vm.Chart, Mode=OneWay}"/>
+                x:Name="PriceChart"
+                ChartModel="{x:Bind vm.Chart, Mode=OneWay}"/>
             
             <local:TimeRangeRadioButtons
-				Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan, Mode=OneWay}"
-				Tapped="TimeRangeButtons_Tapped"/>
-		</Grid>
+                Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan, Mode=OneWay}"
+                Margin="0 5 0 0"
+                Tapped="TimeRangeButtons_Tapped"/>
+        </Grid>
 
         <!-- 
         ####################################################################################################
         ############################################## Bottom Cards ########################################
         #################################################################################################### -->
 
-        <ScrollViewer Grid.Row="3" Margin="0 0 0 5">
 
 
             <Grid x:Name="BottomCards">
@@ -325,7 +325,7 @@
 
 
                 <!--
-				<ListView Grid.Row="1" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0" Background="Blue" Visibility="Collapsed">
+                <ListView Grid.Row="1" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0" Background="Blue" Visibility="Collapsed">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="helpers:JSONexchanges">
                             <Grid BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}" BorderThickness="0 0 0 2" Padding="0 0 0 5">
@@ -351,7 +351,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-				-->
+                -->
             </Grid>
         </ScrollViewer>
 

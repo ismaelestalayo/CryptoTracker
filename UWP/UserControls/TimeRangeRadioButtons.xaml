@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    MaxHeight="60"
+    MaxHeight="55"
     d:Width="460"
     d:Height="60">
 
@@ -75,13 +75,13 @@
                                 ContentTransitions="{TemplateBinding ContentTransitions}"
                                 CornerRadius="4"
                                 FontSize="13"
-                                Height="21"
+                                Height="20"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 Margin="2 0"
                                 Padding="0 0 0 3"
                                 VerticalContentAlignment="Center"
-                                Width="{TemplateBinding Width}"/>
+                                Width="35"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -93,39 +93,47 @@
         BorderBrush="{ThemeResource SystemBaseMediumColor}"
         BorderThickness="1"
         CornerRadius="6"
+        Height="28"
         Orientation="Horizontal"
         Grid.ColumnSpan="2"
         HorizontalAlignment="Center"
-        Margin="0 10 0 10"
+        Margin="0"
         Padding="0 2">
         <StackPanel.Resources>
             <Style TargetType="RadioButton" BasedOn="{StaticResource timerangeRadioButtons}">
+                <Setter Property="Margin" Value="-4 0"/>
+            </Style>
+            <Style TargetType="Border">
+                <Setter Property="Background" Value="{ThemeResource SystemBaseLowColor}"/>
+                <Setter Property="Margin" Value="1 3"/>
+                <Setter Property="Padding" Value="0 5"/>
+                <Setter Property="Width" Value="1"/>
             </Style>
         </StackPanel.Resources>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="1h"/>
         
-        <Border Width="1" Background="{ThemeResource SystemBaseLowColor}" Margin="1 3"/>
+        <Border/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="4h"/>
         
-        <Border Width="1" Background="{ThemeResource SystemBaseLowColor}" Margin="1 3"/>
+        <Border/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="1d"/>
 
-        <Border Width="1" Background="{ThemeResource SystemBaseLowColor}" Visibility="{x:Bind FullRange}" Margin="1 3"/>
+        <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="3d" Visibility="{x:Bind FullRange}"/>
 
-        <Border Width="1" Background="{ThemeResource SystemBaseLowColor}" Visibility="{x:Bind FullRange}" Margin="1 3"/>
+        <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="1w" Visibility="{x:Bind FullRange}" IsChecked="True"/>
 
-        <Border Width="1" Background="{ThemeResource SystemBaseLowColor}" Visibility="{x:Bind FullRange}" Margin="1 3"/>
+        <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="1m" Visibility="{x:Bind FullRange}"/>
 
-        <Border Width="1" Background="{ThemeResource SystemBaseLowColor}" Visibility="{x:Bind FullRange}" Margin="1 3"/>
+        <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="3m" Visibility="{x:Bind FullRange}"/>
 
-        <Border Width="1" Background="{ThemeResource SystemBaseLowColor}" Visibility="{x:Bind FullRange}" Margin="1 3"/>
+        <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="1y" Visibility="{x:Bind FullRange}"/>
 
-        <Border Width="1" Background="{ThemeResource SystemBaseLowColor}" Visibility="{x:Bind FullRange}" Margin="1 3"/>
+        <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="all" Visibility="{x:Bind FullRange}"/>
     </StackPanel>
 </UserControl>

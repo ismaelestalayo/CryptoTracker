@@ -73,7 +73,7 @@
             <local:TimeRangeRadioButtons
 				FullRange="False"
 				Grid.Row="1" RelativePanel.AlignHorizontalCenterWithPanel="True"
-				Margin="10 -7"
+				Margin="0 2"
 				TimeSpan="{x:Bind vm.Chart.TimeSpan, Mode=OneWay}"
 				Tapped="TimeRangeButtons_Tapped"/>
         </RelativePanel>
