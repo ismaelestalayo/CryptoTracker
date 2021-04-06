@@ -30,5 +30,11 @@ namespace UWP.Models {
             get => _minimum;
             set => SetProperty(ref _minimum, value);
         }
-	}
+
+        private int tickInterval = 10;
+        public int TickInterval {
+            get => tickInterval;
+            set => SetProperty(ref tickInterval, value);
+        }
+    }
 }

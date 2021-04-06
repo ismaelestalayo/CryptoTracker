@@ -50,14 +50,18 @@
         </telerik:RadCartesianChart.Grid>
 
         <telerik:RadCartesianChart.HorizontalAxis>
-            <telerik:DateTimeContinuousAxis
+            <telerik:DateTimeCategoricalAxis
                 FontWeight="Light" FontFamily="Segoe UI"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 LabelFormat="{x:Bind ChartModel.LabelFormat, Mode=OneWay}"
                 LabelOffset="1"
+                PlotMode="OnTicks"
+                MajorTickInterval="{x:Bind ChartModel.TickInterval, Mode=OneWay}"/>
+            <!--
                 MajorStep="{x:Bind ChartModel.MajorStep, Mode=OneWay}"
                 MajorStepUnit="{x:Bind ChartModel.MajorStepUnit, Mode=OneWay}"
-                Minimum="{x:Bind ChartModel.Minimum, Mode=OneWay}"/>
+                Minimum="{x:Bind ChartModel.Minimum, Mode=OneWay}"
+            -->
         </telerik:RadCartesianChart.HorizontalAxis>
 
         <telerik:RadCartesianChart.VerticalAxis>
@@ -83,9 +87,6 @@
                 <telerik:BarSeries.VerticalAxis>
                     <telerik:LinearAxis Visibility="Collapsed" Maximum="{x:Bind ChartModel.VolumeMax, Mode=OneWay}"/>
                 </telerik:BarSeries.VerticalAxis>
-                <telerik:BarSeries.HorizontalAxis>
-                    <telerik:DateTimeCategoricalAxis Visibility="Collapsed"/>
-                </telerik:BarSeries.HorizontalAxis>
                 
                 <telerik:BarSeries.CategoryBinding>
                     <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
@@ -99,14 +100,15 @@
             <telerik:AreaSeries
                 ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}"
                 Stroke="{x:Bind ChartModel.ChartStroke, Mode=OneWay}"
-                StrokeThickness="1">
+                StrokeThickness="1"
+                Visibility="{x:Bind ShowCandles, Mode=OneWay, Converter={StaticResource BoolInverter}}">
                 <telerik:AreaSeries.Fill>
                     <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
                         <GradientStop Color="{x:Bind ChartModel.ChartFill1, Mode=OneWay}" Offset="0.3"/>
                         <GradientStop Color="{x:Bind ChartModel.ChartFill2, Mode=OneWay}" Offset="1."/>
                     </LinearGradientBrush>
                 </telerik:AreaSeries.Fill>
-                
+
                 <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                     <DataTemplate>
                         <StackPanel Padding="5 2">
@@ -123,7 +125,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                
+
                 <telerik:ChartTrackBallBehavior.IntersectionTemplate>
                     <DataTemplate>
                         <Ellipse Width="7" Height="7" Fill="#A07D7D7D" StrokeThickness="1"/>

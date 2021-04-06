@@ -178,6 +178,7 @@ namespace UWP.Views {
             vm.Chart.Minimum = temp.Minimum;
             vm.Chart.MajorStepUnit = temp.MajorStepUnit;
             vm.Chart.MajorStep = temp.MajorStep;
+            vm.Chart.TickInterval = temp.TickInterval;
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());

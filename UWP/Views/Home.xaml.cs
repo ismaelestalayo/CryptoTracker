@@ -144,6 +144,7 @@ namespace UWP.Views {
                 vm.PriceCards[i].Chart.Minimum = temp.Minimum;
                 vm.PriceCards[i].Chart.MajorStepUnit = temp.MajorStepUnit;
                 vm.PriceCards[i].Chart.MajorStep = temp.MajorStep;
+                vm.PriceCards[i].Chart.TickInterval = temp.TickInterval;
 
                 /// Calculate min-max to adjust axis
                 var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
