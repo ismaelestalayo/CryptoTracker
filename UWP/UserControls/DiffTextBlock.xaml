@@ -25,8 +25,10 @@
         <TextBlock
             d:Text="▲15%"
             d:Foreground="#00aa00"
+            FontFamily="Segoe UI"
             Foreground="{x:Bind DiffFg, Mode=OneWay}"
             FontSize="14" FontWeight="SemiBold"
+            CharacterSpacing="-25"
             Padding="5 0 5 2">
             <Run Text="{x:Bind DiffArrow, Mode=OneWay}"/><!--
             --><Run Text="{x:Bind Diff, Mode=OneWay}"/><!--

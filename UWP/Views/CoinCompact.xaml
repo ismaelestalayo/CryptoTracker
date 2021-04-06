@@ -43,11 +43,13 @@
             <Button
                 Background="Transparent"
                 CornerRadius="0"
-                Height="32"                
+                Content="&#xE944;"
+                FontFamily="{StaticResource FluentIconFont}"
+                FontSize="16"
+                Height="32"
+                Opacity="0.5"                
 				Click="FullScreen_btn_click"
-                Width="42">
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE740;" FontSize="14"/>
-            </Button>
+                Width="42"/>
 
             <TextBlock
 				d:Text="CRYPTO"

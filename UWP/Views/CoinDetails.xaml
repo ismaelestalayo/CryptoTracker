@@ -25,7 +25,7 @@
             <Setter Property="Margin" Value="5 0"/>
             <Setter Property="Height" Value="32"/>
             <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="20"/>
         </Style>
         <Style TargetType="RelativePanel" x:Key="AboutRelativePanelStyle">
             <Setter Property="Margin" Value="0, 8"/>
@@ -124,24 +124,26 @@
         ####################################################################################################
         ############################################### Page Title #########################################
         #################################################################################################### -->
-        <Grid BorderThickness="0 0 0 0.5" Padding="0 5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+        <Grid BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <StackPanel Orientation="Horizontal">
-                <Image Source="{x:Bind vm.Coin.Logo, Mode=OneWay}" d:Source="/Assets/Icons/iconBTC.png" 
-                    Margin="10 0 15 0" VerticalAlignment="Center" Width="32"/>
-                <StackPanel Orientation="Vertical">
+                <Image
+                    d:Source="/Assets/Icons/iconBTC.png"
+                    Source="{x:Bind vm.Coin.Logo, Mode=OneWay}"
+                    Margin="10 0" Width="32"/>
+                <StackPanel Orientation="Vertical" Margin="0">
                     <TextBlock
                         d:Text="Bitcoin"
                         Text="{x:Bind vm.Coin.FullName}"
-                        Margin="0 0 0 -7"
+                        Margin="1 0 0 -7"
+                        FontSize="22"
                         FontWeight="SemiBold"
-                        Style="{StaticResource TitleTextBlockStyle}"
-                        VerticalAlignment="Stretch"/>
+                        Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBlock
                         FontWeight="Normal"
-                        d:Text="BTC #1"
+                        d:Text="BTC"
+                        CharacterSpacing="50"
                         Text="{x:Bind vm.Coin.Name}"
-                        Opacity="0.5"
-                        VerticalAlignment="Stretch"/>
+                        Opacity="0.5"/>
                 </StackPanel>
                 <Button
                     d:Content="&#xEB51;"
@@ -157,7 +159,7 @@
                     Style="{StaticResource IconBtn}"/>
                 <Button
                     d:Visibility="Visible" x:Name="CompactOverlay_btn"
-                    Content="&#xE1D8;" Click="CompactOverlay_btn_click"
+                    Content="&#xE8a7;" Click="CompactOverlay_btn_click"
                     Visibility="Collapsed"
                     ToolTipService.ToolTip="Compact overlay"
                     Style="{StaticResource IconBtn}"/>
@@ -166,18 +168,22 @@
             <StackPanel Orientation="Horizontal" Margin="5 0" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <TextBlock
                     d:Text="1000€"
+                    FontSize="26"
                     FontWeight="SemiBold"
+                    CharacterSpacing="-25"
                     Style="{ThemeResource TitleTextBlockStyle}">
                     <Run Text="{x:Bind vm.Coin.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}"/><!--
                     --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                 </TextBlock>
-                
+
                 <local:DiffTextBlock
                     Diff="{x:Bind vm.Coin.Diff, Mode=OneWay}"
                     DiffFg="{x:Bind vm.Coin.DiffFG, Mode=OneWay}"
-                    Margin="0 7 0 0"/>
+                    Margin="0 8 0 0"/>
             </StackPanel>
-
+            <StackPanel Orientation="Horizontal">
+                
+            </StackPanel>
         </Grid>
 
         <!-- 

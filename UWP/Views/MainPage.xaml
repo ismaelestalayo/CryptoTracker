@@ -101,7 +101,7 @@
                                 Tapped="NavView_Sync_Tapped"
                                 ToolTipService.ToolTip="Refresh">
                                 <NavigationViewItem.Icon>
-                                    <FontIcon Glyph="&#xE117;"/> <!-- Find -->
+                                    <FontIcon Glyph="&#xE117;"/> <!-- Sync -->
                                 </NavigationViewItem.Icon>
                             </NavigationViewItem>
                             <ProgressRing
