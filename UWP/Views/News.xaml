@@ -1,5 +1,6 @@
 ﻿<Page
     x:Class="UWP.Views.News"
+    x:DefaultBindMode="OneWay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -64,7 +65,7 @@
             </controls:TokenizingTextBox>
 
             <controls:AdaptiveGridView x:Name="NewsAdaptiveGridView" OneRowModeEnabled="False"
-                ItemsSource="{x:Bind vm.News, Mode=OneWay}"
+                ItemsSource="{x:Bind vm.News}"
                 DesiredWidth="300" SelectionMode="None" IsItemClickEnabled="True" ItemHeight="200"
                 ItemClick="NewsItem_Click" Grid.Row="1">
                 <controls:AdaptiveGridView.ItemTemplate>

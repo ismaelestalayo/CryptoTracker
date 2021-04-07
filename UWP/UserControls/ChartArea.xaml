@@ -1,5 +1,6 @@
 ﻿<UserControl
     x:Class="UWP.UserControls.ChartArea"
+    x:DefaultBindMode="OneWay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,7 +10,7 @@
 
     <telerik:RadCartesianChart
         x:Name="Chart"
-        DataContext="{x:Bind ChartModel, Mode=OneWay}"
+        DataContext="{x:Bind ChartModel}"
         Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
 
         <telerik:RadCartesianChart.Grid>
@@ -23,18 +24,18 @@
         <telerik:RadCartesianChart.VerticalAxis>
             <telerik:LinearAxis
                 Visibility="Collapsed"
-                Minimum="{x:Bind ChartModel.PricesMinMax.Item1, Mode=OneWay}"
-                Maximum="{x:Bind ChartModel.PricesMinMax.Item2, Mode=OneWay}"/>
+                Minimum="{x:Bind ChartModel.PricesMinMax.Item1}"
+                Maximum="{x:Bind ChartModel.PricesMinMax.Item2}"/>
         </telerik:RadCartesianChart.VerticalAxis>
 
         <telerik:AreaSeries
-            ItemsSource="{x:Bind ChartModel.ChartData, Mode=OneWay}"
-            Stroke="{x:Bind ChartModel.ChartStroke, Mode=OneWay}"
+            ItemsSource="{x:Bind ChartModel.ChartData}"
+            Stroke="{x:Bind ChartModel.ChartStroke}"
             StrokeThickness="1">
             <telerik:AreaSeries.Fill>
                 <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-                    <GradientStop Color="{x:Bind ChartModel.ChartFill1, Mode=OneWay}" Offset="0.3"/>
-                    <GradientStop Color="{x:Bind ChartModel.ChartFill2, Mode=OneWay}" Offset="1."/>
+                    <GradientStop Color="{x:Bind ChartModel.ChartFill1}" Offset="0.3"/>
+                    <GradientStop Color="{x:Bind ChartModel.ChartFill2}" Offset="1."/>
                 </LinearGradientBrush>
             </telerik:AreaSeries.Fill>
 

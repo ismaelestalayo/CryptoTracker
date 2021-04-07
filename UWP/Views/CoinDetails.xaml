@@ -1,5 +1,6 @@
 ﻿<Page
     x:Class="UWP.Views.CoinDetails"
+    x:DefaultBindMode="OneWay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -128,7 +129,7 @@
             <StackPanel Orientation="Horizontal">
                 <Image
                     d:Source="/Assets/Icons/iconBTC.png"
-                    Source="{x:Bind vm.Coin.Logo, Mode=OneWay}"
+                    Source="{x:Bind vm.Coin.Logo}"
                     Margin="10 0" Width="32"/>
                 <StackPanel Orientation="Vertical" Margin="0">
                     <TextBlock
@@ -148,13 +149,13 @@
                 <Button
                     d:Content="&#xEB51;"
                     Click="FavCoin_click"
-                    Content="{x:Bind vm.Coin.FavIcon, Mode=OneWay}"
+                    Content="{x:Bind vm.Coin.FavIcon}"
                     ToolTipService.ToolTip="Toggle favourite"
                     Style="{StaticResource IconBtn}"/>
                 <Button
                     d:Content="&#xE840;"
                     Click="PinCoin_click"
-                    Content="{x:Bind vm.Coin.PinIcon, Mode=OneWay}"
+                    Content="{x:Bind vm.Coin.PinIcon}"
                     ToolTipService.ToolTip="Toggle pin to start screen"
                     Style="{StaticResource IconBtn}"/>
                 <Button
@@ -172,13 +173,13 @@
                     FontWeight="SemiBold"
                     CharacterSpacing="-25"
                     Style="{ThemeResource TitleTextBlockStyle}">
-                    <Run Text="{x:Bind vm.Coin.Price, Mode=OneWay, Converter={StaticResource NumberFormatter}}"/><!--
+                    <Run Text="{x:Bind vm.Coin.Price, Converter={StaticResource NumberFormatter}}"/><!--
                     --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                 </TextBlock>
 
                 <local:DiffTextBlock
-                    Diff="{x:Bind vm.Coin.Diff, Mode=OneWay}"
-                    DiffFg="{x:Bind vm.Coin.DiffFG, Mode=OneWay}"
+                    Diff="{x:Bind vm.Coin.Diff}"
+                    DiffFg="{x:Bind vm.Coin.DiffFG}"
                     Margin="0 8 0 0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -190,14 +191,14 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <Grid Grid.Row="2" Grid.Column="0" Opacity="{x:Bind vm.Coin.Opacity, Mode=OneWay}">
+        <Grid Grid.Row="2" Grid.Column="0" Opacity="{x:Bind vm.Coin.Opacity}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <controls:Loading
-                IsLoading="{x:Bind vm.Coin.IsLoading, Mode=OneWay}"
+                IsLoading="{x:Bind vm.Coin.IsLoading}"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Grid.RowSpan="2" Grid.ColumnSpan="2"
                 Background="Transparent">
@@ -212,8 +213,8 @@
 
             <local:ChartAreaFull
                 x:Name="PriceChart"
-                ChartModel="{x:Bind vm.Chart, Mode=OneWay}"
-                ShowCandles="{x:Bind vm.ShowCandles, Mode=OneWay}"/>
+                ChartModel="{x:Bind vm.Chart}"
+                ShowCandles="{x:Bind vm.ShowCandles}"/>
 
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5 0">
                 <Button
@@ -226,7 +227,7 @@
                     </Button.Content>
                 </Button>
                 <local:TimeRangeRadioButtons
-                    Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan, Mode=OneWay}"
+                    Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan}"
                     HorizontalAlignment="Center"
                     Tapped="TimeRangeButtons_Tapped"/>
                 <Button
@@ -276,7 +277,7 @@
                         </RelativePanel>
 
                         <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                            <TextBlock Text="{x:Bind vm.CoinInfo.description.en, Mode=OneWay}" TextWrapping="WrapWholeWords"
+                            <TextBlock Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords"
                                        TextAlignment="Justify" Opacity="0.8"/>
                         </ScrollViewer>
                     </Grid>
@@ -298,40 +299,37 @@
                         <controls:UniformGrid Margin="10" Opacity="0.9">
                             <TextBlock>
                                 <Run Text="Low" FontWeight="SemiBold"/>
-                                <Run Text="(" FontWeight="SemiBold"/><Run Text="{x:Bind vm.Chart.TimeSpan,
-                                    Mode=OneWay}" FontWeight="SemiBold"/><Run Text=")" FontWeight="SemiBold"/>
+                                <Run Text="(" FontWeight="SemiBold"/><Run Text="{x:Bind vm.Chart.TimeSpan}" FontWeight="SemiBold"/><Run Text=")" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1, Mode=OneWay,
+                                <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1,
                                     Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind
-                                    vm.Coin.CurrencySym, Mode=OneWay}"/>
+                                    vm.Coin.CurrencySym}"/>
                             </TextBlock>
                             <TextBlock>
                                 <Run Text="High" FontWeight="SemiBold"/>
-                                <Run Text="(" FontWeight="SemiBold"/><Run Text="{x:Bind vm.Chart.TimeSpan,
-                                    Mode=OneWay}" FontWeight="SemiBold"/><Run Text=")" FontWeight="SemiBold"/>
+                                <Run Text="(" FontWeight="SemiBold"/><Run Text="{x:Bind vm.Chart.TimeSpan}" FontWeight="SemiBold"/><Run Text=")" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2, Mode=OneWay,
+                                <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2,
                                     Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind
-                                    vm.Coin.CurrencySym, Mode=OneWay}"/>
+                                    vm.Coin.CurrencySym}"/>
                             </TextBlock>
 
                             <TextBlock>
                                 <Run Text="All time low:" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.atl.eur, Mode=OneWay,
+                                <Run Text="{x:Bind vm.CoinInfo.market_data.atl.eur,
                                     Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind
-                                    vm.Coin.CurrencySym, Mode=OneWay}"/>
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.atl_date.eur, Mode=OneWay,
+                                    vm.Coin.CurrencySym}"/>
+                                <Run Text="{x:Bind vm.CoinInfo.market_data.atl_date.eur,
                                     Converter={StaticResource DateShortener}}" FontWeight="Light" FontSize="11"
                                     Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
                             </TextBlock>
                             <TextBlock>
                                 <Run Text="All time high:" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.ath.eur, Mode=OneWay,
-                                    Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind vm.Coin.CurrencySym,
-                                    Mode=OneWay}"/>
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.ath_date.eur, Mode=OneWay, Converter={StaticResource DateShortener}}"
+                                <Run Text="{x:Bind vm.CoinInfo.market_data.ath.eur,
+                                    Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                <Run Text="{x:Bind vm.CoinInfo.market_data.ath_date.eur, Converter={StaticResource DateShortener}}"
                                      FontWeight="Light" FontSize="11"
                                      Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
                             </TextBlock>
@@ -344,7 +342,7 @@
                         <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
                             <TextBlock Text="Global Market" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiBold" RelativePanel.AlignRightWithPanel="True">
-                                <Run Text="#"/><Run Text="{x:Bind vm.CoinInfo.market_cap_rank, Mode=OneWay}"/>
+                                <Run Text="#"/><Run Text="{x:Bind vm.CoinInfo.market_cap_rank}"/>
                             </TextBlock>
                         </RelativePanel>
 
@@ -352,20 +350,20 @@
                             <TextBlock Margin="5" FontSize="16" FontWeight="Light">
                                 <Run Text="Market Cap:" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.market_cap.eur, Mode=OneWay,
+                                <Run Text="{x:Bind vm.CoinInfo.market_data.market_cap.eur,
                                     Converter={StaticResource NumberPrefixer}}"/><!--
-                                --><Run Text="{x:Bind vm.Coin.CurrencySym, Mode=OneWay}"/>
+                                --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                 <Run Text="(" FontWeight="Light" FontSize="11"/><Run 
-                                    Text="{x:Bind vm.CoinInfo.market_data.market_cap_change_percentage_24h, Mode=OneWay}"
+                                    Text="{x:Bind vm.CoinInfo.market_data.market_cap_change_percentage_24h}"
                                     FontWeight="Light" FontSize="11"/><Run
                                     Text="%)" FontWeight="Light" FontSize="11"/>
                             </TextBlock>
                             <TextBlock Margin="5" FontSize="16" FontWeight="Light">
                                 <Run Text="Circulating supply" FontWeight="SemiBold"/>
                                 <LineBreak/>
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.circulating_supply, Mode=OneWay,
+                                <Run Text="{x:Bind vm.CoinInfo.market_data.circulating_supply,
                                         Converter={StaticResource StringFormatConverter}}"/>
-                                <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
+                                <Run Text="{x:Bind vm.Coin.Name}"/>
                             </TextBlock>
                         </controls:UniformGrid>
                     </StackPanel>

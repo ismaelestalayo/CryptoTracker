@@ -1,5 +1,6 @@
 ﻿<Page
     x:Class="UWP.Views.Portfolio"
+    x:DefaultBindMode="OneWay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -77,7 +78,7 @@
                 Height="34"
                 Margin="0 4 0 0"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}">
+                Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
                 <d:StackPanel Height="32" Width="1500" HorizontalAlignment="Left" Background="Goldenrod"/>
                 <d:StackPanel Height="32" Width="250" HorizontalAlignment="Left" Background="IndianRed"/>
                 <d:StackPanel Height="32" Width="100" HorizontalAlignment="Left" Background="MediumPurple"/>
@@ -117,7 +118,7 @@
         ###############################################################################################################
         ############################################################################################################### -->
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0"
-            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}">
+            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
             <controls:DataGrid
                 x:Name="Portfolio_dg"
                 AutoGenerateColumns="False" BorderThickness="0"
@@ -126,7 +127,7 @@
                 GridLinesVisibility="Horizontal"
                 HeadersVisibility="Column" HorizontalAlignment="Stretch"
                 HorizontalGridLinesBrush="{ThemeResource SystemChromeDisabledHighColor}"
-                ItemsSource="{x:Bind vm.Portfolio, Mode=OneWay}"
+                ItemsSource="{x:Bind vm.Portfolio}"
                 LoadingRowGroup="dg_loadingRowGroup"
                 Margin="0"
                 RowBackground="Transparent" RowDetailsVisibilityMode="Collapsed"
@@ -151,11 +152,11 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
-                                        <Run Text="{Binding CryptoQty, Mode=OneWay}"/>
-                                        <Run Text="{Binding Crypto, Mode=OneWay}"/>
+                                        <Run Text="{Binding CryptoQty}"/>
+                                        <Run Text="{Binding Crypto}"/>
                                     </TextBlock>
 
-                                    <Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo, Mode=OneWay}"/>
+                                    <Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
                                 </Grid>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -165,8 +166,8 @@
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding Current, Mode=OneWay}"/>
-                                    <TextBlock Text="{Binding CurrencySymbol, Mode=OneWay}"/>
+                                    <TextBlock Text="{Binding Current}"/>
+                                    <TextBlock Text="{Binding CurrencySymbol}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -176,8 +177,8 @@
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding InvestedQty, Mode=OneWay}"/>
-                                    <TextBlock Text="{Binding CurrencySymbol, Mode=OneWay}"/>
+                                    <TextBlock Text="{Binding InvestedQty}"/>
+                                    <TextBlock Text="{Binding CurrencySymbol}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -187,9 +188,9 @@
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding Arrow, Mode=OneWay}" Margin="4 0" Foreground="{Binding ProfitFG, Mode=OneWay}"/>
-                                    <TextBlock Text="{Binding Worth, Mode=OneWay}"/>
-                                    <TextBlock Text="{Binding CurrencySymbol, Mode=OneWay}"/>
+                                    <TextBlock Text="{Binding Arrow}" Margin="4 0" Foreground="{Binding ProfitFG}"/>
+                                    <TextBlock Text="{Binding Worth}"/>
+                                    <TextBlock Text="{Binding CurrencySymbol}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -247,15 +248,15 @@
                             <!-- First Row-->
                             <TextBlock Grid.Row="0" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Buy price:"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding BoughtAt, Mode=OneWay}"/><!--
-                                --><Run Text="{Binding CurrencySymbol, Mode=OneWay}"/>
+                                <Run Text="{Binding BoughtAt}"/><!--
+                                --><Run Text="{Binding CurrencySymbol}"/>
                             </TextBlock>
 
                             <TextBlock Grid.Row="0" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Currently:"/>
                             <TextBlock Grid.Row="0" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Current, Mode=OneWay}"/><Run Text="{Binding CurrencySymbol, Mode=OneWay}"/>
-                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Arrow, Mode=OneWay}"/><!--
-                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding Delta, Mode=OneWay}"/><!--
+                                <Run Text="{Binding Current}"/><Run Text="{Binding CurrencySymbol}"/>
+                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Arrow}"/><!--
+                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding Delta}"/><!--
                                 --><Run Foreground="{Binding ProfitFG}" Text="%"/>
                             </TextBlock>
                             
@@ -263,27 +264,27 @@
                             <!-- Second Row-->
                             <TextBlock Grid.Row="1" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Cost:"/>
                             <TextBlock Grid.Row="1" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding InvestedQty, Mode=OneWay}"/><Run Text="{Binding CurrencySymbol, Mode=OneWay}"/>
+                                <Run Text="{Binding InvestedQty}"/><Run Text="{Binding CurrencySymbol}"/>
                             </TextBlock>
 
                             <TextBlock Grid.Row="1" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Worth:"/>
                             <TextBlock Grid.Row="1" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Worth, Mode=OneWay}"/><Run Text="{Binding CurrencySymbol, Mode=OneWay}"/>
-                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Arrow, Mode=OneWay}"/><!--
-                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding Profit, Mode=OneWay}"/><!--
-                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding CurrencySymbol, Mode=OneWay}"/>
+                                <Run Text="{Binding Worth}"/><Run Text="{Binding CurrencySymbol}"/>
+                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Arrow}"/><!--
+                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding Profit}"/><!--
+                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding CurrencySymbol}"/>
                             </TextBlock>
 
 
                             <!-- Third Row-->
                             <TextBlock Grid.Row="2" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Date:"/>
                             <TextBlock Grid.Row="2" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Date, Mode=OneWay, Converter={StaticResource DateOffsetShortener}}"/>
+                                <Run Text="{Binding Date, Converter={StaticResource DateOffsetShortener}}"/>
                             </TextBlock>
 
                             <TextBlock Grid.Row="2" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Exchange:"/>
                             <TextBlock Grid.Row="2" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Exchange, Mode=OneWay}"/>
+                                <Run Text="{Binding Exchange}"/>
                             </TextBlock>
                         </Grid>
                     </DataTemplate>
@@ -298,7 +299,7 @@
         </ScrollViewer>
 
         <StackPanel Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Top" Margin="0 50 0 0"
-            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
+            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2VisibilityInverted}}">
             <controls:DropShadowPanel
                 BlurRadius="10"
                 ShadowOpacity="0.3"
@@ -327,7 +328,7 @@
 
         <!-- Total portfolio values -->
         <Grid Grid.Row="2" Margin="0 5 0 50" Height="32"
-            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}">
+            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -343,27 +344,27 @@
             </Grid.Resources>
             <TextBlock Grid.Column="0" TextAlignment="Center" Text="Total"/>
             <TextBlock Grid.Column="2" TextAlignment="Center">
-                <Run Text="{x:Bind vm.TotalInvested, Mode=OneWay}"/><!--
-                --><Run Text="{x:Bind vm.CurrencySymbol, Mode=OneWay}"/>
+                <Run Text="{x:Bind vm.TotalInvested}"/><!--
+                --><Run Text="{x:Bind vm.CurrencySymbol}"/>
             </TextBlock>
             <TextBlock Grid.Column="3" TextAlignment="Center">
-                <Run Text="{x:Bind vm.TotalWorth, Mode=OneWay}"/><!--
-                --><Run Text="{x:Bind vm.CurrencySymbol, Mode=OneWay}"/>
+                <Run Text="{x:Bind vm.TotalWorth}"/><!--
+                --><Run Text="{x:Bind vm.CurrencySymbol}"/>
             </TextBlock>
         </Grid>
         
         <!-- Portfolio history chart -->
         <local:ChartAreaFull
             x:Name="PortfolioChart"
-            ChartModel="{x:Bind vm.Chart, Mode=OneWay}"
+            ChartModel="{x:Bind vm.Chart}"
             Grid.Row="4"
-            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}"/>
+            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"/>
 
         <!-- Timerange radio buttons -->
         <local:TimeRangeRadioButtons
             x:Name="TimerangeRadioButtons"
             Grid.Row="5"
-            Visibility="{x:Bind vm.Portfolio.Count, Mode=OneWay, Converter={StaticResource ListCount2Visibility}}"
+            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"
             Margin="0 0 0 10"
             Tapped="TimeRangeButtons_Tapped"/>
 
@@ -384,7 +385,7 @@
                 <!-- Row 0 -->
                 <ComboBox
                     Header="💰 Crypto" IsEditable="True"
-                    ItemsSource="{x:Bind vm.CoinsArray, Mode=OneWay}"
+                    ItemsSource="{x:Bind vm.CoinsArray}"
                     LostFocus="DialogBtn_LostFocus"
                     Margin="0 0 5 0" PlaceholderText="Coin"
                     SelectedValue="{x:Bind vm.NewPurchase.Crypto, Mode=TwoWay}"
@@ -398,7 +399,7 @@
                     Width="130"/>
                 <muxc:NumberBox
                     AcceptsExpression="True" Header="Invested"
-                    Foreground="{x:Bind vm.NewPurchase.ProfitFG, Mode=OneWay}"
+                    Foreground="{x:Bind vm.NewPurchase.ProfitFG}"
                     HorizontalAlignment="Left" LostFocus="DialogBtn_LostFocus"
                     Margin="0 0 5 0" Minimum="0" PlaceholderText="0"
                     Value="{x:Bind vm.NewPurchase.InvestedQty, Mode=TwoWay}"
@@ -440,8 +441,8 @@
                         Width="130">
                         <TextBlock
                             Foreground="{ThemeResource TextControlForegroundDisabled}">
-                            <Run Text="{x:Bind vm.NewPurchase.Worth, Mode=OneWay}"/><!--
-                            --><Run Text="{x:Bind vm.NewPurchase.CurrencySymbol, Mode=OneWay}"/>
+                            <Run Text="{x:Bind vm.NewPurchase.Worth}"/><!--
+                            --><Run Text="{x:Bind vm.NewPurchase.CurrencySymbol}"/>
                         </TextBlock>
                     </StackPanel>
                 </controls:HeaderedContentControl>
@@ -456,9 +457,9 @@
                         CornerRadius="{ThemeResource ControlCornerRadius}"
                         Width="130">
                         <TextBlock
-                            Foreground="{x:Bind vm.NewPurchase.ProfitFG, Mode=OneWay, FallbackValue='Gray'}">
-                            <Run Text="{x:Bind vm.NewPurchase.Profit, Mode=OneWay}"/><!--
-                            --><Run Text="{x:Bind vm.NewPurchase.CurrencySymbol, Mode=OneWay}"/>
+                            Foreground="{x:Bind vm.NewPurchase.ProfitFG, FallbackValue='Gray'}">
+                            <Run Text="{x:Bind vm.NewPurchase.Profit}"/><!--
+                            --><Run Text="{x:Bind vm.NewPurchase.CurrencySymbol}"/>
                         </TextBlock>
                     </StackPanel>
                 </controls:HeaderedContentControl>

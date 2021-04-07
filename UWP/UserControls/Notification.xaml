@@ -1,5 +1,6 @@
 ﻿<UserControl
     x:Class="UWP.UserControls.Notification"
+    x:DefaultBindMode="OneWay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -32,15 +33,15 @@
         IsMasked="True">
         <muxc:InfoBar
             d:Title="Welcome to CryptoTracker v6.0.0" d:Content="Notification message. &#x0a;" d:IsOpen="True"
-            Title="{x:Bind Title, Mode=OneWay}"
-            IsOpen="{x:Bind IsOpen, Mode=OneWay}" Closed="InfoBar_Closed"
+            Title="{x:Bind Title}"
+            IsOpen="{x:Bind IsOpen}" Closed="InfoBar_Closed"
             Severity="Informational"
             MaxWidth="400"
             MinWidth="250"
             Padding="10">
             <muxc:InfoBar.Content>
-                <TextBlock TextWrapping="WrapWholeWords" Height="{x:Bind MessageHeight, Mode=OneWay}">
-                    <Run Text="{x:Bind Message, Mode=OneWay, FallbackValue=''}"/>
+                <TextBlock TextWrapping="WrapWholeWords" Height="{x:Bind MessageHeight}">
+                    <Run Text="{x:Bind Message, FallbackValue=''}"/>
                 </TextBlock>
             </muxc:InfoBar.Content>
             <muxc:InfoBar.IconSource>

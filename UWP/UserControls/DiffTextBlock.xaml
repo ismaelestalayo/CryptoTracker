@@ -1,5 +1,6 @@
 ﻿<UserControl
     x:Class="UWP.UserControls.DiffTextBlock"
+    x:DefaultBindMode="OneWay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -16,7 +17,7 @@
         VerticalAlignment="Center">
         <Border
             d:Background="#00aa00"
-            Background="{x:Bind DiffFg, Mode=OneWay}" Opacity="0.15"/>
+            Background="{x:Bind DiffFg}" Opacity="0.15"/>
         <Border>
             <Border.Background>
                 <media:BackdropSaturationBrush Saturation="0.6"/>
@@ -26,12 +27,12 @@
             d:Text="▲15%"
             d:Foreground="#00aa00"
             FontFamily="Segoe UI"
-            Foreground="{x:Bind DiffFg, Mode=OneWay}"
+            Foreground="{x:Bind DiffFg}"
             FontSize="14" FontWeight="SemiBold"
             CharacterSpacing="-25"
             Padding="5 0 5 2">
-            <Run Text="{x:Bind DiffArrow, Mode=OneWay}"/><!--
-            --><Run Text="{x:Bind Diff, Mode=OneWay}"/><!--
+            <Run Text="{x:Bind DiffArrow}"/><!--
+            --><Run Text="{x:Bind Diff}"/><!--
             --><Run Text="%"/>
         </TextBlock>
     </Grid>
