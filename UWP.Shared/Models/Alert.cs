@@ -33,8 +33,13 @@ namespace UWP.Models {
             set => SetProperty(ref currencySymbol, value);
         }
 
-        private string mode = "above";
-        public string Mode {
+        /// <summary>
+        /// Alert mode: 
+        /// - 0: above
+        /// - 1: below: 
+        /// </summary>
+        private int mode = 0;
+        public int Mode {
             get => mode;
             set => SetProperty(ref mode, value);
         }
