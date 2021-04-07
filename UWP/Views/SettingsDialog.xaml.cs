@@ -8,7 +8,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -17,6 +16,8 @@ namespace CryptoTracker.Views {
     public sealed partial class SettingsDialog : ContentDialog {
         /// Store a refrence to Rectangle to later unregester the event handler
         private Rectangle _lockRectangle;
+
+        private string FooterVersion;
 
         public SettingsDialog(string initialPage = "General") {
             InitializeComponent();
@@ -37,8 +38,7 @@ namespace CryptoTracker.Views {
             }
 
             var version = Package.Current.Id.Version;
-            FooterVersion.Content = string.Format("CryptoTracker {0}.{1}.{2}",
-                version.Major, version.Minor, version.Build);
+            FooterVersion = string.Format("CryptoTracker {0}.{1}.{2}", version.Major, version.Minor, version.Build);
             NavigateFrame(initialPage);
         }
 
@@ -64,7 +64,7 @@ namespace CryptoTracker.Views {
         }
 
         /// #######################################################################################
-        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
+        private void NavView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args) {
             string source;
             
             if (((Frame)sender.Content).SourcePageType != null)
@@ -83,25 +83,24 @@ namespace CryptoTracker.Views {
                     break;
                 case "Appearance":
                     SettingsFrame.Navigate(typeof(SettingsAppearance));
-                    SettingsNavView.SelectedItem = SettingsNavView.MenuItems[1];
                     break;
                 case "Alerts":
                     SettingsFrame.Navigate(typeof(SettingsAlerts));
-                    SettingsNavView.SelectedItem = SettingsNavView.MenuItems[2];
                     break;
                 case "Changelog":
                     SettingsFrame.Navigate(typeof(SettingsChangelog));
-                    SettingsNavView.SelectedItem = SettingsNavView.MenuItems[3];
                     break;
                 case "Feedback":
                     SettingsFrame.Navigate(typeof(SettingsFeedback));
-                    SettingsNavView.SelectedItem = SettingsNavView.MenuItems[4];
                     break;
                 case "About":
                     SettingsFrame.Navigate(typeof(SettingsAbout));
-                    SettingsNavView.SelectedItem = SettingsNavView.MenuItems[5];
                     break;
             }
+        }
+
+        private void CloseDialog_Click(object sender, RoutedEventArgs e) {
+            this.Hide();
         }
     }
 }

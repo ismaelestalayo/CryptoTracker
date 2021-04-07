@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using UWP.Core.Constants;
 using UWP.Helpers;
@@ -15,37 +14,57 @@ namespace UWP.Views {
         private static LocalSettings localSettings = new LocalSettings();
         private static string currency = localSettings.Get<string>(UserSettings.Currency);
         private static string currencySym = Currencies.GetCurrencySymbol(currency);
-        private ObservableCollection<Alert> alerts { get; set; }
+
 
         public SettingsAlerts() {
             this.InitializeComponent();
         }
 
         private new async void Loaded(object sender, RoutedEventArgs e) {
-            alerts = await LocalStorageHelper.ReadObject<ObservableCollection<Alert>>(UserStorage.Alerts);
+            vm.Alerts = await LocalStorageHelper.ReadObject<ObservableCollection<Alert>>(UserStorage.Alerts);
         }
 
         private new void Unloaded(object sender, RoutedEventArgs e) {
-            LocalStorageHelper.SaveObject(UserStorage.Alerts, alerts);
+            LocalStorageHelper.SaveObject(UserStorage.Alerts, vm.Alerts);
         }
 
 
         // ###############################################################################################
         private async Task CreateAlert(string crypto, string mode, double threshold) {
-            alerts.Add(new Alert() {
+            vm.Alerts.Add(new Alert() {
                 Crypto = crypto,
                 Currency = currency,
                 CurrencySymbol = currencySym,
                 Enabled = true,
-                Id = alerts.Count,
-                Mode = mode,
+                Id = vm.Alerts.Count,
+                Mode = 0,
                 Threshold = threshold
             });
-            localSettings.Set(UserStorage.Alerts, alerts);
+            localSettings.Set(UserStorage.Alerts, vm.Alerts);
         }
 
         private void Delete_alert(object sender, RoutedEventArgs e) {
-            var z = sender;
+            var alert = ((FrameworkElement)sender).DataContext as Alert;
+            vm.Alerts.Remove(alert);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            vm.Alerts.Add(
+                new Alert() {
+                    Crypto = "ETH",
+                    Enabled = true,
+                    Id = 0,
+                    Mode = 0,
+                    Threshold = 1720
+                });
+            vm.Alerts.Add(
+                new Alert() {
+                    Crypto = "BTC",
+                    Enabled = true,
+                    Id = 1,
+                    Mode = 0,
+                    Threshold = 60000
+                });
         }
     }
 }

@@ -4,6 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:helpers="using:UWP.Helpers"
     xmlns:models="using:UWP.Models"
     xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600"
@@ -20,79 +22,101 @@
         <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="FontWeight" Value="ExtraLight"/>
             <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0 5"/>
             <Setter Property="MaxWidth" Value="350"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="TextLineBounds" Value="Tight"/>
-            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="Margin" Value="10 1 0 0"/>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="Title">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="Margin" Value="0 25 0 5"/>
         </Style>
 
-        <Style TargetType="FontIcon">
-            <Setter Property="Margin" Value="0 8 15 0"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-        </Style>
-        <Style TargetType="StackPanel">
-            <Setter Property="Margin" Value="0 0 0 10"/>
-        </Style>
         <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
         <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
+
+        <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
-    <ScrollViewer
-        BorderThickness="0.2 0 0 0" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
-        Padding="20 15 0 0">
-
+    <ScrollViewer>
         <StackPanel>
             <!-- ALERTS -->
-            <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE90A;"/>
-                <StackPanel>
-                    <TextBlock Text="Alerts" Style="{ThemeResource ClassTitle}"/>
-                    <ListView ItemsSource="{x:Bind alerts, Mode=OneWay}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:Alert">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                    </Grid.ColumnDefinitions>
+            <StackPanel Style="{StaticResource Title}">
+                <FontIcon Glyph="&#xEA8F;"/>
+                <TextBlock Text="Alerts" Style="{ThemeResource ClassTitle}"/>
+                <Button Content="ADD" Click="Button_Click" Padding="5 0" Margin="5 0"/>
+            </StackPanel>
+            
+            <ListView ItemsSource="{x:Bind vm.Alerts, Mode=OneWay}" HorizontalAlignment="Left" Margin="-10 10 0 0">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Alert">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*" MinWidth="95"/>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
 
-                                    <Grid.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
-                                        </Style>
-                                    </Grid.Resources>
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </Grid.Resources>
 
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Text="{x:Bind Crypto}"/>
-                                    <ToggleSwitch
-                                        Grid.Column="1" OnContent="" OffContent=""
-                                        IsOn="{x:Bind Enabled, Mode=TwoWay}"
-                                        Margin="5 0"/>
-                                    <TextBlock
-                                        Grid.Column="2"
-                                        Text="{x:Bind Mode}"/>
-                                    <TextBox 
-                                        Grid.Column="3" Margin="5 0"
-                                        Text="{x:Bind Threshold}"/>
-                                    <Button
-                                        Click="Delete_alert"
-                                        Grid.Column="4" Content="&#xE107;" Background="Transparent"
-                                        FontFamily="{StaticResource FluentIconFont}"
-                                        Margin="5 0" Padding="10 9" Height="32"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        
-                    </ListView>
-                </StackPanel>
+                            <ToggleSwitch
+                                Grid.Column="0" OnContent="" OffContent=""
+                                HorizontalAlignment="Left"
+                                IsOn="{x:Bind Enabled, Mode=TwoWay}"
+                                Margin="0 0 0 0"/>
+                            <TextBlock
+                                d:Text="TST"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                Text="{x:Bind Crypto}"/>
+                            <ComboBox
+                                PlaceholderText="Mode"
+                                Grid.Column="2" Margin="5 0"
+                                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                                SelectedIndex="{x:Bind Mode, Mode=TwoWay}">
+                                <ComboBoxItem Content="above" Tag="index_0"/>
+                                <ComboBoxItem Content="under" Tag="index_1"/>
+                            </ComboBox>
+                            <muxc:NumberBox
+                                Grid.Column="3" Margin="5 0"
+                                PlaceholderText="Threshold"
+                                Text="{x:Bind Threshold, Mode=TwoWay, TargetNullValue=0}"/>
+                            <Button
+                                Click="Delete_alert"
+                                Grid.Column="4" Content="&#xE107;" Background="Transparent"
+                                FontFamily="{StaticResource FluentIconFont}"
+                                Margin="5 0" Padding="10 9" Height="32"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <!-- For previsualization purposes -->
+                <d:Rectangle/>
+            </ListView>
+                
+            <!-- NO ALERTS WARNING -->
+            <StackPanel
+                HorizontalAlignment="Center" 
+                Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
+                <TextBlock
+                FontWeight="Bold" HorizontalAlignment="Center"
+                Text="You have no alerts"
+                Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                <TextBlock
+                FontWeight="Light" FontSize="16"
+                HorizontalAlignment="Center"
+                Text="Try adding one from a coin's page" Opacity="0.7"/>
             </StackPanel>
 
         </StackPanel>
