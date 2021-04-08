@@ -76,7 +76,9 @@
 
         <telerik:RadCartesianChart.Series>
             <!-- VOLUME - BAR SERIES -->
-            <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData}">
+            <telerik:BarSeries
+                ItemsSource="{x:Bind ChartModel.ChartData}"
+                Visibility="{x:Bind ShowCandles, Converter={StaticResource BoolInverter}}">
                 <telerik:BarSeries.DefaultVisualStyle>
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="{StaticResource ChartFill1}"/>
@@ -104,7 +106,7 @@
                 ItemsSource="{x:Bind ChartModel.ChartData}"
                 Stroke="{x:Bind ChartModel.ChartStroke}"
                 StrokeThickness="1"
-                Visibility="Visible">
+                Visibility="{x:Bind ShowCandles, Converter={StaticResource BoolInverter}}">
                 <telerik:AreaSeries.Fill>
                     <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
                         <GradientStop Color="{x:Bind ChartModel.ChartFill1}" Offset="0.3"/>

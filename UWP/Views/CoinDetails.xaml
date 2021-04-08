@@ -64,8 +64,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*" MinHeight="250" MaxHeight="450"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*" MinHeight="380" MaxHeight="500" x:Name="ChartRow"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
@@ -100,6 +100,7 @@
                         <Setter Target="UniformGrid.Columns" Value="3"/>
                         <Setter Target="UniformGrid.Rows" Value="2"/>
                         <Setter Target="UniformGrid.Height" Value="370"/>
+                        <Setter Target="ChartRow.MaxHeight" Value="850"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -112,6 +113,7 @@
                         <Setter Target="UniformGrid.Rows" Value="2"/>
                         <Setter Target="UniformGrid.Height" Value="370"/>
                         <Setter Target="InfoCard.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="ChartRow.MaxHeight" Value="900"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
