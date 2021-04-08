@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:UWP.UserControls"
+    xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     mc:Ignorable="d"
     Unloaded="Page_Unloaded"
@@ -29,7 +29,7 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <local:ChartArea
+        <userControls:ChartArea
 			x:Name="PriceChart"
             Grid.Row="1"
 			Grid.RowSpan="2"
@@ -64,7 +64,7 @@
             </TextBlock>
         </RelativePanel>
 
-        <local:DiffTextBlock
+        <userControls:DiffTextBlock
             Diff="{x:Bind vm.Info.Diff}"
             DiffFg="{x:Bind vm.Info.DiffFG}"
             Grid.Row="1"
@@ -73,7 +73,7 @@
 
 
         <RelativePanel Grid.Row="2">
-            <local:TimeRangeRadioButtons
+            <userControls:TimeRangeRadioButtons
 				FullRange="False"
 				Grid.Row="1" RelativePanel.AlignHorizontalCenterWithPanel="True"
 				Margin="0 2"

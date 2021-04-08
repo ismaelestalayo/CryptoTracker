@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:UWP.Models"
-    xmlns:local="using:UWP.UserControls"
+    xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     NavigationCacheMode="Required"
     Loaded="Page_Loaded"
@@ -152,7 +152,7 @@
                                         --><Run Text="{x:Bind CoinInfo.CurrencySymbol}"/>
                                     </TextBlock>
 
-                                    <local:DiffTextBlock
+                                    <userControls:DiffTextBlock
                                         Diff="{x:Bind Raw.CHANGEPCT24HOUR}"
                                         DiffFg="{x:Bind CoinInfo.ChangeFG}"
                                         VerticalAlignment="Bottom"

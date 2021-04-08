@@ -8,7 +8,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:helpers="using:UWP.Helpers"
     xmlns:models="using:UWP.Models"
-    xmlns:local="using:UWP.UserControls"
+    xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
@@ -65,7 +65,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <local:TimeRangeRadioButtons
+            <userControls:TimeRangeRadioButtons
                 Grid.ColumnSpan="2" TimeSpan="1w"
                 Margin="0 10 0 5"
                 Tapped="TimeRangeButtons_Tapped"/>
@@ -150,14 +150,14 @@
                                         Converter={StaticResource GeneralConv}}" d:Text="0"/><!--
                                     --><Run Text="{x:Bind Info.CurrencySym}" d:Text="€"/>
                                 </TextBlock>
-                                <local:DiffTextBlock
+                                <userControls:DiffTextBlock
                                     Diff="{x:Bind Info.Diff}"
                                     DiffFg="{x:Bind Info.DiffFG}"
                                     VerticalAlignment="Bottom"
                                     Margin="0 2"/>
                             </StackPanel>
                             
-                            <local:ChartArea
+                            <userControls:ChartArea
                                 Grid.Row="1"
                                 ChartModel="{x:Bind Chart}"/>
                         </Grid>
@@ -239,7 +239,7 @@
                             </Grid>
 
                             <!-- VOLUME CHART: -->
-                            <local:ChartBars
+                            <userControls:ChartBars
                                 Grid.Row="1"
                                 ChartModel="{x:Bind Chart}"/>
                         </Grid>

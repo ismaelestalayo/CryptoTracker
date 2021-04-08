@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:UWP.Helpers"
-    xmlns:local="using:UWP.UserControls"
+    xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     xmlns:views="using:UWP.Views"
     mc:Ignorable="d">
@@ -136,7 +136,7 @@
             BorderBrush="DodgerBlue" BorderThickness="0 4 0 0"
             IsOpen="{x:Bind vm.InfoBarOpened}"/>-->
 
-        <local:Notification
+        <userControls:Notification
             IsOpen="{x:Bind vm.InfoBarOpened, Mode=TwoWay}"
             Margin="10 50"
             Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"

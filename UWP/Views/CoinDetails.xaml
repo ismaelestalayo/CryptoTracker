@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:helpers="using:UWP.Helpers"
-    xmlns:local="using:UWP.UserControls"
+    xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     mc:Ignorable="d"
     Unloaded="Page_Unloaded"
@@ -177,7 +177,7 @@
                     --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                 </TextBlock>
 
-                <local:DiffTextBlock
+                <userControls:DiffTextBlock
                     Diff="{x:Bind vm.Coin.Diff}"
                     DiffFg="{x:Bind vm.Coin.DiffFG}"
                     Margin="0 8 0 0"/>
@@ -211,7 +211,7 @@
                 </ContentControl>
             </controls:Loading>
 
-            <local:ChartAreaFull
+            <userControls:ChartAreaFull
                 x:Name="PriceChart"
                 ChartModel="{x:Bind vm.Chart}"
                 ShowCandles="{x:Bind vm.ShowCandles}"/>
@@ -226,7 +226,7 @@
                             VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Button.Content>
                 </Button>
-                <local:TimeRangeRadioButtons
+                <userControls:TimeRangeRadioButtons
                     Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan}"
                     HorizontalAlignment="Center"
                     Tapped="TimeRangeButtons_Tapped"/>

@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:UWP.Helpers"
-    xmlns:local="using:UWP.UserControls"
+    xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
@@ -354,14 +354,14 @@
         </Grid>
         
         <!-- Portfolio history chart -->
-        <local:ChartAreaFull
+        <userControls:ChartAreaFull
             x:Name="PortfolioChart"
             ChartModel="{x:Bind vm.Chart}"
             Grid.Row="4"
             Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"/>
 
         <!-- Timerange radio buttons -->
-        <local:TimeRangeRadioButtons
+        <userControls:TimeRangeRadioButtons
             x:Name="TimerangeRadioButtons"
             Grid.Row="5"
             Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"
