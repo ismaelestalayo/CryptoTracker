@@ -165,25 +165,25 @@
       <DependentUpon>Portfolio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\SettingsAlerts.xaml.cs">
+    <Compile Include="Views\Settings\SettingsAlerts.xaml.cs">
       <DependentUpon>SettingsAlerts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsAbout.xaml.cs">
+    <Compile Include="Views\Settings\SettingsAbout.xaml.cs">
       <DependentUpon>SettingsAbout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsFeedback.xaml.cs">
+    <Compile Include="Views\Settings\SettingsFeedback.xaml.cs">
       <DependentUpon>SettingsFeedback.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsChangelog.xaml.cs">
+    <Compile Include="Views\Settings\SettingsChangelog.xaml.cs">
       <DependentUpon>SettingsChangelog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsAppearance.xaml.cs">
+    <Compile Include="Views\Settings\SettingsAppearance.xaml.cs">
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsGeneral.xaml.cs">
+    <Compile Include="Views\Settings\SettingsGeneral.xaml.cs">
       <DependentUpon>SettingsGeneral.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings.xaml.cs">
+    <Compile Include="Views\Settings\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\News.xaml.cs">
@@ -192,7 +192,7 @@
     <Compile Include="Views\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsDialog.xaml.cs">
+    <Compile Include="Views\Settings\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Top100.xaml.cs">
@@ -382,31 +382,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsAlerts.xaml">
+    <Page Include="Views\Settings\SettingsAlerts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsAbout.xaml">
+    <Page Include="Views\Settings\SettingsAbout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsFeedback.xaml">
+    <Page Include="Views\Settings\SettingsFeedback.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsChangelog.xaml">
+    <Page Include="Views\Settings\SettingsChangelog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsAppearance.xaml">
+    <Page Include="Views\Settings\SettingsAppearance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsGeneral.xaml">
+    <Page Include="Views\Settings\SettingsGeneral.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings.xaml">
+    <Page Include="Views\Settings\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -433,7 +433,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsDialog.xaml">
+    <Page Include="Views\Settings\SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

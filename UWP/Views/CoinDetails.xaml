@@ -265,7 +265,7 @@
             </PivotItem>
         </Pivot>
 
-        <ScrollViewer Grid.Row="3" Margin="0 5" Visibility="Visible">
+        <ScrollViewer Grid.Row="3" Margin="0 5" Visibility="Collapsed">
 
             <Grid x:Name="BottomCards">
                 <Grid.RowDefinitions>

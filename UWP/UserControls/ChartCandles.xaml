@@ -23,14 +23,14 @@
             <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">
                 <telerik:ChartTrackBallBehavior.LineStyle>
                     <Style TargetType="Polyline">
-                        <Setter Property="Stroke" Value="{x:Bind ChartModel.ChartStroke}"/>
+                        <Setter Property="Stroke" Value="#808080"/>
                         <Setter Property="StrokeThickness" Value="1"/>
                         <Setter Property="StrokeDashArray" Value="5,6"/>
                     </Style>
                 </telerik:ChartTrackBallBehavior.LineStyle>
                 <telerik:ChartTrackBallBehavior.InfoStyle>
                     <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                        <Setter Property="Background" Value="#30808080"/>
+                        <Setter Property="Background" Value="#20808080"/>
                         <Setter Property="BorderBrush" Value="#808080"/>
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="CornerRadius" Value="10"/>
