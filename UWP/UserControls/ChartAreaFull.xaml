@@ -12,8 +12,6 @@
 
     <UserControl.Resources>
         <helpers:DateTimeFormatter x:Key="DateFormatter"/>
-        <helpers:BoolInverseToVisibility x:Key="BoolInverter"/>
-        <helpers:BoolToVisibility x:Key="BoolConverter"/>
 
         <SolidColorBrush x:Key="ChartFill1" Color="{x:Bind ChartModel.ChartFill1}"/>
         <SolidColorBrush x:Key="ChartFill2" Color="{x:Bind ChartModel.ChartFill2}"/>
@@ -60,11 +58,6 @@
                 LabelOffset="1"
                 PlotMode="OnTicks"
                 MajorTickInterval="{x:Bind ChartModel.TickInterval}"/>
-            <!--
-                MajorStep="{x:Bind ChartModel.MajorStep}"
-                MajorStepUnit="{x:Bind ChartModel.MajorStepUnit}"
-                Minimum="{x:Bind ChartModel.Minimum}"
-            -->
         </telerik:RadCartesianChart.HorizontalAxis>
 
         <telerik:RadCartesianChart.VerticalAxis>
@@ -76,9 +69,7 @@
 
         <telerik:RadCartesianChart.Series>
             <!-- VOLUME - BAR SERIES -->
-            <telerik:BarSeries
-                ItemsSource="{x:Bind ChartModel.ChartData}"
-                Visibility="{x:Bind ShowCandles, Converter={StaticResource BoolInverter}}">
+            <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData}">
                 <telerik:BarSeries.DefaultVisualStyle>
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="{StaticResource ChartFill1}"/>
@@ -101,12 +92,12 @@
                 </telerik:BarSeries.ValueBinding>
             </telerik:BarSeries>
 
+            
             <!-- PRICE - AREA SERIES -->
             <telerik:AreaSeries
                 ItemsSource="{x:Bind ChartModel.ChartData}"
                 Stroke="{x:Bind ChartModel.ChartStroke}"
-                StrokeThickness="1"
-                Visibility="{x:Bind ShowCandles, Converter={StaticResource BoolInverter}}">
+                StrokeThickness="1">
                 <telerik:AreaSeries.Fill>
                     <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
                         <GradientStop Color="{x:Bind ChartModel.ChartFill1}" Offset="0.3"/>
@@ -144,78 +135,6 @@
                     <telerik:PropertyNameDataPointBinding PropertyName="Value"/>
                 </telerik:AreaSeries.ValueBinding>
             </telerik:AreaSeries>
-
-            <!-- PRICE - AREA SERIES -->
-            <telerik:CandlestickSeries
-                ItemsSource="{x:Bind ChartModel.ChartData}"
-                Visibility="{x:Bind ShowCandles, Converter={StaticResource BoolConverter}}">
-                <telerik:CandlestickSeries.DefaultVisualStyle>
-                    <Style TargetType="telerik:Candlestick">
-                        <Setter Property="MinHeight" Value="1"/>
-                        <Setter Property="MaxWidth" Value="40"/>
-                        <Setter Property="StrokeThickness" Value="1"/>
-                        <Setter Property="UpFill" Value="{StaticResource pastelGreen}"/>
-                        <Setter Property="UpStroke" Value="{StaticResource pastelGreen}"/>
-                        <Setter Property="DownStroke" Value="{StaticResource pastelRed}"/>
-                        <Setter Property="DownFill" Value="{StaticResource pastelRed}"/>
-                    </Style>
-                </telerik:CandlestickSeries.DefaultVisualStyle>
-
-                <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                    <DataTemplate>
-                        <StackPanel Padding="5 2">
-                            <StackPanel Orientation="Vertical" Padding="5 2">
-                                <TextBlock
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                                    FontWeight="Normal" FontSize="14">
-                                    <Run Text="H/L:"/>
-                                    <Run Text="{Binding DataPoint.High, Converter={StaticResource NumberFormatter}}"/>
-                                    <Run Text="-"/>
-                                    <Run Text="{Binding DataPoint.Low, Converter={StaticResource NumberFormatter}}"/>
-                                </TextBlock>
-                                <TextBlock
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                                    FontWeight="Normal" FontSize="14">
-                                    <Run Text="O/C:"/>
-                                    <Run Text="{Binding DataPoint.Open, Converter={StaticResource NumberFormatter}}"/>
-                                    <Run Text="-"/>
-                                    <Run Text="{Binding DataPoint.Close, Converter={StaticResource NumberFormatter}}"/>
-                                </TextBlock>
-                                <TextBlock
-                                    Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
-                                    FontSize="12" Opacity="0.5"
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-
-                <telerik:ChartTrackBallBehavior.IntersectionTemplate>
-                    <DataTemplate>
-                        <Ellipse Width="7" Height="7" Fill="#A07D7D7D" StrokeThickness="1"/>
-                    </DataTemplate>
-                </telerik:ChartTrackBallBehavior.IntersectionTemplate>
-
-                <telerik:CandlestickSeries.CategoryBinding>
-                    <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
-                </telerik:CandlestickSeries.CategoryBinding>
-                <telerik:CandlestickSeries.HighBinding>
-                    <telerik:PropertyNameDataPointBinding PropertyName="High"/>
-                </telerik:CandlestickSeries.HighBinding>
-                <telerik:CandlestickSeries.LowBinding>
-                    <telerik:PropertyNameDataPointBinding PropertyName="Low"/>
-                </telerik:CandlestickSeries.LowBinding>
-
-
-                <telerik:CandlestickSeries.OpenBinding>
-                    <telerik:PropertyNameDataPointBinding PropertyName="Open"/>
-                </telerik:CandlestickSeries.OpenBinding>
-                <telerik:CandlestickSeries.CloseBinding>
-                    <telerik:PropertyNameDataPointBinding PropertyName="Close"/>
-                </telerik:CandlestickSeries.CloseBinding>
-
-            </telerik:CandlestickSeries>
-
 
         </telerik:RadCartesianChart.Series>
     </telerik:RadCartesianChart>

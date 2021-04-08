@@ -58,6 +58,8 @@
         <helpers:StringFormatConverter x:Key="StringFormatConverter"/>
         <helpers:NumberPrefixConverter x:Key="NumberPrefixer"/>
         <helpers:DateTimeShortener x:Key="DateShortener"/>
+        <helpers:BoolToVisibility x:Key="BoolConverter"/>
+        <helpers:BoolInverseToVisibility x:Key="BoolInverter"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Padding="5, 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
@@ -216,7 +218,12 @@
             <userControls:ChartAreaFull
                 x:Name="PriceChart"
                 ChartModel="{x:Bind vm.Chart}"
-                ShowCandles="{x:Bind vm.ShowCandles}"/>
+                Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}"/>
+
+            <userControls:ChartCandles
+                x:Name="CandleChart"
+                Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}"
+                ChartModel="{x:Bind vm.Chart}"/>
 
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5 0">
                 <Button
