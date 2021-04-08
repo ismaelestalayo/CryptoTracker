@@ -42,7 +42,6 @@
     
         <muxc:NavigationView
             x:Name="SettingsNavView"
-            Background="{ThemeResource ContentDialogBackground}"
             Grid.Row="1"
             IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
             IsSettingsVisible="False" IsPaneOpen="True"

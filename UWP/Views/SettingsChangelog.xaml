@@ -17,49 +17,41 @@
         <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="FontWeight" Value="ExtraLight"/>
             <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0 5"/>
             <Setter Property="MaxWidth" Value="350"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="TextLineBounds" Value="Tight"/>
-            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="Margin" Value="10 1 0 0"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="ClassSubtitle" BasedOn="{StaticResource SubtitleTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="TextLineBounds" Value="Tight"/>
+            <Setter Property="Margin" Value="0 10 0 0"/>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="Title">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="Margin" Value="0 25 0 5"/>
         </Style>
 
-        <Style TargetType="FontIcon">
-            <Setter Property="Margin" Value="0 8 15 0"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-        </Style>
-        <Style TargetType="StackPanel">
-            <Setter Property="Margin" Value="0 0 0 10"/>
-        </Style>
         <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
         <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
-    <ScrollViewer
-        BorderThickness="0.2 0 0 0" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
-        Padding="20 15 0 0" >
-        <ScrollViewer.Resources>
-            <Style TargetType="FontIcon">
-                <Setter Property="Margin" Value="0 8 15 0"/>
-                <Setter Property="VerticalAlignment" Value="Top"/>
-            </Style>
-            <Style TargetType="StackPanel">
-                <Setter Property="Margin" Value="0 0 0 10"/>
-            </Style>
-        </ScrollViewer.Resources>
-
+    <ScrollViewer>
         <StackPanel>
             <!-- CHANGELOGS -->
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xE14C;"/>
-                <StackPanel x:Name="ChangeLogList">
-                    <d:TextBlock Text="X.Y.Z" Style="{ThemeResource ClassTitle}"/>
-                </StackPanel>
+                <TextBlock Text="Changelogs" Style="{ThemeResource ClassTitle}"/>
             </StackPanel>
-            
+            <StackPanel x:Name="ChangeLogList">
+                <d:TextBlock Text="X.Y.Z" Style="{ThemeResource ClassTitle}"/>
+            </StackPanel>
+
         </StackPanel>
     </ScrollViewer>
 </Page>

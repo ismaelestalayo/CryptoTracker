@@ -17,60 +17,55 @@
         <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="FontWeight" Value="ExtraLight"/>
             <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0 5"/>
             <Setter Property="MaxWidth" Value="350"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
             <Setter Property="TextLineBounds" Value="Tight"/>
-            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="Margin" Value="10 1 0 0"/>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="Title">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="Margin" Value="0 25 0 5"/>
         </Style>
 
-        <Style TargetType="FontIcon">
-            <Setter Property="Margin" Value="0 8 15 0"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-        </Style>
-        <Style TargetType="StackPanel">
-            <Setter Property="Margin" Value="0 0 0 10"/>
-        </Style>
         <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
         <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
-    <ScrollViewer
-        BorderThickness="0.2 0 0 0" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
-        Padding="20 15 0 0">
-
+    <ScrollViewer>
         <StackPanel>
             <!-- MENTION -->
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xE90A;"/>
-                <StackPanel>
-                    <TextBlock Text="Mention" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock>
-                        <Run Text="Data provided by"/>
-                        <Hyperlink Foreground="Gray" NavigateUri="https://www.cryptocompare.com/api" >
-                            CryptoCompare API
-                        </Hyperlink>
-                    </TextBlock>
-                    <TextBlock>
-                        <Run Text="Crypto Tracker's"/>
-                        <Hyperlink Foreground="Gray" NavigateUri="https://ismaelestalayo.com/privacy">
-                            Privacy policy
-                        </Hyperlink>
-                    </TextBlock>
-                </StackPanel>
+                <TextBlock Text="Mention" Style="{ThemeResource ClassTitle}"/>
             </StackPanel>
 
+            <TextBlock>
+                <Run Text="Data provided by"/>
+                <Hyperlink Foreground="Gray" NavigateUri="https://www.cryptocompare.com/api" >
+                    CryptoCompare API
+                </Hyperlink>
+            </TextBlock>
+            <TextBlock>
+                <Run Text="Crypto Tracker's"/>
+                <Hyperlink Foreground="Gray" NavigateUri="https://ismaelestalayo.com/privacy">
+                    Privacy policy
+                </Hyperlink>
+            </TextBlock>
+
+
             <!-- ABOUT ME -->
-            <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph=""/>
-                <StackPanel>
-                    <TextBlock Text="About me" Style="{ThemeResource ClassTitle}"/>
-                    <TextBlock Text="eee"/>
-                </StackPanel>
+            <StackPanel Style="{StaticResource Title}">
+                <FontIcon Glyph="&#xE13D;"/>
+                <TextBlock Text="About me" Style="{ThemeResource ClassTitle}"/>
             </StackPanel>
+
+            <TextBlock Text="eee"/>
+            
         </StackPanel>
     </ScrollViewer>
 </Page>
