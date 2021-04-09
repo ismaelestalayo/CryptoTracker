@@ -265,7 +265,6 @@ namespace UWP.Views {
             // otherwise assume the value got filled in by TextMemberPath 
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
-                box.Text = box.Text.ToUpper();
                 suggestions.Clear();
 
                 box.ItemsSource = FilterCoins(box);
@@ -291,7 +290,8 @@ namespace UWP.Views {
 
         private void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e) {
             CoinAutoSuggestBox.Text = "";
-            CoinAutoSuggestBox.Visibility = Visibility.Collapsed;
+            if (((Frame)Window.Current.Content).ActualWidth < 720)
+                CoinAutoSuggestBox.Visibility = Visibility.Collapsed;
         }
 
         private void AutoSuggestBox_SizeChanged(object sender, SizeChangedEventArgs e) {
