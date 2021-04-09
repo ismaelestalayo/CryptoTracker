@@ -71,11 +71,13 @@
                 Text="Home, Details and Compact Overlay automatically refresh.
                 &#x0a;(Charts update minutely because of the API's granularity.)"/>
             <ComboBox
-                BorderThickness="1"
+                BorderThickness="1" SelectedItem="{x:Bind vm.AutoRefresh, Mode=TwoWay}"
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                 Margin="0 5 0 0">
-                <ComboBoxItem Content="30 sec" Name="refresh30"/>
-                <ComboBoxItem Content="60 sec" Name="refresh60"/>
+                <x:String>None</x:String>
+                <x:String>30 sec</x:String>
+                <x:String>1 min</x:String>
+                <x:String>2 min</x:String>
             </ComboBox>
 
             <!-- CLOUD SYNC -->

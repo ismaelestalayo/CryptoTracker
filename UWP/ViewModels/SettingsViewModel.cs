@@ -1,9 +1,9 @@
-﻿using UWP.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
+using UWP.Core.Constants;
+using UWP.Models;
 
 namespace UWP.ViewModels {
     class SettingsViewModel : ObservableRecipient {
@@ -17,6 +17,15 @@ namespace UWP.ViewModels {
 		public ObservableCollection<Alert> Alerts {
 			get => alerts;
 			set => SetProperty(ref alerts, value);
+		}
+
+		private string autoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
+		public string AutoRefresh {
+			get => autoRefresh;
+			set {
+				if (SetProperty(ref autoRefresh, value))
+					App._LocalSettings.Set(UserSettings.AutoRefresh, autoRefresh);
+			}
 		}
 
 		public void InAppNotification(string title, string message = "") {
