@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace UWP.Shared.Constants {
     public class Currencies {
@@ -6,6 +7,8 @@ namespace UWP.Shared.Constants {
             string symbol;
             return CurrencySymbol.TryGetValue(currency, out symbol) ? symbol : "€";
         }
+
+        public static List<string> AllCurrencies => CurrencySymbol.Keys.ToList();
 
         private static readonly Dictionary<string, string> CurrencySymbol = new Dictionary<string, string>() {
             { "AUD", "$" },

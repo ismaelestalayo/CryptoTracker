@@ -1,65 +1,24 @@
-﻿using UWP.Core.Constants;
+﻿using System.Collections.Generic;
+using UWP.Core.Constants;
 using UWP.Shared.Constants;
-using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace UWP.Views {
     public sealed partial class SettingsGeneral : Page {
 
-        private PackageVersion version;
-        private string PortfolioKey = "Portfolio";
+        private List<string> AllCurrencies = Currencies.AllCurrencies;
 
         public SettingsGeneral() {
-            this.InitializeComponent();            
-
-            var currency = App._LocalSettings.Get<string>(UserSettings.Currency);
-            switch (currency) {
-                case "EUR":
-                    EUR.IsSelected = true;
-                    break;
-                case "USD":
-                    USD.IsSelected = true;
-                    break;
-                case "GBP":
-                    GBP.IsSelected = true;
-                    break;
-                case "CAD":
-                    CAD.IsSelected = true;
-                    break;
-                case "AUD":
-                    AUD.IsSelected = true;
-                    break;
-                case "MXN":
-                    MXN.IsSelected = true;
-                    break;
-                case "CNY":
-                    CNY.IsSelected = true;
-                    break;
-                case "JPY":
-                    JPY.IsSelected = true;
-                    break;
-                case "INR":
-                    INR.IsSelected = true;
-                    break;
-            }
-            CoinComboBox.PlaceholderText = currency;
+            this.InitializeComponent();
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e) {
+            vm.AutoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
+            vm.Currency = App._LocalSettings.Get<string>(UserSettings.Currency);
+        }
 
         // ###############################################################################################
-        private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
-            ComboBox c = sender as ComboBox;
-            var currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
-            var currencySym = Currencies.GetCurrencySymbol(currency);
-
-            App._LocalSettings.Set(UserSettings.Currency, currency);
-            App._LocalSettings.Set(UserSettings.CurrencySymbol, currencySym);
-            
-            App.currency = currency;
-            App.currencySymbol = currencySym;
-        }
-
         private async void UploadPortfolio_Click(object sender, RoutedEventArgs e) {            
             //try {
             //    var helper = new RoamingObjectStorageHelper();
