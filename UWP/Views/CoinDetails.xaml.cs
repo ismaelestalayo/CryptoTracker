@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UWP.APIs;
 using UWP.Background;
+using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
@@ -56,13 +57,27 @@ namespace UWP.Views {
                 animation.TryStart(PriceChart, new UIElement[] { BottomCards });
 
             /// Create the auto-refresh timer
-            TimeSpan period = TimeSpan.FromSeconds(30);
-            PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-                    if (timeUnit == "minute")
-                        TimeRangeButtons_Tapped(null, null);
-                });
-            }, period);
+            var autoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
+            TimeSpan period;
+            if (autoRefresh != "None") {
+                switch (autoRefresh) {
+                    case "30 sec":
+                        period = TimeSpan.FromSeconds(30);
+                        break;
+                    case "1 min":
+                        period = TimeSpan.FromSeconds(60);
+                        break;
+                    case "2 min":
+                        period = TimeSpan.FromSeconds(120);
+                        break;
+                }
+                PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                        if (timeUnit == "minute")
+                            TimeRangeButtons_Tapped(null, null);
+                    });
+                }, period);
+            }
 
             try {
                 var type = (e.Parameter.GetType()).Name;
