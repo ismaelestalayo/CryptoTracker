@@ -137,7 +137,6 @@ namespace UWP.Views {
             vm.Coin.IsLoading = true;
             
             await UpdateCoin();
-            //await Get24Volume();
             //CryptoCompare.GetExchanges(crypto);
         }
 
@@ -188,12 +187,6 @@ namespace UWP.Views {
             vm.Coin.Diff = diff;
 
             vm.Coin.IsLoading = false;
-        }
-
-        
-        async private Task Get24Volume() {
-            var crypto = vm.Coin.Name;
-            // TODO: add volume chart
         }
 
         // #########################################################################################

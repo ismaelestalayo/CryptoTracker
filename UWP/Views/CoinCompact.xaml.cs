@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
+using UWP.Shared.Constants;
 using UWP.UserControls;
 using UWP.ViewModels;
 using Windows.System.Threading;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -35,32 +34,26 @@ namespace UWP.Views {
 			this.InitializeComponent();
 		}
 
+		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
+			vm.Chart.ChartStroke = ColorConstants.GetBrush(vm.Info.Name);
+		}
+
         protected override void OnNavigatedTo(NavigationEventArgs e) {
 			var type = (e.Parameter.GetType()).Name;
 
-			switch (type) {
-				case nameof(CoinDetailsViewModel):
-					var coinDetailsVM = (CoinDetailsViewModel)e.Parameter;
-					vm.CoinDetailsVM = coinDetailsVM;
-					vm.Chart = coinDetailsVM.Chart;
-					vm.Info = coinDetailsVM.Coin;
-					vm.Chart.TimeSpan = vm.Chart.TimeSpan;
-					if (!timeSpans.Contains(vm.Chart.TimeSpan)) {
-						(timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
-						vm.Chart.TimeSpan = timeSpan;
-						UpdateValues();
-					}
-					else
-						timeSpan = vm.Chart.TimeSpan;
+			var coinDetailsVM = (CoinDetailsViewModel)e.Parameter;
+			vm.CoinDetailsVM = coinDetailsVM;
+			vm.Chart = coinDetailsVM.Chart;
+			vm.Info = coinDetailsVM.Coin;
+			vm.Chart.TimeSpan = vm.Chart.TimeSpan;
+			if (!timeSpans.Contains(vm.Chart.TimeSpan)) {
+				(timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+				vm.Chart.TimeSpan = timeSpan;
+				UpdateValues();
+			}
+			else
+				timeSpan = vm.Chart.TimeSpan;
 
-					break;
-				default:
-				case "string":
-					var crypto = e.Parameter?.ToString().ToUpper(CultureInfo.InvariantCulture) ?? "NULL";
-					vm.Info.Name = crypto;
-					UpdateValues();
-					break;
-            }
 
 			/// Create the auto-refresh timer
 			var autoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
@@ -115,16 +108,11 @@ namespace UWP.Views {
 
 			vm.Info.Diff = diff;
 
-			SolidColorBrush brush;
-			if (diff > 0)
-				brush = ((SolidColorBrush)Application.Current.Resources["pastelGreen"]);
-			else
-				brush = ((SolidColorBrush)Application.Current.Resources["pastelRed"]);
+			var brush = (diff > 0) ?
+				(SolidColorBrush)Application.Current.Resources["pastelGreen"] :
+				(SolidColorBrush)Application.Current.Resources["pastelRed"];
 
 			vm.Chart.ChartStroke = brush;
-			var color = brush.Color;
-			vm.Chart.ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
-			vm.Chart.ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
 
 			var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
 			vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max, 0.25);
