@@ -8,11 +8,4 @@
         <Setter Property="StrokeThickness" Value="0.2"/>
     </Style>
 
-    <Style TargetType="Line" x:Key="TransparentLine">
-        <Setter Property="Stroke" Value="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
-    </Style>
-    <DataTemplate x:Key="TransparentRect">
-        <Rectangle Stroke="Transparent"/>
-    </DataTemplate>
-
 </ResourceDictionary>

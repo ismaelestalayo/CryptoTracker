@@ -1,16 +1,16 @@
-﻿using UWP.Helpers;
-using UWP.Models;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Media;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using UWP.Helpers;
+using UWP.Models;
 using UWP.Services;
+using Windows.UI.Xaml.Media;
 
 namespace UWP.APIs {
-	class CryptoCompare {
+    class CryptoCompare {
 
         /* ###############################################################################################
          * Gets the current price of a coin (in the currency set by App.currency)

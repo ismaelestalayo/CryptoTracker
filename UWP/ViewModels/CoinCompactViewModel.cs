@@ -1,8 +1,8 @@
-﻿using UWP.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using UWP.Models;
 
 namespace UWP.ViewModels {
-	class CoinCompactViewModel : ObservableObject {
+    class CoinCompactViewModel : ObservableObject {
 
 		private Coin info = new Coin();
 		public Coin Info {

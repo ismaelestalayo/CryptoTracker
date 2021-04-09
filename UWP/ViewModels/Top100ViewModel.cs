@@ -1,9 +1,9 @@
-﻿using UWP.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UWP.Models;
 
 namespace UWP.ViewModels {
     public class Top100ViewModel : ObservableRecipient {

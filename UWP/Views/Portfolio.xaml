@@ -5,11 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:helpers="using:UWP.Helpers"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
     mc:Ignorable="d">

@@ -1,7 +1,7 @@
-﻿using UWP.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UWP.Models;
 
 namespace UWP.Helpers {
     class GraphHelper {

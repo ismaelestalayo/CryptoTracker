@@ -1,6 +1,6 @@
-﻿using UWP.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using UWP.Models;
 
 namespace UWP.ViewModels {
     public class PortfolioViewModel : ObservableRecipient {

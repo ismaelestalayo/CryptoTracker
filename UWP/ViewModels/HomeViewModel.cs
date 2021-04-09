@@ -1,11 +1,11 @@
-﻿using UWP.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using System;
+using System.Collections.ObjectModel;
+using UWP.Models;
 
 namespace UWP.ViewModels {
-	public class HomeViewModel : ObservableRecipient {
+    public class HomeViewModel : ObservableRecipient {
 
 		private ObservableCollection<HomeCard> priceCards = new ObservableCollection<HomeCard>();
 		public ObservableCollection<HomeCard> PriceCards {
