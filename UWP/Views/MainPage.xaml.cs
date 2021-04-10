@@ -1,7 +1,6 @@
 ﻿using CryptoTracker.Views;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
@@ -9,7 +8,6 @@ using UWP.Services;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Core;
@@ -23,7 +21,6 @@ using Windows.UI.Xaml.Navigation;
 namespace UWP.Views {
     public sealed partial class MainPage : Page {
 
-        private readonly ObservableCollection<string> suggestions = new ObservableCollection<string>();
         private int CurrentTabIndex = 0;
         readonly UISettings uiSettings = new UISettings();
 
@@ -264,22 +261,16 @@ namespace UWP.Views {
             // Only get results when it was a user typing, 
             // otherwise assume the value got filled in by TextMemberPath 
             // or the handler for SuggestionChosen.
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
-                suggestions.Clear();
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
                 box.ItemsSource = FilterCoins(box);
-            }
         }
 
-        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
-            CoinAutoSuggestBox.Text = ((SuggestionCoinList)args.SelectedItem).Name;
-        }
+        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+            =>  CoinAutoSuggestBox.Text = "";
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
-            if (args.ChosenSuggestion != null) {
+            if (args.ChosenSuggestion != null)
                 ContentFrame.Navigate(typeof(CoinDetails), ((SuggestionCoinList)args.ChosenSuggestion).Name);
-            }
-            
-            CoinAutoSuggestBox.Text = "";
         }
 
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
@@ -288,7 +279,7 @@ namespace UWP.Views {
         }
 
         private void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e) {
-            CoinAutoSuggestBox.Text = "";
+            //CoinAutoSuggestBox.Text = "";
             if (((Frame)Window.Current.Content).ActualWidth < 720)
                 CoinAutoSuggestBox.Visibility = Visibility.Collapsed;
         }
@@ -296,7 +287,8 @@ namespace UWP.Views {
         /// #######################################################################################
         private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
             var filtered = App.coinList.Where(x =>
-                x.symbol.Contains(box.Text) || x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                x.symbol.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase) ||
+                x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
             List<SuggestionCoinList> list = new List<SuggestionCoinList>();
             foreach (CoinBasicInfo coin in filtered) {
                 list.Add(new SuggestionCoinList {
