@@ -19,13 +19,6 @@ namespace UWP.ViewModels {
 			set => SetProperty(ref newPurchase, value);
 		}
 
-		private ObservableCollection<string> coinsArray = new ObservableCollection<string>();
-		public ObservableCollection<string> CoinsArray {
-			get => coinsArray;
-			set => SetProperty(ref coinsArray, value);
-		}
-
-
 		private ChartModel chart = new ChartModel();
 		public ChartModel Chart {
 			get => chart;

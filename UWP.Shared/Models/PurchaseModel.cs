@@ -21,8 +21,8 @@ namespace UWP.Models {
         /// <summary>
         /// DataMembers that are saved locally
         /// </summary>
-        public string crypto;
-        public string cryptoLogo;
+        private string crypto;
+        private string cryptoLogo;
         private double cryptoQty;
 
         [DataMember()]

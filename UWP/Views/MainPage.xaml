@@ -84,10 +84,10 @@
 
             <!-- SEARCH -->
             <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox x:Name="CoinAutoSuggestBox" PlaceholderText="Search" QueryIcon="Find" Width="150"
+                <AutoSuggestBox
+                    x:Name="CoinAutoSuggestBox" PlaceholderText="Search" QueryIcon="Find" Width="150"
                     GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged" 
                     UpdateTextOnSelect="False"
-                    SuggestionChosen="AutoSuggestBox_SuggestionChosen"
                     QuerySubmitted="AutoSuggestBox_QuerySubmitted" Visibility="Collapsed" 
                     LostFocus="AutoSuggestBox_LostFocus">
                     <AutoSuggestBox.TextBoxStyle>

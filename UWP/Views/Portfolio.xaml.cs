@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UWP.APIs;
 using UWP.Helpers;
 using UWP.Models;
+using UWP.Services;
 using UWP.UserControls;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -32,7 +33,6 @@ namespace UWP.Views {
 
         private string PortfolioKey = "Portfolio";
 
-        internal static bool ForceRefresh { get; set; }
         private int EditingPurchaseId { get; set; }
 
         private bool ShowingDetails = false;
@@ -42,10 +42,6 @@ namespace UWP.Views {
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) {
-            /// Populate list of coins
-            var coinsArray = App.coinList.Select(x => x.symbol).ToList();
-            coinsArray.Sort((x, y) => x.CompareTo(y));
-            vm.CoinsArray = new ObservableCollection<string>(coinsArray);
             vm.Portfolio = RetrievePortfolio();
 
             UpdatePortfolio();
@@ -432,6 +428,38 @@ namespace UWP.Views {
 
                 Portfolio_dg.ItemsSource = groupedItems.View;
             }
+        }
+
+        private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
+            AutoSuggestBox box = sender as AutoSuggestBox;
+            box.ItemsSource = FilterCoins(box);
+        }
+
+        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+            => CoinAutoSuggestBox.Text = ((SuggestionCoinList)args.SelectedItem).Name;
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+            => vm.NewPurchase.Crypto = ((SuggestionCoinList)args.ChosenSuggestion)?.Name;
+
+        private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
+            var filtered = App.coinList.Where(x =>
+                x.symbol.Contains(box.Text) || x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            List<SuggestionCoinList> list = new List<SuggestionCoinList>();
+            foreach (CoinBasicInfo coin in filtered) {
+                list.Add(new SuggestionCoinList {
+                    Icon = IconsHelper.GetIcon(coin.symbol),
+                    Name = coin.symbol
+                });
+            }
+            return list;
+        }
+
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
+            // Only get results when it was a user typing, 
+            // otherwise assume the value got filled in by TextMemberPath 
+            // or the handler for SuggestionChosen.
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+                sender.ItemsSource = FilterCoins(sender);
         }
     }
 }
