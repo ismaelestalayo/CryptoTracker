@@ -21,8 +21,9 @@ namespace UWP.APIs {
          * 
         */
 
-        internal static async Task<double> GetPriceAsync(string crypto, string market = "null") {
-            var currency = App.currency;
+        internal static async Task<double> GetPriceAsync(string crypto, string currency = "") {
+            if (currency == "")
+                currency = App.currency;
 
             // TODO: useful to have multiple markets?
             try {

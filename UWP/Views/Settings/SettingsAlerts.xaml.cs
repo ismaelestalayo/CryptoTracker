@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using UWP.Core.Constants;
 using UWP.Helpers;
@@ -21,7 +22,8 @@ namespace UWP.Views {
         }
 
         private new async void Loaded(object sender, RoutedEventArgs e) {
-            vm.Alerts = await LocalStorageHelper.ReadObject<ObservableCollection<Alert>>(UserStorage.Alerts);
+            var alerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
+            vm.Alerts = new ObservableCollection<Alert>(alerts);
         }
 
         private new void Unloaded(object sender, RoutedEventArgs e) {

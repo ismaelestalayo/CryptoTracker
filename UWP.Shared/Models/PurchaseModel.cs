@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using UWP.Core.Constants;
@@ -17,50 +18,44 @@ namespace UWP.Models {
     public class PurchaseModel : INotifyPropertyChanged {
         public PurchaseModel() { }
 
-        private bool isComplete = false;
-        public bool IsComplete {
-            get => isComplete;
-            set => SetProperty(ref isComplete, value);
-        }
-
-        private DateTime lastUpdate = DateTime.Now;
-        public DateTime LastUpdate {
-            get => lastUpdate;
-            set => SetProperty(ref lastUpdate, value);
-        }
-
-        [DataMember()]
-        public string Crypto { get; set; }
-
-        [DataMember()]
-        public string CryptoLogo { get; set; }
-
+        /// <summary>
+        /// DataMembers that are saved locally
+        /// </summary>
+        public string crypto;
+        public string cryptoLogo;
         private double cryptoQty;
+
+        [DataMember()]
+        public string Crypto {
+            get => crypto;
+            set {
+                SetProperty(ref crypto, value);
+                string logoURL = "Assets/Icons/icon" + crypto + ".png";
+                CryptoLogo = (!File.Exists(logoURL)) ?
+                    "https://chasing-coins.com/coin/logo/" + crypto : "/" + logoURL;
+            }
+        }
+
+        [DataMember()]
+        public string CryptoLogo {
+            get => cryptoLogo;
+            set => SetProperty(ref cryptoLogo, value);
+        }
+        
         [DataMember()]
         public double CryptoQty {
             get => cryptoQty;
             set => SetProperty(ref cryptoQty, value);
         }
 
-        private DateTimeOffset date = DateTime.Today;
+        private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
         [DataMember()]
-        public DateTimeOffset Date {
-            get => date;
-            set => SetProperty(ref date, value);
-        }
-
-        private string exchange = "";
-        [DataMember()]
-        public string Exchange {
-            get => exchange;
-            set => SetProperty(ref exchange, value);
-        }
-
-        private string notes = "";
-        [DataMember()]
-        public string Notes {
-            get => notes;
-            set => SetProperty(ref notes, value);
+        public string Currency {
+            get => currency;
+            set {
+                SetProperty(ref currency, value);
+                CurrencySymbol = Currencies.GetCurrencySymbol(Currency);
+            }
         }
 
         private double investedQty = 0;
@@ -70,6 +65,34 @@ namespace UWP.Models {
             set => SetProperty(ref investedQty, value);
         }
 
+        /// Dates, notes...
+        private DateTimeOffset date = DateTime.Today;
+        private string exchange = "";
+        private string notes = "";
+
+        [DataMember()]
+        public DateTimeOffset Date {
+            get => date;
+            set => SetProperty(ref date, value);
+        }
+        
+        [DataMember()]
+        public string Exchange {
+            get => exchange;
+            set => SetProperty(ref exchange, value);
+        }
+        
+        [DataMember()]
+        public string Notes {
+            get => notes;
+            set => SetProperty(ref notes, value);
+        }
+
+
+        /// #######################################################################################
+        /// <summary>
+        /// Atrtibutes calculated on load
+        /// </summary>
         private double delta = 0;
         public double Delta {
             get => delta;
@@ -82,15 +105,22 @@ namespace UWP.Models {
             set => SetProperty(ref boughtAt, value);
         }
 
-        private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
-        [DataMember()]
-        public string Currency {
-            get => currency;
-            set => SetProperty(ref currency, value);
+        public string currencySymbol;
+        public string CurrencySymbol {
+            get => currencySymbol;
+            set => SetProperty(ref currencySymbol, value);
         }
 
-        public string CurrencySymbol {
-            get => Currencies.GetCurrencySymbol(currency);
+        private bool isComplete = false;
+        public bool IsComplete {
+            get => isComplete;
+            set => SetProperty(ref isComplete, value);
+        }
+
+        private DateTime lastUpdate = DateTime.Now;
+        public DateTime LastUpdate {
+            get => lastUpdate;
+            set => SetProperty(ref lastUpdate, value);
         }
 
         private string arrow = "▲";
@@ -124,6 +154,8 @@ namespace UWP.Models {
             set => SetProperty(ref worth, value);
         }
 
+
+        /// #######################################################################################
         /// <summary>
         /// Similar SetProperty to that of the WCT's MVVM approach
         /// </summary>

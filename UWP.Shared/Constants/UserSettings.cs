@@ -31,7 +31,14 @@ namespace UWP.Core.Constants {
 	}
 
 	public class UserStorage {
+		/// <summary>
+		/// List<Alert>
+		/// </summary>
 		public const string Alerts = "Alerts";
+
+		/// <summary>
+		/// List<PurchaseModel>
+		/// </summary>
 		public const string Portfolio = "Portfolio";
 
 	}

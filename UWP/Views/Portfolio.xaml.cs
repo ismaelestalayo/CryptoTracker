@@ -1,14 +1,13 @@
-﻿using UWP.APIs;
-using UWP.Helpers;
-using UWP.Models;
-using UWP.UserControls;
-using Microsoft.Toolkit.Uwp.UI.Controls;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using UWP.APIs;
+using UWP.Helpers;
+using UWP.Models;
+using UWP.UserControls;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -194,7 +193,7 @@ namespace UWP.Views {
             string crypto = purchase.Crypto;
 
             if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
-                purchase.Current = await CryptoCompare.GetPriceAsync(crypto);
+                purchase.Current = await CryptoCompare.GetPriceAsync(crypto, purchase.Currency);
 
             var curr = purchase.Current;
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
@@ -287,14 +286,6 @@ namespace UWP.Views {
                 new MessageDialog("You must fill Crypto, Amount and Invested fields.").ShowAsync();
             }
             else {
-                // Get logo for the coin just in case the coin changed
-                var crypto = vm.NewPurchase.Crypto;
-                string logoURL = "Assets/Icons/icon" + crypto + ".png";
-                if (!File.Exists(logoURL))
-                    vm.NewPurchase.CryptoLogo = "https://chasing-coins.com/coin/logo/" + crypto;
-                else
-                    vm.NewPurchase.CryptoLogo = "/" + logoURL;
-
                 if (sender.PrimaryButtonText == "Add")
                     vm.Portfolio.Add(vm.NewPurchase);
                 else if(sender.PrimaryButtonText == "Save") {
