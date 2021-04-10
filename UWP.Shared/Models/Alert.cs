@@ -1,9 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
-using System;
-using Telerik.Charting;
 
 namespace UWP.Models {
-	public class Alert : ObservableObject {
+    public class Alert : ObservableObject {
         /// <summary>
         /// Attributes to adjust the axis to the plotted time interval
         /// </summary>

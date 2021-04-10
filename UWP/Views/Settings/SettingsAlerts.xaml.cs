@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
@@ -18,12 +18,13 @@ namespace UWP.Views {
 
 
         public SettingsAlerts() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private new async void Loaded(object sender, RoutedEventArgs e) {
             var alerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
             vm.Alerts = new ObservableCollection<Alert>(alerts);
+            vm.CvsSource = from alert in vm.Alerts group alert by alert.Crypto;
         }
 
         private new void Unloaded(object sender, RoutedEventArgs e) {
@@ -32,22 +33,10 @@ namespace UWP.Views {
 
 
         // ###############################################################################################
-        private async Task CreateAlert(string crypto, string mode, double threshold) {
-            vm.Alerts.Add(new Alert() {
-                Crypto = crypto,
-                Currency = currency,
-                CurrencySymbol = currencySym,
-                Enabled = true,
-                Id = vm.Alerts.Count,
-                Mode = 0,
-                Threshold = threshold
-            });
-            localSettings.Set(UserStorage.Alerts, vm.Alerts);
-        }
-
         private void Delete_alert(object sender, RoutedEventArgs e) {
             var alert = ((FrameworkElement)sender).DataContext as Alert;
             vm.Alerts.Remove(alert);
+            vm.CvsSource = from a in vm.Alerts group a by a.Crypto;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -56,16 +45,32 @@ namespace UWP.Views {
                     Crypto = "ETH",
                     Enabled = true,
                     Id = 0,
+                    Mode = 1,
+                    Threshold = 1920
+                });
+            vm.Alerts.Add(
+                new Alert() {
+                    Crypto = "ETH",
+                    Enabled = true,
+                    Id = 1,
                     Mode = 0,
-                    Threshold = 1720
+                    Threshold = 1700
                 });
             vm.Alerts.Add(
                 new Alert() {
                     Crypto = "BTC",
                     Enabled = true,
-                    Id = 1,
+                    Id = 2,
                     Mode = 0,
                     Threshold = 60000
+                });
+            vm.Alerts.Add(
+                new Alert() {
+                    Crypto = "XRP",
+                    Enabled = true,
+                    Id = 3,
+                    Mode = 0,
+                    Threshold = (double)1.5
                 });
         }
     }

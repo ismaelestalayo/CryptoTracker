@@ -38,6 +38,7 @@
         <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
         <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
 
+        <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind vm.CvsSource, Mode=OneWay}"/>
         <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
     </Page.Resources>
 
@@ -51,35 +52,19 @@
                 <TextBlock Text="Alerts" Style="{ThemeResource ClassTitle}"/>
                 <Button Content="ADD" Click="Button_Click" Padding="5 0" Margin="5 0"/>
             </StackPanel>
-            
-            <ListView ItemsSource="{x:Bind vm.Alerts, Mode=OneWay}" HorizontalAlignment="Left" Margin="-10 10 0 0">
+           
+
+            <ListView
+                ItemsSource="{Binding Source={StaticResource cvs}}"
+                Margin="-10 10 0 0" HorizontalAlignment="Left">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Alert">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*" MinWidth="95"/>
-                                <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.Resources>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                </Style>
-                            </Grid.Resources>
-
+                        <StackPanel Orientation="Horizontal" Padding="10 -5 0 0">
                             <ToggleSwitch
                                 Grid.Column="0" OnContent="" OffContent=""
-                                HorizontalAlignment="Left"
+                                HorizontalAlignment="Left" Width="50"
                                 IsOn="{x:Bind Enabled, Mode=TwoWay}"
-                                Margin="0 0 0 0"/>
-                            <TextBlock
-                                d:Text="TST"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                Text="{x:Bind Crypto}"/>
+                                Margin="5 0"/>
                             <ComboBox
                                 PlaceholderText="Mode"
                                 Grid.Column="2" Margin="5 0"
@@ -91,32 +76,44 @@
                             <muxc:NumberBox
                                 Grid.Column="3" Margin="5 0"
                                 PlaceholderText="Threshold"
-                                Text="{x:Bind Threshold, Mode=TwoWay, TargetNullValue=0}"/>
+                                Text="{x:Bind Threshold, TargetNullValue=0}"
+                                Width="100"/>
                             <Button
                                 Click="Delete_alert"
                                 Grid.Column="4" Content="&#xE107;" Background="Transparent"
                                 FontFamily="{StaticResource FluentIconFont}"
-                                Margin="5 0" Padding="10 9" Height="32"/>
-                        </Grid>
+                                Margin=" 0" Padding="10 9" Height="32"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    FontWeight="Bold" FontSize="15" Margin="0"
+                                    Text="{Binding Key, Mode=OneWay}"/>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
 
                 <!-- For previsualization purposes -->
                 <d:Rectangle/>
             </ListView>
-                
+
             <!-- NO ALERTS WARNING -->
             <StackPanel
                 HorizontalAlignment="Center" 
                 Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
                 <TextBlock
-                FontWeight="Bold" HorizontalAlignment="Center"
-                Text="You have no alerts"
-                Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                    FontWeight="Bold" HorizontalAlignment="Center"
+                    Text="You have no alerts"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"/>
                 <TextBlock
-                FontWeight="Light" FontSize="16"
-                HorizontalAlignment="Center"
-                Text="Try adding one from a coin's page" Opacity="0.7"/>
+                    FontWeight="Light" FontSize="16"
+                    HorizontalAlignment="Center"
+                    Text="Try adding one from a coin's page" Opacity="0.7"/>
             </StackPanel>
 
         </StackPanel>
