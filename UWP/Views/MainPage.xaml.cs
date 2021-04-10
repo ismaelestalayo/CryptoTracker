@@ -266,7 +266,6 @@ namespace UWP.Views {
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
                 suggestions.Clear();
-
                 box.ItemsSource = FilterCoins(box);
             }
         }
@@ -284,19 +283,14 @@ namespace UWP.Views {
         }
 
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
-            //AutoSuggestBox box = sender as AutoSuggestBox;
-            //box.ItemsSource = FilterCoins(box);
+            AutoSuggestBox box = sender as AutoSuggestBox;
+            box.ItemsSource = FilterCoins(box);
         }
 
         private void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e) {
             CoinAutoSuggestBox.Text = "";
             if (((Frame)Window.Current.Content).ActualWidth < 720)
                 CoinAutoSuggestBox.Visibility = Visibility.Collapsed;
-        }
-
-        private void AutoSuggestBox_SizeChanged(object sender, SizeChangedEventArgs e) {
-            if(e.PreviousSize == new Size(0, 0))
-                CoinAutoSuggestBox.Focus(FocusState.Programmatic);
         }
 
         /// #######################################################################################

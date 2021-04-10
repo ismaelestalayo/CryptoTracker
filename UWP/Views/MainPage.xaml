@@ -87,7 +87,7 @@
                 <AutoSuggestBox x:Name="CoinAutoSuggestBox" PlaceholderText="Search" QueryIcon="Find" Width="150"
                     GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged" 
                     UpdateTextOnSelect="False"
-                    SuggestionChosen="AutoSuggestBox_SuggestionChosen" SizeChanged="AutoSuggestBox_SizeChanged"
+                    SuggestionChosen="AutoSuggestBox_SuggestionChosen"
                     QuerySubmitted="AutoSuggestBox_QuerySubmitted" Visibility="Collapsed" 
                     LostFocus="AutoSuggestBox_LostFocus">
                     <AutoSuggestBox.TextBoxStyle>
