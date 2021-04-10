@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using UWP.APIs;
+using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
@@ -19,10 +20,6 @@ using Windows.UI.Xaml.Media;
 using static UWP.APIs.CryptoCompare;
 
 namespace UWP.Views {
-    public class SuggestionCoinList {
-        public string Icon { get; set; }
-        public string Name { get; set; }
-    }
 
     public partial class Portfolio : Page {
         /// Variables to get historic
@@ -41,28 +38,29 @@ namespace UWP.Views {
             this.InitializeComponent();   
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) {
-            vm.Portfolio = RetrievePortfolio();
-
+        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            vm.Portfolio = await RetrievePortfolio();
             UpdatePortfolio();
         }
 
         /// ###############################################################################################
         /// Get portfolio from LocalStorage
-        internal ObservableCollection<PurchaseModel> RetrievePortfolio() {
-            var portfolio = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseModel>>(PortfolioKey).Result;
+        internal async Task<ObservableCollection<PurchaseModel>> RetrievePortfolio() {
+            ObservableCollection<PurchaseModel> portfolio;
 
-            if (portfolio.Count > 0)
-                return portfolio;
+            var portfolioV2 = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+
+            if (portfolioV2.Count > 0)
+                return new ObservableCollection<PurchaseModel>(portfolioV2);
 
             /// If it is empty, there might be an old portfolio in the old format and key
-            var oldPurchases = LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio").Result;
-            if (oldPurchases.Count < 0)
+            var portfolioV1 = await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio");
+            if (portfolioV1.Count < 0)
                 return new ObservableCollection<PurchaseModel>();
 
             /// For retrocompatibility with old portfolios
             portfolio = new ObservableCollection<PurchaseModel>();
-            foreach (var p in oldPurchases) {
+            foreach (var p in portfolioV1) {
                 portfolio.Add(new PurchaseModel() {
                     Crypto = p.Crypto,
                     CryptoLogo = p.CryptoLogo,
@@ -436,17 +434,17 @@ namespace UWP.Views {
         }
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-            => CoinAutoSuggestBox.Text = ((SuggestionCoinList)args.SelectedItem).Name;
+            => CoinAutoSuggestBox.Text = ((SuggestionCoin)args.SelectedItem).Name;
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-            => vm.NewPurchase.Crypto = ((SuggestionCoinList)args.ChosenSuggestion)?.Name;
+            => vm.NewPurchase.Crypto = ((SuggestionCoin)args.ChosenSuggestion)?.Name;
 
-        private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
+        private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
             var filtered = App.coinList.Where(x =>
                 x.symbol.Contains(box.Text) || x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            List<SuggestionCoinList> list = new List<SuggestionCoinList>();
+            List<SuggestionCoin> list = new List<SuggestionCoin>();
             foreach (CoinBasicInfo coin in filtered) {
-                list.Add(new SuggestionCoinList {
+                list.Add(new SuggestionCoin {
                     Icon = IconsHelper.GetIcon(coin.symbol),
                     Name = coin.symbol
                 });

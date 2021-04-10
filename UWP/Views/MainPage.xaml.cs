@@ -5,6 +5,7 @@ using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Services;
+using UWP.Models;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
@@ -267,7 +268,7 @@ namespace UWP.Views {
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
             if (args.ChosenSuggestion != null)
-                ContentFrame.Navigate(typeof(CoinDetails), ((SuggestionCoinList)args.ChosenSuggestion).Name);
+                ContentFrame.Navigate(typeof(CoinDetails), ((SuggestionCoin)args.ChosenSuggestion).Name);
         }
 
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
@@ -282,13 +283,13 @@ namespace UWP.Views {
         }
 
         /// #######################################################################################
-        private List<SuggestionCoinList> FilterCoins(AutoSuggestBox box) {
+        private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
             var filtered = App.coinList.Where(x =>
                 x.symbol.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase) ||
                 x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            List<SuggestionCoinList> list = new List<SuggestionCoinList>();
+            List<SuggestionCoin> list = new List<SuggestionCoin>();
             foreach (CoinBasicInfo coin in filtered) {
-                list.Add(new SuggestionCoinList {
+                list.Add(new SuggestionCoin {
                     Icon = IconsHelper.GetIcon(coin.symbol),
                     Name = coin.symbol
                 });

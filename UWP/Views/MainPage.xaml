@@ -8,7 +8,7 @@
     xmlns:helpers="using:UWP.Helpers"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
-    xmlns:views="using:UWP.Views"
+    xmlns:models="using:UWP.Models"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -96,7 +96,7 @@
                         </Style>
                     </AutoSuggestBox.TextBoxStyle>
                     <AutoSuggestBox.ItemTemplate>
-                        <DataTemplate x:DataType="views:SuggestionCoinList">
+                        <DataTemplate x:DataType="models:SuggestionCoin">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="30" Source="{x:Bind Icon}"/>
                                 <TextBlock Text="{x:Bind Name}" Margin="10 0" VerticalAlignment="Center"/>
