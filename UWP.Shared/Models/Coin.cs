@@ -1,8 +1,8 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using System;
 using System.Linq;
 using UWP.Core.Constants;
+using UWP.Helpers;
 using UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -18,7 +18,7 @@ namespace UWP.Models {
             set {
                 SetProperty(ref name, value);
                 // TODO
-                //Logo = IconsHelper.GetIcon(value);
+                Logo = IconsHelper.GetIcon(value);
                 var coinList = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.PinnedCoins);
                 IsFav = coinList.Split("|").ToList().Contains(value);
             }
@@ -88,7 +88,8 @@ namespace UWP.Models {
         /// </summary>
         private double price = 0;
         private double diff = 0;
-        private string volume = "0";
+        private double volumeToTotal = 0;
+        private double volumeFromTotal = 0;
 
         public double Price {
             get => price;
@@ -104,9 +105,13 @@ namespace UWP.Models {
             }
         }
 
-        public string Volume {
-            get => volume;
-            set => SetProperty(ref volume, value);
+        public double VolumeToTotal {
+            get => volumeToTotal;
+            set => SetProperty(ref volumeToTotal, value);
+        }
+        public double VolumeFromTotal {
+            get => volumeFromTotal;
+            set => SetProperty(ref volumeFromTotal, value);
         }
     }
 }

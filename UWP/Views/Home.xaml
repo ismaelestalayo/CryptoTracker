@@ -25,6 +25,7 @@
         <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
         <helpers:GeneralNumberConverter x:Key="GeneralConv"/>
         <helpers:BoolInverseToVisibility x:Key="BoolInverse2Visibility"/>
+        <helpers:NumberPrefixConverter x:Key="NumberPrefixer"/>
     </Page.Resources>
 
     <!-- 
@@ -234,8 +235,11 @@
                                     Style="{ThemeResource TitleTextBlockStyle}"/>
                                 <TextBlock
                                     Grid.Column="1"
-                                    Style="{ThemeResource TitleTextBlockStyle}"
-                                    Text="{x:Bind Info.Volume}"/>
+                                    Style="{ThemeResource TitleTextBlockStyle}">
+                                    <Run Text="{x:Bind Info.VolumeToTotal,
+                                        Converter={StaticResource NumberPrefixer}}"/><!--
+                                    --><Run Text="{x:Bind Info.CurrencySym}"/>
+                                </TextBlock>
                             </Grid>
 
                             <!-- VOLUME CHART: -->

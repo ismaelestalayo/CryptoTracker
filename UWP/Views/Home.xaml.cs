@@ -173,9 +173,10 @@ namespace UWP.Views {
                 vm.PriceCards[i].Info.Diff = diff;
 
                 /// Sum total volume from historic
+                vm.VolumeCards[i].Info.VolumeToTotal = histo.Sum(h => h.volumeto);
+                vm.VolumeCards[i].Info.VolumeFromTotal = histo.Sum(h => h.volumefrom);
                 double total = 0;
                 histo.ForEach(x => total += x.volumeto);
-                vm.VolumeCards[i].Info.Volume = NumberHelper.AddUnitPrefix(total) + App.currencySymbol;
 
                 /// Show that loading is done
                 vm.PriceCards[i].Info.IsLoading = false;

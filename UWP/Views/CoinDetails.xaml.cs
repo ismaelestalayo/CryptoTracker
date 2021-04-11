@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Helpers;
 using UWP.UserControls;
 using UWP.ViewModels;
 using Windows.Graphics.Display;
@@ -33,8 +35,6 @@ namespace UWP.Views {
         private static int aggregate = 1;
         private static string timeSpan = "1w";
         private static string timeUnit = "hour";
-        private double low = 0;
-        private double high = 0;
 
         /// Timer for auto-refresh
         private static ThreadPoolTimer PeriodicTimer;
@@ -112,6 +112,9 @@ namespace UWP.Views {
                 var message = $"There was an error loading that coin. Try again later.\n\n{ex.Message}";
                 new MessageDialog(message).ShowAsync();
             }
+
+            var portfolio = await PortfolioHelper.GetPortfolio(vm.Coin.Name);
+            vm.Purchases = new ObservableCollection<PurchaseModel>(portfolio);
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e) {
@@ -173,10 +176,10 @@ namespace UWP.Views {
             vm.Chart.MajorStep = temp.MajorStep;
             vm.Chart.TickInterval = temp.TickInterval;
 
+            vm.Coin.VolumeFromTotal = vm.Chart.ChartData.Sum(c => c.Volume);
+
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
-            low = MinMax.Min;
-            high = MinMax.Max;
             vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max);
             vm.Chart.VolumeMax = GraphHelper.GetMaxOfVolume(chartData);
 
