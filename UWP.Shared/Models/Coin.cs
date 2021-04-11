@@ -88,6 +88,7 @@ namespace UWP.Models {
         /// </summary>
         private double price = 0;
         private double diff = 0;
+        private string diffArrow = "△";
         private double volumeToTotal = 0;
         private double volumeFromTotal = 0;
 
@@ -99,12 +100,18 @@ namespace UWP.Models {
             get => diff;
             set {
                 SetProperty(ref diff, value);
-                DiffFG = (value > 0) ?
+                DiffFG = (value >= 0) ?
                     (SolidColorBrush)Application.Current.Resources["pastelGreen"] :
                     (SolidColorBrush)Application.Current.Resources["pastelRed"];
+                DiffArrow = (value >= 0) ? "▴" : "▾";
             }
         }
 
+
+        public string DiffArrow {
+            get => diffArrow;
+            set => SetProperty(ref diffArrow, value);
+        }
         public double VolumeToTotal {
             get => volumeToTotal;
             set => SetProperty(ref volumeToTotal, value);

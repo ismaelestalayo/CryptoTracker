@@ -126,6 +126,7 @@
     <Compile Include="Constants\UserSettings.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
+    <Compile Include="Helpers\PortfolioHelper.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\ChartPoint.cs" />
     <Compile Include="Models\Alert.cs" />
