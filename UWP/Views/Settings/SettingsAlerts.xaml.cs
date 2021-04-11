@@ -45,7 +45,7 @@ namespace UWP.Views {
                     Crypto = "ETH",
                     Enabled = true,
                     Id = 0,
-                    Mode = 1,
+                    Mode = "under",
                     Threshold = 1920
                 });
             vm.Alerts.Add(
@@ -53,7 +53,7 @@ namespace UWP.Views {
                     Crypto = "ETH",
                     Enabled = true,
                     Id = 1,
-                    Mode = 0,
+                    Mode = "under",
                     Threshold = 1700
                 });
             vm.Alerts.Add(
@@ -61,7 +61,7 @@ namespace UWP.Views {
                     Crypto = "BTC",
                     Enabled = true,
                     Id = 2,
-                    Mode = 0,
+                    Mode = "above",
                     Threshold = 60000
                 });
             vm.Alerts.Add(
@@ -69,7 +69,7 @@ namespace UWP.Views {
                     Crypto = "XRP",
                     Enabled = true,
                     Id = 3,
-                    Mode = 0,
+                    Mode = "above",
                     Threshold = (double)1.5
                 });
         }

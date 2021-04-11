@@ -69,14 +69,14 @@
                                 PlaceholderText="Mode"
                                 Grid.Column="2" Margin="5 0"
                                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                                SelectedIndex="{x:Bind Mode, Mode=TwoWay}">
-                                <ComboBoxItem Content="above" Tag="index_0"/>
-                                <ComboBoxItem Content="under" Tag="index_1"/>
+                                SelectedItem="{x:Bind Mode, Mode=TwoWay}">
+                                <x:String>above</x:String>
+                                <x:String>under</x:String>
                             </ComboBox>
                             <muxc:NumberBox
                                 Grid.Column="3" Margin="5 0"
                                 PlaceholderText="Threshold"
-                                Text="{x:Bind Threshold, TargetNullValue=0}"
+                                Value="{x:Bind Threshold, Mode=TwoWay}"
                                 Width="100"/>
                             <Button
                                 Click="Delete_alert"

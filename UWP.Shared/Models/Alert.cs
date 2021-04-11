@@ -3,7 +3,7 @@
 namespace UWP.Models {
     public class Alert : ObservableObject {
         /// <summary>
-        /// Attributes to adjust the axis to the plotted time interval
+        /// Class that holds user Alerts
         /// </summary>
         private bool enabled = false;
         public bool Enabled {
@@ -31,13 +31,8 @@ namespace UWP.Models {
             set => SetProperty(ref currencySymbol, value);
         }
 
-        /// <summary>
-        /// Alert mode: 
-        /// - 0: above
-        /// - 1: below: 
-        /// </summary>
-        private int mode = 0;
-        public int Mode {
+        private string mode = "";
+        public string Mode {
             get => mode;
             set => SetProperty(ref mode, value);
         }
@@ -45,7 +40,7 @@ namespace UWP.Models {
         private double threshold = 0;
         public double Threshold {
             get => threshold;
-            set => SetProperty(ref threshold, value);
+            set => SetProperty(ref threshold, double.IsNaN(value) ? 0 : value);
         }
-	}
+    }
 }
