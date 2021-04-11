@@ -1,7 +1,7 @@
 ﻿using System.IO;
 
 namespace UWP.Helpers {
-    class IconsHelper {
+    public class IconsHelper {
 
         public static string GetIcon(string coin) {
             string filename = "Assets/Icons/icon" + coin + ".png";

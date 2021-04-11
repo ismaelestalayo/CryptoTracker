@@ -119,7 +119,6 @@
     <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
-    <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
     <Compile Include="UserControls\ChartArea.xaml.cs">
       <DependentUpon>ChartArea.xaml</DependentUpon>
