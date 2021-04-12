@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
@@ -88,7 +89,8 @@ namespace UWP.Models {
         /// </summary>
         private double price = 0;
         private double diff = 0;
-        private string diffArrow = "△";
+        private double diffPct = 0;
+        private string diffArrow = "▲";
         private double volumeToTotal = 0;
         private double volumeFromTotal = 0;
 
@@ -99,15 +101,20 @@ namespace UWP.Models {
         public double Diff {
             get => diff;
             set {
-                SetProperty(ref diff, value);
                 DiffFG = (value >= 0) ?
                     (SolidColorBrush)Application.Current.Resources["pastelGreen"] :
                     (SolidColorBrush)Application.Current.Resources["pastelRed"];
-                DiffArrow = (value >= 0) ? "▴" : "▾";
+                DiffArrow = (value >= 0) ? "▲" : "▼";
+                value = Math.Abs(value);
+                DiffPct = (double)Math.Round((value / Price) * 100, 1);
+                SetProperty(ref diff, value);
             }
         }
 
-
+        public double DiffPct {
+            get => diffPct;
+            set => SetProperty(ref diffPct, value);
+        }
         public string DiffArrow {
             get => diffArrow;
             set => SetProperty(ref diffArrow, value);

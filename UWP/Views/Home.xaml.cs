@@ -169,8 +169,7 @@ namespace UWP.Views {
                 /// Calculate the price difference
                 double oldestPrice = histo[0].Average;
                 double newestPrice = histo[histo.Count - 1].Average;
-                double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
-                vm.PriceCards[i].Info.Diff = diff;
+                vm.PriceCards[i].Info.Diff = newestPrice - oldestPrice;
 
                 /// Sum total volume from historic
                 vm.VolumeCards[i].Info.VolumeToTotal = histo.Sum(h => h.volumeto);

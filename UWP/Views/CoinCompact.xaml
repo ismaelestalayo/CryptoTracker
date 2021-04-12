@@ -65,7 +65,7 @@
         </RelativePanel>
 
         <userControls:DiffTextBlock
-            Diff="{x:Bind vm.Info.Diff}"
+            Diff="{x:Bind vm.Info.DiffPct}"
             DiffFg="{x:Bind vm.Info.DiffFG}"
             Grid.Row="1"
             VerticalAlignment="Top"

@@ -186,8 +186,7 @@ namespace UWP.Views {
             /// Calculate the price difference
             double oldestPrice = histo[0].Average;
             double newestPrice = histo[histo.Count - 1].Average;
-            double diff = (double)Math.Round((newestPrice / oldestPrice - 1) * 100, 2);
-            vm.Coin.Diff = diff;
+            vm.Coin.Diff = newestPrice - oldestPrice;
 
             vm.Coin.IsLoading = false;
         }

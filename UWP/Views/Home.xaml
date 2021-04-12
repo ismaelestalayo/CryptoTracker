@@ -23,9 +23,7 @@
         <helpers:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
         <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
         <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
-        <helpers:GeneralNumberConverter x:Key="GeneralConv"/>
         <helpers:BoolInverseToVisibility x:Key="BoolInverse2Visibility"/>
-        <helpers:NumberPrefixConverter x:Key="NumberPrefixer"/>
     </Page.Resources>
 
     <!-- 
@@ -148,11 +146,11 @@
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0">
                                 <TextBlock Style="{ThemeResource TitleTextBlockStyle}">
                                     <Run Text="{x:Bind Info.Price,
-                                        Converter={StaticResource GeneralConv}}" d:Text="0"/><!--
+                                        Converter={StaticResource NumberRounder}}" d:Text="0"/><!--
                                     --><Run Text="{x:Bind Info.CurrencySym}" d:Text="€"/>
                                 </TextBlock>
                                 <userControls:DiffTextBlock
-                                    Diff="{x:Bind Info.Diff}"
+                                    Diff="{x:Bind Info.DiffPct}"
                                     DiffFg="{x:Bind Info.DiffFG}"
                                     VerticalAlignment="Bottom"
                                     Margin="0 2"/>
