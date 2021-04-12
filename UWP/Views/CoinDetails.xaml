@@ -56,7 +56,6 @@
             <Setter Property="BorderThickness" Value="0 0 0 1"/>
         </Style>
         <helpers:StringFormatConverter x:Key="StringFormatConverter"/>
-        <helpers:NumberPrefixConverter x:Key="NumberPrefixer"/>
         <helpers:DateTimeShortener x:Key="DateShortener"/>
         <helpers:BoolToVisibility x:Key="BoolConverter"/>
         <helpers:BoolInverseToVisibility x:Key="BoolInverter"/>
@@ -129,65 +128,76 @@
         ####################################################################################################
         ############################################### Page Title #########################################
         #################################################################################################### -->
-        <Grid BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+        <Grid BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+              Padding="0 0 0 3">
             <StackPanel Orientation="Horizontal">
                 <Image
                     d:Source="/Assets/Icons/iconBTC.png"
                     Source="{x:Bind vm.Coin.Logo}"
-                    Margin="10 0" Width="32"/>
-                <StackPanel Orientation="Vertical" Margin="0">
-                    <TextBlock
-                        d:Text="Bitcoin"
-                        Text="{x:Bind vm.Coin.FullName}"
-                        Margin="1 0 0 -7"
-                        FontSize="22"
-                        FontWeight="SemiBold"
-                        Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock
-                        FontWeight="Normal"
-                        d:Text="BTC"
-                        CharacterSpacing="50"
-                        Text="{x:Bind vm.Coin.Name}"
-                        Opacity="0.5"/>
+                    Margin="2 0" Width="32"/>
+                <StackPanel Orientation="Vertical" Margin="5 0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock
+                            d:Text="Bitcoin"
+                            Text="{x:Bind vm.Coin.FullName}"
+                            Margin="1 0 0 -7"
+                            FontSize="22"
+                            FontWeight="SemiBold"
+                            Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock
+                            FontWeight="Normal"
+                            d:Text="BTC"
+                            CharacterSpacing="50"
+                            Text="{x:Bind vm.Coin.Name}"
+                            Opacity="0.5"/>
+                    </StackPanel>
                 </StackPanel>
-                <Button
-                    d:Content="&#xEB51;"
-                    Click="FavCoin_click"
-                    Content="{x:Bind vm.Coin.FavIcon}"
-                    ToolTipService.ToolTip="Toggle favourite"
-                    Style="{StaticResource IconBtn}"/>
-                <Button
-                    d:Content="&#xE840;"
-                    Click="PinCoin_click"
-                    Content="{x:Bind vm.Coin.PinIcon}"
-                    ToolTipService.ToolTip="Toggle pin to start screen"
-                    Style="{StaticResource IconBtn}"/>
-                <Button
-                    d:Visibility="Visible" x:Name="CompactOverlay_btn"
-                    Content="&#xE8a7;" Click="CompactOverlay_btn_click"
-                    Visibility="Collapsed"
-                    ToolTipService.ToolTip="Compact overlay"
-                    Style="{StaticResource IconBtn}"/>
+                <StackPanel Orientation="Horizontal" Visibility="Visible">
+                    <Button
+                        d:Content="&#xEB51;"
+                        Click="FavCoin_click"
+                        Content="{x:Bind vm.Coin.FavIcon}"
+                        ToolTipService.ToolTip="Toggle favourite"
+                        Style="{StaticResource IconBtn}"/>
+                    <Button
+                        d:Content="&#xE840;"
+                        Click="PinCoin_click"
+                        Content="{x:Bind vm.Coin.PinIcon}"
+                        ToolTipService.ToolTip="Toggle pin to start screen"
+                        Style="{StaticResource IconBtn}"/>
+                    <Button
+                        d:Visibility="Visible" x:Name="CompactOverlay_btn"
+                        Content="&#xE8a7;" Click="CompactOverlay_btn_click"
+                        Visibility="Collapsed"
+                        ToolTipService.ToolTip="Compact overlay"
+                        Style="{StaticResource IconBtn}"/>
+                </StackPanel>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="5 0" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <StackPanel Margin="5 -1" HorizontalAlignment="Right" >
                 <TextBlock
                     d:Text="1000€"
-                    FontSize="26"
-                    FontWeight="SemiBold"
-                    CharacterSpacing="-25"
+                    FontWeight="Normal"
+                    HorizontalAlignment="Right"
                     Style="{ThemeResource TitleTextBlockStyle}">
-                    <Run Text="{x:Bind vm.Coin.Price, Converter={StaticResource NumberFormatter}}"/><!--
+                    <Run Text="{x:Bind vm.Coin.Price, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                 </TextBlock>
 
-                <userControls:DiffTextBlock
-                    Diff="{x:Bind vm.Coin.Diff}"
+                <TextBlock
+                    Foreground="{x:Bind vm.Coin.DiffFG}" FontWeight="SemiBold"
+                    FontSize="13" Margin="0 -7 0 0"
+                    HorizontalAlignment="Right">
+                    <Run Text="{x:Bind vm.Coin.DiffArrow}"/><!--
+                    --><Run Text="{x:Bind vm.Coin.Diff, Converter={StaticResource NumberRounder}}"/><!--
+                    --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                    <Run Text="("/><Run Text="{x:Bind vm.Coin.DiffPct}"/><Run Text="%)"/>
+                </TextBlock>
+
+                <userControls:DiffTextBlock Visibility="Collapsed"
+                    Diff="{x:Bind vm.Coin.DiffPct}"
                     DiffFg="{x:Bind vm.Coin.DiffFG}"
-                    Margin="0 8 0 0"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                
+                    Margin="0 0 0 0"/>
             </StackPanel>
         </Grid>
 
@@ -250,22 +260,8 @@
         ####################################################################################################
         ############################################## Bottom Cards ########################################
         #################################################################################################### -->
-        
-        <Pivot Grid.Row="3" MaxWidth="700" BorderBrush="Black" BorderThickness="2" Margin="0 5">
-            <PivotItem Header="Overview">
 
-            </PivotItem>
-            
-            <PivotItem Header="Alerts">
-
-            </PivotItem>
-
-            <PivotItem Header="Portfolio">
-
-            </PivotItem>
-        </Pivot>
-
-        <ScrollViewer Grid.Row="3" Margin="0 5" Visibility="Collapsed">
+        <ScrollViewer Grid.Row="3" Margin="0 5">
 
             <Grid x:Name="BottomCards">
                 <Grid.RowDefinitions>
@@ -377,6 +373,15 @@
                         </controls:UniformGrid>
                     </StackPanel>
                     
+                    <!-- a -->
+                    <StackPanel Style="{ThemeResource CardStackPanel}">
+                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
+                            <TextBlock Text="Entries" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                        </RelativePanel>
+
+                        <userControls:PortfolioList/>
+                    </StackPanel>
+
                 </controls:UniformGrid>
 
 
