@@ -12,6 +12,13 @@ namespace UWP.Helpers {
             => throw new NotImplementedException();
     }
 
+    public class NumberRounder : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => NumberHelper.Rounder((double)val).ToString();
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
     public class NumberPrefixConverter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
             => NumberHelper.AddUnitPrefix((double)val);
