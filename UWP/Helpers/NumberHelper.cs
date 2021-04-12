@@ -20,14 +20,12 @@ namespace UWP.Helpers {
         }
 
         public static double Rounder(double price) {
-            if (Math.Abs(price) > 99)
+            if (Math.Abs(price) > 999)
+                return Math.Round(price, 1);
+            else if (Math.Abs(price) > 9)
                 return Math.Round(price, 2);
-            else if (Math.Abs(price) > 10)
-                return Math.Round(price, 3);
-            else if (Math.Abs(price) > 1)
-                return Math.Round(price, 4);
             else
-                return Math.Round(price, 6);
+                return Math.Round(price, 3);
 		}
     }
 }

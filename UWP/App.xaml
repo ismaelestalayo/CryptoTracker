@@ -18,6 +18,7 @@
 
             <helpers:GeneralNumberConverter x:Key="NumberFormatter"/>
             <helpers:NumberRounder x:Key="NumberRounder"/>
+            <helpers:NumberPrefixConverter x:Key="NumberPrefixer"/>
 
             <FontFamily x:Key="FluentIconFont">/Assets/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
             <!-- Manually override default "Segoe MDL2 Assets" font-->
@@ -31,13 +32,13 @@
                     <SolidColorBrush x:Key="Main_WhiteBlack"    Color="#2E2E2E"/>
                     <SolidColorBrush x:Key="Main_WhiteBlackT"   Color="#2E2E2E" Opacity="0.4"/>
                     <SolidColorBrush x:Key="pastelRed"          Color="#FF4040"/>
-                    <SolidColorBrush x:Key="pastelGreen"        Color="#00C060"/>
+                    <SolidColorBrush x:Key="pastelGreen"        Color="#00AD57"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="Main_WhiteBlack"    Color="#D2D2D2"/>
                     <SolidColorBrush x:Key="Main_WhiteBlackT"   Color="#D2D2D2" Opacity="0.4"/>
                     <SolidColorBrush x:Key="pastelRed"          Color="#FF5757"/>
-                    <SolidColorBrush x:Key="pastelGreen"        Color="#00AD57"/>
+                    <SolidColorBrush x:Key="pastelGreen"        Color="#00C060"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
