@@ -379,7 +379,7 @@
                             <TextBlock Text="Entries" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                         </RelativePanel>
 
-                        <userControls:PortfolioList/>
+                        <userControls:PortfolioList Purchases="{x:Bind vm.Purchases}"/>
                     </StackPanel>
 
                 </controls:UniformGrid>
