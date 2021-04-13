@@ -449,22 +449,11 @@ namespace UWP.Views {
         }
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-            => CoinAutoSuggestBox.Text = ((SuggestionCoin)args.SelectedItem).Name;
+            => CoinAutoSuggestBox.Text = ((SuggestionCoin)args.SelectedItem).Symbol;
 
-        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-            => vm.NewPurchase.Crypto = ((SuggestionCoin)args.ChosenSuggestion)?.Name;
-
-        private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinList.Where(x =>
-                x.symbol.Contains(box.Text) || x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            List<SuggestionCoin> list = new List<SuggestionCoin>();
-            foreach (CoinBasicInfo coin in filtered) {
-                list.Add(new SuggestionCoin {
-                    Icon = IconsHelper.GetIcon(coin.symbol),
-                    Name = coin.symbol
-                });
-            }
-            return list;
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
+            vm.NewPurchase.Crypto = ((SuggestionCoin)args.ChosenSuggestion)?.Symbol;
+            vm.NewPurchase.CryptoName = ((SuggestionCoin)args.ChosenSuggestion)?.Name;
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
@@ -473,6 +462,21 @@ namespace UWP.Views {
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
                 sender.ItemsSource = FilterCoins(sender);
+        }
+
+        private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
+            var filtered = App.coinList.Where(x =>
+                x.symbol.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase) ||
+                x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            List<SuggestionCoin> list = new List<SuggestionCoin>();
+            foreach (CoinBasicInfo coin in filtered) {
+                list.Add(new SuggestionCoin {
+                    Icon = IconsHelper.GetIcon(coin.symbol),
+                    Name = coin.name,
+                    Symbol = coin.symbol
+                });
+            }
+            return list;
         }
     }
 }

@@ -405,7 +405,7 @@
                             <DataTemplate x:DataType="models:SuggestionCoin">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="30" Source="{x:Bind Icon}"/>
-                                    <TextBlock Text="{x:Bind Name}" Margin="10 0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{x:Bind Symbol}" Margin="10 0" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </DataTemplate>
                         </AutoSuggestBox.ItemTemplate>
