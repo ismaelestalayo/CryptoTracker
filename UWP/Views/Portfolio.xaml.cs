@@ -223,7 +223,21 @@ namespace UWP.Views {
         private void DuplicatePurchase_Click(object sender, RoutedEventArgs e) {
             var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
             var i = vm.Portfolio.IndexOf(purchase);
-            vm.Portfolio.Insert(i, purchase);
+            var newPurchase = new PurchaseModel() {
+                Crypto = purchase.Crypto,
+                CryptoName = purchase.CryptoName,
+                CryptoLogo = purchase.CryptoLogo,
+                CryptoQty = purchase.CryptoQty,
+                Currency = purchase.Currency,
+                CurrencySymbol = purchase.CurrencySymbol,
+                Id = Guid.NewGuid().ToString("N"),
+                Type = purchase.Type,
+                InvestedQty = purchase.InvestedQty,
+                Date = purchase.Date,
+                Exchange = purchase.Exchange,
+                Notes = purchase.Notes
+            };
+            vm.Portfolio.Insert(i, newPurchase);
             /// Update the page and save the new portfolio
             UpdatePortfolio();
             LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
@@ -313,7 +327,7 @@ namespace UWP.Views {
         }
 
 
-        /// ###############################################################################################
+        /// #######################################################################################
         /// Sorting
         private void DataGrid_Sorting(object sender, DataGridColumnEventArgs e) {
             if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
@@ -369,7 +383,7 @@ namespace UWP.Views {
             }
         }
 
-        /// ###############################################################################################
+        /// #######################################################################################
         /// Grouping
         public class GroupInfoCollection<T> : ObservableCollection<T> {
             public object Key { get; set; }
@@ -428,6 +442,7 @@ namespace UWP.Views {
             }
         }
 
+        /// #######################################################################################
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
             AutoSuggestBox box = sender as AutoSuggestBox;
             box.ItemsSource = FilterCoins(box);
