@@ -23,9 +23,7 @@
                 <Run Text="New in this version: &#x1F680; &#x0a;" FontWeight="Bold"/>
                 
                 <Run FontWeight="Light"
-                     Text=" •  Added 10 new crypto icons.
-                     &#x0a;  •  Fixed email's subject.
-                     "/> 
+                     Text=" •  Fixed Portfolio's currency not updating."/> 
                 <LineBreak/>
                 <LineBreak/>
                 

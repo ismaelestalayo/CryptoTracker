@@ -117,6 +117,7 @@ namespace CryptoTracker {
 
         internal PurchaseClass UpdatePurchase(PurchaseClass purchase) {
             string crypto = purchase.Crypto;
+            purchase.c = App.coinSymbol;
 
             if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
                 purchase.Current = Math.Round(App.GetCurrentPrice(crypto, "defaultMarket"), 4);

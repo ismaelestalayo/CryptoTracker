@@ -9,6 +9,8 @@ namespace CryptoTracker.Helpers {
     [DataContractAttribute()]
     internal class PurchaseClass : INotifyPropertyChanged {
 
+        public PurchaseClass() { }
+
         private bool _isComplete { get; set; } = false;
         public bool IsComplete {
             get { return _isComplete; }
@@ -59,8 +61,7 @@ namespace CryptoTracker.Helpers {
             get { return _boughtAt; }
             set { _boughtAt = value; NotifyPropertyChanged(nameof(BoughtAt)); } }
 
-        private string _c { get; set; } = App.coinSymbol;
-        [DataMember()]
+        private string _c = App.coinSymbol;
         public string c {
             get { return _c; }
             set { _c = value; NotifyPropertyChanged(nameof(c)); } }
