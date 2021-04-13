@@ -268,7 +268,7 @@ namespace UWP.Views {
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
             if (args.ChosenSuggestion != null)
-                ContentFrame.Navigate(typeof(CoinDetails), ((SuggestionCoin)args.ChosenSuggestion).Name);
+                ContentFrame.Navigate(typeof(CoinDetails), ((SuggestionCoin)args.ChosenSuggestion).Symbol);
         }
 
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
@@ -291,7 +291,8 @@ namespace UWP.Views {
             foreach (CoinBasicInfo coin in filtered) {
                 list.Add(new SuggestionCoin {
                     Icon = IconsHelper.GetIcon(coin.symbol),
-                    Name = coin.symbol
+                    Name = coin.name,
+                    Symbol = coin.symbol
                 });
             }
             return list;

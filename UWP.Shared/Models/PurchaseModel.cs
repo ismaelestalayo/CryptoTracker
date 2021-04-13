@@ -22,6 +22,7 @@ namespace UWP.Models {
         /// DataMembers that are saved locally
         /// </summary>
         private string crypto;
+        private string cryptoName;
         private string cryptoLogo;
         private double cryptoQty;
 
@@ -37,6 +38,12 @@ namespace UWP.Models {
         }
 
         [DataMember()]
+        public string CryptoName {
+            get => cryptoName;
+            set => SetProperty(ref cryptoName, value);
+        }
+
+        [DataMember()]
         public string CryptoLogo {
             get => cryptoLogo;
             set => SetProperty(ref cryptoLogo, value);
@@ -48,6 +55,7 @@ namespace UWP.Models {
             set => SetProperty(ref cryptoQty, value);
         }
 
+        /// #######################################################################################
         private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
         [DataMember()]
         public string Currency {
@@ -58,6 +66,20 @@ namespace UWP.Models {
             }
         }
 
+        private string id;
+        [DataMember()]
+        public string Id {
+            get => id ?? Guid.NewGuid().ToString("N");
+            set => id = value;
+        }
+
+        private string type;
+        [DataMember()]
+        public string Type {
+            get => string.IsNullOrEmpty(type) ? "Purchase" : type;
+            set => type = value;
+        }
+
         private double investedQty = 0;
         [DataMember()]
         public double InvestedQty {
@@ -65,6 +87,7 @@ namespace UWP.Models {
             set => SetProperty(ref investedQty, value);
         }
 
+        /// #######################################################################################
         /// Dates, notes...
         private DateTimeOffset date = DateTime.Today;
         private string exchange = "";
@@ -105,7 +128,7 @@ namespace UWP.Models {
             set => SetProperty(ref boughtAt, value);
         }
 
-        public string currencySymbol;
+        private string currencySymbol;
         public string CurrencySymbol {
             get => currencySymbol;
             set => SetProperty(ref currencySymbol, value);
