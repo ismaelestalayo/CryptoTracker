@@ -52,8 +52,9 @@
                 <TextBlock Text="Alerts" Style="{ThemeResource ClassTitle}"/>
                 <Button Content="ADD" Click="Button_Click" Padding="5 0" Margin="5 0"/>
             </StackPanel>
-           
 
+            <TextBlock
+                Text="Once an alert is fired it shows a toast notification and is then disabled not to spam (you can manually enable it again and change the threshold)."/>
             <ListView
                 ItemsSource="{Binding Source={StaticResource cvs}}"
                 Margin="-10 10 0 0" HorizontalAlignment="Left">

@@ -32,6 +32,9 @@ namespace UWP.Models {
         }
 
         private string mode = "";
+        /// <summary>
+        /// "above" or "below"
+        /// </summary>
         public string Mode {
             get => mode;
             set => SetProperty(ref mode, value);
