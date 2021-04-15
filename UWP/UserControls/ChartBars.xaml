@@ -10,17 +10,25 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="ChartFill1" Color="{x:Bind ChartModel.ChartFill1}"/>
+    </UserControl.Resources>
+
     <telerik:RadCartesianChart
         x:Name="Chart"
         DataContext="{x:Bind ChartModel}"
         Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-        Margin="-7 -3">
+        Margin="-7 -5">
+        
+        <telerik:RadCartesianChart.HorizontalAxis>
+            <telerik:DateTimeCategoricalAxis 
+                MajorTickInterval="{x:Bind ChartModel.TickInterval}"/>
+        </telerik:RadCartesianChart.HorizontalAxis>
 
         <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData}">
-
             <telerik:BarSeries.DefaultVisualStyle>
                 <Style TargetType="Border">
-                    <Setter Property="Background" Value="{x:Bind ChartModel.ChartFill1}"/>
+                    <Setter Property="Background" Value="{StaticResource ChartFill1}"/>
                     <Setter Property="BorderThickness" Value="3"/>
                 </Style>
             </telerik:BarSeries.DefaultVisualStyle>

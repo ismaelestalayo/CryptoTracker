@@ -104,7 +104,7 @@ namespace UWP.Models {
                 DiffFG = (value >= 0) ?
                     (SolidColorBrush)Application.Current.Resources["pastelGreen"] :
                     (SolidColorBrush)Application.Current.Resources["pastelRed"];
-                DiffArrow = (value >= 0) ? "▲" : "▼";
+                DiffArrow = (value >= 0) ? "+" : "-";
                 value = Math.Abs(value);
                 DiffPct = (double)Math.Round((value / Price) * 100, 1);
                 SetProperty(ref diff, value);
