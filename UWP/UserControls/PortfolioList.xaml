@@ -14,18 +14,6 @@
         <helpers:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
     </UserControl.Resources>
 
-    <UserControl.Style>
-        <Style TargetType="controls:HeaderedContentControl">
-            <Setter Property="HeaderTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Title}" Opacity="0.2" Foreground="Red"/>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Style>
-
     <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->
     <ListView ItemsSource="{x:Bind Purchases, Mode=OneWay}" Margin="10 5">
         <ListView.ItemTemplate>
