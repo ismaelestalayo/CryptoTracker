@@ -65,8 +65,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="5*" MinHeight="380" MaxHeight="500" x:Name="ChartRow"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="6*" MinHeight="380" MaxHeight="500" x:Name="ChartRow"/>
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
@@ -76,9 +76,9 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="UniformGrid.Columns" Value="1"/>
-                        <Setter Target="UniformGrid.Rows" Value="5"/>
-                        <Setter Target="UniformGrid.Height" Value="900"/>
+                        <Setter Target="BottomUniformGrid.Columns" Value="1"/>
+                        <Setter Target="BottomUniformGrid.Rows" Value="5"/>
+                        <Setter Target="BottomUniformGrid.Height" Value="900"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -87,9 +87,9 @@
                         <AdaptiveTrigger MinWindowWidth="600"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="UniformGrid.Columns" Value="2"/>
-                        <Setter Target="UniformGrid.Rows" Value="3"/>
-                        <Setter Target="UniformGrid.Height" Value="550"/>
+                        <Setter Target="BottomUniformGrid.Columns" Value="2"/>
+                        <Setter Target="BottomUniformGrid.Rows" Value="3"/>
+                        <Setter Target="BottomUniformGrid.Height" Value="550"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -98,9 +98,9 @@
                         <AdaptiveTrigger MinWindowWidth="900"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="UniformGrid.Columns" Value="3"/>
-                        <Setter Target="UniformGrid.Rows" Value="2"/>
-                        <Setter Target="UniformGrid.Height" Value="370"/>
+                        <Setter Target="BottomUniformGrid.Columns" Value="3"/>
+                        <Setter Target="BottomUniformGrid.Rows" Value="2"/>
+                        <Setter Target="BottomUniformGrid.Height" Value="370"/>
                         <Setter Target="ChartRow.MaxHeight" Value="850"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -110,9 +110,9 @@
                         <AdaptiveTrigger MinWindowWidth="1300"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="UniformGrid.Columns" Value="4"/>
-                        <Setter Target="UniformGrid.Rows" Value="2"/>
-                        <Setter Target="UniformGrid.Height" Value="370"/>
+                        <Setter Target="BottomUniformGrid.Columns" Value="4"/>
+                        <Setter Target="BottomUniformGrid.Rows" Value="2"/>
+                        <Setter Target="BottomUniformGrid.Height" Value="370"/>
                         <Setter Target="InfoCard.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="ChartRow.MaxHeight" Value="900"/>
                     </VisualState.Setters>
@@ -260,66 +260,54 @@
         ####################################################################################################
         ############################################## Bottom Cards ########################################
         #################################################################################################### -->
+        <ScrollViewer Grid.Row="3" Margin="0 10">
+            <controls:UniformGrid x:Name="BottomUniformGrid" Rows="3" Columns="2" VerticalAlignment="Top">
 
-        <ScrollViewer Grid.Row="3" Margin="0 5">
+                <!-- Info card -->
+                <StackPanel x:Name="InfoCard" Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2" Grid.ColumnSpan="1">
+                    <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
+                        <TextBlock Text="Information" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                    </RelativePanel>
 
-            <Grid x:Name="BottomCards">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <controls:UniformGrid Grid.Row="0" x:Name="UniformGrid" Rows="3" Columns="2" Height="700">
-
-                    <!-- Info card -->
-                    <Grid x:Name="InfoCard" Style="{ThemeResource CardGrid}" Grid.RowSpan="2" Grid.ColumnSpan="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Information" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                        </RelativePanel>
-
-                        <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                            <TextBlock Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords"
-                                       TextAlignment="Justify" Opacity="0.8"/>
-                        </ScrollViewer>
-                    </Grid>
+                    <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <TextBlock Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords"
+                                    TextAlignment="Justify" Opacity="0.8"/>
+                    </ScrollViewer>
+                </StackPanel>
 
 
-                    <!-- Stats card -->
-                    <StackPanel Style="{ThemeResource CardStackPanel}">
-                        <StackPanel.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="FontWeight" Value="Light"/>
-                                <Setter Property="FontSize" Value="16"/>
-                                <Setter Property="Margin" Value="5"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Stats" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                        </RelativePanel>
+                <!-- Stats + Global Market card -->
+                <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontWeight" Value="Light"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
+                        <TextBlock Text="Market Data" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                    </RelativePanel>
 
-                        <controls:UniformGrid Margin="10" Opacity="0.9">
-                            <TextBlock>
+                    <controls:UniformGrid Margin="10" Opacity="0.9">
+                        <TextBlock>
                                 <Run Text="Low" FontWeight="SemiBold"/>
                                 <Run Text="(" FontWeight="SemiBold"/><Run Text="{x:Bind vm.Chart.TimeSpan}" FontWeight="SemiBold"/><Run Text=")" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1,
                                     Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind
                                     vm.Coin.CurrencySym}"/>
-                            </TextBlock>
-                            <TextBlock>
+                        </TextBlock>
+                        <TextBlock>
                                 <Run Text="High" FontWeight="SemiBold"/>
                                 <Run Text="(" FontWeight="SemiBold"/><Run Text="{x:Bind vm.Chart.TimeSpan}" FontWeight="SemiBold"/><Run Text=")" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2,
                                     Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind
                                     vm.Coin.CurrencySym}"/>
-                            </TextBlock>
+                        </TextBlock>
 
-                            <TextBlock>
+                        <TextBlock>
                                 <Run Text="All time low:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind vm.CoinInfo.market_data.atl.eur,
@@ -328,8 +316,8 @@
                                 <Run Text="{x:Bind vm.CoinInfo.market_data.atl_date.eur,
                                     Converter={StaticResource DateShortener}}" FontWeight="Light" FontSize="11"
                                     Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
-                            </TextBlock>
-                            <TextBlock>
+                        </TextBlock>
+                        <TextBlock>
                                 <Run Text="All time high:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind vm.CoinInfo.market_data.ath.eur,
@@ -337,22 +325,11 @@
                                 <Run Text="{x:Bind vm.CoinInfo.market_data.ath_date.eur, Converter={StaticResource DateShortener}}"
                                      FontWeight="Light" FontSize="11"
                                      Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
-                            </TextBlock>
-                        </controls:UniformGrid>
-                    </StackPanel>
+                        </TextBlock>
+                    </controls:UniformGrid>
 
-
-                    <!-- Global Market card -->
-                    <StackPanel Style="{ThemeResource CardStackPanel}">
-                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Global Market" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="SemiBold" RelativePanel.AlignRightWithPanel="True">
-                                <Run Text="#"/><Run Text="{x:Bind vm.CoinInfo.market_cap_rank}"/>
-                            </TextBlock>
-                        </RelativePanel>
-
-                        <controls:UniformGrid Margin="10" Columns="1" Opacity="0.9">
-                            <TextBlock Margin="5" FontSize="16" FontWeight="Light">
+                    <controls:UniformGrid Margin="10" Columns="1" Opacity="0.9">
+                        <TextBlock Margin="5" FontSize="16" FontWeight="Light">
                                 <Run Text="Market Cap:" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind vm.CoinInfo.market_data.market_cap.eur,
@@ -362,25 +339,28 @@
                                     Text="{x:Bind vm.CoinInfo.market_data.market_cap_change_percentage_24h}"
                                     FontWeight="Light" FontSize="11"/><Run
                                     Text="%)" FontWeight="Light" FontSize="11"/>
-                            </TextBlock>
-                            <TextBlock Margin="5" FontSize="16" FontWeight="Light">
+                        </TextBlock>
+                        <TextBlock Margin="5" FontSize="16" FontWeight="Light">
                                 <Run Text="Circulating supply" FontWeight="SemiBold"/>
                                 <LineBreak/>
                                 <Run Text="{x:Bind vm.CoinInfo.market_data.circulating_supply,
                                         Converter={StaticResource StringFormatConverter}}"/>
                                 <Run Text="{x:Bind vm.Coin.Name}"/>
-                            </TextBlock>
-                        </controls:UniformGrid>
-                    </StackPanel>
-                    
-                    <!-- a -->
-                    <StackPanel Style="{ThemeResource CardStackPanel}">
-                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Entries" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                        </RelativePanel>
+                        </TextBlock>
+                    </controls:UniformGrid>
+                </StackPanel>
 
-                        <userControls:PortfolioList Purchases="{x:Bind vm.Purchases}"/>
-                    </StackPanel>
+                <!-- Entries card -->
+                <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2">
+                    <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
+                        <TextBlock Text="Entries" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                    </RelativePanel>
+                    <ScrollViewer>
+                        <userControls:PortfolioList
+                            IsHitTestVisible="False"
+                            Purchases="{x:Bind vm.Purchases}"/>
+                    </ScrollViewer>
+                </StackPanel>
 
                 </controls:UniformGrid>
 
@@ -413,7 +393,6 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
                 -->
-            </Grid>
         </ScrollViewer>
 
     </Grid>
