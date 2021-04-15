@@ -72,7 +72,7 @@
                                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                                 SelectedItem="{x:Bind Mode, Mode=TwoWay}">
                                 <x:String>above</x:String>
-                                <x:String>under</x:String>
+                                <x:String>below</x:String>
                             </ComboBox>
                             <muxc:NumberBox
                                 Grid.Column="3" Margin="5 0"

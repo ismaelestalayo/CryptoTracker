@@ -59,30 +59,34 @@ namespace UWP.Background {
                 var data = await Ioc.Default.GetService<ICryptoCompare>().GetPrice(alert.Key, currency);
                 double price = double.Parse(data.Split(":")[1].Replace("}", ""));
 
+                /// Go check each alert, and if the user is notified, disable it not to spam
                 foreach (var a in alert)
-                    CheckAlert(a, price);
+                    if (CheckAlert(a, price))
+                        localAlerts[localAlerts.IndexOf(a)].Enabled = false;
             }
+            LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
         }
 
-        private void CheckAlert(Alert alert, double price) {
+        private bool CheckAlert(Alert alert, double price) {
             string header = "";
             switch (alert.Mode.ToLowerInvariant()) {
                 case "below":
                     if (price < alert.Threshold) {
                         header = $"📉 {alert.Crypto} is {alert.Mode} {alert.Threshold}";
                         ToastGenerator.SendToastNotification(header);
-                        alert.Enabled = false;
+                        return true;
                     }
-                    break;
+                    return false;
                 case "above":
                     if (price > alert.Threshold) {
                         header = $"🚀 {alert.Crypto} is {alert.Mode} {alert.Threshold}";
                         ToastGenerator.SendToastNotification(header);
                         alert.Enabled = false;
+                        return true;
                     }
-                    break;
+                    return false;
                 default:
-                    break;
+                    return false;
             }
         }
     }
