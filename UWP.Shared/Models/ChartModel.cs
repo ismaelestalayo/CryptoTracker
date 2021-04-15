@@ -10,7 +10,7 @@ namespace UWP.Models {
         /// <summary>
         /// List of ChartData containing the values for the chart
         /// </summary>
-        private List<ChartPoint> chartData = new List<ChartPoint>() { new ChartPoint() { Value = 5, Date = DateTime.Today } };
+        private List<ChartPoint> chartData = new List<ChartPoint>();
         public List<ChartPoint> ChartData {
             get => chartData;
             set => SetProperty(ref chartData, value);
