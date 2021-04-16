@@ -134,6 +134,7 @@
     <Compile Include="Models\Coin.cs" />
     <Compile Include="Models\CoinCard.cs" />
     <Compile Include="Models\GlobalStats.cs" />
+    <Compile Include="Models\HistoricPrice.cs" />
     <Compile Include="Models\HomeCard.cs" />
     <Compile Include="Models\NewsItem.cs" />
     <Compile Include="Models\PurchaseModel.cs" />

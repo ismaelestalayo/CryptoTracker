@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UWP.Core.Constants;
 using UWP.Services;
+using UWP.Shared.Models;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Graphics.Display;

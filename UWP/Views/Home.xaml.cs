@@ -142,7 +142,7 @@ namespace UWP.Views {
                 vm.PriceCards[i].Chart.ChartStroke = brush;
 
                 /// Get Historic and create List of ChartData for the chart
-                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
+                var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);
                 var chartData = new List<ChartPoint>();
                 foreach (var h in histo) {
                     chartData.Add(new ChartPoint() {

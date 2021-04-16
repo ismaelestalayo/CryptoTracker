@@ -5,22 +5,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using UWP.Core.Constants;
 using UWP.Services;
+using UWP.Shared.Models;
 
 namespace UWP.Background {
-
-    public sealed class HistoricPrice {
-        public int time { get; set; }
-        public float high { get; set; } = 0;
-        public float low { get; set; } = 0;
-        public float open { get; set; } = 0;
-        public float close { get; set; } = 0;
-        public float volumefrom { get; set; } = 0;
-        public float volumeto { get; set; } = 0;
-
-        internal float Average { get; set; } = 0;
-        internal string Date { get; set; }
-        internal DateTime DateTime { get; set; }
-    }
 
     class GetHistoDupe {
 

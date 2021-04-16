@@ -164,7 +164,7 @@ namespace UWP.Views {
             vm.Chart.ChartStroke = brush;
 
             /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
-            var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
+            var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);
             var chartData = new List<ChartPoint>();
             foreach (var h in histo) {
                 chartData.Add(new ChartPoint() {

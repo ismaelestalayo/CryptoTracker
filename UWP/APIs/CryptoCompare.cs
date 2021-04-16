@@ -7,78 +7,11 @@ using System.Threading.Tasks;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Models;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.APIs {
     class CryptoCompare {
-
-        /* ###############################################################################################
-         * Gets the current price of a coin (in the currency set by App.currency)
-         * 
-         * Arguments: 
-         * - crypto: BTC ETH...
-         * - time: minute hour day
-         * - limit: 1 - 2000
-         * 
-        */
-        internal static async Task<List<HistoricPrice>> GetHistoricAsync(string crypto, string time, int limit, int aggregate = 1) {
-            var currency = App.currency;
-            var NullValue = new List<HistoricPrice>() { new HistoricPrice() { Average = 1, DateTime = DateTime.Today } };
-
-            object resp;
-            try {
-                if (limit == 0)
-                    resp = await Ioc.Default.GetService<ICryptoCompare>().GetHistoricAll(time, crypto, currency);
-                else
-                    resp = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric(time, crypto, currency, limit, aggregate);
-
-                var response = JsonSerializer.Deserialize<object>(resp.ToString());
-
-                var okey = ((JsonElement)response).GetProperty("Response").ToString();
-                if (okey != "Success")
-                    return NullValue;
-                
-                var data = ((JsonElement)response).GetProperty("Data").ToString();
-                var historic = JsonSerializer.Deserialize<List<HistoricPrice>>(data);
-
-                // Add calculation of dates and average values
-                DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                foreach (var h in historic) {
-                    h.Average = (h.high + h.low) / 2;
-                    DateTime d = dtDateTime.AddSeconds(h.time).ToLocalTime();
-                    h.DateTime = d;
-                    h.Date = d.ToString();
-                }
-                
-                // if getting all history, remove null prices
-                if (limit == 0) {
-                    int i = historic.FindIndex(x => x.Average != 0);
-                    if (i != 0)
-                        historic.RemoveRange(0, i - 1);
-                }
-
-                return historic;
-            }
-            catch (Exception ex) {
-                var z = ex.Message;
-                return NullValue;
-            }
-        }
-
-        public class HistoricPrice {
-            public int time { get; set; }
-            public double high { get; set; } = 0;
-            public double low { get; set; } = 0;
-            public double open { get; set; } = 0;
-            public double close { get; set; } = 0;
-            public double volumefrom { get; set; } = 0;
-            public double volumeto { get; set; } = 0;
-
-            internal double Average { get; set; } = 0;
-            internal string Date { get; set; }
-            internal DateTime DateTime { get; set; }
-        }
-
 
         /* ###############################################################################################
          * Gets the exchanges for a crypto (with the price and volume)

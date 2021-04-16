@@ -93,7 +93,7 @@ namespace UWP.Views {
 			vm.Info.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(crypto, App.currency);
 
 			/// Get historic values
-			var histo = await GetHistoricAsync(crypto, timeUnit, limit, aggregate);
+			var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);
 
 			var chartData = new List<ChartPoint>();
 			foreach (var h in histo)

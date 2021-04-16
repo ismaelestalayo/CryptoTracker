@@ -10,6 +10,7 @@ using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Models;
 using UWP.UserControls;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -135,7 +136,7 @@ namespace UWP.Views {
             var cryptoWorth = new List<List<double>>();
             var histos = new List<List<HistoricPrice>>(nPurchases);
             foreach (var crypto in uniqueCryptos) {
-                var histo = await CryptoCompare.GetHistoricAsync(crypto, timeUnit, limit, aggregate);
+                var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);
                 var cryptoQty = vm.Portfolio.Where(x => x.Crypto == crypto).Sum(x => x.CryptoQty);
                 cryptoWorth.Add(histo.Select(x => x.Average * cryptoQty).ToList());
                 histos.Add(histo);

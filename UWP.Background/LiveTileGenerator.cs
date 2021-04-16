@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using UWP.Shared.Constants;
+using UWP.Shared.Models;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Storage;
