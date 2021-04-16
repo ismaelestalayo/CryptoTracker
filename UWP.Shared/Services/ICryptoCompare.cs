@@ -28,4 +28,14 @@ namespace UWP.Services {
 		[Get("/data/news/categories")]
 		Task<object> GetNewsCategories();
 	}
+
+	public static class CryptoCompareExtensions {
+		public static async Task<double> GetPrice(this ICryptoCompare service, string crypto, string currency) {
+			var response = await service.GetPrice(crypto, currency);
+			var data = response.ToString();
+			double price = 0;
+			double.TryParse(data.Split(":")[1].Replace("}", ""), out price);
+			return price;
+		}
+    }
 }

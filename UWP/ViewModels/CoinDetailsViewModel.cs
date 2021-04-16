@@ -38,6 +38,25 @@ namespace UWP.ViewModels {
             set => SetProperty(ref showCandles, value);
         }
 
+        /// <summary>
+        /// Total sum of purchases
+        /// </summary>
+        private double totalOwned = 0;
+        private double totalValue = 0;
+        private double totalProfit = 0;
+        public double TotalOwned {
+            get => totalOwned;
+            set => SetProperty(ref totalOwned, value);
+        }
+        public double TotalValue {
+            get => totalValue;
+            set => SetProperty(ref totalValue, value);
+        }
+        public double TotalProfit {
+            get => totalProfit;
+            set => SetProperty(ref totalProfit, value);
+        }
+
         /// #############################################################################
         public void InAppNotification(string title, string message = "") {
             var tuple = new Tuple<string, string>(title, message);

@@ -4,7 +4,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:helpers="using:UWP.Helpers"
     xmlns:models="using:UWP.Models"
     d:Height="200" d:Width="600"
@@ -15,10 +14,19 @@
     </UserControl.Resources>
 
     <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->
-    <ListView ItemsSource="{x:Bind Purchases, Mode=OneWay}" Margin="10 5">
+    <ListView ItemsSource="{x:Bind Purchases, Mode=OneWay}" Width="350">
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+        </ListView.ItemContainerStyle>
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:PurchaseModel">
-                <StackPanel Margin="0 10" BorderBrush="#888" BorderThickness="1" CornerRadius="6" Padding="15 5">
+                <StackPanel
+                    BorderBrush="#888" BorderThickness="1" CornerRadius="6" Padding="10 5" Margin="0 3">
                     <TextBlock d:Text="Purchase - 01/01/2021" Opacity="0.5" FontWeight="Light">
                         <Run Text="{x:Bind Type}"/>
                         <Run Text="-"/>

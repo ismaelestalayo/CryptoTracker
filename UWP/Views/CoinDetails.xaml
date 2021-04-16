@@ -356,7 +356,7 @@
                         </StackPanel>
 
                         <Rectangle/>
-                        
+
                         <StackPanel>
                             <TextBlock Opacity="0.4" Text="Circulating supply"/>
                             <TextBlock FontWeight="SemiBold" Margin="0 -3">
@@ -369,7 +369,7 @@
                 </StackPanel>
 
                 <!-- Entries card -->
-                <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2">
+                <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2" Grid.ColumnSpan="2">
                     <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
                         <TextBlock Text="Entries" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                     </RelativePanel>
@@ -378,29 +378,33 @@
                             <Grid Margin="10 0">
                                 <TextBlock HorizontalAlignment="Left" HorizontalTextAlignment="Center">
                                     <Run Text="Owned"/>
-                                    <LineBreak/><Run Text="0.00 XXX"/>
+                                    <LineBreak/><Run Text="{x:Bind vm.TotalOwned}"/><Run Text="{x:Bind vm.Coin.Name}"/>
                                 </TextBlock>
                                 <TextBlock HorizontalAlignment="Center" HorizontalTextAlignment="Center">
-                                    <Run Text="Market value"/>
-                                    <LineBreak/><Run Text="0.00 XXX"/>
+                                    <Run Text="Value"/><LineBreak/>
+                                    <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                 </TextBlock>
                                 <TextBlock HorizontalAlignment="Right" HorizontalTextAlignment="Center">
                                     <Run Text="Total profit"/>
-                                    <LineBreak/><Run Text="0.00 XXX"/>
+                                    <LineBreak/><Run Text="{x:Bind vm.TotalProfit}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                 </TextBlock>
                             </Grid>
-                            <Button Content="Add new purchase" Margin="0 10"/>
+                            <Button
+                                Background="Transparent" CornerRadius="6"
+                                BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
+                                Click="NewPurchase_click" Content="Add new purchase"
+                                HorizontalAlignment="Center" Margin="0 10"/>
                             <userControls:PortfolioList
                                 IsHitTestVisible="False"
-                                Purchases="{x:Bind vm.Purchases}"/>
+                                Purchases="{x:Bind vm.Purchases}"
+                                HorizontalAlignment="Stretch"/>
                         </StackPanel>
                     </ScrollViewer>
                 </StackPanel>
 
-                </controls:UniformGrid>
+            </controls:UniformGrid>
 
-
-                <!--
+            <!--
                 <ListView Grid.Row="1" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0" Background="Blue" Visibility="Collapsed">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="helpers:JSONexchanges">

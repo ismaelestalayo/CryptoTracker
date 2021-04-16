@@ -116,6 +116,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\PortfolioEntryDialog.xaml.cs">
+      <DependentUpon>PortfolioEntryDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
@@ -339,6 +342,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialogs\PortfolioEntryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\ChartArea.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -58,7 +58,9 @@ namespace UWP.Shared.Constants {
             { "XTZ_color",  ParseHex("#2c7df7") },
             { "ZRX_color",  ParseHex("#404040") },
 
-            { "NULL_color",  ParseHex("#7D7D7D") }
+            { "NULL_color",   ParseHex("#7D7D7D") },
+            { "pastel_green", ParseHex("#00C060") },
+            { "pastel_red",   ParseHex("#FF5757") }
         };
 
         /// Color c = (Color)XamlBindingHelper.ConvertValue(typeof(Color), "#ABCDEF");

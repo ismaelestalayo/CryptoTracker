@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CryptoTracker.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -115,6 +116,12 @@ namespace UWP.Views {
 
             var portfolio = await PortfolioHelper.GetPortfolio(vm.Coin.Name);
             vm.Purchases = new ObservableCollection<PurchaseModel>(portfolio);
+            for (int i = 0; i < vm.Purchases.Count; i++) {
+                vm.Purchases[i] = await PortfolioHelper.UpdatePurchase(vm.Purchases[i]);
+                vm.TotalOwned += vm.Purchases[i].CryptoQty;
+                vm.TotalProfit += vm.Purchases[i].Profit;
+                vm.TotalValue += vm.Purchases[i].Worth;
+            }
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e) {
@@ -277,6 +284,15 @@ namespace UWP.Views {
 
         private void ShowCandles_Click(object sender, RoutedEventArgs e) {
             vm.ShowCandles = !vm.ShowCandles;
+        }
+
+        private async void NewPurchase_click(object sender, RoutedEventArgs e) {
+            var dialog = new PortfolioEntryDialog() {
+                NewPurchase = new PurchaseModel() { Crypto = vm.Coin.Name }
+            };
+            var response = await dialog.ShowAsync();
+            if (response.ToString().ToLowerInvariant() == "primary")
+                vm.Purchases.Add(dialog.NewPurchase);
         }
     }
 }
