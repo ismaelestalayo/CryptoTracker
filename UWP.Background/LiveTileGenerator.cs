@@ -1,10 +1,12 @@
-﻿using NotificationsExtensions;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using NotificationsExtensions;
 using NotificationsExtensions.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using UWP.Services;
 using UWP.Shared.Constants;
 using UWP.Shared.Models;
 using Windows.Data.Xml.Dom;
@@ -28,7 +30,7 @@ namespace UWP.Background {
         /// </summary>
         internal static async Task<Grid> SecondaryTileGrid(string crypto, List<HistoricPrice> hist = null) {
             if (hist == null)
-                hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
+                hist = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, "hour", 168);
 
             var polyline = new Polyline();
             polyline.Stroke = ColorConstants.GetBrush($"{crypto}_color");

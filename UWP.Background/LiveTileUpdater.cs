@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -49,7 +50,7 @@ namespace UWP.Background {
         }
 
         internal static async Task<bool> AddSecondaryTile(string crypto) {
-            hist = await GetHistoDupe.GetWeeklyHistAsync(crypto);
+            hist = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, "hour", 168);
             await RenderTileSVG(crypto);
 
             // Initialize the tile with required arguments
