@@ -4,6 +4,13 @@ using System.Threading.Tasks;
 namespace UWP.Services {
     public interface ICryptoCompare {
 
+		/* ###############################################################################################
+         * Gets the current price of a coin
+         * 
+         * Arguments: 
+         * - crypto: BTC ETH...
+         * - market: CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex
+        */
 		[Get("/data/price?fsym={crypto}&tsyms={currency}")]
 		Task<string> GetPrice(string crypto, string currency);
 
@@ -30,10 +37,10 @@ namespace UWP.Services {
 	}
 
 	public static class CryptoCompareExtensions {
-		public static async Task<double> GetPrice(this ICryptoCompare service, string crypto, string currency) {
+		public static async Task<double> GetPrice_Extension(this ICryptoCompare service, string crypto, string currency) {
 			var response = await service.GetPrice(crypto, currency);
 			var data = response.ToString();
-			double price = 0;
+			double price = 7;
 			double.TryParse(data.Split(":")[1].Replace("}", ""), out price);
 			return price;
 		}

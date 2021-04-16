@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,8 +36,8 @@ namespace CryptoTracker.Dialogs {
 
         private void PurchaseDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
             if (string.IsNullOrEmpty(NewPurchase.Crypto) || NewPurchase.CryptoQty <= 0 || NewPurchase.InvestedQty < 0) {
+                WarningMsg.Visibility = Visibility.Visible;
                 args.Cancel = true;
-                new MessageDialog("You must fill Crypto, Amount and Invested fields.").ShowAsync();
             }
             else {
                 //if (sender.PrimaryButtonText == "Add")
@@ -100,7 +101,8 @@ namespace CryptoTracker.Dialogs {
             string crypto = purchase.Crypto;
 
             if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
-                purchase.Current = await CryptoCompare.GetPriceAsync(crypto, purchase.Currency);
+                purchase.Current = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
+                    crypto, purchase.Currency);
 
             var curr = purchase.Current;
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);

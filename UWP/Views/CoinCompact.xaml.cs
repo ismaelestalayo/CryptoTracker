@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
+using UWP.Services;
 using UWP.Shared.Constants;
 using UWP.UserControls;
 using UWP.ViewModels;
@@ -88,7 +90,7 @@ namespace UWP.Views {
 			var crypto = vm.Info.Name;
 
 			/// Get current price
-			vm.Info.Price = await GetPriceAsync(crypto);
+			vm.Info.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(crypto, App.currency);
 
 			/// Get historic values
 			var histo = await GetHistoricAsync(crypto, timeUnit, limit, aggregate);

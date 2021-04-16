@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Dialogs;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -153,7 +154,8 @@ namespace UWP.Views {
         /// #########################################################################################
         private async Task UpdateCoin() {
             var crypto = vm.Coin.Name;
-            vm.Coin.Price = await CryptoCompare.GetPriceAsync(crypto);
+            vm.Coin.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
+                crypto, App.currency);
 
             /// Colors
             var brush = vm.Chart.ChartStroke;

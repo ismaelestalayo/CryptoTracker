@@ -16,109 +16,124 @@
     PrimaryButtonClick="PurchaseDialog_PrimaryButtonClick"
     Title="New purchase">
 
-    <controls:UniformGrid Columns="3" Rows="4" Margin="0 15">
-        <!-- Row 0 -->
-        <Canvas>
-            <!-- Dialog focuses on first element, so create a decoy Combobox -->
-            <ComboBox Opacity="0" Width="1" Height="1"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <AutoSuggestBox
-                x:Name="CoinAutoSuggestBox"
-                Grid.Column="0" Grid.Row="0"
-                Header="💰 Crypto"
-                PlaceholderText="Search" 
-                GotFocus="AutoSuggestBox_GotFocus"
-                HorizontalAlignment="Left"
-                TextChanged="AutoSuggestBox_TextChanged"
-                Text="{x:Bind NewPurchase.Crypto, Mode=OneWay}"
-                SuggestionChosen="AutoSuggestBox_SuggestionChosen"
-                QueryIcon="Find"
-                QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-                Width="130">
-                <AutoSuggestBox.ItemTemplate>
-                    <DataTemplate x:DataType="models:SuggestionCoin">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="30" Source="{x:Bind Icon}"/>
-                            <TextBlock Text="{x:Bind Symbol}" Margin="10 0" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </AutoSuggestBox.ItemTemplate>
-            </AutoSuggestBox>
-        </Canvas>
+        <TextBlock
+            x:Name="WarningMsg"
+            Text="Error, you must fill at least Crypto, Amount and Invested fields."
+            HorizontalAlignment="Center"
+            FontWeight="Light" Foreground="Red"
+            Visibility="Collapsed"/>
 
-        <muxc:NumberBox
-            AcceptsExpression="True" Header="Amount"
-            LostFocus="DialogBtn_LostFocus"
-            Margin="0 0 5 0" Minimum="0"
-            PlaceholderText="0" HorizontalAlignment="Left"
-            Value="{x:Bind NewPurchase.CryptoQty, Mode=TwoWay}"
-            Width="130"/>
-        <muxc:NumberBox
-            AcceptsExpression="True" Header="Invested"
-            Foreground="{x:Bind NewPurchase.ProfitFG}"
-            HorizontalAlignment="Left" LostFocus="DialogBtn_LostFocus"
-            Margin="0 0 5 0" Minimum="0" PlaceholderText="0"
-            Value="{x:Bind NewPurchase.InvestedQty, Mode=TwoWay}"
-            Width="130"/>
+        <controls:UniformGrid Grid.Row="1" Columns="3" Rows="4" Margin="0 15">
+            <!-- Row 0 -->
+            <Canvas>
+                <!-- Dialog focuses on first element, so create a decoy Combobox -->
+                <ComboBox Opacity="0" Width="1" Height="1"/>
 
-        <!-- Row 1 -->
-        <DatePicker
-            Date="{x:Bind NewPurchase.Date, Mode=TwoWay}"
-            Grid.Row="1" Grid.ColumnSpan="2"
-            Header="📅 Date" HorizontalAlignment="Left"
-            VerticalAlignment="Top"/>
-        <Rectangle />
+                <AutoSuggestBox
+                    x:Name="CoinAutoSuggestBox"
+                    Grid.Column="0" Grid.Row="0"
+                    Header="💰 Crypto"
+                    PlaceholderText="Search" 
+                    GotFocus="AutoSuggestBox_GotFocus"
+                    HorizontalAlignment="Left"
+                    TextChanged="AutoSuggestBox_TextChanged"
+                    Text="{x:Bind NewPurchase.Crypto, Mode=OneWay}"
+                    SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+                    QueryIcon="Find"
+                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                    Width="130">
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:SuggestionCoin">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="30" Source="{x:Bind Icon}"/>
+                                <TextBlock Text="{x:Bind Symbol}" Margin="10 0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
+            </Canvas>
 
-        <!-- Row 2 -->
-        <TextBox
-            Grid.Column="0" Grid.ColumnSpan="2"
-            Header="✏ Notes"  HorizontalAlignment="Stretch"
-            Margin="0 0 35 0" PlaceholderText="Note..."
-            Text="{x:Bind NewPurchase.Notes, Mode=TwoWay}"
-            VerticalAlignment="Top"/>
-        <TextBox
-            Grid.Row="2" Grid.RowSpan="1" Grid.Column="2"
-            Header="Exchange"  HorizontalAlignment="Left"
-            Text="{x:Bind NewPurchase.Exchange, Mode=TwoWay}"
-            PlaceholderText="CoinBase" VerticalAlignment="Top"
-            Width="130"/>
+            <muxc:NumberBox
+                AcceptsExpression="True" Header="Amount"
+                LostFocus="DialogBtn_LostFocus"
+                Margin="0 0 5 0" Minimum="0"
+                PlaceholderText="0" HorizontalAlignment="Left"
+                Value="{x:Bind NewPurchase.CryptoQty, Mode=TwoWay}"
+                Width="130"/>
+            <muxc:NumberBox
+                AcceptsExpression="True" Header="Invested"
+                Foreground="{x:Bind NewPurchase.ProfitFG}"
+                HorizontalAlignment="Left" LostFocus="DialogBtn_LostFocus"
+                Margin="0 0 5 0" Minimum="0" PlaceholderText="0"
+                Value="{x:Bind NewPurchase.InvestedQty, Mode=TwoWay}"
+                Width="130"/>
 
-        <!-- Row 3 -->
-        <controls:HeaderedContentControl 
-            Foreground="{ThemeResource TextControlHeaderForegroundDisabled}"
-            Grid.Row="3"
-            Header="💵 Worth" Margin="0 10 0 0" VerticalAlignment="Bottom">
-            <StackPanel
-                Background="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"
-                BorderBrush="{ThemeResource TextControlBorderBrushDisabled}"
-                BorderThickness="1"
-                Padding="6" Margin="0 5 0 0"
-                CornerRadius="{ThemeResource ControlCornerRadius}"
-                Width="130">
-                <TextBlock
-                    Foreground="{ThemeResource TextControlForegroundDisabled}">
-                    <Run Text="{x:Bind NewPurchase.Worth}"/><!--
-                    --><Run Text="{x:Bind NewPurchase.CurrencySymbol}"/>
-                </TextBlock>
-            </StackPanel>
-        </controls:HeaderedContentControl>
-        <controls:HeaderedContentControl
-            Foreground="{ThemeResource TextControlHeaderForegroundDisabled}"
-            Header="Profit" Margin="0 10 0 0" VerticalAlignment="Bottom">
-            <StackPanel
-                Background="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"
-                BorderBrush="{ThemeResource TextControlBorderBrushDisabled}"
-                BorderThickness="1"
-                Padding="6" Margin="0 5 0 0"
-                CornerRadius="{ThemeResource ControlCornerRadius}"
-                Width="130">
-                <TextBlock
-                    Foreground="{x:Bind NewPurchase.ProfitFG, FallbackValue='Gray'}">
-                    <Run Text="{x:Bind NewPurchase.Profit}"/><!--
-                    --><Run Text="{x:Bind NewPurchase.CurrencySymbol}"/>
-                </TextBlock>
-            </StackPanel>
-        </controls:HeaderedContentControl>
+            <!-- Row 1 -->
+            <DatePicker
+                Date="{x:Bind NewPurchase.Date, Mode=TwoWay}"
+                Grid.Row="1" Grid.ColumnSpan="2"
+                Header="📅 Date" HorizontalAlignment="Left"
+                VerticalAlignment="Top"/>
+            <Rectangle />
+
+            <!-- Row 2 -->
+            <TextBox
+                Grid.Column="0" Grid.ColumnSpan="2"
+                Header="✏ Notes"  HorizontalAlignment="Stretch"
+                Margin="0 0 35 0" PlaceholderText="Note..."
+                Text="{x:Bind NewPurchase.Notes, Mode=TwoWay}"
+                VerticalAlignment="Top"/>
+            <TextBox
+                Grid.Row="2" Grid.RowSpan="1" Grid.Column="2"
+                Header="Exchange"  HorizontalAlignment="Left"
+                Text="{x:Bind NewPurchase.Exchange, Mode=TwoWay}"
+                PlaceholderText="CoinBase" VerticalAlignment="Top"
+                Width="130"/>
+
+            <!-- Row 3 -->
+            <controls:HeaderedContentControl 
+                Foreground="{ThemeResource TextControlHeaderForegroundDisabled}"
+                Grid.Row="3"
+                Header="💵 Worth" Margin="0 10 0 0" VerticalAlignment="Bottom">
+                <StackPanel
+                    Background="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"
+                    BorderBrush="{ThemeResource TextControlBorderBrushDisabled}"
+                    BorderThickness="1"
+                    Padding="6" Margin="0 5 0 0"
+                    CornerRadius="{ThemeResource ControlCornerRadius}"
+                    Width="130">
+                    <TextBlock
+                        Foreground="{ThemeResource TextControlForegroundDisabled}">
+                        <Run Text="{x:Bind NewPurchase.Worth}"/><!--
+                        --><Run Text="{x:Bind NewPurchase.CurrencySymbol}"/>
+                    </TextBlock>
+                </StackPanel>
+            </controls:HeaderedContentControl>
+            <controls:HeaderedContentControl
+                Foreground="{ThemeResource TextControlHeaderForegroundDisabled}"
+                Header="Profit" Margin="0 10 0 0" VerticalAlignment="Bottom">
+                <StackPanel
+                    Background="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"
+                    BorderBrush="{ThemeResource TextControlBorderBrushDisabled}"
+                    BorderThickness="1"
+                    Padding="6" Margin="0 5 0 0"
+                    CornerRadius="{ThemeResource ControlCornerRadius}"
+                    Width="130">
+                    <TextBlock
+                        Foreground="{x:Bind NewPurchase.ProfitFG, FallbackValue='Gray'}">
+                        <Run Text="{x:Bind NewPurchase.Profit}"/><!--
+                        --><Run Text="{x:Bind NewPurchase.CurrencySymbol}"/>
+                    </TextBlock>
+                </StackPanel>
+            </controls:HeaderedContentControl>
         
-    </controls:UniformGrid>
+        </controls:UniformGrid>
+
+    </Grid>
 </ContentDialog>

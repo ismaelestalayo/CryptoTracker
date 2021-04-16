@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using UWP.Background;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
+using UWP.Services;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.StartScreen;
@@ -127,7 +129,8 @@ namespace UWP.Views {
                 vm.PriceCards[i].Info.CurrencySym = App.currencySymbol;
 
                 /// Get price
-                vm.PriceCards[i].Info.Price = await CryptoCompare.GetPriceAsync(crypto);
+                vm.PriceCards[i].Info.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
+                    crypto, App.currency);
 
                 /// Save the current timeSpan for navigating to another page
                 vm.PriceCards[i].Chart.TimeSpan = timeSpan;

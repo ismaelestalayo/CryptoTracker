@@ -17,30 +17,6 @@ namespace UWP.APIs {
          * 
          * Arguments: 
          * - crypto: BTC ETH...
-         * - market: CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex
-         * 
-        */
-
-        internal static async Task<double> GetPriceAsync(string crypto, string currency = "") {
-            if (currency == "")
-                currency = App.currency;
-
-            // TODO: useful to have multiple markets?
-            try {
-                var data = await Ioc.Default.GetService<ICryptoCompare>().GetPrice(crypto, currency);
-                double price = double.Parse(data.Split(":")[1].Replace("}", ""));
-                return NumberHelper.Rounder(price);
-            }
-            catch (Exception ex) {
-                return 0;
-            }
-        }
-
-        /* ###############################################################################################
-         * Gets the current price of a coin (in the currency set by App.currency)
-         * 
-         * Arguments: 
-         * - crypto: BTC ETH...
          * - time: minute hour day
          * - limit: 1 - 2000
          * 

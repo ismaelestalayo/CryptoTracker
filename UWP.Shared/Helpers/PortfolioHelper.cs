@@ -26,8 +26,8 @@ namespace UWP.Shared.Helpers {
             string crypto = purchase.Crypto;
 
             if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
-                purchase.Current = await CryptoCompareExtensions.GetPrice(
-                    Ioc.Default.GetService<ICryptoCompare>(), purchase.Crypto, purchase.Currency);
+                purchase.Current = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
+                    purchase.Crypto, purchase.Currency);
 
             var curr = purchase.Current;
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
