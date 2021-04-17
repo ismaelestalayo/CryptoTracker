@@ -69,9 +69,10 @@ namespace UWP.Background {
             tile.VisualElements.ForegroundText = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black)
                 ? ForegroundText.Light : ForegroundText.Dark;
 
-            if (!SecondaryTile.Exists(crypto))
+            if (!SecondaryTile.Exists(crypto)) {
                 if (!await tile.RequestCreateAsync())
                     return false;
+            }
             else
                 await tile.UpdateAsync();
 

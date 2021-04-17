@@ -4,9 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:helpers="using:UWP.Helpers"
-    xmlns:models="using:UWP.Models"
+    xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600"
     d:Width="500"
@@ -55,53 +54,8 @@
 
             <TextBlock
                 Text="Once an alert is fired it shows a toast notification and is then disabled not to spam (you can manually enable it again and change the threshold)."/>
-            <ListView
-                ItemsSource="{Binding Source={StaticResource cvs}}"
-                Margin="-10 10 0 0" HorizontalAlignment="Left">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Alert">
-                        <StackPanel Orientation="Horizontal" Padding="10 -5 0 0">
-                            <ToggleSwitch
-                                Grid.Column="0" OnContent="" OffContent=""
-                                HorizontalAlignment="Left" Width="50"
-                                IsOn="{x:Bind Enabled, Mode=TwoWay}"
-                                Margin="5 0"/>
-                            <ComboBox
-                                PlaceholderText="Mode"
-                                Grid.Column="2" Margin="5 0"
-                                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                                SelectedItem="{x:Bind Mode, Mode=TwoWay}">
-                                <x:String>above</x:String>
-                                <x:String>below</x:String>
-                            </ComboBox>
-                            <muxc:NumberBox
-                                Grid.Column="3" Margin="5 0"
-                                PlaceholderText="Threshold"
-                                Value="{x:Bind Threshold, Mode=TwoWay}"
-                                Width="100"/>
-                            <Button
-                                Click="Delete_alert"
-                                Grid.Column="4" Content="&#xE107;" Background="Transparent"
-                                FontFamily="{StaticResource FluentIconFont}"
-                                Margin=" 0" Padding="10 9" Height="32"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock
-                                    FontWeight="Bold" FontSize="15" Margin="0"
-                                    Text="{Binding Key, Mode=OneWay}"/>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-
-                <!-- For previsualization purposes -->
-                <d:Rectangle/>
-            </ListView>
+            <userControls:AlertListGrouped
+                Alerts="{x:Bind vm.Alerts, Mode=OneWay}"/>
 
             <!-- NO ALERTS WARNING -->
             <StackPanel
