@@ -266,8 +266,9 @@
                     </RelativePanel>
 
                     <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                        <TextBlock Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords"
-                                    TextAlignment="Justify" Opacity="0.8"/>
+                        <TextBlock
+                            Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords"
+                            TextAlignment="Justify" Opacity="0.8"/>
                     </ScrollViewer>
                 </StackPanel>
 
@@ -278,7 +279,7 @@
                     </RelativePanel>
 
                     <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                        <ListView/>
+                        <userControls:AlertList Alerts="{x:Bind vm.Alerts}"/>
                     </ScrollViewer>
                 </StackPanel>
 

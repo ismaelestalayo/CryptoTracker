@@ -123,6 +123,9 @@
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
+    <Compile Include="UserControls\AlertList.xaml.cs">
+      <DependentUpon>AlertList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ChartArea.xaml.cs">
       <DependentUpon>ChartArea.xaml</DependentUpon>
     </Compile>
@@ -348,6 +351,10 @@
     <Page Include="Dialogs\PortfolioEntryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlertList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ChartArea.xaml">
       <Generator>MSBuild:Compile</Generator>

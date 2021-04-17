@@ -123,6 +123,10 @@ namespace UWP.Views {
                 vm.TotalProfit += vm.Purchases[i].Profit;
                 vm.TotalValue += vm.Purchases[i].Worth;
             }
+
+            var alerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
+            alerts = alerts.Where(x => x.Crypto == vm.Coin.Name).ToList();
+            vm.Alerts = new ObservableCollection<Alert>(alerts);
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e) {

@@ -32,6 +32,12 @@ namespace UWP.ViewModels {
             set => SetProperty(ref purchases, value);
         }
 
+        private ObservableCollection<Alert> alerts;
+        public ObservableCollection<Alert> Alerts {
+            get => alerts;
+            set => SetProperty(ref alerts, value);
+        }
+
         private bool showCandles = false;
         public bool ShowCandles {
             get => showCandles;
