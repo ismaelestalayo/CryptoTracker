@@ -39,6 +39,7 @@
             <Setter Property="Margin" Value="0 0 0 10"/>
             <Setter Property="BorderBrush" Value="{ThemeResource DefaultTextForegroundThemeBrush}"/>
             <Setter Property="BorderThickness" Value="0 0 0 1"/>
+
         </Style>
         <helpers:StringFormatConverter x:Key="StringFormatConverter"/>
         <helpers:DateTimeShortener x:Key="DateShortener"/>
@@ -286,88 +287,93 @@
 
                 <!-- Global Market card -->
                 <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2">
-                    <StackPanel.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="FontWeight" Value="Light"/>
-                            <Setter Property="FontSize" Value="16"/>
-                        </Style>
-                    </StackPanel.Resources>
                     <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
                         <TextBlock Text="Market Data" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                     </RelativePanel>
 
                     <controls:UniformGrid Margin="5 0" Columns="2" RowSpacing="20">
-                        <StackPanel>
-                            <TextBlock Opacity="0.4">
-                                <Run Text="Low ("/><Run Text="{x:Bind vm.Chart.TimeSpan}"/><Run Text=")"/>
-                            </TextBlock>
-                            <TextBlock FontWeight="SemiBold" Margin="0 -3">
-                                <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1,
-                                    Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
-                                    vm.Coin.CurrencySym}"/>
-                            </TextBlock>
-                        </StackPanel>
+                        <userControls:HeaderedTextBlock>
+                            <userControls:HeaderedTextBlock.TopTextBlock>
+                                <TextBlock>
+                                    <Run Text="Low ("/><Run Text="{x:Bind vm.Chart.TimeSpan}"/><Run Text=")"/>
+                                </TextBlock>
+                            </userControls:HeaderedTextBlock.TopTextBlock>
+                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1,
+                                        Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
+                                        vm.Coin.CurrencySym}"/>
+                                </TextBlock>
+                            </userControls:HeaderedTextBlock.BottomTextBlock>
+                        </userControls:HeaderedTextBlock>
 
-                        <StackPanel>
-                            <TextBlock Opacity="0.4">
-                                <Run Text="High ("/><!--
-                                --><Run Text="{x:Bind vm.Chart.TimeSpan}"/><Run Text=")"/>
-                            </TextBlock>
-                            <TextBlock FontWeight="SemiBold" Margin="0 -3">
-                                <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2,
-                                    Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
-                                    vm.Coin.CurrencySym}"/>
-                            </TextBlock>
-                        </StackPanel>
+                        <userControls:HeaderedTextBlock>
+                            <userControls:HeaderedTextBlock.TopTextBlock>
+                                <TextBlock>
+                                    <Run Text="High ("/><Run Text="{x:Bind vm.Chart.TimeSpan}"/><Run Text=")"/>
+                                </TextBlock>
+                            </userControls:HeaderedTextBlock.TopTextBlock>
+                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2,
+                                        Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
+                                        vm.Coin.CurrencySym}"/>
+                                </TextBlock>
+                            </userControls:HeaderedTextBlock.BottomTextBlock>
+                        </userControls:HeaderedTextBlock>
 
-                        <StackPanel>
-                            <TextBlock Opacity="0.4" Text="All time low:"/>
-                            <TextBlock FontWeight="SemiBold" Margin="0 -3">
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.atl.eur,
-                                    Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
-                                    vm.Coin.CurrencySym}"/>
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.atl_date.eur,
-                                    Converter={StaticResource DateShortener}}" FontWeight="Light" FontSize="11"
-                                    Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
-                            </TextBlock>
-                        </StackPanel>
+                        <userControls:HeaderedTextBlock TopTextBlock="All time low">
+                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <TextBlock>
+                                   <Run Text="{x:Bind vm.CoinInfo.market_data.atl.eur,
+                                       Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
+                                       vm.Coin.CurrencySym}"/>
+                                    <Run Text="{x:Bind vm.CoinInfo.market_data.atl_date.eur,
+                                        Converter={StaticResource DateShortener}}" FontWeight="Light" FontSize="11"
+                                        Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
+                                </TextBlock>
+                            </userControls:HeaderedTextBlock.BottomTextBlock>
+                        </userControls:HeaderedTextBlock>
 
-                        <StackPanel>
-                            <TextBlock Opacity="0.4" Text="All time high:"/>
-                            <TextBlock FontWeight="SemiBold" Margin="0 -3">
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.ath.eur,
-                                    Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.ath_date.eur, Converter={StaticResource DateShortener}}"
-                                     FontWeight="Light" FontSize="11"
-                                     Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
-                            </TextBlock>
-                        </StackPanel>
+                        <userControls:HeaderedTextBlock TopTextBlock="All time high">
+                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <TextBlock>
+                                   <Run Text="{x:Bind vm.CoinInfo.market_data.ath.eur,
+                                       Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                    <Run Text="{x:Bind vm.CoinInfo.market_data.ath_date.eur, Converter={StaticResource DateShortener}}"
+                                         FontWeight="Light" FontSize="11" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
+                                </TextBlock>
+                            </userControls:HeaderedTextBlock.BottomTextBlock>
+                        </userControls:HeaderedTextBlock>
 
-                        <StackPanel>
-                            <TextBlock Opacity="0.4" Text="Market Cap:"/>
-                            <TextBlock FontWeight="SemiBold" Margin="0 -3">
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.market_cap.eur,
-                                    Converter={StaticResource NumberPrefixer}}"/><!--
-                                --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                <Run Text="(" FontWeight="Light" FontSize="11"/><Run 
-                                    Text="{x:Bind vm.CoinInfo.market_data.market_cap_change_percentage_24h}"
-                                    FontWeight="Light" FontSize="11"/><Run
-                                    Text="%)" FontWeight="Light" FontSize="11"/>
-                            </TextBlock>
-                        </StackPanel>
-
+                        <userControls:HeaderedTextBlock TopTextBlock="Market Cap.">
+                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.CoinInfo.market_data.market_cap.eur,
+                                        Converter={StaticResource NumberPrefixer}}"/><!--
+                                    --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                    <Run Text="(" FontWeight="Light" FontSize="12"/><!--
+                                    --><Run Text="{x:Bind vm.CoinInfo.market_data.market_cap_change_percentage_24h}"
+                                    FontWeight="Light" FontSize="12"/><Run Text="%)" FontWeight="Light" FontSize="12"/>
+                                </TextBlock>
+                            </userControls:HeaderedTextBlock.BottomTextBlock>
+                        </userControls:HeaderedTextBlock>
+                        
                         <Rectangle/>
 
-                        <StackPanel>
-                            <TextBlock Opacity="0.4" Text="Circulating supply"/>
-                            <TextBlock FontWeight="SemiBold" Margin="0 -3">
-                                <Run Text="{x:Bind vm.CoinInfo.market_data.circulating_supply,
-                                            Converter={StaticResource StringFormatConverter}}"/>
-                                <Run Text="{x:Bind vm.Coin.Name}"/>
-                            </TextBlock>
-                        </StackPanel>
+                        <userControls:HeaderedTextBlock TopTextBlock="Circulating supply">
+                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.CoinInfo.market_data.circulating_supply,
+                                        Converter={StaticResource StringFormatConverter}}"/>
+                                    <Run Text="{x:Bind vm.Coin.Name}"/>
+                                </TextBlock>
+                            </userControls:HeaderedTextBlock.BottomTextBlock>
+                        </userControls:HeaderedTextBlock>
+                        
                     </controls:UniformGrid>
                 </StackPanel>
+
 
                 <!-- Entries card -->
                 <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2" Grid.ColumnSpan="2">
@@ -377,19 +383,34 @@
                     <ScrollViewer>
                         <StackPanel>
                             <Grid Margin="10 0">
-                                <TextBlock HorizontalAlignment="Left" HorizontalTextAlignment="Center">
-                                    <Run Text="Owned"/>
-                                    <LineBreak/><Run Text="{x:Bind vm.TotalOwned}"/><Run Text="{x:Bind vm.Coin.Name}"/>
-                                </TextBlock>
-                                <TextBlock HorizontalAlignment="Center" HorizontalTextAlignment="Center">
-                                    <Run Text="Value"/><LineBreak/>
-                                    <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                </TextBlock>
-                                <TextBlock HorizontalAlignment="Right" HorizontalTextAlignment="Center">
-                                    <Run Text="Total profit"/>
-                                    <LineBreak/><Run Text="{x:Bind vm.TotalProfit}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                </TextBlock>
+                                <userControls:HeaderedTextBlock Alignment="Center" TopTextBlock="Owned">
+                                    <userControls:HeaderedTextBlock.BottomTextBlock>
+                                        <TextBlock>
+                                            <Run Text="{x:Bind vm.TotalOwned, Mode=OneWay}"/>
+                                            <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
+                                        </TextBlock>
+                                    </userControls:HeaderedTextBlock.BottomTextBlock>
+                                </userControls:HeaderedTextBlock>
+
+                                <userControls:HeaderedTextBlock HorizontalAlignment="Center" Alignment="Center" TopTextBlock="Value">
+                                    <userControls:HeaderedTextBlock.BottomTextBlock>
+                                        <TextBlock>
+                                            <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                        </TextBlock>
+                                    </userControls:HeaderedTextBlock.BottomTextBlock>
+                                </userControls:HeaderedTextBlock>
+
+                                <userControls:HeaderedTextBlock HorizontalAlignment="Right" Alignment="Center" TopTextBlock="Total profit">
+                                    <userControls:HeaderedTextBlock.BottomTextBlock>
+                                        <TextBlock Foreground="{x:Bind vm.Coin.DiffFG}">
+                                            <Run Text="{x:Bind vm.Coin.DiffArrow}"/><!--
+                                            --><Run Text="{x:Bind vm.TotalProfit}"/><!--
+                                            --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                        </TextBlock>
+                                    </userControls:HeaderedTextBlock.BottomTextBlock>
+                                </userControls:HeaderedTextBlock>
                             </Grid>
+                            
                             <Button
                                 Background="Transparent" CornerRadius="6"
                                 BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
