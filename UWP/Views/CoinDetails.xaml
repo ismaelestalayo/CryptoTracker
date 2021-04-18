@@ -41,6 +41,49 @@
             <Setter Property="BorderThickness" Value="0 0 0 1"/>
 
         </Style>
+
+        <Style TargetType="controls:HeaderedContentControl">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="controls:HeaderedContentControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <ContentPresenter
+                                x:Name="HeaderPresenter" 
+                                x:DeferLoadStrategy="Lazy"
+                                Content="{TemplateBinding Header}" 
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                Opacity="0.6"/>
+                            <ContentPresenter
+                                x:Name="ContentPresenter"
+                                Grid.Row="1"
+                                FontSize="16" FontWeight="SemiBold"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Margin="0 -5 0 0"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="OrientationStates">
+                                    <VisualState x:Name="Vertical" />
+                                    <VisualState x:Name="Horizontal">
+                                        <VisualState.Setters>
+                                            <Setter Target="HeaderPresenter.(Grid.ColumnSpan)" Value="1" />
+                                            <Setter Target="ContentPresenter.(Grid.ColumnSpan)" Value="1" />
+                                            <Setter Target="ContentPresenter.(Grid.Column)" Value="1" />
+                                            <Setter Target="HeaderPresenter.(Grid.Row)" Value="1" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <helpers:StringFormatConverter x:Key="StringFormatConverter"/>
         <helpers:DateTimeShortener x:Key="DateShortener"/>
         <helpers:BoolToVisibility x:Key="BoolConverter"/>
@@ -292,38 +335,39 @@
                     </RelativePanel>
 
                     <controls:UniformGrid Margin="5 0" Columns="2" RowSpacing="20">
-                        <userControls:HeaderedTextBlock>
-                            <userControls:HeaderedTextBlock.TopTextBlock>
+
+                        <controls:HeaderedContentControl>
+                            <controls:HeaderedContentControl.Header>
                                 <TextBlock>
                                     <Run Text="Low ("/><Run Text="{x:Bind vm.Chart.TimeSpan}"/><Run Text=")"/>
                                 </TextBlock>
-                            </userControls:HeaderedTextBlock.TopTextBlock>
-                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                            </controls:HeaderedContentControl.Header>
+                            <controls:HeaderedContentControl.Content>
                                 <TextBlock>
                                     <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1,
                                         Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
                                         vm.Coin.CurrencySym}"/>
                                 </TextBlock>
-                            </userControls:HeaderedTextBlock.BottomTextBlock>
-                        </userControls:HeaderedTextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
 
-                        <userControls:HeaderedTextBlock>
-                            <userControls:HeaderedTextBlock.TopTextBlock>
+                        <controls:HeaderedContentControl>
+                            <controls:HeaderedContentControl.Header>
                                 <TextBlock>
                                     <Run Text="High ("/><Run Text="{x:Bind vm.Chart.TimeSpan}"/><Run Text=")"/>
                                 </TextBlock>
-                            </userControls:HeaderedTextBlock.TopTextBlock>
-                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                            </controls:HeaderedContentControl.Header>
+                            <controls:HeaderedContentControl.Content>
                                 <TextBlock>
                                     <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2,
                                         Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
                                         vm.Coin.CurrencySym}"/>
                                 </TextBlock>
-                            </userControls:HeaderedTextBlock.BottomTextBlock>
-                        </userControls:HeaderedTextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
 
-                        <userControls:HeaderedTextBlock TopTextBlock="All time low">
-                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                        <controls:HeaderedContentControl Header="All time low">
+                            <controls:HeaderedContentControl.Content>
                                 <TextBlock>
                                    <Run Text="{x:Bind vm.CoinInfo.market_data.atl.eur,
                                        Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
@@ -332,44 +376,44 @@
                                         Converter={StaticResource DateShortener}}" FontWeight="Light" FontSize="11"
                                         Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
                                 </TextBlock>
-                            </userControls:HeaderedTextBlock.BottomTextBlock>
-                        </userControls:HeaderedTextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
 
-                        <userControls:HeaderedTextBlock TopTextBlock="All time high">
-                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                        <controls:HeaderedContentControl Header="All time high">
+                            <controls:HeaderedContentControl.Content>
                                 <TextBlock>
                                    <Run Text="{x:Bind vm.CoinInfo.market_data.ath.eur,
                                        Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                     <Run Text="{x:Bind vm.CoinInfo.market_data.ath_date.eur, Converter={StaticResource DateShortener}}"
                                          FontWeight="Light" FontSize="11" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
                                 </TextBlock>
-                            </userControls:HeaderedTextBlock.BottomTextBlock>
-                        </userControls:HeaderedTextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
 
-                        <userControls:HeaderedTextBlock TopTextBlock="Market Cap.">
-                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                        <controls:HeaderedContentControl Header="Market Cap.">
+                            <controls:HeaderedContentControl.Content>
                                 <TextBlock>
                                     <Run Text="{x:Bind vm.CoinInfo.market_data.market_cap.eur,
-                                        Converter={StaticResource NumberPrefixer}}"/><!--
+                                        Converter={StaticResource NumberUnit}}"/><!--
                                     --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                     <Run Text="(" FontWeight="Light" FontSize="12"/><!--
                                     --><Run Text="{x:Bind vm.CoinInfo.market_data.market_cap_change_percentage_24h}"
                                     FontWeight="Light" FontSize="12"/><Run Text="%)" FontWeight="Light" FontSize="12"/>
                                 </TextBlock>
-                            </userControls:HeaderedTextBlock.BottomTextBlock>
-                        </userControls:HeaderedTextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
                         
                         <Rectangle/>
 
-                        <userControls:HeaderedTextBlock TopTextBlock="Circulating supply">
-                            <userControls:HeaderedTextBlock.BottomTextBlock>
+                        <controls:HeaderedContentControl Header="Circulating supply">
+                            <controls:HeaderedContentControl.Content>
                                 <TextBlock>
                                     <Run Text="{x:Bind vm.CoinInfo.market_data.circulating_supply,
                                         Converter={StaticResource StringFormatConverter}}"/>
                                     <Run Text="{x:Bind vm.Coin.Name}"/>
                                 </TextBlock>
-                            </userControls:HeaderedTextBlock.BottomTextBlock>
-                        </userControls:HeaderedTextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
                         
                     </controls:UniformGrid>
                 </StackPanel>
@@ -383,32 +427,32 @@
                     <ScrollViewer>
                         <StackPanel>
                             <Grid Margin="10 0">
-                                <userControls:HeaderedTextBlock Alignment="Center" TopTextBlock="Owned">
-                                    <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <controls:HeaderedContentControl HorizontalAlignment="Left" HorizontalContentAlignment="Center" Header="Owned">
+                                    <controls:HeaderedContentControl.Content>
                                         <TextBlock>
                                             <Run Text="{x:Bind vm.TotalOwned, Mode=OneWay}"/>
                                             <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
                                         </TextBlock>
-                                    </userControls:HeaderedTextBlock.BottomTextBlock>
-                                </userControls:HeaderedTextBlock>
+                                    </controls:HeaderedContentControl.Content>
+                                </controls:HeaderedContentControl>
 
-                                <userControls:HeaderedTextBlock HorizontalAlignment="Center" Alignment="Center" TopTextBlock="Value">
-                                    <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <controls:HeaderedContentControl HorizontalAlignment="Center" HorizontalContentAlignment="Center" Header="Value">
+                                    <controls:HeaderedContentControl.Content>
                                         <TextBlock>
                                             <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                         </TextBlock>
-                                    </userControls:HeaderedTextBlock.BottomTextBlock>
-                                </userControls:HeaderedTextBlock>
+                                    </controls:HeaderedContentControl.Content>
+                                </controls:HeaderedContentControl>
 
-                                <userControls:HeaderedTextBlock HorizontalAlignment="Right" Alignment="Center" TopTextBlock="Total profit">
-                                    <userControls:HeaderedTextBlock.BottomTextBlock>
+                                <controls:HeaderedContentControl HorizontalAlignment="Right" HorizontalContentAlignment="Center" Header="Total profit">
+                                    <controls:HeaderedContentControl.Content>
                                         <TextBlock Foreground="{x:Bind vm.Coin.DiffFG}">
                                             <Run Text="{x:Bind vm.Coin.DiffArrow}"/><!--
-                                            --><Run Text="{x:Bind vm.TotalProfit}"/><!--
+                                            --><Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
                                             --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                         </TextBlock>
-                                    </userControls:HeaderedTextBlock.BottomTextBlock>
-                                </userControls:HeaderedTextBlock>
+                                    </controls:HeaderedContentControl.Content>
+                                </controls:HeaderedContentControl>
                             </Grid>
                             
                             <Button

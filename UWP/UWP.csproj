@@ -141,9 +141,6 @@
     <Compile Include="UserControls\DiffTextBlock.xaml.cs">
       <DependentUpon>DiffTextBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\HeaderedTextBlock.xaml.cs">
-      <DependentUpon>HeaderedTextBlock.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Notification.xaml.cs">
       <DependentUpon>Notification.xaml</DependentUpon>
     </Compile>
@@ -378,10 +375,6 @@
     <Page Include="UserControls\DiffTextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\HeaderedTextBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Notification.xaml">
       <SubType>Designer</SubType>
