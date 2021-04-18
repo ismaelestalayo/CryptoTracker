@@ -24,24 +24,9 @@ namespace UWP.UserControls {
                 typeof(SolidColorBrush),
                 null);
 
-        public static readonly DependencyProperty DiffArrowProperty =
-            DependencyProperty.Register(
-                nameof(DiffArrowProperty),
-                typeof(string),
-                typeof(string),
-                null);
-
-        private string DiffArrow {
-            get => (string)GetValue(DiffArrowProperty);
-            set => SetValue(DiffArrowProperty, value);
-        }
-
         public double Diff {
             get => (double)GetValue(DiffProperty);
-            set {
-                DiffArrow = (value < 0) ? "▼" : "▲";
-                SetValue(DiffProperty, Math.Abs(value));
-            }
+            set => SetValue(DiffProperty, value);
         }
 
         public SolidColorBrush DiffFg {

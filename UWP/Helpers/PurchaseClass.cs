@@ -65,12 +65,6 @@ namespace UWP.Helpers {
             get { return _c; }
             set { _c = value; NotifyPropertyChanged(nameof(c)); } }
 
-        private string _arrow { get; set; }
-        public string arrow {
-            get { return _arrow; }
-            set { _arrow = value; NotifyPropertyChanged(nameof(arrow)); } }
-
-
         private SolidColorBrush _profitFG { get; set; } = new SolidColorBrush(Color.FromArgb(255, 128, 128, 128));
         public SolidColorBrush ProfitFG {
             get { return _profitFG; }

@@ -217,18 +217,22 @@
                     <TextBlock
                         Foreground="{x:Bind vm.Coin.DiffFG}" FontWeight="Normal"
                         FontSize="14"
-                        HorizontalAlignment="Right">
-                        <Run Text="{x:Bind vm.Coin.DiffArrow}"/><!--
-                        --><Run Text="{x:Bind vm.Coin.Diff, Converter={StaticResource NumberRounder}}"/><!--
+                        HorizontalAlignment="Right"><!--
+                        --><Run Text="{x:Bind vm.Coin.Diff, Converter={StaticResource NumberSign}}"/><!--
                         --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                     </TextBlock>
-                    <TextBlock
+                    <TextBlock Visibility="Collapsed"
                         Foreground="{x:Bind vm.Coin.DiffFG}" FontWeight="Bold"
                         FontSize="13" Margin="2 0"
-                        HorizontalAlignment="Right">
-                        <Run Text="("/><Run Text="{x:Bind vm.Coin.DiffArrow}"/><!--
-                        --><Run Text="{x:Bind vm.Coin.DiffPct}"/><Run Text="%)"/>
+                        HorizontalAlignment="Right"><!--
+                        --><Run Text="("/><!--
+                        --><Run Text="{x:Bind vm.Coin.DiffPct, Converter={StaticResource NumberSign}}"/><!--
+                        --><Run Text="%)"/>
                     </TextBlock>
+                    <userControls:DiffTextBlock Visibility="Visible"
+                        Diff="{x:Bind vm.Coin.DiffPct}"
+                        DiffFg="{x:Bind vm.Coin.DiffFG}"
+                        Margin="0 0 0 0"/>
                 </StackPanel>
 
                 <userControls:DiffTextBlock Visibility="Collapsed"
@@ -447,8 +451,7 @@
                                 <controls:HeaderedContentControl HorizontalAlignment="Right" HorizontalContentAlignment="Center" Header="Total profit">
                                     <controls:HeaderedContentControl.Content>
                                         <TextBlock Foreground="{x:Bind vm.Coin.DiffFG}">
-                                            <Run Text="{x:Bind vm.Coin.DiffArrow}"/><!--
-                                            --><Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
+                                            <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
                                             --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                         </TextBlock>
                                     </controls:HeaderedContentControl.Content>

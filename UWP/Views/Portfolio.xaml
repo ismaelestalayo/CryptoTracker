@@ -189,9 +189,10 @@
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding Arrow}" Margin="4 0" Foreground="{Binding ProfitFG}"/>
-                                    <TextBlock Text="{Binding Worth}"/>
-                                    <TextBlock Text="{Binding CurrencySymbol}"/>
+                                    <TextBlock
+                                        Text="{Binding Worth, Converter={StaticResource NumberSign}}"
+                                        Foreground="{Binding ProfitFG}"/>
+                                    <TextBlock Text="{Binding CurrencySymbol}" Foreground="{Binding ProfitFG}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -256,8 +257,8 @@
                             <TextBlock Grid.Row="0" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Currently:"/>
                             <TextBlock Grid.Row="0" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
                                 <Run Text="{Binding Current}"/><Run Text="{Binding CurrencySymbol}"/>
-                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Arrow}"/><!--
-                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding Delta}"/><!--
+                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Delta,
+                                    Converter={StaticResource NumberSign}}"/><!--
                                 --><Run Foreground="{Binding ProfitFG}" Text="%"/>
                             </TextBlock>
                             
@@ -271,8 +272,8 @@
                             <TextBlock Grid.Row="1" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Worth:"/>
                             <TextBlock Grid.Row="1" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
                                 <Run Text="{Binding Worth}"/><Run Text="{Binding CurrencySymbol}"/>
-                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Arrow}"/><!--
-                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding Profit}"/><!--
+                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Profit,
+                                    Converter={StaticResource NumberSign}}"/><!--
                                 --><Run Foreground="{Binding ProfitFG}" Text="{Binding CurrencySymbol}"/>
                             </TextBlock>
 
@@ -331,7 +332,7 @@
         <Grid Grid.Row="2" Margin="0 5 0 50" Height="32"
             Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.2*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

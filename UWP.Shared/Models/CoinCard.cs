@@ -101,7 +101,6 @@ namespace UWP.Models {
         /// </summary>
         private double _price = 0;
         private double _diff = 0;
-        private string _diffArrow = "▲";
         private string _volume24 = "0";
         private string _volume24to = "0";
 
@@ -112,20 +111,11 @@ namespace UWP.Models {
         internal double Diff {
             get => _diff;
             set {
-                SetProperty(ref _diff, Math.Abs(value)); /// Save the absolute value
-                if (value < 0) {
-                    DiffArrow = "▼";
-                    DiffFG = (SolidColorBrush)Application.Current.Resources["pastelRed"];
-                }
-                else {
-                    DiffArrow = "▲";
-                    DiffFG = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
-                }
+                SetProperty(ref _diff, value);
+                DiffFG = (value < 0) ?
+                    (SolidColorBrush)Application.Current.Resources["pastelRed"] :
+                    (SolidColorBrush)Application.Current.Resources["pastelGreen"];
             }
-        }
-        internal string DiffArrow {
-            get => _diffArrow;
-            set => SetProperty(ref _diffArrow, value);
         }
         internal string Volume24 {
             get => _volume24;

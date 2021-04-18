@@ -24,15 +24,14 @@
             </Border.Background>
         </Border>
         <TextBlock
-            d:Text="▲15%"
+            d:Text="+15%"
             d:Foreground="#00aa00"
             FontFamily="Segoe UI"
             Foreground="{x:Bind DiffFg}"
             FontSize="14" FontWeight="SemiBold"
             CharacterSpacing="-25"
             Padding="5 0 5 2">
-            <Run Text="{x:Bind DiffArrow}"/><!--
-            --><Run Text="{x:Bind Diff}"/><!--
+            <Run Text="{x:Bind Diff, Converter={StaticResource NumberSign}}"/><!--
             --><Run Text="%"/>
         </TextBlock>
     </Grid>

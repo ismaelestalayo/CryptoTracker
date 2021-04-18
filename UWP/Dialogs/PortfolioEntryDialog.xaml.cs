@@ -113,12 +113,11 @@ namespace CryptoTracker.Dialogs {
                 priceBought = Math.Round(priceBought, 4);
 
                 double earningz = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
-                purchase.Arrow = earningz < 0 ? "▼" : "▲";
                 purchase.BoughtAt = priceBought;
                 purchase.Delta = Math.Round(curr / priceBought, 2) * 100;
                 if (purchase.Delta > 100)
                     purchase.Delta -= 100;
-                purchase.Profit = Math.Round(Math.Abs(earningz), 2);
+                purchase.Profit = Math.Round(earningz, 2);
                 purchase.ProfitFG = (earningz < 0) ?
                     (SolidColorBrush)App.Current.Resources["pastelRed"] :
                     (SolidColorBrush)App.Current.Resources["pastelGreen"];

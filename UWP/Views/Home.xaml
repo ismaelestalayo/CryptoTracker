@@ -235,7 +235,7 @@
                                     Grid.Column="1"
                                     Style="{ThemeResource TitleTextBlockStyle}">
                                     <Run Text="{x:Bind Info.VolumeToTotal,
-                                        Converter={StaticResource NumberPrefixer}}"/><!--
+                                        Converter={StaticResource NumberUnit}}"/><!--
                                     --><Run Text="{x:Bind Info.CurrencySym}"/>
                                 </TextBlock>
                             </Grid>

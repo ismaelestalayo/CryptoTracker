@@ -201,12 +201,11 @@ namespace UWP.Views {
                 priceBought = Math.Round(priceBought, 4);
 
                 double earningz = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
-                purchase.Arrow = earningz < 0 ? "▼" : "▲";
                 purchase.BoughtAt = priceBought;
                 purchase.Delta = Math.Round(curr / priceBought, 2) * 100;
                 if (purchase.Delta > 100)
                     purchase.Delta -= 100;
-                purchase.Profit = Math.Round(Math.Abs(earningz), 2);
+                purchase.Profit = Math.Round(earningz, 2);
                 purchase.ProfitFG = (earningz < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
             }
             if (purchase.InvestedQty == 0)
@@ -414,10 +413,12 @@ namespace UWP.Views {
                 ObservableCollection<GroupInfoCollection<PurchaseModel>> purchases = new ObservableCollection<GroupInfoCollection<PurchaseModel>>();
                 switch (opt) {
                     case "By profits":
-                        var query = from item in vm.Portfolio group item by item.Arrow into g select new { GroupName = g.Key, Items = g };
+                        var query = from item in vm.Portfolio
+                                    group item by (item.Profit >= 0 ? "win" : "loss")
+                                    into g select new { GroupName = g.Key, Items = g };
                         foreach (var g in query) {
                             GroupInfoCollection<PurchaseModel> info = new GroupInfoCollection<PurchaseModel>();
-                            info.Key = (g.GroupName == "▲") ? "Profits" : "Losses";
+                            info.Key = (g.GroupName == "win") ? "Profits" : "Losses";
                             foreach (var item in g.Items) {
                                 info.Add(item);
                             }
@@ -425,7 +426,9 @@ namespace UWP.Views {
                         }
                         break;
                     case "By coin":
-                        query = from item in vm.Portfolio group item by item.Crypto into g select new { GroupName = g.Key, Items = g };
+                        query = from item in vm.Portfolio
+                                group item by item.Crypto
+                                into g select new { GroupName = g.Key, Items = g };
                         foreach (var g in query) {
                             GroupInfoCollection<PurchaseModel> info = new GroupInfoCollection<PurchaseModel>();
                             info.Key = g.GroupName;

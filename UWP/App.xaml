@@ -18,7 +18,8 @@
 
             <helpers:GeneralNumberConverter x:Key="NumberFormatter"/>
             <helpers:NumberRounder x:Key="NumberRounder"/>
-            <helpers:NumberPrefixConverter x:Key="NumberPrefixer"/>
+            <helpers:NumberUnitSuffixer x:Key="NumberUnit"/>
+            <helpers:NumberSignPrefixer x:Key="NumberSign"/>
 
             <FontFamily x:Key="FluentIconFont">/Assets/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
             <!-- Manually override default "Segoe MDL2 Assets" font-->

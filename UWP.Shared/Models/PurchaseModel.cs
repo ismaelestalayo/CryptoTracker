@@ -146,13 +146,6 @@ namespace UWP.Models {
             set => SetProperty(ref lastUpdate, value);
         }
 
-        private string arrow = "▲";
-        public string Arrow {
-            get => arrow;
-            set => SetProperty(ref arrow, value);
-        }
-
-
         private SolidColorBrush profitFG = new SolidColorBrush(Color.FromArgb(255, 128, 128, 128));
         public SolidColorBrush ProfitFG {
             get => profitFG;
