@@ -21,10 +21,10 @@ namespace UWP.ViewModels {
             set => SetProperty(ref top100cards, value);
         }
 
-        private List<Ticker> tickers;
-        public List<Ticker> Tickers {
-            get => tickers;
-            set => SetProperty(ref tickers, value);
+        private List<CoinMarket> coinMarket;
+        public List<CoinMarket> CoinMarket {
+            get => coinMarket;
+            set => SetProperty(ref coinMarket, value);
         }
 
         public void InAppNotification(string title, string message = "") {

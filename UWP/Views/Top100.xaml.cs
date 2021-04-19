@@ -1,5 +1,4 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using System.Linq;
 using UWP.APIs;
 using UWP.Models;
 using UWP.Services;
@@ -17,9 +16,10 @@ namespace UWP.Views {
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             vm.GlobalStats = await CoinGecko.GetGlobalStats();
             vm.Top100cards = await CryptoCompare.GetTop100();
-            var tickers = await Ioc.Default.GetService<ICoinPaprika>().GetTickers_("EUR");
-            tickers = tickers.OrderBy(x => x.rank).ToList();
-            vm.Tickers = tickers;
+
+            var coinMarket = await Ioc.Default.GetService<ICoinGecko>().GetCoinsMarkets_("EUR");
+            //tickers = tickers.OrderBy(x => x.rank).ToList();
+            vm.CoinMarket = coinMarket;
         }
 
         // #########################################################################################

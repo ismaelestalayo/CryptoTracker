@@ -115,9 +115,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
             <Grid.Resources>
@@ -133,7 +133,7 @@
             <TextBlock Grid.Column="3" Text="Diff 7d"/>
             <TextBlock Grid.Column="4" Text="Diff 30d"/>
         </Grid>
-        <ListView Grid.Row="3" ItemsSource="{x:Bind vm.Tickers}">
+        <ListView Grid.Row="3" ItemsSource="{x:Bind vm.CoinMarket}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemExpanded}">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -141,7 +141,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="services:Ticker">
+                <DataTemplate x:DataType="services:CoinMarket">
                     <Grid
                         Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
                         
@@ -150,9 +150,9 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -163,15 +163,15 @@
                         <StackPanel Grid.Column="0" Grid.Row="1"
                             Orientation="Horizontal" Padding="30 5 0 5">
                             <Image d:Source="ms-appx:///Assets/Icons/iconNULL.png"
-                                Source="{x:Bind logo}"
+                                Source="{x:Bind image}"
                                 Width="32" Margin="10 0"/>
                             <StackPanel>
                                 <TextBlock d:Text="Bitcoin" Text="{x:Bind name}" FontWeight="Bold"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <StackPanel Background="#50808080" CornerRadius="6" Padding="4 0">
+                                <StackPanel Orientation="Horizontal" Opacity="0.5">
+                                    <StackPanel Background="#50808080" CornerRadius="4" Padding="4 0" Height="16">
                                         <TextBlock
-                                            d:Text="1" Text="{x:Bind rank}"
-                                            FontSize="12" Padding="0 1 0 0"/>
+                                            d:Text="1" Text="{x:Bind market_cap_rank}"
+                                            FontSize="12" Padding="0 0 0 0"/>
                                     </StackPanel>
                                     <TextBlock d:Text="BTC" Text="{x:Bind symbol}" Margin="3 0"/>
                                 </StackPanel>
@@ -180,33 +180,39 @@
 
                         <!-- COLUMN 1 -->
                         <TextBlock Grid.Column="1" Grid.Row="1"
-                            FontSize="18" CharacterSpacing="50"
-                            FontWeight="Bold" HorizontalAlignment="Center"
-                            Text="{x:Bind quote.price, Converter={StaticResource NumberRounder}}"
+                            FontSize="18"
+                            FontWeight="SemiBold" HorizontalAlignment="Center"
+                            Text="{x:Bind current_price, Converter={StaticResource NumberRounder}}"
                             VerticalAlignment="Center"/>
 
                         <!-- COLUMN 2 -->
                         <TextBlock Grid.Column="2" Grid.Row="1"
-                            Foreground="{x:Bind quote.percent_change_24h, Converter={StaticResource NumberForeground}}"
+                            Foreground="{x:Bind price_change_percentage_24h_in_currency,
+                                Converter={StaticResource NumberForeground}}"
                             FontWeight="SemiBold" HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                            <Run Text="{x:Bind quote.percent_change_24h}"/><Run Text="%"/>
+                            <Run Text="{x:Bind price_change_percentage_24h_in_currency,
+                                Converter={StaticResource NumberRounder}}"/><Run Text="%"/>
                         </TextBlock>
 
                         <!-- COLUMN 3 -->
                         <TextBlock Grid.Column="3" Grid.Row="1"
-                            Foreground="{x:Bind quote.percent_change_7d, Converter={StaticResource NumberForeground}}"
+                            Foreground="{x:Bind price_change_percentage_7d_in_currency,
+                                Converter={StaticResource NumberForeground}}"
                             FontWeight="SemiBold" HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                            <Run Text="{x:Bind quote.percent_change_7d}"/><Run Text="%"/>
+                            <Run Text="{x:Bind price_change_percentage_7d_in_currency,
+                                Converter={StaticResource NumberRounder}}"/><Run Text="%"/>
                         </TextBlock>
 
                         <!-- COLUMN 4 -->
                         <TextBlock Grid.Column="4" Grid.Row="1"
                             FontWeight="SemiBold" HorizontalAlignment="Center"
-                            Foreground="{x:Bind quote.percent_change_30d, Converter={StaticResource NumberForeground}}"
+                            Foreground="{x:Bind price_change_percentage_30d_in_currency,
+                                Converter={StaticResource NumberForeground}}"
                             VerticalAlignment="Center">
-                            <Run Text="{x:Bind quote.percent_change_30d}"/><Run Text="%"/>
+                            <Run Text="{x:Bind price_change_percentage_30d_in_currency,
+                                Converter={StaticResource NumberRounder}}"/><Run Text="%"/>
                         </TextBlock>
 
                     </Grid>
