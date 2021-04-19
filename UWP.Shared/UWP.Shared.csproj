@@ -141,6 +141,7 @@
     <Compile Include="Models\SuggestionCoin.cs" />
     <Compile Include="Models\Top100card.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ICoinPaprika.cs" />
     <Compile Include="Services\IGithub.cs" />
     <Compile Include="Services\ICoinGecko.cs" />
     <Compile Include="Services\ICryptoCompare.cs" />

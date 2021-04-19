@@ -8,9 +8,9 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:helpers="using:UWP.Helpers"
+    xmlns:models="using:UWP.Models"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
-    xmlns:models="using:UWP.Models"
     NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
     mc:Ignorable="d">

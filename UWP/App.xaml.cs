@@ -69,6 +69,7 @@ namespace UWP {
                 new ServiceCollection()
                 .AddSingleton(RestService.For<ICryptoCompare>("https://min-api.cryptocompare.com/"))
                 .AddSingleton(RestService.For<ICoinGecko>("https://api.coingecko.com/api/v3/"))
+                .AddSingleton(RestService.For<ICoinPaprika>("https://api.coinpaprika.com/"))
                 .AddSingleton(RestService.For<IGithub>("https://raw.githubusercontent.com/ismaelestalayo/CryptoTracker/API/"))
                 .AddTransient<LocalSettings>()
                 .BuildServiceProvider());

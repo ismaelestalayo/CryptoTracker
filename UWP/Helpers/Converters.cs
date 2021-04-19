@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using UWP.Shared.Constants;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Media;
 
 namespace UWP.Helpers {
     /// Numbers
@@ -68,6 +70,14 @@ namespace UWP.Helpers {
     public class DateTimeOffsetShortener : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
             => ((DateTimeOffset)val).DateTime.ToShortDateString();
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
+    /// Colors
+    public class NumberForeground : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => (double)val >= 0 ? ColorConstants.GetBrush("pastel_green") : ColorConstants.GetBrush("pastel_red");
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UWP.Models;
+using UWP.Services;
 
 namespace UWP.ViewModels {
     public class Top100ViewModel : ObservableRecipient {
@@ -18,6 +19,12 @@ namespace UWP.ViewModels {
         public List<Top100card> Top100cards {
             get => top100cards;
             set => SetProperty(ref top100cards, value);
+        }
+
+        private List<Ticker> tickers;
+        public List<Ticker> Tickers {
+            get => tickers;
+            set => SetProperty(ref tickers, value);
         }
 
         public void InAppNotification(string title, string message = "") {

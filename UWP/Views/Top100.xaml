@@ -5,7 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="using:UWP.Helpers"
     xmlns:models="using:UWP.Models"
+    xmlns:services="using:UWP.Services"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     NavigationCacheMode="Required"
@@ -16,23 +18,62 @@
         <viewModels:Top100ViewModel x:Name="vm"/>
     </Page.DataContext>
 
-    <!-- 
-    ###################################################################################################
-    # TOP HEADER # -->
-    <Grid Padding="5" >
+    <Page.Resources>
+        <helpers:NumberForeground x:Key="NumberForeground"/>
+    </Page.Resources>
+    
+    <Grid Padding="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Padding="0 10" Margin="5" CornerRadius="5" MaxWidth="750"
-              Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+        <!-- 
+        ###########################################################################################
+        # TOP HEADER # -->
+        <Grid
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+            CornerRadius="8"
+            Padding="30 10" Margin="10"
+            MaxWidth="650">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
+            <StackPanel HorizontalAlignment="Center" Margin="0 0 0 10">
+                <TextBlock Text="GLOBAL MARKET DATA" Opacity="0.75" FontWeight="Light" CharacterSpacing="100"/>
+            </StackPanel>
+
+            <!-- TITLES -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontWeight" Value="Light"/>
+                        <Setter Property="Margin" Value="0 -5 0 0"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Style>
+                </Grid.Resources>
+
+                <TextBlock Grid.Column="0" Text="BTC dom."/>
+                <TextBlock Grid.Column="1" Text="24h Vol"/>
+                <TextBlock Grid.Column="2" Text="Mkt Cap."/>
+            </Grid>
+
+            <!-- VALUES -->
+            <Grid Grid.Row="2" Margin="0 -5 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -49,44 +90,177 @@
 
                 <TextBlock Grid.Column="0">
                     <Run Text="{x:Bind vm.GlobalStats.BtcDominance}"
-                        d:Text="100"/><Run Text="%"/>
+                         d:Text="50.00"/><Run Text="%"/>
                 </TextBlock>
-                <TextBlock Grid.Column="1" d:Text="0B€">
+                <TextBlock Grid.Column="1" d:Text="340B€">
                     <Run	Text="{x:Bind vm.GlobalStats.TotalVolume}"/><!--
                     --><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol}"/>
                 </TextBlock>
-                <TextBlock Grid.Column="2" d:Text="0B€">
-                    <Run	Text="{x:Bind vm.GlobalStats.TotalMarketCap}"/><!--
+                <TextBlock Grid.Column="2" d:Text="1700B€">
+                    <Run Text="{x:Bind vm.GlobalStats.TotalMarketCap}"/><!--
                     --><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol}"/>
                 </TextBlock>
             </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="Margin" Value="0 -5 0 0"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                        <Setter Property="Opacity" Value="0.5"/>
-                    </Style>
-                </Grid.Resources>
-
-                <TextBlock Grid.Column="0" Text="BTC dom."/>
-                <TextBlock Grid.Column="1" Text="24h Vol"/>
-                <TextBlock Grid.Column="2" Text="Mkt Cap."/>
-            </Grid>
         </Grid>
 
+        <userControls:TimeRangeRadioButtons
+            Grid.Row="1"
+            FullRange="False"
+            Margin="0 10 0 20"/>
+
         <!-- 
-        ###################################################################################################
+        ###########################################################################################
         # Top 100 List View # -->
-        <ScrollViewer Grid.Row="1"
+        <Grid Grid.Row="2" BorderThickness="0 0 0 0.2" BorderBrush="{ThemeResource SystemChromeAltLowColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+
+            <TextBlock Grid.Column="0" Text="Rank"/>
+            <TextBlock Grid.Column="1" Text="Price"/>
+            <TextBlock Grid.Column="2" Text="Diff 24h"/>
+            <TextBlock Grid.Column="3" Text="Diff 7d"/>
+            <TextBlock Grid.Column="4" Text="Diff 30d"/>
+        </Grid>
+        <ListView Grid.Row="3" ItemsSource="{x:Bind vm.Tickers}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemExpanded}">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="services:Ticker">
+                    <Grid
+                        Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+                        
+                        CornerRadius="5"
+                        Margin="0 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- COLUMN 0 -->
+                        <StackPanel Grid.Column="0" Grid.Row="1"
+                            Orientation="Horizontal" Padding="30 5 0 5">
+                            <Image d:Source="ms-appx:///Assets/Icons/iconNULL.png"
+                                Source="{x:Bind logo}"
+                                Width="32" Margin="10 0"/>
+                            <StackPanel>
+                                <TextBlock d:Text="Bitcoin" Text="{x:Bind name}" FontWeight="Bold"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Background="#50808080" CornerRadius="6" Padding="4 0">
+                                        <TextBlock
+                                            d:Text="1" Text="{x:Bind rank}"
+                                            FontSize="12" Padding="0 1 0 0"/>
+                                    </StackPanel>
+                                    <TextBlock d:Text="BTC" Text="{x:Bind symbol}" Margin="3 0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- COLUMN 1 -->
+                        <TextBlock Grid.Column="1" Grid.Row="1"
+                            FontSize="18" CharacterSpacing="50"
+                            FontWeight="Bold" HorizontalAlignment="Center"
+                            Text="{x:Bind quote.price, Converter={StaticResource NumberRounder}}"
+                            VerticalAlignment="Center"/>
+
+                        <!-- COLUMN 2 -->
+                        <TextBlock Grid.Column="2" Grid.Row="1"
+                            Foreground="{x:Bind quote.percent_change_24h, Converter={StaticResource NumberForeground}}"
+                            FontWeight="SemiBold" HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                            <Run Text="{x:Bind quote.percent_change_24h}"/><Run Text="%"/>
+                        </TextBlock>
+
+                        <!-- COLUMN 3 -->
+                        <TextBlock Grid.Column="3" Grid.Row="1"
+                            Foreground="{x:Bind quote.percent_change_7d, Converter={StaticResource NumberForeground}}"
+                            FontWeight="SemiBold" HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                            <Run Text="{x:Bind quote.percent_change_7d}"/><Run Text="%"/>
+                        </TextBlock>
+
+                        <!-- COLUMN 4 -->
+                        <TextBlock Grid.Column="4" Grid.Row="1"
+                            FontWeight="SemiBold" HorizontalAlignment="Center"
+                            Foreground="{x:Bind quote.percent_change_30d, Converter={StaticResource NumberForeground}}"
+                            VerticalAlignment="Center">
+                            <Run Text="{x:Bind quote.percent_change_30d}"/><Run Text="%"/>
+                        </TextBlock>
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+            <!-- For previsualization purposes -->
+            <d:Rectangle/>
+        </ListView>
+        
+        <!--<controls:DataGrid
+            AutoGenerateColumns="False"
+            Grid.Row="2"
+            ItemsSource="{x:Bind vm.Tickers}">
+            
+            <controls:DataGrid.Columns>
+                <controls:DataGridTemplateColumn Header="Rank" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="services:Ticker">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0 5">
+
+                                <Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
+
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind name}" FontWeight="Bold"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel
+                                            Background="#66808080" CornerRadius="6"
+                                            Padding="3 0" Margin="3 0">
+                                            <TextBlock Text="{x:Bind rank}"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{x:Bind symbol}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="Price" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="services:Ticker">
+                            <TextBlock Text="{x:Bind quote.price}" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+            </controls:DataGrid.Columns>
+            
+        </controls:DataGrid>-->
+
+        <!-- 
+        ###########################################################################################
+        # Top 100 List View # -->
+        <ScrollViewer Grid.Row="4"
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Auto"
             MaxWidth="600">
