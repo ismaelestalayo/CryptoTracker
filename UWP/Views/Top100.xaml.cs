@@ -45,5 +45,11 @@ namespace UWP.Views {
             // Update pinnedCoin list
             App.UpdatePinnedCoins();
         }
+
+        private void Fav_click(object sender, RoutedEventArgs e) {
+            var card = ((CoinMarket)((FrameworkElement)sender).DataContext);
+            var crypto = card.symbol.ToUpperInvariant();
+            vm.Vis = Visibility.Collapsed;
+        }
     }
 }

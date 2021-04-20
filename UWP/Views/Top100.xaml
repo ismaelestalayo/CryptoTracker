@@ -5,11 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:helpers="using:UWP.Helpers"
+    xmlns:converters="using:UWP.Converters"
     xmlns:models="using:UWP.Models"
     xmlns:services="using:UWP.Services"
     xmlns:userControls="using:UWP.UserControls"
-    xmlns:viewModels="using:UWP.ViewModels"
+    xmlns:viewModels="using:UWP.ViewModels" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     NavigationCacheMode="Required"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
@@ -19,7 +19,24 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <helpers:NumberForeground x:Key="NumberForeground"/>
+        <Style x:Key="DataGrid_HeaderStyle" TargetType="ContentControl">
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContentControl">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <converters:NumberForeground x:Key="NumberForeground"/>
     </Page.Resources>
     
     <Grid Padding="10">
@@ -30,6 +47,28 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DataGridColumn30d.Width" Value="1"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NarrowStateee">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DataGridColumn30d.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <!-- 
         ###########################################################################################
@@ -103,15 +142,15 @@
             </Grid>
         </Grid>
 
-        <userControls:TimeRangeRadioButtons
+        <!--<userControls:TimeRangeRadioButtons
             Grid.Row="1"
             FullRange="False"
-            Margin="0 10 0 20"/>
+            Margin="0 10 0 20"/>-->
 
         <!-- 
         ###########################################################################################
         # Top 100 List View # -->
-        <Grid Grid.Row="2" BorderThickness="0 0 0 0.2" BorderBrush="{ThemeResource SystemChromeAltLowColor}">
+        <!--<Grid Grid.Row="2" BorderThickness="0 0 0 0.2" BorderBrush="{ThemeResource SystemChromeAltLowColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -129,11 +168,11 @@
 
             <TextBlock Grid.Column="0" Text="Rank"/>
             <TextBlock Grid.Column="1" Text="Price"/>
-            <TextBlock Grid.Column="2" Text="Diff 24h"/>
-            <TextBlock Grid.Column="3" Text="Diff 7d"/>
-            <TextBlock Grid.Column="4" Text="Diff 30d"/>
-        </Grid>
-        <ListView Grid.Row="3" ItemsSource="{x:Bind vm.CoinMarket}">
+            <TextBlock Grid.Column="2" Text="24h"/>
+            <TextBlock Grid.Column="3" Text="7d"/>
+            <TextBlock Grid.Column="4" Text="30d"/>
+        </Grid>-->
+        <!--<ListView Grid.Row="3" ItemsSource="{x:Bind vm.CoinMarket}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemExpanded}">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -159,7 +198,7 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- COLUMN 0 -->
+                        --><!-- COLUMN 0 --><!--
                         <StackPanel Grid.Column="0" Grid.Row="1"
                             Orientation="Horizontal" Padding="30 5 0 5">
                             <Image d:Source="ms-appx:///Assets/Icons/iconNULL.png"
@@ -178,14 +217,14 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <!-- COLUMN 1 -->
+                        --><!-- COLUMN 1 --><!--
                         <TextBlock Grid.Column="1" Grid.Row="1"
                             FontSize="18"
                             FontWeight="SemiBold" HorizontalAlignment="Center"
                             Text="{x:Bind current_price, Converter={StaticResource NumberRounder}}"
                             VerticalAlignment="Center"/>
 
-                        <!-- COLUMN 2 -->
+                        --><!-- COLUMN 2 --><!--
                         <TextBlock Grid.Column="2" Grid.Row="1"
                             Foreground="{x:Bind price_change_percentage_24h_in_currency,
                                 Converter={StaticResource NumberForeground}}"
@@ -195,7 +234,7 @@
                                 Converter={StaticResource NumberRounder}}"/><Run Text="%"/>
                         </TextBlock>
 
-                        <!-- COLUMN 3 -->
+                        --><!-- COLUMN 3 --><!--
                         <TextBlock Grid.Column="3" Grid.Row="1"
                             Foreground="{x:Bind price_change_percentage_7d_in_currency,
                                 Converter={StaticResource NumberForeground}}"
@@ -205,7 +244,7 @@
                                 Converter={StaticResource NumberRounder}}"/><Run Text="%"/>
                         </TextBlock>
 
-                        <!-- COLUMN 4 -->
+                        --><!-- COLUMN 4 --><!--
                         <TextBlock Grid.Column="4" Grid.Row="1"
                             FontWeight="SemiBold" HorizontalAlignment="Center"
                             Foreground="{x:Bind price_change_percentage_30d_in_currency,
@@ -219,62 +258,165 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
             
-            <!-- For previsualization purposes -->
+            --><!-- For previsualization purposes --><!--
             <d:Rectangle/>
-        </ListView>
-        
-        <!--<controls:DataGrid
+        </ListView>-->
+
+        <controls:DataGrid
+            x:Name="DataGrid"
             AutoGenerateColumns="False"
-            Grid.Row="2"
-            ItemsSource="{x:Bind vm.Tickers}">
-            
+            ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
+            Grid.Row="3"
+            ItemsSource="{x:Bind vm.CoinMarket}"
+            MaxWidth="1000">
+
+            <controls:DataGrid.Resources>
+                <Style TargetType="Grid">
+                    <Setter Property="Background" Value="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
+                    <Setter Property="Margin" Value="0 2"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                </Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </controls:DataGrid.Resources>
+
             <controls:DataGrid.Columns>
-                <controls:DataGridTemplateColumn Header="Rank" Width="*">
+                <controls:DataGridTemplateColumn Header="Rank" Width="200">
                     <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate x:DataType="services:Ticker">
-                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0 5">
-
-                                <Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
-
-                                <StackPanel>
-                                    <TextBlock Text="{x:Bind name}" FontWeight="Bold"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <StackPanel
-                                            Background="#66808080" CornerRadius="6"
-                                            Padding="3 0" Margin="3 0">
-                                            <TextBlock Text="{x:Bind rank}"/>
+                        <DataTemplate x:DataType="services:CoinMarket">
+                            <Grid Padding="15 0 0 0" Margin="3 2 0 2">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Padding="0 5">
+                                    <Button
+                                        Content="&#xEB51;"
+                                        Click="Fav_click"
+                                        FontFamily="{StaticResource FluentIconFont}"
+                                        Background="Transparent"/>
+                                    <Image Grid.Column="1" Width="38" Margin="10 0" Source="{x:Bind image}"/>
+                                    <StackPanel>
+                                        <TextBlock Text="{x:Bind name}" FontWeight="Bold"/>
+                                        <StackPanel Orientation="Horizontal"  Opacity="0.75">
+                                            <StackPanel Background="#60808080" CornerRadius="3" Height="16" Width="16">
+                                                <TextBlock Text="{x:Bind market_cap_rank}" FontSize="12"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{x:Bind symbol}" Margin="3 0"/>
                                         </StackPanel>
-                                        <TextBlock Text="{x:Bind symbol}"/>
                                     </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="Mkt. cap." Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="services:CoinMarket">
+                            <Grid>
+                                <StackPanel>
+                                    <TextBlock
+                                        Text="{x:Bind market_cap, Converter={StaticResource NumberUnit}}"
+                                        FontWeight="Bold"/>
+                                    <TextBlock
+                                        Text="{x:Bind market_cap_change_percentage_24h,
+                                            Converter={StaticResource NumberSign}}"
+                                        FontSize="12" FontWeight="Bold"
+                                        Foreground="{x:Bind market_cap_change_24h,
+                                            Converter={StaticResource NumberForeground}}">
+                                        <Run Text="%"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="Vol. 24h" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="services:CoinMarket">
+                            <Grid>
+                                <StackPanel>
+                                    <TextBlock
+                                        Text="{x:Bind total_volume, Converter={StaticResource NumberUnit}}"
+                                        FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
 
                 <controls:DataGridTemplateColumn Header="Price" Width="*">
                     <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate x:DataType="services:Ticker">
-                            <TextBlock Text="{x:Bind quote.price}" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <DataTemplate x:DataType="services:CoinMarket">
+                            <Grid>
+                                <TextBlock
+                                    Text="{x:Bind current_price, Converter={StaticResource NumberRounder}}"
+                                    FontSize="18" FontWeight="Bold"/>
+                            </Grid>
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="24h" Width="100">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="services:CoinMarket">
+                            <Grid>
+                                <TextBlock
+                                    Text="{x:Bind price_change_percentage_24h_in_currency,
+                                    Converter={StaticResource NumberSign}}" FontWeight="SemiBold"
+                                    Foreground="{x:Bind price_change_percentage_24h_in_currency,
+                                    Converter={StaticResource NumberForeground}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="7d" Width="100">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="services:CoinMarket">
+                            <Grid>
+                                <TextBlock Text="{x:Bind price_change_percentage_7d_in_currency,
+                                    Converter={StaticResource NumberSign}}" FontWeight="SemiBold"
+                                    Foreground="{x:Bind price_change_percentage_7d_in_currency,
+                                    Converter={StaticResource NumberForeground}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTemplateColumn Header="30d" Width="100" x:Name="DataGridColumn30d">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="services:CoinMarket">
+                            <Grid>
+                                <TextBlock Text="{x:Bind price_change_percentage_30d_in_currency,
+                                    Converter={StaticResource NumberSign}}" FontWeight="SemiBold"
+                                    Foreground="{x:Bind price_change_percentage_30d_in_currency,
+                                    Converter={StaticResource NumberForeground}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+
+                <controls:DataGridTextColumn
+                    Header="PRICEE" Binding="{Binding current_price}" Tag="PRICEE" Visibility="{x:Bind vm.Vis, Mode=OneWay}"/>
+
             </controls:DataGrid.Columns>
             
-        </controls:DataGrid>-->
+        </controls:DataGrid>
 
         <!-- 
         ###########################################################################################
         # Top 100 List View # -->
-        <ScrollViewer Grid.Row="4"
-            HorizontalScrollBarVisibility="Disabled"
-            VerticalScrollBarVisibility="Auto"
-            MaxWidth="600">
             <ListView x:Name="top100ListView"
-                SelectionMode="None"
+                Grid.Row="4"
                 IsItemClickEnabled="True"
                 ItemClick="ListView_Click"
-                ItemsSource="{x:Bind vm.Top100cards}">
+                ItemsSource="{x:Bind vm.Top100cards}"
+                MaxWidth="600"
+                SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Top100card">
                         <Grid x:Name="listView_Element"
@@ -368,7 +510,6 @@
                 <d:Rectangle/>
             </ListView>
 
-        </ScrollViewer>
 
     </Grid>
 </Page>

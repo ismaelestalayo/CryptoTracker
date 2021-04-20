@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UWP.Models;
 using UWP.Services;
+using Windows.UI.Xaml;
 
 namespace UWP.ViewModels {
     public class Top100ViewModel : ObservableRecipient {
@@ -25,6 +26,12 @@ namespace UWP.ViewModels {
         public List<CoinMarket> CoinMarket {
             get => coinMarket;
             set => SetProperty(ref coinMarket, value);
+        }
+
+        private Visibility vis = Visibility.Visible;
+        public Visibility Vis {
+            get => vis;
+            set => SetProperty(ref vis, value);
         }
 
         public void InAppNotification(string title, string message = "") {
