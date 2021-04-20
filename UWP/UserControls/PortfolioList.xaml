@@ -4,13 +4,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:helpers="using:UWP.Helpers"
+    xmlns:converters="using:UWP.Converters"
     xmlns:models="using:UWP.Models"
     d:Height="200" d:Width="600"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <helpers:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
+        <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
     </UserControl.Resources>
 
     <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->

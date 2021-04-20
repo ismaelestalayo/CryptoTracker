@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:helpers="using:UWP.Helpers"
+    xmlns:converters="using:UWP.Converters"
     xmlns:models="using:UWP.Models"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
@@ -20,10 +20,9 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <helpers:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
-        <helpers:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
-        <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
-        <helpers:BoolInverseToVisibility x:Key="BoolInverse2Visibility"/>
+        <converters:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
+        <converters:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
+        <converters:BoolInverseToVisibility x:Key="BoolInverse2Visibility"/>
     </Page.Resources>
 
     <!-- 

@@ -7,11 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
-    xmlns:helpers="using:UWP.Helpers"
+    xmlns:converters="using:UWP.Converters"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <helpers:DateTimeFormatter x:Key="DateFormatter"/>
+        <converters:DateTimeFormatter x:Key="DateFormatter"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart

@@ -20,7 +20,6 @@
             x:Key="NavigationViewTopPaneBackground" BackgroundSource="HostBackdrop" 
             TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity="0.9"
             FallbackColor="{ThemeResource SystemChromeMediumLowColor}"/>
-        <helpers:VisibilityInverter x:Key="VisibilityInverter"/>
     </Page.Resources>
     
     <!-- 

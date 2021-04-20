@@ -2,7 +2,7 @@
     x:Class="UWP.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:helpers="using:UWP.Helpers">
+    xmlns:converters="using:UWP.Converters">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -16,10 +16,11 @@
             <SolidColorBrush x:Key="coinColor" Color="#2A2A2A"/>
             <SolidColorBrush x:Key="coinColorT" Color="#2A2A2A" Opacity="0.4"/>
 
-            <helpers:GeneralNumberConverter x:Key="NumberFormatter"/>
-            <helpers:NumberRounder x:Key="NumberRounder"/>
-            <helpers:NumberUnitSuffixer x:Key="NumberUnit"/>
-            <helpers:NumberSignPrefixer x:Key="NumberSign"/>
+            <converters:GeneralNumberConverter x:Key="NumberFormatter"/>
+            <converters:NumberRounder x:Key="NumberRounder"/>
+            <converters:NumberUnitSuffixer x:Key="NumberUnit"/>
+            <converters:NumberSignPrefixer x:Key="NumberSign"/>
+            <converters:VisibilityInverter x:Key="VisibilityInverter"/>
 
             <FontFamily x:Key="FluentIconFont">/Assets/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
             <!-- Manually override default "Segoe MDL2 Assets" font-->

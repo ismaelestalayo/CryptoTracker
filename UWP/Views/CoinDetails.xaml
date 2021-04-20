@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:helpers="using:UWP.Helpers"
+    xmlns:converters="using:UWP.Converters"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     mc:Ignorable="d"
@@ -84,10 +84,10 @@
             </Setter>
         </Style>
 
-        <helpers:StringFormatConverter x:Key="StringFormatConverter"/>
-        <helpers:DateTimeShortener x:Key="DateShortener"/>
-        <helpers:BoolToVisibility x:Key="BoolConverter"/>
-        <helpers:BoolInverseToVisibility x:Key="BoolInverter"/>
+        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+        <converters:DateTimeShortener x:Key="DateShortener"/>
+        <converters:BoolToVisibility x:Key="BoolConverter"/>
+        <converters:BoolInverseToVisibility x:Key="BoolInverter"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Padding="5, 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
