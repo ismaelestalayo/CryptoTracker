@@ -17,6 +17,15 @@ namespace UWP.Converters {
             => throw new NotImplementedException();
     }
 
+    public class PercentageRounder : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang) {
+            double perc = Math.Round((double)val, 2);
+            return new NumberSignPrefixer().Convert(perc, targetType, param, lang) + "%";
+        }
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
     public class NumberUnitSuffixer : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
             => NumberHelper.AddUnitPrefix((double)val);

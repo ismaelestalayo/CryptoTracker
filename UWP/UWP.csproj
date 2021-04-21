@@ -116,6 +116,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\StringConverters.cs" />
     <Compile Include="Converters\OtherConverters.cs" />
     <Compile Include="Converters\DateConverters.cs" />
     <Compile Include="Converters\BoolConverters.cs" />

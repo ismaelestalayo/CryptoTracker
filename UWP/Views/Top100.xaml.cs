@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using UWP.APIs;
 using UWP.Models;
 using UWP.Services;
@@ -50,6 +51,14 @@ namespace UWP.Views {
             var card = ((CoinMarket)((FrameworkElement)sender).DataContext);
             var crypto = card.symbol.ToUpperInvariant();
             vm.Vis = Visibility.Collapsed;
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            var card = ((CoinMarket)((DataGrid)sender).SelectedItem);
+            var crypto = card.symbol.ToUpperInvariant();
+
+            top100ListView.PrepareConnectedAnimation("toCoinDetails", null, "listView_Element");
+            this.Frame.Navigate(typeof(CoinDetails), crypto);
         }
     }
 }

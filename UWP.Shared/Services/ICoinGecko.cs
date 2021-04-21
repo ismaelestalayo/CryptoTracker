@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using UWP.Helpers;
 
 namespace UWP.Services {
     public interface ICoinGecko {
@@ -24,6 +25,7 @@ namespace UWP.Services {
             foreach (var d in data) {
                 var z = ((JsonElement)d.sparkline_in_7d).GetProperty("price");
                 d.sparkline_7d = JsonSerializer.Deserialize<List<double>>(z.ToString());
+                d.image = IconsHelper.GetIcon(d.symbol.ToUpperInvariant());
             }
             return data;
 		}

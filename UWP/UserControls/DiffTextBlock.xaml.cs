@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -24,7 +23,7 @@ namespace UWP.UserControls {
                 typeof(SolidColorBrush),
                 null);
 
-        public double Diff {
+        public double? Diff {
             get => (double)GetValue(DiffProperty);
             set => SetValue(DiffProperty, value);
         }

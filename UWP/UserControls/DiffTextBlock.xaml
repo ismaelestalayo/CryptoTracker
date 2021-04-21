@@ -6,9 +6,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:converters="using:UWP.Converters"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="100">
+
+    <UserControl.Resources>
+        <converters:PercentageRounder x:Key="Percentage"/>
+        <converters:NumberForeground x:Key="NumberForeground"/>
+    </UserControl.Resources>
 
     <Grid
         CornerRadius="5"
@@ -17,7 +23,7 @@
         VerticalAlignment="Center">
         <Border
             d:Background="#00aa00"
-            Background="{x:Bind DiffFg}" Opacity="0.15"/>
+            Background="{x:Bind Diff, Converter={StaticResource NumberForeground}}" Opacity="0.15"/>
         <Border>
             <Border.Background>
                 <media:BackdropSaturationBrush Saturation="0.6"/>
@@ -27,12 +33,11 @@
             d:Text="+15%"
             d:Foreground="#00aa00"
             FontFamily="Segoe UI"
-            Foreground="{x:Bind DiffFg}"
+            Foreground="{x:Bind Diff, Converter={StaticResource NumberForeground}}"
             FontSize="14" FontWeight="SemiBold"
             CharacterSpacing="-25"
-            Padding="5 0 5 2">
-            <Run Text="{x:Bind Diff, Converter={StaticResource NumberSign}}"/><!--
-            --><Run Text="%"/>
+            Padding="5 0 5 2"
+            Text="{x:Bind Diff, Converter={StaticResource Percentage}}">
         </TextBlock>
     </Grid>
 </UserControl>
