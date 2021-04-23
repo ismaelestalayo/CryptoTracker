@@ -1,7 +1,11 @@
-﻿using Refit;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Refit;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
+using UWP.Core.Constants;
 using UWP.Helpers;
 
 namespace UWP.Services {
@@ -21,12 +25,16 @@ namespace UWP.Services {
 		public static async Task<List<CoinMarket>> GetCoinsMarkets_(this ICoinGecko service, string currency) {
 			var response = await service.GetCoinsMarkets(currency);
 
-			var data = JsonSerializer.Deserialize<List<CoinMarket>>(response.ToString());
+            var pinnedCoins = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.PinnedCoins);
+            var pinned = pinnedCoins.Split("|").ToList();
+
+            var data = JsonSerializer.Deserialize<List<CoinMarket>>(response.ToString());
             foreach (var d in data) {
                 var z = ((JsonElement)d.sparkline_in_7d).GetProperty("price");
                 d.sparkline_7d = JsonSerializer.Deserialize<List<double>>(z.ToString());
                 var img = IconsHelper.GetIcon(d.symbol.ToUpperInvariant());
                 d.image = img.StartsWith("/Assets") ? img : d.image;
+                d.IsFav = pinned.Contains(d.symbol.ToUpperInvariant());
             }
             return data;
 		}
@@ -54,12 +62,16 @@ namespace UWP.Services {
         public string ath_date { get; set; }
         public double atl { get; set; } = 0;
         public string atl_date { get; set; }
+        [IgnoreDataMemberAttribute]
         public List<double> sparkline_7d { get; set; }
+        [IgnoreDataMemberAttribute]
         public object sparkline_in_7d { get; set; }
         public double? price_change_percentage_1h_in_currency { get; set; } = 0;
         public double? price_change_percentage_24h_in_currency { get; set; } = 0;
         public double? price_change_percentage_30d_in_currency { get; set; } = 0;
         public double? price_change_percentage_7d_in_currency { get; set; } = 0;
         public double? price_change_percentage_1y_in_currency { get; set; } = 0;
+
+        public bool IsFav { get; set; } = false;
     }
 }

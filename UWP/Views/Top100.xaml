@@ -21,6 +21,7 @@
         <converters:NumberForeground x:Key="NumberForeground"/>
         <converters:UpperCaseConverter x:Key="UpperCase"/>
         <converters:PercentageRounder x:Key="Percentage"/>
+        <converters:FavIconConverter x:Key="FavIcon"/>
     </Page.Resources>
     
     <Grid Padding="10">
@@ -275,20 +276,22 @@
                         <StackPanel Grid.Column="0"
                                 Orientation="Horizontal" Padding="30 5 0 5">
                             <Button
-                                    Content="&#xEB51;"
-                                    Click="Fav_click"
-                                    FontFamily="{StaticResource FluentIconFont}"
-                                    Background="Transparent"/>
-                            <Image d:Source="ms-appx:///Assets/Icons/iconNULL.png"
-                                    Source="{x:Bind image}"
-                                    Width="45" Margin="10 0"/>
+                                d:Content="&#xEB51;"
+                                Click="Fav_click"
+                                Content="{x:Bind IsFav, Converter={StaticResource FavIcon}}"
+                                FontFamily="{StaticResource FluentIconFont}"
+                                Background="Transparent"/>
+                            <Image
+                                d:Source="ms-appx:///Assets/Icons/iconNULL.png"
+                                Source="{x:Bind image}"
+                                Width="45" Margin="10 0"/>
                             <StackPanel>
                                 <TextBlock d:Text="Bitcoin" Text="{x:Bind name}" FontWeight="Bold" FontSize="16"/>
                                 <StackPanel Orientation="Horizontal" Opacity="0.5">
                                     <StackPanel Background="#50808080" CornerRadius="4" Padding="4 0" Height="16">
                                         <TextBlock
-                                                d:Text="1" Text="{x:Bind market_cap_rank}"
-                                                FontSize="12" Padding="0 0 0 0"/>
+                                            d:Text="1" Text="{x:Bind market_cap_rank}"
+                                            FontSize="12" Padding="0 0 0 0"/>
                                     </StackPanel>
                                     <TextBlock d:Text="BTC" Text="{x:Bind symbol,
                                             Converter={StaticResource UpperCase}}" Margin="3 0"/>

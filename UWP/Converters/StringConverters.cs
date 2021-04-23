@@ -28,4 +28,12 @@ namespace UWP.Converters {
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
+
+    public class FavIconConverter : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => (bool)val ? "\uEB52" : "\uEB51";
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
 }
