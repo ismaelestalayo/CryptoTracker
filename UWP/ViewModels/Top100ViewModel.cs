@@ -28,12 +28,6 @@ namespace UWP.ViewModels {
             set => SetProperty(ref coinMarket, value);
         }
 
-        private Visibility vis = Visibility.Visible;
-        public Visibility Vis {
-            get => vis;
-            set => SetProperty(ref vis, value);
-        }
-
         public void InAppNotification(string title, string message = "") {
             var tuple = new Tuple<string, string>(title, message);
             Messenger.Send(new NotificationMessage(tuple));

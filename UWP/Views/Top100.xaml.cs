@@ -1,5 +1,4 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using UWP.APIs;
 using UWP.Models;
 using UWP.Services;
@@ -18,16 +17,16 @@ namespace UWP.Views {
             vm.GlobalStats = await CoinGecko.GetGlobalStats();
             vm.Top100cards = await CryptoCompare.GetTop100();
 
-            var coinMarket = await Ioc.Default.GetService<ICoinGecko>().GetCoinsMarkets_("EUR");
+            vm.CoinMarket = await Ioc.Default.GetService<ICoinGecko>().GetCoinsMarkets_("EUR");
             //tickers = tickers.OrderBy(x => x.rank).ToList();
-            vm.CoinMarket = coinMarket;
         }
 
         // #########################################################################################
         private void ListView_Click(object sender, ItemClickEventArgs e) {
-            top100ListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "listView_Element");
+            CurrenciesListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "listView_Element2");
 
-            var crypto = ((Top100card)e.ClickedItem).CoinInfo.Name;
+            var crypto = ((CoinMarket)e.ClickedItem).symbol.ToUpperInvariant();
+            // ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("toCoinDetails", sender);
             this.Frame.Navigate(typeof(CoinDetails), crypto);
         }
 
@@ -50,15 +49,7 @@ namespace UWP.Views {
         private void Fav_click(object sender, RoutedEventArgs e) {
             var card = ((CoinMarket)((FrameworkElement)sender).DataContext);
             var crypto = card.symbol.ToUpperInvariant();
-            vm.Vis = Visibility.Collapsed;
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var card = ((CoinMarket)((DataGrid)sender).SelectedItem);
-            var crypto = card.symbol.ToUpperInvariant();
-
-            top100ListView.PrepareConnectedAnimation("toCoinDetails", null, "listView_Element");
-            this.Frame.Navigate(typeof(CoinDetails), crypto);
-        }
     }
 }

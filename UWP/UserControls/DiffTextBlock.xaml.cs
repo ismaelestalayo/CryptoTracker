@@ -24,7 +24,7 @@ namespace UWP.UserControls {
                 null);
 
         public double? Diff {
-            get => (double)GetValue(DiffProperty);
+            get => (double)(GetValue(DiffProperty) ?? (double)0);
             set => SetValue(DiffProperty, value);
         }
 
