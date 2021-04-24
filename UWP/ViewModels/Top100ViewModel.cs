@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UWP.Models;
 using UWP.Services;
@@ -14,8 +15,8 @@ namespace UWP.ViewModels {
             set => SetProperty(ref globalStats, value);
         }
 
-        private ObservableCollection<CoinMarket> coinMarket;
-        public ObservableCollection<CoinMarket> CoinMarket {
+        private List<CoinMarket> coinMarket;
+        public List<CoinMarket> CoinMarket {
             get => coinMarket;
             set => SetProperty(ref coinMarket, value);
         }

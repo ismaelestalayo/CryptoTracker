@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using UWP.Core.Constants;
 using UWP.Helpers;
+using UWP.Shared.Constants;
 
 namespace UWP.Services {
     public interface ICoinGecko {
@@ -22,8 +23,12 @@ namespace UWP.Services {
 	}
 
 	public static class CoinGeckoExtensions {
-		public static async Task<List<CoinMarket>> GetCoinsMarkets_(this ICoinGecko service, string currency) {
-			var response = await service.GetCoinsMarkets(currency);
+		public static async Task<List<CoinMarket>> GetCoinsMarkets_(this ICoinGecko service, string currency = "") {
+            if (currency == "")
+                currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
+            var currencySym = Currencies.GetCurrencySymbol(currency);
+            
+            var response = await service.GetCoinsMarkets(currency);
 
             var pinnedCoins = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.PinnedCoins);
             var pinned = pinnedCoins.Split("|").ToList();
@@ -35,6 +40,7 @@ namespace UWP.Services {
                 var img = IconsHelper.GetIcon(d.symbol.ToUpperInvariant());
                 d.image = img.StartsWith("/Assets") ? img : d.image;
                 d.IsFav = pinned.Contains(d.symbol.ToUpperInvariant());
+                d.currencySymbol = currencySym;
             }
             return data;
 		}
@@ -73,5 +79,6 @@ namespace UWP.Services {
         public double? price_change_percentage_1y_in_currency { get; set; } = 0;
 
         public bool IsFav { get; set; } = false;
+        public string currencySymbol { get; set; } = "";
     }
 }

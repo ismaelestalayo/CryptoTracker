@@ -59,7 +59,7 @@ namespace UWP.Shared.Constants {
             { "ZRX_color",  ParseHex("#404040") },
 
             { "NULL_color",   ParseHex("#7D7D7D") },
-            { "pastel_green", ParseHex("#00C060") },
+            { "pastel_green", ParseHex("#00AD57") },
             { "pastel_red",   ParseHex("#FF5757") }
         };
 
