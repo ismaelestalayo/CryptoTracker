@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UWP.APIs;
 using UWP.Background;
@@ -9,12 +10,16 @@ using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
+using Windows.Graphics.Display;
+using Windows.Graphics.Imaging;
+using Windows.Storage;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace UWP.Views {
     public sealed partial class Home : Page {
@@ -224,6 +229,36 @@ namespace UWP.Views {
                 vm.InAppNotification($"Unpinned {crypto} from start screen.");
             }
             else {
+                var grid = await LiveTileGenerator.SecondaryTileGridOperation(crypto);
+
+                try {
+                    RenderTargetBitmap rtb = new RenderTargetBitmap();
+                    MainGrid.Children.Add(grid);
+                    grid.Opacity = 0;
+                    await rtb.RenderAsync(grid);
+                    MainGrid.Children.Remove(grid);
+                    var pixelBuffer = await rtb.GetPixelsAsync();
+                    var pixels = pixelBuffer.ToArray();
+                    var displayInformation = DisplayInformation.GetForCurrentView();
+                    var file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"tile-{crypto}.png",
+                        CreationCollisionOption.ReplaceExisting);
+                    using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
+                        var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+                        encoder.SetPixelData(BitmapPixelFormat.Bgra8,
+                                             BitmapAlphaMode.Premultiplied,
+                                             (uint)rtb.PixelWidth,
+                                             (uint)rtb.PixelHeight,
+                                             displayInformation.RawDpiX,
+                                             displayInformation.RawDpiY,
+                                             pixels);
+                        await encoder.FlushAsync();
+                    }
+                }
+                catch (Exception ex) {
+                    var z = ex.Message;
+                }
+
+
                 success = await LiveTileUpdater.AddSecondaryTileAction(crypto);
                 if (success) {
                     vm.PriceCards[i].Info.IsPin = true;
