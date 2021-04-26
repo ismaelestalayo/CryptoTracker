@@ -210,9 +210,9 @@ namespace UWP.Views {
                     page = typeof(Home);
                     CurrentTabIndex = 0;
                     break;
-                case "Top 100":
+                case "Coins":
                     dir.Effect = (CurrentTabIndex > 1) ? SlideNavigationTransitionEffect.FromLeft : SlideNavigationTransitionEffect.FromRight;
-                    page = typeof(Top100);
+                    page = typeof(Coins);
                     CurrentTabIndex = 1;
                     break;
                 case "News":

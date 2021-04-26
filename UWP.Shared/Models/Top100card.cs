@@ -2,11 +2,10 @@
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using UWP.Core.Constants;
 using UWP.Services;
-using UWP.Shared.Constants;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
-	public class Top100card : ObservableObject{
+    public class Top100card : ObservableObject{
         private CoinInfo _coinInfo = new CoinInfo();
         public CoinInfo CoinInfo {
             get => _coinInfo;

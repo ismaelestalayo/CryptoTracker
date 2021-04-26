@@ -64,7 +64,7 @@
                         <FontIcon Glyph="&#xE10F;"/> <!-- Home -->
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Top 100" Tag="top" FontWeight="Light">
+                <NavigationViewItem Content="Coins" Tag="top" FontWeight="Light">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE179;"/> <!-- All Apps -->
                     </NavigationViewItem.Icon>

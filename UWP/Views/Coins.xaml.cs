@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UWP.APIs;
 using UWP.Core.Constants;
@@ -10,24 +11,24 @@ using Windows.UI.Xaml.Controls;
 
 namespace UWP.Views {
 
-    public sealed partial class Top100 : Page {
+    public sealed partial class Coins : Page {
 
         private string sortedBy = "";
 
-        public Top100() {
+        public Coins() {
             InitializeComponent();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             vm.GlobalStats = await CoinGecko.GetGlobalStats();
 
-            var coinMarket = await LocalStorageHelper.ReadObject<List<CoinMarket>>(UserStorage.Top100List);
-            vm.CoinMarket = coinMarket;
+            var coinMarket = await LocalStorageHelper.ReadObject<List<CoinMarket>>(UserStorage.CoinsCache);
+            vm.CoinMarket = new ObservableCollection<CoinMarket>(coinMarket);
             var market = await Ioc.Default.GetService<ICoinGecko>().GetCoinsMarkets_();
             market = market.OrderBy(x => x.market_cap_rank).ToList();
-            vm.CoinMarket = market;
+            vm.CoinMarket = new ObservableCollection<CoinMarket>(market);
 
-            LocalStorageHelper.SaveObject(UserStorage.Top100List, vm.CoinMarket);
+            LocalStorageHelper.SaveObject(UserStorage.CoinsCache, vm.CoinMarket);
         }
 
         // #########################################################################################
@@ -58,44 +59,46 @@ namespace UWP.Views {
 
         private void Sort_list_click(object sender, RoutedEventArgs e) {
             var btn = ((ContentControl)sender).Content.ToString().ToLowerInvariant();
+            var list = new List<CoinMarket>();
             switch (btn) {
                 case "rank":
-                    vm.CoinMarket = (sortedBy != btn) ?
+                    list = (sortedBy != btn) ?
                         vm.CoinMarket.OrderByDescending(x => x.market_cap_rank).ToList() :
                         vm.CoinMarket.OrderBy(x => x.market_cap_rank).ToList();
                     break;
                 case "price":
-                    vm.CoinMarket = (sortedBy != btn) ?
+                    list = (sortedBy != btn) ?
                         vm.CoinMarket.OrderByDescending(x => x.current_price).ToList() :
                         vm.CoinMarket.OrderByDescending(x => x.current_price).ToList();
                     break;
                 case "mkt. cap.":
-                    vm.CoinMarket = (sortedBy != btn) ?
+                    list = (sortedBy != btn) ?
                         vm.CoinMarket.OrderByDescending(x => x.market_cap).ToList() :
                         vm.CoinMarket.OrderBy(x => x.market_cap).ToList();
                     break;
                 case "volume":
-                    vm.CoinMarket = (sortedBy != btn) ?
+                    list = (sortedBy != btn) ?
                         vm.CoinMarket.OrderByDescending(x => x.total_volume).ToList() :
                         vm.CoinMarket.OrderBy(x => x.total_volume).ToList();
                     break;
                 case "24h":
-                    vm.CoinMarket = (sortedBy != btn) ?
+                    list = (sortedBy != btn) ?
                         vm.CoinMarket.OrderByDescending(x => x.price_change_percentage_24h_in_currency).ToList() :
                         vm.CoinMarket.OrderBy(x => x.price_change_percentage_24h_in_currency).ToList();
                     break;
                 case "7d":
-                    vm.CoinMarket = (sortedBy != btn) ?
+                    list = (sortedBy != btn) ?
                         vm.CoinMarket.OrderByDescending(x => x.price_change_percentage_7d_in_currency).ToList() :
                         vm.CoinMarket.OrderBy(x => x.price_change_percentage_7d_in_currency).ToList();
                     break;
                 case "30d":
-                    vm.CoinMarket = (sortedBy != btn) ?
+                    list = (sortedBy != btn) ?
                         vm.CoinMarket.OrderByDescending(x => x.price_change_percentage_30d_in_currency).ToList() :
                         vm.CoinMarket.OrderBy(x => x.price_change_percentage_30d_in_currency).ToList();
                     break;
             }
             sortedBy = (sortedBy == btn) ? "" : btn;
+            vm.CoinMarket = new ObservableCollection<CoinMarket>(list);
         }
     }
 }

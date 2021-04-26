@@ -161,7 +161,7 @@
     <Compile Include="ViewModels\NewsViewModel.cs" />
     <Compile Include="ViewModels\PortfolioViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\Top100ViewModel.cs" />
+    <Compile Include="ViewModels\CoinsViewModel.cs" />
     <Compile Include="ViewModels\WebViewViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -209,8 +209,8 @@
     <Compile Include="Views\Settings\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Top100.xaml.cs">
-      <DependentUpon>Top100.xaml</DependentUpon>
+    <Compile Include="Views\Coins.xaml.cs">
+      <DependentUpon>Coins.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WebVieww.xaml.cs">
       <DependentUpon>WebVieww.xaml</DependentUpon>
@@ -467,7 +467,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Top100.xaml">
+    <Page Include="Views\Coins.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

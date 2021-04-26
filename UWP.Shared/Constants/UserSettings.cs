@@ -44,6 +44,6 @@ namespace UWP.Core.Constants {
 		/// <summary>
 		/// List<CoinMarket>
 		/// </summary>
-		public const string Top100List = "Top100";
+		public const string CoinsCache = "CoinsCache";
 	}
 }
