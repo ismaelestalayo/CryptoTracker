@@ -10,6 +10,7 @@ using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Constants;
 using UWP.Shared.Models;
 using UWP.UserControls;
 using Windows.UI.Popups;
@@ -91,30 +92,33 @@ namespace UWP.Views {
                 await UpdatePurchaseAsync(vm.Portfolio[i]);
 
             /// Create the diversification grid
-            foreach (var purchase in vm.Portfolio) {
+            var grouped = vm.Portfolio.GroupBy(x => x.Crypto);
+            foreach (var purchases in grouped) {
+                var crypto = purchases.Key.ToUpperInvariant();
+                var worth = purchases.ToList().Sum(x => x.InvestedQty);
+
                 ColumnDefinition col = new ColumnDefinition();
-                col.Width = new GridLength(purchase.Worth, GridUnitType.Star);
+                col.Width = new GridLength(worth, GridUnitType.Star);
                 PortfolioChartGrid.ColumnDefinitions.Add(col);
 
                 var s = new StackPanel();
                 s.BorderThickness = new Thickness(0);
                 s.Margin = new Thickness(1, 0, 1, 0);
                 var t = new TextBlock() {
-                    Text = purchase.Crypto,
+                    Text = crypto,
                     FontSize = 12,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     Margin = new Thickness(0, 7, 0, 7)
                 };
                 s.Children.Add(t);
-                try { s.Background = (SolidColorBrush)App.Current.Resources[purchase.Crypto + "_colorT"]; }
-                catch { s.Background = (SolidColorBrush)App.Current.Resources["Main_WhiteBlackT"]; }
+                s.Background = ColorConstants.GetBrush(crypto + "_color", 100);
 
                 PortfolioChartGrid.Children.Add(s);
                 Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);
+            }
 
-                vm.TotalInvested += purchase.InvestedQty;
-                vm.TotalWorth += purchase.Worth;
-            }            
+            vm.TotalInvested = vm.Portfolio.Sum(x => x.InvestedQty);
+            vm.TotalWorth = vm.Portfolio.Sum(x => x.Worth);
 
             /// Finally, update the chart of the portfolio's worth
             await UpdatePortfolioChart();
