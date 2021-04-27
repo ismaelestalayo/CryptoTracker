@@ -18,6 +18,7 @@
 
             <converters:GeneralNumberConverter x:Key="NumberFormatter"/>
             <converters:NumberRounder x:Key="NumberRounder"/>
+            <converters:NumberForeground x:Key="NumberForeground"/>
             <converters:NumberUnitSuffixer x:Key="NumberUnit"/>
             <converters:NumberSignPrefixer x:Key="NumberSign"/>
             <converters:VisibilityInverter x:Key="VisibilityInverter"/>

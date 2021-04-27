@@ -13,7 +13,6 @@
 
     <UserControl.Resources>
         <converters:PercentageRounder x:Key="Percentage"/>
-        <converters:NumberForeground x:Key="NumberForeground"/>
     </UserControl.Resources>
 
     <Grid

@@ -297,8 +297,10 @@ namespace UWP.Views {
                 NewPurchase = new PurchaseModel() { Crypto = vm.Coin.Name }
             };
             var response = await dialog.ShowAsync();
-            if (response.ToString().ToLowerInvariant() == "primary")
+            if (response.ToString().ToLowerInvariant() == "primary") {
                 vm.Purchases.Add(dialog.NewPurchase);
+                PortfolioHelper.AddPurchase(dialog.NewPurchase);
+            }            
         }
     }
 }

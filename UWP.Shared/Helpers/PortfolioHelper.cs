@@ -8,7 +8,6 @@ using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
 using UWP.Shared.Constants;
-using Windows.UI.Xaml.Media;
 
 namespace UWP.Shared.Helpers {
     public class PortfolioHelper {
@@ -20,6 +19,12 @@ namespace UWP.Shared.Helpers {
                 portfolio = portfolio.Where(p => p.Crypto == filterCrypto).ToList();
 
             return (portfolio.Count == 0) ? new List<PurchaseModel>() : portfolio;
+        }
+
+        public async static void AddPurchase(PurchaseModel purchase) {
+            var portfolio = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+            portfolio.Add(purchase);
+            LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
         }
 
         public async static Task<PurchaseModel> UpdatePurchase(PurchaseModel purchase) {

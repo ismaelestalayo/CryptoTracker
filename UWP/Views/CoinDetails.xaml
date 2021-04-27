@@ -55,6 +55,7 @@
                             <ContentPresenter
                                 x:Name="HeaderPresenter" 
                                 x:DeferLoadStrategy="Lazy"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 Content="{TemplateBinding Header}" 
                                 ContentTemplate="{TemplateBinding HeaderTemplate}"
                                 Opacity="0.6"/>
@@ -450,7 +451,7 @@
 
                                 <controls:HeaderedContentControl HorizontalAlignment="Right" HorizontalContentAlignment="Center" Header="Total profit">
                                     <controls:HeaderedContentControl.Content>
-                                        <TextBlock Foreground="{x:Bind vm.Coin.DiffFG}">
+                                        <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
                                             <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
                                             --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                         </TextBlock>
