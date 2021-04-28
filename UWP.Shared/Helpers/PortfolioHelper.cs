@@ -42,13 +42,14 @@ namespace UWP.Shared.Helpers {
                 double priceBought = (1 / purchase.CryptoQty) * purchase.InvestedQty;
                 priceBought = Math.Round(priceBought, 4);
 
-                double earningz = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
+                var diff = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
+                
+                purchase.Delta = Math.Round(100 * diff / purchase.InvestedQty, 2);
                 purchase.BoughtAt = priceBought;
-                purchase.Delta = Math.Round(curr / priceBought, 2) * 100;
                 if (purchase.Delta > 100)
                     purchase.Delta -= 100;
-                purchase.Profit = Math.Round(earningz, 2);
-                purchase.ProfitFG = (earningz < 0) ?
+                purchase.Profit = Math.Round(diff, 2);
+                purchase.ProfitFG = (diff < 0) ?
                     ColorConstants.GetBrush("pastel_red") :
                     ColorConstants.GetBrush("pastel_green");
             }

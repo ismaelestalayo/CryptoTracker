@@ -73,8 +73,9 @@
 
                         <StackPanel Grid.Column="4" Margin="10 0">
                             <TextBlock Text="Delta" Opacity="0.75" Margin="0 0 0 -5"/>
-                            <TextBlock d:Text="12%" FontSize="16" HorizontalAlignment="Right">
-                                <Run Text="{x:Bind Worth}"/><!--
+                            <TextBlock d:Text="12%" FontSize="16" HorizontalAlignment="Right"
+                                Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
+                                <Run Text="{x:Bind Delta}"/><!--
                                 --><Run Text="{x:Bind CurrencySymbol}"/>
                             </TextBlock>
                         </StackPanel>
