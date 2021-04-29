@@ -30,7 +30,7 @@
             <Setter Property="Orientation" Value="Horizontal"/>
             <Setter Property="Margin" Value="0 25 0 0"/>
         </Style>
-        
+
         <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
         <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
@@ -49,7 +49,7 @@
                 Text="Choose the currency in which to to show prices. (Pages need to be updated manually.)"/>
             <ComboBox
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                Margin="0 5 0 0"
+                Margin="0 5 0 0" Width="90"
                 SelectedItem="{x:Bind vm.Currency, Mode=TwoWay}"
                 ItemsSource="{x:Bind AllCurrencies, Mode=OneTime}"/>
 
@@ -65,7 +65,7 @@
             <ComboBox
                 SelectedItem="{x:Bind vm.AutoRefresh, Mode=TwoWay}"
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                Margin="0 5 0 0">
+                Margin="0 5 0 0" Width="90">
                 <x:String>None</x:String>
                 <x:String>30 sec</x:String>
                 <x:String>1 min</x:String>

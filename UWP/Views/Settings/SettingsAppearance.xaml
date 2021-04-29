@@ -45,7 +45,7 @@
             </StackPanel>
                 
             <TextBlock Text="Theme"/>
-            <ComboBox x:Name="ThemeComboBox"
+            <ComboBox x:Name="ThemeComboBox" Width="110"
                 PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed">
                 <ComboBoxItem Content="Light" Name="Light"/>
                 <ComboBoxItem Content="Dark" Name="Dark"/>

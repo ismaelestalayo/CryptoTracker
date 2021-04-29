@@ -242,6 +242,7 @@
                             <!-- VOLUME CHART: -->
                             <userControls:ChartBars
                                 Grid.Row="1"
+                                Margin="0 -5"
                                 ChartModel="{x:Bind Chart}"/>
                         </Grid>
 

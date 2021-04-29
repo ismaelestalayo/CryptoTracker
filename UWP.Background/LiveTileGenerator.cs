@@ -34,9 +34,9 @@ namespace UWP.Background {
 
             var polyline = new Polyline();
             polyline.Stroke = ColorConstants.GetBrush($"{crypto}_color");
-            polyline.Fill = ColorConstants.GetBrush($"{crypto}_color", 20);
+            polyline.Fill = ColorConstants.GetBrush($"{crypto}_color", 50);
             polyline.FillRule = FillRule.Nonzero;
-            polyline.StrokeThickness = 0.5;
+            polyline.StrokeThickness = 1.5;
             polyline.VerticalAlignment = VerticalAlignment.Bottom;
 
             var points = new PointCollection();

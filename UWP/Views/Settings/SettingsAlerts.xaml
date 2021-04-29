@@ -59,7 +59,8 @@
 
             <!-- NO ALERTS WARNING -->
             <StackPanel
-                HorizontalAlignment="Center" 
+                HorizontalAlignment="Left"
+                Width="325"
                 Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
                 <TextBlock
                     FontWeight="Bold" HorizontalAlignment="Center"

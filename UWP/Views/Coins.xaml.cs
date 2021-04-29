@@ -65,13 +65,13 @@ namespace UWP.Views {
             switch (btn) {
                 case "rank":
                     list = (sortedBy != btn) ?
-                        vm.CoinMarket.OrderByDescending(x => x.market_cap_rank).ToList() :
-                        vm.CoinMarket.OrderBy(x => x.market_cap_rank).ToList();
+                        vm.CoinMarket.OrderBy(x => x.market_cap_rank).ToList() :
+                        vm.CoinMarket.OrderByDescending(x => x.market_cap_rank).ToList();
                     break;
                 case "price":
                     list = (sortedBy != btn) ?
                         vm.CoinMarket.OrderByDescending(x => x.current_price).ToList() :
-                        vm.CoinMarket.OrderByDescending(x => x.current_price).ToList();
+                        vm.CoinMarket.OrderBy(x => x.current_price).ToList();
                     break;
                 case "mkt. cap.":
                     list = (sortedBy != btn) ?
