@@ -124,14 +124,14 @@
                         BorderThickness="0 0 0 0.2" BorderBrush="{ThemeResource SystemChromeAltLowColor}"
                         Margin="12 0 12 3" Padding="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" x:Name="cryptoCol"/>
-                            <ColumnDefinition Width="1.5*" x:Name="chartCol"/>
-                            <ColumnDefinition Width="*" x:Name="priceCol"/>
+                            <ColumnDefinition Width="2*" x:Name="cryptoCol" MinWidth="220"/>
+                            <ColumnDefinition Width="175" x:Name="priceCol"/>
+                            <ColumnDefinition Width="*" x:Name="chartCol"/>
                             <ColumnDefinition Width="*" x:Name="capCol"/>
                             <ColumnDefinition Width="*" x:Name="volCol"/>
-                            <ColumnDefinition Width="100" x:Name="diff24hCol"/>
-                            <ColumnDefinition Width="100" x:Name="diff7dCol"/>
-                            <ColumnDefinition Width="100" x:Name="diff30dCol"/>
+                            <ColumnDefinition Width="*" x:Name="diff24hCol"/>
+                            <ColumnDefinition Width="*" x:Name="diff7dCol"/>
+                            <ColumnDefinition Width="*" x:Name="diff30dCol"/>
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
                             <Style TargetType="Button">
@@ -155,9 +155,21 @@
                                     </VisualState.Setters>
                                 </VisualState>
 
-                                <VisualState x:Name="step1">
+                                <VisualState x:Name="step01">
                                     <VisualState.StateTriggers>
                                         <AdaptiveTrigger MinWindowWidth="600"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="volCol.Width" Value="0"/>
+                                        <Setter Target="diff24hCol.Width" Value="0"/>
+                                        <Setter Target="diff7dCol.Width" Value="0"/>
+                                        <Setter Target="diff30dCol.Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="step1">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="700"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="volCol.Width" Value="0"/>
@@ -168,7 +180,7 @@
 
                                 <VisualState x:Name="step2">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="700" />
+                                        <AdaptiveTrigger MinWindowWidth="800" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="diff7dCol.Width" Value="0"/>
@@ -178,7 +190,7 @@
 
                                 <VisualState x:Name="step3">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="800" />
+                                        <AdaptiveTrigger MinWindowWidth="900" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="diff30dCol.Width" Value="0"/>
@@ -187,7 +199,7 @@
 
                                 <VisualState x:Name="step4">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="900" />
+                                        <AdaptiveTrigger MinWindowWidth="1000" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="diff30dCol.Width" Value="100"/>
@@ -204,12 +216,6 @@
                         <Button Grid.Column="5" Click="Sort_list_click" Content="24h"/>
                         <Button Grid.Column="6" Click="Sort_list_click" Content="7d"/>
                         <Button Grid.Column="7" Click="Sort_list_click" Content="30d"/>
-                        <!--<TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="Price"/>
-                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="Mkt. Cap."/>
-                        <TextBlock Grid.Column="3" HorizontalAlignment="Center" Text="Volume"/>
-                        <TextBlock Grid.Column="4" HorizontalAlignment="Center" Text="24h"/>
-                        <TextBlock Grid.Column="5" HorizontalAlignment="Center" Text="7d"/>
-                        <TextBlock Grid.Column="6" HorizontalAlignment="Center" Text="30d"/>-->
                     </Grid>
                 </UserControl>
             </ListView.Header>
@@ -225,14 +231,14 @@
                         <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
                             CornerRadius="5" Margin="0 3" Padding="0 2" x:Name="listView_Element2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" x:Name="cryptoCol"/>
-                                <ColumnDefinition Width="1.5*" x:Name="priceCol"/>
+                                <ColumnDefinition Width="2*" x:Name="cryptoCol" MinWidth="220"/>
+                                <ColumnDefinition Width="175" x:Name="priceCol"/>
                                 <ColumnDefinition Width="*" x:Name="chartCol"/>
                                 <ColumnDefinition Width="*" x:Name="capCol"/>
                                 <ColumnDefinition Width="*" x:Name="volCol"/>
-                                <ColumnDefinition Width="100" x:Name="diff24hCol"/>
-                                <ColumnDefinition Width="100" x:Name="diff7dCol"/>
-                                <ColumnDefinition Width="100" x:Name="diff30dCol"/>
+                                <ColumnDefinition Width="*" x:Name="diff24hCol"/>
+                                <ColumnDefinition Width="*" x:Name="diff7dCol"/>
+                                <ColumnDefinition Width="*" x:Name="diff30dCol"/>
                             </Grid.ColumnDefinitions>
 
                             <VisualStateManager.VisualStateGroups>
@@ -250,9 +256,21 @@
                                         </VisualState.Setters>
                                     </VisualState>
 
-                                    <VisualState x:Name="step1">
+                                    <VisualState x:Name="step01">
                                         <VisualState.StateTriggers>
                                             <AdaptiveTrigger MinWindowWidth="600"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="volCol.Width" Value="0"/>
+                                            <Setter Target="diff24hCol.Width" Value="0"/>
+                                            <Setter Target="diff7dCol.Width" Value="0"/>
+                                            <Setter Target="diff30dCol.Width" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="step1">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="700"/>
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
                                             <Setter Target="volCol.Width" Value="0"/>
@@ -263,7 +281,7 @@
 
                                     <VisualState x:Name="step2">
                                         <VisualState.StateTriggers>
-                                            <AdaptiveTrigger MinWindowWidth="700" />
+                                            <AdaptiveTrigger MinWindowWidth="800" />
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
                                             <Setter Target="diff7dCol.Width" Value="0"/>
@@ -273,7 +291,7 @@
 
                                     <VisualState x:Name="step3">
                                         <VisualState.StateTriggers>
-                                            <AdaptiveTrigger MinWindowWidth="800" />
+                                            <AdaptiveTrigger MinWindowWidth="900" />
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
                                             <Setter Target="diff30dCol.Width" Value="0"/>
@@ -282,7 +300,7 @@
 
                                     <VisualState x:Name="step4">
                                         <VisualState.StateTriggers>
-                                            <AdaptiveTrigger MinWindowWidth="900" />
+                                            <AdaptiveTrigger MinWindowWidth="1000" />
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
                                             <Setter Target="diff30dCol.Width" Value="100"/>
