@@ -9,6 +9,7 @@
     xmlns:services="using:UWP.Services"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
+    xmlns:microcharts="using:Microcharts.Uwp"
     NavigationCacheMode="Required"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
@@ -22,6 +23,7 @@
         <converters:UpperCaseConverter x:Key="UpperCase"/>
         <converters:PercentageRounder x:Key="Percentage"/>
         <converters:FavIconConverter x:Key="FavIcon"/>
+        <converters:MicroChartConverter x:Key="MicroChart"/>
     </Page.Resources>
     
     <Grid Padding="10">
@@ -115,7 +117,7 @@
             x:Name="CurrenciesListView" Grid.Row="2"
             IsItemClickEnabled="True" ItemClick="ListView_Click"
             ItemsSource="{x:Bind vm.CoinMarket}"
-            SelectionMode="None"  MaxWidth="1000">
+            SelectionMode="None"  MaxWidth="1100">
             <ListView.Header>
                 <UserControl x:Name="listView_Element">
                     <Grid x:Name="listView_Element2"
@@ -123,6 +125,7 @@
                         Margin="12 0 12 3" Padding="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" x:Name="cryptoCol"/>
+                            <ColumnDefinition Width="1.5*" x:Name="chartCol"/>
                             <ColumnDefinition Width="*" x:Name="priceCol"/>
                             <ColumnDefinition Width="*" x:Name="capCol"/>
                             <ColumnDefinition Width="*" x:Name="volCol"/>
@@ -144,6 +147,7 @@
                                         <AdaptiveTrigger MinWindowWidth="0"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
+                                        <Setter Target="capCol.Width" Value="0"/>
                                         <Setter Target="volCol.Width" Value="0"/>
                                         <Setter Target="diff24hCol.Width" Value="0"/>
                                         <Setter Target="diff7dCol.Width" Value="0"/>
@@ -156,7 +160,7 @@
                                         <AdaptiveTrigger MinWindowWidth="600"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="diff24hCol.Width" Value="0"/>
+                                        <Setter Target="volCol.Width" Value="0"/>
                                         <Setter Target="diff7dCol.Width" Value="0"/>
                                         <Setter Target="diff30dCol.Width" Value="0"/>
                                     </VisualState.Setters>
@@ -194,12 +198,12 @@
 
                         <!--<TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="Rank"/>-->
                         <Button Grid.Column="0" Click="Sort_list_click" Content="Rank"/>
-                        <Button Grid.Column="1" Click="Sort_list_click" Content="Price"/>
-                        <Button Grid.Column="2" Click="Sort_list_click" Content="Mkt. Cap."/>
-                        <Button Grid.Column="3" Click="Sort_list_click" Content="Volume"/>
-                        <Button Grid.Column="4" Click="Sort_list_click" Content="24h"/>
-                        <Button Grid.Column="5" Click="Sort_list_click" Content="7d"/>
-                        <Button Grid.Column="6" Click="Sort_list_click" Content="30d"/>
+                        <Button Grid.Column="1" Click="Sort_list_click" Content="Price" Grid.ColumnSpan="2"/>
+                        <Button Grid.Column="3" Click="Sort_list_click" Content="Mkt. Cap."/>
+                        <Button Grid.Column="4" Click="Sort_list_click" Content="Volume"/>
+                        <Button Grid.Column="5" Click="Sort_list_click" Content="24h"/>
+                        <Button Grid.Column="6" Click="Sort_list_click" Content="7d"/>
+                        <Button Grid.Column="7" Click="Sort_list_click" Content="30d"/>
                         <!--<TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="Price"/>
                         <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="Mkt. Cap."/>
                         <TextBlock Grid.Column="3" HorizontalAlignment="Center" Text="Volume"/>
@@ -222,7 +226,8 @@
                             CornerRadius="5" Margin="0 3" Padding="0 2" x:Name="listView_Element2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*" x:Name="cryptoCol"/>
-                                <ColumnDefinition Width="*" x:Name="priceCol"/>
+                                <ColumnDefinition Width="1.5*" x:Name="priceCol"/>
+                                <ColumnDefinition Width="*" x:Name="chartCol"/>
                                 <ColumnDefinition Width="*" x:Name="capCol"/>
                                 <ColumnDefinition Width="*" x:Name="volCol"/>
                                 <ColumnDefinition Width="100" x:Name="diff24hCol"/>
@@ -237,6 +242,7 @@
                                             <AdaptiveTrigger MinWindowWidth="0"/>
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
+                                            <Setter Target="capCol.Width" Value="0"/>
                                             <Setter Target="volCol.Width" Value="0"/>
                                             <Setter Target="diff24hCol.Width" Value="0"/>
                                             <Setter Target="diff7dCol.Width" Value="0"/>
@@ -249,7 +255,7 @@
                                             <AdaptiveTrigger MinWindowWidth="600"/>
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
-                                            <Setter Target="diff24hCol.Width" Value="0"/>
+                                            <Setter Target="volCol.Width" Value="0"/>
                                             <Setter Target="diff7dCol.Width" Value="0"/>
                                             <Setter Target="diff30dCol.Width" Value="0"/>
                                         </VisualState.Setters>
@@ -287,7 +293,7 @@
 
                             <!-- COLUMN 0 -->
                             <StackPanel Grid.Column="0"
-                                    Orientation="Horizontal" Padding="30 5 0 5">
+                                    Orientation="Horizontal" Padding="15 5 0 5">
                                 <Button
                                     d:Content="&#xEB51;"
                                     Click="Fav_click"
@@ -314,20 +320,20 @@
                             </StackPanel>
 
                             <!-- COLUMN 1 -->
-                            <TextBlock Grid.Column="1"
-                                FontSize="18"
-                                FontWeight="SemiBold" HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                                <Run Text="{x:Bind current_price, Converter={StaticResource NumberRounder}}"/><!--
-                                --><Run Text="{x:Bind currencySymbol}"/>
-                            </TextBlock>
+                            <microcharts:ChartView
+                                Grid.Column="1"
+                                Height="100"
+                                Margin="-10 -15 -10 -35"
+                                VerticalAlignment="Center"
+                                Chart="{x:Bind sparkline_7d, Converter={StaticResource MicroChart}}"
+                                x:Name="chartView"/>
 
                             <!-- COLUMN 2 -->
                             <TextBlock Grid.Column="2"
                                 FontSize="18"
-                                FontWeight="Normal" HorizontalAlignment="Center"
+                                FontWeight="SemiBold" HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <Run Text="{x:Bind market_cap, Converter={StaticResource NumberUnit}}"/><!--
+                                <Run Text="{x:Bind current_price, Converter={StaticResource NumberRounder}}"/><!--
                                 --><Run Text="{x:Bind currencySymbol}"/>
                             </TextBlock>
 
@@ -336,23 +342,32 @@
                                 FontSize="18"
                                 FontWeight="Normal" HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <Run Text="{x:Bind total_volume, Converter={StaticResource NumberUnit}}"/><!--
+                                <Run Text="{x:Bind market_cap, Converter={StaticResource NumberUnit}}"/><!--
                                 --><Run Text="{x:Bind currencySymbol}"/>
                             </TextBlock>
 
                             <!-- COLUMN 4 -->
-                            <userControls:DiffTextBlock
-                                Grid.Column="4"
-                                Diff="{x:Bind price_change_percentage_24h_in_currency}"/>
+                            <TextBlock Grid.Column="4"
+                                FontSize="18"
+                                FontWeight="Normal" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <Run Text="{x:Bind total_volume, Converter={StaticResource NumberUnit}}"/><!--
+                                --><Run Text="{x:Bind currencySymbol}"/>
+                            </TextBlock>
 
                             <!-- COLUMN 5 -->
                             <userControls:DiffTextBlock
                                 Grid.Column="5"
-                                Diff="{x:Bind price_change_percentage_7d_in_currency}"/>
+                                Diff="{x:Bind price_change_percentage_24h_in_currency}"/>
 
                             <!-- COLUMN 6 -->
                             <userControls:DiffTextBlock
                                 Grid.Column="6"
+                                Diff="{x:Bind price_change_percentage_7d_in_currency}"/>
+
+                            <!-- COLUMN 7 -->
+                            <userControls:DiffTextBlock
+                                Grid.Column="7"
                                 Diff="{x:Bind price_change_percentage_30d_in_currency}"/>
 
                         </Grid>

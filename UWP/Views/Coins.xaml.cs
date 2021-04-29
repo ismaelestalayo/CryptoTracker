@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+﻿using Microcharts.Uwp;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace UWP.Views {
         // #########################################################################################
         private void ListView_Click(object sender, ItemClickEventArgs e) {
             CurrenciesListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "listView_Element2");
-
+            
             var crypto = ((CoinMarket)e.ClickedItem).symbol.ToUpperInvariant();
             // ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("toCoinDetails", sender);
             this.Frame.Navigate(typeof(CoinDetails), crypto);
