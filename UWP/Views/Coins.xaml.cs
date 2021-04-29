@@ -21,10 +21,11 @@ namespace UWP.Views {
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            vm.GlobalStats = await CoinGecko.GetGlobalStats();
-
             var coinMarket = await LocalStorageHelper.ReadObject<List<CoinMarket>>(UserStorage.CoinsCache);
             vm.CoinMarket = new ObservableCollection<CoinMarket>(coinMarket);
+
+            vm.GlobalStats = await CoinGecko.GetGlobalStats();
+
             var market = await Ioc.Default.GetService<ICoinGecko>().GetCoinsMarkets_();
             market = market.OrderBy(x => x.market_cap_rank).ToList();
             vm.CoinMarket = new ObservableCollection<CoinMarket>(market);

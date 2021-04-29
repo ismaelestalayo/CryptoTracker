@@ -21,7 +21,7 @@
     <telerik:RadCartesianChart
         x:Name="Chart"
         Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-        Margin="-5 0 -25 0">
+        Margin="-5 0 -30 0">
 
         <telerik:RadCartesianChart.Behaviors>
             <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">

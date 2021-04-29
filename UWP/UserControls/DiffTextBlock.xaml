@@ -22,7 +22,7 @@
         VerticalAlignment="Center">
         <Border
             d:Background="#00aa00"
-            Background="{x:Bind Diff, Converter={StaticResource NumberForeground}}" Opacity="0.15"/>
+            Background="{x:Bind Diff, Converter={StaticResource NumberForeground}}" Opacity="0.2"/>
         <Border>
             <Border.Background>
                 <media:BackdropSaturationBrush Saturation="0.6"/>

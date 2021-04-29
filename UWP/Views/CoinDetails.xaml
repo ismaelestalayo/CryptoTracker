@@ -235,11 +235,6 @@
                         DiffFg="{x:Bind vm.Coin.DiffFG}"
                         Margin="0 0 0 0"/>
                 </StackPanel>
-
-                <userControls:DiffTextBlock Visibility="Collapsed"
-                    Diff="{x:Bind vm.Coin.DiffPct}"
-                    DiffFg="{x:Bind vm.Coin.DiffFG}"
-                    Margin="0 0 0 0"/>
             </StackPanel>
         </Grid>
 
@@ -277,7 +272,7 @@
                 Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}"
                 ChartModel="{x:Bind vm.Chart}"/>
 
-            <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5 0">
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5">
                 <Button
                     Click="ShowCandles_Click"
                     Style="{StaticResource IconBtn}">
