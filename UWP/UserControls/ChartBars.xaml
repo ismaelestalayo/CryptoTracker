@@ -6,12 +6,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:converters="using:UWP.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="ChartFill1" Color="{x:Bind ChartModel.ChartFill1}"/>
+        <converters:BrushToColorTr1Converter x:Key="transparent1"/>
+
+        <SolidColorBrush x:Key="Fill1" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
@@ -28,7 +31,7 @@
         <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData}">
             <telerik:BarSeries.DefaultVisualStyle>
                 <Style TargetType="Border">
-                    <Setter Property="Background" Value="{StaticResource ChartFill1}"/>
+                    <Setter Property="Background" Value="{StaticResource Fill1}"/>
                     <Setter Property="BorderThickness" Value="3"/>
                 </Style>
             </telerik:BarSeries.DefaultVisualStyle>

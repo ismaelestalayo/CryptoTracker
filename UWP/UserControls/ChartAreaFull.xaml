@@ -12,10 +12,8 @@
 
     <UserControl.Resources>
         <converters:DateTimeFormatter x:Key="DateFormatter"/>
-
-        <SolidColorBrush x:Key="ChartFill1" Color="{x:Bind ChartModel.ChartFill1}"/>
-        <SolidColorBrush x:Key="ChartFill2" Color="{x:Bind ChartModel.ChartFill2}"/>
-        <SolidColorBrush x:Key="ChartStroke" Color="{x:Bind ChartModel.ChartStroke.Color}"/>
+        <converters:BrushToColorTr1Converter x:Key="transparent1"/>
+        <converters:BrushToColorTr2Converter x:Key="transparent2"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
@@ -34,8 +32,8 @@
                 </telerik:ChartTrackBallBehavior.LineStyle>
                 <telerik:ChartTrackBallBehavior.InfoStyle>
                     <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                        <Setter Property="Background" Value="{StaticResource ChartFill2}"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource ChartStroke}"/>
+                        <Setter Property="Background" Value="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
+                        <Setter Property="BorderBrush" Value="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}"/>
                         <Setter Property="BorderThickness" Value="1"/>
                     </Style>
                 </telerik:ChartTrackBallBehavior.InfoStyle>
@@ -72,7 +70,7 @@
             <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData}">
                 <telerik:BarSeries.DefaultVisualStyle>
                     <Style TargetType="Border">
-                        <Setter Property="Background" Value="{StaticResource ChartFill1}"/>
+                        <Setter Property="Background" Value="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
                         <Setter Property="Opacity" Value="1"/>
                     </Style>
                 </telerik:BarSeries.DefaultVisualStyle>
@@ -100,8 +98,8 @@
                 StrokeThickness="1">
                 <telerik:AreaSeries.Fill>
                     <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-                        <GradientStop Color="{x:Bind ChartModel.ChartFill1}" Offset="0.3"/>
-                        <GradientStop Color="{x:Bind ChartModel.ChartFill2}" Offset="1."/>
+                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}" Offset="0.3"/>
+                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}" Offset="1."/>
                     </LinearGradientBrush>
                 </telerik:AreaSeries.Fill>
 

@@ -45,8 +45,8 @@
             Grid.Row="1"
             IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
             IsSettingsVisible="False" IsPaneOpen="True"
-            PaneDisplayMode="Left" OpenPaneLength="150"
-            Height="550" Width="540" Padding="30" Margin="10 0"
+            PaneDisplayMode="Left" OpenPaneLength="130"
+            Height="550" Width="520" Padding="30" Margin="10 0"
             SelectionChanged="NavView_SelectionChanged">
             <muxc:NavigationView.Resources>
                 <Style TargetType="muxc:NavigationViewItem">

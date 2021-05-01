@@ -35,25 +35,10 @@ namespace UWP.Models {
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
         private SolidColorBrush chartStroke = new SolidColorBrush(Color.FromArgb(127, 127, 127, 127));
-        private Color chartFill1 = Color.FromArgb(64, 128, 128, 128);
-        private Color chartFill2 = Color.FromArgb(16, 128, 128, 128);
 
         public SolidColorBrush ChartStroke {
             get => chartStroke;
-            set {
-                SetProperty(ref chartStroke, value);
-                var color = value.Color;
-                ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
-                ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
-            }
-        }
-        public Color ChartFill1 {
-            get => chartFill1;
-            set => SetProperty(ref chartFill1, value);
-        }
-        public Color ChartFill2 {
-            get => chartFill2;
-            set => SetProperty(ref chartFill2, value);
+            set => SetProperty(ref chartStroke, value);
         }
 
         /// <summary>

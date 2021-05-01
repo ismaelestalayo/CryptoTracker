@@ -70,29 +70,14 @@ namespace UWP.Models {
         /// </summary>
         private SolidColorBrush _chartStroke = (SolidColorBrush)Application.Current.Resources["main_gray"];
         private SolidColorBrush _diffFG = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
-        private Color _chartFill1 = Color.FromArgb(64, 128, 128, 128);
-        private Color _chartFill2 = Color.FromArgb(16, 128, 128, 128);
         
         internal SolidColorBrush ChartStroke {
             get => _chartStroke;
-            set {
-                SetProperty(ref _chartStroke, value);
-                var color = value.Color;
-                ChartFill1 = Color.FromArgb(64, color.R, color.G, color.B);
-                ChartFill2 = Color.FromArgb(16, color.R, color.G, color.B);
-            }
+            set => SetProperty(ref _chartStroke, value);
         }
         internal SolidColorBrush DiffFG {
             get => _diffFG;
             set => SetProperty(ref _diffFG, value);
-        }
-        internal Color ChartFill1 {
-            get => _chartFill1;
-            set => SetProperty(ref _chartFill1, value);
-        }
-        internal Color ChartFill2 {
-            get => _chartFill2;
-            set => SetProperty(ref _chartFill2, value);
         }
 
 
