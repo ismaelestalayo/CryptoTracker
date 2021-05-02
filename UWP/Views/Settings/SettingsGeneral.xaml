@@ -44,14 +44,24 @@
                 <FontIcon Glyph="&#xE909;"/>
                 <TextBlock Text="Currency" Style="{ThemeResource ClassTitle}"/>
             </StackPanel>
-            
+
             <TextBlock
                 Text="Choose the currency in which to to show prices. (Pages need to be updated manually.)"/>
             <ComboBox
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                Margin="0 5 0 0" Width="90"
-                SelectedItem="{x:Bind vm.Currency, Mode=TwoWay}"
-                ItemsSource="{x:Bind AllCurrencies, Mode=OneTime}"/>
+                Margin="0 5 0 0" Width="110"
+                ItemsSource="{x:Bind AvailableCurrencies, Mode=OneTime}"
+                SelectedValue="{x:Bind vm.Currency, Mode=TwoWay}"
+                SelectedValuePath="Key">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Value}" Width="25"/>
+                            <TextBlock Text="{Binding Key}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
 
             <!-- AUTO-REFRESH -->

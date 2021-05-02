@@ -7,19 +7,20 @@ namespace UWP.Shared.Constants {
             string symbol;
             return CurrencySymbol.TryGetValue(currency, out symbol) ? symbol : "€";
         }
-
-        public static List<string> AllCurrencies => CurrencySymbol.Keys.ToList();
-
-        private static readonly Dictionary<string, string> CurrencySymbol = new Dictionary<string, string>() {
+        
+        public static readonly Dictionary<string, string> CurrencySymbol = new Dictionary<string, string>() {
+            { "ARS", "$" },
             { "AUD", "$" },
             { "BRL", "R$"},
             { "CAD", "$" },
             { "CNY", "¥" },
             { "EUR", "€" },
             { "GBP", "£" },
+            { "ILS", "₪" },
             { "INR", "₹" },
             { "JPY", "¥" },
             { "MXN", "$" },
+            { "PLN", "zł"},
             { "USD", "$" },
         };
     }

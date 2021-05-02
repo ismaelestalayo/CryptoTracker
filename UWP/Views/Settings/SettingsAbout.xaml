@@ -64,8 +64,14 @@
                 <TextBlock Text="About me" Style="{ThemeResource ClassTitle}"/>
             </StackPanel>
 
-            <TextBlock Text="eee"/>
-            
+            <TextBlock Text="Made with ❤ by an engineering student."/>
+
+            <HyperlinkButton NavigateUri="https://ismaelestalayo.com/" 
+                        Content="www.ismaelestalayo.com" 
+                        Margin="0 -6 0 0"
+                        Foreground="{ThemeResource HyperlinkForegroundThemeBrush}"
+                        FontWeight="Light"/>
+
         </StackPanel>
     </ScrollViewer>
 </Page>

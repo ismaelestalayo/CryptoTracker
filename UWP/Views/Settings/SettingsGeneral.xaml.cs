@@ -7,10 +7,10 @@ using Windows.UI.Xaml.Controls;
 namespace UWP.Views {
     public sealed partial class SettingsGeneral : Page {
 
-        private List<string> AllCurrencies = Currencies.AllCurrencies;
+        private Dictionary<string, string> AvailableCurrencies = Currencies.CurrencySymbol;
 
         public SettingsGeneral() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) {
