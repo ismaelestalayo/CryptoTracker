@@ -14,6 +14,9 @@
         <converters:DateTimeFormatter x:Key="DateFormatter"/>
         <converters:BrushToColorTr1Converter x:Key="transparent1"/>
         <converters:BrushToColorTr2Converter x:Key="transparent2"/>
+
+        <SolidColorBrush x:Key="Fill1" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
+        <SolidColorBrush x:Key="Fill2" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
@@ -32,8 +35,8 @@
                 </telerik:ChartTrackBallBehavior.LineStyle>
                 <telerik:ChartTrackBallBehavior.InfoStyle>
                     <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                        <Setter Property="Background" Value="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
-                        <Setter Property="BorderBrush" Value="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}"/>
+                        <Setter Property="Background" Value="{StaticResource Fill2}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource Fill1}"/>
                         <Setter Property="BorderThickness" Value="1"/>
                     </Style>
                 </telerik:ChartTrackBallBehavior.InfoStyle>
@@ -70,7 +73,7 @@
             <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData}">
                 <telerik:BarSeries.DefaultVisualStyle>
                     <Style TargetType="Border">
-                        <Setter Property="Background" Value="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
+                        <Setter Property="Background" Value="{StaticResource Fill1}"/>
                         <Setter Property="Opacity" Value="1"/>
                     </Style>
                 </telerik:BarSeries.DefaultVisualStyle>

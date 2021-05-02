@@ -225,12 +225,6 @@ namespace UWP.Views {
                     page = typeof(Portfolio);
                     CurrentTabIndex = 3;
                     break;
-
-                case "Settings":
-                    dir.Effect = SlideNavigationTransitionEffect.FromRight;
-                    page = typeof(Settings);
-                    CurrentTabIndex = 4;
-                    break;
             }
 
             ///if it's the same page, override the default animation for one from the Bottom
