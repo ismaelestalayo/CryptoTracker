@@ -6,7 +6,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
     xmlns:converters="using:UWP.Converters"
     mc:Ignorable="d">
 
@@ -16,39 +15,25 @@
         <converters:BrushToColorTr2Converter x:Key="transparent2"/>
 
         <SolidColorBrush x:Key="Fill1" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
-        <SolidColorBrush x:Key="Fill2" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
         x:Name="Chart"
-        Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-        Margin="-5 0 -30 0">
+        Margin="-5 0 -22 0">
 
         <telerik:RadCartesianChart.Behaviors>
-            <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">
-                <telerik:ChartTrackBallBehavior.LineStyle>
-                    <Style TargetType="Polyline">
-                        <Setter Property="Stroke" Value="{x:Bind ChartModel.ChartStroke}"/>
-                        <Setter Property="StrokeThickness" Value="1"/>
-                        <Setter Property="StrokeDashArray" Value="5,6"/>
-                    </Style>
-                </telerik:ChartTrackBallBehavior.LineStyle>
-                <telerik:ChartTrackBallBehavior.InfoStyle>
-                    <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                        <Setter Property="Background" Value="{StaticResource Fill2}"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource Fill1}"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                    </Style>
-                </telerik:ChartTrackBallBehavior.InfoStyle>
-            </telerik:ChartTrackBallBehavior>
+            <telerik:ChartTrackBallBehavior
+                InfoMode="Multiple" SnapMode="AllClosePoints"
+                InfoStyle="{StaticResource ChartTrackBallInfo}"
+                LineStyle="{StaticResource ChartTrackBallLine}"
+                ShowIntersectionPoints="True"/>
             <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
         </telerik:RadCartesianChart.Behaviors>
 
         <telerik:RadCartesianChart.Grid>
             <telerik:CartesianChartGrid
-                MajorYLinesRenderMode="Inner"
-                MajorLinesVisibility="X"
-                MajorYLineStyle="{StaticResource ChartGridColor}"/>
+                MajorYLinesRenderMode="InnerAndLast"
+                MajorLinesVisibility="Y"/>
         </telerik:RadCartesianChart.Grid>
 
         <telerik:RadCartesianChart.HorizontalAxis>
@@ -108,17 +93,11 @@
 
                 <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                     <DataTemplate>
-                        <StackPanel Padding="5 2">
-                            <StackPanel Orientation="Vertical" Padding="5 2">
-                                <TextBlock
-                                    Text="{Binding DataPoint.Value, Converter={StaticResource NumberFormatter}}"
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                                    FontWeight="Normal" FontSize="16"/>
-                                <TextBlock
-                                    Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
-                                    FontSize="12" Opacity="0.5"
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
-                            </StackPanel>
+                        <StackPanel Padding="0 2" DataContextChanged="StackPanel_DataContextChanged">
+                            <TextBlock
+                                Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
+                                FontSize="12" Opacity="0.5" HorizontalAlignment="Center"
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
                         </StackPanel>
                     </DataTemplate>
                 </telerik:ChartTrackBallBehavior.TrackInfoTemplate>

@@ -87,6 +87,7 @@
 
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
         <converters:DateTimeShortener x:Key="DateShortener"/>
+        <converters:DateTimeFormatter x:Key="DateFormater"/>
         <converters:BoolToVisibility x:Key="BoolConverter"/>
         <converters:BoolInverseToVisibility x:Key="BoolInverter"/>
     </Page.Resources>
@@ -160,6 +161,10 @@
         #################################################################################################### -->
         <Grid BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
               Padding="0 0 0 3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
                 <Image
                     d:Source="/Assets/Icons/iconBTC.png"
@@ -236,6 +241,38 @@
                         Margin="0 0 0 0"/>
                 </StackPanel>
             </StackPanel>
+
+            <controls:UniformGrid
+                Grid.Row="1" Columns="4"
+                ColumnSpacing="20"
+                HorizontalAlignment="Center"
+                Margin="0 0 0 5">
+                <controls:UniformGrid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </controls:UniformGrid.Resources>
+
+                <TextBlock>
+                    <Run Text="O" Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.ChartPoint.Open, Converter={StaticResource NumberRounder}}"/>
+                </TextBlock>
+
+                <TextBlock>
+                    <Run Text="H" Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.ChartPoint.High, Converter={StaticResource NumberRounder}}"/>
+                </TextBlock>
+
+                <TextBlock>
+                    <Run Text="L" Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.ChartPoint.Low, Converter={StaticResource NumberRounder}}"/>
+                </TextBlock>
+
+                <TextBlock>
+                    <Run Text="C" FontWeight="Light" Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.ChartPoint.Close, Converter={StaticResource NumberRounder}}"/>
+                </TextBlock>
+            </controls:UniformGrid>
         </Grid>
 
         <!-- 
@@ -265,12 +302,14 @@
             <userControls:ChartAreaFull
                 x:Name="PriceChart"
                 ChartModel="{x:Bind vm.Chart}"
+                ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
                 Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}"/>
 
             <userControls:ChartCandles
                 x:Name="CandleChart"
-                Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}"
-                ChartModel="{x:Bind vm.Chart}"/>
+                ChartModel="{x:Bind vm.Chart}"
+                ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
+                Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}"/>
 
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5">
                 <Button

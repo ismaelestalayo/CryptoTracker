@@ -26,6 +26,12 @@ namespace UWP.ViewModels {
             set => SetProperty(ref chart, value);
         }
 
+        private ChartPoint chartPoint = new ChartPoint();
+        public ChartPoint ChartPoint {
+            get => chartPoint;
+            set => SetProperty(ref chartPoint, value);
+        }
+
         private ObservableCollection<PurchaseModel> purchases;
         public ObservableCollection<PurchaseModel> Purchases {
             get => purchases;

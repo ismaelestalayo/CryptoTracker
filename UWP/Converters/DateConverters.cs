@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 namespace UWP.Converters {
     public class DateTimeFormatter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
-            => ((DateTime)val).ToString(App.UserCulture);
+            => ((DateTime)val).ToString("dd MMM yyyy HH:mm");
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }

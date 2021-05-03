@@ -6,7 +6,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
-    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives"
     xmlns:converters="using:UWP.Converters"
     mc:Ignorable="d">
 
@@ -17,34 +16,22 @@
     <telerik:RadCartesianChart
         x:Name="Chart"
         Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-        Margin="-5 0 -30 0">
+        Margin="-5 0 -22 0">
 
         <telerik:RadCartesianChart.Behaviors>
-            <telerik:ChartTrackBallBehavior InfoMode="Multiple" SnapMode="AllClosePoints" ShowIntersectionPoints="True">
-                <telerik:ChartTrackBallBehavior.LineStyle>
-                    <Style TargetType="Polyline">
-                        <Setter Property="Stroke" Value="#808080"/>
-                        <Setter Property="StrokeThickness" Value="1"/>
-                        <Setter Property="StrokeDashArray" Value="5,6"/>
-                    </Style>
-                </telerik:ChartTrackBallBehavior.LineStyle>
-                <telerik:ChartTrackBallBehavior.InfoStyle>
-                    <Style TargetType="telerikPrimitives:TrackBallInfoControl">
-                        <Setter Property="Background" Value="#20808080"/>
-                        <Setter Property="BorderBrush" Value="#808080"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </telerik:ChartTrackBallBehavior.InfoStyle>
-            </telerik:ChartTrackBallBehavior>
-            <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
+            <telerik:ChartTrackBallBehavior
+                InfoMode="Multiple" SnapMode="AllClosePoints"
+                InfoStyle="{StaticResource ChartTrackBallInfo}"
+                LineStyle="{StaticResource ChartTrackBallLine}"
+                ShowIntersectionPoints="True"
+                ShowInfo="True"/>
+            <telerik:ChartPanAndZoomBehavior PanMode="Both" ZoomMode="Both"/>
         </telerik:RadCartesianChart.Behaviors>
 
         <telerik:RadCartesianChart.Grid>
             <telerik:CartesianChartGrid
                 MajorYLinesRenderMode="Inner"
-                MajorLinesVisibility="X"
-                MajorYLineStyle="{StaticResource ChartGridColor}"/>
+                MajorLinesVisibility="X"/>
         </telerik:RadCartesianChart.Grid>
 
         <telerik:RadCartesianChart.HorizontalAxis>
@@ -105,36 +92,18 @@
 
                 <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                     <DataTemplate>
-                        <StackPanel Padding="5 2">
-                            <StackPanel Orientation="Vertical" Padding="5 2">
-                                <TextBlock
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                                    FontWeight="Normal" FontSize="14">
-                                    <Run Text="H/L:"/>
-                                    <Run Text="{Binding DataPoint.High, Converter={StaticResource NumberFormatter}}"/>
-                                    <Run Text="-"/>
-                                    <Run Text="{Binding DataPoint.Low, Converter={StaticResource NumberFormatter}}"/>
-                                </TextBlock>
-                                <TextBlock
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                                    FontWeight="Normal" FontSize="14">
-                                    <Run Text="O/C:"/>
-                                    <Run Text="{Binding DataPoint.Open, Converter={StaticResource NumberFormatter}}"/>
-                                    <Run Text="-"/>
-                                    <Run Text="{Binding DataPoint.Close, Converter={StaticResource NumberFormatter}}"/>
-                                </TextBlock>
-                                <TextBlock
-                                    Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
-                                    FontSize="12" Opacity="0.5" HorizontalAlignment="Center"
-                                    Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
-                            </StackPanel>
+                        <StackPanel Padding="0 2" DataContextChanged="StackPanel_DataContextChanged">
+                            <TextBlock
+                                Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
+                                FontSize="12" Opacity="0.5" HorizontalAlignment="Center"
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>
                         </StackPanel>
                     </DataTemplate>
                 </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
 
                 <telerik:ChartTrackBallBehavior.IntersectionTemplate>
                     <DataTemplate>
-                        <Ellipse Width="7" Height="7" Fill="#A07D7D7D" StrokeThickness="1"/>
+                        <Ellipse Width="7" Height="7" Fill="Gray" StrokeThickness="1"/>
                     </DataTemplate>
                 </telerik:ChartTrackBallBehavior.IntersectionTemplate>
 
