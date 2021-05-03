@@ -40,5 +40,8 @@ namespace UWP.UserControls {
             var point = ((DataPointInfo)sender.DataContext).DataPoint.DataItem as ChartPoint;
             ChartPoint = point;
         }
+
+        private void Chart_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+            => ChartPoint = new ChartPoint() { High = 0, Open = 0, Low = 0, Close = 0, Value = 0 };
     }
 }

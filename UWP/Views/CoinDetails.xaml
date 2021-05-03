@@ -90,6 +90,7 @@
         <converters:DateTimeFormatter x:Key="DateFormater"/>
         <converters:BoolToVisibility x:Key="BoolConverter"/>
         <converters:BoolInverseToVisibility x:Key="BoolInverter"/>
+        <converters:DoubleToVisibilityConverter x:Key="DoubleVisibility"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Padding="5, 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
@@ -246,7 +247,8 @@
                 Grid.Row="1" Columns="4"
                 ColumnSpacing="20"
                 HorizontalAlignment="Center"
-                Margin="0 0 0 5">
+                Margin="0 0 0 5"
+                Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibility}}">
                 <controls:UniformGrid.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontWeight" Value="Bold"/>
@@ -269,7 +271,7 @@
                 </TextBlock>
 
                 <TextBlock>
-                    <Run Text="C" FontWeight="Light" Foreground="Gray"/>
+                    <Run Text="C" Foreground="Gray"/>
                     <Run Text="{x:Bind vm.ChartPoint.Close, Converter={StaticResource NumberRounder}}"/>
                 </TextBlock>
             </controls:UniformGrid>
