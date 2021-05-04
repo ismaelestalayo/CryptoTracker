@@ -91,6 +91,7 @@
         <converters:BoolToVisibility x:Key="BoolConverter"/>
         <converters:BoolInverseToVisibility x:Key="BoolInverter"/>
         <converters:DoubleToVisibilityConverter x:Key="DoubleVisibility"/>
+        <converters:DoubleToVisibilityInverter x:Key="DoubleVisibilityInv"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Padding="5, 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
@@ -164,7 +165,7 @@
               Padding="0 0 0 3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="28"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
                 <Image
@@ -243,12 +244,15 @@
                 </StackPanel>
             </StackPanel>
 
+
+            <!-- SHOW WHEN NOT HOVERING -->
             <controls:UniformGrid
                 Grid.Row="1" Columns="4"
                 ColumnSpacing="20"
                 HorizontalAlignment="Center"
                 Margin="0 0 0 5"
-                Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibility}}">
+                VerticalAlignment="Center"
+                Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibilityInv}}">
                 <controls:UniformGrid.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontWeight" Value="Bold"/>
@@ -256,23 +260,78 @@
                 </controls:UniformGrid.Resources>
 
                 <TextBlock>
+                    <Run Text="Vol" Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.TotalValue, Converter={StaticResource NumberUnit}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                </TextBlock>
+
+                <TextBlock>
+                    <Run Text="Min." Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1, Converter={StaticResource NumberRounder}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                </TextBlock>
+                <TextBlock>
+                    <Run Text="Max." Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2, Converter={StaticResource NumberRounder}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                </TextBlock>
+
+                <TextBlock>
+                    <Run Text="Vol" Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.TotalValue, Converter={StaticResource NumberUnit}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                </TextBlock>
+            </controls:UniformGrid>
+            
+
+            <!-- SHOW ON HOVERING -->
+            <controls:UniformGrid
+                Grid.Row="1" Columns="4"
+                ColumnSpacing="20"
+                HorizontalAlignment="Center"
+                Margin="0 0 0 5"
+                VerticalAlignment="Center"
+                Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibility}}">
+                <controls:UniformGrid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </controls:UniformGrid.Resources>
+
+                <!-- AREA CHART -->
+                <Rectangle Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}"/>
+
+                <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}">
+                    <Run Text="Price" Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.ChartPoint.Value, Converter={StaticResource NumberRounder}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                </TextBlock>
+                <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}">
+                    <Run Text="Vol" Foreground="Gray"/>
+                    <Run Text="{x:Bind vm.ChartPoint.Volume, Converter={StaticResource NumberUnit}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                </TextBlock>
+
+                <!-- CANDLE CHART -->
+                <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                     <Run Text="O" Foreground="Gray"/>
-                    <Run Text="{x:Bind vm.ChartPoint.Open, Converter={StaticResource NumberRounder}}"/>
+                    <Run Text="{x:Bind vm.ChartPoint.Open, Converter={StaticResource NumberRounder}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
-
-                <TextBlock>
+                <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                     <Run Text="H" Foreground="Gray"/>
-                    <Run Text="{x:Bind vm.ChartPoint.High, Converter={StaticResource NumberRounder}}"/>
+                    <Run Text="{x:Bind vm.ChartPoint.High, Converter={StaticResource NumberRounder}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
-
-                <TextBlock>
+                <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                     <Run Text="L" Foreground="Gray"/>
-                    <Run Text="{x:Bind vm.ChartPoint.Low, Converter={StaticResource NumberRounder}}"/>
+                    <Run Text="{x:Bind vm.ChartPoint.Low, Converter={StaticResource NumberRounder}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
-
-                <TextBlock>
+                <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                     <Run Text="C" Foreground="Gray"/>
-                    <Run Text="{x:Bind vm.ChartPoint.Close, Converter={StaticResource NumberRounder}}"/>
+                    <Run Text="{x:Bind vm.ChartPoint.Close, Converter={StaticResource NumberRounder}}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
             </controls:UniformGrid>
         </Grid>

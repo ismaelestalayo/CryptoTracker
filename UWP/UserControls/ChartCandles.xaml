@@ -54,7 +54,7 @@
 
         <telerik:RadCartesianChart.Series>
             <!-- VOLUME - BAR SERIES -->
-            <telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData}">
+            <!--<telerik:BarSeries ItemsSource="{x:Bind ChartModel.ChartData}">
                 <telerik:BarSeries.DefaultVisualStyle>
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="#30808080"/>
@@ -74,7 +74,7 @@
                 <telerik:BarSeries.ValueBinding>
                     <telerik:PropertyNameDataPointBinding PropertyName="Volume"/>
                 </telerik:BarSeries.ValueBinding>
-            </telerik:BarSeries>
+            </telerik:BarSeries>-->
 
 
             <!-- PRICE - CANDLESTICK SERIES -->

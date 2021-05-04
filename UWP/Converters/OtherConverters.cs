@@ -44,6 +44,14 @@ namespace UWP.Converters {
             => throw new NotImplementedException();
     }
 
+    public class DoubleToVisibilityInverter : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => ((double)val) != 0 ? Visibility.Collapsed : Visibility.Visible;
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
     public class BrushToColorTr1Converter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang) {
             var color = ((SolidColorBrush)val).Color;
