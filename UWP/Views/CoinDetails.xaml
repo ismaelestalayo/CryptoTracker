@@ -20,6 +20,7 @@
     <Page.Resources>
         <Style TargetType="Button" x:Key="IconBtn">
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Opacity" Value="0.75"/>
             <Setter Property="CornerRadius" Value="6"/>
             <Setter Property="Padding" Value="5 0"/>
@@ -135,6 +136,8 @@
                         <Setter Target="BottomUniformGrid.Rows" Value="2"/>
                         <Setter Target="BottomUniformGrid.Height" Value="370"/>
                         <Setter Target="ChartRow.MaxHeight" Value="850"/>
+                        <Setter Target="TopInfoPanel.(Grid.Row)" Value="0"/>
+                        <Setter Target="TopInfoPanelHover.(Grid.Row)" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -161,12 +164,13 @@
         ####################################################################################################
         ############################################### Page Title #########################################
         #################################################################################################### -->
-        <Grid BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+        <Grid
+            BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Background="#00e080f0" Margin="0 5">
+            <StackPanel Orientation="Horizontal" Margin="0 5">
                 <Image
                     d:Source="/Assets/Icons/iconBTC.png"
                     Source="{x:Bind vm.Coin.Logo}"
@@ -244,9 +248,10 @@
 
 
             <!-- SHOW WHEN NOT HOVERING -->
-            <StackPanel
+            <StackPanel x:Name="TopInfoPanel"
                 Grid.Row="1" Spacing="50" Orientation="Horizontal"
-                HorizontalAlignment="Center" Margin="0 0 0 5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom" Margin="0 0 0 5"
                 Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibilityInv}}">
                 <StackPanel.Resources>
                     <Style TargetType="TextBlock">
@@ -273,18 +278,26 @@
                     <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
+                <TextBlock>
+                    <Run Text="Mkt.Cap" Foreground="Gray"/>
+                    <LineBreak/>
+                    <Run Text="{x:Bind vm.Coin.CurrencySym}"/><!--
+                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                </TextBlock>
             </StackPanel>
             
 
             <!-- SHOW ON HOVERING -->
-            <StackPanel
-                Grid.Row="1" Spacing="50" Orientation="Horizontal"
-                HorizontalAlignment="Center" Margin="0 0 0 5"
+            <StackPanel x:Name="TopInfoPanelHover"
+                Grid.Row="1" Spacing="0" Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom" Margin="0 0 0 5"
                 Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibility}}">
                 <StackPanel.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="30 0"/>
                     </Style>
                 </StackPanel.Resources>
 
@@ -419,97 +432,6 @@
                     <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
                         <userControls:AlertList Alerts="{x:Bind vm.Alerts}"/>
                     </ScrollViewer>
-                </StackPanel>
-
-
-                <!-- Global Market card -->
-                <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2">
-                    <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                        <TextBlock Text="Market Data" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                    </RelativePanel>
-
-                    <controls:UniformGrid Margin="5 0" Columns="2" RowSpacing="20">
-
-                        <controls:HeaderedContentControl>
-                            <controls:HeaderedContentControl.Header>
-                                <TextBlock>
-                                    <Run Text="Low ("/><Run Text="{x:Bind vm.Chart.TimeSpan}"/><Run Text=")"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Header>
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock>
-                                    <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1,
-                                        Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
-                                        vm.Coin.CurrencySym}"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-
-                        <controls:HeaderedContentControl>
-                            <controls:HeaderedContentControl.Header>
-                                <TextBlock>
-                                    <Run Text="High ("/><Run Text="{x:Bind vm.Chart.TimeSpan}"/><Run Text=")"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Header>
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock>
-                                    <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2,
-                                        Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
-                                        vm.Coin.CurrencySym}"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-
-                        <controls:HeaderedContentControl Header="All time low">
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock>
-                                   <Run Text="{x:Bind vm.CoinInfo.market_data.atl.eur,
-                                       Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind
-                                       vm.Coin.CurrencySym}"/>
-                                    <Run Text="{x:Bind vm.CoinInfo.market_data.atl_date.eur,
-                                        Converter={StaticResource DateShortener}}" FontWeight="Light" FontSize="11"
-                                        Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-
-                        <controls:HeaderedContentControl Header="All time high">
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock>
-                                   <Run Text="{x:Bind vm.CoinInfo.market_data.ath.eur,
-                                       Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                    <Run Text="{x:Bind vm.CoinInfo.market_data.ath_date.eur, Converter={StaticResource DateShortener}}"
-                                         FontWeight="Light" FontSize="11" Foreground="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-
-                        <controls:HeaderedContentControl Header="Market Cap.">
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock>
-                                    <Run Text="{x:Bind vm.CoinInfo.market_data.market_cap.eur,
-                                        Converter={StaticResource NumberUnit}}"/><!--
-                                    --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                    <Run Text="(" FontWeight="Light" FontSize="12"/><!--
-                                    --><Run Text="{x:Bind vm.CoinInfo.market_data.market_cap_change_percentage_24h}"
-                                    FontWeight="Light" FontSize="12"/><Run Text="%)" FontWeight="Light" FontSize="12"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-                        
-                        <Rectangle/>
-
-                        <controls:HeaderedContentControl Header="Circulating supply">
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock>
-                                    <Run Text="{x:Bind vm.CoinInfo.market_data.circulating_supply,
-                                        Converter={StaticResource StringFormatConverter}}"/>
-                                    <Run Text="{x:Bind vm.Coin.Name}"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-                        
-                    </controls:UniformGrid>
                 </StackPanel>
 
 
