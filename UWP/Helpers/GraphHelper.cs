@@ -36,7 +36,7 @@ namespace UWP.Helpers {
             new Dictionary<string, (string, int, int)>() {
                 { "1h",  ("minute",   60, 1) }, // 1 h ----------->   60 mins
                 { "4h",  ("minute",  240, 1) }, // 4 h = 60 * 4 -->  240 mins
-                { "1d",  ("minute", 1440, 5) }, // 1 d = 60 * 24 -> 1440 mins (300 * 5)
+                { "1d",  ("minute", 720, 2) }, // 1 d = 60 * 24 -> 1440 mins (300 * 5)
                 { "3d",  ("hour",     72, 1) }, // 3 d = 24 * 3 -->   72 hours 
                 { "1w",  ("hour",    168, 1) }, // 1 w = 24 * 7 -->  168 hours
                 { "1m",  ("hour",    372, 2) }, // 1 m = 24 * 31 ->  744 hours (372 * 2)
