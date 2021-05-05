@@ -23,10 +23,10 @@
             <Setter Property="Opacity" Value="0.75"/>
             <Setter Property="CornerRadius" Value="6"/>
             <Setter Property="Padding" Value="5 0"/>
-            <Setter Property="Margin" Value="5 0"/>
-            <Setter Property="Height" Value="32"/>
+            <Setter Property="Margin" Value="5 -3"/>
+            <Setter Property="Height" Value="24"/>
             <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
         
         <Style TargetType="StackPanel" x:Key="CardStackPanel">
@@ -161,81 +161,79 @@
         ####################################################################################################
         ############################################### Page Title #########################################
         #################################################################################################### -->
-        <Grid BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-              Padding="0 0 0 3">
+        <Grid BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="28"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Background="#00e080f0" Margin="0 5">
                 <Image
                     d:Source="/Assets/Icons/iconBTC.png"
                     Source="{x:Bind vm.Coin.Logo}"
-                    Margin="2 0" Width="32"/>
-                <StackPanel Orientation="Vertical" Margin="5 0" VerticalAlignment="Center">
-                    <StackPanel Orientation="Vertical">
+                    Margin="5 0 7 0" Width="38"
+                    VerticalAlignment="Center"/>
+                <StackPanel Orientation="Vertical" Margin="0">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
                         <TextBlock
                             d:Text="Bitcoin"
+                            CharacterSpacing="25"
                             Text="{x:Bind vm.Coin.FullName}"
-                            Margin="1 0 0 -7"
                             FontSize="22"
                             FontWeight="SemiBold"
                             Style="{StaticResource TitleTextBlockStyle}"/>
                         <TextBlock
                             FontWeight="Normal"
                             d:Text="BTC"
+                            Margin="0 2"
+                            VerticalAlignment="Bottom"
                             CharacterSpacing="50"
                             Text="{x:Bind vm.Coin.Name}"
                             Opacity="0.5"/>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Visibility="Visible">
-                    <Button
-                        d:Content="&#xEB51;"
-                        Click="FavCoin_click"
-                        Content="{x:Bind vm.Coin.FavIcon}"
-                        ToolTipService.ToolTip="Toggle favourite"
-                        Style="{StaticResource IconBtn}"/>
-                    <Button
-                        d:Content="&#xE840;"
-                        Click="PinCoin_click"
-                        Content="{x:Bind vm.Coin.PinIcon}"
-                        ToolTipService.ToolTip="Toggle pin to start screen"
-                        Style="{StaticResource IconBtn}"/>
-                    <Button
-                        d:Visibility="Visible" x:Name="CompactOverlay_btn"
-                        Content="&#xE8a7;" Click="CompactOverlay_btn_click"
-                        Visibility="Collapsed"
-                        ToolTipService.ToolTip="Compact overlay"
-                        Style="{StaticResource IconBtn}"/>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            d:Content="&#xEB51;"
+                            Click="FavCoin_click"
+                            Content="{x:Bind vm.Coin.FavIcon}"
+                            Margin="-5 -5 5 -5"
+                            ToolTipService.ToolTip="Toggle favourite"
+                            Style="{StaticResource IconBtn}"/>
+                        <Button
+                            d:Content="&#xE840;"
+                            Click="PinCoin_click"
+                            Content="{x:Bind vm.Coin.PinIcon}"
+                            ToolTipService.ToolTip="Toggle pin to start screen"
+                            Style="{StaticResource IconBtn}"/>
+                        <Button
+                            d:Visibility="Visible" x:Name="CompactOverlay_btn"
+                            Content="&#xE8a7;" Click="CompactOverlay_btn_click"
+                            Visibility="Collapsed"
+                            ToolTipService.ToolTip="Compact overlay"
+                            Style="{StaticResource IconBtn}"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Margin="5 -1" HorizontalAlignment="Right" >
+
+            <StackPanel Margin="5 0" HorizontalAlignment="Right">
                 <TextBlock
                     d:Text="1000€"
-                    FontWeight="SemiBold" FontSize="26"
+                    FontWeight="SemiBold" FontSize="28"
+                    CharacterSpacing="50"
                     HorizontalAlignment="Right"
                     Style="{ThemeResource TitleTextBlockStyle}">
                     <Run Text="{x:Bind vm.Coin.Price, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                 </TextBlock>
-
-                <StackPanel Orientation="Horizontal"  Margin="0 -5 0 0">
+                
+                <StackPanel Orientation="Horizontal" Margin="0 -2" HorizontalAlignment="Right">
                     <TextBlock
-                        Foreground="{x:Bind vm.Coin.DiffFG}" FontWeight="Normal"
+                        Foreground="{x:Bind vm.Coin.DiffFG}" FontWeight="SemiBold"
                         FontSize="14"
                         HorizontalAlignment="Right"><!--
-                        --><Run Text="{x:Bind vm.Coin.Diff, Converter={StaticResource NumberSign}}"/><!--
+                        --><Run Text="{x:Bind vm.Coin.Diff, Converter={StaticResource NumberRounder}}"/><!--
                         --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                    </TextBlock>
-                    <TextBlock Visibility="Collapsed"
-                        Foreground="{x:Bind vm.Coin.DiffFG}" FontWeight="Bold"
-                        FontSize="13" Margin="2 0"
-                        HorizontalAlignment="Right"><!--
-                        --><Run Text="("/><!--
-                        --><Run Text="{x:Bind vm.Coin.DiffPct, Converter={StaticResource NumberSign}}"/><!--
-                        --><Run Text="%)"/>
                     </TextBlock>
                     <userControls:DiffTextBlock Visibility="Visible"
                         Diff="{x:Bind vm.Coin.DiffPct}"
@@ -246,68 +244,60 @@
 
 
             <!-- SHOW WHEN NOT HOVERING -->
-            <controls:UniformGrid
-                Grid.Row="1" Columns="4"
-                ColumnSpacing="20"
-                HorizontalAlignment="Center"
-                Margin="0 0 0 5"
-                VerticalAlignment="Center"
+            <StackPanel
+                Grid.Row="1" Spacing="50" Orientation="Horizontal"
+                HorizontalAlignment="Center" Margin="0 0 0 5"
                 Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibilityInv}}">
-                <controls:UniformGrid.Resources>
+                <StackPanel.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="HorizontalTextAlignment" Value="Center"/>
                     </Style>
-                </controls:UniformGrid.Resources>
+                </StackPanel.Resources>
 
                 <TextBlock>
                     <Run Text="Vol" Foreground="Gray"/>
-                    <Run Text="{x:Bind vm.TotalValue, Converter={StaticResource NumberUnit}}"/><!--
+                    <LineBreak/>
+                    <Run Text="{x:Bind vm.Coin.VolumeToTotal, Converter={StaticResource NumberUnit}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
-
                 <TextBlock>
                     <Run Text="Min." Foreground="Gray"/>
+                    <LineBreak/>
                     <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
                 <TextBlock>
                     <Run Text="Max." Foreground="Gray"/>
+                    <LineBreak/>
                     <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
-
-                <TextBlock>
-                    <Run Text="Vol" Foreground="Gray"/>
-                    <Run Text="{x:Bind vm.TotalValue, Converter={StaticResource NumberUnit}}"/><!--
-                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                </TextBlock>
-            </controls:UniformGrid>
+            </StackPanel>
             
 
             <!-- SHOW ON HOVERING -->
-            <controls:UniformGrid
-                Grid.Row="1" Columns="4"
-                ColumnSpacing="20"
-                HorizontalAlignment="Center"
-                Margin="0 0 0 5"
-                VerticalAlignment="Center"
+            <StackPanel
+                Grid.Row="1" Spacing="50" Orientation="Horizontal"
+                HorizontalAlignment="Center" Margin="0 0 0 5"
                 Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibility}}">
-                <controls:UniformGrid.Resources>
+                <StackPanel.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="HorizontalTextAlignment" Value="Center"/>
                     </Style>
-                </controls:UniformGrid.Resources>
+                </StackPanel.Resources>
 
                 <!-- AREA CHART -->
-                <Rectangle Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}"/>
-
                 <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}">
                     <Run Text="Price" Foreground="Gray"/>
+                    <LineBreak/>
                     <Run Text="{x:Bind vm.ChartPoint.Value, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
                 <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}">
                     <Run Text="Vol" Foreground="Gray"/>
+                    <LineBreak/>
                     <Run Text="{x:Bind vm.ChartPoint.Volume, Converter={StaticResource NumberUnit}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
@@ -315,32 +305,36 @@
                 <!-- CANDLE CHART -->
                 <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                     <Run Text="O" Foreground="Gray"/>
+                    <LineBreak/>
                     <Run Text="{x:Bind vm.ChartPoint.Open, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
                 <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                     <Run Text="H" Foreground="Gray"/>
+                    <LineBreak/>
                     <Run Text="{x:Bind vm.ChartPoint.High, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
                 <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                     <Run Text="L" Foreground="Gray"/>
+                    <LineBreak/>
                     <Run Text="{x:Bind vm.ChartPoint.Low, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
                 <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                     <Run Text="C" Foreground="Gray"/>
+                    <LineBreak/>
                     <Run Text="{x:Bind vm.ChartPoint.Close, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
-            </controls:UniformGrid>
+            </StackPanel>
         </Grid>
 
         <!-- 
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <Grid Grid.Row="2" Grid.Column="0" Opacity="{x:Bind vm.Coin.Opacity}">
+        <Grid Grid.Row="2" Opacity="{x:Bind vm.Coin.Opacity}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>

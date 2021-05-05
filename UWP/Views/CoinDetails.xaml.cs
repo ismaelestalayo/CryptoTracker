@@ -174,7 +174,7 @@ namespace UWP.Views {
                 chartData.Add(new ChartPoint() {
                     Date = h.DateTime,
                     Value = h.Average,
-                    Volume = h.volumefrom,
+                    Volume = h.volumeto,
                     High = h.high,
                     Low = h.low,
                     Open = h.open,
@@ -189,7 +189,7 @@ namespace UWP.Views {
             vm.Chart.MajorStep = temp.MajorStep;
             vm.Chart.TickInterval = temp.TickInterval;
 
-            vm.Coin.VolumeFromTotal = vm.Chart.ChartData.Sum(c => c.Volume);
+            vm.Coin.VolumeToTotal = histo.Sum(x => x.volumeto);
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());

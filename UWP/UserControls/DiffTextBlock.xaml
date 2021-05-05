@@ -33,8 +33,7 @@
             d:Foreground="#00aa00"
             FontFamily="Segoe UI"
             Foreground="{x:Bind Diff, Converter={StaticResource NumberForeground}}"
-            FontSize="14" FontWeight="SemiBold"
-            CharacterSpacing="-25"
+            FontSize="14" FontWeight="Bold"
             Padding="5 0 5 2"
             Text="{x:Bind Diff, Converter={StaticResource Percentage}}">
         </TextBlock>

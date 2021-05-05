@@ -153,7 +153,7 @@ namespace UWP.Views {
                     chartData.Add(new ChartPoint() {
                         Date = h.DateTime,
                         Value = h.Average,
-                        Volume = h.volumefrom,
+                        Volume = h.volumeto,
                         High = h.high,
                         Low = h.low,
                         Open = h.open,
