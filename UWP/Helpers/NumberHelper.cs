@@ -24,8 +24,12 @@ namespace UWP.Helpers {
                 return Math.Round(price, 1);
             else if (Math.Abs(price) > 9)
                 return Math.Round(price, 2);
-            else
+            else if (Math.Abs(price) > 1)
                 return Math.Round(price, 3);
-		}
+            else if (Math.Abs(price) > 0.1)
+                return Math.Round(price, 4);
+            else
+                return Math.Round(price, 5);
+        }
     }
 }
