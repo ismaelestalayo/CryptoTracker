@@ -302,5 +302,7 @@ namespace UWP.Views {
                 PortfolioHelper.AddPurchase(dialog.NewPurchase);
             }
         }
+
+        public string Format(string text, object arg) => string.Format(text, arg);
     }
 }

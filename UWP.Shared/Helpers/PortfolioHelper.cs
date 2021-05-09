@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using UWP.Core.Constants;
@@ -26,6 +27,17 @@ namespace UWP.Shared.Helpers {
             portfolio.Add(purchase);
             LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
         }
+
+        public static void SavePortfolio(object portfolio) {
+            var type = portfolio.GetType();
+            if (type == typeof(List<PurchaseModel>))
+                LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
+            else if (type == typeof(ObservableCollection<PurchaseModel>)) {
+                var p = new List<PurchaseModel>((ObservableCollection<PurchaseModel>)portfolio);
+                LocalStorageHelper.SaveObject(UserStorage.Portfolio, p);
+            }
+        }
+
 
         public async static Task<PurchaseModel> UpdatePurchase(PurchaseModel purchase) {
             string crypto = purchase.Crypto;

@@ -1,11 +1,11 @@
-﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+﻿using CryptoTracker.Dialogs;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using UWP.APIs;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
@@ -14,14 +14,11 @@ using UWP.Shared.Constants;
 using UWP.Shared.Helpers;
 using UWP.Shared.Models;
 using UWP.UserControls;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using static UWP.APIs.CryptoCompare;
 
 namespace UWP.Views {
 
@@ -124,6 +121,7 @@ namespace UWP.Views {
             /// Finally, update the chart of the portfolio's worth
             await UpdatePortfolioChart();
         }
+
 
         /// ###############################################################################################
         /// Update the chart of the historic values of the portfolio
@@ -248,51 +246,40 @@ namespace UWP.Views {
 
         /// ###############################################################################################
         /// Add/Edit purchase dialog
-        private void AddPurchase_click(object sender, RoutedEventArgs e) {
-            vm.NewPurchase = new PurchaseModel();
-            PurchaseDialog.Title = "💵 New purchase";
-            PurchaseDialog.PrimaryButtonText = "Add";
-            PurchaseDialog.ShowAsync();
-        }
-
-        private void EditPurchase_Click(object sender, RoutedEventArgs e) {
-            var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
-            EditingPurchaseId = vm.Portfolio.IndexOf(purchase);
-            vm.NewPurchase = purchase;
-            PurchaseDialog.Title = "💵 Edit purchase";
-            PurchaseDialog.PrimaryButtonText = "Save";
-            PurchaseDialog.ShowAsync();
-        }
-
-        private void PurchaseDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
-            if (string.IsNullOrEmpty(vm.NewPurchase.Crypto) || vm.NewPurchase.CryptoQty <= 0 || vm.NewPurchase.InvestedQty < 0) {
-                args.Cancel = true;
-                new MessageDialog("You must fill Crypto, Amount and Invested fields.").ShowAsync();
-            }
-            else {
-                if (sender.PrimaryButtonText == "Add")
-                    vm.Portfolio.Add(vm.NewPurchase);
-                else if(sender.PrimaryButtonText == "Save") {
-                    vm.Portfolio.RemoveAt(EditingPurchaseId);
-                    vm.Portfolio.Insert(EditingPurchaseId, vm.NewPurchase);
-                }
-
-                /// Update the page and save the new portfolio
+        private async void AddPurchase_click(object sender, RoutedEventArgs e) {
+            var dialog = new PortfolioEntryDialog() {
+                NewPurchase = new PurchaseModel(),
+                PrimaryButtonText = "Add",
+                Title = "💵 New purchase"
+            };
+            var response = await dialog.ShowAsync();
+            if (response == ContentDialogResult.Primary) {
+                vm.Portfolio.Add(dialog.NewPurchase);
+                PortfolioHelper.AddPurchase(dialog.NewPurchase);
+                
+                // Update everything
                 UpdatePortfolio();
-                LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
             }
         }
 
-        private async void DialogBtn_LostFocus(object sender, RoutedEventArgs e) {
-            // If we change the crypto, set the current price to 0 so everything updates
-            if (sender.GetType().Name == "ComboBox")
-                vm.NewPurchase.Current = 0;
+        private async void EditPurchase_Click(object sender, RoutedEventArgs e) {
+            var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
+            var dialog = new PortfolioEntryDialog() {
+                NewPurchase = purchase,
+                PrimaryButtonText = "Save",
+                Title = "💵 Edit purchase"
+            };
+            var response = await dialog.ShowAsync();
+            if (response == ContentDialogResult.Primary) {
+                EditingPurchaseId = vm.Portfolio.IndexOf(purchase);
+                vm.Portfolio.RemoveAt(EditingPurchaseId);
+                vm.Portfolio.Insert(EditingPurchaseId, dialog.NewPurchase);
+                PortfolioHelper.SavePortfolio(vm.Portfolio);
 
-            // If we have the coin and the quantity, we can update some properties
-            if (!string.IsNullOrEmpty(vm.NewPurchase.Crypto) && vm.NewPurchase.CryptoQty > 0)
-                vm.NewPurchase = await PortfolioHelper.UpdatePurchase(vm.NewPurchase);
+                // Update everything
+                UpdatePortfolio();
+            }
         }
-
 
         private void TimeRangeButtons_Tapped(object sender, TappedRoutedEventArgs e) {
             if (sender != null)
@@ -422,41 +409,5 @@ namespace UWP.Views {
             }
         }
 
-        /// #######################################################################################
-        private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
-            AutoSuggestBox box = sender as AutoSuggestBox;
-            box.ItemsSource = FilterCoins(box);
-        }
-
-        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-            => CoinAutoSuggestBox.Text = ((SuggestionCoin)args.SelectedItem).Symbol;
-
-        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
-            vm.NewPurchase.Crypto = ((SuggestionCoin)args.ChosenSuggestion)?.Symbol;
-            vm.NewPurchase.CryptoName = ((SuggestionCoin)args.ChosenSuggestion)?.Name;
-        }
-
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
-            // Only get results when it was a user typing, 
-            // otherwise assume the value got filled in by TextMemberPath 
-            // or the handler for SuggestionChosen.
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-                sender.ItemsSource = FilterCoins(sender);
-        }
-
-        private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinList.Where(x =>
-                x.symbol.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase) ||
-                x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            List<SuggestionCoin> list = new List<SuggestionCoin>();
-            foreach (CoinBasicInfo coin in filtered) {
-                list.Add(new SuggestionCoin {
-                    Icon = IconsHelper.GetIcon(coin.symbol),
-                    Name = coin.name,
-                    Symbol = coin.symbol
-                });
-            }
-            return list;
-        }
     }
 }
