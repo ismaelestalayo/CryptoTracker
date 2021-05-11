@@ -14,7 +14,7 @@
     </UserControl.Resources>
 
     <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->
-    <ListView ItemsSource="{x:Bind Purchases, Mode=OneWay}" Width="350">
+    <ListView ItemsSource="{x:Bind Purchases, Mode=OneWay}">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -25,62 +25,87 @@
         </ListView.ItemContainerStyle>
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:PurchaseModel">
-                <StackPanel
-                    BorderBrush="#888" BorderThickness="1" CornerRadius="6" Padding="10 5" Margin="0 3">
-                    <TextBlock d:Text="Purchase - 01/01/2021" Opacity="0.5" FontWeight="Light">
-                        <Run Text="{x:Bind Type}"/>
-                        <Run Text="-"/>
-                        <Run Text="{x:Bind Date, Converter={StaticResource DateOffsetShortener}}"/>
-                    </TextBlock>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Image Source="{x:Bind CryptoLogo}" d:Source="ms-appx:///Assets/Icons/iconNULL.png" Width="25"/>
-                        
-                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5 0">
-                            <TextBlock Text="Ethereum" FontWeight="Bold" Opacity="0.75" Margin="0 0 0 -3"/>
-                            <TextBlock d:Text="0.12 XXX">
-                                <Run Text="{x:Bind CryptoQty}"/>
-                                <Run Text="{x:Bind Crypto}"/>
-                            </TextBlock>
-                        </StackPanel>
+                <!-- Must wrap it w/UserControl for VisualStateManager -->
+                <UserControl>
+                    <StackPanel BorderBrush="#888" BorderThickness="1" CornerRadius="6" Padding="10 5" Margin="0 3">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="NarrowState">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="Gridd.Background" Value="#30ff0000"/>
+                                    </VisualState.Setters>
+                                </VisualState>
 
-                        <StackPanel Grid.Column="2" Margin="10 0">
-                            <TextBlock Text="Invested" Opacity="0.75" Margin="0 0 0 -5"/>
-                            <TextBlock d:Text="51.3€" FontSize="16" HorizontalAlignment="Right">
-                                <Run Text="{x:Bind InvestedQty}"/><!--
-                                --><Run Text="{x:Bind CurrencySymbol}"/>
-                            </TextBlock>
-                        </StackPanel>
+                                <VisualState x:Name="WideState">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="720"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="Gridd.Background" Value="#300000ff"/>
+                                        <Setter Target="Gridd.ColumnDefinitions[4].Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
 
-                        <StackPanel Grid.Column="3" Margin="10 0">
-                            <TextBlock Text="Worth" Opacity="0.75" Margin="0 0 0 -5"/>
-                            <TextBlock d:Text="62.5€" FontSize="16" HorizontalAlignment="Right">
-                                <Run Text="{x:Bind Worth}"/><!--
-                                --><Run Text="{x:Bind CurrencySymbol}"/>
-                            </TextBlock>
-                        </StackPanel>
+                        <TextBlock d:Text="Purchase - 01/01/2021" Opacity="0.5" FontWeight="Light">
+                            <Run Text="{x:Bind Type}"/>
+                            <Run Text="-"/>
+                            <Run Text="{x:Bind Date, Converter={StaticResource DateOffsetShortener}}"/>
+                        </TextBlock>
+                        <Grid x:Name="Gridd">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="4" Margin="10 0">
-                            <TextBlock Text="Delta" Opacity="0.75" Margin="0 0 0 -5"/>
-                            <TextBlock d:Text="12%" FontSize="16" HorizontalAlignment="Right"
-                                Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
-                                <Run Text="{x:Bind Delta}"/><!--
-                                --><Run Text="{x:Bind CurrencySymbol}"/>
-                            </TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
+                            <Image Source="{x:Bind CryptoLogo}" d:Source="ms-appx:///Assets/Icons/iconNULL.png" Width="25"/>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5 0">
+                                <TextBlock Text="Ethereum" FontWeight="Bold" Opacity="0.75" Margin="0 0 0 -3"/>
+                                <TextBlock d:Text="0.12 XXX">
+                                    <Run Text="{x:Bind CryptoQty}"/>
+                                    <Run Text="{x:Bind Crypto}"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="10 0">
+                                <TextBlock Text="Invested" Opacity="0.75" Margin="0 0 0 -5"/>
+                                <TextBlock d:Text="51.3€" FontSize="16" HorizontalAlignment="Right">
+                                    <Run Text="{x:Bind InvestedQty}"/><!--
+                                    --><Run Text="{x:Bind CurrencySymbol}"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Margin="10 0">
+                                <TextBlock Text="Worth" Opacity="0.75" Margin="0 0 0 -5"/>
+                                <TextBlock d:Text="62.5€" FontSize="16" HorizontalAlignment="Right">
+                                    <Run Text="{x:Bind Worth}"/><!--
+                                    --><Run Text="{x:Bind CurrencySymbol}"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4" Margin="10 0">
+                                <TextBlock Text="Delta" Opacity="0.75" Margin="0 0 0 -5"/>
+                                <TextBlock d:Text="12%" FontSize="16" HorizontalAlignment="Right"
+                                    Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
+                                    <Run Text="{x:Bind Delta}"/><!--
+                                    --><Run Text="{x:Bind CurrencySymbol}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </UserControl>
             </DataTemplate>
         </ListView.ItemTemplate>
 
