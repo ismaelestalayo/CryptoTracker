@@ -51,22 +51,22 @@ namespace UWP.Services {
         public string symbol { get; set; }
         public string name { get; set; }
         public string image { get; set; }
-        public double current_price { get; set; } = 0;
-        public double market_cap { get; set; } = 0;
+        public double? current_price { get; set; } = 0;
+        public double? market_cap { get; set; } = 0;
         public int market_cap_rank { get; set; }
-        public double total_volume { get; set; } = 0;
-        public double high_24h { get; set; } = 0;
-        public double low_24h { get; set; } = 0;
-        public double price_change_24h { get; set; } = 0;
-        public double price_change_percentage_24h { get; set; } = 0;
-        public double market_cap_change_24h { get; set; } = 0;
-        public double market_cap_change_percentage_24h { get; set; } = 0;
-        public double circulating_supply { get; set; } = 0;
+        public double? total_volume { get; set; } = 0;
+        public double? high_24h { get; set; } = 0;
+        public double? low_24h { get; set; } = 0;
+        public double? price_change_24h { get; set; } = 0;
+        public double? price_change_percentage_24h { get; set; } = 0;
+        public double? market_cap_change_24h { get; set; } = 0;
+        public double? market_cap_change_percentage_24h { get; set; } = 0;
+        public double? circulating_supply { get; set; } = 0;
         public double? total_supply { get; set; } = 0;
         public double? max_supply { get; set; } = 0;
-        public double ath { get; set; } = 0;
+        public double? ath { get; set; } = 0;
         public string ath_date { get; set; }
-        public double atl { get; set; } = 0;
+        public double? atl { get; set; } = 0;
         public string atl_date { get; set; }
         [IgnoreDataMemberAttribute]
         public List<double> sparkline_7d { get; set; }
