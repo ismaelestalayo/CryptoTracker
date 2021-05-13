@@ -254,6 +254,7 @@ namespace UWP.Views {
             };
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
+                dialog.NewPurchase.CryptoName = App.coinList.FirstOrDefault(x => x.symbol == dialog.NewPurchase.Crypto).name;
                 vm.Portfolio.Add(dialog.NewPurchase);
                 PortfolioHelper.AddPurchase(dialog.NewPurchase);
                 

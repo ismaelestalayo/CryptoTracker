@@ -1,9 +1,11 @@
 ﻿<UserControl
     x:Class="UWP.UserControls.PortfolioList"
+    x:DefaultBindMode="OneWay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:converters="using:UWP.Converters"
     xmlns:models="using:UWP.Models"
     d:Height="200" d:Width="600"
@@ -44,8 +46,8 @@
                                         <AdaptiveTrigger MinWindowWidth="720"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="Gridd.Background" Value="#300000ff"/>
-                                        <Setter Target="Gridd.ColumnDefinitions[4].Width" Value="0"/>
+                                        <Setter Target="Gridd.Background" Value="#000000ff"/>
+                                        <!--<Setter Target="Gridd.ColumnDefinitions[4].Width" Value="0"/>-->
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
@@ -69,40 +71,49 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="{x:Bind CryptoLogo}" d:Source="ms-appx:///Assets/Icons/iconNULL.png" Width="25"/>
+                            <Image
+                                d:Source="ms-appx:///Assets/Icons/iconNULL.png"
+                                Source="{x:Bind CryptoLogo}" Width="25"/>
 
-                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5 0">
-                                <TextBlock Text="Ethereum" FontWeight="Bold" Opacity="0.75" Margin="0 0 0 -3"/>
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 0">
+                                <TextBlock Text="{x:Bind CryptoName}" FontWeight="Bold" Opacity="0.75" Margin="0 0 0 -3"/>
                                 <TextBlock d:Text="0.12 XXX">
                                     <Run Text="{x:Bind CryptoQty}"/>
                                     <Run Text="{x:Bind Crypto}"/>
                                 </TextBlock>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="2" Margin="10 0">
-                                <TextBlock Text="Invested" Opacity="0.75" Margin="0 0 0 -5"/>
-                                <TextBlock d:Text="51.3€" FontSize="16" HorizontalAlignment="Right">
-                                    <Run Text="{x:Bind InvestedQty}"/><!--
-                                    --><Run Text="{x:Bind CurrencySymbol}"/>
-                                </TextBlock>
-                            </StackPanel>
+                            <controls:HeaderedContentControl
+                                Grid.Column="2" Header="Invested"
+                                HorizontalAlignment="Right" HorizontalContentAlignment="Center">
+                                <controls:HeaderedContentControl.Content>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind InvestedQty}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                    </TextBlock>
+                                </controls:HeaderedContentControl.Content>
+                            </controls:HeaderedContentControl>
 
-                            <StackPanel Grid.Column="3" Margin="10 0">
-                                <TextBlock Text="Worth" Opacity="0.75" Margin="0 0 0 -5"/>
-                                <TextBlock d:Text="62.5€" FontSize="16" HorizontalAlignment="Right">
-                                    <Run Text="{x:Bind Worth}"/><!--
-                                    --><Run Text="{x:Bind CurrencySymbol}"/>
-                                </TextBlock>
-                            </StackPanel>
+                            <controls:HeaderedContentControl
+                                Grid.Column="3" Header="Worth"
+                                HorizontalAlignment="Right" HorizontalContentAlignment="Center">
+                                <controls:HeaderedContentControl.Content>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind Worth}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                    </TextBlock>
+                                </controls:HeaderedContentControl.Content>
+                            </controls:HeaderedContentControl>
 
-                            <StackPanel Grid.Column="4" Margin="10 0">
-                                <TextBlock Text="Delta" Opacity="0.75" Margin="0 0 0 -5"/>
-                                <TextBlock d:Text="12%" FontSize="16" HorizontalAlignment="Right"
-                                    Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
-                                    <Run Text="{x:Bind Delta}"/><!--
-                                    --><Run Text="{x:Bind CurrencySymbol}"/>
-                                </TextBlock>
-                            </StackPanel>
+                            <controls:HeaderedContentControl
+                                Grid.Column="4" Header="Delta"
+                                HorizontalAlignment="Right" HorizontalContentAlignment="Center">
+                                <controls:HeaderedContentControl.Content>
+                                    <TextBlock Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
+                                        <Run Text="{x:Bind Delta}"/><!--
+                                        --><Run Text="{x:Bind CurrencySymbol}"/>
+                                    </TextBlock>
+                                </controls:HeaderedContentControl.Content>
+                            </controls:HeaderedContentControl>
+                            
                         </Grid>
                     </StackPanel>
                 </UserControl>
