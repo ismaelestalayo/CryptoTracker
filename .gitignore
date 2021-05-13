@@ -260,4 +260,3 @@ paket-files/
 __pycache__/
 *.pyc
 /CryptoTracker/Helpers/CurrencyHelper.cs
-UWP/Package.appxmanifest
