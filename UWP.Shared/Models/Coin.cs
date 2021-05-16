@@ -20,8 +20,8 @@ namespace UWP.Models {
                 SetProperty(ref name, value);
                 // TODO
                 Logo = IconsHelper.GetIcon(value);
-                var coinList = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.PinnedCoins);
-                IsFav = coinList.Split("|").ToList().Contains(value);
+                var pinned = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.PinnedCoins);
+                IsFav = pinned.Split("|").ToList().Contains(value);
             }
         }
         public string FullName { get; set; } = "NULL";

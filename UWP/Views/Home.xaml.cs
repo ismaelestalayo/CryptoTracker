@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using UWP.APIs;
 using UWP.Background;
 using UWP.Core.Constants;
 using UWP.Helpers;
@@ -34,7 +33,7 @@ namespace UWP.Views {
 
 
         public Home() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
@@ -46,7 +45,7 @@ namespace UWP.Views {
             /// Create the auto-refresh timer
             var autoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
             TimeSpan period;
-            if (autoRefresh != "None") {
+            if (!autoRefresh.Equals("none", StringComparison.InvariantCultureIgnoreCase)) {
                 switch (autoRefresh) {
                     case "30 sec":
                         period = TimeSpan.FromSeconds(30);

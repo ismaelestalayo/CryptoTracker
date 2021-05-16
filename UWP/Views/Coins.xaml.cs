@@ -1,5 +1,4 @@
-﻿using Microcharts.Uwp;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
