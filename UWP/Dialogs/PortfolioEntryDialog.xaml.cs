@@ -81,11 +81,11 @@ namespace CryptoTracker.Dialogs {
         }
 
         private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinList.Where(x =>
+            var filtered = App.coinListPaprika.Where(x =>
                 x.symbol.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase) ||
                 x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
             List<SuggestionCoin> list = new List<SuggestionCoin>();
-            foreach (CoinBasicInfo coin in filtered) {
+            foreach (var coin in filtered) {
                 list.Add(new SuggestionCoin {
                     Icon = IconsHelper.GetIcon(coin.symbol),
                     Name = coin.name,

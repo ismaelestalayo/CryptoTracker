@@ -23,6 +23,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Popups;
 
 namespace UWP {
 	sealed partial class App : Application {
@@ -37,7 +38,7 @@ namespace UWP {
 
         internal static LocalSettings _LocalSettings = new LocalSettings();
         internal static string CurrentPage = "";
-        internal static List<CoinBasicInfo> coinList = new List<CoinBasicInfo>();
+        internal static List<CoinPaprikaCoin> coinListPaprika = new List<CoinPaprikaCoin>();
         internal static List<string> pinnedCoins;
 
         internal static CultureInfo UserCulture = new CultureInfo(GlobalizationPreferences.Languages[0]);
@@ -120,8 +121,12 @@ namespace UWP {
 
             deferral.Complete();
         }
-        private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e) {
+        private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e) {
+            e.Handled = true;
             Analytics.TrackEvent($"UNHANDLED-{CurrentPage}: " + e.Message);
+
+            var messageDialog = new MessageDialog("An error occurred", "Error");
+            await messageDialog.ShowAsync();
         }
 
         // ###############################################################################################
@@ -164,10 +169,7 @@ namespace UWP {
             }
         }
 
-        /* ###############################################################################################
-         * Gets the list of coins and saves it under App.coinList
-         * API: Github
-        */
+        // ###############################################################################################
         internal async static Task GetCoinList() {
             // check cache before sending an unnecesary request
             var date = _LocalSettings.Get<double>(UserSettings.CoinListDate);
@@ -175,13 +177,13 @@ namespace UWP {
             DateTime lastUpdate = DateTime.FromOADate((double)date);
             var days = DateTime.Today.CompareTo(lastUpdate);
 
-			coinList = await LocalStorageHelper.ReadObject<List<CoinBasicInfo>>("CoinList");
+            coinListPaprika = await LocalStorageHelper.ReadObject<List<CoinPaprikaCoin>>("CoinList");
 
-			// if empty list OR old cache -> refresh
-			if (coinList.Count == 0 || days > 7) {
-                coinList = await GitHub.GetAllCoins();
+            // if empty list OR old cache -> refresh
+            if (coinListPaprika.Count == 0 || days > 7) {
+                coinListPaprika = await Ioc.Default.GetService<ICoinPaprika>().GetCoinList_();
             }
-            
+
         }
 
         
