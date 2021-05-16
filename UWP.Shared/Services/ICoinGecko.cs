@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Refit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,19 +12,48 @@ using UWP.Shared.Constants;
 
 namespace UWP.Services {
     public interface ICoinGecko {
+        [Get("/simple/price?ids={cryptos}&vs_currency={currency}")]
+        Task<string> GetPrice(string cryptos, string currency);
 
-		[Get("/global")]
-		Task<string> GetGlobalStats();
+        [Get("/coins/list")]
+        Task<string> GetCoinList();
 
-		[Get("/coins/{coin}?localization=false&tickers=false&community_data=false&developer_data=false")]
-		Task<string> GetCoin(string coin);
+        [Get("/global")]
+        Task<string> GetGlobalStats();
 
-		[Get("/coins/markets?vs_currency={currency}&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=1h,24h,7d,30d,1y")]
-		Task<string> GetCoinsMarkets(string currency);
-	}
+        [Get("/coins/{coin}?localization=false&tickers=false&community_data=false&developer_data=false")]
+        Task<string> GetCoin(string coin);
 
-	public static class CoinGeckoExtensions {
-		public static async Task<List<CoinMarket>> GetCoinsMarkets_(this ICoinGecko service, string currency = "") {
+        [Get("/coins/markets?vs_currency={currency}&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=1h,24h,7d,30d,1y")]
+        Task<string> GetCoinsMarkets(string currency);
+    }
+
+    public static class CoinGeckoExtensions {
+        public static async Task<int> GetPrice_(this ICoinGecko service, string cryptos, string currency = "") {
+            if (currency == "")
+                currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
+            var currencySym = Currencies.GetCurrencySymbol(currency);
+
+            try {
+                var response = await service.GetPrice(cryptos, currency);
+                return 3;
+            }
+            catch (Exception ex) {
+                return 0;
+            }
+        }
+
+        public static async Task<List<CoinGeckoCoin>> GetCoinList_(this ICoinGecko service) {
+            try {
+                var response = await service.GetCoinList();
+                return JsonSerializer.Deserialize<List<CoinGeckoCoin>>(response.ToString());
+            }
+            catch (Exception ex) {
+                return new List<CoinGeckoCoin>();
+            }
+        }
+
+        public static async Task<List<CoinMarket>> GetCoinsMarkets_(this ICoinGecko service, string currency = "") {
             if (currency == "")
                 currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
             var currencySym = Currencies.GetCurrencySymbol(currency);
@@ -43,8 +73,14 @@ namespace UWP.Services {
                 d.currencySymbol = currencySym;
             }
             return data;
-		}
-	}
+        }
+    }
+
+    public class CoinGeckoCoin {
+        public string id { get; set; }
+        public string symbol { get; set; }
+        public string name { get; set; }
+    }
 
     public class CoinMarket {
         public string id { get; set; }

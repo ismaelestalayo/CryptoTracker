@@ -2,6 +2,7 @@
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using UWP.Core.Constants;
@@ -17,6 +18,9 @@ namespace UWP.Services {
          * - crypto: BTC ETH...
          * - market: CCCAGG Bitstamp Bitfinex Coinbase HitBTC Kraken Poloniex
         */
+        [Get("/data/all/coinlist?summary=true")]
+        Task<string> GetAllCoins();
+
         [Get("/data/price?fsym={crypto}&tsyms={currency}")]
         Task<string> GetPrice(string crypto, string currency);
 
@@ -43,6 +47,23 @@ namespace UWP.Services {
     }
 
     public static class CryptoCompareExtensions {
+        public static async Task<List<CoinCryptoCompare>> GetAllCoins_(this ICryptoCompare service) {
+            try {
+                var resp = await service.GetAllCoins();
+                var response = JsonSerializer.Deserialize<object>(resp.ToString());
+                var okey = ((JsonElement)response).GetProperty("Response").ToString();
+                if (okey != "Success")
+                    throw new Exception();
+
+                var data = ((JsonElement)response).GetProperty("Data");
+                var d = JsonSerializer.Deserialize<Dictionary<string, CoinCryptoCompare>>(data.ToString());
+
+                return d.Values.ToList();
+            }
+            catch (Exception ex) {
+                return new List<CoinCryptoCompare>();
+            }
+        }
         public static async Task<double> GetPrice_Extension(this ICryptoCompare service, string crypto, string currency) {
             var response = await service.GetPrice(crypto, currency);
             var data = response.ToString();
@@ -56,7 +77,6 @@ namespace UWP.Services {
 
             var currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
             
-            var NullValue = new List<HistoricPrice>() { new HistoricPrice() };
 
             object resp;
             try {
@@ -68,8 +88,10 @@ namespace UWP.Services {
                 var response = JsonSerializer.Deserialize<object>(resp.ToString());
 
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
-                if (okey != "Success")
-                    return NullValue;
+                var timeTo = ((JsonElement)response).GetProperty("TimeTo").ToString();
+                var timeFrom = ((JsonElement)response).GetProperty("TimeFrom").ToString();
+                if (!okey.Equals("Success", StringComparison.InvariantCultureIgnoreCase) || timeTo == timeFrom)
+                    throw new Exception();
 
                 var data = ((JsonElement)response).GetProperty("Data").ToString();
                 var historic = JsonSerializer.Deserialize<List<HistoricPrice>>(data);
@@ -94,9 +116,15 @@ namespace UWP.Services {
             }
             catch (Exception ex) {
                 var z = ex.Message;
-                return NullValue;
+                return new List<HistoricPrice>() { new HistoricPrice() };
             }
         }
 
+    }
+
+    public class CoinCryptoCompare {
+        public string Id { get; set; }
+        public string Symbol { get; set; }
+        public string FullName { get; set; }
     }
 }
