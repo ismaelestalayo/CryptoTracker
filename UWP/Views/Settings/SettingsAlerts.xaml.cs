@@ -38,40 +38,5 @@ namespace UWP.Views {
             vm.Alerts.Remove(alert);
             vm.CvsSource = from a in vm.Alerts group a by a.Crypto;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            vm.Alerts.Add(
-                new Alert() {
-                    Crypto = "ETH",
-                    Enabled = true,
-                    Id = 0,
-                    Mode = "above",
-                    Threshold = 1920
-                });
-            vm.Alerts.Add(
-                new Alert() {
-                    Crypto = "ETH",
-                    Enabled = true,
-                    Id = 1,
-                    Mode = "below",
-                    Threshold = 1700
-                });
-            vm.Alerts.Add(
-                new Alert() {
-                    Crypto = "BTC",
-                    Enabled = true,
-                    Id = 2,
-                    Mode = "below",
-                    Threshold = 60000
-                });
-            vm.Alerts.Add(
-                new Alert() {
-                    Crypto = "XRP",
-                    Enabled = true,
-                    Id = 3,
-                    Mode = "above",
-                    Threshold = (double)1.5
-                });
-        }
     }
 }

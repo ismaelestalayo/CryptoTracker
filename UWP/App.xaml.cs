@@ -125,7 +125,7 @@ namespace UWP {
             e.Handled = true;
             Analytics.TrackEvent($"UNHANDLED-{CurrentPage}: " + e.Message);
 
-            var messageDialog = new MessageDialog("An error occurred", "Error");
+            var messageDialog = new MessageDialog(e.Message, "An error occurred");
             await messageDialog.ShowAsync();
         }
 

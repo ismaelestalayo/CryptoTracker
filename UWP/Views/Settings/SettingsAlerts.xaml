@@ -49,7 +49,6 @@
             <StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xEA8F;"/>
                 <TextBlock Text="Alerts" Style="{ThemeResource ClassTitle}"/>
-                <Button Content="ADD" Click="Button_Click" Padding="5 0" Margin="5 0"/>
             </StackPanel>
 
             <TextBlock
