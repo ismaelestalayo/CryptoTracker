@@ -137,6 +137,7 @@
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="Transparent"/>
                                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="BorderThickness" Value="0"/>
                             </Style>
                         </Grid.Resources>
 
@@ -314,10 +315,12 @@
                                     Orientation="Horizontal" Padding="15 5 0 5">
                                 <Button
                                     d:Content="&#xEB51;"
+                                    BorderThickness="0"
                                     Click="Fav_click"
                                     Content="{x:Bind IsFav, Converter={StaticResource FavIcon}}"
                                     FontFamily="{StaticResource FluentIconFont}"
-                                    Background="Transparent"/>
+                                    Background="Transparent"
+                                    Padding="7" Margin="5 0"/>
                                 <Image
                                     d:Source="ms-appx:///Assets/Icons/iconNULL.png"
                                     Source="{x:Bind image}"
