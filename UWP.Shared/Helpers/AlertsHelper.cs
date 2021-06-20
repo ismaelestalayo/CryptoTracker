@@ -8,10 +8,8 @@ using UWP.Models;
 
 namespace UWP.Shared.Helpers {
     public class AlertsHelper {
-        public async static Task<ObservableCollection<Alert>> GetAlerts() {
-            var alerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
-            return new ObservableCollection<Alert>(alerts);
-        }
+        public async static Task<List<Alert>> GetAlerts()
+            => await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
 
         public async static Task<ObservableCollection<Alert>> GetCryptoAlerts(string crypto) {
             var allAlerts = await GetAlerts();
@@ -20,16 +18,16 @@ namespace UWP.Shared.Helpers {
         }
 
         public async static void UpdateOneCryptoAlerts(string crypto, ObservableCollection<Alert> alerts) {
-            var localAlerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
-            foreach (var alert in alerts) {
-                var a = localAlerts.Select(x => x.Id == alert.Id).ToList();
-            }
-
-            //LocalStorageHelper.SaveObject(UserStorage.Alerts, alerts);
+            var localAlerts = await GetAlerts();
+            foreach (var alert in localAlerts.ToList())
+                if (alert.Crypto == crypto)
+                    localAlerts.Remove(alert);
+            localAlerts.AddRange(alerts);
+            LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
         }
 
         public async static Task DeleteAlert(int index) {
-            var localAlerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
+            var localAlerts = await GetAlerts();
             localAlerts.RemoveAt(index);
             LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
         }

@@ -35,7 +35,8 @@
                         PlaceholderText="Mode"
                         Grid.Column="2" Margin="5 0"
                         Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                        SelectedItem="{x:Bind Mode, Mode=TwoWay}">
+                        SelectedItem="{x:Bind Mode, Mode=TwoWay}"
+                        VerticalAlignment="Center">
                         <x:String>above</x:String>
                         <x:String>below</x:String>
                     </ComboBox>
@@ -43,6 +44,7 @@
                         Grid.Column="3" Margin="5 0"
                         PlaceholderText="Threshold"
                         Value="{x:Bind Threshold, Mode=TwoWay}"
+                        VerticalAlignment="Center"
                         Width="100"/>
                     <Button
                         Click="Delete_alert"

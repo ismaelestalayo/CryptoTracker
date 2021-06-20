@@ -24,7 +24,8 @@ namespace UWP.UserControls {
         }
 
         private void Delete_alert(object sender, RoutedEventArgs e) {
-
+            var alert = ((FrameworkElement)sender).DataContext as Alert;
+            Alerts.Remove(alert);
         }
     }
 }

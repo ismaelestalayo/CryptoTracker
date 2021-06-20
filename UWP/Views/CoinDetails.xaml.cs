@@ -24,6 +24,7 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
@@ -50,7 +51,7 @@ namespace UWP.Views {
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
             /// If list is empty
-            if (App.coinList.Count == 0)
+            if (App.coinListPaprika.Count == 0)
                 await App.GetCoinList();
 
             /// Create the connected animation
@@ -89,7 +90,7 @@ namespace UWP.Views {
                         vm.Coin = ((HomeCard)e.Parameter).Info;
                         vm.Chart.TimeSpan = vm.Chart.TimeSpan;
 
-                        var coin = App.coinList.Find(x => x.symbol == vm.Coin.Name);
+                        var coin = App.coinListPaprika.Find(x => x.symbol == vm.Coin.Name);
                         vm.Coin.FullName = coin.name;
                         vm.CoinInfo = await CoinGecko.GetCoin(coin.name);
                         break;
@@ -103,10 +104,10 @@ namespace UWP.Views {
                     case "string":
                         var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
                         vm.Coin.Name = crypto;
-                        var _coin = App.coinList.Find(x => x.symbol == crypto) ?? new CoinBasicInfo();
+                        var _coin = App.coinListPaprika.Find(x => x.symbol == crypto) ?? new CoinPaprikaCoin();
                         vm.Coin.FullName = _coin?.name ?? "NULL";
 
-                        InitValuesFromZero(_coin);
+                        InitValuesFromZero(_coin.name);
                         break;
                 }
             }
@@ -124,9 +125,7 @@ namespace UWP.Views {
                 vm.TotalValue += vm.Purchases[i].Worth;
             }
 
-            var alerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
-            alerts = alerts.Where(x => x.Crypto == vm.Coin.Name).ToList();
-            vm.Alerts = new ObservableCollection<Alert>(alerts);
+            vm.Alerts = await AlertsHelper.GetCryptoAlerts(vm.Coin.Name);
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e) {
@@ -134,8 +133,8 @@ namespace UWP.Views {
         }
 
         /// #########################################################################################
-        private async void InitValuesFromZero(CoinBasicInfo coin) {
-            vm.CoinInfo = await CoinGecko.GetCoin(coin.name);
+        private async void InitValuesFromZero(string cryptoName) {
+            vm.CoinInfo = await CoinGecko.GetCoin(cryptoName);
 
             try {
                 TimeRangeButtons_Tapped(null, null);
@@ -304,5 +303,19 @@ namespace UWP.Views {
         }
 
         public string Format(string text, object arg) => string.Format(text, arg);
+
+        private void NewAlert(object sender, RoutedEventArgs e) {
+            vm.Alerts.Add(new Alert() {
+                Crypto = vm.Coin.Name,
+                Currency = App.currency,
+                CurrencySymbol = App.currencySymbol,
+                Enabled = true,
+                Id = Guid.NewGuid().GetHashCode(),
+                Mode = "above"
+            });
+        }
+
+        private void Flyout_Closed(object sender, object e)
+            => AlertsHelper.UpdateOneCryptoAlerts(vm.Coin.Name, vm.Alerts);
     }
 }

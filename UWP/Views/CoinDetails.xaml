@@ -129,7 +129,7 @@
 
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900"/>
+                        <AdaptiveTrigger MinWindowWidth="850"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="BottomUniformGrid.Columns" Value="3"/>
@@ -209,6 +209,29 @@
                             Content="{x:Bind vm.Coin.PinIcon}"
                             ToolTipService.ToolTip="Toggle pin to start screen"
                             Style="{StaticResource IconBtn}"/>
+                        <Button
+                            Content="&#xEA8F;"
+                            ToolTipService.ToolTip="Toggle pin to start screen"
+                            Style="{StaticResource IconBtn}">
+                            <Button.Flyout>
+                                <Flyout Placement="BottomEdgeAlignedLeft" Closed="Flyout_Closed">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Text="Alerts" FontWeight="Bold"
+                                            Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                        <userControls:AlertList
+                                            Alerts="{x:Bind vm.Alerts, Mode=TwoWay}"
+                                            MaxHeight="250"/>
+                                        <Button
+                                            Content="New alert" Click="NewAlert"
+                                            Background="Transparent" CornerRadius="6"
+                                            BorderThickness="0.5"
+                                            BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
+                                            HorizontalAlignment="Center" Margin="0 10"/>
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
                         <Button
                             d:Visibility="Visible" x:Name="CompactOverlay_btn"
                             Content="&#xE8a7;" Click="CompactOverlay_btn_click"
@@ -404,88 +427,87 @@
         ####################################################################################################
         ############################################## Bottom Cards ########################################
         #################################################################################################### -->
-        <ScrollViewer Grid.Row="3" Margin="0 10">
-            <controls:UniformGrid x:Name="BottomUniformGrid" Rows="3" Columns="2" VerticalAlignment="Top">
+        <Pivot Grid.Row="3" Margin="5 0">
+            <PivotItem Header="Info">
+                <controls:UniformGrid x:Name="BottomUniformGrid" Rows="3" Columns="2" VerticalAlignment="Top">
 
-                <!-- Info card -->
-                <StackPanel
+                    <!-- Info card -->
+                    <StackPanel
                     x:Name="InfoCard" Style="{ThemeResource CardStackPanel}"
-                    Grid.RowSpan="2" Grid.ColumnSpan="1"
-                    Visibility="Collapsed">
-                    <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                        <TextBlock Text="Information" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                    </RelativePanel>
+                    Grid.RowSpan="2" Grid.ColumnSpan="2">
+                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
+                            <TextBlock Text="Information" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                        </RelativePanel>
 
-                    <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                        <TextBlock
+                        <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+                            <TextBlock
                             Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords"
                             TextAlignment="Justify" Opacity="0.8"/>
-                    </ScrollViewer>
+                        </ScrollViewer>
+                    </StackPanel>
+
+                    <!-- Alerts card -->
+                    <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2" Grid.ColumnSpan="1">
+                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
+                            <TextBlock Text="Alerts" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                        </RelativePanel>
+
+                    </StackPanel>
+
+
+                    
+                </controls:UniformGrid>
+                
+            </PivotItem>
+
+
+            <PivotItem Header="Entries" Margin="10">
+                <StackPanel>
+                    <Grid Margin="10 0">
+                        <controls:HeaderedContentControl HorizontalAlignment="Left" HorizontalContentAlignment="Center" Header="Owned">
+                            <controls:HeaderedContentControl.Content>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.TotalOwned, Mode=OneWay}"/>
+                                    <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
+                                </TextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
+
+                        <controls:HeaderedContentControl HorizontalAlignment="Center" HorizontalContentAlignment="Center" Header="Value">
+                            <controls:HeaderedContentControl.Content>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                </TextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
+
+                        <controls:HeaderedContentControl HorizontalAlignment="Right" HorizontalContentAlignment="Center" Header="Total profit">
+                            <controls:HeaderedContentControl.Content>
+                                <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
+                                    <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
+                                    --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                </TextBlock>
+                            </controls:HeaderedContentControl.Content>
+                        </controls:HeaderedContentControl>
+                    </Grid>
+
+                    <Button
+                        Background="Transparent" CornerRadius="6"
+                        BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
+                        Click="NewPurchase_click" Content="Add new purchase"
+                        HorizontalAlignment="Center" Margin="0 10"/>
+                    <userControls:PortfolioList
+                        IsHitTestVisible="False"
+                        Purchases="{x:Bind vm.Purchases}"
+                        HorizontalAlignment="Stretch"/>
                 </StackPanel>
-
-                <!-- Alerts card -->
-                <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2" Grid.ColumnSpan="1">
-                    <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                        <TextBlock Text="Alerts" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                    </RelativePanel>
-
-                    <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                        <userControls:AlertList Alerts="{x:Bind vm.Alerts}"/>
-                    </ScrollViewer>
-                </StackPanel>
+            </PivotItem>
 
 
-                <!-- Entries card -->
-                <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2" Grid.ColumnSpan="2">
-                    <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                        <TextBlock Text="Entries" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                    </RelativePanel>
-                    <ScrollViewer>
-                        <StackPanel>
-                            <Grid Margin="10 0">
-                                <controls:HeaderedContentControl HorizontalAlignment="Left" HorizontalContentAlignment="Center" Header="Owned">
-                                    <controls:HeaderedContentControl.Content>
-                                        <TextBlock>
-                                            <Run Text="{x:Bind vm.TotalOwned, Mode=OneWay}"/>
-                                            <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
-                                        </TextBlock>
-                                    </controls:HeaderedContentControl.Content>
-                                </controls:HeaderedContentControl>
+            <!--<ScrollViewer Grid.Row="3" Margin="0 10" Visibility="Visible">
+            
 
-                                <controls:HeaderedContentControl HorizontalAlignment="Center" HorizontalContentAlignment="Center" Header="Value">
-                                    <controls:HeaderedContentControl.Content>
-                                        <TextBlock>
-                                            <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                        </TextBlock>
-                                    </controls:HeaderedContentControl.Content>
-                                </controls:HeaderedContentControl>
-
-                                <controls:HeaderedContentControl HorizontalAlignment="Right" HorizontalContentAlignment="Center" Header="Total profit">
-                                    <controls:HeaderedContentControl.Content>
-                                        <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
-                                            <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
-                                            --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                        </TextBlock>
-                                    </controls:HeaderedContentControl.Content>
-                                </controls:HeaderedContentControl>
-                            </Grid>
-                            
-                            <Button
-                                Background="Transparent" CornerRadius="6"
-                                BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
-                                Click="NewPurchase_click" Content="Add new purchase"
-                                HorizontalAlignment="Center" Margin="0 10"/>
-                            <userControls:PortfolioList
-                                IsHitTestVisible="False"
-                                Purchases="{x:Bind vm.Purchases}"
-                                HorizontalAlignment="Stretch"/>
-                        </StackPanel>
-                    </ScrollViewer>
-                </StackPanel>
-
-            </controls:UniformGrid>
-
-            <!--
+            --><!--
                 <ListView Grid.Row="1" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0" Background="Blue" Visibility="Collapsed">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="helpers:JSONexchanges">
@@ -512,8 +534,10 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-                -->
-        </ScrollViewer>
+                --><!--
+        </ScrollViewer>-->
+
+        </Pivot>
 
     </Grid>
 </Page>

@@ -30,13 +30,5 @@ namespace UWP.Views {
         private new void Unloaded(object sender, RoutedEventArgs e) {
             LocalStorageHelper.SaveObject(UserStorage.Alerts, vm.Alerts);
         }
-
-
-        // ###############################################################################################
-        private void Delete_alert(object sender, RoutedEventArgs e) {
-            var alert = ((FrameworkElement)sender).DataContext as Alert;
-            vm.Alerts.Remove(alert);
-            vm.CvsSource = from a in vm.Alerts group a by a.Crypto;
-        }
     }
 }
