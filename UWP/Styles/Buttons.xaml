@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="Button">
-        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
     <Style TargetType="Button" x:Key="Crypto_button_style">
