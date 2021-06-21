@@ -14,23 +14,12 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
-            <Setter Property="FontWeight" Value="ExtraLight"/>
-            <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="0 5"/>
-            <Setter Property="MaxWidth" Value="350"/>
-        </Style>
-        <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
-            <Setter Property="TextLineBounds" Value="Tight"/>
-            <Setter Property="Margin" Value="10 1 0 0"/>
-        </Style>
         <Style TargetType="StackPanel" x:Key="Title">
             <Setter Property="Orientation" Value="Horizontal"/>
             <Setter Property="Margin" Value="0 25 0 5"/>
         </Style>
-        
-        <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
+
+        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
         <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
 
@@ -41,7 +30,7 @@
             <!-- APPEARANCE -->
             <StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xE703;"/>
-                <TextBlock Text="Appearance" Style="{ThemeResource ClassTitle}"/>
+                <TextBlock Text="Appearance" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
                 
             <TextBlock Text="Theme"/>
@@ -56,7 +45,7 @@
             <!-- COLORS -->
             <StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xE9D2;"/>
-                <TextBlock Text="Colors" Style="{ThemeResource ClassTitle}"/>
+                <TextBlock Text="Colors" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
             <TextBlock Text="Theming"/>

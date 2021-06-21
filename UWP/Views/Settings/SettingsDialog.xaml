@@ -15,101 +15,81 @@
         <x:Double x:Key="ContentDialogMaxWidth">630</x:Double>
     </ContentDialog.Resources>
 
-    <Grid Background="{ThemeResource ContentDialogBackground}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Grid
-            BorderThickness="0 0 0 1" BorderBrush="#60808080"
-            Padding="5 0" Margin="5 0"
-            Opacity="0.5">
-            <TextBlock
-                d:Text="CryptoTracker X.Y.Z"
-                Text="{x:Bind FooterVersion, Mode=OneWay}"
-                FontSize="12" FontWeight="SemiBold"
-                VerticalAlignment="Center"/>
-            <Button
-                Background="Transparent"
-                Click="CloseDialog_Click"
-                Content="&#xE8BB;"
-                FontFamily="{StaticResource FluentIconFont}"
-                FontSize="12"
-                HorizontalAlignment="Right"
-                Margin="0 0 -5 0" Padding="5 5" />
-        </Grid>
-    
-        <muxc:NavigationView
-            x:Name="SettingsNavView"
-            Grid.Row="1"
-            IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
-            IsSettingsVisible="False" IsPaneOpen="True"
-            PaneDisplayMode="Left" OpenPaneLength="130"
-            Height="550" Width="520" Padding="30" Margin="10 0"
-            SelectionChanged="NavView_SelectionChanged">
-            <muxc:NavigationView.Resources>
-                <Style TargetType="muxc:NavigationViewItem">
-                    <Setter Property="FontWeight" Value="Light"/>
-                    <Setter Property="Padding" Value="0 0 0 4"/>
-                </Style>
-            </muxc:NavigationView.Resources>
+    <muxc:NavigationView
+        x:Name="SettingsNavView"
+        IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
+        IsSettingsVisible="False" IsPaneOpen="True"
+        PaneDisplayMode="Left" OpenPaneLength="165"
+        Height="550" Width="520"
+        SelectionChanged="NavView_SelectionChanged">
+        <muxc:NavigationView.Resources>
+            <Style TargetType="muxc:NavigationViewItem">
+                <Setter Property="FontWeight" Value="Light"/>
+                <Setter Property="Padding" Value="0 0 0 0"/>
+            </Style>
+            <Thickness x:Key="NavigationViewContentPresenterMargin">0</Thickness>
+            <Thickness x:Key="NavigationViewPaneContentGridMargin">8,12,8,12</Thickness>
+        </muxc:NavigationView.Resources>
 
-            <muxc:NavigationView.MenuItems>
-                <muxc:NavigationViewItem Content="General">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE10F;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+        <muxc:NavigationView.MenuItems>
+            <muxc:NavigationViewItem Content="General">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE10F;"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
 
-                <muxc:NavigationViewItem Content="Appearance">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE2B1;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem Content="Appearance">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE2B1;"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
 
-                <muxc:NavigationViewItem Content="Alerts">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xEA8F;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem Content="Alerts">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xEA8F;"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
 
-                <muxc:NavigationViewItem Content="Changelog">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE14C;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem Content="Changelog">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE14C;"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
 
-                <muxc:NavigationViewItem Content="Feedback">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE789;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem Content="Feedback">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE789;"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
 
-                <muxc:NavigationViewItem Content="About">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE946;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
-            
-            </muxc:NavigationView.MenuItems>
+            <muxc:NavigationViewItem Content="About">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE946;"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
 
-            <Frame x:Name="SettingsFrame" Padding="15 0 0 0">
-                <Frame.ContentTransitions>
-                    <TransitionCollection>
-                        <NavigationThemeTransition/>
-                    </TransitionCollection>
-                </Frame.ContentTransitions>
-            </Frame>
+        </muxc:NavigationView.MenuItems>
+
+        <!-- TODO: this negative margin should be removed when it's fixed in WinUI 2.6 -->
+        <Frame
+            x:Name="SettingsFrame"
+            Background="{ThemeResource SystemChromeMediumLowColor}"
+            Padding="24 0 8 0" Margin="0">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
 
 
-            <!--<muxc:NavigationView.PaneFooter>
-                <muxc:NavigationViewItem
-                    d:Content="CryptoTracker 6.0.0"
-                    x:Name="FooterVersion" IsEnabled="False" Margin="0 -0"
-                    Content="CryptoTracker 6.0.0" FontWeight="Normal" Padding="-5 0">
-                </muxc:NavigationViewItem>
-            </muxc:NavigationView.PaneFooter>-->
-        </muxc:NavigationView>
-    </Grid>
+        <muxc:NavigationView.PaneFooter>
+            <muxc:NavigationViewItem
+                d:Content="CryptoTracker X.Y.Z"
+                IsEnabled="False"
+                Content="{x:Bind FooterVersion, Mode=OneWay}" FontWeight="Normal" Padding="-5 0">
+            </muxc:NavigationViewItem>
+        </muxc:NavigationView.PaneFooter>
+    </muxc:NavigationView>
 </ContentDialog>

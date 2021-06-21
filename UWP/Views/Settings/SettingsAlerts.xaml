@@ -18,23 +18,12 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
-            <Setter Property="FontWeight" Value="ExtraLight"/>
-            <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="0 5"/>
-            <Setter Property="MaxWidth" Value="350"/>
-        </Style>
-        <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
-            <Setter Property="TextLineBounds" Value="Tight"/>
-            <Setter Property="Margin" Value="10 1 0 0"/>
-        </Style>
         <Style TargetType="StackPanel" x:Key="Title">
             <Setter Property="Orientation" Value="Horizontal"/>
             <Setter Property="Margin" Value="0 25 0 5"/>
         </Style>
 
-        <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
         <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
 
         <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind vm.CvsSource, Mode=OneWay}"/>
@@ -48,7 +37,7 @@
             <!-- ALERTS -->
             <StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xEA8F;"/>
-                <TextBlock Text="Alerts" Style="{ThemeResource ClassTitle}"/>
+                <TextBlock Text="Alerts" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
             <TextBlock

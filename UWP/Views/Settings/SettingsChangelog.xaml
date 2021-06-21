@@ -14,19 +14,8 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style TargetType="TextBlock" x:Key="ClassLabel" BasedOn="{StaticResource BaseTextBlockStyle}">
-            <Setter Property="FontWeight" Value="ExtraLight"/>
-            <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="0 5"/>
-            <Setter Property="MaxWidth" Value="350"/>
-        </Style>
-        <Style TargetType="TextBlock" x:Key="ClassTitle" BasedOn="{StaticResource TitleTextBlockStyle}">
-            <Setter Property="TextLineBounds" Value="Tight"/>
-            <Setter Property="Margin" Value="10 1 0 0"/>
-        </Style>
-        <Style TargetType="TextBlock" x:Key="ClassSubtitle" BasedOn="{StaticResource SubtitleTextBlockStyle}">
-            <Setter Property="FontWeight" Value="Light"/>
+        <Style TargetType="TextBlock" x:Key="SettingsSectionSubtitle" BasedOn="{StaticResource SubtitleTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="TextLineBounds" Value="Tight"/>
             <Setter Property="Margin" Value="0 10 0 0"/>
         </Style>
@@ -35,7 +24,7 @@
             <Setter Property="Margin" Value="0 25 0 5"/>
         </Style>
 
-        <Style TargetType="TextBlock" BasedOn="{StaticResource ClassLabel}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
         <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
 
@@ -46,10 +35,10 @@
             <!-- CHANGELOGS -->
             <StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xE14C;"/>
-                <TextBlock Text="Changelogs" Style="{ThemeResource ClassTitle}"/>
+                <TextBlock Text="Changelogs" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
             <StackPanel x:Name="ChangeLogList">
-                <d:TextBlock Text="X.Y.Z" Style="{ThemeResource ClassTitle}"/>
+                <d:TextBlock Text="X.Y.Z" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
         </StackPanel>

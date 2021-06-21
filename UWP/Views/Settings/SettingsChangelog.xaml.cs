@@ -21,8 +21,8 @@ namespace UWP.Views {
                 var changes = Changelogs.FormatChangelog(changelog.Value);
                 var s = new StackPanel() {
                     Children = {
-                        new TextBlock(){ Text = changelog.Key, Style = Resources["ClassSubtitle"] as Style },
-                        new TextBlock(){ Text = changes, Style = Resources["ClassLabel"] as Style }
+                        new TextBlock(){ Text = changelog.Key, Style = Resources["SettingsSectionSubtitle"] as Style },
+                        new TextBlock(){ Text = changes }
                     }
                 };
                 ChangeLogList.Children.Add(s);
