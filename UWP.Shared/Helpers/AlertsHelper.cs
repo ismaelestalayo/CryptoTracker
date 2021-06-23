@@ -23,13 +23,13 @@ namespace UWP.Shared.Helpers {
                 if (alert.Crypto == crypto)
                     localAlerts.Remove(alert);
             localAlerts.AddRange(alerts);
-            LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
+            await LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
         }
 
         public async static Task DeleteAlert(int index) {
             var localAlerts = await GetAlerts();
             localAlerts.RemoveAt(index);
-            LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
+            await LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
         }
     }
 }

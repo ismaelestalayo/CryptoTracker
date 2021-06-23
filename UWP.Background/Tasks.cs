@@ -51,8 +51,8 @@ namespace UWP.Background {
             var localSettings = new LocalSettings();
             var currency = localSettings.Get<string>(UserSettings.Currency);
 
-            localAlerts = localAlerts.Where(x => x.Enabled).ToList();
-            var alerts = localAlerts.GroupBy(x => x.Crypto);
+            var enabledAlerts = localAlerts.Where(x => x.Enabled).ToList();
+            var alerts = enabledAlerts.GroupBy(x => x.Crypto);
 
             /// More efficient: get price once for all alerts of the same crypto
             foreach (var alert in alerts) {
@@ -64,7 +64,7 @@ namespace UWP.Background {
                     if (CheckAlert(a, price))
                         localAlerts[localAlerts.IndexOf(a)].Enabled = false;
             }
-            LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
+            await LocalStorageHelper.SaveObject(UserStorage.Alerts, localAlerts);
         }
 
         private bool CheckAlert(Alert alert, double price) {

@@ -25,7 +25,7 @@ namespace UWP.Shared.Helpers {
         public async static void AddPurchase(PurchaseModel purchase) {
             var portfolio = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
             portfolio.Add(purchase);
-            LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
+            await LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
         }
 
         public static void SavePortfolio(object portfolio) {

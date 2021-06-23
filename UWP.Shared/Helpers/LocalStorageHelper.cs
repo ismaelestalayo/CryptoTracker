@@ -6,7 +6,7 @@ using Windows.Storage;
 
 namespace UWP.Helpers {
     public class LocalStorageHelper {
-        public static async void SaveObject<T>(string key, T obj) {
+        public static async Task SaveObject<T>(string key, T obj) {
             try {
                 var savedStuffFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(
                     key, CreationCollisionOption.ReplaceExisting);

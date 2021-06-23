@@ -29,7 +29,7 @@
                 <Setter Property="Padding" Value="0 0 0 0"/>
             </Style>
             <Thickness x:Key="NavigationViewContentPresenterMargin">0</Thickness>
-            <Thickness x:Key="NavigationViewPaneContentGridMargin">8,12,8,12</Thickness>
+            <Thickness x:Key="NavigationViewPaneContentGridMargin">8,12,8,8</Thickness>
         </muxc:NavigationView.Resources>
 
         <muxc:NavigationView.MenuItems>

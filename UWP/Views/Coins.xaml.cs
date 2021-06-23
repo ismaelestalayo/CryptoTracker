@@ -29,7 +29,7 @@ namespace UWP.Views {
             market = market.OrderBy(x => x.market_cap_rank).ToList();
             vm.CoinMarket = new ObservableCollection<CoinMarket>(market);
 
-            LocalStorageHelper.SaveObject(UserStorage.CoinsCache, vm.CoinMarket);
+            await LocalStorageHelper.SaveObject(UserStorage.CoinsCache, vm.CoinMarket);
         }
 
         // #########################################################################################

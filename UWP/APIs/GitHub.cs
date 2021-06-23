@@ -24,7 +24,7 @@ namespace UWP.APIs {
                 //coinList.Sort((x, y) => x.Symbol.CompareTo(y.Symbol));
 
                 // Save on Local Storage, and save the Date
-                LocalStorageHelper.SaveObject("CoinList", coins);
+                await LocalStorageHelper.SaveObject("CoinList", coins);
                 App._LocalSettings.Set(UserSettings.CoinListDate, DateTime.Today.ToOADate());
 
                 return coins;
