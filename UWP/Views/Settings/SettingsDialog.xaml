@@ -9,12 +9,10 @@
     mc:Ignorable="d">
 
     <ContentDialog.Resources>
-        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{ThemeResource ContentDialogBackground}"/>
         <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="{ThemeResource ContentDialogBackground}"/>
         <Thickness x:Key="ContentDialogPadding">0</Thickness>
         <x:Double x:Key="ContentDialogMaxWidth">630</x:Double>
     </ContentDialog.Resources>
-
 
     <muxc:NavigationView
         x:Name="SettingsNavView"
@@ -30,6 +28,7 @@
             </Style>
             <Thickness x:Key="NavigationViewContentPresenterMargin">0</Thickness>
             <Thickness x:Key="NavigationViewPaneContentGridMargin">8,12,8,8</Thickness>
+            <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius >
         </muxc:NavigationView.Resources>
 
         <muxc:NavigationView.MenuItems>
@@ -74,8 +73,8 @@
         <!-- TODO: this negative margin should be removed when it's fixed in WinUI 2.6 -->
         <Frame
             x:Name="SettingsFrame"
-            Background="{ThemeResource SystemChromeMediumLowColor}"
-            Padding="24 0 8 0" Margin="0">
+            Background="{ThemeResource SystemChromeMediumHighColor}"
+            Padding="18 0 8 0" Margin="0">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>

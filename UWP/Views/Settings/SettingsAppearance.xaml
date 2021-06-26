@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600"
     d:Width="500"
@@ -27,19 +28,25 @@
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
         <StackPanel>
+            <StackPanel.BackgroundTransition>
+                <BrushTransition/>
+            </StackPanel.BackgroundTransition>
+            
             <!-- APPEARANCE -->
             <StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xE703;"/>
                 <TextBlock Text="Appearance" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
-                
+
             <TextBlock Text="Theme"/>
-            <ComboBox x:Name="ThemeComboBox" Width="110"
-                PlaceholderText="Theme" SelectionChanged="ThemeComboBox_changed">
-                <ComboBoxItem Content="Light" Name="Light"/>
-                <ComboBoxItem Content="Dark" Name="Dark"/>
-                <ComboBoxItem Content="Windows" Name="Windows"/>
-            </ComboBox>
+            <muxc:RadioButtons
+                x:Name="ThemeRadioButtons" 
+                SelectionChanged="ThemeRadioButtons_Changed"
+                MaxColumns="3" Width="400">
+                <RadioButton Tag="theme" MinWidth="100" Content="Light"/>
+                <RadioButton Tag="theme" MinWidth="100" Content="Dark"/>
+                <RadioButton Tag="theme" MinWidth="100" Content="Windows"/>
+            </muxc:RadioButtons>
 
 
             <!-- COLORS -->

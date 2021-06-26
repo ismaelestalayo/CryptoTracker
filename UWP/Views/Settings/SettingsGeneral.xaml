@@ -35,7 +35,7 @@
             </StackPanel>
 
             <TextBlock
-                Text="Choose the currency in which to to show prices. (Pages need to be updated manually.)"/>
+                Text="Choose the currency in which to to show prices. &#x0a;(Pages need to be updated manually.)"/>
             <ComboBox
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                 Margin="0 5 0 0" Width="110"

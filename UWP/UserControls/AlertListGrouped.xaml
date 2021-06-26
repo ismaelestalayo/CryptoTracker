@@ -16,7 +16,7 @@
     <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->
     <ListView
         ItemsSource="{Binding Source={StaticResource cvs}}"
-        Margin="-10 10 0 0" HorizontalAlignment="Left">
+        Margin="10 10 0 0" HorizontalAlignment="Left">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemExpanded}">
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -25,18 +25,17 @@
         </ListView.ItemContainerStyle>
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:Alert">
-                <StackPanel Orientation="Horizontal" Padding="0 0 0 0">
+                <StackPanel Orientation="Horizontal" Padding="0">
                     <ToggleSwitch
                         Grid.Column="0" OnContent="" OffContent=""
-                        HorizontalAlignment="Left" Width="50"
-                        IsOn="{x:Bind Enabled, Mode=TwoWay}"
-                        Margin="5 0"/>
+                        HorizontalAlignment="Left" MinWidth="50"
+                        IsOn="{x:Bind Enabled, Mode=TwoWay}"/>
                     <ComboBox
                         PlaceholderText="Mode"
                         Grid.Column="2" Margin="5 0"
                         Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                         SelectedItem="{x:Bind Mode, Mode=TwoWay}"
-                        VerticalAlignment="Center">
+                        VerticalAlignment="Center" Width="100">
                         <x:String>above</x:String>
                         <x:String>below</x:String>
                     </ComboBox>
@@ -45,7 +44,7 @@
                         PlaceholderText="Threshold"
                         Value="{x:Bind Threshold, Mode=TwoWay}"
                         VerticalAlignment="Center"
-                        Width="100"/>
+                        Width="75"/>
                     <Button
                         Click="Delete_alert"
                         Grid.Column="4" Content="&#xE107;" Background="Transparent"

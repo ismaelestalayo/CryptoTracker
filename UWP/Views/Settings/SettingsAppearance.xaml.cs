@@ -1,6 +1,5 @@
-﻿using UWP.Core.Constants;
-using UWP.Shared.Constants;
-using Windows.ApplicationModel;
+﻿using Microsoft.UI.Xaml.Controls;
+using UWP.Core.Constants;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -9,34 +8,31 @@ using Windows.UI.Xaml.Controls;
 namespace UWP.Views {
     public sealed partial class SettingsAppearance : Page {
 
-        private PackageVersion version;
-        private string PortfolioKey = "Portfolio";
-
         public SettingsAppearance() {
             this.InitializeComponent();
-            version = Package.Current.Id.Version;
 
-            ThemeComboBox.PlaceholderText = App._LocalSettings.Get<string>(UserSettings.Theme);
-
+            var theme = App._LocalSettings.Get<string>(UserSettings.Theme);
+            switch (theme) {
+                case "Light":
+                    ThemeRadioButtons.SelectedIndex = 0;
+                    break;
+                case "Dark":
+                    ThemeRadioButtons.SelectedIndex = 1;
+                    break;
+                default:
+                case "Windows":
+                    ThemeRadioButtons.SelectedIndex = 2;
+                    break;
+            }
         }
 
 
         // ###############################################################################################
-        private void CoinBox_changed(object sender, SelectionChangedEventArgs e) {
-            ComboBox c = sender as ComboBox;
-            var currency = ((ComboBoxItem)c.SelectedItem).Name.ToString();
-            var currencySym = Currencies.GetCurrencySymbol(currency);
-
-            App._LocalSettings.Set(UserSettings.Currency, currency);
-            App._LocalSettings.Set(UserSettings.CurrencySymbol, currencySym);
-            
-            App.currency = currency;
-            App.currencySymbol = currencySym;
-        }
-
-        private void ThemeComboBox_changed(object sender, SelectionChangedEventArgs e) {
-            ComboBox c = sender as ComboBox;
-            var theme = ((ComboBoxItem)c.SelectedItem).Name.ToString();
+        private void ThemeRadioButtons_Changed(object sender, SelectionChangedEventArgs e) {
+            RadioButtons r = sender as RadioButtons;
+            if (r.SelectedIndex < 0)
+                return;
+            var theme = ((ContentControl)r.SelectedItem).Content.ToString();
 
             var parentFrame = (Frame)Window.Current.Content;
             var parentDialog = (FrameworkElement)((FrameworkElement)((FrameworkElement)this.Parent).Parent).Parent;
@@ -58,6 +54,5 @@ namespace UWP.Views {
                     break;
             }
         }
-        
     }
 }

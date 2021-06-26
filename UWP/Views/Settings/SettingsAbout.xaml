@@ -56,10 +56,10 @@
             <TextBlock Text="Made with ❤ by an engineering student."/>
 
             <HyperlinkButton NavigateUri="https://ismaelestalayo.com/" 
-                        Content="www.ismaelestalayo.com" 
-                        Margin="0 -6 0 0"
-                        Foreground="{ThemeResource HyperlinkForegroundThemeBrush}"
-                        FontWeight="Light"/>
+                Content="ismaelestalayo.com" 
+                Margin="0 -6 0 0" HorizontalAlignment="Left" Background="Red" HorizontalContentAlignment="Left"
+                Foreground="{ThemeResource HyperlinkForegroundThemeBrush}"
+                FontWeight="Light"/>
 
         </StackPanel>
     </ScrollViewer>
