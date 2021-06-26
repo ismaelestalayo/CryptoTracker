@@ -53,13 +53,10 @@
                 <TextBlock Text="About me" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
-            <TextBlock Text="Made with ❤ by an engineering student."/>
-
-            <HyperlinkButton NavigateUri="https://ismaelestalayo.com/" 
-                Content="ismaelestalayo.com" 
-                Margin="0 -6 0 0" HorizontalAlignment="Left" Background="Red" HorizontalContentAlignment="Left"
-                Foreground="{ThemeResource HyperlinkForegroundThemeBrush}"
-                FontWeight="Light"/>
+            <TextBlock >
+                <Run Text="Made with ❤ by an engineering student."/>
+                <Hyperlink NavigateUri="https://ismaelestalayo.com/">ismaelestalayo.com</Hyperlink>
+            </TextBlock>
 
         </StackPanel>
     </ScrollViewer>
