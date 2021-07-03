@@ -9,6 +9,7 @@ using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Constants;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -141,8 +142,7 @@ namespace UWP.Views {
 
                 /// Colors
                 var brush = vm.PriceCards[i].Chart.ChartStroke;
-                if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
-                    brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
+                brush = ColorConstants.GetCoinBrush(crypto.ToUpper() + "_color");
                 vm.PriceCards[i].Chart.ChartStroke = brush;
 
                 /// Get Historic and create List of ChartData for the chart

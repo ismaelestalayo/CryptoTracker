@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media;
 namespace UWP.Converters {
     public class NumberForeground : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
-            => (double)val >= 0 ? ColorConstants.GetBrush("pastel_green") : ColorConstants.GetBrush("pastel_red");
+            => (double)val >= 0 ? ColorConstants.GetColorBrush("pastel_green") : ColorConstants.GetColorBrush("pastel_red");
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }

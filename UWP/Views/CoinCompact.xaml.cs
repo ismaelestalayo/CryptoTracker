@@ -36,7 +36,7 @@ namespace UWP.Views {
 		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
-			vm.Chart.ChartStroke = ColorConstants.GetBrush(vm.Info.Name);
+			vm.Chart.ChartStroke = ColorConstants.GetCoinBrush(vm.Info.Name);
 		}
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {

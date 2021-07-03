@@ -33,8 +33,8 @@ namespace UWP.Background {
                 hist = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, "hour", 168);
 
             var polyline = new Polyline();
-            polyline.Stroke = ColorConstants.GetBrush($"{crypto}_color");
-            polyline.Fill = ColorConstants.GetBrush($"{crypto}_color", 50);
+            polyline.Stroke = ColorConstants.GetCoinBrush($"{crypto}_color");
+            polyline.Fill = ColorConstants.GetCoinBrush($"{crypto}_color", 50);
             polyline.FillRule = FillRule.Nonzero;
             polyline.StrokeThickness = 1.5;
             polyline.VerticalAlignment = VerticalAlignment.Bottom;

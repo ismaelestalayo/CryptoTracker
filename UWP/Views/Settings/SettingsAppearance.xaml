@@ -42,7 +42,7 @@
             <muxc:RadioButtons
                 x:Name="ThemeRadioButtons" 
                 SelectionChanged="ThemeRadioButtons_Changed"
-                MaxColumns="3" Width="400">
+                MaxColumns="3" Margin="0 -10 0 0" Width="400">
                 <RadioButton Tag="theme" MinWidth="100" Content="Light"/>
                 <RadioButton Tag="theme" MinWidth="100" Content="Dark"/>
                 <RadioButton Tag="theme" MinWidth="100" Content="Windows"/>
@@ -55,7 +55,8 @@
                 <TextBlock Text="Colors" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
-            <TextBlock Text="Theming"/>
+            <TextBlock Text="Monochrome"/>
+            <ToggleSwitch x:Name="MonochromeSwitch" Margin="0 -10 0 0" Toggled="Monochrome_Toggled"/>
 
         </StackPanel>
     </ScrollViewer>

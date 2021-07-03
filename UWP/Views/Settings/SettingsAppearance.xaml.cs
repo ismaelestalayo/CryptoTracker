@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using UWP.Core.Constants;
+using UWP.Shared.Constants;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -11,6 +12,7 @@ namespace UWP.Views {
         public SettingsAppearance() {
             this.InitializeComponent();
 
+            MonochromeSwitch.IsOn = App._LocalSettings.Get<bool>(UserSettings.Monochrome);
             var theme = App._LocalSettings.Get<string>(UserSettings.Theme);
             switch (theme) {
                 case "Light":
@@ -38,21 +40,14 @@ namespace UWP.Views {
             var parentDialog = (FrameworkElement)((FrameworkElement)((FrameworkElement)this.Parent).Parent).Parent;
 
             App._LocalSettings.Set(UserSettings.Theme, theme);
-            switch (theme) {
-                case "Light":
-                    parentFrame.RequestedTheme = ElementTheme.Light;
-                    parentDialog.RequestedTheme = ElementTheme.Light;
-                    break;
-                case "Dark":
-                    parentFrame.RequestedTheme = ElementTheme.Dark;
-                    parentDialog.RequestedTheme = ElementTheme.Dark;
-                    break;
-                case "Windows":
-                    bool isDark = new UISettings().GetColorValue(UIColorType.Background) == Colors.Black;
-                    parentFrame.RequestedTheme = isDark ? ElementTheme.Dark : ElementTheme.Light;
-                    parentDialog.RequestedTheme = isDark ? ElementTheme.Dark : ElementTheme.Light;
-                    break;
-            }
+            var darkTheme = ColorConstants.CurrentThemeIsDark();
+            parentFrame.RequestedTheme = darkTheme ? ElementTheme.Dark : ElementTheme.Light;
+            parentDialog.RequestedTheme = darkTheme ? ElementTheme.Dark : ElementTheme.Light;
+        }
+
+        private void Monochrome_Toggled(object sender, RoutedEventArgs e) {
+            var t = sender as ToggleSwitch;
+            App._LocalSettings.Set(UserSettings.Monochrome, t.IsOn);
         }
     }
 }

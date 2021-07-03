@@ -48,8 +48,8 @@ namespace UWP.Converters {
             if (val != null) {
                 var vals = (val as List<double>);
                 color = (vals[vals.Count - 1] > vals[0]) ?
-                    SKColor.Parse(ColorConstants.GetBrush("pastel_green").Color.ToString()) :
-                    SKColor.Parse(ColorConstants.GetBrush("pastel_red").Color.ToString());
+                    SKColor.Parse(ColorConstants.GetColorBrush("pastel_green").Color.ToString()) :
+                    SKColor.Parse(ColorConstants.GetColorBrush("pastel_red").Color.ToString());
                 var entries = vals.ConvertAll(PointConverter);
                 Chart chart = new LineChart() {
                     Entries = entries,

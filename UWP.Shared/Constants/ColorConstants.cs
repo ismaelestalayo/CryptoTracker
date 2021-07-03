@@ -1,21 +1,33 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using UWP.Core.Constants;
+using UWP.Services;
 using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Shared.Constants {
     public class ColorConstants {
 
-        public static SolidColorBrush GetBrush(string key, int opacity = 255) {
+        public static SolidColorBrush GetColorBrush(string key, int opacity = 255) {
             Color color;
-            bool semiTranparent = false;
-
-            //if (key.EndsWith("_colorT")) {
-            //    key = key.Replace("_colorT", "_color");
-            //    semiTranparent = true;
-            //}
-
             color = ColorDict.TryGetValue(key, out color) ? color : ColorDict["NULL_color"];
+
+            if (opacity != 255)
+                color.A = (byte)opacity;
+
+            return new SolidColorBrush(color);
+        }
+
+        public static SolidColorBrush GetCoinBrush(string key, int opacity = 255) {
+            Color color;
+            color = ColorDict.TryGetValue(key, out color) ? color : ColorDict["NULL_color"];
+
+            var localSettings = new LocalSettings();
+            if (localSettings.Get<bool>(UserSettings.Monochrome)) {
+                var darkTheme = CurrentThemeIsDark();
+                color = (darkTheme) ? ParseHex("#f0f0f0") : ParseHex("#101010");
+            }
 
             if (opacity != 255)
                 color.A = (byte)opacity;
@@ -69,5 +81,19 @@ namespace UWP.Shared.Constants {
             byte.Parse(hexValue.Substring(1, 2), NumberStyles.AllowHexSpecifier),
             byte.Parse(hexValue.Substring(3, 2), NumberStyles.AllowHexSpecifier),
             byte.Parse(hexValue.Substring(5, 2), NumberStyles.AllowHexSpecifier));
+
+        /// <summary>
+        /// Returns "light"/"dark" based on the current theme of the user
+        /// </summary>
+        public static bool CurrentThemeIsDark() {
+            var localSettings = new LocalSettings();
+            var theme = localSettings.Get<string>(UserSettings.Theme).ToLowerInvariant();
+            if (theme == "light")
+                return false;
+            else if (theme == "dark")
+                return true;
+            bool isDark = new UISettings().GetColorValue(UIColorType.Background) == Colors.Black;
+            return isDark;
+        }
     }
 }

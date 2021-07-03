@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
-using UWP.Models;
 
 namespace UWP.Core.Constants {
-	/// <summary>
-	/// Class with key constants for user settings
-	/// </summary>
-	public class UserSettings {
+    /// <summary>
+    /// Class with key constants for user settings
+    /// </summary>
+    public class UserSettings {
 		public const string AutoRefresh = "AutoRefresh";
 		public const string CoinListDate = "CoinListDate";
 		public const string Currency = "Currency";
 		public const string CurrencySymbol = "CurrencySymbol";
 		public const string IsNewUser = "NewUser";
 		public const string LastVersion = "LastVersion";
+		public const string Monochrome = "Monochrome";
 		public const string PinnedCoins = "Pinned";
 		public const string StartupPage = "StartupPage";
 		public const string Theme = "Theme";
@@ -26,6 +26,7 @@ namespace UWP.Core.Constants {
 			{ CurrencySymbol, "€" },
 			{ IsNewUser, true },
 			{ LastVersion, "0.0.0" },
+			{ Monochrome, false },
 			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
 			{ StartupPage, "Home" },
 			{ Theme, "Windows" },

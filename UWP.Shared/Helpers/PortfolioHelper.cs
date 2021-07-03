@@ -62,8 +62,8 @@ namespace UWP.Shared.Helpers {
                     purchase.Delta -= 100;
                 purchase.Profit = Math.Round(diff, 2);
                 purchase.ProfitFG = (diff < 0) ?
-                    ColorConstants.GetBrush("pastel_red") :
-                    ColorConstants.GetBrush("pastel_green");
+                    ColorConstants.GetColorBrush("pastel_red") :
+                    ColorConstants.GetColorBrush("pastel_green");
             }
             if (purchase.InvestedQty == 0)
                 purchase.Delta = 0;

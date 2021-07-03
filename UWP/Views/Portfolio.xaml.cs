@@ -109,7 +109,7 @@ namespace UWP.Views {
                     Margin = new Thickness(0, 7, 0, 7)
                 };
                 s.Children.Add(t);
-                s.Background = ColorConstants.GetBrush(crypto + "_color", 100);
+                s.Background = ColorConstants.GetCoinBrush(crypto + "_color", 100);
 
                 PortfolioChartGrid.Children.Add(s);
                 Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);
