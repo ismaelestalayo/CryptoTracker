@@ -48,7 +48,7 @@ namespace UWP {
             currencySymbol = _LocalSettings.Get<string>(UserSettings.CurrencySymbol);
             string _theme = _LocalSettings.Get<string>(UserSettings.Theme);
             string _pinned = _LocalSettings.Get<string>(UserSettings.PinnedCoins);
-			
+
             pinnedCoins = new List<string>(_pinned.Split(new char[] { '|' }));
             pinnedCoins.Remove("");
 

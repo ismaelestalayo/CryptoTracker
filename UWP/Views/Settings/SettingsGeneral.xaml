@@ -58,18 +58,35 @@
                 <FontIcon Glyph="&#xE121;"/>
                 <TextBlock Text="Auto-refresh" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
-            <TextBlock
-                Text="Home, Details and Compact Overlay automatically refresh.
-                &#x0a;(Charts update minutely because of the API's granularity.)"/>
+            <TextBlock>
+                <Run Text="Home, Details and Compact Overlay automatically refresh."/>
+                <Run Text="(Charts update minutely because of the API's granularity.)" FontStyle="Italic"/>
+            </TextBlock>
             <ComboBox
                 SelectedItem="{x:Bind vm.AutoRefresh, Mode=TwoWay}"
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                Margin="0 5 0 0" Width="90">
+                Margin="0 5 0 0" Width="110">
                 <x:String>None</x:String>
                 <x:String>30 sec</x:String>
                 <x:String>1 min</x:String>
                 <x:String>2 min</x:String>
             </ComboBox>
+
+            <!-- STARTUP PAGE -->
+            <StackPanel Style="{StaticResource SettingsSectionTitle}">
+                <FontIcon Glyph="&#xE7E8;"/>
+                <TextBlock Text="Startup page" Style="{ThemeResource SettingsSectionTitleText}"/>
+            </StackPanel>
+            <TextBlock Text="Choose the page to load when opening the app."/>
+            <ComboBox x:Name="startupPage" SelectionChanged="startupPage_SelectionChanged"
+                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                Margin="0 5 0 0" Width="110">
+                <x:String>Home</x:String>
+                <x:String>Coins</x:String>
+                <x:String>News</x:String>
+                <x:String>Portfolio</x:String>
+            </ComboBox>
+            
 
             <!-- CLOUD SYNC -->
             <StackPanel  Style="{StaticResource SettingsSectionTitle}">

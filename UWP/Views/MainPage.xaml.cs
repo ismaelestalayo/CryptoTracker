@@ -65,17 +65,25 @@ namespace UWP.Views {
             this.RegisterBackgroundTask();
 
             var param = e.Parameter.ToString();
+            // if there's no param (tile or jump list) check user's startup page
+            if (string.IsNullOrEmpty(param))
+                param = App._LocalSettings.Get<string>(UserSettings.StartupPage);            
+            
             if (param.StartsWith("/tile-"))
                 Redirect = param.Split("-")[1];
 
             switch (param) {
-                case "/Portfolio":
-                    NavView.SelectedItem = NavView.MenuItems[3];
+                case "/Coins":
+                    NavView.SelectedItem = NavView.MenuItems[1];
                     break;
                 case "/News":
                     NavView.SelectedItem = NavView.MenuItems[2];
                     break;
+                case "/Portfolio":
+                    NavView.SelectedItem = NavView.MenuItems[3];
+                    break;
                 default:
+                case "Home":
                     NavView.SelectedItem = NavView.MenuItems[0];
                     break;
             }
@@ -96,7 +104,7 @@ namespace UWP.Views {
                 taskBuilder.Name = taskName;
                 taskBuilder.TaskEntryPoint = taskEntryPoint;
                 taskBuilder.SetTrigger(new TimeTrigger(15, false));
-                var registration = taskBuilder.Register();
+                taskBuilder.Register();
             }
         }
 
@@ -120,7 +128,7 @@ namespace UWP.Views {
         }
 
         private void ColorValuesChanged(UISettings sender, object args) {
-            if ((App._LocalSettings.Get<string>(UserSettings.Theme) == "Windows")) {
+            if (App._LocalSettings.Get<string>(UserSettings.Theme) == "Windows") {
                 var color = uiSettings.GetColorValue(UIColorType.Background);
                 switch (color.ToString()) {
                     case "#FF000000":
@@ -179,9 +187,8 @@ namespace UWP.Views {
 
         /// #########################################################################################
         ///  Navigation View
-        private void NavView_Sync_Tapped(object sender, TappedRoutedEventArgs e) {
-            UpdateButton_Click(sender, e);
-        }
+        private void NavView_Sync_Tapped(object sender, TappedRoutedEventArgs e)
+            => UpdateButton_Click(sender, e);
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
             string source = "null";
@@ -191,7 +198,7 @@ namespace UWP.Views {
                 return;
 
             if (((Frame)sender.Content).SourcePageType != null)
-                source = (((Frame)sender.Content).SourcePageType).Name;
+                source = ((Frame)sender.Content).SourcePageType.Name;
             
             selected = ((ContentControl)args.SelectedItem).Content.ToString();
 
@@ -244,7 +251,7 @@ namespace UWP.Views {
 
         /// Hide NavigationView if navigating to the Compact Overlay view
         private void ContentFrame_Navigating(object sender, NavigatingCancelEventArgs e) {
-            var toPage = (e.SourcePageType).Name;
+            var toPage = e.SourcePageType.Name;
             App.CurrentPage = toPage;
             NavView.IsPaneVisible = (toPage == "CoinCompact") ? false : true;
             CustomAppTitleBar.Margin = (toPage == "CoinCompact") ? new Thickness(46, 0, 0, 0) : new Thickness(0);

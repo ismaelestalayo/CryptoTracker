@@ -16,6 +16,7 @@ namespace UWP.Views {
         private void Page_Loaded(object sender, RoutedEventArgs e) {
             vm.AutoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
             vm.Currency = App._LocalSettings.Get<string>(UserSettings.Currency);
+            startupPage.PlaceholderText = App._LocalSettings.Get<string>(UserSettings.StartupPage).Replace("/", "");
         }
 
         // ###############################################################################################
@@ -95,6 +96,11 @@ namespace UWP.Views {
             //        RequestedTheme = ((Frame)Window.Current.Content).RequestedTheme
             //    }.ShowAsync();
             //}
+        }
+
+        private void startupPage_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            var c = sender as ComboBox;
+            App._LocalSettings.Set(UserSettings.StartupPage, c.SelectedItem.ToString());
         }
     }
 }

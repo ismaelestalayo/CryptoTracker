@@ -13,6 +13,7 @@ namespace UWP.Core.Constants {
 		public const string IsNewUser = "NewUser";
 		public const string LastVersion = "LastVersion";
 		public const string PinnedCoins = "Pinned";
+		public const string StartupPage = "StartupPage";
 		public const string Theme = "Theme";
 
 		/// <summary>
@@ -26,6 +27,7 @@ namespace UWP.Core.Constants {
 			{ IsNewUser, true },
 			{ LastVersion, "0.0.0" },
 			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
+			{ StartupPage, "Home" },
 			{ Theme, "Windows" },
 		};
 	}
