@@ -28,7 +28,7 @@
                 InfoStyle="{StaticResource ChartTrackBallInfo}"
                 LineStyle="{StaticResource ChartTrackBallLine}"
                 ShowIntersectionPoints="True"/>
-            <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="Horizontal"/>
+            <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="{x:Bind chartZoom}"/>
         </telerik:RadCartesianChart.Behaviors>
 
         <telerik:RadCartesianChart.Grid>
@@ -39,7 +39,7 @@
 
         <telerik:RadCartesianChart.HorizontalAxis>
             <telerik:DateTimeCategoricalAxis
-                FontWeight="Light" FontFamily="Segoe UI"
+                FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 LabelFormat="{x:Bind ChartModel.LabelFormat}"
                 LabelOffset="1"

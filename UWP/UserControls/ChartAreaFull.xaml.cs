@@ -36,6 +36,11 @@ namespace UWP.UserControls {
             set => SetValue(ChartPointProperty, value);
         }
 
+        public bool ChartZoom {
+            set => chartZoom = value ? ChartPanZoomMode.Both : ChartPanZoomMode.None;
+        }
+        private ChartPanZoomMode chartZoom { get; set; } = ChartPanZoomMode.Horizontal;
+
         private void StackPanel_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args) {
             var point = ((DataPointInfo)sender.DataContext).DataPoint.DataItem as ChartPoint;
             ChartPoint = point;
