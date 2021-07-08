@@ -24,7 +24,6 @@
         </Style>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
-        <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
 
         <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind vm.CvsSource, Mode=OneWay}"/>
         <converters:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>

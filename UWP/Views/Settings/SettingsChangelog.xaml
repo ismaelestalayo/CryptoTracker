@@ -25,7 +25,6 @@
         </Style>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
-        <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////

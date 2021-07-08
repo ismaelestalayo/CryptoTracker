@@ -88,7 +88,6 @@
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 10 0 0">
                 <Button
                     Click="AddPurchase_click"
-                    Style="{ThemeResource Crypto_button_style}"
                     Margin="0 0 5 0"
                     ToolTipService.ToolTip="Add">
                     <StackPanel Orientation="Horizontal">
@@ -97,7 +96,6 @@
                     </StackPanel>
                 </Button>
                 <ComboBox Width="150" SelectionChanged="Grouping_ComboBox_SelectionChanged"
-                    Style="{ThemeResource Crypto_comboBox_style}"
                     Margin="0 0 10 0">
                     <ComboBoxItem Content="Dont group" IsSelected="True"/>
                     <ComboBoxItem Content="By profits"/>

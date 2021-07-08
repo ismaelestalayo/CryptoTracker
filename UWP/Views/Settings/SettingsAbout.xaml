@@ -20,7 +20,6 @@
         </Style>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
-        <Style TargetType="Button" BasedOn="{StaticResource Crypto_button_style}"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
@@ -35,13 +34,13 @@
 
             <TextBlock>
                 <Run Text="Data provided by"/>
-                <Hyperlink Foreground="Gray" NavigateUri="https://www.cryptocompare.com/api" >
+                <Hyperlink NavigateUri="https://www.cryptocompare.com/api" >
                     CryptoCompare API
                 </Hyperlink>
             </TextBlock>
             <TextBlock>
                 <Run Text="Crypto Tracker's"/>
-                <Hyperlink Foreground="Gray" NavigateUri="https://ismaelestalayo.com/privacy">
+                <Hyperlink NavigateUri="https://ismaelestalayo.com/privacy">
                     Privacy policy
                 </Hyperlink>
             </TextBlock>
@@ -54,7 +53,7 @@
             </StackPanel>
 
             <TextBlock >
-                <Run Text="Made with ❤ by an engineering student."/>
+                <Run Text="Made with 🤍 by a former engineer student."/>
                 <Hyperlink NavigateUri="https://ismaelestalayo.com/">ismaelestalayo.com</Hyperlink>
             </TextBlock>
 
