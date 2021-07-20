@@ -53,10 +53,6 @@
         </VisualStateManager.VisualStateGroups>
 
         <Grid x:Name="MainGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -72,15 +68,18 @@
             ####################################################################################################
             ############################################# PRICE LIST VIEW ######################################
             #################################################################################################### -->
-            <ListView x:Name="PriceListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
-                      ItemsSource="{x:Bind vm.PriceCards}">
-                <ListView.ItemTemplate>
+            <controls:AdaptiveGridView
+                x:Name="HomeGridView"
+                SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
+                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1000"
+                ItemsSource="{x:Bind vm.PriceCards}">
+                <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="models:HomeCard">
-                        <Grid x:Name="PriceListView_Element"
+                        <Grid x:Name="HomeGridView_Element"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
                             CornerRadius="5"
-                            Height="210"
-                            Margin="0 5 -5 5"							
+                            Height="275"
+                            Margin="5"
                             Opacity="{x:Bind Info.Opacity}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -130,20 +129,22 @@
                                 </ContentControl>
                             </controls:Loading>
 
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="5 0">
                                 <Image
-                                    Margin="2"
                                     Source="{x:Bind Info.Logo}"
-                                    Width="25"
+                                    Width="24"
                                     d:Source="/Assets/Icons/iconNULL.png"/>
                                 <TextBlock
-                                    Margin="5 -2"
+                                    Margin="5 0"
                                     Text="{x:Bind Info.Name}"
+                                    FontSize="26" VerticalAlignment="Center"
                                     Style="{ThemeResource TitleTextBlockStyle}"
                                     d:Text="XXX"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 0">
-                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}">
+                                <TextBlock
+                                    FontSize="26" VerticalAlignment="Center"
+                                    Style="{ThemeResource TitleTextBlockStyle}">
                                     <Run Text="{x:Bind Info.Price,
                                         Converter={StaticResource NumberRounder}}" d:Text="0"/><!--
                                     --><Run Text="{x:Bind Info.CurrencySym}" d:Text="€"/>
@@ -151,111 +152,32 @@
                                 <userControls:DiffTextBlock
                                     Diff="{x:Bind Info.DiffPct}"
                                     DiffFg="{x:Bind Info.DiffFG}"
-                                    VerticalAlignment="Bottom"
-                                    Margin="0 2"/>
+                                    Margin="0 5"
+                                    VerticalAlignment="Bottom"/>
                             </StackPanel>
                             
-                            <userControls:ChartArea
-                                Grid.Row="1"
+                            <userControls:ChartAreaFull
+                                Grid.Row="1" ChartZoom="False"
                                 ChartModel="{x:Bind Chart}"/>
                         </Grid>
 
                     </DataTemplate>
-                </ListView.ItemTemplate>
+                </controls:AdaptiveGridView.ItemTemplate>
 
-                <ListView.ItemContainerStyle>
+                <controls:AdaptiveGridView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     </Style>
-                </ListView.ItemContainerStyle>
+                </controls:AdaptiveGridView.ItemContainerStyle>
 
                 <!-- For previsualization purposes -->
                 <d:Rectangle/>
-            </ListView>
+            </controls:AdaptiveGridView>
 
             <!-- 
             ###########################################################################################################################
-            ####################################################### VOLUME LIST VIEW ##################################################
-            ###################################################a######################################################################## -->
-            <ListView x:Name="VolumeListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" 
-                      Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind vm.VolumeCards}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:HomeCard">
-                        <Grid x:Name="VolumeListView_Element"
-                            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-                            CornerRadius="5"
-                            Height="210"
-                            Margin="-5 5 0 5"
-                            Opacity="{x:Bind Info.Opacity}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Text="Un-favourite" Click="UnfavCoin">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xEA92;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Unpin from start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin}">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE77A;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Pin to start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin, Converter={StaticResource BoolInverse2Visibility}}">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE840;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Move up" Click="MoveCoinUp">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE74A;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Move down" Click="MoveCoinDown">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE74B;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                </MenuFlyout>
-                            </Grid.ContextFlyout>
-
-                            <Grid Margin="5 -2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock 
-                                    FontWeight="ExtraLight" 
-                                    Text="Volume"
-                                    Style="{ThemeResource TitleTextBlockStyle}"/>
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Style="{ThemeResource TitleTextBlockStyle}">
-                                    <Run Text="{x:Bind Info.VolumeToTotal,
-                                        Converter={StaticResource NumberUnit}}"/><!--
-                                    --><Run Text="{x:Bind Info.CurrencySym}"/>
-                                </TextBlock>
-                            </Grid>
-
-                            <!-- VOLUME CHART: -->
-                            <userControls:ChartBars
-                                Grid.Row="1"
-                                Margin="0 -5"
-                                ChartModel="{x:Bind Chart}"/>
-                        </Grid>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-
+            ####################################################### EMPTY HOME MESSAGE ################################################
+            ########################################################################################################################### -->
             <StackPanel
                 Grid.Row="2" Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" Margin="0 250 0 0"

@@ -18,7 +18,6 @@ using Windows.UI.Core;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace UWP.Views {
@@ -193,15 +192,7 @@ namespace UWP.Views {
         /// (Left/Right) Click handlers
         private void homeListView_Click(object sender, ItemClickEventArgs e) {
             /// Connected animation
-            switch ( ((ListView)sender).Name ) {
-                case "PriceListView":
-                    PriceListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "PriceListView_Element");
-                    break;
-
-                case "VolumeListView":
-                    VolumeListView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "VolumeListView_Element");
-                    break;
-            }
+            HomeGridView.PrepareConnectedAnimation("toCoinDetails", e.ClickedItem, "HomeGridView_Element");
 
             var card = ((HomeCard)e.ClickedItem);
             this.Frame.Navigate(typeof(CoinDetails), card);
