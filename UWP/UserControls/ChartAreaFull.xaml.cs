@@ -36,12 +36,19 @@ namespace UWP.UserControls {
             set => SetValue(ChartPointProperty, value);
         }
 
-        public bool ChartZoom {
-            set => chartZoom = value ? ChartPanZoomMode.Both : ChartPanZoomMode.None;
+        private bool isZoomEnabled = true;
+        public bool IsZoomEnabled {
+            get => isZoomEnabled;
+            set {
+                isZoomEnabled = value;
+                chartZoomMode = value ? ChartPanZoomMode.Both : ChartPanZoomMode.None;
+                chartTrackBall = value ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
-        private ChartPanZoomMode chartZoom { get; set; } = ChartPanZoomMode.Horizontal;
+        private ChartPanZoomMode chartZoomMode { get; set; } = ChartPanZoomMode.Horizontal;
+        private Visibility chartTrackBall { get; set; } = Visibility.Visible;
 
-        private void StackPanel_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args) {
+        private void ChartTrackBall_Changed(FrameworkElement sender, DataContextChangedEventArgs args) {
             var point = ((DataPointInfo)sender.DataContext).DataPoint.DataItem as ChartPoint;
             ChartPoint = point;
         }

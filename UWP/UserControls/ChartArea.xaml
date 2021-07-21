@@ -39,7 +39,7 @@
             Stroke="{x:Bind ChartModel.ChartStroke}"
             StrokeThickness="1">
             <telerik:AreaSeries.Fill>
-                <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
+                <LinearGradientBrush StartPoint="0.5, 0.2" EndPoint="0.5, 1">
                     <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}" Offset="0.2"/>
                     <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}" Offset="1.1"/>
                 </LinearGradientBrush>

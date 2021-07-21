@@ -19,7 +19,7 @@
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
-        x:Name="Chart"
+        x:Name="Chart" IsHitTestVisible="{x:Bind IsZoomEnabled}"
         Margin="-5 0 -22 0">
 
         <telerik:RadCartesianChart.Behaviors>
@@ -28,7 +28,7 @@
                 InfoStyle="{StaticResource ChartTrackBallInfo}"
                 LineStyle="{StaticResource ChartTrackBallLine}"
                 ShowIntersectionPoints="True"/>
-            <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="{x:Bind chartZoom}"/>
+            <telerik:ChartPanAndZoomBehavior PanMode="Horizontal" ZoomMode="{x:Bind chartZoomMode}"/>
         </telerik:RadCartesianChart.Behaviors>
 
         <telerik:RadCartesianChart.Grid>
@@ -86,7 +86,7 @@
                 Stroke="{x:Bind ChartModel.ChartStroke}"
                 StrokeThickness="1">
                 <telerik:AreaSeries.Fill>
-                    <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
+                    <LinearGradientBrush StartPoint="0.5, 0.2" EndPoint="0.5, 1">
                         <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}" Offset="0.3"/>
                         <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}" Offset="1."/>
                     </LinearGradientBrush>
@@ -94,7 +94,7 @@
 
                 <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                     <DataTemplate>
-                        <StackPanel Padding="0 2" DataContextChanged="StackPanel_DataContextChanged">
+                        <StackPanel Padding="0 2" DataContextChanged="ChartTrackBall_Changed">
                             <TextBlock
                                 Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
                                 FontSize="12" Opacity="0.5" HorizontalAlignment="Center"

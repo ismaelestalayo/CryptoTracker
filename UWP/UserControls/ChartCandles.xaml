@@ -93,7 +93,7 @@
 
                 <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                     <DataTemplate>
-                        <StackPanel Padding="0 2" DataContextChanged="StackPanel_DataContextChanged">
+                        <StackPanel Padding="0 2" DataContextChanged="ChartTrackBall_Changed">
                             <TextBlock
                                 Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
                                 FontSize="12" Opacity="0.5" HorizontalAlignment="Center"

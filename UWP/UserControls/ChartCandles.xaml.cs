@@ -36,7 +36,7 @@ namespace UWP.UserControls {
             set => SetValue(ChartPointProperty, value);
         }
 
-        private void StackPanel_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args) {
+        private void ChartTrackBall_Changed(FrameworkElement sender, DataContextChangedEventArgs args) {
             var point = ((DataPointInfo)sender.DataContext).DataPoint.DataItem as ChartPoint;
             ChartPoint = point;
         }
