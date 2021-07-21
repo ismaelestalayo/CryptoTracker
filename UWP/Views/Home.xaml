@@ -157,7 +157,7 @@
                             </StackPanel>
                             
                             <userControls:ChartAreaFull
-                                Grid.Row="1" ChartZoom="False"
+                                Grid.Row="1" IsZoomEnabled="False"
                                 ChartModel="{x:Bind Chart}"/>
                         </Grid>
 
