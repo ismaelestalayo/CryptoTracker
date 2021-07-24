@@ -1,8 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using UWP.Core.Constants;
 using UWP.Shared.Constants;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

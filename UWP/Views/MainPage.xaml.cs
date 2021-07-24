@@ -83,6 +83,7 @@ namespace UWP.Views {
                     NavView.SelectedItem = NavView.MenuItems[3];
                     break;
                 default:
+                case null:
                 case "Home":
                     NavView.SelectedItem = NavView.MenuItems[0];
                     break;

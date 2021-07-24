@@ -165,7 +165,7 @@
                 </controls:AdaptiveGridView.ItemTemplate>
 
                 <controls:AdaptiveGridView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
+                    <Style TargetType="GridViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     </Style>
                 </controls:AdaptiveGridView.ItemContainerStyle>
