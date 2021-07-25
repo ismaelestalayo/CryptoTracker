@@ -71,14 +71,15 @@
             <controls:AdaptiveGridView
                 x:Name="HomeGridView"
                 SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
-                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1000"
+                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1200"
+                DragItemsCompleted="HomeGridView_DragCompleted"
                 ItemsSource="{x:Bind vm.PriceCards}">
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="models:HomeCard">
                         <Grid x:Name="HomeGridView_Element"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
                             CornerRadius="5"
-                            Height="275"
+                            Height="300"
                             Margin="5"
                             Opacity="{x:Bind Info.Opacity}">
                             <Grid.RowDefinitions>
@@ -100,16 +101,6 @@
                                     <MenuFlyoutItem Text="Pin to start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin, Converter={StaticResource BoolInverse2Visibility}}">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE840;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Move up" Click="MoveCoinUp">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE74A;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Move down" Click="MoveCoinDown">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE74B;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                 </MenuFlyout>

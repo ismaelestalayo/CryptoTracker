@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
@@ -70,6 +71,14 @@ namespace UWP.Views {
             PeriodicTimer?.Cancel();
         }
 
+        public async Task UpdatePage() {
+            foreach (var homeCard in vm.PriceCards)
+                homeCard.Info.IsLoading = true;
+
+            for (int i = 0; i < vm.PriceCards.Count; i++)
+                await UpdateCard(i);
+        }
+
         /// #########################################################################################
         private async void InitHome() {
             /// See if there's any change
@@ -79,7 +88,6 @@ namespace UWP.Views {
             // TODO: dont clear cards that haven't changed
             if(!pinned.SequenceEqual(current)) {
                 vm.PriceCards.Clear();
-                vm.VolumeCards.Clear();
                 foreach (var coin in App.pinnedCoins)
                     AddCoinHome(coin);
             }
@@ -88,7 +96,6 @@ namespace UWP.Views {
             for (int i = 0; i < App.pinnedCoins.Count; i++) {
                 await UpdateCard(i);
                 vm.PriceCards[i].Info.IsPin = tiles.Any(tile => tile.TileId == App.pinnedCoins[i]);
-                vm.VolumeCards[i].Info.IsPin = tiles.Any(tile => tile.TileId == App.pinnedCoins[i]);
             }
 
         }
@@ -98,7 +105,6 @@ namespace UWP.Views {
         internal void AddCoinHome(string crypto) {
             var h = new HomeCard() { Info = new Coin() { Name = crypto } };
             vm.PriceCards.Add(h);
-            vm.VolumeCards.Add(h);
 
             /// Update pinnedCoin list
             App.UpdatePinnedCoins();
@@ -110,7 +116,6 @@ namespace UWP.Views {
 
                 App.pinnedCoins.RemoveAt(n);
                 vm.PriceCards.RemoveAt(n);
-                vm.VolumeCards.RemoveAt(n);
 
                 /// Update pinnedCoin list
                 App.UpdatePinnedCoins();
@@ -119,14 +124,6 @@ namespace UWP.Views {
 
         /// #########################################################################################
         ///  Update all cards
-        internal async Task UpdateAllCards() {
-            foreach (var homeCard in vm.PriceCards)
-                homeCard.Info.IsLoading = true;
-            
-            for (int i = 0; i < vm.PriceCards.Count; i++)
-                await UpdateCard(i);
-        }
-
         private async Task UpdateCard(int i) {
             try {
                 string crypto = App.pinnedCoins[i];
@@ -159,7 +156,6 @@ namespace UWP.Views {
                     });
                 }
                 vm.PriceCards[i].Chart.ChartData = chartData;
-                vm.VolumeCards[i].Chart.ChartData = chartData;
                 var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
                 vm.PriceCards[i].Chart.LabelFormat = temp.LabelFormat;
                 vm.PriceCards[i].Chart.Minimum = temp.Minimum;
@@ -178,8 +174,8 @@ namespace UWP.Views {
                 vm.PriceCards[i].Info.Diff = newestPrice - oldestPrice;
 
                 /// Sum total volume from historic
-                vm.VolumeCards[i].Info.VolumeToTotal = histo.Sum(h => h.volumeto);
-                vm.VolumeCards[i].Info.VolumeFromTotal = histo.Sum(h => h.volumefrom);
+                vm.PriceCards[i].Info.VolumeToTotal = histo.Sum(h => h.volumeto);
+                vm.PriceCards[i].Info.VolumeFromTotal = histo.Sum(h => h.volumefrom);
                 double total = histo.Sum(h => h.volumeto);
 
                 /// Show that loading is done
@@ -255,41 +251,21 @@ namespace UWP.Views {
                 }
             }
         }
-        private void MoveCoinDown(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeCard)((FrameworkElement)sender).DataContext).Info.Name;
-            int n = App.pinnedCoins.IndexOf(crypto);
-
-            if(n < vm.PriceCards.Count - 1) {
-                /// Swap downwards the N card
-                (App.pinnedCoins[n + 1], App.pinnedCoins[n]) = (App.pinnedCoins[n], App.pinnedCoins[n + 1]);
-                (vm.PriceCards[n + 1], vm.PriceCards[n]) = (vm.PriceCards[n], vm.PriceCards[n + 1]);
-                (vm.VolumeCards[n + 1], vm.VolumeCards[n]) = (vm.VolumeCards[n], vm.VolumeCards[n + 1]);
-
-                /// Update pinnedCoin list
-                App.UpdatePinnedCoins();
-            }
-        }
-        private void MoveCoinUp(object sender, RoutedEventArgs e) {
-            string crypto = ((HomeCard)((FrameworkElement)sender).DataContext).Info.Name;
-            int n = App.pinnedCoins.IndexOf(crypto);
-
-            if (n != 0) {
-                /// Swap upwards the N card
-                (App.pinnedCoins[n], App.pinnedCoins[n-1]) = (App.pinnedCoins[n-1], App.pinnedCoins[n]);
-                (vm.PriceCards[n], vm.PriceCards[n-1]) = (vm.PriceCards[n-1], vm.PriceCards[n]);
-                (vm.VolumeCards[n], vm.VolumeCards[n-1]) = (vm.VolumeCards[n-1], vm.VolumeCards[n]);
-
-                /// Update pinnedCoin list
-                App.UpdatePinnedCoins();
-            }
-        }
 
         /// #######################################################################################
         private async void TimeRangeButtons_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
             timeSpan = ((UserControls.TimeRangeRadioButtons)sender)?.TimeSpan ?? timeSpan;
             (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
 
-            await UpdateAllCards();
+            await UpdatePage();
+        }
+
+        private void HomeGridView_DragCompleted(ListViewBase sender, DragItemsCompletedEventArgs args) {
+            var cards = sender.ItemsSource as ObservableCollection<HomeCard>;
+            App.pinnedCoins = cards.Select(x => x.Info.Name).ToList();
+
+            /// Update pinnedCoin list
+            App.UpdatePinnedCoins();
         }
     }
 }
