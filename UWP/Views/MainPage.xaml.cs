@@ -18,6 +18,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using UWP.Shared.Interfaces;
+using Windows.UI.Popups;
 
 namespace UWP.Views {
     public sealed partial class MainPage : Page {
@@ -164,23 +166,10 @@ namespace UWP.Views {
         // #########################################################################################
         internal async void UpdateButton_Click(object sender, RoutedEventArgs e) {
             SyncIcon.Visibility = Visibility.Collapsed;
-            switch (ContentFrame.SourcePageType.Name) {
-                case "CoinDetails":
-                    var p0 = (CoinDetails)ContentFrame.Content;
-                    p0.UpdatePage();
-                    break;
-                case "Home":
-                    var p2 = (Home)ContentFrame.Content;
-                    await p2.UpdateAllCards();
-                    break;
-                case "Portfolio":
-                    var p1 = (Portfolio)ContentFrame.Content;
-                    p1.UpdatePortfolio();
-                    break;
-                case "News":
-                    var p3 = (News)ContentFrame.Content;
-                    p3.UpdateNews();
-                    break;
+            try {
+                await ((UpdatablePage)ContentFrame.Content).UpdatePage();
+            } catch (Exception ex) {
+                await new MessageDialog(ex.Message).ShowAsync();
             }
 
             SyncIcon.Visibility = Visibility.Visible;

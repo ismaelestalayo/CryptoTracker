@@ -12,6 +12,7 @@ using UWP.Models;
 using UWP.Services;
 using UWP.Shared.Constants;
 using UWP.Shared.Helpers;
+using UWP.Shared.Interfaces;
 using UWP.Shared.Models;
 using UWP.UserControls;
 using Windows.UI.Xaml;
@@ -22,7 +23,7 @@ using Windows.UI.Xaml.Input;
 
 namespace UWP.Views {
 
-    public partial class Portfolio : Page {
+    public partial class Portfolio : Page, UpdatablePage {
         /// Variables to get historic
         private static int limit = 168;
         private static int aggregate = 1;
@@ -41,44 +42,10 @@ namespace UWP.Views {
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             vm.Portfolio = await RetrievePortfolio();
-            UpdatePortfolio();
+            UpdatePage();
         }
 
-        /// ###############################################################################################
-        /// Get portfolio from LocalStorage
-        internal async Task<ObservableCollection<PurchaseModel>> RetrievePortfolio() {
-            ObservableCollection<PurchaseModel> portfolio;
-
-            var portfolioV2 = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
-
-            if (portfolioV2.Count > 0)
-                return new ObservableCollection<PurchaseModel>(portfolioV2);
-
-            /// If it is empty, there might be an old portfolio in the old format and key
-            var portfolioV1 = await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio");
-            if (portfolioV1.Count < 0)
-                return new ObservableCollection<PurchaseModel>();
-
-            /// For retrocompatibility with old portfolios
-            portfolio = new ObservableCollection<PurchaseModel>();
-            foreach (var p in portfolioV1) {
-                portfolio.Add(new PurchaseModel() {
-                    Crypto = p.Crypto,
-                    CryptoLogo = p.CryptoLogo,
-                    CryptoQty = p.CryptoQty,
-                    Currency = p.c,
-                    Date = p.Date,
-                    Exchange = p.Exchange,
-                    InvestedQty = p.InvestedQty
-                });
-            }
-            return portfolio;
-        }
-
-
-        /// ###############################################################################################
-        ///  For sync all
-        internal async void UpdatePortfolio() {
+        public async Task UpdatePage() {
             /// Empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
@@ -120,6 +87,37 @@ namespace UWP.Views {
 
             /// Finally, update the chart of the portfolio's worth
             await UpdatePortfolioChart();
+        }
+
+        /// ###############################################################################################
+        /// Get portfolio from LocalStorage
+        internal async Task<ObservableCollection<PurchaseModel>> RetrievePortfolio() {
+            ObservableCollection<PurchaseModel> portfolio;
+
+            var portfolioV2 = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+
+            if (portfolioV2.Count > 0)
+                return new ObservableCollection<PurchaseModel>(portfolioV2);
+
+            /// If it is empty, there might be an old portfolio in the old format and key
+            var portfolioV1 = await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio");
+            if (portfolioV1.Count < 0)
+                return new ObservableCollection<PurchaseModel>();
+
+            /// For retrocompatibility with old portfolios
+            portfolio = new ObservableCollection<PurchaseModel>();
+            foreach (var p in portfolioV1) {
+                portfolio.Add(new PurchaseModel() {
+                    Crypto = p.Crypto,
+                    CryptoLogo = p.CryptoLogo,
+                    CryptoQty = p.CryptoQty,
+                    Currency = p.c,
+                    Date = p.Date,
+                    Exchange = p.Exchange,
+                    InvestedQty = p.InvestedQty
+                });
+            }
+            return portfolio;
         }
 
 
@@ -213,7 +211,7 @@ namespace UWP.Views {
             };
             vm.Portfolio.Insert(i, newPurchase);
             /// Update the page and save the new portfolio
-            UpdatePortfolio();
+            UpdatePage();
             LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
         }
 
@@ -224,7 +222,7 @@ namespace UWP.Views {
             var index = items.IndexOf(item);
             vm.Portfolio.RemoveAt(index);
             /// Update the page and save the new portfolio
-            UpdatePortfolio();
+            UpdatePage();
             LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
         }
 
@@ -260,7 +258,7 @@ namespace UWP.Views {
                 PortfolioHelper.AddPurchase(dialog.NewPurchase);
                 
                 // Update everything
-                UpdatePortfolio();
+                UpdatePage();
             }
         }
 
@@ -279,7 +277,7 @@ namespace UWP.Views {
                 PortfolioHelper.SavePortfolio(vm.Portfolio);
 
                 // Update everything
-                UpdatePortfolio();
+                UpdatePage();
             }
         }
 
@@ -288,7 +286,7 @@ namespace UWP.Views {
                 timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
 
             (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
-            UpdatePortfolio();
+            UpdatePage();
         }
 
 

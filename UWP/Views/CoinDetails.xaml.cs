@@ -13,6 +13,7 @@ using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
 using UWP.Shared.Helpers;
+using UWP.Shared.Interfaces;
 using UWP.UserControls;
 using UWP.ViewModels;
 using Windows.Graphics.Display;
@@ -24,7 +25,6 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
@@ -32,7 +32,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace UWP.Views {
-    public sealed partial class CoinDetails : Page {
+    public sealed partial class CoinDetails : Page, UpdatablePage {
         /// Variables to get historic
         private static int limit = 168;
         private static int aggregate = 1;
@@ -132,6 +132,13 @@ namespace UWP.Views {
             PeriodicTimer?.Cancel();
         }
 
+        public async Task UpdatePage() {
+            vm.Coin.IsLoading = true;
+
+            await UpdateCoin();
+            //CryptoCompare.GetExchanges(crypto);
+        }
+
         /// #########################################################################################
         private async void InitValuesFromZero(string cryptoName) {
             vm.CoinInfo = await CoinGecko.GetCoin(cryptoName);
@@ -146,14 +153,6 @@ namespace UWP.Views {
 
         /// #########################################################################################
         /// #########################################################################################
-        /// #########################################################################################
-        internal async void UpdatePage() {
-            vm.Coin.IsLoading = true;
-            
-            await UpdateCoin();
-            //CryptoCompare.GetExchanges(crypto);
-        }
-
         /// #########################################################################################
         private async Task UpdateCoin() {
             var crypto = vm.Coin.Name;

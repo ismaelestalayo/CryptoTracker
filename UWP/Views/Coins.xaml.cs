@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using UWP.APIs;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Services;
+using UWP.Shared.Interfaces;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace UWP.Views {
 
-    public sealed partial class Coins : Page {
+    public sealed partial class Coins : Page, UpdatablePage {
 
         private string sortedBy = "";
 
@@ -20,6 +22,10 @@ namespace UWP.Views {
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            await UpdatePage();
+        }
+
+        public async Task UpdatePage() {
             var coinMarket = await LocalStorageHelper.ReadObject<List<CoinMarket>>(UserStorage.CoinsCache);
             vm.CoinMarket = new ObservableCollection<CoinMarket>(coinMarket);
 

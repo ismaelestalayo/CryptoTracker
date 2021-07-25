@@ -11,6 +11,7 @@ using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
 using UWP.Shared.Constants;
+using UWP.Shared.Interfaces;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -22,7 +23,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace UWP.Views {
-    public sealed partial class Home : Page {
+    public sealed partial class Home : Page, UpdatablePage {
         /// Variables to get historic
         private static int limit = 168;
         private static int aggregate = 1;

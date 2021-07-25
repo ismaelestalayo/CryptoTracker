@@ -1,16 +1,16 @@
-﻿using UWP.APIs;
-using UWP.Models;
-using Microsoft.Toolkit.Uwp.UI;
+﻿using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
+using UWP.APIs;
+using UWP.Models;
+using UWP.Shared.Interfaces;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace UWP.Views {
 
-    public sealed partial class News : Page {
+    public sealed partial class News : Page, UpdatablePage {
         /// Private variables
         private AdvancedCollectionView _acv;
         private TokenizingTextBox _ttb;
@@ -29,16 +29,16 @@ namespace UWP.Views {
             _acv.Filter = item => !_ttb.Items.Contains(item) && (item as NewsCategories).categoryName.Contains(_ttb.Text, StringComparison.CurrentCultureIgnoreCase);
             _ttb.SuggestedItemsSource = _acv;
 
-            await UpdateNews();
+            await UpdatePage();
         }
 
-        /// ###############################################################################################
-        internal async Task UpdateNews() {
+        public async Task UpdatePage() {
             NewsAdaptiveGridView.IsItemClickEnabled = false;
             vm.News = await CryptoCompare.GetNews(vm.Filters);
             NewsAdaptiveGridView.IsItemClickEnabled = true;
         }
 
+        /// ###############################################################################################
         private void NewsItem_Click(object sender, ItemClickEventArgs e) {
             NewsAdaptiveGridView.PrepareConnectedAnimation("toWebView", e.ClickedItem, "GridView_Element");
             this.Frame.Navigate(typeof(WebVieww), ((NewsData)e.ClickedItem));
@@ -53,14 +53,14 @@ namespace UWP.Views {
         private void TokenItemAdded(TokenizingTextBox sender, object data) {
             if (data is NewsCategories category && sender.Items.Count < 5) {
                 vm.Filters.Add(category.categoryName);
-                UpdateNews();
+                UpdatePage();
             }
         }
 
         private void TokenItemRemoved(TokenizingTextBox sender, TokenItemRemovingEventArgs args) {
             if (args.Item is NewsCategories category) {
                 vm.Filters.Remove(category.categoryName);
-                UpdateNews();
+                UpdatePage();
             }
         }
 
