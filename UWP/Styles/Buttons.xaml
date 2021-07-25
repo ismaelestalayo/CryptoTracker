@@ -4,55 +4,14 @@
 
 
 
-    <Style TargetType="Button">
+    <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="CornerRadius" Value="4"/>
-        <Setter Property="Margin" Value="0 0 5 5"/>
+        <Setter Property="Margin" Value="0 0 10 5"/>
         <Setter Property="Padding" Value="23 7"/>
-        <Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ButtonBase">
-                    <Grid
-                        x:Name="Grid" CornerRadius="{TemplateBinding CornerRadius}"
-                        Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                        <ContentPresenter
-                            x:Name="Text" Content="{TemplateBinding Content}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
-
-                                <VisualState x:Name="PointerOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ComboBoxBackgroundPointerOver}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemBaseMediumLowColor}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}"/>
     </Style>
 
-    <Style TargetType="ComboBox" x:Key="Crypto_comboBox_style">
+    <Style TargetType="ComboBox" x:Key="Crypto_comboBox_style" BasedOn="{StaticResource DefaultComboBoxStyle}">
         <Setter Property="Background" Value="{ThemeResource SystemChromeDisabledHighColor}"/>
         <Setter Property="Foreground" Value="{ThemeResource SystemBaseMediumHighColor}"/>
         <Setter Property="BorderThickness" Value="0"/>

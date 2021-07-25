@@ -163,22 +163,19 @@ namespace UWP.Views {
             Window.Current.SetTitleBar(CustomAppTitleBar);
         }
 
-        // #########################################################################################
-        internal async void UpdateButton_Click(object sender, RoutedEventArgs e) {
+        /// #########################################################################################
+        ///  Navigation View
+        private async void NavView_Sync_Tapped(object sender, TappedRoutedEventArgs e) {
             SyncIcon.Visibility = Visibility.Collapsed;
             try {
-                await ((UpdatablePage)ContentFrame.Content).UpdatePage();
-            } catch (Exception ex) {
+                await((UpdatablePage)ContentFrame.Content).UpdatePage();
+            }
+            catch (Exception ex) {
                 await new MessageDialog(ex.Message).ShowAsync();
             }
 
             SyncIcon.Visibility = Visibility.Visible;
         }
-
-        /// #########################################################################################
-        ///  Navigation View
-        private void NavView_Sync_Tapped(object sender, TappedRoutedEventArgs e)
-            => UpdateButton_Click(sender, e);
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
             string source = "null";

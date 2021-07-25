@@ -17,7 +17,7 @@
 
 	<Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="32"/>
+			<RowDefinition Height="36"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
@@ -47,10 +47,10 @@
                 Content="&#xE944;"
                 FontFamily="{StaticResource FluentIconFont}"
                 FontSize="16"
-                Height="32"
-                Opacity="0.5"                
-				Click="FullScreen_btn_click"
-                Width="42"/>
+                Height="42" Width="46"
+                Opacity="0.5"
+                Padding="13 12 13 10" HorizontalAlignment="Stretch"
+				Click="FullScreen_btn_click"/>
 
             <TextBlock
 				d:Text="CRYPTO"
