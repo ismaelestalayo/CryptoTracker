@@ -35,8 +35,16 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="*"/>
-                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="0"/>
+                        <Setter Target="HomeGridView.ItemHeight" Value="225"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="MediumState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="700" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HomeGridView.ItemHeight" Value="250"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -45,8 +53,16 @@
                         <AdaptiveTrigger MinWindowWidth="900" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MainGrid.ColumnDefinitions[0].Width" Value="5*"/>
-                        <Setter Target="MainGrid.ColumnDefinitions[1].Width" Value="3*"/>
+                        <Setter Target="HomeGridView.ItemHeight" Value="275"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="VeryWideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HomeGridView.ItemHeight" Value="300"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -71,15 +87,14 @@
             <controls:AdaptiveGridView
                 x:Name="HomeGridView"
                 SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
-                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1200"
-                DragItemsCompleted="HomeGridView_DragCompleted"
+                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1100"
+                DragItemsCompleted="HomeGridView_DragCompleted" ItemHeight="300"
                 ItemsSource="{x:Bind vm.PriceCards}">
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="models:HomeCard">
                         <Grid x:Name="HomeGridView_Element"
                             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
-                            CornerRadius="5"
-                            Height="300"
+                            CornerRadius="6"
                             Margin="5"
                             Opacity="{x:Bind Info.Opacity}">
                             <Grid.RowDefinitions>
@@ -126,7 +141,7 @@
                                     Width="24"
                                     d:Source="/Assets/Icons/iconNULL.png"/>
                                 <TextBlock
-                                    Margin="5 0"
+                                    Margin="5 -4 0 0"
                                     Text="{x:Bind Info.Name}"
                                     FontSize="26" VerticalAlignment="Center"
                                     Style="{ThemeResource TitleTextBlockStyle}"
