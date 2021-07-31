@@ -57,7 +57,7 @@ namespace UWP.Background {
             SecondaryTile tile = new SecondaryTile(
                 crypto,
                 "CryptoTracker",
-                $"/tile-{crypto}",
+                $"/coin-{crypto}",
                 new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Medium.scale-100.png"),
                 TileSize.Wide310x150);
             tile.VisualElements.ShowNameOnSquare150x150Logo = true;

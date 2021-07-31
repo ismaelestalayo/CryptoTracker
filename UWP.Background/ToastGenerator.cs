@@ -5,7 +5,7 @@ using Windows.UI.Notifications;
 
 namespace UWP.Background {
     public sealed class ToastGenerator {
-        public static void SendToastNotification(string header) {
+        public static void SendAlert(string header, string coin) {
             var toastContent = new ToastContent() {
                 Visual = new ToastVisual() {
                     BindingGeneric = new ToastBindingGeneric() {
@@ -18,7 +18,8 @@ namespace UWP.Background {
                             }
                         }
                     }
-                }
+                },
+                Launch = "/coin-" + coin
             };
 
             // Create the toast notification

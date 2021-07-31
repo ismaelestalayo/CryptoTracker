@@ -113,6 +113,23 @@ namespace UWP {
             SetJumpList();
         }
 
+        protected override void OnActivated(IActivatedEventArgs args) {
+            if (args.Kind == ActivationKind.ToastNotification) {
+                var toastArgs = args as ToastNotificationActivatedEventArgs;
+                var arg = toastArgs.Argument;
+
+                if (!string.IsNullOrEmpty(arg)) {
+                    Frame rootFrame = Window.Current.Content as Frame;
+                    if (rootFrame == null) {
+                        rootFrame = new Frame();
+                        Window.Current.Content = rootFrame;
+                    }
+                    rootFrame.Navigate(typeof(MainPage), arg);
+                    Window.Current.Activate();
+                }
+            }
+        }
+
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }

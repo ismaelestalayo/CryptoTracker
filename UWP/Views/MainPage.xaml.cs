@@ -71,7 +71,7 @@ namespace UWP.Views {
             if (string.IsNullOrEmpty(param))
                 param = App._LocalSettings.Get<string>(UserSettings.StartupPage);            
             
-            if (param.StartsWith("/tile-"))
+            if (param.StartsWith("/coin-"))
                 Redirect = param.Split("-")[1];
 
             switch (param) {
