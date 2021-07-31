@@ -69,18 +69,19 @@ namespace UWP.Background {
 
         private bool CheckAlert(Alert alert, double price) {
             string header = "";
+            string subheader = $"Currently at {price}{alert.CurrencySymbol}";
             switch (alert.Mode.ToLowerInvariant()) {
                 case "below":
                     if (price < alert.Threshold) {
-                        header = $"📉 {alert.Crypto} is {alert.Mode} {alert.Threshold}";
-                        ToastGenerator.SendAlert(header, alert.Crypto);
+                        header = $"📉 {alert.Crypto} {alert.Mode} {alert.Threshold}{alert.CurrencySymbol}";
+                        ToastGenerator.SendAlert(header, subheader, alert.Crypto);
                         return true;
                     }
                     return false;
                 case "above":
-                    if (price > alert.Threshold) {
-                        header = $"🚀 {alert.Crypto} is {alert.Mode} {alert.Threshold}";
-                        ToastGenerator.SendAlert(header, alert.Crypto);
+                    if (price >= alert.Threshold) {
+                        header = $"🚀 {alert.Crypto} {alert.Mode} {alert.Threshold}{alert.CurrencySymbol}";
+                        ToastGenerator.SendAlert(header, subheader, alert.Crypto);
                         alert.Enabled = false;
                         return true;
                     }
