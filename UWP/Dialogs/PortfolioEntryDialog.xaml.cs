@@ -1,15 +1,9 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UWP;
-using UWP.APIs;
-using UWP.Core.Constants;
-using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -34,6 +28,16 @@ namespace CryptoTracker.Dialogs {
             set => SetValue(NewPurchaseProperty, value);
         }
 
+        private SuggestionCoin suggestionCoin = new SuggestionCoin();
+        private SuggestionCoin SuggestionCoin {
+            get => suggestionCoin;
+            set {
+                NewPurchase.Crypto = value.Symbol;
+                NewPurchase.CryptoName = value.Name;
+            }
+        }
+
+        /// ###############################################################################################
         private void PurchaseDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
             if (string.IsNullOrEmpty(NewPurchase.Crypto) || NewPurchase.CryptoQty <= 0 || NewPurchase.InvestedQty < 0) {
                 WarningMsg.Visibility = Visibility.Visible;
@@ -57,42 +61,6 @@ namespace CryptoTracker.Dialogs {
             // If we have the coin and the quantity, we can update some properties
             if (!string.IsNullOrEmpty(NewPurchase.Crypto) && NewPurchase.CryptoQty > 0)
                 NewPurchase = await UpdatePurchaseAsync(NewPurchase);
-        }
-
-        private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
-            AutoSuggestBox box = sender as AutoSuggestBox;
-            box.ItemsSource = FilterCoins(box);
-        }
-
-        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-            => CoinAutoSuggestBox.Text = ((SuggestionCoin)args.SelectedItem).Symbol;
-
-        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
-            NewPurchase.Crypto = ((SuggestionCoin)args.ChosenSuggestion)?.Symbol;
-            NewPurchase.CryptoName = ((SuggestionCoin)args.ChosenSuggestion)?.Name;
-        }
-
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
-            // Only get results when it was a user typing, 
-            // otherwise assume the value got filled in by TextMemberPath 
-            // or the handler for SuggestionChosen.
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-                sender.ItemsSource = FilterCoins(sender);
-        }
-
-        private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinListPaprika.Where(x =>
-                x.symbol.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase) ||
-                x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            List<SuggestionCoin> list = new List<SuggestionCoin>();
-            foreach (var coin in filtered) {
-                list.Add(new SuggestionCoin {
-                    Icon = IconsHelper.GetIcon(coin.symbol),
-                    Name = coin.name,
-                    Symbol = coin.symbol
-                });
-            }
-            return list;
         }
 
         /// ###############################################################################################

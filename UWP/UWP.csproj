@@ -127,6 +127,9 @@
     <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Helpers\PurchaseClass.cs" />
+    <Compile Include="UserControls\CoinAutoSuggestBox.xaml.cs">
+      <DependentUpon>CoinAutoSuggestBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\AlertList.xaml.cs">
       <DependentUpon>AlertList.xaml</DependentUpon>
     </Compile>
@@ -357,6 +360,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UserControls\CoinAutoSuggestBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\AlertList.xaml">
       <Generator>MSBuild:Compile</Generator>

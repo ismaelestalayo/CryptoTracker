@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:models="using:UWP.Models"
+    xmlns:usercontrols="using:UWP.UserControls"
     mc:Ignorable="d"
     CloseButtonText="Cancel"
     CornerRadius="8"
@@ -35,36 +35,19 @@
                 <!-- Dialog focuses on first element, so create a decoy Combobox -->
                 <ComboBox Opacity="0" Width="1" Height="1"/>
 
-                <AutoSuggestBox
-                    x:Name="CoinAutoSuggestBox"
-                    Grid.Column="0" Grid.Row="0"
+                <usercontrols:CoinAutoSuggestBox
+                    Coin="{x:Bind SuggestionCoin, Mode=TwoWay}"
                     Header="💰 Crypto"
-                    PlaceholderText="Search" 
-                    GotFocus="AutoSuggestBox_GotFocus"
-                    HorizontalAlignment="Left"
-                    TextChanged="AutoSuggestBox_TextChanged"
-                    Text="{x:Bind NewPurchase.Crypto, Mode=OneWay}"
-                    SuggestionChosen="AutoSuggestBox_SuggestionChosen"
-                    QueryIcon="Find"
-                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-                    Width="130">
-                    <AutoSuggestBox.ItemTemplate>
-                        <DataTemplate x:DataType="models:SuggestionCoin">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Width="30" Source="{x:Bind Icon}"/>
-                                <TextBlock Text="{x:Bind Symbol}" Margin="10 0" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </AutoSuggestBox.ItemTemplate>
-                </AutoSuggestBox>
+                    VerticalAlignment="Top"/>
             </Canvas>
 
             <muxc:NumberBox
                 AcceptsExpression="True" Header="Amount"
                 LostFocus="DialogBtn_LostFocus"
-                Margin="0 0 5 0" Minimum="0"
+                Minimum="0"
                 PlaceholderText="0" HorizontalAlignment="Left"
                 Value="{x:Bind NewPurchase.CryptoQty, Mode=TwoWay}"
+                VerticalAlignment="Top"
                 Width="130"/>
             <muxc:NumberBox
                 AcceptsExpression="True" Header="Invested"
@@ -72,6 +55,7 @@
                 HorizontalAlignment="Left" LostFocus="DialogBtn_LostFocus"
                 Margin="0 0 5 0" Minimum="0" PlaceholderText="0"
                 Value="{x:Bind NewPurchase.InvestedQty, Mode=TwoWay}"
+                VerticalAlignment="Top"
                 Width="130"/>
 
             <!-- Row 1 -->
@@ -132,7 +116,7 @@
                     </TextBlock>
                 </StackPanel>
             </controls:HeaderedContentControl>
-        
+
         </controls:UniformGrid>
 
     </Grid>
