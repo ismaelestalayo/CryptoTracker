@@ -5,6 +5,7 @@ using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Services;
+using UWP.UserControls;
 using UWP.Models;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
@@ -251,7 +252,7 @@ namespace UWP.Views {
             // otherwise assume the value got filled in by TextMemberPath 
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-                box.ItemsSource = FilterCoins(box);
+                box.ItemsSource = CoinAutoSuggestBox.FilterCoins(box);
         }
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
@@ -261,36 +262,21 @@ namespace UWP.Views {
 
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
             AutoSuggestBox box = sender as AutoSuggestBox;
-            box.ItemsSource = FilterCoins(box);
+            box.ItemsSource = CoinAutoSuggestBox.FilterCoins(box);
         }
 
         private void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e) {
-            //CoinAutoSuggestBox.Text = "";
+            //AutoSuggestBox.Text = "";
             if (((Frame)Window.Current.Content).ActualWidth < 720)
-                CoinAutoSuggestBox.Visibility = Visibility.Collapsed;
+                AutoSuggestBox.Visibility = Visibility.Collapsed;
         }
 
-        /// #######################################################################################
-        private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
-            var filtered = App.coinListPaprika.Where(x =>
-                x.symbol.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase) ||
-                x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            List<SuggestionCoin> list = new List<SuggestionCoin>();
-            foreach (var coin in filtered) {
-                list.Add(new SuggestionCoin {
-                    Icon = IconsHelper.GetIcon(coin.symbol),
-                    Name = coin.name,
-                    Symbol = coin.symbol
-                });
-            }
-            return list;
-        }
 
         /// #######################################################################################
         ///  Search button
         private void NavView_Search_Tapped(object sender, TappedRoutedEventArgs e) {
-            CoinAutoSuggestBox.Visibility = Visibility.Visible;
-            CoinAutoSuggestBox.Focus(FocusState.Programmatic);
+            AutoSuggestBox.Visibility = Visibility.Visible;
+            AutoSuggestBox.Focus(FocusState.Programmatic);
         }
 
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {

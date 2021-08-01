@@ -52,8 +52,8 @@ namespace UWP.UserControls {
             => Coin = (SuggestionCoin)args.ChosenSuggestion;
 
         /// #######################################################################################
-        ///  Filter
-        private List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
+        ///  Filter (also used in the MainPage)
+        public static List<SuggestionCoin> FilterCoins(AutoSuggestBox box) {
             var filtered = App.coinListPaprika.Where(x =>
                 x.symbol.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase) ||
                 x.name.Contains(box.Text, StringComparison.InvariantCultureIgnoreCase)).ToList();

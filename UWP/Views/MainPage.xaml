@@ -33,7 +33,7 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="CoinAutoSuggestBox.Visibility" Value="Collapsed"/>
+                        <Setter Target="AutoSuggestBox.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -42,7 +42,7 @@
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="CoinAutoSuggestBox.Visibility" Value="Visible"/>
+                        <Setter Target="AutoSuggestBox.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -85,7 +85,7 @@
             <!-- SEARCH -->
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox
-                    x:Name="CoinAutoSuggestBox" PlaceholderText="Search" QueryIcon="Find" Width="150"
+                    x:Name="AutoSuggestBox" PlaceholderText="Search" QueryIcon="Find" Width="150"
                     GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged" 
                     UpdateTextOnSelect="False"
                     QuerySubmitted="AutoSuggestBox_QuerySubmitted" Visibility="Collapsed" 
@@ -111,7 +111,7 @@
                 <StackPanel Orientation="Horizontal">
                     <NavigationViewItem
                         Tapped="NavView_Search_Tapped"
-                        Visibility="{x:Bind CoinAutoSuggestBox.Visibility, Converter={StaticResource VisibilityInverter}}"
+                        Visibility="{x:Bind AutoSuggestBox.Visibility, Converter={StaticResource VisibilityInverter}}"
                         ToolTipService.ToolTip="Search">
                         <NavigationViewItem.Icon>
                             <FontIcon Glyph="&#xE11A;"/> <!-- Find -->
