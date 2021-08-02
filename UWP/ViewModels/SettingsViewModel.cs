@@ -52,6 +52,8 @@ namespace UWP.ViewModels {
             }
         }
 
+        /// #######################################################################################
+        ///  Notifications
         public void InAppNotification(string title, string message = "") {
             var tuple = new Tuple<string, string>(title, message);
             Messenger.Send(new NotificationMessage(tuple));

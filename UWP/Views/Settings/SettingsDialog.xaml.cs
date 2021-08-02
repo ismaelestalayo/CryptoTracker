@@ -96,6 +96,9 @@ namespace CryptoTracker.Views {
                 case "About":
                     SettingsFrame.Navigate(typeof(SettingsAbout));
                     break;
+                case "Calculator":
+                    SettingsFrame.Navigate(typeof(SettingsCalculator));
+                    break;
             }
         }
 

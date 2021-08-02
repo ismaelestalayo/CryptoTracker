@@ -2,8 +2,8 @@
 
 namespace UWP.Models {
     public class SuggestionCoin : ObservableObject {
-        public string Icon { get; set; }
-        public string Name { get; set; }
-        public string Symbol { get; set; }
+        public string Icon { get; set; } = "/Assets/Icons/iconNULL.png";
+        public string Name { get; set; } = "Null";
+        public string Symbol { get; set; } = "NULL";
     }
 }
