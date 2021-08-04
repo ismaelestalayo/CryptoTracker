@@ -321,6 +321,13 @@
                                     FontFamily="{StaticResource FluentIconFont}"
                                     Background="Transparent"
                                     Padding="7" Margin="5 0"/>
+                                <userControls:ToggleIconButton
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    IsChecked="{x:Bind IsFav}"
+                                    Padding="7" Margin="5 0"
+                                    OffIcon="&#xEB51;"
+                                    OnIcon="&#xEB52;"/>
                                 <Image
                                     d:Source="ms-appx:///Assets/Icons/iconNULL.png"
                                     Source="{x:Bind image}"

@@ -1,0 +1,50 @@
+﻿<UserControl
+    x:Class="UWP.UserControls.ToggleIconButton"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="50"
+    d:DesignWidth="100">
+
+    <UserControl.Resources>
+        <Style TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ToggleButton
+        d:Content="x"
+        x:Name="ToggleButton"
+        Background="{x:Bind Background}"
+        BorderThickness="{x:Bind BorderThickness}"
+        Content="{x:Bind OffIcon, Mode=OneTime}"
+        Checked="ToggleButton_Checked"
+        IsChecked="{x:Bind IsChecked}"
+        FontFamily="Segoe MDL2 Assets"
+        Unchecked="ToggleButton_Unchecked"/>
+
+
+
+</UserControl>
