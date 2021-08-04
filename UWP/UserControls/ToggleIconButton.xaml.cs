@@ -29,6 +29,12 @@ namespace UWP.UserControls {
             set => _offIcon = value;
         }
 
+        private string _tooltip = "";
+        public string Tooltip {
+            get => _tooltip;
+            set => _tooltip = value;
+        }
+
         // ##############################################################################
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
             => ToggleButton.Content = OnIcon;

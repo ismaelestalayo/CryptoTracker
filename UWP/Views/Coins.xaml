@@ -313,21 +313,14 @@
                             <!-- COLUMN 0 -->
                             <StackPanel Grid.Column="0"
                                     Orientation="Horizontal" Padding="15 5 0 5">
-                                <Button
-                                    d:Content="&#xEB51;"
-                                    BorderThickness="0"
-                                    Click="Fav_click"
-                                    Content="{x:Bind IsFav, Converter={StaticResource FavIcon}}"
-                                    FontFamily="{StaticResource FluentIconFont}"
-                                    Background="Transparent"
-                                    Padding="7" Margin="5 0"/>
                                 <userControls:ToggleIconButton
                                     Background="Transparent"
                                     BorderThickness="0"
+                                    Tapped="Fav_click"
                                     IsChecked="{x:Bind IsFav}"
-                                    Padding="7" Margin="5 0"
                                     OffIcon="&#xEB51;"
-                                    OnIcon="&#xEB52;"/>
+                                    OnIcon="&#xEB52;"
+                                    Tooltip="Toggle favourite"/>
                                 <Image
                                     d:Source="ms-appx:///Assets/Icons/iconNULL.png"
                                     Source="{x:Bind image}"

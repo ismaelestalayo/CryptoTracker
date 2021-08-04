@@ -10,6 +10,7 @@ using UWP.Services;
 using UWP.Shared.Interfaces;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace UWP.Views {
 
@@ -47,7 +48,7 @@ namespace UWP.Views {
             this.Frame.Navigate(typeof(CoinDetails), crypto);
         }
 
-        private void Fav_click(object sender, RoutedEventArgs e) {
+        private void Fav_click(object sender, TappedRoutedEventArgs e) {
             var card = (CoinMarket)((FrameworkElement)sender).DataContext;
             var crypto = card.symbol.ToUpperInvariant();
             if (!App.pinnedCoins.Contains(crypto)) {
