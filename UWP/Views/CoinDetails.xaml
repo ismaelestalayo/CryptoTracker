@@ -24,7 +24,7 @@
             <Setter Property="Opacity" Value="0.75"/>
             <Setter Property="CornerRadius" Value="6"/>
             <Setter Property="Padding" Value="5 0"/>
-            <Setter Property="Margin" Value="5 -3"/>
+            <Setter Property="Margin" Value="0 -3"/>
             <Setter Property="Height" Value="24"/>
             <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
             <Setter Property="FontSize" Value="16"/>
@@ -95,7 +95,7 @@
         <converters:DoubleToVisibilityInverter x:Key="DoubleVisibilityInv"/>
     </Page.Resources>
 
-    <Grid x:Name="MainGrid" Padding="5, 0" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -164,20 +164,19 @@
         ####################################################################################################
         ############################################### Page Title #########################################
         #################################################################################################### -->
-        <Grid
-            BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Margin="0 5">
+            <StackPanel Orientation="Horizontal" Margin="0" Padding="0 10">
                 <Image
                     d:Source="/Assets/Icons/iconBTC.png"
                     Source="{x:Bind vm.Coin.Logo}"
-                    Margin="5 0 7 0" Width="38"
+                    Margin="7 0" Width="42"
                     VerticalAlignment="Center"/>
-                <StackPanel Orientation="Vertical" Margin="0">
-                    <StackPanel Orientation="Horizontal" Spacing="5">
+                <StackPanel Orientation="Vertical" Margin="0 2">
+                    <StackPanel Orientation="Horizontal" Spacing="5" Margin="0 -5 0 0">
                         <TextBlock
                             d:Text="Bitcoin"
                             CharacterSpacing="25"
@@ -186,33 +185,48 @@
                             FontWeight="SemiBold"
                             Style="{StaticResource TitleTextBlockStyle}"/>
                         <TextBlock
-                            FontWeight="Normal"
+                            FontSize="16" FontWeight="SemiBold"
                             d:Text="BTC"
-                            Margin="0 2"
+                            Margin="4 2"
                             VerticalAlignment="Bottom"
                             CharacterSpacing="50"
                             Text="{x:Bind vm.Coin.Name}"
                             Opacity="0.5"/>
                     </StackPanel>
                     
-                    <StackPanel Orientation="Horizontal">
+                    <!-- Small buttons -->
+                    <StackPanel Orientation="Horizontal" Spacing="5" Margin="-5 0 -5 -0">
+                        <Button
+                            Content="&#xE946;"
+                            Style="{ThemeResource IconBtn}"
+                            ToolTipService.ToolTip="Information">
+                            <Button.Flyout>
+                                <Flyout Placement="BottomEdgeAlignedLeft">
+                                    <TextBlock
+                                        Text="{x:Bind vm.CoinInfo.description.en}"
+                                        TextWrapping="Wrap" HorizontalAlignment="Left"
+                                        TextAlignment="Justify" Opacity="1"
+                                        Margin="0 0 0 -15"
+                                        Width="375"/>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
                         <Button
                             d:Content="&#xEB51;"
                             Click="FavCoin_click"
                             Content="{x:Bind vm.Coin.FavIcon}"
-                            Margin="-5 -5 5 -5"
-                            ToolTipService.ToolTip="Toggle favourite"
-                            Style="{StaticResource IconBtn}"/>
+                            Style="{StaticResource IconBtn}"
+                            ToolTipService.ToolTip="Toggle favourite"/>
                         <Button
                             d:Content="&#xE840;"
                             Click="PinCoin_click"
                             Content="{x:Bind vm.Coin.PinIcon}"
-                            ToolTipService.ToolTip="Toggle pin to start screen"
-                            Style="{StaticResource IconBtn}"/>
+                            Style="{StaticResource IconBtn}"
+                            ToolTipService.ToolTip="Toggle pin to Start Screen"/>
                         <Button
                             Content="&#xEA8F;"
-                            ToolTipService.ToolTip="Toggle pin to start screen"
-                            Style="{StaticResource IconBtn}">
+                            Style="{StaticResource IconBtn}"
+                            ToolTipService.ToolTip="Alerts">
                             <Button.Flyout>
                                 <Flyout Placement="BottomEdgeAlignedLeft" Closed="Flyout_Closed">
                                     <StackPanel>
@@ -243,18 +257,17 @@
             </StackPanel>
 
 
-            <StackPanel Margin="5 0" HorizontalAlignment="Right">
+            <StackPanel Margin="8 0" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <TextBlock
                     d:Text="1000€"
                     FontWeight="SemiBold" FontSize="28"
-                    CharacterSpacing="50"
                     HorizontalAlignment="Right"
                     Style="{ThemeResource TitleTextBlockStyle}">
                     <Run Text="{x:Bind vm.Coin.Price, Converter={StaticResource NumberRounder}}"/><!--
                     --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                 </TextBlock>
                 
-                <StackPanel Orientation="Horizontal" Margin="0 -2" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" Margin="0 -4 0 0" HorizontalAlignment="Right">
                     <TextBlock
                         Foreground="{x:Bind vm.Coin.DiffFG}" FontWeight="SemiBold"
                         FontSize="14"
@@ -272,19 +285,19 @@
 
             <!-- SHOW WHEN NOT HOVERING -->
             <StackPanel x:Name="TopInfoPanel"
-                Grid.Row="1" Spacing="50" Orientation="Horizontal"
+                Grid.Row="1" Spacing="30" Orientation="Horizontal"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Bottom" Margin="0 0 0 5"
+                VerticalAlignment="Bottom" Margin="0 0 0 10"
                 Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibilityInv}}">
                 <StackPanel.Resources>
                     <Style TargetType="TextBlock">
-                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
                         <Setter Property="HorizontalTextAlignment" Value="Center"/>
                     </Style>
                 </StackPanel.Resources>
 
                 <TextBlock>
-                    <Run Text="Vol" Foreground="Gray"/>
+                    <Run Text="Vol." Foreground="Gray"/>
                     <LineBreak/>
                     <Run Text="{x:Bind vm.Coin.VolumeToTotal, Converter={StaticResource NumberUnit}}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
@@ -302,7 +315,7 @@
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                 </TextBlock>
                 <TextBlock>
-                    <Run Text="Mkt.Cap" Foreground="Gray"/>
+                    <Run Text="Mkt. Cap" Foreground="Gray"/>
                     <LineBreak/>
                     <Run Text="{x:Bind vm.Coin.CurrencySym}"/><!--
                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
@@ -314,11 +327,11 @@
             <StackPanel x:Name="TopInfoPanelHover"
                 Grid.Row="1" Spacing="0" Orientation="Horizontal"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Bottom" Margin="0 0 0 5"
+                VerticalAlignment="Bottom" Margin="0 0 0 10"
                 Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibility}}">
                 <StackPanel.Resources>
                     <Style TargetType="TextBlock">
-                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
                         <Setter Property="HorizontalTextAlignment" Value="Center"/>
                         <Setter Property="Margin" Value="30 0"/>
                     </Style>
@@ -370,7 +383,10 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <Grid Grid.Row="2" Opacity="{x:Bind vm.Coin.Opacity}">
+        <Grid
+            Grid.Row="2" Opacity="{x:Bind vm.Coin.Opacity}"
+            BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+            BorderThickness="0 0.5 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
@@ -402,9 +418,11 @@
                 ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
                 Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}"/>
 
-            <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="5">
+            <RelativePanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5">
                 <Button
                     Click="ShowCandles_Click"
+                    Margin="10 3"
+                    RelativePanel.LeftOf="TimeRangeRadioButtons"
                     Style="{StaticResource IconBtn}">
                     <Button.Content>
                         <PathIcon                            
@@ -412,15 +430,24 @@
                             VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Button.Content>
                 </Button>
+                <!--<userControls:ToggleIconButton
+                    FontSize="16"
+                    Margin="32 0"
+                    OffIcon="&#xEAFC;"
+                    OnIcon="&#xE9F9;"/>-->
                 <userControls:TimeRangeRadioButtons
+                    x:Name="TimeRangeRadioButtons"
                     Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan}"
                     HorizontalAlignment="Center"
+                    RelativePanel.AlignHorizontalCenterWithPanel="True"
                     Tapped="TimeRangeButtons_Tapped"/>
                 <Button
                     Content="&#xE9A6;"
                     HorizontalAlignment="Right"
+                    Margin="10 3"
+                    RelativePanel.RightOf="TimeRangeRadioButtons"
                     Style="{StaticResource IconBtn}"/>
-            </Grid>
+            </RelativePanel>
         </Grid>
 
         <!-- 

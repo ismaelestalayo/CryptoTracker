@@ -26,7 +26,7 @@
         <converters:MicroChartConverter x:Key="MicroChart"/>
     </Page.Resources>
     
-    <Grid Padding="10">
+    <Grid Padding="10 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -38,8 +38,8 @@
         # TOP HEADER # -->
         <Grid
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            CornerRadius="8"
-            Padding="30 10" Margin="10"
+            CornerRadius="6" BorderThickness="0.5" BorderBrush="{ThemeResource SystemBaseMediumLowColor}"
+            Padding="30 10" Margin="15"
             MaxWidth="650">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -108,7 +108,7 @@
         <!--<userControls:TimeRangeRadioButtons
             Grid.Row="1"
             FullRange="False"
-            Margin="0 10 0 20"/>-->
+            Margin="0 0"/>-->
 
         <!-- 
         ###########################################################################################
@@ -117,12 +117,12 @@
             x:Name="CurrenciesListView" Grid.Row="2"
             IsItemClickEnabled="True" ItemClick="ListView_Click"
             ItemsSource="{x:Bind vm.CoinMarket}"
-            SelectionMode="None"  MaxWidth="1100">
+            SelectionMode="None" MaxWidth="1100">
             <ListView.Header>
                 <UserControl x:Name="listView_Element">
                     <Grid x:Name="listView_Element2"
-                        BorderThickness="0 0 0 0.2" BorderBrush="{ThemeResource SystemChromeAltLowColor}"
-                        Margin="12 0 12 3" Padding="0">
+                        BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemBaseMediumLowColor}"
+                        Margin="12 5 12 3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" x:Name="cryptoCol" MinWidth="220"/>
                             <ColumnDefinition Width="175" x:Name="priceCol"/>

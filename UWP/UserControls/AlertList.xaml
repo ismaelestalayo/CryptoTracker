@@ -24,7 +24,7 @@
                 <StackPanel Orientation="Horizontal" Padding="0 0 0 0">
                     <ToggleSwitch
                         Grid.Column="0" OnContent="" OffContent=""
-                        HorizontalAlignment="Left" Width="50"
+                        HorizontalAlignment="Left" Width="50" MinWidth="50" MaxWidth="50"
                         IsOn="{x:Bind Enabled, Mode=TwoWay}"
                         Margin="5 0"/>
                     <ComboBox

@@ -200,6 +200,7 @@
         Content="{x:Bind OffIcon, Mode=OneTime}"
         Checked="ToggleButton_Checked"
         IsChecked="{x:Bind IsChecked}"
+        FontSize="{x:Bind FontSize}"
         FontFamily="Segoe MDL2 Assets"
         Padding="7" Margin="5 0"
         Unchecked="ToggleButton_Unchecked"
