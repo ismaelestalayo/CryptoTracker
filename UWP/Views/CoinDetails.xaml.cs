@@ -286,9 +286,8 @@ namespace UWP.Views {
             UpdatePage();
         }
 
-        private void ShowCandles_Click(object sender, RoutedEventArgs e) {
-            vm.ShowCandles = !vm.ShowCandles;
-        }
+        private void ShowCandles_Click(object sender, RoutedEventArgs e)
+            => vm.ShowCandles = !vm.ShowCandles;
 
         private async void NewPurchase_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {

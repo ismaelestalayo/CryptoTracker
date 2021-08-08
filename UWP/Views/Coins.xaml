@@ -313,14 +313,27 @@
                             <!-- COLUMN 0 -->
                             <StackPanel Grid.Column="0"
                                     Orientation="Horizontal" Padding="15 5 0 5">
-                                <userControls:ToggleIconButton
+                                <userControls:ToggleIconButton Background="Red">
+                                    <userControls:ToggleIconButton.OnIcon>
+                                        <FontIcon Glyph="&#xEB52;" FontSize="16"/>
+                                    </userControls:ToggleIconButton.OnIcon>
+                                    <userControls:ToggleIconButton.OffIcon>
+                                        <FontIcon Glyph="&#xEB51;" FontSize="16"/>
+                                    </userControls:ToggleIconButton.OffIcon>
+                                </userControls:ToggleIconButton>
+                                <!--<userControls:ToggleIconButton
                                     Background="Transparent"
                                     BorderThickness="0"
-                                    Tapped="Fav_click"
-                                    IsChecked="{x:Bind IsFav}"
-                                    OffIcon="&#xEB51;"
-                                    OnIcon="&#xEB52;"
-                                    Tooltip="Toggle favourite"/>
+                                    Click="Fav_click"
+                                    IsChecked="{x:Bind IsFav, Mode=OneTime}"
+                                    Tooltip="Toggle favourite">
+                                    <userControls:ToggleIconButton.OnIcon>
+                                        <FontIcon Glyph="&#xEB52;" FontSize="16"/>
+                                    </userControls:ToggleIconButton.OnIcon>
+                                    <userControls:ToggleIconButton.OffIcon>
+                                        <FontIcon Glyph="&#xEB51;" FontSize="16"/>
+                                    </userControls:ToggleIconButton.OffIcon>
+                                </userControls:ToggleIconButton>-->
                                 <Image
                                     d:Source="ms-appx:///Assets/Icons/iconNULL.png"
                                     Source="{x:Bind image}"

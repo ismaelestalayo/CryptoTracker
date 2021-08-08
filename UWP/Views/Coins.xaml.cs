@@ -48,7 +48,7 @@ namespace UWP.Views {
             this.Frame.Navigate(typeof(CoinDetails), crypto);
         }
 
-        private void Fav_click(object sender, TappedRoutedEventArgs e) {
+        private void Fav_click(object sender, RoutedEventArgs e) {
             var card = (CoinMarket)((FrameworkElement)sender).DataContext;
             var crypto = card.symbol.ToUpperInvariant();
             if (!App.pinnedCoins.Contains(crypto)) {

@@ -37,7 +37,7 @@
 
         <telerik:RadCartesianChart.HorizontalAxis>
             <telerik:DateTimeCategoricalAxis
-                FontWeight="Light" FontFamily="Segoe UI"
+                FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 LabelFormat="{x:Bind ChartModel.LabelFormat}"
                 LabelOffset="1"

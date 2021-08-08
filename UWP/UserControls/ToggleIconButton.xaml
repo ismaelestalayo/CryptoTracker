@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="50"
-    d:DesignWidth="100">
+    d:DesignWidth="100"
+    Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <!--<SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
@@ -197,14 +198,17 @@
         x:Name="ToggleButton"
         Background="{x:Bind Background}"
         BorderThickness="{x:Bind BorderThickness}"
-        Content="{x:Bind OffIcon, Mode=OneTime}"
         Checked="ToggleButton_Checked"
+        Height="{x:Bind Height}"
         IsChecked="{x:Bind IsChecked}"
-        FontSize="{x:Bind FontSize}"
         FontFamily="Segoe MDL2 Assets"
         Padding="7" Margin="5 0"
         Unchecked="ToggleButton_Unchecked"
-        ToolTipService.ToolTip="{x:Bind Tooltip}"/>
+        ToolTipService.ToolTip="{x:Bind Tooltip}">
+        <ToggleButton.Content>
+            <ContentPresenter Content="{x:Bind Icon, Mode=OneWay, FallbackValue=OffIcon}"/>
+        </ToggleButton.Content>
+    </ToggleButton>
 
 
 
