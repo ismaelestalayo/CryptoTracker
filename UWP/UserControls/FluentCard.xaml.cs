@@ -20,16 +20,16 @@ namespace CryptoTracker.UserControls {
             set => SetValue(ExpandableContentProperty, value);
         }
 
-        public static readonly DependencyProperty AdditionalDescriptionContentProperty = DependencyProperty.Register(
-          "AdditionalDescriptionContent",
+        public static readonly DependencyProperty TitleContentProperty = DependencyProperty.Register(
+          "TitleContent",
           typeof(FrameworkElement),
           typeof(FluentCard),
           new PropertyMetadata(null)
         );
 
-        public FrameworkElement AdditionalDescriptionContent {
-            get => (FrameworkElement)GetValue(AdditionalDescriptionContentProperty);
-            set => SetValue(AdditionalDescriptionContentProperty, value);
+        public FrameworkElement TitleContent {
+            get => (FrameworkElement)GetValue(TitleContentProperty);
+            set => SetValue(TitleContentProperty, value);
         }
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(

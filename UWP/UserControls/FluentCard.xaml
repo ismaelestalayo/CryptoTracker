@@ -21,14 +21,19 @@
     <Grid
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1" CornerRadius="8">
-        <StackPanel>
+        BorderThickness="1" CornerRadius="8"
+        Margin="12 5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- Title Text -->
             <Grid
-                x:Name="TitleBlock"
+                x:Name="TitleTextBlock"
                 x:Load="{x:Bind Title, Mode=OneWay, Converter={StaticResource StringNullOrWhiteSpaceToFalseConverter}}"
                 BorderThickness="0 0 0 1"
-                Height="48"
-                Padding="24 0">
+                Height="48" Padding="24 0">
                 <Grid.BorderBrush>
                     <SolidColorBrush Color="White" Opacity="0.2"/>
                 </Grid.BorderBrush>
@@ -37,12 +42,29 @@
                     FontSize="16" FontWeight="SemiBold"
                     VerticalAlignment="Center"/>
             </Grid>
-            <Grid >
+            <!-- Title Content-->
+            <Grid
+                x:Name="TitleContentBlock"
+                x:Load="{x:Bind TitleContent, Mode=OneWay, Converter={StaticResource NullToFalseConverter}}"
+                BorderThickness="0 0 0 1"
+                Height="48" 
+                Padding="24 0">
+                <Grid.BorderBrush>
+                    <SolidColorBrush Color="White" Opacity="0.2"/>
+                </Grid.BorderBrush>
                 <ContentPresenter
-                    d:Content="ContentPresenter" Content="{x:Bind ExpandableContent, Mode=OneWay}"
+                    d:Content="ContentPresenter"
+                    Content="{x:Bind TitleContent}"
+                    Padding="0 12"/>
+            </Grid>
+            <!-- Expandable Content -->
+            <Grid Grid.Row="1">
+                <ContentPresenter
+                    d:Content="ContentPresenter"
+                    Content="{x:Bind ExpandableContent, Mode=OneWay}"
                     HorizontalAlignment="Stretch"
                     Margin="12 4" Padding="12"/>
             </Grid>
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
