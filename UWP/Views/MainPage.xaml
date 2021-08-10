@@ -137,7 +137,8 @@
             </NavigationView.PaneFooter>
 
             <!-- MAIN FRAME -->
-            <Frame x:Name="ContentFrame" Navigating="ContentFrame_Navigating">
+            <Frame
+                x:Name="ContentFrame" Navigating="ContentFrame_Navigating">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition/>

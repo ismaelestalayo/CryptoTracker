@@ -145,6 +145,9 @@
     <Compile Include="UserControls\ChartBars.xaml.cs">
       <DependentUpon>ChartBars.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\FluentCard.xaml.cs">
+      <DependentUpon>FluentCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ToggleIconButton.xaml.cs">
       <DependentUpon>ToggleIconButton.xaml</DependentUpon>
     </Compile>
@@ -388,6 +391,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ChartBars.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FluentCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

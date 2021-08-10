@@ -42,6 +42,20 @@ namespace UWP.Converters {
             => throw new NotImplementedException();
     }
 
+    public class StringNullOrWhiteSpaceToTrueConverter : IValueConverter {
+        /// <summary>
+        /// Determines whether an inverse conversion should take place.
+        /// </summary>
+        /// <remarks>If set, the value True results in <see cref="Visibility.Collapsed"/>, and false in <see cref="Visibility.Visible"/>.</remarks>
+        public bool Inverse { get; set; }
+
+        public object Convert(object val, Type targetType, object param, string lang)
+            => Inverse ? !string.IsNullOrWhiteSpace((string)val) : string.IsNullOrWhiteSpace((string)val);
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => string.Empty;
+    }
+
     public class MicroChartConverter : IValueConverter {
         private static SKColor color = SKColors.Black;
         public object Convert(object val, Type targetType, object param, string lang) {

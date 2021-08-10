@@ -15,4 +15,20 @@ namespace UWP.Converters {
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
+
+    public class InverseBooleanConverter : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => !(bool)val;
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
+    public class NullToTrueConverter : IValueConverter {
+        public bool Inverse { get; set; } = false;
+
+        public object Convert(object val, Type targetType, object param, string lang)
+            => Inverse ? val != null : val == null;
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
 }

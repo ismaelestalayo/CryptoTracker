@@ -1,0 +1,48 @@
+﻿<UserControl
+    x:Class="CryptoTracker.UserControls.FluentCard"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:UWP.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <converters:NullToTrueConverter x:Key="NullToFalseConverter" Inverse="True" />
+        <converters:NullToTrueConverter x:Key="NullToTrueConverter" Inverse="False" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <converters:StringNullOrWhiteSpaceToTrueConverter x:Key="StringNullOrWhiteSpaceToFalseConverter" Inverse="True" />
+        <converters:StringNullOrWhiteSpaceToTrueConverter x:Key="StringNullOrWhiteSpaceToTrueConverter" Inverse="False" />
+    </UserControl.Resources>
+
+    <Grid
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1" CornerRadius="8">
+        <StackPanel>
+            <Grid
+                x:Name="TitleBlock"
+                x:Load="{x:Bind Title, Mode=OneWay, Converter={StaticResource StringNullOrWhiteSpaceToFalseConverter}}"
+                BorderThickness="0 0 0 1"
+                Height="48"
+                Padding="24 0">
+                <Grid.BorderBrush>
+                    <SolidColorBrush Color="White" Opacity="0.2"/>
+                </Grid.BorderBrush>
+                <TextBlock
+                    d:Text="Title" Text="{x:Bind Title}"
+                    FontSize="16" FontWeight="SemiBold"
+                    VerticalAlignment="Center"/>
+            </Grid>
+            <Grid >
+                <ContentPresenter
+                    d:Content="ContentPresenter" Content="{x:Bind ExpandableContent, Mode=OneWay}"
+                    HorizontalAlignment="Stretch"
+                    Margin="12 4" Padding="12"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
