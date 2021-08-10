@@ -194,7 +194,7 @@
     </UserControl.Resources>
 
     <ToggleButton
-        d:Content="x"
+        d:Content="&#xE18A;"
         x:Name="ToggleButton"
         Background="{x:Bind Background}"
         BorderThickness="{x:Bind BorderThickness}"

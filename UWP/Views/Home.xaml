@@ -84,6 +84,10 @@
             ####################################################################################################
             ############################################# PRICE LIST VIEW ######################################
             #################################################################################################### -->
+            <!-- 
+                "CardBackgroundFillColorDefaultBrush" has too much reveal effect on Dark Theme, so I'll use
+                "SystemChromeMediumLowColor" for now...
+            -->
             <controls:AdaptiveGridView
                 x:Name="HomeGridView"
                 SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
@@ -93,9 +97,9 @@
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="models:HomeCard">
                         <Grid x:Name="HomeGridView_Element"
-                            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" 
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             CornerRadius="6"
-                            Margin="5"
+                            Margin="10 5"
                             Opacity="{x:Bind Info.Opacity}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>

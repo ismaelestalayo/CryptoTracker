@@ -39,7 +39,7 @@ namespace UWP.APIs {
                 return stats;
 
             }
-            catch (Exception) {
+            catch (Exception ex) {
                 return new GlobalStats();
             }
         }

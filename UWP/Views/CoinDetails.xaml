@@ -354,25 +354,21 @@
                         <!-- CANDLE CHART -->
                         <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                             <Run Text="O" Foreground="Gray"/>
-                            <LineBreak/>
                             <Run Text="{x:Bind vm.ChartPoint.Open, Converter={StaticResource NumberRounder}}"/><!--
                             --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
                         <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                             <Run Text="H" Foreground="Gray"/>
-                            <LineBreak/>
                             <Run Text="{x:Bind vm.ChartPoint.High, Converter={StaticResource NumberRounder}}"/><!--
                             --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
                         <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                             <Run Text="L" Foreground="Gray"/>
-                            <LineBreak/>
                             <Run Text="{x:Bind vm.ChartPoint.Low, Converter={StaticResource NumberRounder}}"/><!--
                             --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
                         <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
                             <Run Text="C" Foreground="Gray"/>
-                            <LineBreak/>
                             <Run Text="{x:Bind vm.ChartPoint.Close, Converter={StaticResource NumberRounder}}"/><!--
                             --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
@@ -434,6 +430,13 @@
                             HorizontalAlignment="Center"
                             RelativePanel.AlignHorizontalCenterWithPanel="True"
                             Tapped="TimeRangeButtons_Tapped"/>
+                        <Button
+                            Content="&#xE9A6;"
+                            FontSize="18"
+                            HorizontalAlignment="Right"
+                            Margin="10 3"
+                            RelativePanel.RightOf="TimeRangeRadioButtons"
+                            Style="{StaticResource IconBtn}"/>
                     </RelativePanel>
                 </Grid>
             </usercontrols:FluentCard.ExpandableContent>

@@ -58,21 +58,25 @@ namespace UWP.Services {
                 currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
             var currencySym = Currencies.GetCurrencySymbol(currency);
             
-            var response = await service.GetCoinsMarkets(currency);
+            try {
+                var response = await service.GetCoinsMarkets(currency);
 
-            var pinnedCoins = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.PinnedCoins);
-            var pinned = pinnedCoins.Split("|").ToList();
+                var pinnedCoins = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.PinnedCoins);
+                var pinned = pinnedCoins.Split("|").ToList();
 
-            var data = JsonSerializer.Deserialize<List<CoinMarket>>(response.ToString());
-            foreach (var d in data) {
-                var z = ((JsonElement)d.sparkline_in_7d).GetProperty("price");
-                d.sparkline_7d = JsonSerializer.Deserialize<List<double>>(z.ToString());
-                var img = IconsHelper.GetIcon(d.symbol.ToUpperInvariant());
-                d.image = img.StartsWith("/Assets") ? img : d.image;
-                d.IsFav = pinned.Contains(d.symbol.ToUpperInvariant());
-                d.currencySymbol = currencySym;
+                var data = JsonSerializer.Deserialize<List<CoinMarket>>(response.ToString());
+                foreach (var d in data) {
+                    var z = ((JsonElement)d.sparkline_in_7d).GetProperty("price");
+                    d.sparkline_7d = JsonSerializer.Deserialize<List<double>>(z.ToString());
+                    var img = IconsHelper.GetIcon(d.symbol.ToUpperInvariant());
+                    d.image = img.StartsWith("/Assets") ? img : d.image;
+                    d.IsFav = pinned.Contains(d.symbol.ToUpperInvariant());
+                    d.currencySymbol = currencySym;
+                }
+                return data;
+            } catch (Exception ex) {
+                return new List<CoinMarket>();
             }
-            return data;
         }
     }
 
