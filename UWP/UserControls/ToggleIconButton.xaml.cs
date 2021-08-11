@@ -59,8 +59,9 @@ namespace UWP.UserControls {
             => Icon = OffIcon;
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-            var z = sender;
-            Icon = IsChecked ? OnIcon : OffIcon;
+            //Icon = IsChecked ? OnIcon : OffIcon;
+            if (IsChecked)
+                Icon = OnIcon;
         }
     }
 }
