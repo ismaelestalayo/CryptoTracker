@@ -1,14 +1,12 @@
 ﻿<UserControl
     x:Class="UWP.UserControls.ToggleIconButton"
-    x:DefaultBindMode="OneWay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="50"
-    d:DesignWidth="100"
-    Loaded="UserControl_Loaded">
+    d:DesignWidth="50">
 
     <UserControl.Resources>
         <!--<SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
@@ -198,17 +196,12 @@
         x:Name="ToggleButton"
         Background="{x:Bind Background}"
         BorderThickness="{x:Bind BorderThickness}"
-        Checked="ToggleButton_Checked"
+        Click="ToggleButton_Click"
         Height="{x:Bind Height}"
         IsChecked="{x:Bind IsChecked}"
         FontFamily="Segoe MDL2 Assets"
         Padding="7" Margin="5 0"
-        Unchecked="ToggleButton_Unchecked"
-        ToolTipService.ToolTip="{x:Bind Tooltip}">
-        <ToggleButton.Content>
-            <ContentPresenter Content="{x:Bind Icon, Mode=OneWay, FallbackValue=OffIcon}"/>
-        </ToggleButton.Content>
-    </ToggleButton>
+        ToolTipService.ToolTip="{x:Bind Tooltip}"/>
 
 
 

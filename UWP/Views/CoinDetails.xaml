@@ -415,14 +415,14 @@
                             Click="ShowCandles_Click"
                             Height="28" Opacity="0.75"
                             RelativePanel.LeftOf="TimeRangeRadioButtons">
-                            <userControls:ToggleIconButton.OnIcon>
+                            <userControls:ToggleIconButton.CheckedIcon>
                                 <FontIcon Glyph="&#xE9D2;"/>
-                            </userControls:ToggleIconButton.OnIcon>
-                            <userControls:ToggleIconButton.OffIcon>
+                            </userControls:ToggleIconButton.CheckedIcon>
+                            <userControls:ToggleIconButton.UncheckedIcon>
                                 <PathIcon
                                     Data="M12 0.999999C12 0.729156 12.099 0.494781 12.2969 0.296875C12.4948 0.0989684 12.7292 0 13 0L15 0C15.2708 0 15.5052 0.0989684 15.7031 0.296875C15.901 0.494781 16 0.729156 16 0.999999L16 13C16 13.2708 15.901 13.5052 15.7031 13.7031C15.5052 13.901 15.2708 14 15 14L13 14C12.7292 14 12.4948 13.901 12.2969 13.7031C12.099 13.5052 12 13.2708 12 13L12 0.999999ZM3 4C3.27084 4 3.50522 4.09897 3.70312 4.29687C3.90103 4.49478 4 4.72916 4 5L4 13C4 13.2708 3.90103 13.5052 3.70312 13.7031C3.50522 13.901 3.27084 14 3 14L1 14C0.729156 14 0.494781 13.901 0.296875 13.7031C0.0989685 13.5052 0 13.2708 0 13L0 5C0 4.72916 0.0989685 4.49478 0.296875 4.29687C0.494781 4.09897 0.729156 4 1 4L3 4ZM9 8C9.27084 8 9.50522 8.09897 9.70312 8.29688C9.90103 8.49478 10 8.72916 10 9L10 13C10 13.2708 9.90103 13.5052 9.70312 13.7031C9.50522 13.901 9.27084 14 9 14L7 14C6.72916 14 6.49478 13.901 6.29688 13.7031C6.09897 13.5052 6 13.2708 6 13L6 9C6 8.72916 6.09897 8.49478 6.29688 8.29688C6.49478 8.09897 6.72916 8 7 8L9 8Z"
                                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </userControls:ToggleIconButton.OffIcon>
+                            </userControls:ToggleIconButton.UncheckedIcon>
                         </userControls:ToggleIconButton>
                         <userControls:TimeRangeRadioButtons
                             x:Name="TimeRangeRadioButtons"

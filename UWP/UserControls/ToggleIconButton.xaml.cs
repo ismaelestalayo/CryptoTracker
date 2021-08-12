@@ -15,15 +15,8 @@ namespace UWP.UserControls {
             get => (bool)GetValue(IsCheckedProperty);
             set {
                 SetValue(IsCheckedProperty, value);
-                Icon = value ? OnIcon : OffIcon;
+                ToggleButton.Content = value ? CheckedIcon : UncheckedIcon;
             }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register(nameof(Icon), typeof(IconElement), typeof(IconElement), null);
-        private IconElement Icon {
-            get => (IconElement)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
         }
 
         public event RoutedEventHandler Click {
@@ -33,16 +26,15 @@ namespace UWP.UserControls {
 
 
         // On/Off icons do not need to be a dependancy
-        private IconElement _onIcon;
-        public IconElement OnIcon {
-            get => _onIcon;
-            set => _onIcon = value;
+        private IconElement _checkedIcon = new SymbolIcon(Symbol.Like);
+        public IconElement CheckedIcon {
+            get => _checkedIcon;
+            set => _checkedIcon = value;
         }
-
-        private static IconElement _offIcon;
-        public IconElement OffIcon {
-            get => _offIcon;
-            set => _offIcon = value;
+        private IconElement _uncheckedIcon = new SymbolIcon(Symbol.Dislike);
+        public IconElement UncheckedIcon {
+            get => _uncheckedIcon;
+            set => _uncheckedIcon = value;
         }
 
         private string _tooltip = "";
@@ -52,16 +44,8 @@ namespace UWP.UserControls {
         }
 
         // ##############################################################################
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-            => Icon = OnIcon;
 
-        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
-            => Icon = OffIcon;
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-            //Icon = IsChecked ? OnIcon : OffIcon;
-            if (IsChecked)
-                Icon = OnIcon;
-        }
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+            => ToggleButton.Content = (ToggleButton.Content == CheckedIcon) ? UncheckedIcon : CheckedIcon;
     }
 }

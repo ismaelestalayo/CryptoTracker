@@ -9,7 +9,7 @@
     xmlns:services="using:UWP.Services"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
-    xmlns:microcharts="using:Microcharts.Uwp"
+    xmlns:microcharts="using:Microcharts.Uwp" xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Required"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
@@ -89,7 +89,7 @@
                         <Setter Property="HorizontalAlignment" Value="Center"/>
                     </Style>
                 </Grid.Resources>
-
+                
                 <TextBlock Grid.Column="0">
                     <Run Text="{x:Bind vm.GlobalStats.BtcDominance}"
                          d:Text="50.00"/><Run Text="%"/>
@@ -314,18 +314,18 @@
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Padding="15 5 0 5">
                                 <userControls:ToggleIconButton
                                     Click="Fav_click"
-                                    IsChecked="{x:Bind IsFav}"
+                                    IsChecked="{x:Bind IsFav, Mode=OneTime}"
                                     Tooltip="Toggle favourite">
-                                    <userControls:ToggleIconButton.OnIcon>
-                                        <FontIcon Glyph="&#xEB52;" FontSize="16"/>
-                                    </userControls:ToggleIconButton.OnIcon>
-                                    <userControls:ToggleIconButton.OffIcon>
+                                    <userControls:ToggleIconButton.UncheckedIcon>
                                         <FontIcon Glyph="&#xEB51;" FontSize="16"/>
-                                    </userControls:ToggleIconButton.OffIcon>
+                                    </userControls:ToggleIconButton.UncheckedIcon>
+                                    <userControls:ToggleIconButton.CheckedIcon>
+                                        <FontIcon Glyph="&#xEB52;" FontSize="16"/>
+                                    </userControls:ToggleIconButton.CheckedIcon>
                                 </userControls:ToggleIconButton>
                                 <Image
                                     d:Source="ms-appx:///Assets/Icons/iconNULL.png"
-                                    Source="{x:Bind image}"
+                                    Source="{x:Bind image}" x:Phase="5"
                                     Width="45" Margin="10 0"/>
                                 <StackPanel>
                                     <TextBlock d:Text="Bitcoin" Text="{x:Bind name}" FontWeight="Bold" FontSize="16"/>
