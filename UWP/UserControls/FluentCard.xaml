@@ -32,11 +32,8 @@
             <Grid
                 x:Name="TitleTextBlock"
                 x:Load="{x:Bind Title, Mode=OneWay, Converter={StaticResource StringNullOrWhiteSpaceToFalseConverter}}"
-                BorderThickness="0 0 0 1"
+                BorderThickness="0 0 0 1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 Height="48" Padding="24 0">
-                <Grid.BorderBrush>
-                    <SolidColorBrush Color="White" Opacity="0.2"/>
-                </Grid.BorderBrush>
                 <TextBlock
                     d:Text="Title" Text="{x:Bind Title}"
                     FontSize="16" FontWeight="SemiBold"
@@ -46,12 +43,9 @@
             <Grid
                 x:Name="TitleContentBlock"
                 x:Load="{x:Bind TitleContent, Mode=OneWay, Converter={StaticResource NullToFalseConverter}}"
-                BorderThickness="0 0 0 1"
-                Height="48" 
+                BorderThickness="0 0 0 1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Height="48"
                 Padding="24 0">
-                <Grid.BorderBrush>
-                    <SolidColorBrush Color="White" Opacity="0.2"/>
-                </Grid.BorderBrush>
                 <ContentPresenter
                     d:Content="ContentPresenter"
                     Content="{x:Bind TitleContent}"

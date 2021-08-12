@@ -30,17 +30,21 @@
             <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
             <Setter Property="FontSize" Value="16"/>
         </Style>
-        
+
         <Style TargetType="StackPanel" x:Key="CardStackPanel">
-            <Setter Property="Background" Value="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"/>
-            <Setter Property="CornerRadius" Value="5"/>
-            <Setter Property="Margin" Value="5 0"/>
-            <Setter Property="Padding" Value="15 5"/>
+            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Margin" Value="12 5"/>
+            <Setter Property="Padding" Value="24 0"/>
         </Style>
         <Style TargetType="RelativePanel" x:Key="CardRelativePanelTitle">
-            <Setter Property="Margin" Value="0 0 0 10"/>
-            <Setter Property="BorderBrush" Value="{ThemeResource DefaultTextForegroundThemeBrush}"/>
+            <Setter Property="Margin" Value="-24 0 -24 18"/>
+            <Setter Property="Padding" Value="0 7"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
             <Setter Property="BorderThickness" Value="0 0 0 1"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
 
         </Style>
 
@@ -291,37 +295,46 @@
                 <Grid>
                     <!-- CHART VALUES (ON NOT HOVER) -->
                     <StackPanel
-                        Grid.Row="1" Spacing="30" Orientation="Horizontal"
+                        Grid.Row="1" Spacing="35" Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom" Margin="0"
+                        VerticalAlignment="Bottom" Margin="-20 0"
                         Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleVisibilityInv}}">
-                        <StackPanel.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="FontWeight" Value="SemiBold"/>
-                                <Setter Property="HorizontalTextAlignment" Value="Center"/>
-                            </Style>
-                        </StackPanel.Resources>
 
-                        <TextBlock>
-                            <Run Text="Vol: " Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.Coin.VolumeToTotal, Converter={StaticResource NumberUnit}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                        <TextBlock>
-                            <Run Text="Min: " Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1, Converter={StaticResource NumberRounder}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                        <TextBlock>
-                            <Run Text="Max: " Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2, Converter={StaticResource NumberRounder}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                        <TextBlock>
-                            <Run Text="Mkt. Cap: " Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.Coin.CurrencySym}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
+                        <usercontrols:DoubleTextBlock Header="Vol:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.Coin.VolumeToTotal, Converter={StaticResource NumberUnit}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
+
+                        <usercontrols:DoubleTextBlock Header="Min:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.Chart.PricesMinMax.Item1, Converter={StaticResource NumberRounder}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
+
+                        <usercontrols:DoubleTextBlock Header="Max:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.Chart.PricesMinMax.Item2, Converter={StaticResource NumberRounder}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
+
+                        <usercontrols:DoubleTextBlock Header="Mkt. Cap:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.Coin.CurrencySym}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
                     </StackPanel>
                     
                     <!-- CHART VALUES ON HOVER -->
@@ -446,15 +459,62 @@
         ####################################################################################################
         ############################################## Bottom Cards ########################################
         #################################################################################################### -->
-        <usercontrols:FluentCard Grid.Row="3" Title="Description" IsClickable="False">
+        <usercontrols:FluentCard Grid.Row="3">
+            <usercontrols:FluentCard.TitleContent>
+                <Grid>
+                    <usercontrols:DoubleTextBlock
+                        Header="Owned:"
+                        HorizontalAlignment="Left"
+                        Spacing="5">
+                        <usercontrols:DoubleTextBlock.Value>
+                            <TextBlock>
+                                <Run Text="{x:Bind vm.TotalOwned, Mode=OneWay}"/>
+                                <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
+                            </TextBlock>
+                        </usercontrols:DoubleTextBlock.Value>
+                    </usercontrols:DoubleTextBlock>
+
+                    <usercontrols:DoubleTextBlock
+                        Header="Value:"
+                        HorizontalAlignment="Center"
+                        Spacing="5">
+                        <usercontrols:DoubleTextBlock.Value>
+                            <TextBlock>
+                                <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                            </TextBlock>
+                        </usercontrols:DoubleTextBlock.Value>
+                    </usercontrols:DoubleTextBlock>
+
+                    <usercontrols:DoubleTextBlock
+                        Header="Total profit:"
+                        HorizontalAlignment="Right"
+                        Spacing="5">
+                        <usercontrols:DoubleTextBlock.Value>
+                            <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
+                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
+                                --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                            </TextBlock>
+                        </usercontrols:DoubleTextBlock.Value>
+                    </usercontrols:DoubleTextBlock>
+                </Grid>
+            </usercontrols:FluentCard.TitleContent>
             <usercontrols:FluentCard.ExpandableContent>
-                <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                    <TextBlock Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords" TextAlignment="Justify" Opacity="0.8"/>
-                </ScrollViewer>
+                <StackPanel>
+                    <Button
+                        Background="Transparent" CornerRadius="6"
+                        BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
+                        Click="NewPurchase_click" Content="Add new purchase"
+                        HorizontalAlignment="Center" Margin="0 0 0 10"/>
+                    <userControls:PortfolioList
+                        IsHitTestVisible="False"
+                        Purchases="{x:Bind vm.Purchases}"
+                        HorizontalAlignment="Stretch"/>
+                </StackPanel>
             </usercontrols:FluentCard.ExpandableContent>
         </usercontrols:FluentCard>
-
-        <Pivot Grid.Row="3" Margin="5 0" Visibility="Collapsed">
+        
+        
+        <Pivot Grid.Row="3" Visibility="Collapsed">
             <PivotItem Header="Info">
                 <controls:UniformGrid x:Name="BottomUniformGrid" Rows="3" Columns="2" VerticalAlignment="Top">
 
@@ -463,10 +523,10 @@
                         x:Name="InfoCard" Style="{ThemeResource CardStackPanel}"
                         Grid.RowSpan="2" Grid.ColumnSpan="2">
                         <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Information" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
+                            <TextBlock Text="Information" Margin="24 0" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
                         </RelativePanel>
 
-                        <ScrollViewer Grid.Row="1" Margin="15" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
                             <TextBlock
                                 Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords"
                                 TextAlignment="Justify" Opacity="0.8"/>
@@ -474,60 +534,15 @@
                     </StackPanel>
 
                     <!-- Alerts card -->
-                    <StackPanel Style="{ThemeResource CardStackPanel}" Grid.RowSpan="2" Grid.ColumnSpan="1">
-                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Alerts" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                        </RelativePanel>
+                    <usercontrols:FluentCard Title="Alerts">
+                        <usercontrols:FluentCard.ExpandableContent>
+                            <userControls:AlertList
+                                Alerts="{x:Bind vm.Alerts, Mode=TwoWay}"
+                                MaxHeight="250"/>
+                        </usercontrols:FluentCard.ExpandableContent>
+                    </usercontrols:FluentCard>
 
-                    </StackPanel>
-
-
-                    
                 </controls:UniformGrid>
-                
-            </PivotItem>
-
-
-            <PivotItem Header="Entries" Margin="10">
-                <StackPanel>
-                    <Grid Margin="10 0">
-                        <controls:HeaderedContentControl HorizontalAlignment="Left" HorizontalContentAlignment="Center" Header="Owned">
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock>
-                                    <Run Text="{x:Bind vm.TotalOwned, Mode=OneWay}"/>
-                                    <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-
-                        <controls:HeaderedContentControl HorizontalAlignment="Center" HorizontalContentAlignment="Center" Header="Value">
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock>
-                                    <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-
-                        <controls:HeaderedContentControl HorizontalAlignment="Right" HorizontalContentAlignment="Center" Header="Total profit">
-                            <controls:HeaderedContentControl.Content>
-                                <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
-                                    <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
-                                    --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                </TextBlock>
-                            </controls:HeaderedContentControl.Content>
-                        </controls:HeaderedContentControl>
-                    </Grid>
-
-                    <Button
-                        Background="Transparent" CornerRadius="6"
-                        BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
-                        Click="NewPurchase_click" Content="Add new purchase"
-                        HorizontalAlignment="Center" Margin="0 10"/>
-                    <userControls:PortfolioList
-                        IsHitTestVisible="False"
-                        Purchases="{x:Bind vm.Purchases}"
-                        HorizontalAlignment="Stretch"/>
-                </StackPanel>
             </PivotItem>
 
 
