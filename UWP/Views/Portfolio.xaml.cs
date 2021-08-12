@@ -17,8 +17,6 @@ using UWP.Shared.Models;
 using UWP.UserControls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 
 namespace UWP.Views {
@@ -32,6 +30,8 @@ namespace UWP.Views {
 
         private string PortfolioKey = "Portfolio";
 
+        private ObservableCollection<PurchaseModel> LocalPurchases;
+
         private int EditingPurchaseId { get; set; }
 
         private bool ShowingDetails = false;
@@ -41,8 +41,11 @@ namespace UWP.Views {
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            vm.Portfolio = await RetrievePortfolio();
-            UpdatePage();
+            LocalPurchases = await RetrievePortfolio();
+            vm.Portfolio = LocalPurchases;
+            if (vm.PurchasesAreGrouped)
+                await GroupPurchases();
+            await UpdatePage();
         }
 
         public async Task UpdatePage() {
@@ -215,15 +218,23 @@ namespace UWP.Views {
             LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
         }
 
-        private void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
-            var menu = sender as MenuFlyoutItem;
-            var item = menu.DataContext as PurchaseModel;
-            var items = Portfolio_dg.ItemsSource.Cast<PurchaseModel>().ToList();
-            var index = items.IndexOf(item);
-            vm.Portfolio.RemoveAt(index);
+        private async void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
+            var item = ((MenuFlyoutItem)sender).DataContext as PurchaseModel;
+            vm.Portfolio.Remove(item);
+
+            if (vm.PurchasesAreGrouped) {
+                var crypto = item.Crypto;
+                var matches = LocalPurchases.Where(x => x.Crypto == crypto).ToList();
+                foreach (var match in matches)
+                    LocalPurchases.Remove(match);
+            }
+            else {
+                LocalPurchases = vm.Portfolio;
+            }
+
             /// Update the page and save the new portfolio
-            UpdatePage();
-            LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
+            await UpdatePage();
+            await LocalStorageHelper.SaveObject(PortfolioKey, LocalPurchases);
         }
 
 
@@ -301,41 +312,41 @@ namespace UWP.Views {
             switch (e.Column.Header) {
                 case "Crypto":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
                                                                                            orderby item.Crypto ascending
                                                                                            select item);
                     else
-                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
                                                                                            orderby item.Crypto descending
                                                                                            select item);
                     break;
                 case "Invested":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
                                                                                            orderby item.InvestedQty ascending
                                                                                            select item);
                     else
-                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
                                                                                            orderby item.InvestedQty descending
                                                                                            select item);
                     break;
                 case "Worth":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
                                                                                            orderby item.Worth ascending
                                                                                            select item);
                     else
-                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
                                                                                            orderby item.Worth descending
                                                                                            select item);
                     break;
                 case "Currently":
                     if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
                                                                                            orderby item.Current ascending
                                                                                            select item);
                     else
-                        Portfolio_dg.ItemsSource = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
                                                                                            orderby item.Current descending
                                                                                            select item);
                     break;
@@ -346,68 +357,41 @@ namespace UWP.Views {
             }
         }
 
+
         /// #######################################################################################
-        /// Grouping
-        public class GroupInfoCollection<T> : ObservableCollection<T> {
-            public object Key { get; set; }
-
-            public new IEnumerator<T> GetEnumerator() {
-                return (IEnumerator<T>)base.GetEnumerator();
-            }
-        }
-
-        private void dg_loadingRowGroup(object sender, DataGridRowGroupHeaderEventArgs e) {
-            ICollectionViewGroup group = e.RowGroupHeader.CollectionViewGroup;
-            e.RowGroupHeader.PropertyValue = ((GroupInfoCollection<PurchaseModel>)group.Group).Key.ToString();
-        }
-
-        private void Grouping_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var opt = ((ContentControl)((Selector)sender).SelectedItem).Content.ToString();
-
-            if (vm.Portfolio == null || Portfolio_dg == null)
-                return;
-
-            if (opt == "Dont group") {
-                Portfolio_dg.ItemsSource = vm.Portfolio;
+        /// Manual grouping
+        private async void GroupPurchases_Click(object sender, RoutedEventArgs e) {
+            if (vm.PurchasesAreGrouped) {
+                // group the same coins' purchases into one single entry
+                await GroupPurchases();
             }
             else {
-                ObservableCollection<GroupInfoCollection<PurchaseModel>> purchases = new ObservableCollection<GroupInfoCollection<PurchaseModel>>();
-                switch (opt) {
-                    case "By profits":
-                        var query = from item in vm.Portfolio
-                                    group item by (item.Profit >= 0 ? "win" : "loss")
-                                    into g select new { GroupName = g.Key, Items = g };
-                        foreach (var g in query) {
-                            GroupInfoCollection<PurchaseModel> info = new GroupInfoCollection<PurchaseModel>();
-                            info.Key = (g.GroupName == "win") ? "Profits" : "Losses";
-                            foreach (var item in g.Items) {
-                                info.Add(item);
-                            }
-                            purchases.Add(info);
-                        }
-                        break;
-                    case "By coin":
-                        query = from item in vm.Portfolio
-                                group item by item.Crypto
-                                into g select new { GroupName = g.Key, Items = g };
-                        foreach (var g in query) {
-                            GroupInfoCollection<PurchaseModel> info = new GroupInfoCollection<PurchaseModel>();
-                            info.Key = g.GroupName;
-                            foreach (var item in g.Items) {
-                                info.Add(item);
-                            }
-                            purchases.Add(info);
-                        }
-                        break;
-                }
-
-                CollectionViewSource groupedItems = new CollectionViewSource();
-                groupedItems.IsSourceGrouped = true;
-                groupedItems.Source = purchases;
-
-                Portfolio_dg.ItemsSource = groupedItems.View;
+                // reset the List to the local purchases
+                vm.Portfolio = LocalPurchases;
+                await UpdatePage();
             }
         }
 
+        private async Task GroupPurchases() {
+            var query = from item in LocalPurchases
+                        group item by item.Crypto into g
+                        select new { GroupName = g.Key, Items = g };
+            List<PurchaseModel> grouped = new List<PurchaseModel>();
+            foreach (var q in query) {
+                var g = new PurchaseModel();
+                var first = q.Items.First();
+                g.Crypto = q.GroupName;
+                g.CryptoLogo = first.CryptoLogo;
+                g.CryptoName = first.CryptoName;
+                g.CryptoQty = q.Items.Sum(x => x.CryptoQty);
+                g.Currency = first.Currency;
+                g.CurrencySymbol = first.CurrencySymbol;
+                g.Current = first.Current;
+                g.InvestedQty = q.Items.Sum(x => x.InvestedQty);
+                g = await PortfolioHelper.UpdatePurchase(g);
+                grouped.Add(g);
+            }
+            vm.Portfolio = new ObservableCollection<PurchaseModel>(grouped);
+        }
     }
 }

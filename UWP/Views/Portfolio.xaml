@@ -6,9 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:converters="using:UWP.Converters"
-    xmlns:models="using:UWP.Models"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     NavigationCacheMode="Enabled"
@@ -48,8 +46,9 @@
             <Setter Property="Margin" Value="15 0 50 0"/>
         </Style>
         <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
-        <converters:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
-        <converters:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
+        <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
+        <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
+        <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
@@ -95,15 +94,15 @@
                         <TextBlock Text="New purchase" Margin="10 0 0 0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <ComboBox Width="150" SelectionChanged="Grouping_ComboBox_SelectionChanged"
-                    Margin="0 0 10 0">
-                    <ComboBoxItem Content="Dont group" IsSelected="True"/>
-                    <ComboBoxItem Content="By profits"/>
-                    <ComboBoxItem Content="By coin"/>
-                </ComboBox>
+                <CheckBox
+                    Click="GroupPurchases_Click"
+                    Content="Group purchases"
+                    IsChecked="{x:Bind vm.PurchasesAreGrouped, Mode=TwoWay}"
+                    Margin="5 0"
+                    ToolTipService.ToolTip="Group purchases"/>
                 <CheckBox 
                     Click="ToggleDetails_click" IsChecked="False"
-                    Margin="0 0 3 0"
+                    Margin="5 0"
                     Content="Show details" ToolTipService.ToolTip="Show details"
                     VerticalAlignment="Bottom"/>
             </StackPanel>
@@ -126,7 +125,6 @@
                 HeadersVisibility="Column" HorizontalAlignment="Stretch"
                 HorizontalGridLinesBrush="{ThemeResource SystemChromeDisabledHighColor}"
                 ItemsSource="{x:Bind vm.Portfolio}"
-                LoadingRowGroup="dg_loadingRowGroup"
                 Margin="0"
                 RowBackground="Transparent" RowDetailsVisibilityMode="Collapsed"
                 SelectionMode="Single" Sorting="DataGrid_Sorting"
@@ -206,12 +204,16 @@
                                             <SymbolIcon Symbol="Find"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Edit" Click="EditPurchase_Click">
+                                    <MenuFlyoutItem
+                                        Text="Edit" Click="EditPurchase_Click"
+                                        Visibility="{x:Bind vm.PurchasesAreGrouped, Converter={StaticResource BoolToVisibilityNOT}, Mode=OneWay}">
                                         <MenuFlyoutItem.Icon>
                                             <SymbolIcon Symbol="Edit"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Duplicate" Click="DuplicatePurchase_Click">
+                                    <MenuFlyoutItem
+                                        Text="Duplicate" Click="DuplicatePurchase_Click"
+                                        Visibility="{x:Bind vm.PurchasesAreGrouped, Converter={StaticResource BoolToVisibilityNOT}, Mode=OneWay}">
                                         <MenuFlyoutItem.Icon>
                                             <SymbolIcon Symbol="Copy"/>
                                         </MenuFlyoutItem.Icon>
