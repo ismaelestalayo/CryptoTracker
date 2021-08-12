@@ -11,9 +11,7 @@
     d:DesignWidth="400">
 
     <UserControl.Resources>
-        <converters:NullToTrueConverter x:Key="NullToFalseConverter" Inverse="True" />
-        <converters:NullToTrueConverter x:Key="NullToTrueConverter" Inverse="False" />
-        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <converters:NullToBoolConverter x:Key="NullToFalseConverter" Inverse="True"/>
         <converters:StringNullOrWhiteSpaceToTrueConverter x:Key="StringNullOrWhiteSpaceToFalseConverter" Inverse="True" />
         <converters:StringNullOrWhiteSpaceToTrueConverter x:Key="StringNullOrWhiteSpaceToTrueConverter" Inverse="False" />
     </UserControl.Resources>

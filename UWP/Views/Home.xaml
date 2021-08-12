@@ -20,9 +20,9 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <converters:ListCountToVisibilityConverter x:Key="ListCount2Visibility"/>
-        <converters:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
-        <converters:BoolInverseToVisibility x:Key="BoolInverse2Visibility"/>
+        <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
+        <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
+        <converters:BoolToVisibility Inverse="True" x:Key="BoolInverse2Visibility"/>
     </Page.Resources>
 
     <!-- 

@@ -38,7 +38,11 @@ namespace UWP.Shared.Helpers {
             }
         }
 
-
+        /// <summary>
+        /// Calculate a purchase's worth, delta, boughtAt and profit
+        /// </summary>
+        /// <param name="purchase"></param>
+        /// <returns></returns>
         public async static Task<PurchaseModel> UpdatePurchase(PurchaseModel purchase) {
             string crypto = purchase.Crypto;
 

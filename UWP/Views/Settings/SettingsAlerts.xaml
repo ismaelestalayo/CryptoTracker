@@ -26,7 +26,7 @@
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
 
         <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind vm.CvsSource, Mode=OneWay}"/>
-        <converters:ListCountToVisibilityInvertedConverter x:Key="ListCount2VisibilityInverted"/>
+        <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////

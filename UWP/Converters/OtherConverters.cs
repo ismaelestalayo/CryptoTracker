@@ -20,33 +20,27 @@ namespace UWP.Converters {
             => throw new NotImplementedException();
     }
 
-    public class ListCountToVisibilityInvertedConverter : IValueConverter {
-        public object Convert(object val, Type targetType, object param, string lang)
-            => ((int)val) == 0 ? Visibility.Visible : Visibility.Collapsed;
-
-        public object ConvertBack(object val, Type targetType, object param, string lang)
-            => throw new NotImplementedException();
-    }
-
-    public class ListCountToVisibilityConverter : IValueConverter {
-        public object Convert(object val, Type targetType, object param, string lang)
-            => ((int)val) == 0 ? Visibility.Collapsed : Visibility.Visible;
+    public class ListCountToVisibleConverter : IValueConverter {
+        public bool Inverse { get; set; }
+        public object Convert(object val, Type targetType, object param, string lang) {
+            if (Inverse)
+                return ((int)val) == 0 ? Visibility.Visible : Visibility.Collapsed;
+            else
+                return ((int)val) != 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
 
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
 
     public class DoubleToVisibilityConverter : IValueConverter {
-        public object Convert(object val, Type targetType, object param, string lang)
-            => ((double)val) == 0 ? Visibility.Collapsed : Visibility.Visible;
-
-        public object ConvertBack(object val, Type targetType, object param, string lang)
-            => throw new NotImplementedException();
-    }
-
-    public class DoubleToVisibilityInverter : IValueConverter {
-        public object Convert(object val, Type targetType, object param, string lang)
-            => ((double)val) != 0 ? Visibility.Collapsed : Visibility.Visible;
+        public bool Inverse { get; set; }
+        public object Convert(object val, Type targetType, object param, string lang) {
+            if (Inverse)
+                return ((double)val) == 0 ? Visibility.Visible : Visibility.Collapsed;
+            else
+                return ((double)val) != 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
 
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
