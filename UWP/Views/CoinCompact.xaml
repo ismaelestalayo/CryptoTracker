@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:usercontrols="using:CryptoTracker.UserControls"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     mc:Ignorable="d"
@@ -52,16 +53,16 @@
                 Padding="13 12 13 10" HorizontalAlignment="Stretch"
 				Click="FullScreen_btn_click"/>
 
-            <TextBlock
-				d:Text="CRYPTO"
-                Margin="0 5"
-				RelativePanel.AlignHorizontalCenterWithPanel="True"
-				Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="18">
-                <Run Text="{x:Bind vm.Info.Name}"/><!--
-                --><Run Text=":"/>
-                <Run Text="{x:Bind vm.Info.Price, Converter={StaticResource NumberFormatter}}" FontWeight="Normal"/><!--
-                --><Run Text="{x:Bind vm.Info.CurrencySym}" FontWeight="Normal"/>
-            </TextBlock>
+            <usercontrols:DoubleTextBlock
+                Header="{x:Bind vm.Info.Name}" Margin="0 5" Spacing="5"
+                RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <usercontrols:DoubleTextBlock.Value>
+                    <TextBlock>
+                        <Run Text="{x:Bind vm.Info.Price, Converter={StaticResource NumberFormatter}}"/><!--
+                        --><Run Text="{x:Bind vm.Info.CurrencySym}"/>
+                    </TextBlock>
+                </usercontrols:DoubleTextBlock.Value>
+            </usercontrols:DoubleTextBlock>
         </RelativePanel>
 
         <userControls:DiffTextBlock
@@ -69,7 +70,7 @@
             DiffFg="{x:Bind vm.Info.DiffFG}"
             Grid.Row="1"
             VerticalAlignment="Top"
-            Margin="0 -2"/>
+            Margin="0 -7"/>
 
 
         <RelativePanel Grid.Row="2">
