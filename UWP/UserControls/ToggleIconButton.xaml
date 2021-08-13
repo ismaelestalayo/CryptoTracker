@@ -6,18 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="50"
-    d:DesignWidth="50">
+    d:DesignWidth="50"
+    Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
-        <!--<SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
-        <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPointerOver" Color="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
-        <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
-
-        <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemBaseHighColor}"/>
-        <SolidColorBrush x:Key="ToggleButtonForegroundChecked" Color="{ThemeResource SystemBaseHighColor}"/>
-        <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPointerOver" Color="{ThemeResource SystemBaseHighColor}"/>
-        <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPressed" Color="{ThemeResource SystemBaseHighColor}"/>-->
-
         <Style TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
             <Setter Property="Background" Value="{ThemeResource ToggleButtonBackground}"/>
             <Setter Property="BackgroundSizing" Value="OuterBorderEdge"/>
@@ -198,9 +190,9 @@
         BorderThickness="{x:Bind BorderThickness}"
         Click="ToggleButton_Click"
         Height="{x:Bind Height}"
-        IsChecked="{x:Bind IsChecked}"
+        IsChecked="{x:Bind IsChecked, Mode=TwoWay}"
         FontFamily="Segoe MDL2 Assets"
-        Padding="7" Margin="5 0"
+        Padding="7" Margin="0"
         ToolTipService.ToolTip="{x:Bind Tooltip}"/>
 
 

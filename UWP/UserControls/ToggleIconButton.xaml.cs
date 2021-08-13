@@ -13,10 +13,7 @@ namespace UWP.UserControls {
 
         public bool IsChecked {
             get => (bool)GetValue(IsCheckedProperty);
-            set {
-                SetValue(IsCheckedProperty, value);
-                ToggleButton.Content = value ? CheckedIcon : UncheckedIcon;
-            }
+            set => SetValue(IsCheckedProperty, value);
         }
 
         public event RoutedEventHandler Click {
@@ -47,5 +44,9 @@ namespace UWP.UserControls {
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
             => ToggleButton.Content = (ToggleButton.Content == CheckedIcon) ? UncheckedIcon : CheckedIcon;
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+            => ToggleButton.Content = IsChecked ? CheckedIcon : UncheckedIcon;
+
     }
 }

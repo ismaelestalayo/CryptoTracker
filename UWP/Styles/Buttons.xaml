@@ -5,8 +5,6 @@
 
 
     <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Margin" Value="0 0 10 5"/>
         <Setter Property="Padding" Value="23 7"/>
         <Setter Property="UseSystemFocusVisuals" Value="{ThemeResource UseSystemFocusVisuals}"/>
     </Style>
