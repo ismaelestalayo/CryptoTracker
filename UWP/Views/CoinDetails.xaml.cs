@@ -118,12 +118,16 @@ namespace UWP.Views {
 
             var portfolio = await PortfolioHelper.GetPortfolio(vm.Coin.Name);
             vm.Purchases = new ObservableCollection<PurchaseModel>(portfolio);
-            for (int i = 0; i < vm.Purchases.Count; i++) {
+
+            for (int i = 0; i < vm.Purchases.Count; i++)
                 vm.Purchases[i] = await PortfolioHelper.UpdatePurchase(vm.Purchases[i]);
-                vm.TotalOwned += vm.Purchases[i].CryptoQty;
-                vm.TotalProfit += vm.Purchases[i].Profit;
-                vm.TotalValue += vm.Purchases[i].Worth;
-            }
+
+            vm.TotalQty = vm.Purchases.Sum(x => x.CryptoQty);
+            vm.TotalProfit = vm.Purchases.Sum(x => x.Profit);
+            vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
+
+            var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
+            vm.AvgPrice = (1 / vm.TotalQty) * totalInvested;
 
             vm.Alerts = await AlertsHelper.GetCryptoAlerts(vm.Coin.Name);
         }

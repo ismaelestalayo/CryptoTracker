@@ -295,7 +295,7 @@
                 <Grid>
                     <!-- CHART VALUES (ON NOT HOVER) -->
                     <StackPanel
-                        Grid.Row="1" Spacing="35" Orientation="Horizontal"
+                        Grid.Row="1" Spacing="30" Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom" Margin="-20 0"
                         Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleToVisibilityNOT}}">
@@ -463,7 +463,7 @@
             <usercontrols:FluentCard.TitleContent>
                 <Grid>
                     <usercontrols:DoubleTextBlock
-                        Header="Owned:"
+                        Header="Quantity:"
                         HorizontalAlignment="Left"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
@@ -481,17 +481,33 @@
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
                                 <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"
+                                     Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}"/><!--
+                                --><Run Text="{x:Bind vm.Coin.CurrencySym}"
+                                        Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
                     </usercontrols:DoubleTextBlock>
 
-                    <usercontrols:DoubleTextBlock
+                    <!--<usercontrols:DoubleTextBlock
                         Header="Total profit:"
                         HorizontalAlignment="Right"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
-                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
+                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/>--><!--
+                                --><!--<Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                            </TextBlock>
+                        </usercontrols:DoubleTextBlock.Value>
+                    </usercontrols:DoubleTextBlock>-->
+
+                    <usercontrols:DoubleTextBlock
+                        Header="Avg. Price:"
+                        HorizontalAlignment="Right"
+                        Spacing="5">
+                        <usercontrols:DoubleTextBlock.Value>
+                            <TextBlock>
+                                <Run Text="{x:Bind vm.AvgPrice}"/><!--
                                 --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
