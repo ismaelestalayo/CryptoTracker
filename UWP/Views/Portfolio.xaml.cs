@@ -45,7 +45,7 @@ namespace UWP.Views {
             LocalPurchases = await RetrievePortfolio();
             vm.Portfolio = LocalPurchases;
             if (vm.PurchasesAreGrouped)
-                await GroupPurchases();
+                vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
             await UpdatePage();
         }
 
@@ -367,35 +367,13 @@ namespace UWP.Views {
         private async void GroupPurchases_Click(object sender, RoutedEventArgs e) {
             if (vm.PurchasesAreGrouped) {
                 // group the same coins' purchases into one single entry
-                await GroupPurchases();
+                vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
             }
             else {
                 // reset the List to the local purchases
                 vm.Portfolio = LocalPurchases;
                 await UpdatePage();
             }
-        }
-
-        private async Task GroupPurchases() {
-            var query = from item in LocalPurchases
-                        group item by item.Crypto into g
-                        select new { GroupName = g.Key, Items = g };
-            List<PurchaseModel> grouped = new List<PurchaseModel>();
-            foreach (var q in query) {
-                var g = new PurchaseModel();
-                var first = q.Items.First();
-                g.Crypto = q.GroupName;
-                g.CryptoLogo = first.CryptoLogo;
-                g.CryptoName = first.CryptoName;
-                g.CryptoQty = q.Items.Sum(x => x.CryptoQty);
-                g.Currency = first.Currency;
-                g.CurrencySymbol = first.CurrencySymbol;
-                g.Current = first.Current;
-                g.InvestedQty = q.Items.Sum(x => x.InvestedQty);
-                g = await PortfolioHelper.UpdatePurchase(g);
-                grouped.Add(g);
-            }
-            vm.Portfolio = new ObservableCollection<PurchaseModel>(grouped);
         }
     }
 }

@@ -74,5 +74,28 @@ namespace UWP.Shared.Helpers {
 
             return purchase;
         }
+
+        public async static Task<ObservableCollection<PurchaseModel>> GroupPortfolio(
+            ObservableCollection<PurchaseModel> Purchases) {
+            var query = from item in Purchases
+                        group item by item.Crypto into g
+                        select new { GroupName = g.Key, Items = g };
+            List<PurchaseModel> grouped = new List<PurchaseModel>();
+            foreach (var q in query) {
+                var g = new PurchaseModel();
+                var first = q.Items.First();
+                g.Crypto = q.GroupName;
+                g.CryptoLogo = first.CryptoLogo;
+                g.CryptoName = first.CryptoName;
+                g.CryptoQty = q.Items.Sum(x => x.CryptoQty);
+                g.Currency = first.Currency;
+                g.CurrencySymbol = first.CurrencySymbol;
+                g.Current = first.Current;
+                g.InvestedQty = q.Items.Sum(x => x.InvestedQty);
+                g = await UpdatePurchase(g);
+                grouped.Add(g);
+            }
+            return new ObservableCollection<PurchaseModel>(grouped);
+        }
     }
 }
