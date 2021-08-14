@@ -88,7 +88,9 @@
                     x:Name="AutoSuggestBox" PlaceholderText="Search" QueryIcon="Find" Width="150"
                     GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged" 
                     UpdateTextOnSelect="False"
-                    QuerySubmitted="AutoSuggestBox_QuerySubmitted" Visibility="Collapsed" 
+                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                    IsTabStop="False"
+                    Visibility="Collapsed" 
                     LostFocus="AutoSuggestBox_LostFocus">
                     <AutoSuggestBox.TextBoxStyle>
                         <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">

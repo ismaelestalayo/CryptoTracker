@@ -16,6 +16,16 @@
     PrimaryButtonClick="PurchaseDialog_PrimaryButtonClick"
     Title="New purchase">
 
+    <ContentDialog.Resources>
+        <Style TargetType="muxc:NumberBox">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="PlaceholderText" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Width" Value="130"/>
+        </Style>
+    </ContentDialog.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -38,30 +48,29 @@
                 <usercontrols:CoinAutoSuggestBox
                     Coin="{x:Bind SuggestionCoin, Mode=TwoWay}"
                     Header="💰 Crypto"
+                    LostFocus="CoinAutoSuggestBox_LostFocus"
+                    TabIndex="0"
                     VerticalAlignment="Top"/>
             </Canvas>
 
             <muxc:NumberBox
+                x:Name="AmountNumberBox"
                 AcceptsExpression="True" Header="Amount"
                 LostFocus="DialogBtn_LostFocus"
-                Minimum="0"
-                PlaceholderText="0" HorizontalAlignment="Left"
-                Value="{x:Bind NewPurchase.CryptoQty, Mode=TwoWay}"
-                VerticalAlignment="Top"
-                Width="130"/>
+                TabIndex="1"
+                Value="{x:Bind NewPurchase.CryptoQty, Mode=TwoWay}"/>
             <muxc:NumberBox
                 AcceptsExpression="True" Header="Invested"
                 Foreground="{x:Bind NewPurchase.ProfitFG}"
-                HorizontalAlignment="Left" LostFocus="DialogBtn_LostFocus"
-                Margin="0 0 5 0" Minimum="0" PlaceholderText="0"
-                Value="{x:Bind NewPurchase.InvestedQty, Mode=TwoWay}"
-                VerticalAlignment="Top"
-                Width="130"/>
+                LostFocus="DialogBtn_LostFocus"
+                TabIndex="2"
+                Value="{x:Bind NewPurchase.InvestedQty, Mode=TwoWay}"/>
 
             <!-- Row 1 -->
             <DatePicker
                 Date="{x:Bind NewPurchase.Date, Mode=TwoWay}"
                 Grid.Row="1" Grid.ColumnSpan="2"
+                IsTabStop="False" Margin="0 5 0 0"
                 Header="📅 Date" HorizontalAlignment="Left"
                 VerticalAlignment="Top"/>
             <Rectangle />
@@ -71,12 +80,14 @@
                 Grid.Column="0" Grid.ColumnSpan="2"
                 Header="✏ Notes"  HorizontalAlignment="Stretch"
                 Margin="0 0 35 0" PlaceholderText="Note..."
+                TabIndex="3"
                 Text="{x:Bind NewPurchase.Notes, Mode=TwoWay}"
                 VerticalAlignment="Top"/>
             <TextBox
                 Grid.Row="2" Grid.RowSpan="1" Grid.Column="2"
                 Header="Exchange"  HorizontalAlignment="Left"
                 Text="{x:Bind NewPurchase.Exchange, Mode=TwoWay}"
+                TabIndex="4"
                 PlaceholderText="CoinBase" VerticalAlignment="Top"
                 Width="130"/>
 
