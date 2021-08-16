@@ -71,25 +71,25 @@ namespace UWP.Views {
                 col.Width = new GridLength(worth, GridUnitType.Star);
                 PortfolioChartGrid.ColumnDefinitions.Add(col);
 
-                var s = new StackPanel();
-                s.BorderThickness = new Thickness(0);
+                // Use a grid for Vertical alignment
+                var g = new Grid();
+                g.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 0, 255));
+                g.BorderThickness = new Thickness(0);
+                g.VerticalAlignment = VerticalAlignment.Stretch;
 
-                // Tooltip
                 var val = Math.Round((worth / vm.TotalWorth) * 100, 1);
-                ToolTipService.SetToolTip(s, $"{val}%");
-                ToolTipService.SetPlacement(s, PlacementMode.Bottom);
-
                 var t = new TextBlock() {
-                    Text = crypto,
+                    Text = crypto + "\n" + $"{val}%",
                     FontSize = 12,
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Margin = new Thickness(0, 7, 0, 7)
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
                 };
-                s.Children.Add(t);
-                s.Background = ColorConstants.GetCoinBrush(crypto + "_color", 100);
+                g.Children.Add(t);
+                g.Background = ColorConstants.GetCoinBrush(crypto + "_color", 100);
 
-                PortfolioChartGrid.Children.Add(s);
-                Grid.SetColumn(s, PortfolioChartGrid.Children.Count - 1);
+                PortfolioChartGrid.Children.Add(g);
+                Grid.SetColumn(g, PortfolioChartGrid.Children.Count - 1);
             }
 
             /// Finally, update the chart of the portfolio's worth
@@ -363,17 +363,16 @@ namespace UWP.Views {
 
 
         /// #######################################################################################
-        /// Manual grouping
+        /// <summary>
+        /// Group the same coins' purchases into one single entry (if grouped, reset the List to the LocalPurchases)
+        /// </summary>
         private async void GroupPurchases_Click(object sender, RoutedEventArgs e) {
-            if (vm.PurchasesAreGrouped) {
-                // group the same coins' purchases into one single entry
+            if (vm.PurchasesAreGrouped)
                 vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
-            }
-            else {
-                // reset the List to the local purchases
+            else
                 vm.Portfolio = LocalPurchases;
-                await UpdatePage();
-            }
+                //await UpdatePage();
         }
+
     }
 }

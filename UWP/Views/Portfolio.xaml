@@ -51,6 +51,7 @@
         <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
     </Page.Resources>
 
+
     <Grid x:Name="MainGrid" Padding="5 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -65,8 +66,7 @@
         ############################################################################################################### -->
         <Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 10 7 5" RowSpacing="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="36"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -75,37 +75,30 @@
                 Background="Transparent" BorderThickness="0"
                 CornerRadius="5"
                 Grid.Row="0"
-                Height="34"
-                Margin="0 4 0 0"
-                ColumnSpacing="2"
-                VerticalAlignment="Center"
+                ColumnSpacing="3"
                 Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
+
+                <!-- Transitions -->
+                <Grid.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="-1000"/>
+                    </TransitionCollection>
+                </Grid.ChildrenTransitions>
+
+                <!-- For previsualization purposes -->
                 <d:Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2*"/>
                 </d:Grid.ColumnDefinitions>
-                <d:StackPanel Grid.Column="0" Height="32" HorizontalAlignment="Stretch" Background="MediumPurple"/>
-                <d:StackPanel Grid.Column="1" Height="32" HorizontalAlignment="Stretch" Background="IndianRed" />
-                <d:StackPanel Grid.Column="2" Height="32" HorizontalAlignment="Stretch" Background="Goldenrod"/>
+                <d:Grid Grid.Column="0" Background="MediumPurple">
+                    <TextBlock Text="XXX &#x0a;43%" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </d:Grid>
+                <d:StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Background="IndianRed"/>
+                <d:StackPanel Grid.Column="2" HorizontalAlignment="Stretch" Background="Goldenrod"/>
             </Grid>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="1">
-                <Ellipse Fill="MediumPurple" Width="5" Height="5"/>
-                <TextBlock Margin="5 0 10 0">
-                    <Run Text="ETH:"/>
-                    <Run Text="17%" FontWeight="SemiLight"/>
-                </TextBlock>
-
-                <Ellipse Fill="IndianRed" Width="5" Height="5"/>
-                <TextBlock Text="XXX" Margin="5 0 10 0"/>
-
-                <Ellipse Fill="Goldenrod" Width="5" Height="5"/>
-                <TextBlock Text="BTC" Margin="5 0 10 0"/>
-            </StackPanel>
-
-
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10">
                 <Button
                     BorderBrush="{ThemeResource ButtonBorderBrush}"
                     BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
@@ -148,8 +141,7 @@
             </StackPanel>
         </Grid>
 
-
-
+        
         <!-- 
         ###############################################################################################################
         ###############################################################################################################
@@ -169,7 +161,7 @@
                 RowBackground="Transparent" RowDetailsVisibilityMode="Collapsed"
                 SelectionMode="Single" Sorting="DataGrid_Sorting"
                 VerticalAlignment="Top">
-                
+
                 <controls:DataGrid.RowGroupHeaderStyles>
                     <!-- Override the default Style for groups headers -->
                     <Style TargetType="controls:DataGridRowGroupHeader">
@@ -177,6 +169,7 @@
                     </Style>
                 </controls:DataGrid.RowGroupHeaderStyles>
 
+                <!-- COLUMNS -->
                 <controls:DataGrid.Columns>
                     <controls:DataGridTemplateColumn Header="Crypto" Width="1.2*">
                         <controls:DataGridTemplateColumn.CellTemplate>
@@ -393,15 +386,22 @@
                 --><Run Text="{x:Bind vm.CurrencySymbol}"/>
             </TextBlock>
         </Grid>
+
+
+        <userControls:PortfolioList
+            Grid.Row="3"
+            Margin="10 0"
+            IsHitTestVisible="False"
+            Purchases="{x:Bind vm.Portfolio}"/>
         
-        <!-- Portfolio history chart -->
+        <!-- PORTFOLIO HISTORY CHART -->
         <userControls:ChartAreaFull
             x:Name="PortfolioChart"
             ChartModel="{x:Bind vm.Chart}"
             Grid.Row="4"
             Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"/>
 
-        <!-- Timerange radio buttons -->
+        <!-- TIMERANGE RADIO BUTTONS -->
         <userControls:TimeRangeRadioButtons
             x:Name="TimerangeRadioButtons"
             Grid.Row="5"
