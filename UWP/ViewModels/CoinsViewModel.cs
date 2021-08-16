@@ -14,7 +14,7 @@ namespace UWP.ViewModels {
             set => SetProperty(ref globalStats, value);
         }
 
-        private ObservableCollection<CoinMarket> coinMarket;
+        private ObservableCollection<CoinMarket> coinMarket = new ObservableCollection<CoinMarket>();
         public ObservableCollection<CoinMarket> CoinMarket {
             get => coinMarket;
             set => SetProperty(ref coinMarket, value);

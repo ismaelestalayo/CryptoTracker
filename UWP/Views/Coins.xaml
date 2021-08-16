@@ -118,6 +118,18 @@
             IsItemClickEnabled="True" ItemClick="ListView_Click"
             ItemsSource="{x:Bind vm.CoinMarket}"
             SelectionMode="None" MaxWidth="1100">
+            
+            <!-- Transitions -->
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <ContentThemeTransition />
+                    <EntranceThemeTransition/>
+                    <AddDeleteThemeTransition/>
+                    <ReorderThemeTransition/>
+                    <RepositionThemeTransition/>
+                </TransitionCollection>
+            </ListView.ItemContainerTransitions>
+            
             <ListView.Header>
                 <UserControl x:Name="listView_Element">
                     <Grid x:Name="listView_Element2"

@@ -10,7 +10,6 @@ using UWP.Services;
 using UWP.Shared.Interfaces;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 namespace UWP.Views {
 
@@ -23,18 +22,22 @@ namespace UWP.Views {
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            // Read from the cache
+            var coinMarket = await LocalStorageHelper.ReadObject<List<CoinMarket>>(UserStorage.CoinsCache);
+            foreach (var coin in coinMarket)
+                vm.CoinMarket.Add(coin);
+
             await UpdatePage();
         }
 
         public async Task UpdatePage() {
-            var coinMarket = await LocalStorageHelper.ReadObject<List<CoinMarket>>(UserStorage.CoinsCache);
-            vm.CoinMarket = new ObservableCollection<CoinMarket>(coinMarket);
-
             vm.GlobalStats = await CoinGecko.GetGlobalStats();
 
             var market = await Ioc.Default.GetService<ICoinGecko>().GetCoinsMarkets_();
             market = market.OrderBy(x => x.market_cap_rank).ToList();
-            vm.CoinMarket = new ObservableCollection<CoinMarket>(market);
+            vm.CoinMarket.Clear();
+            foreach (var coin in market)
+                vm.CoinMarket.Add(coin);
 
             await LocalStorageHelper.SaveObject(UserStorage.CoinsCache, vm.CoinMarket);
         }

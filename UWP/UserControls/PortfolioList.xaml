@@ -41,7 +41,7 @@
                                         <AdaptiveTrigger MinWindowWidth="0" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="Gridd.Background" Value="#30ff0000"/>
+                                        <Setter Target="Gridd.Background" Value="#00ff0000"/>
                                     </VisualState.Setters>
                                 </VisualState>
 

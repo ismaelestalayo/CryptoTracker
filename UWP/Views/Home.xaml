@@ -109,6 +109,18 @@
                     <SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPressed" Color="Transparent" />
                     <SolidColorBrush x:Key="GridViewItemRevealPlaceholderBackground" Color="Transparent" />
                 </controls:AdaptiveGridView.Resources>
+                <!-- TRANSITIONS -->
+                <controls:AdaptiveGridView.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <ContentThemeTransition />
+                    </TransitionCollection>
+                </controls:AdaptiveGridView.ItemContainerTransitions>
+                <controls:AdaptiveGridView.Transitions>
+                    <TransitionCollection>
+                        <AddDeleteThemeTransition />
+                    </TransitionCollection>
+                </controls:AdaptiveGridView.Transitions>
+                <!-- ITEM TEMPLATE -->
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="models:HomeCard">
                         <Grid x:Name="HomeGridView_Element"
