@@ -50,8 +50,9 @@
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
         <converters:DateTimeShortener x:Key="DateShortener"/>
         <converters:DateTimeFormatter x:Key="DateFormater"/>
-        <converters:BoolToVisibility x:Key="BoolConverter"/>
-        <converters:BoolToVisibility Inverse="True" x:Key="BoolInverter"/>
+        <converters:BoolToVisibility x:Key="BoolVisibilityConverter"/>
+        <converters:BoolToVisibility Inverse="True" x:Key="BoolVisibilityInverter"/>
+        <converters:BoolInverter x:Key="BoolInverter"/>
         <converters:DoubleToVisibilityConverter x:Key="DoubleToVisibility"/>
         <converters:DoubleToVisibilityConverter Inverse="True" x:Key="DoubleToVisibilityNOT"/>
     </Page.Resources>
@@ -295,52 +296,81 @@
                     
                     <!-- CHART VALUES ON HOVER -->
                     <StackPanel
-                        Grid.Row="1" Spacing="0" Orientation="Horizontal"
+                        Grid.Row="1" Spacing="30" Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom" Margin="0"
                         d:Visibility="Collapsed"
                         Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleToVisibility}}">
-                        <StackPanel.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="FontWeight" Value="SemiBold"/>
-                                <Setter Property="HorizontalTextAlignment" Value="Center"/>
-                                <Setter Property="Margin" Value="30 0"/>
-                            </Style>
-                        </StackPanel.Resources>
 
                         <!-- AREA CHART -->
-                        <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}">
-                            <Run Text="Price" Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.ChartPoint.Value, Converter={StaticResource NumberRounder}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                        <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}">
-                            <Run Text="Vol" Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.ChartPoint.Volume, Converter={StaticResource NumberUnit}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
+                        <usercontrols:DoubleTextBlock
+                            x:Name="_HoverText1"
+                            x:Load="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}"
+                            Header="Price:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.ChartPoint.Value, Converter={StaticResource NumberRounder}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
+                        <usercontrols:DoubleTextBlock
+                            x:Name="_HoverText2"
+                            x:Load="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}"
+                            Header="Vol:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.ChartPoint.Volume, Converter={StaticResource NumberUnit}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
 
                         <!-- CANDLE CHART -->
-                        <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
-                            <Run Text="O" Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.ChartPoint.Open, Converter={StaticResource NumberRounder}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                        <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
-                            <Run Text="H" Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.ChartPoint.High, Converter={StaticResource NumberRounder}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                        <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
-                            <Run Text="L" Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.ChartPoint.Low, Converter={StaticResource NumberRounder}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                        <TextBlock Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}">
-                            <Run Text="C" Foreground="Gray"/>
-                            <Run Text="{x:Bind vm.ChartPoint.Close, Converter={StaticResource NumberRounder}}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
+                        <usercontrols:DoubleTextBlock
+                            x:Name="_HoverText3"
+                            x:Load="{x:Bind vm.ShowCandles}"
+                            Header="O:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.ChartPoint.Open, Converter={StaticResource NumberRounder}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
+                        <usercontrols:DoubleTextBlock
+                            x:Name="_HoverText4"
+                            x:Load="{x:Bind vm.ShowCandles}"
+                            Header="H:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.ChartPoint.High, Converter={StaticResource NumberRounder}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
+                        <usercontrols:DoubleTextBlock
+                            x:Name="_HoverText5"
+                            x:Load="{x:Bind vm.ShowCandles}"
+                            Header="L:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.ChartPoint.Low, Converter={StaticResource NumberRounder}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
+                        <usercontrols:DoubleTextBlock
+                            x:Name="_HoverText6"
+                            x:Load="{x:Bind vm.ShowCandles}"
+                            Header="C:" Spacing="5">
+                            <usercontrols:DoubleTextBlock.Value>
+                                <TextBlock>
+                                    <Run Text="{x:Bind vm.ChartPoint.Close, Converter={StaticResource NumberRounder}}"/><!--
+                                    --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                                </TextBlock>
+                            </usercontrols:DoubleTextBlock.Value>
+                        </usercontrols:DoubleTextBlock>
                     </StackPanel>
                 </Grid>
             </usercontrols:FluentCard.TitleContent>
@@ -370,13 +400,13 @@
                         x:Name="PriceChart" Margin="-20 0"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
-                        Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolInverter}}"/>
+                        Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityInverter}}"/>
 
                     <userControls:ChartCandles
                         x:Name="CandleChart" Margin="-20 0"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
-                        Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolConverter}}"/>
+                        Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityConverter}}"/>
                     
                     <!-- Time RadioButtons + side buttons -->
                     <RelativePanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="0 5 0 0">
@@ -444,18 +474,6 @@
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
                     </usercontrols:DoubleTextBlock>
-
-                    <!--<usercontrols:DoubleTextBlock
-                        Header="Total profit:"
-                        HorizontalAlignment="Right"
-                        Spacing="5">
-                        <usercontrols:DoubleTextBlock.Value>
-                            <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
-                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/>--><!--
-                                --><!--<Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                            </TextBlock>
-                        </usercontrols:DoubleTextBlock.Value>
-                    </usercontrols:DoubleTextBlock>-->
 
                     <usercontrols:DoubleTextBlock
                         Header="Avg. Price:"
