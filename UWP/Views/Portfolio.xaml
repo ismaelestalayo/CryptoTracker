@@ -28,7 +28,7 @@
                     <ControlTemplate TargetType="ContentControl">
                         <ContentPresenter Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Background="{ThemeResource SystemChromeDisabledHighColor}"
+                            Background="{ThemeResource SystemChromeMediumLowColor}"
                             CornerRadius="0 0 0 0" Padding="5"
                             ContentTransitions="{TemplateBinding ContentTransitions}"
                             HorizontalContentAlignment="Center"
@@ -51,7 +51,7 @@
         <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
     </Page.Resources>
 
-    <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="5 0">
+    <Grid x:Name="MainGrid" Padding="5 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>

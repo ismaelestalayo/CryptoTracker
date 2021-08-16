@@ -16,13 +16,6 @@
         <viewModels:MainPageViewModel x:Name="vm"/>
     </Page.DataContext>
 
-    <Page.Resources>
-        <AcrylicBrush 
-            x:Key="NavigationViewTopPaneBackground" BackgroundSource="HostBackdrop" 
-            TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity="0.9"
-            FallbackColor="{ThemeResource SystemChromeMediumLowColor}"/>
-    </Page.Resources>
-    
     <!-- 
     ################################################################################################### -->
     <Grid>
@@ -54,7 +47,7 @@
         </Grid.RowDefinitions>
 
         <NavigationView 
-            x:Name="NavView" Background="{ThemeResource SystemChromeMediumColor}" 
+            x:Name="NavView"
             Grid.RowSpan="2" OverflowLabelMode="NoLabel"
             IsBackButtonVisible="Collapsed" PaneDisplayMode="Top"
             ItemInvoked="NavView_ItemInvoked"
