@@ -10,7 +10,6 @@
     d:DesignWidth="100">
 
     <StackPanel
-        d:Orientation="Horizontal"
         Orientation="{x:Bind Orientation}"
         HorizontalAlignment="Center"
         Spacing="{x:Bind Spacing}"

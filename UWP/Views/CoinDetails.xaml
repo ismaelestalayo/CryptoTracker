@@ -45,50 +45,6 @@
             <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
             <Setter Property="BorderThickness" Value="0 0 0 1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-
-        </Style>
-
-        <Style TargetType="controls:HeaderedContentControl">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="controls:HeaderedContentControl">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <ContentPresenter
-                                x:Name="HeaderPresenter" 
-                                x:DeferLoadStrategy="Lazy"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                Content="{TemplateBinding Header}" 
-                                ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                Opacity="0.6"/>
-                            <ContentPresenter
-                                x:Name="ContentPresenter"
-                                Grid.Row="1"
-                                FontSize="16" FontWeight="SemiBold"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                Margin="0 -5 0 0"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="OrientationStates">
-                                    <VisualState x:Name="Vertical" />
-                                    <VisualState x:Name="Horizontal">
-                                        <VisualState.Setters>
-                                            <Setter Target="HeaderPresenter.(Grid.ColumnSpan)" Value="1" />
-                                            <Setter Target="ContentPresenter.(Grid.ColumnSpan)" Value="1" />
-                                            <Setter Target="ContentPresenter.(Grid.Column)" Value="1" />
-                                            <Setter Target="HeaderPresenter.(Grid.Row)" Value="1" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
 
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
@@ -468,7 +424,7 @@
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.TotalOwned, Mode=OneWay}"/>
+                                <Run Text="{x:Bind vm.TotalQty, Mode=OneWay}"/>
                                 <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>

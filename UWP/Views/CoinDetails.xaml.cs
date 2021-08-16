@@ -127,7 +127,7 @@ namespace UWP.Views {
             vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
 
             var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
-            vm.AvgPrice = (1 / vm.TotalQty) * totalInvested;
+            vm.AvgPrice = (totalInvested == 0) ? 0 : (totalInvested / vm.TotalQty);
 
             vm.Alerts = await AlertsHelper.GetCryptoAlerts(vm.Coin.Name);
         }

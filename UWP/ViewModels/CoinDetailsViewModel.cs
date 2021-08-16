@@ -63,7 +63,7 @@ namespace UWP.ViewModels {
         /// Total sum of purchases
         /// </summary>
         private double avgPrice = 0;
-        private double totalOwned = 0;
+        private double totalQty = 0;
         private double totalValue = 0;
         private double totalProfit = 0;
         public double AvgPrice {
@@ -71,8 +71,8 @@ namespace UWP.ViewModels {
             set => SetProperty(ref avgPrice, value);
         }
         public double TotalQty {
-            get => totalOwned;
-            set => SetProperty(ref totalOwned, value);
+            get => totalQty;
+            set => SetProperty(ref totalQty, value);
         }
         public double TotalValue {
             get => totalValue;

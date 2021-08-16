@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:usercontrols="using:CryptoTracker.UserControls"
     xmlns:converters="using:UWP.Converters"
     xmlns:models="using:UWP.Models"
     d:Height="200" d:Width="600"
@@ -13,6 +13,10 @@
 
     <UserControl.Resources>
         <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
+
+        <Style TargetType="usercontrols:DoubleTextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
     </UserControl.Resources>
 
     <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->
@@ -76,44 +80,48 @@
                                 Source="{x:Bind CryptoLogo}" Width="25"/>
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 0">
-                                <TextBlock Text="{x:Bind CryptoName}" FontWeight="Bold" Opacity="0.75" Margin="0 0 0 -3"/>
+                                <TextBlock d:Text="Crypto" Text="{x:Bind CryptoName}" FontWeight="Bold" Opacity="0.75" Margin="0 0 0 -3"/>
                                 <TextBlock d:Text="0.12 XXX">
                                     <Run Text="{x:Bind CryptoQty}"/>
                                     <Run Text="{x:Bind Crypto}"/>
                                 </TextBlock>
                             </StackPanel>
 
-                            <controls:HeaderedContentControl
-                                Grid.Column="2" Header="Invested"
-                                HorizontalAlignment="Right" HorizontalContentAlignment="Center">
-                                <controls:HeaderedContentControl.Content>
+                            <usercontrols:DoubleTextBlock
+                                Grid.Column="2"
+                                Header="Invested"
+                                Orientation="Vertical"
+                                Spacing="-5">
+                                <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock>
                                         <Run Text="{x:Bind InvestedQty}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
-                                </controls:HeaderedContentControl.Content>
-                            </controls:HeaderedContentControl>
+                                </usercontrols:DoubleTextBlock.Value>
+                            </usercontrols:DoubleTextBlock>
 
-                            <controls:HeaderedContentControl
-                                Grid.Column="3" Header="Worth"
-                                HorizontalAlignment="Right" HorizontalContentAlignment="Center">
-                                <controls:HeaderedContentControl.Content>
+                            <usercontrols:DoubleTextBlock
+                                Grid.Column="3"
+                                Header="Worth"
+                                Orientation="Vertical"
+                                Spacing="-5">
+                                <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock>
                                         <Run Text="{x:Bind Worth}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
-                                </controls:HeaderedContentControl.Content>
-                            </controls:HeaderedContentControl>
+                                </usercontrols:DoubleTextBlock.Value>
+                            </usercontrols:DoubleTextBlock>
 
-                            <controls:HeaderedContentControl
-                                Grid.Column="4" Header="Delta"
-                                HorizontalAlignment="Right" HorizontalContentAlignment="Center">
-                                <controls:HeaderedContentControl.Content>
+                            <usercontrols:DoubleTextBlock
+                                Grid.Column="4"
+                                Header="Delta"
+                                Orientation="Vertical"
+                                Spacing="-5">
+                                <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
-                                        <Run Text="{x:Bind Delta}"/><!--
-                                        --><Run Text="{x:Bind CurrencySymbol}"/>
+                                        <Run Text="{x:Bind Delta}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
-                                </controls:HeaderedContentControl.Content>
-                            </controls:HeaderedContentControl>
-                            
+                                </usercontrols:DoubleTextBlock.Value>
+                            </usercontrols:DoubleTextBlock>
                         </Grid>
                     </StackPanel>
                 </UserControl>
