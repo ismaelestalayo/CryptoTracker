@@ -236,6 +236,7 @@
   <ItemGroup>
     <Content Include="Assets\AppIcon-D.png" />
     <Content Include="Assets\AppIcon-L.png" />
+    <Content Include="Assets\AppIcon.png" />
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconBAT.png" />
     <Content Include="Assets\Icons\iconBCH.png" />

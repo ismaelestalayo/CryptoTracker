@@ -56,15 +56,15 @@ namespace UWP.Background {
             // Initialize the tile with required arguments
             SecondaryTile tile = new SecondaryTile(
                 crypto,
-                "CryptoTracker",
+                $"Crypto {crypto}",
                 $"/coin-{crypto}",
-                new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Medium.scale-100.png"),
+                new Uri("ms-appx:///Assets/AppIcon.png"),
                 TileSize.Wide310x150);
             tile.VisualElements.ShowNameOnSquare150x150Logo = true;
             tile.VisualElements.ShowNameOnSquare310x310Logo = false;
             tile.VisualElements.ShowNameOnWide310x150Logo = false;
-            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
-            tile.VisualElements.Square44x44Logo = new Uri("ms-appx:///Assets/Tiles and stuff/Tile-Wide.scale-100.png");
+            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/AppIcon.png");
+            tile.VisualElements.Square44x44Logo = new Uri("ms-appx:///Assets/AppIcon.png");
 
             tile.VisualElements.ForegroundText = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black)
                 ? ForegroundText.Light : ForegroundText.Dark;

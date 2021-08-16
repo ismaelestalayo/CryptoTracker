@@ -33,7 +33,7 @@ namespace UWP.Models {
     /// Categories to filter news for the TokenBox
     /// </summary>
     public class NewsCategories {
-        public string categoryName { get; set; }
+        public string categoryName { get; set; } = "";
         public List<string> wordsAssociatedWithCategory { get; set; }
         public List<string> excludedPhrases { get; set; }
         public List<string> includedPhrases { get; set; }

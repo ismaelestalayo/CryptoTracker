@@ -187,6 +187,7 @@
         d:Content="&#xE18A;"
         x:Name="ToggleButton"
         Background="{x:Bind Background}"
+        BorderBrush="{x:Bind BorderBrush}"
         BorderThickness="{x:Bind BorderThickness}"
         Click="ToggleButton_Click"
         Height="{x:Bind Height}"

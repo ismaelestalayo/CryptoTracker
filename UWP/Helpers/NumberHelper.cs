@@ -19,6 +19,9 @@ namespace UWP.Helpers {
             }
         }
 
+        /// <summary>
+        /// Round a double with a decimal precision that depends on its value
+        /// </summary>
         public static double Rounder(double price) {
             if (Math.Abs(price) > 999)
                 return Math.Round(price, 1);
