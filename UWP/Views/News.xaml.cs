@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UWP.APIs;
 using UWP.Models;
@@ -34,8 +35,12 @@ namespace UWP.Views {
 
         public async Task UpdatePage() {
             NewsAdaptiveGridView.IsItemClickEnabled = false;
-            vm.News = await CryptoCompare.GetNews(vm.Filters);
-            NewsAdaptiveGridView.IsItemClickEnabled = true;
+            var news = await CryptoCompare.GetNews(vm.Filters);
+            if (news.Count != 0) {
+                vm.News = news;
+                NewsAdaptiveGridView.IsItemClickEnabled = true;
+            } else
+                vm.News = new List<NewsData>() { new NewsData() { title = "Error getting the news..." } };
         }
 
         /// ###############################################################################################
