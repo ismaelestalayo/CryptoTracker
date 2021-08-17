@@ -24,8 +24,7 @@ namespace UWP.Views {
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             // Read from the cache
             var coinMarket = await LocalStorageHelper.ReadObject<List<CoinMarket>>(UserStorage.CoinsCache);
-            foreach (var coin in coinMarket)
-                vm.CoinMarket.Add(coin);
+            vm.CoinMarket = new ObservableCollection<CoinMarket>(coinMarket);
 
             await UpdatePage();
         }
@@ -35,9 +34,7 @@ namespace UWP.Views {
 
             var market = await Ioc.Default.GetService<ICoinGecko>().GetCoinsMarkets_();
             market = market.OrderBy(x => x.market_cap_rank).ToList();
-            vm.CoinMarket.Clear();
-            foreach (var coin in market)
-                vm.CoinMarket.Add(coin);
+            vm.CoinMarket = new ObservableCollection<CoinMarket>(market);
 
             await LocalStorageHelper.SaveObject(UserStorage.CoinsCache, vm.CoinMarket);
         }

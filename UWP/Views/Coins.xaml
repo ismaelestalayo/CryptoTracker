@@ -241,7 +241,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="services:CoinMarket">
                     <UserControl>
-                        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
+                        <Grid Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             CornerRadius="5" Margin="0 3" Padding="0 2" x:Name="listView_Element2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*" x:Name="cryptoCol" MinWidth="220"/>
