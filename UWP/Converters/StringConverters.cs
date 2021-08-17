@@ -42,7 +42,7 @@ namespace UWP.Converters {
             => throw new NotImplementedException();
     }
 
-    public class StringNullOrWhiteSpaceToTrueConverter : IValueConverter {
+    public class StringNullOrEmptyToBoolConverter : IValueConverter {
         /// <summary>
         /// Determines whether an inverse conversion should take place.
         /// </summary>

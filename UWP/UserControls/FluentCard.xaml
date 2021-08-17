@@ -12,8 +12,8 @@
 
     <UserControl.Resources>
         <converters:NullToBoolConverter x:Key="NullToFalseConverter" Inverse="True"/>
-        <converters:StringNullOrWhiteSpaceToTrueConverter x:Key="StringNullOrWhiteSpaceToFalseConverter" Inverse="True" />
-        <converters:StringNullOrWhiteSpaceToTrueConverter x:Key="StringNullOrWhiteSpaceToTrueConverter" Inverse="False" />
+        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrWhiteSpaceToFalseConverter" Inverse="True" />
+        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrWhiteSpaceToTrueConverter" Inverse="False" />
     </UserControl.Resources>
 
     <Grid

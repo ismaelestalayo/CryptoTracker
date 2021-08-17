@@ -18,7 +18,7 @@ namespace UWP.Converters {
 
     public class DateTimeOffsetShortener : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
-            => ((DateTimeOffset)val).DateTime.ToShortDateString();
+            => ((DateTimeOffset)val).DateTime.ToString("MMM dd, yyy");
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
