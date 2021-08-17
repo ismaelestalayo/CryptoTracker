@@ -14,16 +14,12 @@
         HorizontalAlignment="Center"
         Spacing="{x:Bind Spacing}"
         VerticalAlignment="Center">
-        <!--<ContentPresenter
-            Content="{x:Bind Header}"
-            Opacity="0.6"/>-->
         <TextBlock
-            d:Text="Header:" Text="{x:Bind Header}"
+            Text="{x:Bind Header}"
             HorizontalAlignment="Center"
             Opacity="0.6"
             VerticalAlignment="Center"/>
         <ContentPresenter
-            d:Content="Value"
             Content="{x:Bind Value}"
             FontSize="16" FontWeight="SemiBold"
             HorizontalAlignment="Center"

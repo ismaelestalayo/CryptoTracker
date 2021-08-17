@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:usercontrols="using:CryptoTracker.UserControls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:converters="using:UWP.Converters"
     xmlns:userControls="using:UWP.UserControls"
@@ -28,7 +29,7 @@
                     <ControlTemplate TargetType="ContentControl">
                         <ContentPresenter Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Background="{ThemeResource SystemChromeMediumLowColor}"
+                            Background="{ThemeResource ButtonBackground}"
                             CornerRadius="0 0 0 0" Padding="5"
                             ContentTransitions="{TemplateBinding ContentTransitions}"
                             HorizontalContentAlignment="Center"
@@ -68,6 +69,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="36"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid
@@ -98,7 +100,33 @@
                 <d:StackPanel Grid.Column="2" HorizontalAlignment="Stretch" Background="Goldenrod"/>
             </Grid>
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10">
+            <StackPanel Grid.Row="1" HorizontalAlignment="Left" Spacing="30" Orientation="Horizontal">
+                <usercontrols:DoubleTextBlock Header="Balance:" Spacing="5">
+                    <usercontrols:DoubleTextBlock.Value>
+                        <TextBlock FontSize="18">
+                            <Run Text="{x:Bind vm.TotalWorth}"/><!--
+                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                        </TextBlock>
+                    </usercontrols:DoubleTextBlock.Value>
+                </usercontrols:DoubleTextBlock>
+                
+                <usercontrols:DoubleTextBlock Header="Cost:" Spacing="5">
+                    <usercontrols:DoubleTextBlock.Value>
+                        <TextBlock FontSize="18">
+                            <Run Text="{x:Bind vm.TotalInvested}"/><!--
+                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                        </TextBlock>
+                    </usercontrols:DoubleTextBlock.Value>
+                </usercontrols:DoubleTextBlock>
+
+                <usercontrols:DoubleTextBlock Header="Assets:" Spacing="5">
+                    <usercontrols:DoubleTextBlock.Value>
+                        <TextBlock FontSize="18" Text="X"/>
+                    </usercontrols:DoubleTextBlock.Value>
+                </usercontrols:DoubleTextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10">
                 <Button
                     BorderBrush="{ThemeResource ButtonBorderBrush}"
                     BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
