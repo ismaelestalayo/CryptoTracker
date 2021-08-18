@@ -10,8 +10,9 @@
     xmlns:converters="using:UWP.Converters"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
-    NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
+    MaxWidth="1860"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -55,7 +56,6 @@
 
     <Grid x:Name="MainGrid" Padding="5 0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*" MinHeight="0"/>
@@ -103,7 +103,7 @@
             <StackPanel Grid.Row="1" HorizontalAlignment="Left" Spacing="30" Orientation="Horizontal">
                 <usercontrols:DoubleTextBlock Header="Balance:" Spacing="5">
                     <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock FontSize="18">
+                        <TextBlock>
                             <Run Text="{x:Bind vm.TotalWorth}"/><!--
                             --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
@@ -112,7 +112,7 @@
                 
                 <usercontrols:DoubleTextBlock Header="Cost:" Spacing="5">
                     <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock FontSize="18">
+                        <TextBlock>
                             <Run Text="{x:Bind vm.TotalInvested}"/><!--
                             --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
@@ -121,7 +121,7 @@
 
                 <usercontrols:DoubleTextBlock Header="Assets:" Spacing="5">
                     <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock FontSize="18" Text="X"/>
+                        <TextBlock Text="X"/>
                     </usercontrols:DoubleTextBlock.Value>
                 </usercontrols:DoubleTextBlock>
             </StackPanel>
@@ -174,193 +174,9 @@
         ###############################################################################################################
         ###############################################################################################################
         ############################################################################################################### -->
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" CornerRadius="5 5 0 0" Margin="5 10 5 0"
-            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
-            <controls:DataGrid
-                x:Name="Portfolio_dg"
-                AutoGenerateColumns="False" BorderThickness="0"
-                CanUserSortColumns="True" CanUserReorderColumns="False" CanUserResizeColumns="False"
-                ColumnHeaderStyle="{ThemeResource DataGrid_HeaderStyle}"
-                GridLinesVisibility="Horizontal"
-                HeadersVisibility="Column" HorizontalAlignment="Stretch"
-                HorizontalGridLinesBrush="{ThemeResource SystemChromeDisabledHighColor}"
-                ItemsSource="{x:Bind vm.Portfolio}"
-                Margin="0"
-                RowBackground="Transparent" RowDetailsVisibilityMode="Collapsed"
-                SelectionMode="Single" Sorting="DataGrid_Sorting"
-                VerticalAlignment="Top">
-
-                <controls:DataGrid.RowGroupHeaderStyles>
-                    <!-- Override the default Style for groups headers -->
-                    <Style TargetType="controls:DataGridRowGroupHeader">
-                        <Setter Property="Background" Value="Transparent" />
-                    </Style>
-                </controls:DataGrid.RowGroupHeaderStyles>
-
-                <!-- COLUMNS -->
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTemplateColumn Header="Crypto" Width="1.2*">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
-                                        <Run Text="{Binding CryptoQty}"/>
-                                        <Run Text="{Binding Crypto}"/>
-                                    </TextBlock>
-
-                                    <Image Grid.Column="1" Width="30" Margin="10 0" Source="{Binding CryptoLogo}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-
-                    <controls:DataGridTemplateColumn Header="Currently" Width="*">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding Current}"/>
-                                    <TextBlock Text="{Binding CurrencySymbol}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-
-                    <controls:DataGridTemplateColumn Header="Invested" Width="*">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding InvestedQty}"/>
-                                    <TextBlock Text="{Binding CurrencySymbol}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-
-                    <controls:DataGridTemplateColumn Header="Worth" Width="*">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock
-                                        Text="{Binding Worth, Converter={StaticResource NumberRounder}}"
-                                        Foreground="{Binding ProfitFG}"/>
-                                    <TextBlock Text="{Binding CurrencySymbol}" Foreground="{Binding ProfitFG}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>					
-                </controls:DataGrid.Columns>
-                
-                <controls:DataGrid.RowStyle>
-                    <Style TargetType="controls:DataGridRow">
-                        <Setter Property="controls:DataGridRow.ContextFlyout">
-                            <Setter.Value>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Text="See coin" Click="GoToCoinPortfolio_Click">
-                                        <MenuFlyoutItem.Icon>
-                                            <SymbolIcon Symbol="Find"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem
-                                        Text="Edit" Click="EditPurchase_Click"
-                                        Visibility="{x:Bind vm.PurchasesAreGrouped, Converter={StaticResource BoolToVisibilityNOT}, Mode=OneWay}">
-                                        <MenuFlyoutItem.Icon>
-                                            <SymbolIcon Symbol="Edit"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem
-                                        Text="Duplicate" Click="DuplicatePurchase_Click"
-                                        Visibility="{x:Bind vm.PurchasesAreGrouped, Converter={StaticResource BoolToVisibilityNOT}, Mode=OneWay}">
-                                        <MenuFlyoutItem.Icon>
-                                            <SymbolIcon Symbol="Copy"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Remove" Click="RemovePortfolio_Click">
-                                        <MenuFlyoutItem.Icon>
-                                            <SymbolIcon Symbol="Delete"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                </MenuFlyout>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </controls:DataGrid.RowStyle>
-
-                <!-- DETAILS OF EACH PURCHASE -->
-                <controls:DataGrid.RowDetailsTemplate>
-                    <DataTemplate>
-                        <Grid Padding="25 15" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            
-                            <!-- First Row-->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Buy price:"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding BoughtAt}"/><!--
-                                --><Run Text="{Binding CurrencySymbol}"/>
-                            </TextBlock>
-
-                            <TextBlock Grid.Row="0" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Currently:"/>
-                            <TextBlock Grid.Row="0" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Current}"/><Run Text="{Binding CurrencySymbol}"/>
-                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Delta,
-                                    Converter={StaticResource NumberSign}}"/><!--
-                                --><Run Foreground="{Binding ProfitFG}" Text="%"/>
-                            </TextBlock>
-                            
-                            
-                            <!-- Second Row-->
-                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Cost:"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding InvestedQty}"/><Run Text="{Binding CurrencySymbol}"/>
-                            </TextBlock>
-
-                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Worth:"/>
-                            <TextBlock Grid.Row="1" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Worth}"/><Run Text="{Binding CurrencySymbol}"/>
-                                <Run Foreground="{Binding ProfitFG}" Text="{Binding Profit,
-                                    Converter={StaticResource NumberSign}}"/><!--
-                                --><Run Foreground="{Binding ProfitFG}" Text="{Binding CurrencySymbol}"/>
-                            </TextBlock>
-
-
-                            <!-- Third Row-->
-                            <TextBlock Grid.Row="2" Grid.Column="0" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Date:"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Date, Converter={StaticResource DateOffsetShortener}}"/>
-                            </TextBlock>
-
-                            <TextBlock Grid.Row="2" Grid.Column="2" Style="{ThemeResource DataGrid_DetailsLeftStyle}" Text="Exchange:"/>
-                            <TextBlock Grid.Row="2" Grid.Column="3" Style="{ThemeResource DataGrid_DetailsRightStyle}">
-                                <Run Text="{Binding Exchange}"/>
-                            </TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </controls:DataGrid.RowDetailsTemplate>
-                <controls:DataGrid.Resources>
-                    <SolidColorBrush x:Key="DataGridRowSelectedBackgroundColor" Color="LightSeaGreen"/>
-                    <SolidColorBrush x:Key="DataGridRowSelectedHoveredBackgroundColor" Color="LightSeaGreen"/>
-                    <SolidColorBrush x:Key="DataGridRowSelectedUnfocusedBackgroundColor" Color="LightSeaGreen"/>
-                    <SolidColorBrush x:Key="DataGridRowSelectedHoveredUnfocusedBackgroundColor" Color="LightSeaGreen"/>
-                </controls:DataGrid.Resources>
-            </controls:DataGrid>
-        </ScrollViewer>
-
-        <StackPanel Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Top" Margin="0 50 0 0"
+        <!-- Empty portfolio warning -->
+        <StackPanel
+            Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Top" Margin="0 50 0 0"
             Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2VisibilityInverted}}">
             <controls:DropShadowPanel
                 BlurRadius="10"
@@ -375,7 +191,7 @@
                     MaxWidth="500" Stretch="Uniform"
                     Source="/Assets/stockPrices.png"/>
             </controls:DropShadowPanel>
-            
+
             <TextBlock
                 FontWeight="Bold"
                 HorizontalAlignment="Center"
@@ -388,37 +204,9 @@
         </StackPanel>
 
 
-        <!-- Total portfolio values -->
-        <Grid Grid.Row="2" Margin="0 5 0 50" Height="32"
-            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.2*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontSize" Value="16"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-            </Grid.Resources>
-            <TextBlock Grid.Column="0" TextAlignment="Center" Text="Total"/>
-            <TextBlock Grid.Column="2" TextAlignment="Center">
-                <Run Text="{x:Bind vm.TotalInvested}"/><!--
-                --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-            </TextBlock>
-            <TextBlock Grid.Column="3" TextAlignment="Center">
-                <Run Text="{x:Bind vm.TotalWorth}"/><!--
-                --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-            </TextBlock>
-        </Grid>
-
-
         <userControls:PortfolioList
-            Grid.Row="3"
-            Margin="10 0"
+            Grid.Row="1"
+            Margin="7 0"
             IsHitTestVisible="False"
             Purchases="{x:Bind vm.Portfolio}"/>
         
@@ -426,13 +214,13 @@
         <userControls:ChartAreaFull
             x:Name="PortfolioChart"
             ChartModel="{x:Bind vm.Chart}"
-            Grid.Row="4"
+            Grid.Row="3"
             Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"/>
 
         <!-- TIMERANGE RADIO BUTTONS -->
         <userControls:TimeRangeRadioButtons
             x:Name="TimerangeRadioButtons"
-            Grid.Row="5"
+            Grid.Row="4"
             Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"
             Margin="0 0 0 10"
             Tapped="TimeRangeButtons_Tapped"/>

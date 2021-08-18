@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 namespace UWP.UserControls {
     public sealed partial class PortfolioList : UserControl {
         public PortfolioList() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public static readonly DependencyProperty PurchasesProperty =

@@ -40,6 +40,12 @@ namespace UWP.ViewModels {
 			set => SetProperty(ref _purchasesAreGrouped, value);
 		}
 
+		private bool _showDetails = false;
+		public bool ShowDetails {
+			get => _showDetails;
+			set => SetProperty(ref _showDetails, value);
+		}
+
 		private double totalInvested = 0;
 		public double TotalInvested {
 			get => totalInvested;

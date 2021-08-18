@@ -13,6 +13,8 @@
 
     <UserControl.Resources>
         <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
+        <converters:BoolToVisibility x:Key="BoolVisibility"/>
+        <converters:StringNullOrEmptyToBoolConverter Inverse="True" x:Key="StringEmptyBoolNOT"/>
 
         <Style TargetType="usercontrols:DoubleTextBlock">
             <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -20,11 +22,12 @@
     </UserControl.Resources>
 
     <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->
-    <ListView ItemsSource="{x:Bind Purchases, Mode=OneWay}">
+    <ListView x:Name="ListView" ItemsSource="{x:Bind Purchases, Mode=OneWay}">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="Padding" Value="0"/>
             </Style>
@@ -33,7 +36,10 @@
             <DataTemplate x:DataType="models:PurchaseModel">
                 <!-- Must wrap it w/UserControl for VisualStateManager -->
                 <UserControl>
-                    <StackPanel BorderBrush="#888" BorderThickness="1" CornerRadius="6" Padding="10 5" Margin="0 3">
+                    <StackPanel
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource ButtonBorderBrush}" BorderThickness="1"
+                        CornerRadius="6" Padding="15 10" Margin="0 5">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup>
                                 <VisualState x:Name="NarrowState">
@@ -57,18 +63,18 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
-                        <TextBlock d:Text="Purchase - 01/01/2021" Opacity="0.5" FontWeight="Light">
+                        <TextBlock d:Text="Purchase - 01 Jan, 2021" Opacity="0.7" FontWeight="SemiLight">
                             <Run Text="{x:Bind Type}"/>
                             <Run Text="-"/>
                             <Run Text="{x:Bind Date, Converter={StaticResource DateOffsetShortener}}"/>
                         </TextBlock>
-                        <Grid x:Name="Gridd">
+                        <Grid x:Name="Gridd" Margin="0 5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="25"/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -77,10 +83,10 @@
 
                             <Image
                                 d:Source="ms-appx:///Assets/Icons/iconNULL.png"
-                                Source="{x:Bind CryptoLogo}" Width="25"/>
+                                Source="{x:Bind CryptoLogo}" Width="28"/>
 
-                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 0">
-                                <TextBlock d:Text="Crypto" Text="{x:Bind CryptoName}" FontWeight="Bold" Opacity="0.75" Margin="0 0 0 -3"/>
+                            <StackPanel Grid.Column="1" Margin="7 0">
+                                <TextBlock d:Text="Crypto" Text="{x:Bind CryptoName}" FontWeight="Bold" Margin="0 0 0 -3"/>
                                 <TextBlock d:Text="0.12 XXX">
                                     <Run Text="{x:Bind CryptoQty}"/>
                                     <Run Text="{x:Bind Crypto}"/>
@@ -93,7 +99,7 @@
                                 Orientation="Vertical"
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
-                                    <TextBlock>
+                                    <TextBlock d:Text="0€">
                                         <Run Text="{x:Bind InvestedQty}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
@@ -105,7 +111,7 @@
                                 Orientation="Vertical"
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
-                                    <TextBlock>
+                                    <TextBlock d:Text="0€">
                                         <Run Text="{x:Bind Worth}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
@@ -118,18 +124,82 @@
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
-                                        <Run Text="{x:Bind Delta}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                        <Run Text="{x:Bind Profit}"/><Run Text="€"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
                             </usercontrols:DoubleTextBlock>
                         </Grid>
+                        
+                        <StackPanel
+                            x:Name="DetailsPanel"
+                            BorderBrush="{ThemeResource ButtonBorderBrush}" BorderThickness="0 1 0 0"
+                            Margin="0 5 0 0" Padding="0 5 0 0"
+                            Visibility="{Binding ElementName=ListView, Mode=OneWay, Path=DataContext.ShowDetails, Converter={StaticResource BoolVisibility}, FallbackValue=Collapsed}">
+                            <StackPanel Orientation="Horizontal" Spacing="30">
+                                <usercontrols:DoubleTextBlock
+                                    Header="Avg. Cost:"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Left"
+                                    Spacing="5">
+                                    <usercontrols:DoubleTextBlock.Value>
+                                        <TextBlock>
+                                            <Run Text="{x:Bind BoughtAt}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                        </TextBlock>
+                                    </usercontrols:DoubleTextBlock.Value>
+                                </usercontrols:DoubleTextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <usercontrols:DoubleTextBlock
+                                        Header="Currently:"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Left"
+                                        Spacing="5">
+                                        <usercontrols:DoubleTextBlock.Value>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind Current}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                                <Run Text=""/>
+                                                <Run Text="{x:Bind Delta}" Foreground="{x:Bind ProfitFG}"/><!--
+                                                --><Run Text="%"  Foreground="{x:Bind ProfitFG}"/>
+                                            </TextBlock>
+                                        </usercontrols:DoubleTextBlock.Value>
+                                    </usercontrols:DoubleTextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Row 2 -->
+                            <usercontrols:DoubleTextBlock
+                                x:Name="Row2" x:Load="{x:Bind Exchange, Converter={StaticResource StringEmptyBoolNOT}}"
+                                Header="Exchange:"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Spacing="5">
+                                <usercontrols:DoubleTextBlock.Value>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind Exchange}"/>
+                                    </TextBlock>
+                                </usercontrols:DoubleTextBlock.Value>
+                            </usercontrols:DoubleTextBlock>
+
+                            <!-- Row 3 -->
+                            <usercontrols:DoubleTextBlock
+                                x:Name="Row3" x:Load="{x:Bind Notes, Converter={StaticResource StringEmptyBoolNOT}}"
+                                Header="Notes:"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Spacing="5">
+                                <usercontrols:DoubleTextBlock.Value>
+                                    <TextBlock FontWeight="Normal" FontSize="14">
+                                        <Run Text="{x:Bind Notes}"/>
+                                    </TextBlock>
+                                </usercontrols:DoubleTextBlock.Value>
+                            </usercontrols:DoubleTextBlock>
+                        </StackPanel>
                     </StackPanel>
                 </UserControl>
             </DataTemplate>
         </ListView.ItemTemplate>
 
         <!-- For previsualization purposes -->
-        <d:Rectangle/>
         <d:Rectangle/>
     </ListView>
     

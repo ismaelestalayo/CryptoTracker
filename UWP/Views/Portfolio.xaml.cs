@@ -245,13 +245,12 @@ namespace UWP.Views {
         /// ###############################################################################################
         private void ToggleDetails_click(object sender, RoutedEventArgs e) {
             ShowingDetails = !ShowingDetails;
+            vm.ShowDetails = !vm.ShowDetails;
             if (ShowingDetails) {
-                Portfolio_dg.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Visible;
                 PortfolioChart.Visibility = Visibility.Collapsed;
                 TimerangeRadioButtons.Visibility = Visibility.Collapsed;
             }
             else {
-                Portfolio_dg.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
                 PortfolioChart.Visibility = Visibility.Visible;
                 TimerangeRadioButtons.Visibility = Visibility.Visible;
             }
@@ -355,10 +354,10 @@ namespace UWP.Views {
                                                                                            select item);
                     break;
             }
-            foreach (var dgColumn in Portfolio_dg.Columns) {
-                if (dgColumn.Header.ToString() != e.Column.Header.ToString())
-                    dgColumn.SortDirection = null;
-            }
+            //foreach (var dgColumn in Portfolio_dg.Columns) {
+            //    if (dgColumn.Header.ToString() != e.Column.Header.ToString())
+            //        dgColumn.SortDirection = null;
+            //}
         }
 
 
