@@ -12,8 +12,9 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
         <converters:BoolToVisibility x:Key="BoolVisibility"/>
+        <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
+        <converters:NumberSymbolPrefixer x:Key="NumberSymbolPrefixer"/>
         <converters:StringNullOrEmptyToBoolConverter Inverse="True" x:Key="StringEmptyBoolNOT"/>
 
         <Style TargetType="usercontrols:DoubleTextBlock">
@@ -158,7 +159,7 @@
                                             <TextBlock>
                                                 <Run Text="{x:Bind Current}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                                 <Run Text=""/>
-                                                <Run Text="{x:Bind Delta}" Foreground="{x:Bind ProfitFG}"/><!--
+                                                <Run Text="{x:Bind Delta, Converter={StaticResource NumberSymbolPrefixer}}" Foreground="{x:Bind ProfitFG}"/><!--
                                                 --><Run Text="%"  Foreground="{x:Bind ProfitFG}"/>
                                             </TextBlock>
                                         </usercontrols:DoubleTextBlock.Value>

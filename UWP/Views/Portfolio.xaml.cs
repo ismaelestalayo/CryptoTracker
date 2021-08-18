@@ -17,7 +17,6 @@ using UWP.Shared.Models;
 using UWP.UserControls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 
 namespace UWP.Views {
@@ -34,8 +33,6 @@ namespace UWP.Views {
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
         private int EditingPurchaseId { get; set; }
-
-        private bool ShowingDetails = false;
 
         public Portfolio() {
             this.InitializeComponent();   
@@ -243,18 +240,8 @@ namespace UWP.Views {
 
 
         /// ###############################################################################################
-        private void ToggleDetails_click(object sender, RoutedEventArgs e) {
-            ShowingDetails = !ShowingDetails;
-            vm.ShowDetails = !vm.ShowDetails;
-            if (ShowingDetails) {
-                PortfolioChart.Visibility = Visibility.Collapsed;
-                TimerangeRadioButtons.Visibility = Visibility.Collapsed;
-            }
-            else {
-                PortfolioChart.Visibility = Visibility.Visible;
-                TimerangeRadioButtons.Visibility = Visibility.Visible;
-            }
-        }
+        private void ToggleDetails_click(object sender, RoutedEventArgs e)
+            => vm.ShowDetails = !vm.ShowDetails;
 
         /// ###############################################################################################
         /// Add/Edit purchase dialog

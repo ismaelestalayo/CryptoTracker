@@ -47,10 +47,11 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Margin" Value="15 0 50 0"/>
         </Style>
-        <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
-        <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
-        <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
+
         <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
+        <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
+        <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
+        <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityNOT"/>
     </Page.Resources>
 
 
@@ -177,7 +178,7 @@
         <!-- Empty portfolio warning -->
         <StackPanel
             Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Top" Margin="0 50 0 0"
-            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2VisibilityInverted}}">
+            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2VisibilityNOT}}">
             <controls:DropShadowPanel
                 BlurRadius="10"
                 ShadowOpacity="0.3"
@@ -208,22 +209,25 @@
             Grid.Row="1"
             Margin="7 0"
             IsHitTestVisible="False"
-            Purchases="{x:Bind vm.Portfolio}"/>
+            Purchases="{x:Bind vm.Portfolio}"
+            ShowDetails="{x:Bind vm.ShowDetails}"/>
         
-        <!-- PORTFOLIO HISTORY CHART -->
+        <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
+        <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->
         <userControls:ChartAreaFull
             x:Name="PortfolioChart"
+            x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
             ChartModel="{x:Bind vm.Chart}"
             Grid.Row="3"
-            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"/>
-
-        <!-- TIMERANGE RADIO BUTTONS -->
+            Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}"/>
+        
         <userControls:TimeRangeRadioButtons
             x:Name="TimerangeRadioButtons"
+            x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
             Grid.Row="4"
-            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}"
             Margin="0 0 0 10"
-            Tapped="TimeRangeButtons_Tapped"/>
+            Tapped="TimeRangeButtons_Tapped"
+            Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}"/>
 
     </Grid>
 

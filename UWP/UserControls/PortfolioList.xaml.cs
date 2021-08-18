@@ -9,6 +9,7 @@ namespace UWP.UserControls {
     public sealed partial class PortfolioList : UserControl {
         public PortfolioList() {
             InitializeComponent();
+            DataContext = this;
         }
 
         public static readonly DependencyProperty PurchasesProperty =
@@ -21,6 +22,17 @@ namespace UWP.UserControls {
         public ObservableCollection<PurchaseModel> Purchases {
             get => (ObservableCollection<PurchaseModel>)GetValue(PurchasesProperty);
             set => SetValue(PurchasesProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowDetailsProperty =
+        DependencyProperty.Register(
+            nameof(ShowDetails),
+            typeof(bool),
+            typeof(PortfolioList),
+            null);
+        public bool ShowDetails {
+            get => (bool)GetValue(ShowDetailsProperty);
+            set => SetValue(ShowDetailsProperty, value);
         }
     }
 }
