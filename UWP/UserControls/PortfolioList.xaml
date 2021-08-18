@@ -13,6 +13,7 @@
 
     <UserControl.Resources>
         <converters:BoolToVisibility x:Key="BoolVisibility"/>
+        <converters:BoolToVisibility Inverse="True" x:Key="BoolVisibilityNOT"/>
         <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
         <converters:NumberSymbolPrefixer x:Key="NumberSymbolPrefixer"/>
         <converters:StringNullOrEmptyToBoolConverter Inverse="True" x:Key="StringEmptyBoolNOT"/>
@@ -33,6 +34,7 @@
                 <Setter Property="Padding" Value="0"/>
             </Style>
         </ListView.ItemContainerStyle>
+
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:PurchaseModel">
                 <!-- Must wrap it w/UserControl for VisualStateManager -->
@@ -41,28 +43,33 @@
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource ButtonBorderBrush}" BorderThickness="1"
                         CornerRadius="6" Padding="15 10" Margin="0 5">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup>
-                                <VisualState x:Name="NarrowState">
-                                    <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="0" />
-                                    </VisualState.StateTriggers>
-                                    <VisualState.Setters>
-                                        <Setter Target="Gridd.Background" Value="#00ff0000"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                                <VisualState x:Name="WideState">
-                                    <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="720"/>
-                                    </VisualState.StateTriggers>
-                                    <VisualState.Setters>
-                                        <Setter Target="Gridd.Background" Value="#000000ff"/>
-                                        <!--<Setter Target="Gridd.ColumnDefinitions[4].Width" Value="0"/>-->
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
+                        
+                        <StackPanel.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="See coin" Click="PurchaseGoToCoin_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Find"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem 
+                                    Text="Edit" Click="PurchaseEdit_Click"
+                                    Visibility="{Binding ElementName=ListView, FallbackValue=Collapsed, Path=DataContext.Grouped, Converter={StaticResource BoolVisibilityNOT}}">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Edit"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="Duplicate" Click="PurchaseDuplicate_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Copy"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="Remove" Click="PurchaseRemove_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Delete"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </StackPanel.ContextFlyout>
 
                         <TextBlock d:Text="Purchase - 01 Jan, 2021" Opacity="0.7" FontWeight="SemiLight">
                             <Run Text="{x:Bind Type}"/>
@@ -135,7 +142,7 @@
                             x:Name="DetailsPanel"
                             BorderBrush="{ThemeResource ButtonBorderBrush}" BorderThickness="0 1 0 0"
                             Margin="0 5 0 0" Padding="0 5 0 0"
-                            Visibility="{Binding ElementName=ListView, Mode=OneWay, Path=DataContext.ShowDetails, Converter={StaticResource BoolVisibility}, FallbackValue=Collapsed}">
+                            Visibility="{Binding ElementName=ListView, Path=DataContext.ShowDetails, Converter={StaticResource BoolVisibility}, FallbackValue=Collapsed}">
                             <StackPanel Orientation="Horizontal" Spacing="30">
                                 <usercontrols:DoubleTextBlock
                                     Header="Avg. Cost:"

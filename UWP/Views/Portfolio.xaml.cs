@@ -189,57 +189,6 @@ namespace UWP.Views {
         }
 
         /// ###############################################################################################
-        /// A purchase's right click ContextFlyout
-        private void GoToCoinPortfolio_Click(object sender, RoutedEventArgs e) {
-            var menu = sender as MenuFlyoutItem;
-            var item = menu.DataContext as PurchaseModel;
-            this.Frame.Navigate(typeof(CoinDetails), item.Crypto);
-        }
-
-        private void DuplicatePurchase_Click(object sender, RoutedEventArgs e) {
-            var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
-            var i = vm.Portfolio.IndexOf(purchase);
-            var newPurchase = new PurchaseModel() {
-                Crypto = purchase.Crypto,
-                CryptoName = purchase.CryptoName,
-                CryptoLogo = purchase.CryptoLogo,
-                CryptoQty = purchase.CryptoQty,
-                Currency = purchase.Currency,
-                CurrencySymbol = purchase.CurrencySymbol,
-                Id = Guid.NewGuid().ToString("N"),
-                Type = purchase.Type,
-                InvestedQty = purchase.InvestedQty,
-                Date = purchase.Date,
-                Exchange = purchase.Exchange,
-                Notes = purchase.Notes
-            };
-            vm.Portfolio.Insert(i, newPurchase);
-            /// Update the page and save the new portfolio
-            UpdatePage();
-            LocalStorageHelper.SaveObject(PortfolioKey, vm.Portfolio);
-        }
-
-        private async void RemovePortfolio_Click(object sender, RoutedEventArgs e) {
-            var item = ((MenuFlyoutItem)sender).DataContext as PurchaseModel;
-            vm.Portfolio.Remove(item);
-
-            if (vm.PurchasesAreGrouped) {
-                var crypto = item.Crypto;
-                var matches = LocalPurchases.Where(x => x.Crypto == crypto).ToList();
-                foreach (var match in matches)
-                    LocalPurchases.Remove(match);
-            }
-            else {
-                LocalPurchases = vm.Portfolio;
-            }
-
-            /// Update the page and save the new portfolio
-            await UpdatePage();
-            await LocalStorageHelper.SaveObject(PortfolioKey, LocalPurchases);
-        }
-
-
-        /// ###############################################################################################
         private void ToggleDetails_click(object sender, RoutedEventArgs e)
             => vm.ShowDetails = !vm.ShowDetails;
 
@@ -357,8 +306,23 @@ namespace UWP.Views {
                 vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
             else
                 vm.Portfolio = LocalPurchases;
-                //await UpdatePage();
         }
 
+        /// ###############################################################################################
+        /// A purchase's right click ContextFlyout
+        private void PortfolioList_ClickGoTo(object sender, EventArgs e) {
+            var crypto = sender.ToString();
+            this.Frame.Navigate(typeof(CoinDetails), crypto);
+        }
+
+        private void PortfolioList_ClickEdit(object sender, EventArgs e) {
+            var purchase = sender as PurchaseModel;
+        }
+
+        /// <summary>
+        /// Update the page from the UserControl by routing the event here
+        /// </summary>
+        private async void PortfolioList_UpdateParent(object sender, EventArgs e)
+            => await UpdatePage();
     }
 }
