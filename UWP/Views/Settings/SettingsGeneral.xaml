@@ -7,8 +7,7 @@
     xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600"
     d:Width="500"
-    mc:Ignorable="d"
-    Loaded="Page_Loaded">
+    mc:Ignorable="d">
 
     <Page.DataContext>
         <viewModels:SettingsViewModel x:Name="vm"/>

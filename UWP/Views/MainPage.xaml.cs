@@ -1,26 +1,23 @@
 ﻿using CryptoTracker.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UWP.Core.Constants;
-using UWP.Helpers;
-using UWP.Services;
-using UWP.UserControls;
 using UWP.Models;
+using UWP.Shared.Constants;
+using UWP.Shared.Interfaces;
+using UWP.UserControls;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using UWP.Shared.Interfaces;
-using Windows.UI.Popups;
 
 namespace UWP.Views {
     public sealed partial class MainPage : Page {
@@ -45,7 +42,7 @@ namespace UWP.Views {
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
                 var statusBar = StatusBar.GetForCurrentView();
 
-                if (App._LocalSettings.Get<string>(UserSettings.Theme) == "Dark") {
+                if (ColorConstants.CurrentThemeIsDark()){
                     statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23); //31 31 31
                     statusBar.BackgroundOpacity = 1;
                     statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
@@ -87,7 +84,7 @@ namespace UWP.Views {
                     break;
                 default:
                 case null:
-                case "Home":
+                case "/Home":
                     NavView.SelectedItem = NavView.MenuItems[0];
                     break;
             }
@@ -131,23 +128,10 @@ namespace UWP.Views {
             App._LocalSettings.Set(UserSettings.LastVersion, version);
         }
 
-        private void ColorValuesChanged(UISettings sender, object args) {
-            if (App._LocalSettings.Get<string>(UserSettings.Theme) == "Windows") {
-                var color = uiSettings.GetColorValue(UIColorType.Background);
-                switch (color.ToString()) {
-                    case "#FF000000":
-                        ChangeTheme("Dark");
-                        break;
-                    case "#FFFFFFFF":
-                        ChangeTheme("Light");
-                        break;
-                }
-            }
-        }
-
-        private async void ChangeTheme(string theme) {
-            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-                ((Frame)Window.Current.Content).RequestedTheme = theme.Equals("Dark") ? ElementTheme.Dark : ElementTheme.Light;
+        private async void ColorValuesChanged(UISettings sender, object args) {
+            bool darkTheme = ColorConstants.CurrentThemeIsDark();
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                ((Frame)Window.Current.Content).RequestedTheme = darkTheme ? ElementTheme.Dark : ElementTheme.Light;
             });
         }
 

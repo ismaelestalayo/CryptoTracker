@@ -19,16 +19,18 @@ namespace UWP.Views {
 
         public SettingsAlerts() {
             InitializeComponent();
+            Loaded += SettingsAlerts_Loaded;
+            Unloaded += SettingsAlerts_Unloaded;
         }
 
-        private new async void Loaded(object sender, RoutedEventArgs e) {
+        private async void SettingsAlerts_Loaded(object sender, RoutedEventArgs e) {
             var alerts = await LocalStorageHelper.ReadObject<List<Alert>>(UserStorage.Alerts);
             vm.Alerts = new ObservableCollection<Alert>(alerts);
             vm.CvsSource = from alert in vm.Alerts group alert by alert.Crypto;
         }
 
-        private new void Unloaded(object sender, RoutedEventArgs e) {
-            LocalStorageHelper.SaveObject(UserStorage.Alerts, vm.Alerts);
+        private async void SettingsAlerts_Unloaded(object sender, RoutedEventArgs e) {
+            await LocalStorageHelper.SaveObject(UserStorage.Alerts, vm.Alerts);
         }
     }
 }

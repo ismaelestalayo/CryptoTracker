@@ -16,7 +16,7 @@ namespace UWP.Views {
         private PackageVersion version;
 
         public SettingsFeedback() {
-            this.InitializeComponent();
+            InitializeComponent();
 
             version = Package.Current.Id.Version;
         }

@@ -11,9 +11,10 @@ namespace UWP.Views {
 
         public SettingsGeneral() {
             InitializeComponent();
+            Loaded += SettingsGeneral_Loaded;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) {
+        private void SettingsGeneral_Loaded(object sender, RoutedEventArgs e) {
             vm.AutoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
             vm.Currency = App._LocalSettings.Get<string>(UserSettings.Currency);
             startupPage.PlaceholderText = App._LocalSettings.Get<string>(UserSettings.StartupPage).Replace("/", "");
@@ -99,8 +100,8 @@ namespace UWP.Views {
         }
 
         private void startupPage_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var c = sender as ComboBox;
-            App._LocalSettings.Set(UserSettings.StartupPage, c.SelectedItem.ToString());
+            var startupPage = ((ComboBox)sender).SelectedItem.ToString();
+            App._LocalSettings.Set(UserSettings.StartupPage, $"/{startupPage}");
         }
     }
 }

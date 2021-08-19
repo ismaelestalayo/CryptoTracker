@@ -1,9 +1,6 @@
-﻿using UWP;
-using UWP.Core.Constants;
+﻿using UWP.Shared.Constants;
 using UWP.Views;
 using Windows.ApplicationModel;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -22,20 +19,7 @@ namespace CryptoTracker.Views {
         public SettingsDialog(string initialPage = "General") {
             InitializeComponent();
 
-            var currentTheme = App._LocalSettings.Get<string>(UserSettings.Theme);
-            switch (currentTheme) {
-                case "Light":
-                    RequestedTheme = ElementTheme.Light;
-                    break;
-                case "Dark":
-                    RequestedTheme = ElementTheme.Dark;
-                    break;
-                default:
-                case "Windows":
-                    RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
-                        ElementTheme.Dark : ElementTheme.Light;
-                    break;
-            }
+            RequestedTheme = ColorConstants.CurrentThemeIsDark() ? ElementTheme.Dark : ElementTheme.Light;
 
             var version = Package.Current.Id.Version;
             FooterVersion = string.Format("CryptoTracker {0}.{1}.{2}", version.Major, version.Minor, version.Build);

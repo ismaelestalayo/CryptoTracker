@@ -8,8 +8,11 @@ namespace UWP.Views {
     public sealed partial class SettingsAppearance : Page {
 
         public SettingsAppearance() {
-            this.InitializeComponent();
+            InitializeComponent();
+            Loaded += SettingsAppearance_Loaded;
+        }
 
+        private void SettingsAppearance_Loaded(object sender, RoutedEventArgs e) {
             MonochromeSwitch.IsOn = App._LocalSettings.Get<bool>(UserSettings.Monochrome);
             var theme = App._LocalSettings.Get<string>(UserSettings.Theme);
             switch (theme) {
@@ -43,9 +46,7 @@ namespace UWP.Views {
             parentDialog.RequestedTheme = darkTheme ? ElementTheme.Dark : ElementTheme.Light;
         }
 
-        private void Monochrome_Toggled(object sender, RoutedEventArgs e) {
-            var t = sender as ToggleSwitch;
-            App._LocalSettings.Set(UserSettings.Monochrome, t.IsOn);
-        }
+        private void Monochrome_Toggled(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.Monochrome, ((ToggleSwitch)sender).IsOn);
     }
 }

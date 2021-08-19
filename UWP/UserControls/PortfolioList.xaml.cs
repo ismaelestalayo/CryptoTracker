@@ -6,6 +6,7 @@ using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
+using UWP.Shared.Constants;
 using UWP.Shared.Helpers;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -103,7 +104,8 @@ namespace UWP.UserControls {
                 NewPurchase = purchase,
                 SuggestionCoin = new SuggestionCoin(purchase.Crypto, purchase.CryptoName),
                 PrimaryButtonText = "Save",
-                Title = "💵 Edit purchase"
+                Title = "💵 Edit purchase",
+                RequestedTheme = ColorConstants.CurrentThemeIsDark() ? ElementTheme.Dark : ElementTheme.Light
             };
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
