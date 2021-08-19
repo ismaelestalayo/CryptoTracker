@@ -130,7 +130,7 @@ namespace UWP.Models {
 
         private string currencySymbol;
         public string CurrencySymbol {
-            get => currencySymbol;
+            get => currencySymbol ?? Currencies.GetCurrencySymbol(Currency);
             set => SetProperty(ref currencySymbol, value);
         }
 

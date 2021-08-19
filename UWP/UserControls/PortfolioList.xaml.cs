@@ -101,6 +101,7 @@ namespace UWP.UserControls {
 
             var dialog = new PortfolioEntryDialog() {
                 NewPurchase = purchase,
+                SuggestionCoin = new SuggestionCoin(purchase.Crypto, purchase.CryptoName),
                 PrimaryButtonText = "Save",
                 Title = "💵 Edit purchase"
             };
