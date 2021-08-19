@@ -7,6 +7,7 @@ using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Shared.Helpers;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -81,8 +82,17 @@ namespace UWP.UserControls {
             };
             Purchases.Insert(i, newPurchase);
 
-            /// Save the portfolio and update the parent page
-            await LocalStorageHelper.SaveObject(UserStorage.Portfolio, Purchases);
+            var LocalPurchases = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+            var match = LocalPurchases.Where(x => x.Id == purchase.Id).FirstOrDefault();
+            var idx2 = LocalPurchases.IndexOf(match);
+            if (idx2 >= 0) {
+                LocalPurchases.Insert(idx2, newPurchase);
+                await LocalStorageHelper.SaveObject(UserStorage.Portfolio, LocalPurchases);
+            }
+            else
+                await new MessageDialog("Could not save changed to the LocalStorage",
+                    "Error updating the Portfolio").ShowAsync();
+
             UpdateParent?.Invoke(null, null);
         }
 
@@ -104,6 +114,9 @@ namespace UWP.UserControls {
                     LocalPurchases[idx2] = dialog.NewPurchase;
                     await LocalStorageHelper.SaveObject(UserStorage.Portfolio, LocalPurchases);
                 }
+                else
+                    await new MessageDialog("Could not save changed to the LocalStorage",
+                        "Error updating the Portfolio").ShowAsync();
 
                 UpdateParent?.Invoke(null, null);
             }
