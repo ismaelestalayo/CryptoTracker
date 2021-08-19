@@ -101,19 +101,25 @@
                 <d:StackPanel Grid.Column="2" HorizontalAlignment="Stretch" Background="Goldenrod"/>
             </Grid>
 
-            <StackPanel Grid.Row="1" HorizontalAlignment="Left" Spacing="30" Orientation="Horizontal">
-                <usercontrols:DoubleTextBlock Header="Balance:" Spacing="5">
+            <StackPanel Grid.Row="1" Spacing="30" Orientation="Horizontal" Visibility="Collapsed">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontWeight" Value="SemiLight"/>
+                    </Style>
+                </StackPanel.Resources>
+                <usercontrols:DoubleTextBlock Header="Account balance:" Spacing="5">
                     <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock>
+                        <TextBlock FontSize="18" FontWeight="SemiBold">
                             <Run Text="{x:Bind vm.TotalWorth}"/><!--
                             --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
                     </usercontrols:DoubleTextBlock.Value>
                 </usercontrols:DoubleTextBlock>
-                
+
                 <usercontrols:DoubleTextBlock Header="Cost:" Spacing="5">
                     <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock>
+                        <TextBlock FontSize="18" FontWeight="SemiBold">
                             <Run Text="{x:Bind vm.TotalInvested}"/><!--
                             --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
@@ -122,52 +128,67 @@
 
                 <usercontrols:DoubleTextBlock Header="Assets:" Spacing="5">
                     <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock Text="X"/>
+                        <TextBlock Text="3" FontSize="18" FontWeight="SemiBold"/>
                     </usercontrols:DoubleTextBlock.Value>
                 </usercontrols:DoubleTextBlock>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10">
-                <Button
-                    BorderBrush="{ThemeResource ButtonBorderBrush}"
-                    BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                    Click="AddPurchase_click"
-                    Height="36"
-                    ToolTipService.ToolTip="Add a new purchase">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <FontIcon Glyph="&#xE109;" FontSize="15"/>
-                        <TextBlock Text="New purchase" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <userControls:ToggleIconButton
-                    Background="{ThemeResource ButtonBackground}"
-                    BorderBrush="{ThemeResource ButtonBorderBrush}"
-                    BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                    Click="ToggleDetails_click"
-                    IsChecked="True"
-                    Tooltip="Show details">
-                    <userControls:ToggleIconButton.CheckedIcon>
-                        <FontIcon Glyph="&#xE169;" />
-                    </userControls:ToggleIconButton.CheckedIcon>
-                    <userControls:ToggleIconButton.UncheckedIcon>
-                        <FontIcon Glyph="&#xE16A;" />
-                    </userControls:ToggleIconButton.UncheckedIcon>
-                </userControls:ToggleIconButton>
-                <userControls:ToggleIconButton
-                    Background="{ThemeResource ButtonBackground}"
-                    BorderBrush="{ThemeResource ButtonBorderBrush}"
-                    BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                    Click="GroupPurchases_Click"
-                    IsChecked="{x:Bind vm.PurchasesAreGrouped, Mode=TwoWay}"
-                    Tooltip="Group purchases">
-                    <userControls:ToggleIconButton.UncheckedIcon>
-                        <FontIcon Glyph="&#xF168;" />
-                    </userControls:ToggleIconButton.UncheckedIcon>
-                    <userControls:ToggleIconButton.CheckedIcon>
-                        <FontIcon Glyph="&#xE8FD;" />
-                    </userControls:ToggleIconButton.CheckedIcon>
-                </userControls:ToggleIconButton>
-            </StackPanel>
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Horizontal" Spacing="10" Margin="0 -10 0 0">
+                    <Button
+                        BorderBrush="{ThemeResource ButtonBorderBrush}"
+                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                        Click="AddPurchase_click"
+                        Height="36"
+                        ToolTipService.ToolTip="Add a new purchase">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <FontIcon Glyph="&#xE109;" FontSize="15"/>
+                            <TextBlock Text="New purchase" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <userControls:ToggleIconButton
+                        Background="{ThemeResource ButtonBackground}"
+                        BorderBrush="{ThemeResource ButtonBorderBrush}"
+                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                        Click="ToggleDetails_click"
+                        IsChecked="True"
+                        Tooltip="Show details">
+                        <userControls:ToggleIconButton.CheckedIcon>
+                            <FontIcon Glyph="&#xE169;" />
+                        </userControls:ToggleIconButton.CheckedIcon>
+                        <userControls:ToggleIconButton.UncheckedIcon>
+                            <FontIcon Glyph="&#xE16A;" />
+                        </userControls:ToggleIconButton.UncheckedIcon>
+                    </userControls:ToggleIconButton>
+                    <userControls:ToggleIconButton
+                        Background="{ThemeResource ButtonBackground}"
+                        BorderBrush="{ThemeResource ButtonBorderBrush}"
+                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                        Click="GroupPurchases_Click"
+                        IsChecked="{x:Bind vm.PurchasesAreGrouped, Mode=TwoWay}"
+                        Tooltip="Group purchases">
+                        <userControls:ToggleIconButton.UncheckedIcon>
+                            <FontIcon Glyph="&#xF168;" />
+                        </userControls:ToggleIconButton.UncheckedIcon>
+                        <userControls:ToggleIconButton.CheckedIcon>
+                            <FontIcon Glyph="&#xE8FD;" />
+                        </userControls:ToggleIconButton.CheckedIcon>
+                    </userControls:ToggleIconButton>
+                </StackPanel>
+
+                <usercontrols:DoubleTextBlock
+                    FontSize="18" FontWeight="Light"
+                    HorizontalAlignment="Right"
+                    Header="Balance:"
+                    Margin="15 -10 15 0" Spacing="5">
+                    <usercontrols:DoubleTextBlock.Value>
+                        <TextBlock FontSize="22" Margin="0 0 0 03">
+                            <Run Text="{x:Bind vm.TotalWorth}"/><!--
+                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                        </TextBlock>
+                    </usercontrols:DoubleTextBlock.Value>
+                </usercontrols:DoubleTextBlock>
+            </Grid>
         </Grid>
 
         

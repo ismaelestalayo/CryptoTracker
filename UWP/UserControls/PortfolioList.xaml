@@ -15,7 +15,6 @@
         <converters:BoolToVisibility x:Key="BoolVisibility"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolVisibilityNOT"/>
         <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
-        <converters:NumberSymbolPrefixer x:Key="NumberSymbolPrefixer"/>
         <converters:StringNullOrEmptyToBoolConverter Inverse="True" x:Key="StringEmptyBoolNOT"/>
 
         <Style TargetType="usercontrols:DoubleTextBlock">
@@ -132,7 +131,7 @@
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
-                                        <Run Text="{x:Bind Profit}"/><Run Text="€"/>
+                                        <Run Text="{x:Bind Profit}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
                             </usercontrols:DoubleTextBlock>
@@ -171,7 +170,7 @@
                                             <TextBlock>
                                                 <Run Text="{x:Bind Current}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                                 <Run Text=""/>
-                                                <Run Text="{x:Bind Delta, Converter={StaticResource NumberSymbolPrefixer}}" Foreground="{x:Bind ProfitFG}"/><!--
+                                                <Run Text="{x:Bind Delta, Converter={StaticResource NumberSymbol}}" Foreground="{x:Bind ProfitFG}"/><!--
                                                 --><Run Text="%"  Foreground="{x:Bind ProfitFG}"/>
                                             </TextBlock>
                                         </usercontrols:DoubleTextBlock.Value>

@@ -22,6 +22,7 @@
             <converters:NumberForeground x:Key="NumberForeground"/>
             <converters:NumberUnitSuffixer x:Key="NumberUnit"/>
             <converters:NumberSignPrefixer x:Key="NumberSign"/>
+            <converters:NumberSymbolPrefixer x:Key="NumberSymbol"/>
             <converters:VisibilityInverter x:Key="VisibilityInverter"/>
 
             <FontFamily x:Key="FluentIconFont">/Assets/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
