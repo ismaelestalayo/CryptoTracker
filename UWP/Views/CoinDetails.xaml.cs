@@ -93,11 +93,13 @@ namespace UWP.Views {
                         var coin = App.coinListPaprika.Find(x => x.symbol == vm.Coin.Name);
                         vm.Coin.FullName = coin.name;
                         vm.CoinInfo = await CoinGecko.GetCoin(coin.name);
+                        await UpdatePortfolio();
                         break;
                     case nameof(CoinDetailsViewModel):
                         vm = (CoinDetailsViewModel)e.Parameter;
                         timeSpan = vm.Chart.TimeSpan;
                         (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+                        await UpdatePage();
                         break;
                     default:
                     case "string":
@@ -115,7 +117,6 @@ namespace UWP.Views {
                 new MessageDialog(message).ShowAsync();
             }
 
-            await UpdatePage();
             vm.Alerts = await AlertsHelper.GetCryptoAlerts(vm.Coin.Name);
         }
 
@@ -127,7 +128,12 @@ namespace UWP.Views {
             vm.Coin.IsLoading = true;
 
             await UpdateCoin();
+            await UpdatePortfolio();
 
+            //CryptoCompare.GetExchanges(crypto);
+        }
+
+        private async Task UpdatePortfolio() {
             var portfolio = await PortfolioHelper.GetPortfolio(vm.Coin.Name);
             vm.Purchases = new ObservableCollection<PurchaseModel>(portfolio);
 
@@ -141,8 +147,6 @@ namespace UWP.Views {
             var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
             if (totalInvested != 0)
                 vm.AvgPrice = NumberHelper.Rounder(totalInvested / vm.TotalQty);
-
-            //CryptoCompare.GetExchanges(crypto);
         }
 
         /// #########################################################################################
@@ -297,7 +301,8 @@ namespace UWP.Views {
 
         private async void NewPurchase_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {
-                NewPurchase = new PurchaseModel() { Crypto = vm.Coin.Name }
+                NewPurchase = new PurchaseModel() { Crypto = vm.Coin.Name },
+                SuggestionCoin = new SuggestionCoin(vm.Coin)
             };
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
