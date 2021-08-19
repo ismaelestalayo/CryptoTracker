@@ -28,13 +28,13 @@ namespace UWP.Shared.Helpers {
             await LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
         }
 
-        public static void SavePortfolio(object portfolio) {
+        public static async Task SavePortfolio(object portfolio) {
             var type = portfolio.GetType();
             if (type == typeof(List<PurchaseModel>))
-                LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
+                await LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
             else if (type == typeof(ObservableCollection<PurchaseModel>)) {
                 var p = new List<PurchaseModel>((ObservableCollection<PurchaseModel>)portfolio);
-                LocalStorageHelper.SaveObject(UserStorage.Portfolio, p);
+                await LocalStorageHelper.SaveObject(UserStorage.Portfolio, p);
             }
         }
 

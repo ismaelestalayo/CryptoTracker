@@ -193,7 +193,7 @@ namespace UWP.Views {
             => vm.ShowDetails = !vm.ShowDetails;
 
         /// ###############################################################################################
-        /// Add/Edit purchase dialog
+        /// Add purchase dialog
         private async void AddPurchase_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {
                 NewPurchase = new PurchaseModel(),
@@ -207,25 +207,6 @@ namespace UWP.Views {
                 vm.Portfolio.Add(dialog.NewPurchase);
                 PortfolioHelper.AddPurchase(dialog.NewPurchase);
                 
-                // Update everything
-                UpdatePage();
-            }
-        }
-
-        private async void EditPurchase_Click(object sender, RoutedEventArgs e) {
-            var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
-            var dialog = new PortfolioEntryDialog() {
-                NewPurchase = purchase,
-                PrimaryButtonText = "Save",
-                Title = "💵 Edit purchase"
-            };
-            var response = await dialog.ShowAsync();
-            if (response == ContentDialogResult.Primary) {
-                EditingPurchaseId = vm.Portfolio.IndexOf(purchase);
-                vm.Portfolio.RemoveAt(EditingPurchaseId);
-                vm.Portfolio.Insert(EditingPurchaseId, dialog.NewPurchase);
-                PortfolioHelper.SavePortfolio(vm.Portfolio);
-
                 // Update everything
                 UpdatePage();
             }
@@ -313,10 +294,6 @@ namespace UWP.Views {
         private void PortfolioList_ClickGoTo(object sender, EventArgs e) {
             var crypto = sender.ToString();
             this.Frame.Navigate(typeof(CoinDetails), crypto);
-        }
-
-        private void PortfolioList_ClickEdit(object sender, EventArgs e) {
-            var purchase = sender as PurchaseModel;
         }
 
         /// <summary>

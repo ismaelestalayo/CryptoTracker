@@ -206,7 +206,6 @@
 
 
         <userControls:PortfolioList
-            ClickEdit="PortfolioList_ClickEdit"
             ClickGoTo="PortfolioList_ClickGoTo"
             UpdateParent="PortfolioList_UpdateParent"
             Grouped="{x:Bind vm.PurchasesAreGrouped}"

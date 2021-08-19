@@ -1,11 +1,12 @@
-﻿using System;
+﻿using CryptoTracker.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
-using UWP.Views;
+using UWP.Shared.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -57,8 +58,8 @@ namespace UWP.UserControls {
         /// public delegate void StringEventHandler(string val);
 
         public event EventHandler ClickGoTo;
-        public event EventHandler ClickEdit;
         public event EventHandler UpdateParent;
+
 
         /// ##############################################################################
         private async void PurchaseDuplicate_Click(object sender, RoutedEventArgs e) {
@@ -85,15 +86,35 @@ namespace UWP.UserControls {
             UpdateParent?.Invoke(null, null);
         }
 
-        private void PurchaseEdit_Click(object sender, RoutedEventArgs e) {
+        private async void PurchaseEdit_Click(object sender, RoutedEventArgs e) {
             var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
-            ClickEdit?.Invoke(purchase, null);
+
+            var dialog = new PortfolioEntryDialog() {
+                NewPurchase = purchase,
+                PrimaryButtonText = "Save",
+                Title = "💵 Edit purchase"
+            };
+            var response = await dialog.ShowAsync();
+            if (response == ContentDialogResult.Primary) {
+                /// the "purchase" object is binded TwoWay and updated by itself
+                var LocalPurchases = await PortfolioHelper.GetPortfolio();
+                var match = LocalPurchases.Where(x => x.Id == dialog.NewPurchase.Id).FirstOrDefault();
+                var idx2 = LocalPurchases.IndexOf(match);
+                if (idx2 >= 0) {
+                    LocalPurchases[idx2] = dialog.NewPurchase;
+                    await LocalStorageHelper.SaveObject(UserStorage.Portfolio, LocalPurchases);
+                }
+
+                UpdateParent?.Invoke(null, null);
+            }
         }
+
 
         private void PurchaseGoToCoin_Click(object sender, RoutedEventArgs e) {
             var item = ((MenuFlyoutItem)sender).DataContext as PurchaseModel;
             ClickGoTo?.Invoke(item.Crypto, null);
         }
+
 
         private async void PurchaseRemove_Click(object sender, RoutedEventArgs e) {
             var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
