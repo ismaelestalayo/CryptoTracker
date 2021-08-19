@@ -497,7 +497,7 @@
                         HorizontalAlignment="Center" Margin="0 0 0 10"/>
                     <userControls:PortfolioList
                         Purchases="{x:Bind vm.Purchases}"
-                        HorizontalAlignment="Stretch"/>
+                        UpdateParent="PortfolioList_UpdateParent"/>
                 </StackPanel>
             </usercontrols:FluentCard.ExpandableContent>
         </usercontrols:FluentCard>

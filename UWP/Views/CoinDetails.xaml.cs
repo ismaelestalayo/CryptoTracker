@@ -98,7 +98,6 @@ namespace UWP.Views {
                         vm = (CoinDetailsViewModel)e.Parameter;
                         timeSpan = vm.Chart.TimeSpan;
                         (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
-                        await UpdateCoin();
                         break;
                     default:
                     case "string":
@@ -116,6 +115,19 @@ namespace UWP.Views {
                 new MessageDialog(message).ShowAsync();
             }
 
+            await UpdatePage();
+            vm.Alerts = await AlertsHelper.GetCryptoAlerts(vm.Coin.Name);
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e) {
+            PeriodicTimer?.Cancel();
+        }
+
+        public async Task UpdatePage() {
+            vm.Coin.IsLoading = true;
+
+            await UpdateCoin();
+
             var portfolio = await PortfolioHelper.GetPortfolio(vm.Coin.Name);
             vm.Purchases = new ObservableCollection<PurchaseModel>(portfolio);
 
@@ -130,17 +142,6 @@ namespace UWP.Views {
             if (totalInvested != 0)
                 vm.AvgPrice = NumberHelper.Rounder(totalInvested / vm.TotalQty);
 
-            vm.Alerts = await AlertsHelper.GetCryptoAlerts(vm.Coin.Name);
-        }
-
-        private void Page_Unloaded(object sender, RoutedEventArgs e) {
-            PeriodicTimer?.Cancel();
-        }
-
-        public async Task UpdatePage() {
-            vm.Coin.IsLoading = true;
-
-            await UpdateCoin();
             //CryptoCompare.GetExchanges(crypto);
         }
 
@@ -320,5 +321,9 @@ namespace UWP.Views {
 
         private void Flyout_Closed(object sender, object e)
             => AlertsHelper.UpdateOneCryptoAlerts(vm.Coin.Name, vm.Alerts);
+
+        private async void PortfolioList_UpdateParent(object sender, EventArgs e) {
+            await UpdatePage();
+        }
     }
 }
