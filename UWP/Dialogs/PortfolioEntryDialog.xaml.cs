@@ -6,7 +6,6 @@ using UWP.Models;
 using UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -30,11 +29,13 @@ namespace CryptoTracker.Dialogs {
         }
 
         private SuggestionCoin suggestionCoin = new SuggestionCoin();
-        private SuggestionCoin SuggestionCoin {
+        public SuggestionCoin SuggestionCoin {
             get => suggestionCoin;
             set {
                 NewPurchase.Crypto = value?.Symbol;
                 NewPurchase.CryptoName = value?.Name;
+                suggestionCoin = value;
+                AmountNumberBox.Focus(FocusState.Programmatic);
             }
         }
 
@@ -53,9 +54,6 @@ namespace CryptoTracker.Dialogs {
                 //}
             }
         }
-
-        private void CoinAutoSuggestBox_LostFocus(object sender, RoutedEventArgs e)
-            => AmountNumberBox.Focus(FocusState.Programmatic);
 
 
         private async void DialogBtn_LostFocus(object sender, RoutedEventArgs e) {

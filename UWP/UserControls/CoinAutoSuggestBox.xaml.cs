@@ -23,7 +23,11 @@ namespace UWP.UserControls {
 
         public SuggestionCoin Coin {
             get => (SuggestionCoin)GetValue(CoinProperty);
-            set => SetValue(CoinProperty, value);
+            set {
+                SetValue(CoinProperty, value);
+                if (value?.Symbol != "NULL" && value != null)
+                    AutoSuggestBox.Text = value.Symbol;
+            }
         }
         public string Header {
             get => (string)GetValue(HeaderProperty);
@@ -35,6 +39,17 @@ namespace UWP.UserControls {
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e) {
             AutoSuggestBox box = sender as AutoSuggestBox;
             box.ItemsSource = FilterCoins(box);
+        }
+
+        /// When tabbing out of the SuggestBox sometimes the text gets cleared out
+        private void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e) {
+            var searched = AutoSuggestBox.Text.ToUpperInvariant();
+            var matches = App.coinListPaprika.Where(x => x.symbol == searched).ToList();
+
+            if (searched == "" && Coin.Symbol != "NULL")
+                AutoSuggestBox.Text = Coin.Symbol;
+            else if (matches.Count() > 0)
+                Coin = new SuggestionCoin(matches[0].symbol, matches[0].name);
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
