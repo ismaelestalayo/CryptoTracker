@@ -110,6 +110,7 @@ namespace UWP.UserControls {
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
                 /// the "purchase" object is binded TwoWay and updated by itself
+                //if (App.CurrentPage == nameof(Views.Portfolio))
                 var LocalPurchases = await PortfolioHelper.GetPortfolio();
                 var match = LocalPurchases.Where(x => x.Id == dialog.NewPurchase.Id).FirstOrDefault();
                 var idx2 = LocalPurchases.IndexOf(match);

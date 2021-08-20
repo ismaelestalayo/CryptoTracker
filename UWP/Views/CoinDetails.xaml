@@ -150,6 +150,15 @@
                                     CharacterSpacing="50"
                                     Text="{x:Bind vm.Coin.Name}"
                                     Opacity="0.5"/>
+                                <TextBlock
+                                    FontWeight="Light"
+                                    d:Text="#0"
+                                    Margin="0 2"
+                                    VerticalAlignment="Bottom"
+                                    CharacterSpacing="50"
+                                    Opacity="0.5">
+                                    <Run Text="#"/><Run Text="{x:Bind vm.CoinInfo.market_cap_rank}"/>
+                                </TextBlock>
                             </StackPanel>
 
                             <!-- Small buttons -->
@@ -298,7 +307,7 @@
                     <StackPanel
                         Grid.Row="1" Spacing="30" Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom" Margin="0"
+                        VerticalAlignment="Bottom" Margin="-15 0"
                         d:Visibility="Collapsed"
                         Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleToVisibility}}">
 
@@ -397,22 +406,23 @@
                     </controls:Loading>
 
                     <userControls:ChartAreaFull
-                        x:Name="PriceChart" Margin="-20 0"
+                        x:Name="PriceChart" Margin="-20 -15 -20 5"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityInverter}}"/>
 
                     <userControls:ChartCandles
-                        x:Name="CandleChart" Margin="-20 0"
+                        x:Name="CandleChart" Margin="-20 -15 -20 5"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityConverter}}"/>
                     
                     <!-- Time RadioButtons + side buttons -->
-                    <RelativePanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="0 5 0 0">
+                    <RelativePanel Grid.Row="1" Margin="-15 5 -15 0">
                         <userControls:ToggleIconButton
                             Click="ShowCandles_Click"
                             Height="28" Opacity="0.75"
+                            Tooltip="Toggle chart type"
                             RelativePanel.LeftOf="TimeRangeRadioButtons">
                             <userControls:ToggleIconButton.CheckedIcon>
                                 <FontIcon Glyph="&#xE9D2;"/>
@@ -427,13 +437,14 @@
                             x:Name="TimeRangeRadioButtons"
                             Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan}"
                             HorizontalAlignment="Center"
+                            Margin="7 0"
                             RelativePanel.AlignHorizontalCenterWithPanel="True"
                             Tapped="TimeRangeButtons_Tapped"/>
                         <Button
                             Content="&#xE9A6;"
-                            FontSize="18"
+                            FontSize="20"
                             HorizontalAlignment="Right"
-                            Margin="10 3"
+                            RelativePanel.AlignVerticalCenterWithPanel="True"
                             RelativePanel.RightOf="TimeRangeRadioButtons"
                             Style="{StaticResource IconBtn}"/>
                     </RelativePanel>
@@ -449,7 +460,7 @@
             <usercontrols:FluentCard.TitleContent>
                 <Grid>
                     <usercontrols:DoubleTextBlock
-                        Header="Quantity:"
+                        Header="Owned:"
                         HorizontalAlignment="Left"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
