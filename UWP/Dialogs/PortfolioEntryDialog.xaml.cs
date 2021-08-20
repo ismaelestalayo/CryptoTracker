@@ -1,9 +1,11 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UWP;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Constants;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -12,6 +14,9 @@ using Windows.UI.Xaml.Media;
 
 namespace CryptoTracker.Dialogs {
     public sealed partial class PortfolioEntryDialog : ContentDialog {
+
+        private Dictionary<string, string> AvailableCurrencies = Currencies.CurrencySymbol;
+
         public PortfolioEntryDialog() {
             InitializeComponent();
         }
