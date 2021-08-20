@@ -140,9 +140,6 @@
     <Compile Include="UserControls\ChartAreaFull.xaml.cs">
       <DependentUpon>ChartAreaFull.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ChartBars.xaml.cs">
-      <DependentUpon>ChartBars.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\DoubleTextBlock.xaml.cs">
       <DependentUpon>DoubleTextBlock.xaml</DependentUpon>
     </Compile>
@@ -390,10 +387,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ChartAreaFull.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\ChartBars.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
