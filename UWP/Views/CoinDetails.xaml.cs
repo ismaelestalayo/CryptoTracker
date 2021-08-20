@@ -138,7 +138,8 @@ namespace UWP.Views {
 
             vm.TotalQty = vm.Purchases.Sum(x => x.CryptoQty);
             vm.TotalProfit = vm.Purchases.Sum(x => x.Profit);
-            vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
+            //vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
+            vm.TotalValue = vm.TotalQty * vm.Coin.Price;
 
             var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
             if (totalInvested != 0)
