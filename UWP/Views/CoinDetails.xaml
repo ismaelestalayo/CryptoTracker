@@ -500,16 +500,21 @@
                 </Grid>
             </usercontrols:FluentCard.TitleContent>
             <usercontrols:FluentCard.ExpandableContent>
-                <StackPanel>
+                <Grid Margin="0 0 0 -10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <Button
                         Background="Transparent" CornerRadius="6"
                         BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
                         Click="NewPurchase_click" Content="Add new purchase"
                         HorizontalAlignment="Center" Margin="0 0 0 10"/>
                     <userControls:PortfolioList
+                        Grid.Row="1"
                         Purchases="{x:Bind vm.Purchases}"
                         UpdateParent="PortfolioList_UpdateParent"/>
-                </StackPanel>
+                </Grid>
             </usercontrols:FluentCard.ExpandableContent>
         </usercontrols:FluentCard>
         

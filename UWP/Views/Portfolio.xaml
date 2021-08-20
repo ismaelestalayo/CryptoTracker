@@ -236,7 +236,7 @@
             ClickGoTo="PortfolioList_ClickGoTo"
             UpdateParent="PortfolioList_UpdateParent"
             Grouped="{x:Bind vm.PurchasesAreGrouped}"
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="7 0"
             Purchases="{x:Bind vm.Portfolio}"
             ShowDetails="{x:Bind vm.ShowDetails}"/>
