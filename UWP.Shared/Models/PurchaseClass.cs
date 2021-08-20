@@ -5,6 +5,9 @@ using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
+/// <summary>
+/// Must have the old namespace to read from LocalStorage successfully
+/// </summary>
 namespace CryptoTracker.Helpers {
     [DataContractAttribute()]
     public class PurchaseClass : INotifyPropertyChanged {
