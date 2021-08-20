@@ -14,7 +14,7 @@ namespace UWP.Shared.Helpers {
     public class PortfolioHelper {
 
         public async static Task<List<PurchaseModel>> GetPortfolio(string filterCrypto = "") {
-            var portfolio = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+            var portfolio = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio6);
 
             if (filterCrypto != "")
                 portfolio = portfolio.Where(p => p.Crypto == filterCrypto).ToList();
@@ -23,18 +23,18 @@ namespace UWP.Shared.Helpers {
         }
 
         public async static void AddPurchase(PurchaseModel purchase) {
-            var portfolio = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+            var portfolio = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio6);
             portfolio.Add(purchase);
-            await LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
+            await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, portfolio);
         }
 
         public static async Task SavePortfolio(object portfolio) {
             var type = portfolio.GetType();
             if (type == typeof(List<PurchaseModel>))
-                await LocalStorageHelper.SaveObject(UserStorage.Portfolio, portfolio);
+                await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, portfolio);
             else if (type == typeof(ObservableCollection<PurchaseModel>)) {
                 var p = new List<PurchaseModel>((ObservableCollection<PurchaseModel>)portfolio);
-                await LocalStorageHelper.SaveObject(UserStorage.Portfolio, p);
+                await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, p);
             }
         }
 

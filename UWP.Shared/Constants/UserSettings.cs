@@ -42,7 +42,7 @@ namespace UWP.Core.Constants {
 		/// <summary>
 		/// List<PurchaseModel>
 		/// </summary>
-		public const string Portfolio = "Portfolio";
+		public const string Portfolio6 = "Portfolio6";
 
 		/// <summary>
 		/// List<CoinMarket>

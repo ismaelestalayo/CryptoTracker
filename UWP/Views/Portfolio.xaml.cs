@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Dialogs;
+using CryptoTracker.Helpers;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
@@ -96,14 +97,14 @@ namespace UWP.Views {
         internal async Task<ObservableCollection<PurchaseModel>> RetrievePortfolio() {
             ObservableCollection<PurchaseModel> portfolio;
 
-            var portfolioV2 = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+            var portfolioV2 = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio6);
 
             if (portfolioV2.Count > 0)
                 return new ObservableCollection<PurchaseModel>(portfolioV2);
 
             /// If it is empty, there might be an old portfolio in the old format and key
             var portfolioV1 = await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio");
-            if (portfolioV1.Count < 0)
+            if (portfolioV1.Count <= 0)
                 return new ObservableCollection<PurchaseModel>();
 
             /// For retrocompatibility with old portfolios
@@ -111,6 +112,7 @@ namespace UWP.Views {
             foreach (var p in portfolioV1) {
                 portfolio.Add(new PurchaseModel() {
                     Crypto = p.Crypto,
+                    CryptoName = p.Crypto,
                     CryptoLogo = p.CryptoLogo,
                     CryptoQty = p.CryptoQty,
                     Currency = p.c,
@@ -119,6 +121,7 @@ namespace UWP.Views {
                     InvestedQty = p.InvestedQty
                 });
             }
+            await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, portfolio);
             return portfolio;
         }
 

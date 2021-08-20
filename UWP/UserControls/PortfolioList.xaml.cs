@@ -83,12 +83,12 @@ namespace UWP.UserControls {
             };
             Purchases.Insert(i, newPurchase);
 
-            var LocalPurchases = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+            var LocalPurchases = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio6);
             var match = LocalPurchases.Where(x => x.Id == purchase.Id).FirstOrDefault();
             var idx2 = LocalPurchases.IndexOf(match);
             if (idx2 >= 0) {
                 LocalPurchases.Insert(idx2, newPurchase);
-                await LocalStorageHelper.SaveObject(UserStorage.Portfolio, LocalPurchases);
+                await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, LocalPurchases);
             }
             else
                 await new MessageDialog("Could not save changed to the LocalStorage",
@@ -115,7 +115,7 @@ namespace UWP.UserControls {
                 var idx2 = LocalPurchases.IndexOf(match);
                 if (idx2 >= 0) {
                     LocalPurchases[idx2] = dialog.NewPurchase;
-                    await LocalStorageHelper.SaveObject(UserStorage.Portfolio, LocalPurchases);
+                    await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, LocalPurchases);
                 }
                 else
                     await new MessageDialog("Could not save changed to the LocalStorage",
@@ -134,7 +134,7 @@ namespace UWP.UserControls {
 
         private async void PurchaseRemove_Click(object sender, RoutedEventArgs e) {
             var purchase = (PurchaseModel)((FrameworkElement)sender).DataContext;
-            var LocalPurchases = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio);
+            var LocalPurchases = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio6);
 
             if (Grouped) {
                 var crypto = purchase.Crypto;
@@ -149,7 +149,7 @@ namespace UWP.UserControls {
             }
 
             /// Save the portfolio and update the parent page
-            await LocalStorageHelper.SaveObject(UserStorage.Portfolio, LocalPurchases);
+            await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, LocalPurchases);
             UpdateParent?.Invoke(null, null);
         }
 
