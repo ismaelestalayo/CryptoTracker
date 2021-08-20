@@ -24,8 +24,18 @@ namespace UWP.Models {
                 IsFav = pinned.Split("|").ToList().Contains(value);
             }
         }
-        public string FullName { get; set; } = "NULL";
-        public string Logo { get; set; } = "/Assets/Icons/iconNULL.png";
+
+        private string _fullName = "NULL";
+        public string FullName {
+            get => _fullName;
+            set => SetProperty(ref _fullName, value);
+        }
+
+        private string _logo = "/Assets/Icons/iconNULL.png";
+        public string Logo {
+            get => _logo;
+            set => SetProperty(ref _logo, value);
+        }
 
 
         private bool isFav  = false;

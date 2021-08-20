@@ -35,5 +35,9 @@ namespace UWP.Services {
         public string symbol { get; set; }
         public int rank { get; set; } = 0;
         public string type { get; set; }
+
+        public string logo {
+            get => $"https://static.coinpaprika.com/coin/{id}/logo.png";
+        }
     }
 }
