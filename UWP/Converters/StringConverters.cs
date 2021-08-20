@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using UWP.Shared.Constants;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace UWP.Converters {
@@ -51,6 +52,24 @@ namespace UWP.Converters {
 
         public object Convert(object val, Type targetType, object param, string lang)
             => Inverse ? !string.IsNullOrWhiteSpace((string)val) : string.IsNullOrWhiteSpace((string)val);
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => string.Empty;
+    }
+
+    public class StringNullOrEmptyToVisibilityConverter : IValueConverter {
+        /// <summary>
+        /// Determines whether an inverse conversion should take place.
+        /// </summary>
+        /// <remarks>If set, the value True results in <see cref="Visibility.Collapsed"/>, and false in <see cref="Visibility.Visible"/>.</remarks>
+        public bool Inverse { get; set; }
+
+        public object Convert(object val, Type targetType, object param, string lang) {
+            bool emptyString = string.IsNullOrWhiteSpace((string)val);
+            if (Inverse)
+                emptyString = !emptyString;
+            return emptyString ? Visibility.Collapsed : Visibility.Visible;
+        }
 
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => string.Empty;

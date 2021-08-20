@@ -124,7 +124,7 @@ namespace UWP.Views {
             vm.InfoBarTitle = $"Welcome to CryptoTracker v{version}";
             vm.InfoBarMessage = "New in this version:\n";
 
-            vm.InfoBarMessage = Changelogs.FormatChangelog(Changelogs.CurrentChangelog);
+            vm.InfoBarMessage += Changelogs.FormatChangelog(Changelogs.CurrentChangelog);
 
             vm.InfoBarOpened = true;
             App._LocalSettings.Set(UserSettings.LastVersion, version);

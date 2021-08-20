@@ -20,9 +20,6 @@ namespace UWP.UserControls {
         public static readonly DependencyProperty IsOpenProperty =
             DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(bool), null);
 
-        public static readonly DependencyProperty MessageHeightProperty =
-            DependencyProperty.Register(nameof(IsOpen), typeof(double), typeof(double), null);
-
         public string Title {
             get => (string)GetValue(TitleProperty);
             set {
@@ -38,20 +35,12 @@ namespace UWP.UserControls {
 
         public string Message {
             get => (string)GetValue(MessageProperty);
-            set {
-                SetValue(MessageProperty, value);
-                MessageHeight = (value == "") ? 0 : double.NaN;
-            }
+            set => SetValue(MessageProperty, value);
         }
 
         public bool IsOpen {
             get => (bool)GetValue(IsOpenProperty);
             set => SetValue(IsOpenProperty, value);
-        }
-
-        internal double MessageHeight {
-            get => (double)GetValue(MessageHeightProperty);
-            set => SetValue(MessageHeightProperty, value);
         }
 
         private void InfoBar_Closed(Microsoft.UI.Xaml.Controls.InfoBar sender, Microsoft.UI.Xaml.Controls.InfoBarClosedEventArgs args) {

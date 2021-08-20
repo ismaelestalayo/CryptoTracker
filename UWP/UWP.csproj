@@ -275,6 +275,7 @@
     <Content Include="Assets\stockPrices.png" />
     <Content Include="Assets\Tile-D.png" />
     <Content Include="Assets\Tile-L.png" />
+    <Content Include="Assets\Tile.png" />
     <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-16.png" />
     <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-24.png" />
     <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-256.png" />

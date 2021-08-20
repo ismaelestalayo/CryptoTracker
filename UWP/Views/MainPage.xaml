@@ -5,10 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:models="using:UWP.Models"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
@@ -156,7 +156,7 @@
 
         <userControls:Notification
             IsOpen="{x:Bind vm.InfoBarOpened, Mode=TwoWay}"
-            Margin="10 50"
+            Margin="10 55"
             Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
             Message="{x:Bind vm.InfoBarMessage}"
             Title="{x:Bind vm.InfoBarTitle}"/>
