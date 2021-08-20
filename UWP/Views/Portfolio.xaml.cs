@@ -18,6 +18,7 @@ using UWP.Shared.Models;
 using UWP.UserControls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 
 namespace UWP.Views {
@@ -72,6 +73,8 @@ namespace UWP.Views {
                 g.VerticalAlignment = VerticalAlignment.Stretch;
 
                 var val = Math.Round((worth / vm.TotalWorth) * 100, 1);
+                ToolTipService.SetToolTip(g, $"{crypto} {val}%");
+                ToolTipService.SetPlacement(g, PlacementMode.Right);
                 var t = new TextBlock() {
                     Text = crypto + "\n" + $"{val}%",
                     FontSize = 12,

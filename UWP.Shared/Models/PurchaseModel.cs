@@ -64,10 +64,10 @@ namespace UWP.Models {
             }
         }
 
-        private string id;
+        private string id = Guid.NewGuid().ToString("N");
         [DataMember()]
         public string Id {
-            get => id ?? Guid.NewGuid().ToString("N");
+            get => id;
             set => id = value;
         }
 
