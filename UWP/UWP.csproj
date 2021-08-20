@@ -19,7 +19,7 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <AppxPackageDir>C:\Users\ismae\Desktop\appxupload</AppxPackageDir>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <HockeyAppResourceId>40853427385b47e0bacec33938f84566</HockeyAppResourceId>
@@ -112,7 +112,6 @@
   <ItemGroup>
     <Compile Include="APIs\CoinGecko.cs" />
     <Compile Include="APIs\CryptoCompare.cs" />
-    <Compile Include="APIs\GitHub.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -126,7 +125,6 @@
     </Compile>
     <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
-    <Compile Include="Helpers\PurchaseClass.cs" />
     <Compile Include="UserControls\CoinAutoSuggestBox.xaml.cs">
       <DependentUpon>CoinAutoSuggestBox.xaml</DependentUpon>
     </Compile>

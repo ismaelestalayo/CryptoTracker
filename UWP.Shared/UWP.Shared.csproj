@@ -139,6 +139,7 @@
     <Compile Include="Models\HistoricPrice.cs" />
     <Compile Include="Models\HomeCard.cs" />
     <Compile Include="Models\NewsItem.cs" />
+    <Compile Include="Models\PurchaseClass.cs" />
     <Compile Include="Models\PurchaseModel.cs" />
     <Compile Include="Models\SuggestionCoin.cs" />
     <Compile Include="Models\Top100card.cs" />

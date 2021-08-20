@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace UWP.Helpers {
+namespace CryptoTracker.Helpers {
     [DataContractAttribute()]
-    internal class PurchaseClass : INotifyPropertyChanged {
+    public class PurchaseClass : INotifyPropertyChanged {
 
         private bool _isComplete { get; set; } = false;
         public bool IsComplete {
@@ -59,7 +59,7 @@ namespace UWP.Helpers {
             get { return _boughtAt; }
             set { _boughtAt = value; NotifyPropertyChanged(nameof(BoughtAt)); } }
 
-        private string _c { get; set; } = App.currencySymbol;
+        private string _c { get; set; } = "";
         [DataMember()]
         public string c {
             get { return _c; }
