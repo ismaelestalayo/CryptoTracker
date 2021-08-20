@@ -50,10 +50,6 @@ namespace UWP.Views {
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
-            /// If list is empty
-            if (App.coinListPaprika.Count == 0)
-                await App.GetCoinList();
-
             /// Create the connected animation
             var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
             if (animation != null)

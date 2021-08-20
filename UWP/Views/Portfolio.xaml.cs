@@ -28,8 +28,6 @@ namespace UWP.Views {
         private static string timeSpan = "1w";
         private static string timeUnit = "hour";
 
-        private string PortfolioKey = "Portfolio";
-
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
         private int EditingPurchaseId { get; set; }

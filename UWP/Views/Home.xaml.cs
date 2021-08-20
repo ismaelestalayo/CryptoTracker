@@ -39,9 +39,6 @@ namespace UWP.Views {
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            /// First keep an updated list of coins
-            await App.GetCoinList();
-
             InitHome();
 
             /// Create the auto-refresh timer

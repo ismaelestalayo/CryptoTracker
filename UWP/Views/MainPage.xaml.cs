@@ -61,7 +61,7 @@ namespace UWP.Views {
             ExtendAcrylicIntoTitleBar();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
+        protected override async void OnNavigatedTo(NavigationEventArgs e) {
             this.RegisterBackgroundTask();
 
             var param = e.Parameter.ToString();
@@ -89,6 +89,8 @@ namespace UWP.Views {
                     break;
             }
             ShowChangelog();
+
+            await App.GetCoinList();
         }
 
         private async void RegisterBackgroundTask() {
