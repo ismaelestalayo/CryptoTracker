@@ -31,8 +31,6 @@ namespace UWP.Views {
 
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
-        private int EditingPurchaseId { get; set; }
-
         public Portfolio() {
             this.InitializeComponent();   
         }

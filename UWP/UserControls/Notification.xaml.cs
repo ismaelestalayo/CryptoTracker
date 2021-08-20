@@ -22,15 +22,7 @@ namespace UWP.UserControls {
 
         public string Title {
             get => (string)GetValue(TitleProperty);
-            set {
-                SetValue(TitleProperty, value);
-                if (Message == "")
-                    ThreadPoolTimer.CreateTimer(async (source) => {
-                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                            IsOpen = false;
-                        });
-                    }, TimeSpan.FromSeconds(3));
-            }
+            set => SetValue(TitleProperty, value);
         }
 
         public string Message {
@@ -40,7 +32,15 @@ namespace UWP.UserControls {
 
         public bool IsOpen {
             get => (bool)GetValue(IsOpenProperty);
-            set => SetValue(IsOpenProperty, value);
+            set {
+                SetValue(IsOpenProperty, value);
+                if (value && Message == "")
+                    ThreadPoolTimer.CreateTimer(async (source) => {
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                            IsOpen = false;
+                        });
+                    }, TimeSpan.FromSeconds(3));
+            }
         }
 
         private void InfoBar_Closed(Microsoft.UI.Xaml.Controls.InfoBar sender, Microsoft.UI.Xaml.Controls.InfoBarClosedEventArgs args) {

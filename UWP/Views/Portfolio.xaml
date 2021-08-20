@@ -68,7 +68,7 @@
         ############################################################################################################### -->
         <Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 10 7 5" RowSpacing="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="36"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -78,6 +78,7 @@
                 Background="Transparent" BorderThickness="0"
                 CornerRadius="5"
                 Grid.Row="0"
+                Height="36"
                 ColumnSpacing="3"
                 Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
 
@@ -152,7 +153,8 @@
                         BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
                         Click="ToggleDetails_click"
                         IsChecked="True"
-                        Tooltip="Show details">
+                        Tooltip="Show details"
+                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
                         <userControls:ToggleIconButton.CheckedIcon>
                             <FontIcon Glyph="&#xE169;" />
                         </userControls:ToggleIconButton.CheckedIcon>
@@ -166,7 +168,8 @@
                         BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
                         Click="GroupPurchases_Click"
                         IsChecked="{x:Bind vm.PurchasesAreGrouped, Mode=TwoWay}"
-                        Tooltip="Group purchases">
+                        Tooltip="Group purchases"
+                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
                         <userControls:ToggleIconButton.UncheckedIcon>
                             <FontIcon Glyph="&#xF168;" />
                         </userControls:ToggleIconButton.UncheckedIcon>
@@ -180,7 +183,8 @@
                     FontSize="18" FontWeight="Light"
                     HorizontalAlignment="Right"
                     Header="Balance:"
-                    Margin="15 -10 15 0" Spacing="5">
+                    Margin="15 -10 15 0" Spacing="5"
+                    Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
                     <usercontrols:DoubleTextBlock.Value>
                         <TextBlock FontSize="22" Margin="0 0 0 03">
                             <Run Text="{x:Bind vm.TotalWorth}"/><!--
@@ -197,7 +201,7 @@
         ###############################################################################################################
         ############################################################################################################### -->
         <!-- Empty portfolio warning -->
-        <StackPanel
+        <Grid
             Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Top" Margin="0 50 0 0"
             Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2VisibilityNOT}}">
             <controls:DropShadowPanel
@@ -214,16 +218,18 @@
                     Source="/Assets/stockPrices.png"/>
             </controls:DropShadowPanel>
 
-            <TextBlock
-                FontWeight="Bold"
-                HorizontalAlignment="Center"
-                Text="Your portfolio is empty."
-                Style="{ThemeResource SubtitleTextBlockStyle}"/>
-            <TextBlock
-                FontWeight="Light" FontSize="16"
-                HorizontalAlignment="Center"
-                Text="Try adding a purchase." Opacity="0.7"/>
-        </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Margin="0 75">
+                <TextBlock
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    Text="Your portfolio is empty."
+                    Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                <TextBlock
+                    FontWeight="Light" FontSize="16"
+                    HorizontalAlignment="Center"
+                    Text="Try adding a purchase." Opacity="0.7"/>
+            </StackPanel>
+        </Grid>
 
 
         <userControls:PortfolioList

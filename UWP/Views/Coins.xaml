@@ -37,10 +37,10 @@
         ###########################################################################################
         # TOP HEADER # -->
         <Grid
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            CornerRadius="6" BorderThickness="0.5" BorderBrush="{ThemeResource SystemBaseMediumLowColor}"
-            Padding="30 10" Margin="15"
-            MaxWidth="650">
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="6"
+            Padding="20 10" Margin="15"
+            MaxWidth="600">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -48,7 +48,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel HorizontalAlignment="Center" Margin="0 0 0 10">
-                <TextBlock Text="GLOBAL MARKET DATA" Opacity="0.75" FontWeight="SemiBold" CharacterSpacing="100"/>
+                <TextBlock Text="GLOBAL MARKET DATA" Opacity="0.75" FontWeight="Normal" CharacterSpacing="100"/>
             </StackPanel>
 
             <!-- TITLES -->
