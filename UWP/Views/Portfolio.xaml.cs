@@ -45,6 +45,8 @@ namespace UWP.Views {
         }
 
         public async Task UpdatePage() {
+            vm.CurrencySymbol = App.currencySymbol;
+
             /// Empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();

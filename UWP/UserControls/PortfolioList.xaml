@@ -136,45 +136,44 @@
                                 </usercontrols:DoubleTextBlock.Value>
                             </usercontrols:DoubleTextBlock>
                         </Grid>
-                        
+
                         <StackPanel
                             x:Name="DetailsPanel"
                             BorderBrush="{ThemeResource ButtonBorderBrush}" BorderThickness="0 1 0 0"
                             Margin="0 5 0 0" Padding="0 5 0 0"
                             Visibility="{Binding ElementName=ListView, Path=DataContext.ShowDetails, Converter={StaticResource BoolVisibility}, FallbackValue=Collapsed}">
-                            <StackPanel.Resources>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="FontSize" Value="14"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <StackPanel Orientation="Horizontal" Spacing="30">
-                                <usercontrols:DoubleTextBlock
-                                    Header="Avg. Cost:"
-                                    Orientation="Horizontal"
-                                    HorizontalAlignment="Left"
-                                    Spacing="5">
-                                    <usercontrols:DoubleTextBlock.Value>
-                                        <TextBlock>
-                                            <Run Text="{x:Bind BoughtAt}"/><Run Text="{x:Bind CurrencySymbol}"/>
-                                        </TextBlock>
-                                    </usercontrols:DoubleTextBlock.Value>
-                                </usercontrols:DoubleTextBlock>
-
-                                <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Spacing="30">
                                     <usercontrols:DoubleTextBlock
-                                        Header="Currently:"
+                                        Header="Avg. Cost:"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Left"
-                                        Spacing="5">
+                                        Spacing="10">
                                         <usercontrols:DoubleTextBlock.Value>
-                                            <TextBlock>
-                                                <Run Text="{x:Bind Current}"/><Run Text="{x:Bind CurrencySymbol}"/>
-                                                <Run Text=""/>
-                                                <Run Text="{x:Bind Delta, Converter={StaticResource NumberSymbol}}" Foreground="{x:Bind ProfitFG}"/><!--
-                                                --><Run Text="%"  Foreground="{x:Bind ProfitFG}"/>
+                                            <TextBlock FontSize="16">
+                                                <Run Text="{x:Bind BoughtAt}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                             </TextBlock>
                                         </usercontrols:DoubleTextBlock.Value>
                                     </usercontrols:DoubleTextBlock>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <usercontrols:DoubleTextBlock
+                                            Header="Currently:"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Left"
+                                            Spacing="10">
+                                            <usercontrols:DoubleTextBlock.Value>
+                                                <TextBlock FontSize="16">
+                                                    <Run Text="{x:Bind Current}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                                    <Run
+                                                        Text="{x:Bind Delta, Converter={StaticResource NumberSymbol}}"
+                                                        FontSize="14"
+                                                        Foreground="{x:Bind ProfitFG}"/><!--
+                                                    --><Run Text="%" FontSize="14" Foreground="{x:Bind ProfitFG}"/>
+                                                </TextBlock>
+                                            </usercontrols:DoubleTextBlock.Value>
+                                        </usercontrols:DoubleTextBlock>
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
 
@@ -184,27 +183,29 @@
                                 Header="Exchange:"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Left"
-                                Spacing="5">
+                                Spacing="10">
                                 <usercontrols:DoubleTextBlock.Value>
-                                    <TextBlock>
+                                    <TextBlock FontSize="16">
                                         <Run Text="{x:Bind Exchange}"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
                             </usercontrols:DoubleTextBlock>
 
                             <!-- Row 3 -->
-                            <usercontrols:DoubleTextBlock
+                            <StackPanel
                                 x:Name="Row3" x:Load="{x:Bind Notes, Converter={StaticResource StringEmptyBoolNOT}}"
-                                Header="Notes:"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Left"
-                                Spacing="5">
-                                <usercontrols:DoubleTextBlock.Value>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind Notes}"/>
-                                    </TextBlock>
-                                </usercontrols:DoubleTextBlock.Value>
-                            </usercontrols:DoubleTextBlock>
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Text="Notes:" Opacity="0.6"
+                                    Width="72"
+                                    VerticalAlignment="Center"/>
+                                <TextBlock
+                                    Grid.Row="2" Grid.Column="1"
+                                    FontWeight="SemiBold" FontSize="16"
+                                    Text="{x:Bind Notes}"/>
+
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </UserControl>
