@@ -1,10 +1,10 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using UWP.Core.Constants;
+using UWP.Helpers;
 using UWP.Services;
 using UWP.Shared.Constants;
 using Windows.UI;
@@ -31,9 +31,7 @@ namespace UWP.Models {
             get => crypto;
             set {
                 SetProperty(ref crypto, value);
-                string logoURL = "Assets/Icons/icon" + crypto + ".png";
-                CryptoLogo = (!File.Exists(logoURL)) ?
-                    "https://chasing-coins.com/coin/logo/" + crypto : "/" + logoURL;
+                CryptoLogo = IconsHelper.GetIcon(crypto);
             }
         }
 

@@ -10,8 +10,7 @@ namespace UWP.Helpers {
                 return num.ToString("0,,.##M", App.UserCulture);
             }
             else if (num > 999) {
-                num = Math.Round(num, 2);
-                return num.ToString(App.UserCulture);
+                return num.ToString("0,.##K", App.UserCulture);
             }
             else {
                 num = Math.Round(num, 3);

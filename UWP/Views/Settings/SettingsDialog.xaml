@@ -68,13 +68,13 @@
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
 
-            <muxc:NavigationViewItemSeparator/>
+            <!--<muxc:NavigationViewItemSeparator/>
 
             <muxc:NavigationViewItem Content="Calculator">
                 <muxc:NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE1D0;"/>
                 </muxc:NavigationViewItem.Icon>
-            </muxc:NavigationViewItem>
+            </muxc:NavigationViewItem>-->
 
         </muxc:NavigationView.MenuItems>
 
