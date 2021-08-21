@@ -5,8 +5,11 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using System.Xml;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
@@ -16,6 +19,10 @@ using UWP.Shared.Helpers;
 using UWP.Shared.Interfaces;
 using UWP.Shared.Models;
 using UWP.UserControls;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -57,7 +64,7 @@ namespace UWP.Views {
 
             vm.TotalInvested = vm.Portfolio.Sum(x => x.InvestedQty);
             vm.TotalWorth = vm.Portfolio.Sum(x => x.Worth);
-            vm.TotalDelta = vm.Portfolio.Sum(x => x.Delta);
+            vm.TotalDelta = vm.Portfolio.Sum(x => x.Profit);
             vm.AllPurchasesInCurrency = vm.Portfolio.Select(x => x.Currency).All(x => x == vm.Portfolio[0].Currency);
             vm.AllPurchasesCurrencySym = vm.Portfolio.FirstOrDefault()?.CurrencySymbol ?? App.currencySymbol;
 
@@ -313,5 +320,77 @@ namespace UWP.Views {
         /// </summary>
         private async void PortfolioList_UpdateParent(object sender, EventArgs e)
             => await UpdatePage();
+
+
+        /// ###############################################################################################
+        /// Import/Export functionality
+        private async void ImportPortfolio_Click(object sender, RoutedEventArgs e) {
+            var picker = new FileOpenPicker() {
+                ViewMode = PickerViewMode.List,
+                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+            };
+            picker.FileTypeFilter.Add(".ct");
+
+            StorageFile importedFile = await picker.PickSingleFileAsync();
+            // Operation cancelled
+            if (importedFile == null) 
+                return;
+            
+            try {
+                var stream = await importedFile.OpenStreamForReadAsync();
+                DataContractSerializer stuffSerializer = new DataContractSerializer(typeof(List<PurchaseModel>));
+                var setResult = (List<PurchaseModel>)stuffSerializer.ReadObject(stream);
+                await stream.FlushAsync();
+                stream.Dispose();
+
+
+                var importedText = await FileIO.ReadTextAsync(importedFile);
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                StorageFile sampleFile = await storageFolder.CreateFileAsync(
+                    UserStorage.Portfolio6, CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(sampleFile, importedText);
+
+                // Now update the page
+                Page_Loaded(null, null);
+            }
+            catch (Exception ex) {
+                var z = ex.Message;
+                vm.InAppNotification("Error importing portfolio.", ex.Message);
+            }            
+        }
+
+        private async void ExportPortfolio_Click(object sender, RoutedEventArgs e) {
+            var allFiles = await ApplicationData.Current.LocalFolder.GetFilesAsync();
+            var fileNames = allFiles.Select(x => x.Name).ToList();
+
+            if (!fileNames.Contains(UserStorage.Portfolio6)) {
+                vm.InAppNotification("Portfolio not found.");
+                return;
+            }
+
+            var portfolioFile = await ApplicationData.Current.LocalFolder.GetFileAsync(UserStorage.Portfolio6);
+            var portfolioText = await FileIO.ReadTextAsync(portfolioFile);
+            var savePicker = new FileSavePicker();
+            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            savePicker.FileTypeChoices.Add("Plain Text", new List<string>() { ".ct" });
+            savePicker.SuggestedFileName = "CryptoTracker-Portfolio";
+
+            StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null) {
+                // Prevent updates to the remote version of the file until we finish making changes
+                CachedFileManager.DeferUpdates(file);
+
+                await FileIO.WriteTextAsync(file, portfolioText);
+                
+                // Let Windows know that we're finished changing the file
+                // Completing updates may require Windows to ask for user input.
+                FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+                if (status == FileUpdateStatus.Complete)
+                    vm.InAppNotification("Portfolio exported successfully.");
+                else
+                    vm.InAppNotification("Portfolio could not be saved.");
+            }
+            // else: Operation cancelled
+        }
     }
 }

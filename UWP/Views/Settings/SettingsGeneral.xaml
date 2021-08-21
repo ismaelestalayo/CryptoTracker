@@ -84,32 +84,6 @@
                 <x:String>News</x:String>
                 <x:String>Portfolio</x:String>
             </ComboBox>
-            
-
-            <!-- Portfolio backup -->
-            <StackPanel  Style="{StaticResource SettingsSectionTitle}">
-                <FontIcon Glyph="&#xE159;"/>
-                <TextBlock Text="Portfolio backup" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
-
-            <TextBlock Text="Create a backup of your portfolio by saving it in a safe place (or mantain different ones by storing multiple)."/>
-            <StackPanel Orientation="Horizontal" Spacing="10">
-                <Button Content="Import">
-                    <Button.Flyout>
-                        <Flyout>
-                            <StackPanel Spacing="10">
-                                <TextBlock Text="Your current portfolio will be overwritten." Style="{ThemeResource BaseTextBlockStyle}"/>
-                                <Button Click="ImportPortfolio_Click" Content="Yes, import" />
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-
-                </Button>
-                <Button
-                    Content="Export"
-                    Click="ExportPortfolio_Click">
-                </Button>
-            </StackPanel>
 
         </StackPanel>
     </ScrollViewer>

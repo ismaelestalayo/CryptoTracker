@@ -20,34 +20,6 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style x:Key="DataGrid_HeaderStyle" TargetType="ContentControl">
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ContentControl">
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Background="{ThemeResource ButtonBackground}"
-                            CornerRadius="0 0 0 0" Padding="5"
-                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="DataGrid_DetailsLeftStyle" TargetType="TextBlock" >
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-        </Style>
-        <Style x:Key="DataGrid_DetailsRightStyle" TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Margin" Value="15 0 50 0"/>
-        </Style>
-
         <converters:BoolToVisibility x:Key="BoolToVisibility"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
         <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
@@ -104,15 +76,28 @@
             </Grid>
 
             <Grid Grid.Row="2">
-                <StackPanel Orientation="Horizontal" Spacing="10" Margin="0 -10 0 0">
+                <Grid ColumnSpacing="10" Margin="0 -10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+                            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+                            <Setter Property="Height" Value="36"/>
+                        </Style>
+                    </Grid.Resources>
                     <Button
-                        BorderBrush="{ThemeResource ButtonBorderBrush}"
-                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
                         Click="AddPurchase_click"
-                        Height="36"
+                        Grid.Column="0" Padding="15 0"
                         ToolTipService.ToolTip="Add a new purchase">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <FontIcon Glyph="&#xE109;" FontSize="15"/>
+                            <FontIcon Glyph="&#xE109;" FontSize="16"/>
                             <TextBlock Text="New purchase" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -121,6 +106,7 @@
                         BorderBrush="{ThemeResource ButtonBorderBrush}"
                         BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
                         Click="ToggleDetails_click"
+                        Grid.Column="1"
                         IsChecked="True"
                         Tooltip="Show details"
                         Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
@@ -136,6 +122,7 @@
                         BorderBrush="{ThemeResource ButtonBorderBrush}"
                         BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
                         Click="GroupPurchases_Click"
+                        Grid.Column="2"
                         IsChecked="{x:Bind vm.PurchasesAreGrouped, Mode=TwoWay}"
                         Tooltip="Group purchases"
                         Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
@@ -146,7 +133,32 @@
                             <FontIcon Glyph="&#xE8FD;" />
                         </userControls:ToggleIconButton.CheckedIcon>
                     </userControls:ToggleIconButton>
-                </StackPanel>
+
+                    <Button Grid.Column="4">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <FontIcon Glyph="&#xED25;" FontSize="16"/>
+                                <TextBlock Text="Import"/>
+                            </StackPanel>
+                        </Button.Content>
+                        <Button.Flyout>
+                            <Flyout Placement="Bottom">
+                                <StackPanel Spacing="10">
+                                    <TextBlock Text="Your current portfolio will be overwritten." Style="{ThemeResource BaseTextBlockStyle}"/>
+                                    <Button Click="ImportPortfolio_Click" Content="Yes, import" />
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                    <Button Grid.Column="5" Click="ExportPortfolio_Click">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <FontIcon Glyph="&#xE105;" FontSize="16"/>
+                                <TextBlock Text="Export"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
 
