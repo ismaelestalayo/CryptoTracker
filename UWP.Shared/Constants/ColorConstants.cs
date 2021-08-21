@@ -23,11 +23,11 @@ namespace UWP.Shared.Constants {
             Color color;
             color = ColorDict.TryGetValue(key, out color) ? color : ColorDict["NULL_color"];
 
-            var localSettings = new LocalSettings();
-            if (localSettings.Get<bool>(UserSettings.Monochrome)) {
-                var darkTheme = CurrentThemeIsDark();
-                color = (darkTheme) ? ParseHex("#f0f0f0") : ParseHex("#101010");
-            }
+            //var localSettings = new LocalSettings();
+            //if (localSettings.Get<bool>(UserSettings.Monochrome)) {
+            //    var darkTheme = CurrentThemeIsDark();
+            //    color = (darkTheme) ? ParseHex("#f0f0f0") : ParseHex("#101010");
+            //}
 
             if (opacity != 255)
                 color.A = (byte)opacity;
@@ -70,7 +70,7 @@ namespace UWP.Shared.Constants {
             { "XTZ_color",  ParseHex("#2c7df7") },
             { "ZRX_color",  ParseHex("#404040") },
 
-            { "NULL_color",   ParseHex("#7D7D7D") },
+            { "NULL_color",   ParseHex("#7F7F7F") },
             { "pastel_green", ParseHex("#00AD57") },
             { "pastel_red",   ParseHex("#FF5757") }
         };

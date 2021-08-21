@@ -46,7 +46,7 @@
                         Click="Delete_alert"
                         Grid.Column="4" Content="&#xE107;" Background="Transparent"
                         FontFamily="{StaticResource FluentIconFont}"
-                        Margin=" 0" Padding="10 9" />
+                        Margin=" 0" Padding="10 9"/>
                 </StackPanel>
             </DataTemplate>
         </ListView.ItemTemplate>

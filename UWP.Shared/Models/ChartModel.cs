@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Telerik.Charting;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
@@ -34,7 +35,7 @@ namespace UWP.Models {
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
-        private SolidColorBrush chartStroke = new SolidColorBrush(Color.FromArgb(127, 127, 127, 127));
+        private SolidColorBrush chartStroke = new SolidColorBrush(Color.FromArgb(224, 127, 127, 127));
 
         public SolidColorBrush ChartStroke {
             get => chartStroke;

@@ -216,12 +216,12 @@ namespace UWP.Views {
             if (!App.pinnedCoins.Contains(crypto)) {
                 App.pinnedCoins.Add(crypto);
                 //Home.AddCoinHome(crypto);
-                vm.InAppNotification($"{crypto} pinned to home.");
+                vm.InAppNotification($"{crypto} saved to favorites.");
             }
             else {
                 //Home.RemoveCoinHome(crypto);
                 App.pinnedCoins.Remove(crypto);
-                vm.InAppNotification($"{crypto} unpinned from home.");
+                vm.InAppNotification($"{crypto} removed from favorites.");
             }
         }
 
@@ -321,8 +321,11 @@ namespace UWP.Views {
             });
         }
 
-        private void Flyout_Closed(object sender, object e)
-            => AlertsHelper.UpdateOneCryptoAlerts(vm.Coin.Name, vm.Alerts);
+        private void Flyout_Closed(object sender, object e) {
+            // sort alerts before saving
+            vm.Alerts = new ObservableCollection<Alert>(vm.Alerts.OrderBy(x => x.Threshold).ToList());
+            AlertsHelper.UpdateOneCryptoAlerts(vm.Coin.Name, vm.Alerts);
+        }
 
         private async void PortfolioList_UpdateParent(object sender, EventArgs e) {
             await UpdatePage();

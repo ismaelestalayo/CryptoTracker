@@ -59,7 +59,7 @@ namespace UWP.Converters {
     public class BrushToColorTr2Converter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang) {
             var color = ((SolidColorBrush)val).Color;
-            return Color.FromArgb(8, color.R, color.G, color.B);
+            return Color.FromArgb(16, color.R, color.G, color.B);
         }
 
         public object ConvertBack(object val, Type targetType, object param, string lang)

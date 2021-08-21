@@ -73,14 +73,14 @@ namespace UWP.Background {
             switch (alert.Mode.ToLowerInvariant()) {
                 case "below":
                     if (price < alert.Threshold) {
-                        header = $"📉 {alert.Crypto} {alert.Mode} {alert.Threshold}{alert.CurrencySymbol}";
+                        header = $"{alert.Crypto} {alert.Mode} {alert.Threshold}{alert.CurrencySymbol}";
                         ToastGenerator.SendAlert(header, subheader, alert.Crypto);
                         return true;
                     }
                     return false;
                 case "above":
                     if (price >= alert.Threshold) {
-                        header = $"🚀 {alert.Crypto} {alert.Mode} {alert.Threshold}{alert.CurrencySymbol}";
+                        header = $"{alert.Crypto} {alert.Mode} {alert.Threshold}{alert.CurrencySymbol}";
                         ToastGenerator.SendAlert(header, subheader, alert.Crypto);
                         alert.Enabled = false;
                         return true;
