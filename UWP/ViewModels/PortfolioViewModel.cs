@@ -56,5 +56,16 @@ namespace UWP.ViewModels {
 			get => totalWorth;
 			set => SetProperty(ref totalWorth, value);
 		}
+
+		private string allPurchasesCurrencySym = "";
+		public string AllPurchasesCurrencySym {
+			get => allPurchasesCurrencySym;
+			set => SetProperty(ref allPurchasesCurrencySym, value);
+		}
+		private bool allPurchasesInCurrency = false;
+		public bool AllPurchasesInCurrency {
+			get => allPurchasesInCurrency;
+			set => SetProperty(ref allPurchasesInCurrency, value);
+		}
 	}
 }

@@ -48,6 +48,7 @@
             <Setter Property="Margin" Value="15 0 50 0"/>
         </Style>
 
+        <converters:BoolToVisibility x:Key="BoolToVisibility"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
         <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
         <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
@@ -180,6 +181,8 @@
                 </StackPanel>
 
                 <usercontrols:DoubleTextBlock
+                    x:Name="BalanceText"
+                    x:Load="{x:Bind vm.AllPurchasesInCurrency}"
                     FontSize="18" FontWeight="Light"
                     HorizontalAlignment="Right"
                     Header="Balance:"
@@ -188,7 +191,7 @@
                     <usercontrols:DoubleTextBlock.Value>
                         <TextBlock FontSize="22" Margin="0 0 0 03">
                             <Run Text="{x:Bind vm.TotalWorth}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
                         </TextBlock>
                     </usercontrols:DoubleTextBlock.Value>
                 </usercontrols:DoubleTextBlock>

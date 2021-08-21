@@ -57,6 +57,8 @@ namespace UWP.Views {
 
             vm.TotalInvested = vm.Portfolio.Sum(x => x.InvestedQty);
             vm.TotalWorth = vm.Portfolio.Sum(x => x.Worth);
+            vm.AllPurchasesInCurrency = vm.Portfolio.Select(x => x.Currency).All(x => x == vm.Portfolio[0].Currency);
+            vm.AllPurchasesCurrencySym = vm.Portfolio.FirstOrDefault()?.CurrencySymbol ?? App.currencySymbol;
 
             /// Create the diversification grid
             var grouped = vm.Portfolio.GroupBy(x => x.Crypto);

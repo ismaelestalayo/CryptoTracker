@@ -456,7 +456,7 @@
         ####################################################################################################
         ############################################## Bottom Cards ########################################
         #################################################################################################### -->
-        <usercontrols:FluentCard Grid.Row="3">
+        <usercontrols:FluentCard Grid.Row="3" VerticalAlignment="Top">
             <usercontrols:FluentCard.TitleContent>
                 <Grid>
                     <usercontrols:DoubleTextBlock
