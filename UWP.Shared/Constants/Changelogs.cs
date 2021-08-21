@@ -10,21 +10,24 @@ namespace UWP.Core.Constants {
 			{
 				"6.0.0",
 				new List<string>(){
-					"Faster launch",
-					"Polished UI",
-					"Pin any coin as a Live Tile",
-					"More granular charts (1h/4h/1d...)",
-					"Added automatic refresh of 30secs",
+					"Refreshed UI inline with Windows 11",
+					"New volume and candle charts",
+					"New price alerts",
+					"More granular time filters (1h/4h/1d...)",
+					"Pin any coin as a Live Tile (Windows 10)",
+					"Configurable auto-refresh and startup page",
 					"Support for Jump Lists",
-					"Coins: New Compact Overlay",
-					"Portfolio: ability to clone and add notes to purchases" }
-				},
-			{
-				"5.0.0",
-				new List<string>() {
-					"a", "b"
+					"New Compact Overlay",
+					"Portfolio shows diversification ratios and can group entries",
+					"Ability to duplicate, add notes and change the currency of purchases"
 				}
-			}
+			},
+			//{
+			//	"5.0.0",
+			//	new List<string>() {
+			//		"a", "b"
+			//	}
+			//}
 		};
 
 		public static readonly List<string> CurrentChangelog = LatestChangelogs["6.0.0"];

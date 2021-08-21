@@ -33,7 +33,7 @@
             </StackPanel>
 
             <TextBlock
-                Text="Choose the currency in which to to show prices. &#x0a;(Pages need to be updated manually.)"/>
+                Text="Choose the currency in which to display prices."/>
             <ComboBox
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                 Margin="0 5 0 0" Width="110"
@@ -57,8 +57,8 @@
                 <TextBlock Text="Auto-refresh" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
             <TextBlock>
-                <Run Text="Home, Details and Compact Overlay automatically refresh."/>
-                <Run Text="(Charts update minutely because of the API's granularity.)" FontStyle="Italic"/>
+                <Run Text="Choose the frequency of auto-refresh on Home, Details and Compact Overlay pages."/>
+                <Run Text="&#x0a;(Charts update minutely because of API limitations.)" FontStyle="Italic"/>
             </TextBlock>
             <ComboBox
                 SelectedItem="{x:Bind vm.AutoRefresh, Mode=TwoWay}"
@@ -75,7 +75,7 @@
                 <FontIcon Glyph="&#xE7E8;"/>
                 <TextBlock Text="Startup page" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
-            <TextBlock Text="Choose the page to load when opening the app."/>
+            <TextBlock Text="Initial page to load when opening the app."/>
             <ComboBox x:Name="startupPage" SelectionChanged="startupPage_SelectionChanged"
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                 Margin="0 5 0 0" Width="110">
@@ -86,14 +86,14 @@
             </ComboBox>
             
 
-            <!-- CLOUD SYNC -->
+            <!-- Portfolio backup -->
             <StackPanel  Style="{StaticResource SettingsSectionTitle}">
                 <FontIcon Glyph="&#xE753;"/>
                 <TextBlock Text="Cloud sync" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
             
-            <TextBlock Text="Sync your portfolio with OneDrive with just a click."/>
-            <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Create a backup of your portfolio (or mantain different ones) by saving it in a safe place."/>
+            <StackPanel Orientation="Horizontal" Spacing="10">
                 <Button
                     Content="Upload"
                     Click="UploadPortfolio_Click"/>

@@ -33,9 +33,18 @@
             </StackPanel>
 
             <TextBlock>
-                <Run Text="Data provided by"/>
-                <Hyperlink NavigateUri="https://www.cryptocompare.com/api" >
-                    CryptoCompare API
+                <Run Text="Data provided by:"/>
+                
+                <Hyperlink NavigateUri="https://www.coingecko.com/en">
+                    CoinGecko
+                </Hyperlink>
+                <Run Text=","/>
+                <Hyperlink NavigateUri="https://www.coingecko.com/en">
+                    CoinPaprika
+                </Hyperlink>
+                <Run Text="and"/>
+                <Hyperlink NavigateUri="https://www.cryptocompare.com/">
+                    CryptoCompare
                 </Hyperlink>
             </TextBlock>
             <TextBlock>
@@ -52,8 +61,9 @@
                 <TextBlock Text="About me" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
-            <TextBlock >
-                <Run Text="Made with 🤍 by a former engineer student."/>
+            <TextBlock Text="Made with 🤍 by a former telecommunications engineer student."/>
+            <TextBlock>
+                <Run Text="More info at"/>
                 <Hyperlink NavigateUri="https://ismaelestalayo.com/">ismaelestalayo.com</Hyperlink>
             </TextBlock>
 

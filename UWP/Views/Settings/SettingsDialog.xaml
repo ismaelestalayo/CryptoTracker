@@ -81,7 +81,7 @@
         <Frame
             x:Name="SettingsFrame"
             Background="{ThemeResource ContentDialogBackground}"
-            Padding="18 0 8 0" Margin="0">
+            Padding="18 0 18 0" Margin="0">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>

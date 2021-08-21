@@ -44,13 +44,13 @@
             </StackPanel>
 
             <TextBlock Text="Take a minute and leave a review on the Store."/>
-            <StackPanel Orientation="Horizontal" Margin="0">
-                <Button Content="Rating" Click="Feedback_Rating"/>
+            <StackPanel Orientation="Horizontal" Margin="0" Spacing="10">
+                <Button Content="Rate" Click="Feedback_Rating"/>
                 <Button Content="Review" Click="Feedback_Review"/>
             </StackPanel>
 
             <TextBlock Text="I would love to hear your thoughts about the app."/>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Spacing="10">
                 <Button
                     Click="Feedback_Mail" Content="Email"
                     ToolTipService.ToolTip="ismael.em@outlook.com"/>
@@ -69,9 +69,8 @@
             </StackPanel>
             
             <TextBlock
-                Text="I have been developing this app since August 2017, so if
-                you really love my app and want to support it, you can donate in multiple ways:"/>
-            <StackPanel Orientation="Horizontal">
+                Text="I have been developing this app since August 2017, so if you really enjoy using it and want to support it, you can donate in multiple ways:"/>
+            <StackPanel Orientation="Horizontal" Spacing="10">
                 <Button Click="Donation_Paypal" Content="Paypal"/>
                 <Button Click="Donation_Kofi" Content="Ko-fi"/>
                 <Button Click="Donation_ETH" Content="Crypto">
