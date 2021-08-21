@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UWP.Core.Constants;
 using UWP.Shared.Constants;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -102,6 +107,66 @@ namespace UWP.Views {
         private void startupPage_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var startupPage = ((ComboBox)sender).SelectedItem.ToString();
             App._LocalSettings.Set(UserSettings.StartupPage, $"/{startupPage}");
+        }
+
+        private async void ImportPortfolio_Click(object sender, RoutedEventArgs e) {
+            var picker = new FileOpenPicker() {
+                ViewMode = PickerViewMode.List,
+                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+            };
+            picker.FileTypeFilter.Add(".ct");
+
+            StorageFile importedFile = await picker.PickSingleFileAsync();
+            if (importedFile == null) {
+                var zz = "Operation cancelled.";
+                return;
+            }
+            // Application now has read/write access to the picked file
+            var importedText = await FileIO.ReadTextAsync(importedFile);
+
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile sampleFile = await storageFolder.CreateFileAsync(
+                UserStorage.Portfolio6, CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(sampleFile, importedText);
+        }
+
+        private async void ExportPortfolio_Click(object sender, RoutedEventArgs e) {
+            var allFiles = await ApplicationData.Current.LocalFolder.GetFilesAsync();
+            var fileNames = allFiles.Select(x => x.Name).ToList();
+            
+            if (!fileNames.Contains(UserStorage.Portfolio6)) {
+                vm.InAppNotification("Portfolio not found.");
+                return;
+            }
+
+            var portfolioFile = await ApplicationData.Current.LocalFolder.GetFileAsync(UserStorage.Portfolio6);
+            var portfolioText = await FileIO.ReadTextAsync(portfolioFile);
+            var savePicker = new FileSavePicker();
+            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            savePicker.FileTypeChoices.Add("Plain Text", new List<string>() { ".ct" });
+            savePicker.SuggestedFileName = "CryptoTracker-Portfolio";
+
+            StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null) {
+                // Prevent updates to the remote version of the file until
+                // we finish making changes and call CompleteUpdatesAsync.
+                CachedFileManager.DeferUpdates(file);
+                // write to file
+                await FileIO.WriteTextAsync(file, portfolioText);
+                // Let Windows know that we're finished changing the file so
+                // the other app can update the remote version of the file.
+                // Completing updates may require Windows to ask for user input.
+                FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+                if (status == FileUpdateStatus.Complete) {
+                    var z = "File " + file.Name + " was saved.";
+                }
+                else {
+                    var z = "File " + file.Name + " couldn't be saved.";
+                }
+            }
+            else {
+                var z = "Operation cancelled.";
+            }
         }
     }
 }
