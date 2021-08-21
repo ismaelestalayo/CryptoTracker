@@ -49,13 +49,13 @@
 
 
             <!-- COLORS -->
-            <StackPanel Style="{StaticResource Title}">
+            <!--<StackPanel Style="{StaticResource Title}">
                 <FontIcon Glyph="&#xE9D2;"/>
                 <TextBlock Text="Colors" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
             <TextBlock Text="Monochrome"/>
-            <ToggleSwitch x:Name="MonochromeSwitch" Margin="0 -10 0 0" Toggled="Monochrome_Toggled"/>
+            <ToggleSwitch x:Name="MonochromeSwitch" Margin="0 -10 0 0" Toggled="Monochrome_Toggled"/>-->
 
         </StackPanel>
     </ScrollViewer>

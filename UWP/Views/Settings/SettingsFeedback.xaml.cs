@@ -22,15 +22,15 @@ namespace UWP.Views {
         }
 
         private async void Feedback_Rating(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("ratingButton_Click");
+            Analytics.TrackEvent("feedback-rating");
             await ShowRatingReviewDialog();
         }
         private async void Feedback_Review(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("reviewButton_Click");
+            Analytics.TrackEvent("feedback-review");
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9n3b47hbvblc"));
         }
         private async void Feedback_Mail(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("mailButton_Click");
+            Analytics.TrackEvent("feedback-mail");
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient("ismael.em@outlook.com"));
             emailMessage.Subject = "Feedback for CryptoTracker v" + string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
@@ -39,23 +39,23 @@ namespace UWP.Views {
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
         }
         private async void TwitterButton_Click(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("twitterButton_Click");
+            Analytics.TrackEvent("feedback-twitter");
             await Launcher.LaunchUriAsync(new Uri("https://twitter.com/ismaelestalayo"));
         }
 
         /// #######################################################################################
         private async void Donation_Paypal(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("donation-paypal");
+            Analytics.TrackEvent("feedback-donationPaypal");
             await Launcher.LaunchUriAsync(new Uri("https://paypal.me/ismaelEstalayo"));
         }
 
         private async void Donation_Kofi(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("donation-Kofi");
+            Analytics.TrackEvent("feedback-donationKofi");
             await Launcher.LaunchUriAsync(new Uri("https://ko-fi.com/ismaelestalayo"));
         }
 
-        private void Donation_ETH(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("donation-ETH");
+        private void Donation_Crypto(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("feedback-donationCrypto");
             DataPackage dataPackage = new DataPackage();
             dataPackage.RequestedOperation = DataPackageOperation.Copy;
             dataPackage.SetText("0xE1D40ce30E257af4753e607f7F4a4feC8900E3cD");

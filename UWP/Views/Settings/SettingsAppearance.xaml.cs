@@ -13,7 +13,7 @@ namespace UWP.Views {
         }
 
         private void SettingsAppearance_Loaded(object sender, RoutedEventArgs e) {
-            MonochromeSwitch.IsOn = App._LocalSettings.Get<bool>(UserSettings.Monochrome);
+            //MonochromeSwitch.IsOn = App._LocalSettings.Get<bool>(UserSettings.Monochrome);
             var theme = App._LocalSettings.Get<string>(UserSettings.Theme);
             switch (theme) {
                 case "Light":
@@ -46,7 +46,7 @@ namespace UWP.Views {
             parentDialog.RequestedTheme = darkTheme ? ElementTheme.Dark : ElementTheme.Light;
         }
 
-        private void Monochrome_Toggled(object sender, RoutedEventArgs e)
-            => App._LocalSettings.Set(UserSettings.Monochrome, ((ToggleSwitch)sender).IsOn);
+        //private void Monochrome_Toggled(object sender, RoutedEventArgs e)
+        //    => App._LocalSettings.Set(UserSettings.Monochrome, ((ToggleSwitch)sender).IsOn);
     }
 }
