@@ -256,7 +256,7 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <usercontrols:FluentCard Grid.Row="2" Opacity="{x:Bind vm.Coin.Opacity}">
+        <usercontrols:FluentCard Grid.Row="2" Opacity="{x:Bind vm.Coin.Opacity}" x:Name="ChartCard">
             <usercontrols:FluentCard.TitleContent>
                 <Grid>
                     <!-- CHART VALUES (ON NOT HOVER) -->

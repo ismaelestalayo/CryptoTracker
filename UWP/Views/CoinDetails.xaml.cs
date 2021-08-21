@@ -53,7 +53,7 @@ namespace UWP.Views {
             /// Create the connected animation
             var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
             if (animation != null)
-                animation.TryStart(PriceChart, new UIElement[] { BottomUniformGrid });
+                animation.TryStart(PriceChart, new UIElement[] { ChartCard });
 
             /// Create the auto-refresh timer
             var autoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
@@ -239,10 +239,10 @@ namespace UWP.Views {
 
                 try {
                     RenderTargetBitmap rtb = new RenderTargetBitmap();
-                    BottomUniformGrid.Children.Add(grid);
+                    MainGrid.Children.Add(grid);
                     grid.Opacity = 0;
                     await rtb.RenderAsync(grid);
-                    BottomUniformGrid.Children.Remove(grid);
+                    MainGrid.Children.Remove(grid);
                     var pixelBuffer = await rtb.GetPixelsAsync();
                     var pixels = pixelBuffer.ToArray();
                     var displayInformation = DisplayInformation.GetForCurrentView();
