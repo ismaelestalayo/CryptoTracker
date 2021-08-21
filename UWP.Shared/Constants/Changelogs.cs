@@ -13,6 +13,7 @@ namespace UWP.Core.Constants {
 					"Refreshed UI inline with Windows 11",
 					"New volume and candle charts",
 					"New price alerts",
+					"Import/Export portfolio backups",
 					"More granular time filters (1h/4h/1d...)",
 					"Pin any coin as a Live Tile (Windows 10)",
 					"Configurable auto-refresh and startup page",

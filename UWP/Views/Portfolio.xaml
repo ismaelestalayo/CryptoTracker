@@ -134,7 +134,7 @@
                         </userControls:ToggleIconButton.CheckedIcon>
                     </userControls:ToggleIconButton>
 
-                    <Button Grid.Column="4">
+                    <Button Grid.Column="4" ToolTipService.ToolTip="Import portfolio backup">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <FontIcon Glyph="&#xED25;" FontSize="16"/>
@@ -150,7 +150,8 @@
                             </Flyout>
                         </Button.Flyout>
                     </Button>
-                    <Button Grid.Column="5" Click="ExportPortfolio_Click">
+                    <Button Grid.Column="5"  Click="ExportPortfolio_Click"
+                            ToolTipService.ToolTip="Export portfolio backup">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <FontIcon Glyph="&#xE105;" FontSize="16"/>
@@ -210,7 +211,8 @@
                     ShowDetails="{x:Bind vm.ShowDetails}"
                     VerticalAlignment="Top"/>
 
-                <Grid x:Name="TotalValues" Grid.Row="1" Margin="7 0" Padding="15 0">
+                <Grid x:Name="TotalValues" Grid.Row="1" Margin="7 0" Padding="15 0"
+                      x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="28"/>
                         <ColumnDefinition Width="*"/>
