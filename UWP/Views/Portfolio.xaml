@@ -103,38 +103,6 @@
                 <d:StackPanel Grid.Column="2" HorizontalAlignment="Stretch" Background="Goldenrod"/>
             </Grid>
 
-            <StackPanel Grid.Row="1" Spacing="30" Orientation="Horizontal" Visibility="Collapsed">
-                <StackPanel.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="FontWeight" Value="SemiLight"/>
-                    </Style>
-                </StackPanel.Resources>
-                <usercontrols:DoubleTextBlock Header="Account balance:" Spacing="5">
-                    <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock FontSize="18" FontWeight="SemiBold">
-                            <Run Text="{x:Bind vm.TotalWorth}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                    </usercontrols:DoubleTextBlock.Value>
-                </usercontrols:DoubleTextBlock>
-
-                <usercontrols:DoubleTextBlock Header="Cost:" Spacing="5">
-                    <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock FontSize="18" FontWeight="SemiBold">
-                            <Run Text="{x:Bind vm.TotalInvested}"/><!--
-                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                        </TextBlock>
-                    </usercontrols:DoubleTextBlock.Value>
-                </usercontrols:DoubleTextBlock>
-
-                <usercontrols:DoubleTextBlock Header="Assets:" Spacing="5">
-                    <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock Text="3" FontSize="18" FontWeight="SemiBold"/>
-                    </usercontrols:DoubleTextBlock.Value>
-                </usercontrols:DoubleTextBlock>
-            </StackPanel>
-
             <Grid Grid.Row="2">
                 <StackPanel Orientation="Horizontal" Spacing="10" Margin="0 -10 0 0">
                     <Button
@@ -179,22 +147,6 @@
                         </userControls:ToggleIconButton.CheckedIcon>
                     </userControls:ToggleIconButton>
                 </StackPanel>
-
-                <usercontrols:DoubleTextBlock
-                    x:Name="BalanceText"
-                    x:Load="{x:Bind vm.AllPurchasesInCurrency}"
-                    FontSize="18" FontWeight="Light"
-                    HorizontalAlignment="Right"
-                    Header="Balance:"
-                    Margin="15 -10 15 0" Spacing="5"
-                    Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
-                    <usercontrols:DoubleTextBlock.Value>
-                        <TextBlock FontSize="22" Margin="0 0 0 03">
-                            <Run Text="{x:Bind vm.TotalWorth}"/><!--
-                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
-                        </TextBlock>
-                    </usercontrols:DoubleTextBlock.Value>
-                </usercontrols:DoubleTextBlock>
             </Grid>
         </Grid>
 
@@ -235,14 +187,59 @@
         </Grid>
 
 
-        <userControls:PortfolioList
-            ClickGoTo="PortfolioList_ClickGoTo"
-            UpdateParent="PortfolioList_UpdateParent"
-            Grouped="{x:Bind vm.PurchasesAreGrouped}"
-            Grid.Row="2"
-            Margin="7 0"
-            Purchases="{x:Bind vm.Portfolio}"
-            ShowDetails="{x:Bind vm.ShowDetails}"/>
+        <ScrollViewer Grid.Row="2" Padding="0 0 5 0" Margin="0 0 -5 0">
+            <StackPanel>
+                <userControls:PortfolioList
+                    ClickGoTo="PortfolioList_ClickGoTo"
+                    UpdateParent="PortfolioList_UpdateParent"
+                    Grouped="{x:Bind vm.PurchasesAreGrouped}"
+                    Margin="7 0"
+                    Purchases="{x:Bind vm.Portfolio}"
+                    ShowDetails="{x:Bind vm.ShowDetails}"
+                    VerticalAlignment="Top"/>
+
+                <Grid x:Name="TotalValues" Grid.Row="1" Margin="7 0" Padding="15 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="28"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Right" Margin="0 -5 0 0">
+                        <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                        <TextBlock HorizontalAlignment="Center">
+                            <Run Text="{x:Bind vm.TotalInvested}"/><!--
+                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="0 -5 0 0">
+                        <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                        <TextBlock HorizontalAlignment="Center">
+                            <Run Text="{x:Bind vm.TotalWorth}"/><!--
+                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="4" HorizontalAlignment="Right" Margin="0 -5 0 0">
+                        <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                        <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
+                            <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
+                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
         
         <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
         <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->

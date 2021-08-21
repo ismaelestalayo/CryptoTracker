@@ -57,6 +57,7 @@ namespace UWP.Views {
 
             vm.TotalInvested = vm.Portfolio.Sum(x => x.InvestedQty);
             vm.TotalWorth = vm.Portfolio.Sum(x => x.Worth);
+            vm.TotalDelta = vm.Portfolio.Sum(x => x.Delta);
             vm.AllPurchasesInCurrency = vm.Portfolio.Select(x => x.Currency).All(x => x == vm.Portfolio[0].Currency);
             vm.AllPurchasesCurrencySym = vm.Portfolio.FirstOrDefault()?.CurrencySymbol ?? App.currencySymbol;
 

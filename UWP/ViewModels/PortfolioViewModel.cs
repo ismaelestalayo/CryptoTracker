@@ -56,6 +56,12 @@ namespace UWP.ViewModels {
 			get => totalWorth;
 			set => SetProperty(ref totalWorth, value);
 		}
+		private double totalDelta = 0;
+		public double TotalDelta {
+			get => totalDelta;
+			set => SetProperty(ref totalDelta, value);
+		}
+
 
 		private string allPurchasesCurrencySym = "";
 		public string AllPurchasesCurrencySym {

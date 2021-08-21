@@ -81,12 +81,12 @@ namespace UWP.UserControls {
                 Exchange = purchase.Exchange,
                 Notes = purchase.Notes
             };
-            Purchases.Insert(i, newPurchase);
 
             var LocalPurchases = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio6);
             var match = LocalPurchases.Where(x => x.Id == purchase.Id).FirstOrDefault();
             var idx2 = LocalPurchases.IndexOf(match);
             if (idx2 >= 0) {
+                Purchases.Insert(i, newPurchase);
                 LocalPurchases.Insert(idx2, newPurchase);
                 await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, LocalPurchases);
             }

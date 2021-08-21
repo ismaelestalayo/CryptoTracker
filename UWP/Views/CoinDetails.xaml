@@ -517,74 +517,38 @@
                 </Grid>
             </usercontrols:FluentCard.ExpandableContent>
         </usercontrols:FluentCard>
-        
-        
-        <Pivot Grid.Row="3" Visibility="Collapsed">
-            <PivotItem Header="Info">
-                <controls:UniformGrid x:Name="BottomUniformGrid" Rows="3" Columns="2" VerticalAlignment="Top">
-
-                    <!-- Info card -->
-                    <StackPanel
-                        x:Name="InfoCard" Style="{ThemeResource CardStackPanel}"
-                        Grid.RowSpan="2" Grid.ColumnSpan="2">
-                        <RelativePanel Style="{ThemeResource CardRelativePanelTitle}">
-                            <TextBlock Text="Information" Margin="24 0" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Bold"/>
-                        </RelativePanel>
-
-                        <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-                            <TextBlock
-                                Text="{x:Bind vm.CoinInfo.description.en}" TextWrapping="WrapWholeWords"
-                                TextAlignment="Justify" Opacity="0.8"/>
-                        </ScrollViewer>
-                    </StackPanel>
-
-                    <!-- Alerts card -->
-                    <usercontrols:FluentCard Title="Alerts">
-                        <usercontrols:FluentCard.ExpandableContent>
-                            <userControls:AlertList
-                                Alerts="{x:Bind vm.Alerts, Mode=TwoWay}"
-                                MaxHeight="250"/>
-                        </usercontrols:FluentCard.ExpandableContent>
-                    </usercontrols:FluentCard>
-
-                </controls:UniformGrid>
-            </PivotItem>
 
 
-            <!--<ScrollViewer Grid.Row="3" Margin="0 10" Visibility="Visible">
-            
 
-            --><!--
-                <ListView Grid.Row="1" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0" Background="Blue" Visibility="Collapsed">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="helpers:JSONexchanges">
-                            <Grid BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}" BorderThickness="0 0 0 2" Padding="0 0 0 5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
 
-                                <StackPanel>
-                                    <TextBlock Text="{x:Bind Exchange    , Mode=TwoWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Normal"/>
-                                    <TextBlock Text="{x:Bind T_Volume24  , Mode=TwoWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
-                                    <TextBlock Text="{x:Bind T_Volume24To, Mode=TwoWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
-                                </StackPanel>
+        <!--<ScrollViewer Grid.Row="3" Margin="0 10" Visibility="Visible">
+            <ListView Grid.Row="1" x:Name="MarketList" SelectionMode="None" Margin="-10 0 0 0" Background="Blue" Visibility="Collapsed">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="helpers:JSONexchanges">
+                        <Grid BorderBrush="{ThemeResource SystemControlForegroundListLowBrush}" BorderThickness="0 0 0 2" Padding="0 0 0 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="{x:Bind Price}" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>
+                            <StackPanel>
+                                <TextBlock Text="{x:Bind Exchange    , Mode=TwoWay}" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Normal"/>
+                                <TextBlock Text="{x:Bind T_Volume24  , Mode=TwoWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
+                                <TextBlock Text="{x:Bind T_Volume24To, Mode=TwoWay}" Style="{ThemeResource CaptionTextBlockStyle}"  FontWeight="Light"/>
+                            </StackPanel>
 
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
-                --><!--
+                            <TextBlock Text="{x:Bind Price}" Style="{ThemeResource SubtitleTextBlockStyle}" Grid.Column="1" FontWeight="SemiLight"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </ScrollViewer>-->
-
-        </Pivot>
 
     </Grid>
 </Page>
