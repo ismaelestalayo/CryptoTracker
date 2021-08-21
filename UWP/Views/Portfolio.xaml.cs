@@ -196,8 +196,13 @@ namespace UWP.Views {
         }
 
         /// ###############################################################################################
-        private void ToggleDetails_click(object sender, RoutedEventArgs e)
-            => vm.ShowDetails = !vm.ShowDetails;
+        private void ToggleDetails_click(object sender, RoutedEventArgs e) {
+            vm.ShowDetails = !vm.ShowDetails;
+            if (vm.ShowDetails)
+                MainGrid.RowDefinitions[3].Height = new GridLength(0, GridUnitType.Pixel);
+            else
+                MainGrid.RowDefinitions[3].Height = new GridLength(1, GridUnitType.Star);
+        }
 
         /// ###############################################################################################
         /// Add purchase dialog
