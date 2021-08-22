@@ -136,7 +136,7 @@ namespace UWP.Views {
 
                 /// Colors
                 var brush = vm.PriceCards[i].Chart.ChartStroke;
-                brush = ColorConstants.GetCoinBrush(crypto.ToUpper() + "_color");
+                brush = ColorConstants.GetCoinBrush(crypto);
                 vm.PriceCards[i].Chart.ChartStroke = brush;
 
                 /// Get Historic and create List of ChartData for the chart

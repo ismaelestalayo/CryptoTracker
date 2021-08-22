@@ -174,10 +174,7 @@ namespace UWP.Views {
             vm.CurrencySymbol = Currencies.GetCurrencySymbol(App.currency);
 
             /// Colors
-            var brush = vm.Chart.ChartStroke;
-            if (Application.Current.Resources.ContainsKey(crypto.ToUpper() + "_colorT"))
-                brush = (SolidColorBrush)Application.Current.Resources[crypto.ToUpper() + "_color"];
-            vm.Chart.ChartStroke = brush;
+            vm.Chart.ChartStroke = ColorConstants.GetCoinBrush(crypto);
 
             /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
             var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);

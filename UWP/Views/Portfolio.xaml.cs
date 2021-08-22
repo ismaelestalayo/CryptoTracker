@@ -94,7 +94,7 @@ namespace UWP.Views {
                     VerticalAlignment = VerticalAlignment.Center
                 };
                 g.Children.Add(t);
-                g.Background = ColorConstants.GetCoinBrush(crypto + "_color", 100);
+                g.Background = ColorConstants.GetCoinBrush(crypto, 100);
 
                 PortfolioChartGrid.Children.Add(g);
                 Grid.SetColumn(g, PortfolioChartGrid.Children.Count - 1);
