@@ -63,7 +63,7 @@ namespace UWP.Background {
             tile.VisualElements.ShowNameOnSquare150x150Logo = true;
             tile.VisualElements.ShowNameOnSquare310x310Logo = false;
             tile.VisualElements.ShowNameOnWide310x150Logo = false;
-            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/AppIcon.png");
+            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Wide.png");
             tile.VisualElements.Square44x44Logo = new Uri("ms-appx:///Assets/AppIcon.png");
 
             tile.VisualElements.ForegroundText = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black)

@@ -102,6 +102,9 @@ namespace UWP.Views {
                     case "string":
                         var crypto = e.Parameter?.ToString().ToUpperInvariant() ?? "NULL";
                         vm.Coin.Name = crypto;
+                        if (App.coinListGecko.Count == 0)
+                            await App.GetCoinList();
+
                         var _coin = App.coinListPaprika.Find(x => x.symbol == crypto) ?? new CoinPaprikaCoin();
                         vm.Coin.FullName = _coin?.name ?? "NULL";
 
