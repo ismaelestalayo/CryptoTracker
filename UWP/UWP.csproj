@@ -19,7 +19,7 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxPackageDir>C:\Users\ismae\Desktop\appxupload</AppxPackageDir>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <HockeyAppResourceId>40853427385b47e0bacec33938f84566</HockeyAppResourceId>
@@ -320,6 +320,7 @@
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-150.png" />
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-200.png" />
     <Content Include="Assets\Tiles and stuff\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Wide.png" />
     <None Include=".editorconfig" />
     <Content Include="Assets\confetti.json" />
     <Content Include="Assets\SegoeFluentIcons.ttf" />
