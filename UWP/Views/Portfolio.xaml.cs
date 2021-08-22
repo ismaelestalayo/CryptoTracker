@@ -2,7 +2,6 @@
 using CryptoTracker.Helpers;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using System.Xml;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
@@ -23,7 +21,6 @@ using UWP.UserControls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,6 +34,7 @@ namespace UWP.Views {
         private static int aggregate = 1;
         private static string timeSpan = "1w";
         private static string timeUnit = "hour";
+        private static string sortedBy = "";
 
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
@@ -113,8 +111,10 @@ namespace UWP.Views {
 
             var portfolioV2 = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio6);
 
-            if (portfolioV2.Count > 0)
+            if (portfolioV2.Count > 0) {
+                portfolioV2 = portfolioV2.OrderByDescending(x => x.Date).ToList();
                 return new ObservableCollection<PurchaseModel>(portfolioV2);
+            }
 
             /// If it is empty, there might be an old portfolio in the old format and key
             var portfolioV1 = await LocalStorageHelper.ReadObject<ObservableCollection<PurchaseClass>>("portfolio");
@@ -243,58 +243,44 @@ namespace UWP.Views {
 
         /// #######################################################################################
         /// Sorting
-        private void DataGrid_Sorting(object sender, DataGridColumnEventArgs e) {
-            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                e.Column.SortDirection = DataGridSortDirection.Ascending;
-            else
-                e.Column.SortDirection = DataGridSortDirection.Descending;
-
-            switch (e.Column.Header) {
-                case "Crypto":
-                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
-                                                                                           orderby item.Crypto ascending
-                                                                                           select item);
-                    else
-                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
-                                                                                           orderby item.Crypto descending
-                                                                                           select item);
+        private void SortPortfolio_click(object sender, RoutedEventArgs e) {
+            var sortBy = ((Button)sender).Content.ToString();
+            switch (sortBy) {
+                case "Coin":
+                    if (sortedBy != "Coin")
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(
+                            from item in vm.Portfolio orderby item.CryptoName ascending, item.Date select item);
+                    else {
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(
+                            from item in vm.Portfolio orderby item.CryptoName descending, item.Date select item);
+                    }
                     break;
                 case "Invested":
-                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
-                                                                                           orderby item.InvestedQty ascending
-                                                                                           select item);
+                    if (sortedBy != "Invested")
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(
+                            from item in vm.Portfolio orderby item.InvestedQty descending select item);
                     else
-                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
-                                                                                           orderby item.InvestedQty descending
-                                                                                           select item);
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(
+                            from item in vm.Portfolio orderby item.InvestedQty ascending select item);
                     break;
                 case "Worth":
-                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
-                                                                                           orderby item.Worth ascending
-                                                                                           select item);
+                    if (sortedBy != "Worth")
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(
+                            from item in vm.Portfolio orderby item.Worth descending select item);
                     else
-                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
-                                                                                           orderby item.Worth descending
-                                                                                           select item);
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(
+                            from item in vm.Portfolio orderby item.Worth ascending select item);
                     break;
-                case "Currently":
-                    if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
-                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
-                                                                                           orderby item.Current ascending
-                                                                                           select item);
+                case "Delta":
+                    if (sortedBy != "Delta")
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(
+                            from item in vm.Portfolio orderby item.Profit descending select item);
                     else
-                        vm.Portfolio = new ObservableCollection<PurchaseModel>(from item in vm.Portfolio
-                                                                                           orderby item.Current descending
-                                                                                           select item);
+                        vm.Portfolio = new ObservableCollection<PurchaseModel>(
+                            from item in vm.Portfolio orderby item.Profit ascending select item);
                     break;
             }
-            //foreach (var dgColumn in Portfolio_dg.Columns) {
-            //    if (dgColumn.Header.ToString() != e.Column.Header.ToString())
-            //        dgColumn.SortDirection = null;
-            //}
+            sortedBy = (sortedBy != sortBy) ? sortBy : "";
         }
 
 
