@@ -70,7 +70,7 @@ namespace UWP.ViewModels {
 			get => allPurchasesCurrencySym;
 			set => SetProperty(ref allPurchasesCurrencySym, value);
 		}
-		private bool allPurchasesInCurrency = false;
+		private bool allPurchasesInCurrency = true;
 		public bool AllPurchasesInCurrency {
 			get => allPurchasesInCurrency;
 			set => SetProperty(ref allPurchasesInCurrency, value);

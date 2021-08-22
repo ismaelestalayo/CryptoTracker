@@ -132,9 +132,8 @@
             
             <ListView.Header>
                 <UserControl x:Name="listView_Element">
-                    <Grid x:Name="listView_Element2"
-                        BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemBaseMediumLowColor}"
-                        Margin="12 5 12 3">
+                    <Grid x:Name="listView_Element2" Margin="12 5"
+                        BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" x:Name="cryptoCol" MinWidth="220"/>
                             <ColumnDefinition Width="175" x:Name="priceCol"/>
@@ -147,9 +146,10 @@
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
                                 <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="Padding" Value="10 6"/>
                             </Style>
                         </Grid.Resources>
 

@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:usercontrols="using:CryptoTracker.UserControls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:converters="using:UWP.Converters"
     xmlns:userControls="using:UWP.UserControls"
@@ -34,7 +33,6 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="2*" MinHeight="0"/>
             <RowDefinition Height="*" MaxHeight="300"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <!-- 
@@ -199,10 +197,10 @@
             </StackPanel>
         </Grid>
 
-
+        <!-- Column headers + PortfolioList + totals -->
         <ScrollViewer Grid.Row="2" Padding="0 0 5 0" Margin="0 0 -5 0">
             <StackPanel>
-                <Grid BorderThickness="0 0 0 0.5" BorderBrush="{ThemeResource SystemBaseMediumLowColor}"
+                <Grid BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}"
                       Margin="7 5" CornerRadius="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="28"/>
@@ -236,8 +234,9 @@
                     ShowDetails="{x:Bind vm.ShowDetails}"
                     VerticalAlignment="Top"/>
 
-                <Grid x:Name="TotalValues" Grid.Row="1" Margin="7 0" Padding="15 0"
-                      x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}">
+                <Grid x:Name="TotalValues" Grid.Row="1" Margin="7 -15 7 0" Padding="15 0"
+                      x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+                      Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="28"/>
                         <ColumnDefinition Width="*"/>
@@ -253,7 +252,7 @@
                         </Style>
                     </Grid.Resources>
 
-                    <StackPanel Grid.Column="2" HorizontalAlignment="Right" Margin="0 -5 0 0">
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
                         <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
                         <TextBlock HorizontalAlignment="Center">
                             <Run Text="{x:Bind vm.TotalInvested}"/><!--
@@ -261,7 +260,7 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="0 -5 0 0">
+                    <StackPanel Grid.Column="3" HorizontalAlignment="Right">
                         <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
                         <TextBlock HorizontalAlignment="Center">
                             <Run Text="{x:Bind vm.TotalWorth}"/><!--
@@ -269,7 +268,7 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="4" HorizontalAlignment="Right" Margin="0 -5 0 0">
+                    <StackPanel Grid.Column="4" HorizontalAlignment="Right">
                         <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
                         <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
                             <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
@@ -282,20 +281,20 @@
         
         <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
         <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->
-        <userControls:ChartAreaFull
-            x:Name="PortfolioChart"
-            x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
-            ChartModel="{x:Bind vm.Chart}"
-            Grid.Row="3"
-            Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}"/>
-        
-        <userControls:TimeRangeRadioButtons
-            x:Name="TimerangeRadioButtons"
-            x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
-            Grid.Row="4"
-            Margin="0 0 0 10"
-            Tapped="TimeRangeButtons_Tapped"
-            Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}"/>
+        <Grid Grid.Row="3" x:Name="HistoricChartGrid"
+              x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+              Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <userControls:ChartAreaFull ChartModel="{x:Bind vm.Chart}"/>
+
+            <userControls:TimeRangeRadioButtons
+                Grid.Row="1"
+                Margin="0 0 0 15"
+                Tapped="TimeRangeButtons_Tapped"/>
+        </Grid>
 
     </Grid>
 
