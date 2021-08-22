@@ -46,6 +46,7 @@
             <!-- NO ALERTS WARNING -->
             <StackPanel
                 HorizontalAlignment="Left"
+                Margin="0 25 0 0"
                 Width="325"
                 Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
                 <TextBlock

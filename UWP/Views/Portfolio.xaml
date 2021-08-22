@@ -198,7 +198,10 @@
         </Grid>
 
         <!-- Column headers + PortfolioList + totals -->
-        <ScrollViewer Grid.Row="2" Padding="0 0 5 0" Margin="0 0 -5 0">
+        <ScrollViewer
+            x:Name="whole_portfolio"
+            x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+            Grid.Row="2" Padding="0 0 5 0" Margin="0 0 -5 0">
             <StackPanel>
                 <Grid BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}"
                       Margin="7 5" CornerRadius="4">
@@ -234,9 +237,7 @@
                     ShowDetails="{x:Bind vm.ShowDetails}"
                     VerticalAlignment="Top"/>
 
-                <Grid x:Name="TotalValues" Grid.Row="1" Margin="7 -15 7 0" Padding="15 0"
-                      x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
-                      Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}">
+                <Grid Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="28"/>
                         <ColumnDefinition Width="*"/>
