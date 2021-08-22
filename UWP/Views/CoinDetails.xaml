@@ -440,13 +440,15 @@
                             Margin="7 0"
                             RelativePanel.AlignHorizontalCenterWithPanel="True"
                             Tapped="TimeRangeButtons_Tapped"/>
-                        <Button
+                        <!-- TODO -->
+                        <Button Visibility="Collapsed"
                             Content="&#xE9A6;"
                             FontSize="20"
                             HorizontalAlignment="Right"
                             RelativePanel.AlignVerticalCenterWithPanel="True"
                             RelativePanel.RightOf="TimeRangeRadioButtons"
-                            Style="{StaticResource IconBtn}"/>
+                            Style="{StaticResource IconBtn}"
+                            ToolTipService.ToolTip="Go full screen"/>
                     </RelativePanel>
                 </Grid>
             </usercontrols:FluentCard.ExpandableContent>
@@ -477,11 +479,8 @@
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.TotalValue, Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
-                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"
-                                     Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}"/><!--
-                                --><Run Text="{x:Bind vm.Coin.CurrencySym}"
-                                        Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}"/>
+                                <Run Text="{x:Bind vm.TotalValue,
+                                    Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.CurrencySymbol}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
                     </usercontrols:DoubleTextBlock>
@@ -493,7 +492,7 @@
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
                                 <Run Text="{x:Bind vm.AvgPrice, Converter={StaticResource NumberRounder}}"/><!--
-                                --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
                     </usercontrols:DoubleTextBlock>

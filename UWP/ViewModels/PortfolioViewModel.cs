@@ -48,6 +48,8 @@ namespace UWP.ViewModels {
 			set => SetProperty(ref _showDetails, value);
 		}
 
+		/// #############################################################################
+		/// Total values
 		private double totalInvested = 0;
 		public double TotalInvested {
 			get => totalInvested;

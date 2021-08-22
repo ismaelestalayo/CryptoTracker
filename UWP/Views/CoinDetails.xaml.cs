@@ -12,6 +12,7 @@ using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Constants;
 using UWP.Shared.Helpers;
 using UWP.Shared.Interfaces;
 using UWP.UserControls;
@@ -143,8 +144,8 @@ namespace UWP.Views {
 
             vm.TotalQty = vm.Purchases.Sum(x => x.CryptoQty);
             vm.TotalProfit = vm.Purchases.Sum(x => x.Profit);
-            //vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
             vm.TotalValue = vm.TotalQty * vm.Coin.Price;
+            //vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
 
             var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
             if (totalInvested != 0)
@@ -170,6 +171,7 @@ namespace UWP.Views {
             var crypto = vm.Coin.Name;
             vm.Coin.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
                 crypto, App.currency);
+            vm.CurrencySymbol = Currencies.GetCurrencySymbol(App.currency);
 
             /// Colors
             var brush = vm.Chart.ChartStroke;

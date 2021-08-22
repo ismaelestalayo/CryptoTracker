@@ -253,6 +253,7 @@
     <Content Include="Assets\Icons\iconNEO.png" />
     <Content Include="Assets\Icons\iconNULL.png" />
     <Content Include="Assets\Icons\iconONT.png" />
+    <Content Include="Assets\Icons\iconSOL.png" />
     <Content Include="Assets\Icons\iconSTR.png" />
     <Content Include="Assets\Icons\iconTFUEL.png" />
     <Content Include="Assets\Icons\iconTHETA.png" />

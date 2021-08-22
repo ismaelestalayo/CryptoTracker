@@ -56,6 +56,7 @@ namespace UWP.Shared.Constants {
             { "NANO_color", ParseHex("#0092E8") },
             { "NEO_color",  ParseHex("#58BF00") },
             { "ONT_color",  ParseHex("#00a6c0") },
+            { "SOL_color",  ParseHex("#14f195") },
             { "UNI_color",  ParseHex("#ff007a") },
             { "USDT_color", ParseHex("#26A17B") },
             { "USDC_color", ParseHex("#0076ce") },
