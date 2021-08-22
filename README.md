@@ -1,4 +1,4 @@
-<img src="Screenshots/promo/Laptop_front_home_light.png" width = "100%"/>
+<img src="Screenshots/promo/Laptop-dark.png" width = "100%"/>
 
 - Keep track of your favourite coins with the Home dashboard
 - Supports **over 100 cryptocurrencies**!
