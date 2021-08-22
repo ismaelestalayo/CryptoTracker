@@ -206,8 +206,8 @@ namespace UWP.Views {
             vm.Chart.VolumeMax = GraphHelper.GetMaxOfVolume(chartData);
 
             /// Calculate the price difference
-            double oldestPrice = histo[0].Average;
-            double newestPrice = histo[histo.Count - 1].Average;
+            double oldestPrice = histo.FirstOrDefault()?.Average ?? 0;
+            double newestPrice = histo.LastOrDefault()?.Average ?? 0;
             vm.Coin.Diff = newestPrice - oldestPrice;
 
             vm.Coin.IsLoading = false;

@@ -116,7 +116,7 @@ namespace UWP.Services {
             }
             catch (Exception ex) {
                 var z = ex.Message;
-                return new List<HistoricPrice>() { new HistoricPrice() };
+                return new List<HistoricPrice>();
             }
         }
 

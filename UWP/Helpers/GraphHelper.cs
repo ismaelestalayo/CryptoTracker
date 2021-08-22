@@ -17,7 +17,7 @@ namespace UWP.Helpers {
         }
 
         internal static double GetMaxOfVolume(List<ChartPoint> historic) {
-            return 4 * historic.Select(x => x.Volume).ToList().Max();
+            return 4 * historic.Select(x => x.Volume).ToList().DefaultIfEmpty().Max();
         }
 
         internal static (double Min, double Max) OffsetMinMaxForChart(double min, double max, double offMin = 0.15, double offMax = 0.07) {
