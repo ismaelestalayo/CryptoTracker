@@ -1,25 +1,25 @@
-<img src="Screenshots/promo/Hero-art.png" width = "100%"/>
+<img src="Screenshots/promo/Laptop_front_home_light.png" width = "100%"/>
 
-- Keep track of your favourite coins by pining them to the dashboard
-- Adjustable **hourly/daily/weekly/monthly charts**
+- Keep track of your favourite coins with the Home dashboard
 - Supports **over 100 cryptocurrencies**!
-- Portfolio to keep track of all your purchases (with **cloud backup**).
+- Stay up to date with custom **alerts and Live Tiles**
+- Adjustable **hourly/daily/weekly/monthly charts**
+- Portfolio to keep track of all your purchases (with backups).
 - Keep up with the latest news.
 - Currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
 - Beautiful light and dark fluent themes!
-
-
-<img src="Screenshots/promo/Laptop_front_home_light.png" width = "100%"/>
+- plus...
 
 
 ## Detailed overview of each coin:
 <p align="center">
-	<img src="Screenshots/screen_eth_light.png" width = "90%"/>
+	<img src="Screenshots/CoinDetails-light.png" width = "95%"/>
 </p>
 
 ## Your portfolio at a glance:
 <p align="center">
-	<img src="Screenshots/screen_portfolio_light.png" width = "90%" />
+	<img src="Screenshots/Portfolio-light.png" width = "95%" />
+	<img src="Screenshots/PortfolioDetails-light.png" width = "95%" />
 </p>
 
 
