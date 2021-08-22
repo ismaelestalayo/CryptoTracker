@@ -96,6 +96,12 @@
                     <DataTemplate>
                         <StackPanel Padding="0 2" DataContextChanged="ChartTrackBall_Changed">
                             <TextBlock
+                                FontSize="14" Opacity="0.8" HorizontalAlignment="Center"
+                                Foreground="{ThemeResource DefaultTextForegroundThemeBrush}">
+                                <Run Text="{Binding DataPoint.Value, Converter={StaticResource NumberRounder}}"/><!--
+                                --><Run Text="{Binding ElementName=Chart, Path=DataContext.CurrencySymbol }"/>
+                            </TextBlock>
+                            <TextBlock
                                 Text="{Binding DataPoint.Category, Converter={StaticResource DateFormatter}}"
                                 FontSize="12" Opacity="0.5" HorizontalAlignment="Center"
                                 Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"/>

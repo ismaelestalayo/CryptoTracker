@@ -231,7 +231,7 @@
                             HorizontalAlignment="Right"
                             Style="{ThemeResource TitleTextBlockStyle}">
                                 <Run Text="{x:Bind vm.Coin.Price, Converter={StaticResource NumberRounder}}"/><!--
-                                --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                         </TextBlock>
 
                         <StackPanel Orientation="Horizontal" Margin="0 -4 0 0" HorizontalAlignment="Right">
