@@ -6,7 +6,7 @@ using UWP.Models;
 using UWP.Services;
 
 namespace UWP.ViewModels {
-    public class CoinsCacheViewModel : ObservableRecipient {
+    public class CoinsViewModel : ObservableRecipient {
 
         private GlobalStats globalStats = new GlobalStats();
         public GlobalStats GlobalStats {

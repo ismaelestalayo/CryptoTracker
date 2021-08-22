@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -137,6 +138,10 @@ namespace UWP.APIs {
             public double xlm { get; set; } = 0;
             public double xrp { get; set; } = 0;
             public double zar { get; set; } = 0;
+            public double GetValue(string currency) {
+                currency = currency.ToLowerInvariant();
+                return (double)(GetType().GetProperty(currency)?.GetValue(this) ?? (double)0);
+            }
         }
 
         public class CurrencyDateArray {
@@ -244,9 +249,15 @@ namespace UWP.APIs {
             public Links links { get; set; }
             public Image image { get; set; }
             public string genesis_date { get; set; } = "null";
+            public double market_cap {
+                get => market_data?.market_cap.GetValue(App.currency) ?? 0;
+            }
             public int market_cap_rank { get; set; } = 0;
             public MarketData market_data { get; set; }
             public DateTime last_updated { get; set; } = DateTime.Now;
+            public double total_volume {
+                get => market_data?.total_volume.GetValue(App.currency) ?? 0;
+            }
 
             public event PropertyChangedEventHandler PropertyChanged;
             public void NotifyPropertyChanged([CallerMemberName] string propertyName = "") {

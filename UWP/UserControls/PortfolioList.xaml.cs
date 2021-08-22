@@ -91,9 +91,9 @@ namespace UWP.UserControls {
                 await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, LocalPurchases);
             }
             else
-                await new MessageDialog("Could not save changed to the LocalStorage",
-                    "Error updating the Portfolio").ShowAsync();
+                new ViewModels.PortfolioViewModel().InAppNotification("Error updating the Portfolio");
 
+            new ViewModels.PortfolioViewModel().InAppNotification("test");
             UpdateParent?.Invoke(null, null);
         }
 
@@ -119,9 +119,8 @@ namespace UWP.UserControls {
                     await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, LocalPurchases);
                 }
                 else
-                    await new MessageDialog("Could not save changed to the LocalStorage",
-                        "Error updating the Portfolio").ShowAsync();
-
+                    new ViewModels.PortfolioViewModel().InAppNotification("Error updating the Portfolio");
+                
                 UpdateParent?.Invoke(null, null);
             }
         }

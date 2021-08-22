@@ -80,6 +80,7 @@ namespace UWP.Views {
 
             try {
                 var type = (e.Parameter.GetType()).Name;
+                CoinGeckoCoin coinGeckoCoin;
                 switch (type) {
                     case nameof(HomeCard):
                         vm.Chart = ((HomeCard)e.Parameter).Chart;
@@ -88,7 +89,8 @@ namespace UWP.Views {
 
                         var coin = App.coinListPaprika.Find(x => x.symbol == vm.Coin.Name);
                         vm.Coin.FullName = coin.name;
-                        vm.CoinInfo = await CoinGecko.GetCoin(coin.name);
+
+                        await GetCoinGeckoInfo(vm.Coin.Name);
                         await UpdatePortfolio();
                         break;
                     case nameof(CoinDetailsViewModel):
@@ -104,13 +106,16 @@ namespace UWP.Views {
                         var _coin = App.coinListPaprika.Find(x => x.symbol == crypto) ?? new CoinPaprikaCoin();
                         vm.Coin.FullName = _coin?.name ?? "NULL";
 
-                        InitValuesFromZero(_coin.name);
+                        await GetCoinGeckoInfo(vm.Coin.Name);
+                        TimeRangeButtons_Tapped(null, null);
+                        vm.Coin.IsLoading = false;
                         break;
                 }
             }
             catch (Exception ex){
                 var message = $"There was an error loading that coin. Try again later.\n\n{ex.Message}";
-                new MessageDialog(message).ShowAsync();
+                vm.InAppNotification(message, ex.Message);
+                vm.Coin.IsLoading = false;
             }
 
             vm.Alerts = await AlertsHelper.GetCryptoAlerts(vm.Coin.Name);
@@ -146,18 +151,18 @@ namespace UWP.Views {
                 vm.AvgPrice = NumberHelper.Rounder(totalInvested / vm.TotalQty);
         }
 
-        /// #########################################################################################
-        private async void InitValuesFromZero(string cryptoName) {
-            vm.CoinInfo = await CoinGecko.GetCoin(cryptoName);
-
-            try {
-                TimeRangeButtons_Tapped(null, null);
-
-            } catch (Exception) {
-                vm.Coin.IsLoading = false;
+        private async Task GetCoinGeckoInfo(string crypto) {
+            var matches = App.coinListGecko.Where(x => x.symbol.Equals(crypto,
+                            StringComparison.InvariantCultureIgnoreCase)).ToList();
+            if (matches != null) {
+                var id = matches[0].id;
+                if (matches.Count > 1)
+                    id = matches.FirstOrDefault(x => !x.name.Contains("Peg"))?.id ?? id;
+                vm.CoinInfo = await CoinGecko.GetCoin(id);
             }
+            else
+                vm.InAppNotification("There was an error obtaining the coin's info from CoinGecko");
         }
-
         /// #########################################################################################
         /// #########################################################################################
         /// #########################################################################################

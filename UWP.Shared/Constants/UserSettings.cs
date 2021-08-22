@@ -6,7 +6,7 @@ namespace UWP.Core.Constants {
     /// </summary>
     public class UserSettings {
 		public const string AutoRefresh = "AutoRefresh";
-		public const string CoinListDate = "CoinListDate";
+		public const string CoinListsDate = "CoinListsDate";
 		public const string Currency = "Currency";
 		public const string CurrencySymbol = "CurrencySymbol";
 		public const string IsNewUser = "NewUser";
@@ -21,7 +21,7 @@ namespace UWP.Core.Constants {
 		/// </summary>
 		public static readonly Dictionary<string, object> Defaults = new Dictionary<string, object>(){
 			{ AutoRefresh, "1 min" },
-			{ CoinListDate,  (double)0 },
+			{ CoinListsDate,  (double)0 },
 			{ Currency, "EUR" },
 			{ CurrencySymbol, "€" },
 			{ IsNewUser, true },
@@ -38,6 +38,16 @@ namespace UWP.Core.Constants {
 		/// List<Alert>
 		/// </summary>
 		public const string Alerts = "Alerts";
+
+		/// <summary>
+		/// List<CoinGeckoCoin>
+		/// </summary>
+		public const string CacheCoinGecko = "CacheCoinGecko";
+
+		/// <summary>
+		/// List<CoinPaprikaCoin>
+		/// </summary>
+		public const string CacheCoinPaprika = "CacheCoinPaprika";
 
 		/// <summary>
 		/// List<PurchaseModel>

@@ -261,7 +261,7 @@
                 <Grid>
                     <!-- CHART VALUES (ON NOT HOVER) -->
                     <StackPanel
-                        Grid.Row="1" Spacing="30" Orientation="Horizontal"
+                        Grid.Row="1" Spacing="25" Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom" Margin="-20 0"
                         Visibility="{x:Bind vm.ChartPoint.Value, Converter={StaticResource DoubleToVisibilityNOT}}">
@@ -269,7 +269,7 @@
                         <usercontrols:DoubleTextBlock Header="Vol:" Spacing="5">
                             <usercontrols:DoubleTextBlock.Value>
                                 <TextBlock>
-                                    <Run Text="{x:Bind vm.Coin.VolumeToTotal, Converter={StaticResource NumberUnit}}"/><!--
+                                    <Run Text="{x:Bind vm.CoinInfo.total_volume, Converter={StaticResource NumberUnit}}"/><!--
                                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                                 </TextBlock>
                             </usercontrols:DoubleTextBlock.Value>
@@ -296,7 +296,7 @@
                         <usercontrols:DoubleTextBlock Header="Mkt. Cap:" Spacing="5">
                             <usercontrols:DoubleTextBlock.Value>
                                 <TextBlock>
-                                    <Run Text="{x:Bind vm.Coin.CurrencySym}"/><!--
+                                    <Run Text="{x:Bind vm.CoinInfo.market_cap, Converter={StaticResource NumberUnit}}"/><!--
                                     --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                                 </TextBlock>
                             </usercontrols:DoubleTextBlock.Value>
@@ -477,7 +477,7 @@
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.TotalValue}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
+                                <Run Text="{x:Bind vm.TotalValue, Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                                 <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"
                                      Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}"/><!--
                                 --><Run Text="{x:Bind vm.Coin.CurrencySym}"
@@ -492,7 +492,7 @@
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.AvgPrice}"/><!--
+                                <Run Text="{x:Bind vm.AvgPrice, Converter={StaticResource NumberRounder}}"/><!--
                                 --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>

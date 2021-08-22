@@ -12,7 +12,7 @@ namespace UWP.Converters {
 
     public class NumberRounder : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
-            => NumberHelper.Rounder((double)val).ToString("N5", App.UserCulture).TrimEnd('0').Trim(',');
+            => NumberHelper.Rounder((double)val).ToString("N9", App.UserCulture).TrimEnd('0').Trim(',');
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }

@@ -1,5 +1,4 @@
-﻿using UWP.APIs;
-using UWP.Core.Constants;
+﻿using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Services;
 using UWP.Views;
@@ -39,6 +38,7 @@ namespace UWP {
         internal static LocalSettings _LocalSettings = new LocalSettings();
         internal static string CurrentPage = "";
         internal static List<CoinPaprikaCoin> coinListPaprika = new List<CoinPaprikaCoin>();
+        internal static List<CoinGeckoCoin> coinListGecko = new List<CoinGeckoCoin>();
         internal static List<string> pinnedCoins;
 
         internal static CultureInfo UserCulture = new CultureInfo(GlobalizationPreferences.Languages[0]);
@@ -189,16 +189,22 @@ namespace UWP {
         // ###############################################################################################
         internal async static Task GetCoinList() {
             // check cache before sending an unnecesary request
-            var date = _LocalSettings.Get<double>(UserSettings.CoinListDate);
+            var date = _LocalSettings.Get<double>(UserSettings.CoinListsDate);
             
             DateTime lastUpdate = DateTime.FromOADate((double)date);
             var days = DateTime.Today.CompareTo(lastUpdate);
 
-            coinListPaprika = await LocalStorageHelper.ReadObject<List<CoinPaprikaCoin>>("CoinList");
+            coinListPaprika = await LocalStorageHelper.ReadObject<List<CoinPaprikaCoin>>(UserStorage.CacheCoinPaprika);
+            coinListGecko = await LocalStorageHelper.ReadObject<List<CoinGeckoCoin>>(UserStorage.CacheCoinGecko);
 
             // if empty list OR old cache -> refresh
-            if (coinListPaprika.Count == 0 || days > 7) {
+            if (coinListPaprika.Count == 0 || coinListGecko.Count == 0 || days > 7) {
                 coinListPaprika = await Ioc.Default.GetService<ICoinPaprika>().GetCoinList_();
+                coinListGecko = await Ioc.Default.GetService<ICoinGecko>().GetCoinList_();
+
+                _LocalSettings.Set(UserSettings.CoinListsDate, DateTime.Today.ToOADate());
+                await LocalStorageHelper.SaveObject(UserStorage.CacheCoinPaprika, coinListPaprika);
+                await LocalStorageHelper.SaveObject(UserStorage.CacheCoinGecko, coinListGecko);
             }
 
         }
