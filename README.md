@@ -13,7 +13,8 @@
 
 ## Detailed overview of each coin:
 <p align="center">
-	<img src="Screenshots/CoinDetails-light.png" width = "95%"/>
+	<img src="Screenshots/Coin1-light.png" width = "95%"/>
+	<img src="Screenshots/Coin2-light.png" width = "95%"/>
 </p>
 
 ## Your portfolio at a glance:
