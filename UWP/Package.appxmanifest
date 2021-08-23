@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="CryptoTracker.App">
-      <uap:VisualElements DisplayName="Crypto Tracker" Square44x44Logo="Assets\Tiles and stuff\AppIcon.png" Description="Minimal yet powerful cryptocurrency portfolio tracker designed with simplicity and functionality in mind."  BackgroundColor="transparent" Square150x150Logo="Assets\Tiles and stuff\Tile-Medium.png">
+      <uap:VisualElements DisplayName="Crypto Tracker" Square44x44Logo="Assets\Tiles and stuff\AppIcon.png" Description="Simple yet powerful cryptocurrency portfolio tracker designed with simplicity and functionality in mind."  BackgroundColor="transparent" Square150x150Logo="Assets\Tiles and stuff\Tile-Medium.png">
         <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\Tiles and stuff\BadgeLogo.png" />
         <uap:DefaultTile Wide310x150Logo="Assets\Tiles and stuff\Tile-Wide.png" Square71x71Logo="Assets\Tiles and stuff\Tile-Small.png" Square310x310Logo="Assets\Tiles and stuff\Tile-Large.png" ShortName="CryptoTracker">
           <uap:ShowNameOnTiles>

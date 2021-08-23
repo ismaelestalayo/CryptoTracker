@@ -1,14 +1,14 @@
 <img src="Screenshots/promo/Laptop-dark.png" width = "100%"/>
 
 - Keep track of your favourite coins with the Home dashboard
-- Supports **over 100 cryptocurrencies**!
-- Stay up to date with custom **alerts and Live Tiles**
+- Supports **over 800 cryptocurrencies**!
+- Stay up to date with **Alerts, Live Tiles and Compact Overlays**
 - Adjustable **hourly/daily/weekly/monthly charts**
-- Portfolio to keep track of all your purchases (with backups).
+- Powerful portfolio to track the performance of your purchases (with backups).
 - Keep up with the latest news.
-- Currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
-- Beautiful light and dark fluent themes!
-- plus...
+- More than 15 currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
+- Beautiful Light and Dark themes inline with Windows 11
+- ...and much more!
 
 
 ## Detailed overview of each coin:
