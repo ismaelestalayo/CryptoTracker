@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:models="using:UWP.Models"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
@@ -78,13 +79,18 @@
             <!-- SEARCH -->
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox
-                    x:Name="AutoSuggestBox" PlaceholderText="Search" QueryIcon="Find" Width="150"
+                    x:Name="AutoSuggestBox" PlaceholderText="Search" Width="150"
                     GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged" 
                     UpdateTextOnSelect="False"
                     QuerySubmitted="AutoSuggestBox_QuerySubmitted"
                     IsTabStop="False"
                     Visibility="Collapsed" 
                     LostFocus="AutoSuggestBox_LostFocus">
+                    <AutoSuggestBox.QueryIcon>
+                        <muxc:AnimatedIcon>
+                            <animatedvisuals:AnimatedFindVisualSource/>
+                        </muxc:AnimatedIcon>
+                    </AutoSuggestBox.QueryIcon>
                     <AutoSuggestBox.TextBoxStyle>
                         <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
                             <Setter Property="BorderThickness" Value="0"/>
