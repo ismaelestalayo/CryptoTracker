@@ -1,0 +1,172 @@
+﻿<Page 
+    x:Class="UWP.Views.MainPage"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:models="using:UWP.Models"
+    xmlns:userControls="using:UWP.UserControls"
+    xmlns:viewModels="using:UWP.ViewModels"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:MainPageViewModel x:Name="vm"/>
+    </Page.DataContext>
+
+    <!-- 
+    ################################################################################################### -->
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="AutoSuggestBox.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="AutoSuggestBox.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <NavigationView 
+            x:Name="NavView"
+            Grid.RowSpan="2" OverflowLabelMode="NoLabel"
+            IsBackButtonVisible="Collapsed" PaneDisplayMode="Top"
+            ItemInvoked="NavView_ItemInvoked"
+            SelectionChanged="NavView_SelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Tag="home" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE10F;"/> <!-- Home -->
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Coins" Tag="top" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE179;"/> <!-- All Apps -->
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem  Content="News" Tag="news" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE12A;"/> <!-- Preview link -->
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Portfolio" Tag="portfolio" FontWeight="Light">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEAFC;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <!-- SEARCH -->
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox
+                    x:Name="AutoSuggestBox" PlaceholderText="Search" Width="150"
+                    GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged" 
+                    UpdateTextOnSelect="False"
+                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                    IsTabStop="False"
+                    Visibility="Collapsed" 
+                    LostFocus="AutoSuggestBox_LostFocus">
+                    <AutoSuggestBox.QueryIcon>
+                        <muxc:AnimatedIcon>
+                            <animatedvisuals:AnimatedFindVisualSource/>
+                        </muxc:AnimatedIcon>
+                    </AutoSuggestBox.QueryIcon>
+                    <AutoSuggestBox.TextBoxStyle>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </AutoSuggestBox.TextBoxStyle>
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:SuggestionCoin">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="30" Source="{x:Bind Icon}"/>
+                                <TextBlock Text="{x:Bind Symbol}" Margin="10 0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
+            </NavigationView.AutoSuggestBox>
+
+            <!-- FOOTER -->
+            <NavigationView.PaneFooter>
+                <StackPanel Orientation="Horizontal">
+                    <NavigationViewItem
+                        Tapped="NavView_Search_Tapped"
+                        Visibility="{x:Bind AutoSuggestBox.Visibility, Converter={StaticResource VisibilityInverter}}"
+                        ToolTipService.ToolTip="Search">
+                        <NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xE11A;"/> <!-- Find -->
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem>
+                        <RelativePanel Margin="-15 0 0 0">
+                            <NavigationViewItem
+                                x:Name="SyncIcon"
+                                Tapped="NavView_Sync_Tapped"
+                                ToolTipService.ToolTip="Refresh">
+                                <NavigationViewItem.Icon>
+                                    <FontIcon Glyph="&#xE117;"/> <!-- Sync -->
+                                </NavigationViewItem.Icon>
+                            </NavigationViewItem>
+                            <ProgressRing
+                                x:Name="SyncLoading" IsActive="True"
+                                Height="24" Margin="10" Width="28"
+                                Visibility="{x:Bind SyncIcon.Visibility, Converter={StaticResource VisibilityInverter}}"/>
+                        </RelativePanel>
+                    </NavigationViewItem>
+                </StackPanel>
+            </NavigationView.PaneFooter>
+
+            <!-- MAIN FRAME -->
+            <Frame
+                x:Name="ContentFrame" Navigating="ContentFrame_Navigating">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>
+
+        <StackPanel x:Name="CustomAppTitleBar" Background="Transparent"/>
+
+        <!--<controls:TeachingTip
+            d:Title="Notification title" d:Subtitle="Notification message" d:IsOpen="True"
+	        Title="{x:Bind vm.InfoBarTitle}"
+	        Subtitle="{x:Bind vm.InfoBarMessage}"
+	        PreferredPlacement="Top"
+	        PlacementMargin="0 110"
+	        IsLightDismissEnabled="True"
+            BorderBrush="DodgerBlue" BorderThickness="0 4 0 0"
+            IsOpen="{x:Bind vm.InfoBarOpened}"/>-->
+
+        <userControls:Notification
+            IsOpen="{x:Bind vm.InfoBarOpened, Mode=TwoWay}"
+            Margin="10 55"
+            Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
+            Message="{x:Bind vm.InfoBarMessage}"
+            Title="{x:Bind vm.InfoBarTitle}"/>
+    </Grid>
+
+
+</Page>

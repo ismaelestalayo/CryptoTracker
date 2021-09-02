@@ -1,0 +1,53 @@
+﻿<UserControl
+    x:Class="UWP.UserControls.Notification"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:converters="using:UWP.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="150"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringToVisibility"/>
+    </UserControl.Resources>
+
+    <controls:DropShadowPanel
+        BlurRadius="25"
+        ShadowOpacity="0.7"
+        OffsetX="2"
+        OffsetY="2"
+        Color="{ThemeResource SystemAccentColor}"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        IsMasked="True">
+        <muxc:InfoBar
+            d:Title="Welcome to CryptoTracker v6.0.0" d:Content="Notification message. &#x0a;" d:IsOpen="True"
+            BorderBrush="{ThemeResource SystemAccentColor}" BorderThickness="1"
+            Background="{ThemeResource SystemChromeLowColor}"
+            CornerRadius="8"
+            Title="{x:Bind Title}"
+            IsIconVisible="False"
+            IsOpen="{x:Bind IsOpen}" Closed="InfoBar_Closed"
+            Severity="Informational"
+            MaxWidth="400"
+            MinWidth="250"
+            Padding="10">
+            <muxc:InfoBar.Content>
+                <TextBlock
+                    Margin="2 -10 0 0"
+                    TextWrapping="WrapWholeWords"
+                    Visibility="{x:Bind Message, Converter={StaticResource StringToVisibility}}">
+                    <Run Text="{x:Bind Message}"/>
+                </TextBlock>
+            </muxc:InfoBar.Content>
+            <!--<muxc:InfoBar.IconSource>
+                <muxc:FontIconSource FontFamily="Segoe UI Emoji" Glyph="&#x1F680;" FontSize="16"/>
+            </muxc:InfoBar.IconSource>-->
+        </muxc:InfoBar>
+    </controls:DropShadowPanel>
+</UserControl>

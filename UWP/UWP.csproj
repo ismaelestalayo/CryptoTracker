@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{7E2C342E-1D50-499B-9006-7CD6AC674534}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CryptoTracker</RootNamespace>
+    <AssemblyName>Crypto Tracker</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxPackageDir>C:\Users\ismae\Desktop\appxupload</AppxPackageDir>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <HockeyAppResourceId>40853427385b47e0bacec33938f84566</HockeyAppResourceId>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>
+    <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <PackageCertificateThumbprint>3A120CB9AE7643F6DCF91A4F09447CE588064D2B</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>
+    </PackageCertificateKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="APIs\CoinGecko.cs" />
+    <Compile Include="APIs\CryptoCompare.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\StringConverters.cs" />
+    <Compile Include="Converters\OtherConverters.cs" />
+    <Compile Include="Converters\DateConverters.cs" />
+    <Compile Include="Converters\BoolConverters.cs" />
+    <Compile Include="Converters\NumberConverters.cs" />
+    <Compile Include="Dialogs\PortfolioEntryDialog.xaml.cs">
+      <DependentUpon>PortfolioEntryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\NumberHelper.cs" />
+    <Compile Include="Helpers\GraphHelper.cs" />
+    <Compile Include="UserControls\CoinAutoSuggestBox.xaml.cs">
+      <DependentUpon>CoinAutoSuggestBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlertList.xaml.cs">
+      <DependentUpon>AlertList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ChartArea.xaml.cs">
+      <DependentUpon>ChartArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ChartCandles.xaml.cs">
+      <DependentUpon>ChartCandles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ChartAreaFull.xaml.cs">
+      <DependentUpon>ChartAreaFull.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DoubleTextBlock.xaml.cs">
+      <DependentUpon>DoubleTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FluentCard.xaml.cs">
+      <DependentUpon>FluentCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ToggleIconButton.xaml.cs">
+      <DependentUpon>ToggleIconButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DiffTextBlock.xaml.cs">
+      <DependentUpon>DiffTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Notification.xaml.cs">
+      <DependentUpon>Notification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlertListGrouped.xaml.cs">
+      <DependentUpon>AlertListGrouped.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PortfolioList.xaml.cs">
+      <DependentUpon>PortfolioList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TimeRangeRadioButtons.xaml.cs">
+      <DependentUpon>TimeRangeRadioButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\NewsViewModel.cs" />
+    <Compile Include="ViewModels\PortfolioViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\CoinsViewModel.cs" />
+    <Compile Include="ViewModels\WebViewViewModel.cs" />
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\CoinCompactViewModel.cs" />
+    <Compile Include="ViewModels\CoinDetailsViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="Views\CoinCompact.xaml.cs">
+      <DependentUpon>CoinCompact.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CoinDetails.xaml.cs">
+      <DependentUpon>CoinDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio.xaml.cs">
+      <DependentUpon>Portfolio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Settings\SettingsCalculator.xaml.cs">
+      <DependentUpon>SettingsCalculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsAlerts.xaml.cs">
+      <DependentUpon>SettingsAlerts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsAbout.xaml.cs">
+      <DependentUpon>SettingsAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsFeedback.xaml.cs">
+      <DependentUpon>SettingsFeedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsChangelog.xaml.cs">
+      <DependentUpon>SettingsChangelog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsAppearance.xaml.cs">
+      <DependentUpon>SettingsAppearance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsGeneral.xaml.cs">
+      <DependentUpon>SettingsGeneral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\News.xaml.cs">
+      <DependentUpon>News.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Coins.xaml.cs">
+      <DependentUpon>Coins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebVieww.xaml.cs">
+      <DependentUpon>WebVieww.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\AppIcon-D.png" />
+    <Content Include="Assets\AppIcon-L.png" />
+    <Content Include="Assets\AppIcon.png" />
+    <Content Include="Assets\Icons\iconADA.png" />
+    <Content Include="Assets\Icons\iconALGO.png" />
+    <Content Include="Assets\Icons\iconAMPL.png" />
+    <Content Include="Assets\Icons\iconBAT.png" />
+    <Content Include="Assets\Icons\iconBCH.png" />
+    <Content Include="Assets\Icons\iconBCN.png" />
+    <Content Include="Assets\Icons\iconBNB.png" />
+    <Content Include="Assets\Icons\iconBTC.png" />
+    <Content Include="Assets\Icons\iconBTT.png" />
+    <Content Include="Assets\Icons\iconCELO.png" />
+    <Content Include="Assets\Icons\iconCOMP.png" />
+    <Content Include="Assets\Icons\iconDASH.png" />
+    <Content Include="Assets\Icons\iconDGB.png" />
+    <Content Include="Assets\Icons\iconDOGE.png" />
+    <Content Include="Assets\Icons\iconDOT.png" />
+    <Content Include="Assets\Icons\iconEOS.png" />
+    <Content Include="Assets\Icons\iconETC.png" />
+    <Content Include="Assets\Icons\iconETH.png" />
+    <Content Include="Assets\Icons\iconFIL.png" />
+    <Content Include="Assets\Icons\iconGRT.png" />
+    <Content Include="Assets\Icons\iconICX.png" />
+    <Content Include="Assets\Icons\iconIOT.png" />
+    <Content Include="Assets\Icons\iconLINK.png" />
+    <Content Include="Assets\Icons\iconLTC.png" />
+    <Content Include="Assets\Icons\iconMATIC.png" />
+    <Content Include="Assets\Icons\iconNANO.png" />
+    <Content Include="Assets\Icons\iconNEO.png" />
+    <Content Include="Assets\Icons\iconNU.png" />
+    <Content Include="Assets\Icons\iconNULL.png" />
+    <Content Include="Assets\Icons\iconONT.png" />
+    <Content Include="Assets\Icons\iconQTUM.png" />
+    <Content Include="Assets\Icons\iconSHIB.png" />
+    <Content Include="Assets\Icons\iconSOL.png" />
+    <Content Include="Assets\Icons\iconSTR.png" />
+    <Content Include="Assets\Icons\iconTFUEL.png" />
+    <Content Include="Assets\Icons\iconTHETA.png" />
+    <Content Include="Assets\Icons\iconTRX.png" />
+    <Content Include="Assets\Icons\iconUNI.png" />
+    <Content Include="Assets\Icons\iconUSDC.png" />
+    <Content Include="Assets\Icons\iconUSDT.png" />
+    <Content Include="Assets\Icons\iconVET.png" />
+    <Content Include="Assets\Icons\iconXEM.png" />
+    <Content Include="Assets\Icons\iconXLM.png" />
+    <Content Include="Assets\Icons\iconXMR.png" />
+    <Content Include="Assets\Icons\iconXRP.png" />
+    <Content Include="Assets\Icons\iconXTZ.png" />
+    <Content Include="Assets\Icons\iconZRX.png" />
+    <Content Include="Assets\Icons\News.png" />
+    <Content Include="Assets\Icons\Portfolio.png" />
+    <Content Include="Assets\stockPrices.png" />
+    <Content Include="Assets\Tile-D.png" />
+    <Content Include="Assets\Tile-L.png" />
+    <Content Include="Assets\Tile.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-lightunplated_targetsize-48.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-16.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-24.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-256.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-32.png" />
+    <Content Include="Assets\Tiles and stuff\AppIcon.targetsize-48.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\BadgeLogo.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\PackageLogo.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Wide.png" />
+    <None Include=".editorconfig" />
+    <Content Include="Assets\confetti.json" />
+    <Content Include="Assets\SegoeFluentIcons.ttf" />
+    <None Include="Package.xml" />
+    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-100_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-125_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-150_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-200_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Large.scale-400_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-100_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-125_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-150_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-200_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Medium.scale-400_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-100_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-125_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-150_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-200_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Small.scale-400_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-100.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-100_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-125.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-125_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-150.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-150_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-200.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-200_altform-colorful_theme-light.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-400.png" />
+    <Content Include="Assets\Tiles and stuff\Tile-Wide.scale-400_altform-colorful_theme-light.png" />
+    <Content Include="Assets\transparent.png" />
+    <None Include="UWP_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Dialogs\PortfolioEntryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TextBlocks.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UserControls\CoinAutoSuggestBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\AlertList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ChartArea.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ChartCandles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ChartAreaFull.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DoubleTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FluentCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ToggleIconButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\DiffTextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Notification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlertListGrouped.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\PortfolioList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\TimeRangeRadioButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CoinCompact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CoinDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Portfolio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\SettingsCalculator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsAlerts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsAbout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsFeedback.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsChangelog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsAppearance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsGeneral.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\Forms.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\News.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Coins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WebVieww.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microcharts.Uwp">
+      <Version>1.0.0-preview1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Analytics">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Crashes">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>5.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.12</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Services.Store.Engagement">
+      <Version>10.1901.28001</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit">
+      <Version>7.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Mvvm">
+      <Version>7.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>7.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
+      <Version>7.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>7.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <Version>7.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Lottie">
+      <Version>7.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Media">
+      <Version>7.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.6.1</Version>
+    </PackageReference>
+    <PackageReference Include="NotificationsExtensions.Win10">
+      <Version>14332.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Refit">
+      <Version>6.0.38</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.Serialization.Formatters">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>5.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
+      <Version>1.0.2.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
+      <Name>Microsoft Engagement Framework</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+    <SDKReference Include="WindowsMobile, Version=10.0.19041.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\UWP.Background\UWP.Background.csproj">
+      <Project>{d8608452-343a-4dab-acf3-af7f81947652}</Project>
+      <Name>UWP.Background</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UWP.Shared\UWP.Shared.csproj">
+      <Project>{67c2d48d-12d5-4785-b1a1-d9b86bde45fe}</Project>
+      <Name>UWP.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="SpicNSpan" AfterTargets="Clean">
+    <!-- common vars https://msdn.microsoft.com/en-us/library/c02as0cs.aspx?f=255&MSPPError=-2147217396 -->
+    <RemoveDir Directories="$(TargetDir)" />
+    <!-- bin -->
+    <RemoveDir Directories="$(SolutionDir).vs" />
+    <!-- .vs -->
+    <RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" />
+    <!-- obj -->
+  </Target>
+</Project>

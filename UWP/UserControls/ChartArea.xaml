@@ -1,0 +1,56 @@
+﻿<UserControl
+    x:Class="UWP.UserControls.ChartArea"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:converters="using:UWP.Converters"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:BrushToColorTr1Converter x:Key="transparent1"/>
+        <converters:BrushToColorTr2Converter x:Key="transparent2"/>
+    </UserControl.Resources>
+
+    <telerik:RadCartesianChart
+        x:Name="Chart"
+        DataContext="{x:Bind ChartModel}"
+        Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
+
+        <telerik:RadCartesianChart.Grid>
+            <telerik:CartesianChartGrid MajorLinesVisibility="None"/>
+        </telerik:RadCartesianChart.Grid>
+
+        <telerik:RadCartesianChart.HorizontalAxis>
+            <telerik:DateTimeContinuousAxis Visibility="Collapsed"/>
+        </telerik:RadCartesianChart.HorizontalAxis>
+
+        <telerik:RadCartesianChart.VerticalAxis>
+            <telerik:LinearAxis
+                Visibility="Collapsed"
+                Minimum="{x:Bind ChartModel.PricesMinMax.Item1}"
+                Maximum="{x:Bind ChartModel.PricesMinMax.Item2}"/>
+        </telerik:RadCartesianChart.VerticalAxis>
+
+        <telerik:AreaSeries
+            ItemsSource="{x:Bind ChartModel.ChartData}"
+            Stroke="{x:Bind ChartModel.ChartStroke}"
+            StrokeThickness="1">
+            <telerik:AreaSeries.Fill>
+                <LinearGradientBrush StartPoint="0.5, 0.2" EndPoint="0.5, 1">
+                    <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}" Offset="0.2"/>
+                    <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}" Offset="1.1"/>
+                </LinearGradientBrush>
+            </telerik:AreaSeries.Fill>
+
+            <telerik:AreaSeries.CategoryBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
+            </telerik:AreaSeries.CategoryBinding>
+            <telerik:AreaSeries.ValueBinding>
+                <telerik:PropertyNameDataPointBinding PropertyName="Value"/>
+            </telerik:AreaSeries.ValueBinding>
+        </telerik:AreaSeries>
+    </telerik:RadCartesianChart>
+</UserControl>

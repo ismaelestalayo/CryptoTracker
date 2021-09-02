@@ -1,0 +1,74 @@
+﻿<Page
+    x:Class="UWP.Views.WebVieww"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:UWP.ViewModels"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:WebViewViewModel x:Name="vm"/>
+    </Page.DataContext>
+
+    <Grid x:Name="webViewGrid">
+        <Grid.Resources>
+            <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Margin" Value="3 0"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="{ThemeResource NavigationViewDefaultPaneBackground}" Padding="0 2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Click="GoBack_click">
+                <Button.Content>
+                    <FontIcon Glyph="&#xE112;" FontSize="16"/>
+                </Button.Content>
+            </Button>
+            <TextBlock
+                d:Text="https://www.google.com"
+                Grid.Column="1"
+                IsTextSelectionEnabled="True"
+                Text="{x:Bind vm.News.url}"
+                Opacity="0.6"
+                Padding="0 0 0 3"
+                VerticalAlignment="Center"/>
+
+            <Button Grid.Column="2" Click="OpenInBrowser_click">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE12B;" FontSize="16"/>
+                        <TextBlock Text="Open in browser" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button Grid.Column="3" Click="Share_click">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE72D;" FontSize="16"/>
+                        <TextBlock Text="Share" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+
+        <WebView
+            x:Name="myWebView"
+            DefaultBackgroundColor="#2A2A2A"
+            Grid.Row="1"
+            NavigationStarting="MyWebView_NavigationStarting"/>
+    </Grid>
+</Page>

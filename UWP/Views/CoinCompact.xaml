@@ -1,0 +1,85 @@
+﻿<Page
+    x:Class="UWP.Views.CoinCompact"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:usercontrols="using:CryptoTracker.UserControls"
+    xmlns:userControls="using:UWP.UserControls"
+    xmlns:viewModels="using:UWP.ViewModels"
+    mc:Ignorable="d"
+    Unloaded="Page_Unloaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<Page.DataContext>
+		<viewModels:CoinCompactViewModel x:Name="vm"/>
+	</Page.DataContext>
+
+	<Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="36"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+		</Grid.RowDefinitions>
+
+		
+		
+
+		<!-- 
+        ####################################################################################################
+        ############################################### Price Chart ########################################
+        #################################################################################################### -->
+        <userControls:ChartArea
+			x:Name="PriceChart"
+            Grid.Row="1"
+			Grid.RowSpan="2"
+			ChartModel="{x:Bind vm.Chart}"/>
+
+
+        <!-- 
+        ####################################################################################################
+        ############################################### Page Title #########################################
+        #################################################################################################### -->
+        <RelativePanel VerticalAlignment="Top">
+            <Button
+                Background="Transparent"
+                CornerRadius="0"
+                Content="&#xE944;"
+                FontFamily="{StaticResource FluentIconFont}"
+                FontSize="16"
+                Height="42" Width="46"
+                Opacity="0.5"
+                Padding="13 12 13 10" HorizontalAlignment="Stretch"
+				Click="FullScreen_btn_click"/>
+
+            <usercontrols:DoubleTextBlock
+                Header="{x:Bind vm.Info.Name}" Margin="0 5" Spacing="5"
+                RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <usercontrols:DoubleTextBlock.Value>
+                    <TextBlock>
+                        <Run Text="{x:Bind vm.Info.Price, Converter={StaticResource NumberFormatter}}"/><!--
+                        --><Run Text="{x:Bind vm.Info.CurrencySym}"/>
+                    </TextBlock>
+                </usercontrols:DoubleTextBlock.Value>
+            </usercontrols:DoubleTextBlock>
+        </RelativePanel>
+
+        <userControls:DiffTextBlock
+            Diff="{x:Bind vm.Info.DiffPct}"
+            DiffFg="{x:Bind vm.Info.DiffFG}"
+            Grid.Row="1"
+            VerticalAlignment="Top"
+            Margin="0 -7"/>
+
+
+        <RelativePanel Grid.Row="2">
+            <userControls:TimeRangeRadioButtons
+				FullRange="False"
+				Grid.Row="1" RelativePanel.AlignHorizontalCenterWithPanel="True"
+				Margin="0 2"
+				TimeSpan="{x:Bind vm.Chart.TimeSpan}"
+				Tapped="TimeRangeButtons_Tapped"/>
+        </RelativePanel>
+	</Grid>
+</Page>

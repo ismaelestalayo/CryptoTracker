@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="UWP.Views.SettingsGeneral"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:UWP.ViewModels"
+    d:Height="600"
+    d:Width="500"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:SettingsViewModel x:Name="vm"/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <Style TargetType="StackPanel" x:Key="SettingsSectionTitle">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="Margin" Value="0 25 0 0"/>
+        </Style>
+
+        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
+    </Page.Resources>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////// -->
+    <ScrollViewer>
+        <StackPanel>
+            <!-- CURRENCY -->
+            <StackPanel Style="{StaticResource SettingsSectionTitle}">
+                <FontIcon Glyph="&#xE909;"/>
+                <TextBlock Text="Currency" Style="{ThemeResource SettingsSectionTitleText}"/>
+            </StackPanel>
+
+            <TextBlock
+                Text="Choose the currency in which to display prices."/>
+            <ComboBox
+                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                Margin="0 5 0 0" Width="110"
+                ItemsSource="{x:Bind AvailableCurrencies, Mode=OneTime}"
+                SelectedValue="{x:Bind vm.Currency, Mode=TwoWay}"
+                SelectedValuePath="Key">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Value}" Width="25"/>
+                            <TextBlock Text="{Binding Key}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+
+            <!-- AUTO-REFRESH -->
+            <StackPanel Style="{StaticResource SettingsSectionTitle}">
+                <FontIcon Glyph="&#xE121;"/>
+                <TextBlock Text="Auto-refresh" Style="{ThemeResource SettingsSectionTitleText}"/>
+            </StackPanel>
+            <TextBlock>
+                <Run Text="Choose the frequency of auto-refresh on Home, Details and Compact Overlay pages."/>
+                <Run Text="&#x0a;(Charts update minutely because of API limitations.)" FontStyle="Italic"/>
+            </TextBlock>
+            <ComboBox
+                SelectedItem="{x:Bind vm.AutoRefresh, Mode=TwoWay}"
+                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                Margin="0 5 0 0" Width="110">
+                <x:String>None</x:String>
+                <x:String>30 sec</x:String>
+                <x:String>1 min</x:String>
+                <x:String>2 min</x:String>
+            </ComboBox>
+
+            <!-- STARTUP PAGE -->
+            <StackPanel Style="{StaticResource SettingsSectionTitle}">
+                <FontIcon Glyph="&#xE7E8;"/>
+                <TextBlock Text="Startup page" Style="{ThemeResource SettingsSectionTitleText}"/>
+            </StackPanel>
+            <TextBlock Text="Initial page to load when opening the app."/>
+            <ComboBox x:Name="startupPage" SelectionChanged="startupPage_SelectionChanged"
+                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                Margin="0 5 0 0" Width="110">
+                <x:String>Home</x:String>
+                <x:String>Coins</x:String>
+                <x:String>News</x:String>
+                <x:String>Portfolio</x:String>
+            </ComboBox>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

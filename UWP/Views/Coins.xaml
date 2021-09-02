@@ -1,0 +1,419 @@
+﻿<Page
+    x:Class="UWP.Views.Coins"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:microcharts="using:Microcharts.Uwp"
+    xmlns:converters="using:UWP.Converters"
+    xmlns:services="using:UWP.Services"
+    xmlns:userControls="using:UWP.UserControls"
+    xmlns:viewModels="using:UWP.ViewModels"
+    NavigationCacheMode="Required"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:CoinsViewModel x:Name="vm"/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <converters:NumberForeground x:Key="NumberForeground"/>
+        <converters:UpperCaseConverter x:Key="UpperCase"/>
+        <converters:PercentageRounder x:Key="Percentage"/>
+        <converters:FavIconConverter x:Key="FavIcon"/>
+        <converters:MicroChartConverter x:Key="MicroChart"/>
+    </Page.Resources>
+    
+    <Grid Padding="10 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 
+        ###########################################################################################
+        # TOP HEADER # -->
+        <Grid
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="6"
+            Padding="20 10" Margin="15"
+            MaxWidth="600">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel HorizontalAlignment="Center" Margin="0 0 0 10">
+                <TextBlock Text="GLOBAL MARKET DATA" Opacity="0.75" FontWeight="Normal" CharacterSpacing="100"/>
+            </StackPanel>
+
+            <!-- TITLES -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontWeight" Value="SemiLight"/>
+                        <Setter Property="Margin" Value="0 -5 0 0"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Style>
+                </Grid.Resources>
+
+                <TextBlock Grid.Column="0" Text="BTC dom."/>
+                <TextBlock Grid.Column="1" Text="24h Vol"/>
+                <TextBlock Grid.Column="2" Text="Mkt Cap."/>
+            </Grid>
+
+            <!-- VALUES -->
+            <Grid Grid.Row="2" Margin="0 -5 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="22"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </Grid.Resources>
+                
+                <TextBlock Grid.Column="0">
+                    <Run Text="{x:Bind vm.GlobalStats.BtcDominance}"
+                         d:Text="50.00"/><Run Text="%"/>
+                </TextBlock>
+                <TextBlock Grid.Column="1" d:Text="340B€">
+                    <Run	Text="{x:Bind vm.GlobalStats.TotalVolume}"/><!--
+                    --><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol}"/>
+                </TextBlock>
+                <TextBlock Grid.Column="2" d:Text="1700B€">
+                    <Run Text="{x:Bind vm.GlobalStats.TotalMarketCap}"/><!--
+                    --><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol}"/>
+                </TextBlock>
+            </Grid>
+        </Grid>
+
+        <!--<userControls:TimeRangeRadioButtons
+            Grid.Row="1"
+            FullRange="False"
+            Margin="0 0"/>-->
+
+        <!-- 
+        ###########################################################################################
+        # Top 100 List View # -->
+        <ListView
+            x:Name="CurrenciesListView" Grid.Row="2"
+            IsItemClickEnabled="True" ItemClick="ListView_Click"
+            ItemsSource="{x:Bind vm.CoinMarket}"
+            SelectionMode="None" MaxWidth="1100">
+            
+            <!-- Transitions -->
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <ContentThemeTransition />
+                    <EntranceThemeTransition/>
+                    <AddDeleteThemeTransition/>
+                    <ReorderThemeTransition/>
+                    <RepositionThemeTransition/>
+                </TransitionCollection>
+            </ListView.ItemContainerTransitions>
+            
+            <ListView.Header>
+                <UserControl x:Name="listView_Element">
+                    <Grid x:Name="listView_Element2" Margin="12 5"
+                        BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" x:Name="cryptoCol" MinWidth="220"/>
+                            <ColumnDefinition Width="175" x:Name="priceCol"/>
+                            <ColumnDefinition Width="*" x:Name="chartCol"/>
+                            <ColumnDefinition Width="*" x:Name="capCol"/>
+                            <ColumnDefinition Width="*" x:Name="volCol"/>
+                            <ColumnDefinition Width="*" x:Name="diff24hCol"/>
+                            <ColumnDefinition Width="*" x:Name="diff7dCol"/>
+                            <ColumnDefinition Width="*" x:Name="diff30dCol"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="Padding" Value="10 6"/>
+                            </Style>
+                        </Grid.Resources>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="step0">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="0"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="capCol.Width" Value="0"/>
+                                        <Setter Target="volCol.Width" Value="0"/>
+                                        <Setter Target="diff24hCol.Width" Value="0"/>
+                                        <Setter Target="diff7dCol.Width" Value="0"/>
+                                        <Setter Target="diff30dCol.Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="step01">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="600"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="volCol.Width" Value="0"/>
+                                        <Setter Target="diff24hCol.Width" Value="0"/>
+                                        <Setter Target="diff7dCol.Width" Value="0"/>
+                                        <Setter Target="diff30dCol.Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="step1">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="700"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="volCol.Width" Value="0"/>
+                                        <Setter Target="diff7dCol.Width" Value="0"/>
+                                        <Setter Target="diff30dCol.Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="step2">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="800" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="diff7dCol.Width" Value="0"/>
+                                        <Setter Target="diff30dCol.Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="step3">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="900" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="diff30dCol.Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="step4">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="1000" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="diff30dCol.Width" Value="100"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <!--<TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="Rank"/>-->
+                        <Button Grid.Column="0" Click="Sort_list_click" Content="Rank"/>
+                        <Button Grid.Column="1" Click="Sort_list_click" Content="Price" Grid.ColumnSpan="2"/>
+                        <Button Grid.Column="3" Click="Sort_list_click" Content="Mkt. Cap."/>
+                        <Button Grid.Column="4" Click="Sort_list_click" Content="Volume"/>
+                        <Button Grid.Column="5" Click="Sort_list_click" Content="24h"/>
+                        <Button Grid.Column="6" Click="Sort_list_click" Content="7d"/>
+                        <Button Grid.Column="7" Click="Sort_list_click" Content="30d"/>
+                    </Grid>
+                </UserControl>
+            </ListView.Header>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemExpanded}">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="services:CoinMarket">
+                    <UserControl>
+                        <Grid Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            CornerRadius="5" Margin="0 3" Padding="0 2" x:Name="listView_Element2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" x:Name="cryptoCol" MinWidth="220"/>
+                                <ColumnDefinition Width="175" x:Name="priceCol"/>
+                                <ColumnDefinition Width="*" x:Name="chartCol"/>
+                                <ColumnDefinition Width="*" x:Name="capCol"/>
+                                <ColumnDefinition Width="*" x:Name="volCol"/>
+                                <ColumnDefinition Width="*" x:Name="diff24hCol"/>
+                                <ColumnDefinition Width="*" x:Name="diff7dCol"/>
+                                <ColumnDefinition Width="*" x:Name="diff30dCol"/>
+                            </Grid.ColumnDefinitions>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="step0">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="0"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="capCol.Width" Value="0"/>
+                                            <Setter Target="volCol.Width" Value="0"/>
+                                            <Setter Target="diff24hCol.Width" Value="0"/>
+                                            <Setter Target="diff7dCol.Width" Value="0"/>
+                                            <Setter Target="diff30dCol.Width" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="step01">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="600"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="volCol.Width" Value="0"/>
+                                            <Setter Target="diff24hCol.Width" Value="0"/>
+                                            <Setter Target="diff7dCol.Width" Value="0"/>
+                                            <Setter Target="diff30dCol.Width" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="step1">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="700"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="volCol.Width" Value="0"/>
+                                            <Setter Target="diff7dCol.Width" Value="0"/>
+                                            <Setter Target="diff30dCol.Width" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="step2">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="800" />
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="diff7dCol.Width" Value="0"/>
+                                            <Setter Target="diff30dCol.Width" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="step3">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="900" />
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="diff30dCol.Width" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="step4">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="1000" />
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="diff30dCol.Width" Value="100"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <!-- COLUMN 0 -->
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Padding="15 5 0 5">
+                                <userControls:ToggleIconButton
+                                    Click="Fav_click"
+                                    IsChecked="{x:Bind IsFav, Mode=OneTime}"
+                                    Tooltip="Toggle favourite">
+                                    <userControls:ToggleIconButton.UncheckedIcon>
+                                        <FontIcon Glyph="&#xEB51;" FontSize="16"/>
+                                    </userControls:ToggleIconButton.UncheckedIcon>
+                                    <userControls:ToggleIconButton.CheckedIcon>
+                                        <FontIcon Glyph="&#xEB52;" FontSize="16"/>
+                                    </userControls:ToggleIconButton.CheckedIcon>
+                                </userControls:ToggleIconButton>
+                                <Image
+                                    d:Source="ms-appx:///Assets/Icons/iconNULL.png"
+                                    Source="{x:Bind image}" x:Phase="5"
+                                    Width="45" Margin="10 0"/>
+                                <StackPanel>
+                                    <TextBlock d:Text="Bitcoin" Text="{x:Bind name}" FontWeight="Bold" FontSize="16"/>
+                                    <StackPanel Orientation="Horizontal" Opacity="0.5">
+                                        <StackPanel Background="#50808080" CornerRadius="4" Padding="4 0" Height="16">
+                                            <TextBlock
+                                                d:Text="1" Text="{x:Bind market_cap_rank}"
+                                                FontSize="12" Padding="0 0 0 0"/>
+                                        </StackPanel>
+                                        <TextBlock
+                                            d:Text="BTC" Text="{x:Bind symbol,
+                                                Converter={StaticResource UpperCase}}" Margin="3 0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- COLUMN 1 -->
+                            <microcharts:ChartView
+                                Grid.Column="1"
+                                Height="100"
+                                Margin="-10 -15 -10 -35"
+                                VerticalAlignment="Center"
+                                Chart="{x:Bind sparkline_7d, Converter={StaticResource MicroChart}}"
+                                x:Name="chartView"/>
+
+                            <!-- COLUMN 2 -->
+                            <TextBlock Grid.Column="2"
+                                FontSize="18"
+                                FontWeight="SemiBold" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <Run Text="{x:Bind current_price, Converter={StaticResource NumberRounder}}"/><!--
+                                --><Run Text="{x:Bind currencySymbol}"/>
+                            </TextBlock>
+
+                            <!-- COLUMN 3 -->
+                            <TextBlock Grid.Column="3"
+                                FontSize="18"
+                                FontWeight="Normal" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <Run Text="{x:Bind market_cap, Converter={StaticResource NumberUnit}}"/><!--
+                                --><Run Text="{x:Bind currencySymbol}"/>
+                            </TextBlock>
+
+                            <!-- COLUMN 4 -->
+                            <TextBlock Grid.Column="4"
+                                FontSize="18"
+                                FontWeight="Normal" HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <Run Text="{x:Bind total_volume, Converter={StaticResource NumberUnit}}"/><!--
+                                --><Run Text="{x:Bind currencySymbol}"/>
+                            </TextBlock>
+
+                            <!-- COLUMN 5 -->
+                            <userControls:DiffTextBlock
+                                Grid.Column="5"
+                                Diff="{x:Bind price_change_percentage_24h_in_currency}"/>
+
+                            <!-- COLUMN 6 -->
+                            <userControls:DiffTextBlock
+                                Grid.Column="6"
+                                Diff="{x:Bind price_change_percentage_7d_in_currency}"/>
+
+                            <!-- COLUMN 7 -->
+                            <userControls:DiffTextBlock
+                                Grid.Column="7"
+                                Diff="{x:Bind price_change_percentage_30d_in_currency}"/>
+
+                        </Grid>
+                    </UserControl>
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+
+            <!--For previsualization purposes-->
+            <d:Rectangle/>
+        </ListView>
+        
+    </Grid>
+</Page>

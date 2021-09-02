@@ -1,0 +1,59 @@
+﻿<UserControl
+    x:Class="UWP.UserControls.AlertList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:models="using:UWP.Models"
+    d:Height="200" d:Width="600"
+    mc:Ignorable="d">
+
+    <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->
+    <ListView
+        ItemsSource="{x:Bind Alerts, Mode=OneWay}"
+        Margin="-10 0 0 0" HorizontalAlignment="Left">
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemExpanded}">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+        </ListView.ItemContainerStyle>
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="models:Alert">
+                <StackPanel Orientation="Horizontal" Padding="0 0 0 0">
+                    <ToggleSwitch
+                        Grid.Column="0" OnContent="" OffContent=""
+                        HorizontalAlignment="Left" Width="50" MinWidth="50" MaxWidth="50"
+                        IsOn="{x:Bind Enabled, Mode=TwoWay}"
+                        Margin="5 0"/>
+                    <ComboBox
+                        PlaceholderText="Mode"
+                        Grid.Column="2" Margin="5 0"
+                        Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                        SelectedItem="{x:Bind Mode, Mode=TwoWay}"
+                        VerticalAlignment="Center">
+                        <x:String>above</x:String>
+                        <x:String>below</x:String>
+                    </ComboBox>
+                    <muxc:NumberBox
+                        Grid.Column="3" Margin="5 0"
+                        PlaceholderText="Threshold"
+                        Value="{x:Bind Threshold, Mode=TwoWay}"
+                        VerticalAlignment="Center"
+                        Width="100"/>
+                    <Button
+                        Click="Delete_alert"
+                        Grid.Column="4" Content="&#xE107;" Background="Transparent"
+                        FontFamily="{StaticResource FluentIconFont}"
+                        Margin=" 0" Padding="10 9"/>
+                </StackPanel>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+        <!-- For previsualization purposes -->
+        <d:Rectangle/>
+    </ListView>
+
+
+</UserControl>

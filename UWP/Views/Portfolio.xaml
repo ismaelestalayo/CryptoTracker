@@ -1,0 +1,303 @@
+﻿<Page
+    x:Class="UWP.Views.Portfolio"
+    x:DefaultBindMode="OneWay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:UWP.Converters"
+    xmlns:userControls="using:UWP.UserControls"
+    xmlns:viewModels="using:UWP.ViewModels"
+    Loaded="Page_Loaded"
+    MaxWidth="1860"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:PortfolioViewModel x:Name="vm"/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <converters:BoolToVisibility x:Key="BoolToVisibility"/>
+        <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
+        <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
+        <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
+        <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityNOT"/>
+    </Page.Resources>
+
+
+    <Grid x:Name="MainGrid" Padding="5 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="2*" MinHeight="0"/>
+            <RowDefinition Height="*" MaxHeight="300"/>
+        </Grid.RowDefinitions>
+
+        <!-- 
+        ############################################################################################################### -->
+        <Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 10 7 5" RowSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid
+                x:Name="PortfolioChartGrid"
+                Background="Transparent" BorderThickness="0"
+                CornerRadius="5"
+                Grid.Row="0"
+                Height="36"
+                ColumnSpacing="3"
+                Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
+
+                <!-- Transitions -->
+                <Grid.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="-1000"/>
+                    </TransitionCollection>
+                </Grid.ChildrenTransitions>
+
+                <!-- For previsualization purposes -->
+                <d:Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </d:Grid.ColumnDefinitions>
+                <d:Grid Grid.Column="0" Background="MediumPurple">
+                    <TextBlock Text="XXX &#x0a;43%" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </d:Grid>
+                <d:StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Background="IndianRed"/>
+                <d:StackPanel Grid.Column="2" HorizontalAlignment="Stretch" Background="Goldenrod"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid ColumnSpacing="10" Margin="0 -10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+                            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+                            <Setter Property="Height" Value="36"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Button
+                        Click="AddPurchase_click"
+                        Grid.Column="0" Padding="15 0"
+                        ToolTipService.ToolTip="Add a new purchase">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <FontIcon Glyph="&#xE109;" FontSize="16"/>
+                            <TextBlock Text="New purchase" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <userControls:ToggleIconButton
+                        Background="{ThemeResource ButtonBackground}"
+                        BorderBrush="{ThemeResource ButtonBorderBrush}"
+                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                        Click="ToggleDetails_click"
+                        Grid.Column="1"
+                        IsChecked="True"
+                        Tooltip="Show details"
+                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
+                        <userControls:ToggleIconButton.CheckedIcon>
+                            <FontIcon Glyph="&#xE169;" />
+                        </userControls:ToggleIconButton.CheckedIcon>
+                        <userControls:ToggleIconButton.UncheckedIcon>
+                            <FontIcon Glyph="&#xE16A;" />
+                        </userControls:ToggleIconButton.UncheckedIcon>
+                    </userControls:ToggleIconButton>
+                    <userControls:ToggleIconButton
+                        Background="{ThemeResource ButtonBackground}"
+                        BorderBrush="{ThemeResource ButtonBorderBrush}"
+                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                        Click="GroupPurchases_Click"
+                        Grid.Column="2"
+                        IsChecked="{x:Bind vm.PurchasesAreGrouped, Mode=TwoWay}"
+                        Tooltip="Group purchases"
+                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
+                        <userControls:ToggleIconButton.UncheckedIcon>
+                            <FontIcon Glyph="&#xF168;" />
+                        </userControls:ToggleIconButton.UncheckedIcon>
+                        <userControls:ToggleIconButton.CheckedIcon>
+                            <FontIcon Glyph="&#xE8FD;" />
+                        </userControls:ToggleIconButton.CheckedIcon>
+                    </userControls:ToggleIconButton>
+
+                    <Button Grid.Column="4" ToolTipService.ToolTip="Import portfolio backup">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <FontIcon Glyph="&#xED25;" FontSize="16"/>
+                                <TextBlock Text="Import"/>
+                            </StackPanel>
+                        </Button.Content>
+                        <Button.Flyout>
+                            <Flyout Placement="Bottom">
+                                <StackPanel Spacing="10">
+                                    <TextBlock Text="Your current portfolio will be overwritten." Style="{ThemeResource BaseTextBlockStyle}"/>
+                                    <Button Click="ImportPortfolio_Click" Content="Yes, import" />
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                    <Button Grid.Column="5"  Click="ExportPortfolio_Click"
+                            ToolTipService.ToolTip="Export portfolio backup">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <FontIcon Glyph="&#xE105;" FontSize="16"/>
+                                <TextBlock Text="Export"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        
+        <!-- 
+        ###############################################################################################################
+        ###############################################################################################################
+        ############################################################################################################### -->
+        <!-- Empty portfolio warning -->
+        <Grid
+            Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Top" Margin="0 50 0 0"
+            Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2VisibilityNOT}}">
+            <controls:DropShadowPanel
+                BlurRadius="10"
+                ShadowOpacity="0.3"
+                OffsetX="3"
+                OffsetY="3"
+                Color="#000000"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                IsMasked="True">
+                <Image
+                    MaxWidth="500" Stretch="Uniform"
+                    Source="/Assets/stockPrices.png"/>
+            </controls:DropShadowPanel>
+
+            <StackPanel VerticalAlignment="Bottom" Margin="0 75">
+                <TextBlock
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    Text="Your portfolio is empty."
+                    Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                <TextBlock
+                    FontWeight="Light" FontSize="16"
+                    HorizontalAlignment="Center"
+                    Text="Try adding a purchase." Opacity="0.7"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Column headers + PortfolioList + totals -->
+        <ScrollViewer
+            x:Name="whole_portfolio"
+            x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+            Grid.Row="2" Padding="0 0 5 0" Margin="0 0 -5 0">
+            <StackPanel>
+                <Grid BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}"
+                      Margin="7 5" CornerRadius="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="28"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                            <Setter Property="Padding" Value="10 6"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Button Grid.Column="0" Click="SortPortfolio_click" Content="Coin" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" Padding="50 6 10 6"/>
+                    <Button Grid.Column="2" Click="SortPortfolio_click" Content="Invested"/>
+                    <Button Grid.Column="3" Click="SortPortfolio_click" Content="Worth"/>
+                    <Button Grid.Column="4" Click="SortPortfolio_click" Content="Delta" Padding="10 6 25 6"/>
+                </Grid>
+                <userControls:PortfolioList
+                    ClickGoTo="PortfolioList_ClickGoTo"
+                    UpdateParent="PortfolioList_UpdateParent"
+                    Grouped="{x:Bind vm.PurchasesAreGrouped}"
+                    Margin="7 0"
+                    Purchases="{x:Bind vm.Portfolio}"
+                    ShowDetails="{x:Bind vm.ShowDetails}"
+                    VerticalAlignment="Top"/>
+
+                <Grid Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="28"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                        <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                        <TextBlock HorizontalAlignment="Center">
+                            <Run Text="{x:Bind vm.TotalInvested}"/><!--
+                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="3" HorizontalAlignment="Right">
+                        <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                        <TextBlock HorizontalAlignment="Center">
+                            <Run Text="{x:Bind vm.TotalWorth}"/><!--
+                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="4" HorizontalAlignment="Right">
+                        <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                        <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
+                            <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
+                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        
+        <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
+        <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->
+        <Grid Grid.Row="3" x:Name="HistoricChartGrid"
+              x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+              Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <userControls:ChartAreaFull ChartModel="{x:Bind vm.Chart}"/>
+
+            <userControls:TimeRangeRadioButtons
+                Grid.Row="1"
+                Margin="0 0 0 15"
+                Tapped="TimeRangeButtons_Tapped"/>
+        </Grid>
+
+    </Grid>
+
+</Page>
+

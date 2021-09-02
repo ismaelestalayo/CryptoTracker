@@ -1,25 +1,26 @@
-<img src="Screenshots/promo/Hero-art.png" width = "100%"/>
+<img src="Screenshots/promo/Laptop-dark.png" width = "100%"/>
 
-- Keep track of your favourite coins by pining them to the dashboard
+- Keep track of your favourite coins with the Home dashboard
+- Supports **over 800 cryptocurrencies**!
+- Stay up to date with **Alerts, Live Tiles and Compact Overlays**
 - Adjustable **hourly/daily/weekly/monthly charts**
-- Supports **over 100 cryptocurrencies**!
-- Portfolio to keep track of all your purchases (with **cloud backup**).
+- Powerful portfolio to track the performance of your purchases (with backups).
 - Keep up with the latest news.
-- Currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
-- Beautiful light and dark fluent themes!
-
-
-<img src="Screenshots/promo/Laptop_front_home_light.png" width = "100%"/>
+- More than 15 currencies: EUR, USD, GBP, AUD, MXN, CNY, JPY, INR...
+- Beautiful Light and Dark themes inline with Windows 11
+- ...and much more!
 
 
 ## Detailed overview of each coin:
 <p align="center">
-	<img src="Screenshots/screen_eth_light.png" width = "90%"/>
+	<img src="Screenshots/Coin1-light.png" width = "95%"/>
+	<img src="Screenshots/Coin2-light.png" width = "95%"/>
 </p>
 
 ## Your portfolio at a glance:
 <p align="center">
-	<img src="Screenshots/screen_portfolio_light.png" width = "90%" />
+	<img src="Screenshots/Portfolio-light.png" width = "95%" />
+	<img src="Screenshots/PortfolioDetails-light.png" width = "95%" />
 </p>
 
 
