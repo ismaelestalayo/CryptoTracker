@@ -114,20 +114,26 @@ namespace UWP.Views {
         /// <summary>
         /// Show a notification with the changelog to new users.
         /// </summary>
-        private async void ShowChangelog() {
+        private void ShowChangelog() {
             var v = Package.Current.Id.Version;
-            var version = $"{v.Major}.{v.Minor}.{v.Build}";
+            var currentVersion = $"{v.Major}.{v.Minor}.{v.Build}";
             
             var lastVersion = App._LocalSettings.Get<string>(UserSettings.LastVersion);
-            if (version == lastVersion)
+            if (currentVersion == lastVersion)
                 return;
-            vm.InfoBarTitle = $"Welcome to CryptoTracker v{version}";
-            vm.InfoBarMessage = "New in this version:\n";
 
-            vm.InfoBarMessage += Changelogs.FormatChangelog(Changelogs.CurrentChangelog);
+            vm.InfoBarTitle = $"Welcome to Crypto Tracker v{currentVersion}";
+            vm.InfoBarMessage = "New in this version: \n";
+
+            if (App._LocalSettings.Get<bool>(UserSettings.IsNewUser)) {
+                App._LocalSettings.Set(UserSettings.IsNewUser, false);
+                vm.InfoBarMessage += Changelogs.FormatChangelog(Changelogs.MajorChangelog);
+            }
+            else
+                vm.InfoBarMessage += Changelogs.FormatChangelog(Changelogs.CurrentChangelog);
 
             vm.InfoBarOpened = true;
-            App._LocalSettings.Set(UserSettings.LastVersion, version);
+            App._LocalSettings.Set(UserSettings.LastVersion, currentVersion);
         }
 
         private async void ColorValuesChanged(UISettings sender, object args) {

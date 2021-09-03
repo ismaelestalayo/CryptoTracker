@@ -39,7 +39,7 @@
             Padding="10">
             <muxc:InfoBar.Content>
                 <TextBlock
-                    Margin="2 -10 0 10"
+                    Margin="2 -10 0 15"
                     TextWrapping="WrapWholeWords"
                     Visibility="{x:Bind Message, Converter={StaticResource StringToVisibility}}">
                     <Run Text="{x:Bind Message}"/>
