@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace UWP.Core.Constants {
     /// <summary>
@@ -7,6 +8,14 @@ namespace UWP.Core.Constants {
     public class Changelogs {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
+			{
+				"6.0.3",
+				new List<string>(){
+					"Settings: set the currency to all purchases",
+					"Portfolio: group button shown only when multiple same coin entries exist",
+					"Portfolio: fixed error saving the Portfolio",
+				}
+			},
 			{
 				"6.0.0",
 				new List<string>(){
@@ -19,25 +28,19 @@ namespace UWP.Core.Constants {
 					"Configurable auto-refresh and startup page",
 					"Support for Jump Lists",
 					"New Compact Overlay",
-					"Portfolio shows diversification ratios and can group entries",
-					"Ability to duplicate, add notes and change the currency of purchases"
+					"Portfolio: diversification ratios, group or duplicate entries, add notes and change purchases' currencies"
 				}
-			},
-			//{
-			//	"5.0.0",
-			//	new List<string>() {
-			//		"a", "b"
-			//	}
-			//}
+			}
 		};
 
-		public static readonly List<string> CurrentChangelog = LatestChangelogs["6.0.0"];
+		public static readonly List<string> CurrentChangelog = LatestChangelogs[LatestChangelogs.Keys.ToList()[0]];
+		public static readonly List<string> MajorChangelog = LatestChangelogs["6.0.0"];
 
 		public static string FormatChangelog(List<string> changelog) {
 			string message = "";
 			foreach (var change in changelog)
 				message += $"  • {change} \n";
-			return message;
+			return message.TrimEnd('\n');
 		}
 	}
 }

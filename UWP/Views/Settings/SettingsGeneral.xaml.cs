@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using UWP.Core.Constants;
+using UWP.Helpers;
 using UWP.Shared.Constants;
+using UWP.Shared.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace UWP.Views {
     public sealed partial class SettingsGeneral : Page {
@@ -26,5 +29,17 @@ namespace UWP.Views {
             App._LocalSettings.Set(UserSettings.StartupPage, $"/{startupPage}");
         }
 
+        private async void SetAllPurchasesCurrency_Click(object sender, RoutedEventArgs e) {
+            var portfolio = await PortfolioHelper.GetPortfolio();
+            foreach (var purchase in portfolio)
+                purchase.Currency = vm.Currency;
+            await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, portfolio);
+            var openedpopups = VisualTreeHelper.GetOpenPopups(Window.Current);
+            foreach (var popup in openedpopups) {
+                if (popup.Child is ContentDialog)
+                    ((ContentDialog)popup.Child).Hide();
+            }
+            vm.InAppNotification("Currency of all purchases overrided.", "Please refresh the portfolio.");
+        }
     }
 }
