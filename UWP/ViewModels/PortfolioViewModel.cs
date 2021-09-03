@@ -36,6 +36,12 @@ namespace UWP.ViewModels {
 			set => SetProperty(ref currencySym, value);
 		}
 
+		private bool _purchasesAreGroupable = false;
+		public bool PurchasesAreGroupable {
+			get => _purchasesAreGroupable;
+			set => SetProperty(ref _purchasesAreGroupable, value);
+		}
+
 		private bool _purchasesAreGrouped = false;
 		public bool PurchasesAreGrouped {
 			get => _purchasesAreGrouped;

@@ -52,6 +52,8 @@ namespace UWP.Views {
 
         public async Task UpdatePage() {
             vm.CurrencySymbol = App.currencySymbol;
+            vm.Portfolio = await RetrievePortfolio();
+            
 
             /// Empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
@@ -66,6 +68,7 @@ namespace UWP.Views {
             vm.TotalDelta = vm.Portfolio.Sum(x => x.Profit);
             vm.AllPurchasesInCurrency = vm.Portfolio.Select(x => x.Currency).All(x => x == vm.Portfolio[0].Currency);
             vm.AllPurchasesCurrencySym = vm.Portfolio.FirstOrDefault()?.CurrencySymbol ?? App.currencySymbol;
+            vm.PurchasesAreGroupable = vm.Portfolio.GroupBy(x => x.Crypto).Where(x => x.Count() > 1).Count() > 0;
 
             /// Create the diversification grid
             var grouped = vm.Portfolio.GroupBy(x => x.Crypto);
@@ -225,10 +228,11 @@ namespace UWP.Views {
                 dialog.NewPurchase.CryptoName = App.coinListPaprika.FirstOrDefault(
                     x => x.symbol == dialog.NewPurchase.Crypto).name;
                 vm.Portfolio.Add(dialog.NewPurchase);
-                PortfolioHelper.AddPurchase(dialog.NewPurchase);
+
+                await PortfolioHelper.AddPurchase(dialog.NewPurchase);
                 
                 // Update everything
-                UpdatePage();
+                await UpdatePage();
             }
         }
 

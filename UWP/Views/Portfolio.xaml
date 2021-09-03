@@ -116,6 +116,8 @@
                         </userControls:ToggleIconButton.UncheckedIcon>
                     </userControls:ToggleIconButton>
                     <userControls:ToggleIconButton
+                        x:Name="GroupPurchasesBtn"
+                        x:Load="{x:Bind vm.PurchasesAreGroupable}"
                         Background="{ThemeResource ButtonBackground}"
                         BorderBrush="{ThemeResource ButtonBorderBrush}"
                         BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
@@ -237,7 +239,7 @@
                     ShowDetails="{x:Bind vm.ShowDetails}"
                     VerticalAlignment="Top"/>
 
-                <Grid Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}">
+                <Grid Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}" Margin="22 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="28"/>
                         <ColumnDefinition Width="*"/>
