@@ -22,8 +22,8 @@ namespace UWP.Shared.Helpers {
             return (portfolio.Count == 0) ? new List<PurchaseModel>() : portfolio;
         }
 
-        public async static void AddPurchase(PurchaseModel purchase) {
-            var portfolio = await LocalStorageHelper.ReadObject<List<PurchaseModel>>(UserStorage.Portfolio6);
+        public async static Task AddPurchase(PurchaseModel purchase) {
+            var portfolio = await GetPortfolio();
             portfolio.Add(purchase);
             await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, portfolio);
         }

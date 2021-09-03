@@ -8,6 +8,13 @@ namespace UWP.Core.Constants {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
 			{
+				"6.0.X",
+				new List<string>(){
+					"Added button to set the currency to all purchases",
+					"Fixed XML error writing Portfolio",
+				}
+			},
+			{
 				"6.0.0",
 				new List<string>(){
 					"Refreshed UI inline with Windows 11",
@@ -22,13 +29,7 @@ namespace UWP.Core.Constants {
 					"Portfolio shows diversification ratios and can group entries",
 					"Ability to duplicate, add notes and change the currency of purchases"
 				}
-			},
-			//{
-			//	"5.0.0",
-			//	new List<string>() {
-			//		"a", "b"
-			//	}
-			//}
+			}
 		};
 
 		public static readonly List<string> CurrentChangelog = LatestChangelogs["6.0.0"];
