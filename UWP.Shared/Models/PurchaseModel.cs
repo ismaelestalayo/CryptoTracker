@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -15,6 +16,8 @@ namespace UWP.Models {
     /// Had to not implement ObservableObject to make it serializable
     /// </summary>
     [DataContract()]
+    [KnownType(typeof(PurchaseModel))]
+    [KnownType(typeof(List<PurchaseModel>))]
     public class PurchaseModel : INotifyPropertyChanged {
         public PurchaseModel() { }
 
