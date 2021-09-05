@@ -200,88 +200,103 @@
         </Grid>
 
         <!-- Column headers + PortfolioList + totals -->
-        <ScrollViewer
-            x:Name="whole_portfolio"
-            x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
-            Grid.Row="2" Padding="0 0 5 0" Margin="0 0 -5 0">
-            <StackPanel>
-                <Grid BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}"
-                      Margin="7 5" CornerRadius="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="28"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer
+                x:Name="whole_portfolio"
+                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+                Padding="0 0 0 0" Margin="0 0 -5 0">
+                <StackPanel>
+                    <Grid BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}"
+                          Margin="7 5" CornerRadius="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="28"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.Resources>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                            <Setter Property="Padding" Value="10 6"/>
-                        </Style>
-                    </Grid.Resources>
+                        <Grid.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                                <Setter Property="Padding" Value="10 6"/>
+                            </Style>
+                        </Grid.Resources>
 
-                    <Button Grid.Column="0" Click="SortPortfolio_click" Content="Coin" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" Padding="50 6 10 6"/>
-                    <Button Grid.Column="2" Click="SortPortfolio_click" Content="Invested"/>
-                    <Button Grid.Column="3" Click="SortPortfolio_click" Content="Worth"/>
-                    <Button Grid.Column="4" Click="SortPortfolio_click" Content="Delta" Padding="10 6 25 6"/>
-                </Grid>
-                <userControls:PortfolioList
-                    ClickGoTo="PortfolioList_ClickGoTo"
-                    UpdateParent="PortfolioList_UpdateParent"
-                    Grouped="{x:Bind vm.PurchasesAreGrouped}"
-                    Margin="7 0"
-                    Purchases="{x:Bind vm.Portfolio}"
-                    ShowDetails="{x:Bind vm.ShowDetails}"
-                    VerticalAlignment="Top"/>
+                        <Button Grid.Column="0" Click="SortPortfolio_click" Content="Coin" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" Padding="50 6 10 6"/>
+                        <Button Grid.Column="2" Click="SortPortfolio_click" Content="Invested"/>
+                        <Button Grid.Column="3" Click="SortPortfolio_click" Content="Worth"/>
+                        <Button Grid.Column="4" Click="SortPortfolio_click" Content="Delta" Padding="10 6 25 6"/>
+                    </Grid>
+                    <userControls:PortfolioList
+                        ClickGoTo="PortfolioList_ClickGoTo"
+                        UpdateParent="PortfolioList_UpdateParent"
+                        Grouped="{x:Bind vm.PurchasesAreGrouped}"
+                        Margin="7 0"
+                        Purchases="{x:Bind vm.Portfolio}"
+                        ShowDetails="{x:Bind vm.ShowDetails}"
+                        VerticalAlignment="Top"/>
+                </StackPanel>
+            </ScrollViewer>
 
-                <Grid Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}" Margin="22 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="28"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="FontSize" Value="16"/>
-                            <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="HorizontalAlignment" Value="Right"/>
-                        </Style>
-                    </Grid.Resources>
+            <Grid Grid.Row="1" Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}" Margin="20 -10 20 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="28"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                    </Style>
+                </Grid.Resources>
 
-                    <StackPanel Grid.Column="2" HorizontalAlignment="Right">
-                        <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
-                        <TextBlock HorizontalAlignment="Center">
-                            <Run Text="{x:Bind vm.TotalInvested}"/><!--
-                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
-                        </TextBlock>
-                    </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Left">
+                    <TextBlock Text="ROI" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                    <TextBlock HorizontalAlignment="Center">
+                        <Run Text="ROI:"/>
+                        <Run Text="{x:Bind vm.ROI}" Foreground="{x:Bind vm.ROI, Converter={StaticResource NumberForeground}}"/><!--
+                        --><Run Text="%" Foreground="{x:Bind vm.ROI, Converter={StaticResource NumberForeground}}"/>
+                    </TextBlock>
+                </StackPanel>
 
-                    <StackPanel Grid.Column="3" HorizontalAlignment="Right">
-                        <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
-                        <TextBlock HorizontalAlignment="Center">
-                            <Run Text="{x:Bind vm.TotalWorth}"/><!--
-                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
-                        </TextBlock>
-                    </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                    <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                    <TextBlock HorizontalAlignment="Center">
+                        <Run Text="{x:Bind vm.TotalInvested}"/><!--
+                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                    </TextBlock>
+                </StackPanel>
 
-                    <StackPanel Grid.Column="4" HorizontalAlignment="Right">
-                        <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
-                        <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
-                            <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
-                            --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
-                        </TextBlock>
-                    </StackPanel>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
-        
+                <StackPanel Grid.Column="3" HorizontalAlignment="Right">
+                    <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                    <TextBlock HorizontalAlignment="Center">
+                        <Run Text="{x:Bind vm.TotalWorth}"/><!--
+                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Column="4" HorizontalAlignment="Right">
+                    <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
+                    <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
+                        <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
+                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
         <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
         <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->
         <Grid Grid.Row="3" x:Name="HistoricChartGrid"

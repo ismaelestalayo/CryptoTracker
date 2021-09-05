@@ -25,6 +25,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 namespace UWP.Views {
 
@@ -69,6 +70,7 @@ namespace UWP.Views {
             vm.AllPurchasesInCurrency = vm.Portfolio.Select(x => x.Currency).All(x => x == vm.Portfolio[0].Currency);
             vm.AllPurchasesCurrencySym = vm.Portfolio.FirstOrDefault()?.CurrencySymbol ?? App.currencySymbol;
             vm.PurchasesAreGroupable = vm.Portfolio.GroupBy(x => x.Crypto).Where(x => x.Count() > 1).Count() > 0;
+            vm.ROI = Math.Round((vm.TotalWorth - vm.TotalInvested) / vm.TotalInvested, 1) * 100;
 
             /// Create the diversification grid
             var grouped = vm.Portfolio.GroupBy(x => x.Crypto);
@@ -198,6 +200,9 @@ namespace UWP.Views {
             vm.Chart.MajorStepUnit = temp.MajorStepUnit;
             vm.Chart.MajorStep = temp.MajorStep;
             vm.Chart.TickInterval = temp.TickInterval;
+
+            vm.Chart.ChartStroke = (vm.TotalDelta >= 0) ?
+                ColorConstants.GetColorBrush("pastel_green") : ColorConstants.GetColorBrush("pastel_red");
 
             /// Calculate min-max to adjust axis
             var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
