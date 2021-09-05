@@ -24,10 +24,10 @@ namespace UWP.Services {
         [Get("/data/price?fsym={crypto}&tsyms={currency}")]
         Task<string> GetPrice(string crypto, string currency);
 
-        [Get("/data/histo{time}?e=CCCAGG&fsym={crypto}&tsym={currency}&limit={limit}")]
+        [Get("/data/v2/histo{time}?e=CCCAGG&fsym={crypto}&tsym={currency}&limit={limit}")]
         Task<object> GetHistoric(string time, string crypto, string currency, int limit, int aggregate = 1);
 
-        [Get("/data/histo{time}?e=CCCAGG&fsym={crypto}&tsym={currency}&allData=true")]
+        [Get("/data/v2/histo{time}?e=CCCAGG&fsym={crypto}&tsym={currency}&allData=true")]
         Task<object> GetHistoricAll(string time, string crypto, string currency);
 
         [Get("/data/top/exchanges?fsym={crypto}&tsym={currency}&limit={limit}")]
@@ -88,13 +88,14 @@ namespace UWP.Services {
                 var response = JsonSerializer.Deserialize<object>(resp.ToString());
 
                 var okey = ((JsonElement)response).GetProperty("Response").ToString();
-                var timeTo = ((JsonElement)response).GetProperty("TimeTo").ToString();
-                var timeFrom = ((JsonElement)response).GetProperty("TimeFrom").ToString();
+                var data = ((JsonElement)response).GetProperty("Data");
+
+                var timeTo = data.GetProperty("TimeTo").ToString();
+                var timeFrom = data.GetProperty("TimeFrom").ToString();
                 if (!okey.Equals("Success", StringComparison.InvariantCultureIgnoreCase) || timeTo == timeFrom)
                     throw new Exception();
 
-                var data = ((JsonElement)response).GetProperty("Data").ToString();
-                var historic = JsonSerializer.Deserialize<List<HistoricPrice>>(data);
+                var historic = JsonSerializer.Deserialize<List<HistoricPrice>>(data.GetProperty("Data").ToString());
 
                 // Add calculation of dates and average values
                 DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
