@@ -246,7 +246,11 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <Grid Grid.Row="1" Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}" Margin="20 -10 20 10">
+            <Grid
+                x:Name="TotalsRow"
+                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+                Grid.Row="1" Margin="20 -10 20 10"
+                Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="28"/>
                     <ColumnDefinition Width="*"/>
