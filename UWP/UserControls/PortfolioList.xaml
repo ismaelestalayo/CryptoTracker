@@ -95,7 +95,7 @@
                             <StackPanel Grid.Column="1" Margin="7 0">
                                 <TextBlock d:Text="Crypto" Text="{x:Bind CryptoName}" FontWeight="Bold" Margin="0 0 0 -3"/>
                                 <TextBlock d:Text="0.12 XXX">
-                                    <Run Text="{x:Bind CryptoQty}"/>
+                                    <Run Text="{x:Bind CryptoQty, Converter={StaticResource NumberFormatter}}"/>
                                     <Run Text="{x:Bind Crypto}"/>
                                 </TextBlock>
                             </StackPanel>
