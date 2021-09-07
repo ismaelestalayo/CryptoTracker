@@ -89,7 +89,7 @@ namespace UWP.Views {
                 g.VerticalAlignment = VerticalAlignment.Stretch;
 
                 var val = Math.Round((worth / vm.TotalWorth) * 100, 1);
-                ToolTipService.SetToolTip(g, $"{crypto} {val}%");
+                ToolTipService.SetToolTip(g, $"{crypto} {val}% \n{worth}{vm.CurrencySymbol}");
                 ToolTipService.SetPlacement(g, PlacementMode.Right);
                 var t = new TextBlock() {
                     Text = crypto + "\n" + $"{val}%",

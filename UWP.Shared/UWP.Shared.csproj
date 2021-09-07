@@ -127,6 +127,7 @@
     <Compile Include="Helpers\AlertsHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
+    <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Helpers\PortfolioHelper.cs" />
     <Compile Include="Interfaces\Interfaces.cs" />
     <Compile Include="Models\ChartModel.cs" />

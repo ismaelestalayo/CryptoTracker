@@ -1,5 +1,5 @@
 ﻿using System;
-using UWP.Helpers;
+using UWP.Shared.Helpers;
 using Windows.UI.Xaml.Data;
 
 namespace UWP.Converters {
@@ -27,8 +27,22 @@ namespace UWP.Converters {
     }
 
     public class NumberUnitSuffixer : IValueConverter {
-        public object Convert(object val, Type targetType, object param, string lang)
-            => NumberHelper.AddUnitPrefix((double)val);
+        public object Convert(object val, Type targetType, object param, string lang) {
+            var num = (double)val;
+            if (num > 999999999) {
+                return num.ToString("0,,,.##B", App.UserCulture);
+            }
+            else if (num > 999999) {
+                return num.ToString("0,,.##M", App.UserCulture);
+            }
+            else if (num > 999) {
+                return num.ToString("0,.##K", App.UserCulture);
+            }
+            else {
+                num = Math.Round(num, 3);
+                return num.ToString(App.UserCulture);
+            }
+        }
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }

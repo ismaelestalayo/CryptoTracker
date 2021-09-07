@@ -123,7 +123,6 @@
     <Compile Include="Dialogs\PortfolioEntryDialog.xaml.cs">
       <DependentUpon>PortfolioEntryDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="UserControls\CoinAutoSuggestBox.xaml.cs">
       <DependentUpon>CoinAutoSuggestBox.xaml</DependentUpon>
