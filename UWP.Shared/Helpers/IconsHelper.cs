@@ -7,7 +7,7 @@ namespace UWP.Helpers {
         /// Get a coin's icon (either from local Asset or from internet)
         /// </summary>
         /// Old endpoint: chasing-coins.com
-        public static string GetIcon(string coin) {
+        public static string GetIcon(string coin = "NULL") {
             string filename = "Assets/Icons/icon" + coin + ".png";
 
             if (!File.Exists(filename)) {
