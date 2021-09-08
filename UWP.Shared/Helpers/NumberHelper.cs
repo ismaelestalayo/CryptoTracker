@@ -1,23 +1,7 @@
 ﻿using System;
 
-namespace UWP.Helpers {
-    class NumberHelper {
-        public static string AddUnitPrefix(double num) {
-            if (num > 999999999) {
-                return num.ToString("0,,,.##B", App.UserCulture);
-            }
-            else if (num > 999999) {
-                return num.ToString("0,,.##M", App.UserCulture);
-            }
-            else if (num > 999) {
-                return num.ToString("0,.##K", App.UserCulture);
-            }
-            else {
-                num = Math.Round(num, 3);
-                return num.ToString(App.UserCulture);
-            }
-        }
-
+namespace UWP.Shared.Helpers {
+    public class NumberHelper {
         /// <summary>
         /// Round a double with a decimal precision that depends on its value
         /// </summary>

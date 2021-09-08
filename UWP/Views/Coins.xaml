@@ -95,11 +95,11 @@
                          d:Text="50.00"/><Run Text="%"/>
                 </TextBlock>
                 <TextBlock Grid.Column="1" d:Text="340B€">
-                    <Run	Text="{x:Bind vm.GlobalStats.TotalVolume}"/><!--
+                    <Run	Text="{x:Bind vm.GlobalStats.TotalVolume, Converter={StaticResource NumberUnit}}"/><!--
                     --><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol}"/>
                 </TextBlock>
                 <TextBlock Grid.Column="2" d:Text="1700B€">
-                    <Run Text="{x:Bind vm.GlobalStats.TotalMarketCap}"/><!--
+                    <Run Text="{x:Bind vm.GlobalStats.TotalMarketCap, Converter={StaticResource NumberUnit}}"/><!--
                     --><Run Text="{x:Bind vm.GlobalStats.CurrencySymbol}"/>
                 </TextBlock>
             </Grid>

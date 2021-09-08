@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
-using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
+using UWP.Shared.Helpers;
 
 namespace UWP.APIs {
     class CoinGecko {
@@ -34,8 +33,8 @@ namespace UWP.APIs {
                 );
 
                 stats.BtcDominance = Math.Round(btcDominance, 2);
-                stats.TotalVolume = NumberHelper.AddUnitPrefix(totalVolume);
-                stats.TotalMarketCap = NumberHelper.AddUnitPrefix(totalMarketCap);
+                stats.TotalVolume = totalVolume;
+                stats.TotalMarketCap = totalMarketCap;
                 stats.CurrencySymbol = App.currencySymbol;
                 return stats;
 

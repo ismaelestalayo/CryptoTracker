@@ -2,6 +2,7 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using UWP.Helpers;
 using UWP.Models;
 
 namespace UWP.ViewModels {
@@ -70,6 +71,11 @@ namespace UWP.ViewModels {
 		public double TotalDelta {
 			get => totalDelta;
 			set => SetProperty(ref totalDelta, value);
+		}
+		private double roi = 0;
+		public double ROI {
+			get => roi;
+			set => SetProperty(ref roi, value);
 		}
 
 
