@@ -81,11 +81,11 @@ namespace UWP.APIs {
                     coinInfo.ImageUrl = IconsHelper.GetIcon(coinInfo.Name);
                     coinInfo.FavIcon = App.pinnedCoins.Contains(coinInfo.Name) ? "\uEB52" : "\uEB51";
                     coinInfo.ChangeFG = (raw.CHANGE24HOUR < 0) ? (SolidColorBrush)App.Current.Resources["pastelRed"] : (SolidColorBrush)App.Current.Resources["pastelGreen"];
-                    coinInfo.MarketCap = NumberHelper.AddUnitPrefix(raw.MKTCAP);
-                    coinInfo.Volume = NumberHelper.AddUnitPrefix(raw.TOTALVOLUME24HTO);
-                    raw.CHANGEPCT24HOUR = Math.Round(raw.CHANGEPCT24HOUR, 2);
-                    raw.CHANGE24HOUR = NumberHelper.Rounder(raw.CHANGE24HOUR);
-                    raw.PRICE = NumberHelper.Rounder(raw.PRICE);
+                    //coinInfo.MarketCap = NumberHelper.AddUnitPrefix(raw.MKTCAP);
+                    //coinInfo.Volume = NumberHelper.AddUnitPrefix(raw.TOTALVOLUME24HTO);
+                    //raw.CHANGEPCT24HOUR = Math.Round(raw.CHANGEPCT24HOUR, 2);
+                    //raw.CHANGE24HOUR = NumberHelper.Rounder(raw.CHANGE24HOUR);
+                    //raw.PRICE = NumberHelper.Rounder(raw.PRICE);
 
                     top100.Add(new Top100card() {
                         CoinInfo = coinInfo,
@@ -121,10 +121,10 @@ namespace UWP.APIs {
                 var raw = JsonSerializer.Deserialize<Raw>(data.ToString());
 
                 /// quick fixes
-                raw.PRICE = NumberHelper.Rounder(raw.PRICE);
-                raw.CHANGEPCT24HOUR = NumberHelper.Rounder(raw.CHANGEPCT24HOUR);
-                raw.CHANGE24HOUR = NumberHelper.Rounder(raw.CHANGE24HOUR);
-                raw.PRICE = NumberHelper.Rounder(raw.PRICE);
+                //raw.PRICE = NumberHelper.Rounder(raw.PRICE);
+                //raw.CHANGEPCT24HOUR = NumberHelper.Rounder(raw.CHANGEPCT24HOUR);
+                //raw.CHANGE24HOUR = NumberHelper.Rounder(raw.CHANGE24HOUR);
+                //raw.PRICE = NumberHelper.Rounder(raw.PRICE);
                 
                 return raw;
             }

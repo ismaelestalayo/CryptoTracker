@@ -27,7 +27,7 @@
 
     <!-- 
     #################################################################################################### -->
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 0 0 5">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
@@ -90,7 +90,7 @@
             <controls:AdaptiveGridView
                 x:Name="HomeGridView"
                 SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
-                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1100"
+                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1000"
                 DragItemsCompleted="HomeGridView_DragCompleted" ItemHeight="300"
                 ItemsSource="{x:Bind vm.PriceCards}">
                 <controls:AdaptiveGridView.Resources>

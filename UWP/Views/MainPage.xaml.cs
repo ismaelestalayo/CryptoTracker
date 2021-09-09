@@ -59,6 +59,13 @@ namespace UWP.Views {
             uiSettings.ColorValuesChanged += ColorValuesChanged;
 
             ExtendAcrylicIntoTitleBar();
+
+            Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed; ; ;
+        }
+
+        private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e) {
+            if (e.CurrentPoint.Properties.IsXButton1Pressed)
+                e.Handled = !TryGoBack();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
@@ -170,7 +177,15 @@ namespace UWP.Views {
             SyncIcon.Visibility = Visibility.Visible;
         }
 
-        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
+        public bool TryGoBack() {
+            if (ContentFrame.CanGoBack) {
+                ContentFrame.GoBack();
+                return true;
+            }
+            return false;
+        }
+
+        private void NavView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args) {
             string source = "null";
             string selected = "null";
 
@@ -271,7 +286,7 @@ namespace UWP.Views {
             AutoSuggestBox.Focus(FocusState.Programmatic);
         }
 
-        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
+        private void NavView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args) {
             string selected;
             string source = (((Frame)sender.Content).SourcePageType).Name;
             
@@ -288,5 +303,10 @@ namespace UWP.Views {
             
         }
 
+        private async void NavView_Settings_Tapped(object sender, TappedRoutedEventArgs e)
+            => await new SettingsDialog().ShowAsync();
+
+        private void NavView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+            => TryGoBack();
     }
 }
