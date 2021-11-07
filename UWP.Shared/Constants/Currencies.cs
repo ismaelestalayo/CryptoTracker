@@ -2,11 +2,14 @@
 
 namespace UWP.Shared.Constants {
     public class Currencies {
-        public static string GetCurrencySymbol(string currency) {
+        public static string GetCurrencySymbol(string currency = "") {
             string symbol;
             return CurrencySymbol.TryGetValue(currency, out symbol) ? symbol : "€";
         }
-        
+
+        /// TODO: Once I add a good way to convert currencies, add the following:
+        /// { "PHP", "₱"},
+
         public static readonly Dictionary<string, string> CurrencySymbol = new Dictionary<string, string>() {
             { "ARS", "$" },
             { "AUD", "$" },

@@ -131,13 +131,13 @@
                     <muxc:NavigationViewItem
                         AutomationProperties.Name="Refresh"
                         ToolTipService.ToolTip="Refresh"
+                        Tapped="NavView_Sync_Tapped"
                         Height="44" Width="50">
                         <muxc:NavigationViewItem.Content>
                             <Grid Margin="0 0 -7 0">
                                 <FontIcon
                                     x:Name="SyncIcon"
                                     Glyph="&#xE117;" FontSize="{StaticResource ContentControlFontSize}"
-                                    Tapped="NavView_Sync_Tapped"
                                     AutomationProperties.Name="Refresh"/>
                                 <ProgressRing
                                     IsActive="True" Margin="0" 
