@@ -29,7 +29,8 @@ namespace UWP.Views {
 		private List<string> timeSpans = new List<string>{"1h", "4h", "1d"};
 
 		/// Timer for auto-refresh
-		private static ThreadPoolTimer PeriodicTimer;
+		private static ThreadPoolTimer PricePeriodicTimer;
+		private static ThreadPoolTimer ChartPeriodicTimer;
 
 		public CoinCompact() {
 			this.InitializeComponent();
@@ -62,8 +63,6 @@ namespace UWP.Views {
 			if (autoRefresh != "None") {
 				switch (autoRefresh) {
 					case "30 sec":
-						period = TimeSpan.FromSeconds(30);
-						break;
 					case "1 min":
 						period = TimeSpan.FromSeconds(60);
 						break;
@@ -71,25 +70,32 @@ namespace UWP.Views {
 						period = TimeSpan.FromSeconds(120);
 						break;
 				}
-				PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+				PricePeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
 					await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-						if (timeUnit == "minute")
-							TimeRangeButtons_Tapped(null, null);
+						UpdatePrice();
+					});
+				}, TimeSpan.FromSeconds(30));
+
+				ChartPeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+					await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+						TimeRangeButtons_Tapped(null, null);
 					});
 				}, period);
 			}
 		}
 
 		private void Page_Unloaded(object sender, RoutedEventArgs e) {
-			PeriodicTimer?.Cancel();
+			ChartPeriodicTimer?.Cancel();
+			PricePeriodicTimer?.Cancel();
 		}
 
 		/// #########################################################################################
+		private async void UpdatePrice()
+			=> vm.Info.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
+				vm.Info.Name, App.currency);
+		
 		private async void UpdateValues() {
 			var crypto = vm.Info.Name;
-
-			/// Get current price
-			vm.Info.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(crypto, App.currency);
 
 			/// Get historic values
 			var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);

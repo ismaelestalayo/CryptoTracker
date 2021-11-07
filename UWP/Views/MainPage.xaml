@@ -55,10 +55,10 @@
         </Grid.RowDefinitions>
 
         <muxc:NavigationView
-            x:Name="NavView"
+            x:Name="NavView" IsPaneVisible="True"
             Grid.RowSpan="2" OverflowLabelMode="NoLabel"
             IsSettingsVisible="False" BackRequested="NavView_BackRequested"
-            IsBackButtonVisible="Auto" IsBackEnabled="{x:Bind ContentFrame.CanGoBack}"
+            IsBackButtonVisible="Collapsed" IsBackEnabled="{x:Bind ContentFrame.CanGoBack}"
             ItemInvoked="NavView_ItemInvoked"
             PaneDisplayMode="Top"
             SelectionChanged="NavView_SelectionChanged">

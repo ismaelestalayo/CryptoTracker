@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
-using UWP.Shared.Models;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.APIs {

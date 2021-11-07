@@ -30,9 +30,10 @@ namespace UWP.Views {
         private static string timeSpan = "1w";
         private static string timeUnit = "hour";
 
-        /// Timer for auto-refresh
-        private static ThreadPoolTimer PeriodicTimer;
-
+        /// Timers for auto-refresh
+        private static ThreadPoolTimer ChartPeriodicTimer;
+        private static ThreadPoolTimer PricePeriodicTimer;
+        private static DateTime lastPriceUpdate = new DateTime(1990, 1, 1);
 
         public Home() {
             InitializeComponent();
@@ -50,13 +51,20 @@ namespace UWP.Views {
                         period = TimeSpan.FromSeconds(30);
                         break;
                     case "1 min":
+                    default:
                         period = TimeSpan.FromSeconds(60);
                         break;
                     case "2 min":
                         period = TimeSpan.FromSeconds(120);
                         break;
                 }
-                PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                PricePeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => {
+                        await UpdatePrices();
+                    });
+                }, TimeSpan.FromSeconds(30));
+
+                ChartPeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                         if (timeUnit == "minute")
                             TimeRangeButtons_Tapped(null, null);
@@ -66,15 +74,26 @@ namespace UWP.Views {
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e) {
-            PeriodicTimer?.Cancel();
+            ChartPeriodicTimer?.Cancel();
+            PricePeriodicTimer?.Cancel();
         }
 
         public async Task UpdatePage() {
             foreach (var homeCard in vm.PriceCards)
                 homeCard.Info.IsLoading = true;
 
+            await UpdatePrices();
             for (int i = 0; i < vm.PriceCards.Count; i++)
                 await UpdateCard(i);
+        }
+
+        public async Task UpdatePrices() {
+            if ((DateTime.Now - lastPriceUpdate).TotalSeconds < 15)
+                return;
+
+            for (int i = 0; i < vm.PriceCards.Count; i++)
+                await UpdateCardPrice(i);
+            lastPriceUpdate = DateTime.Now;
         }
 
         /// #########################################################################################
@@ -91,11 +110,10 @@ namespace UWP.Views {
             }
 
             var tiles = await SecondaryTile.FindAllAsync();
-            for (int i = 0; i < App.pinnedCoins.Count; i++) {
-                await UpdateCard(i);
+            for (int i = 0; i < App.pinnedCoins.Count; i++)
                 vm.PriceCards[i].Info.IsPin = tiles.Any(tile => tile.TileId == App.pinnedCoins[i]);
-            }
 
+            await UpdatePage();
         }
 
         /// #########################################################################################
@@ -121,15 +139,25 @@ namespace UWP.Views {
         }
 
         /// #########################################################################################
-        ///  Update all cards
+        ///  Update a card's price
+        private async Task UpdateCardPrice(int i) {
+            /// Get price
+            string crypto = App.pinnedCoins[i];
+            var price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
+                crypto, App.currency);
+
+            vm.PriceCards[i].Info.Price = price;
+
+            var oldestPrice = vm.PriceCards[i].Chart.ChartData.FirstOrDefault()?.Value ?? price;
+            vm.PriceCards[i].Info.Diff = price - oldestPrice;
+        }
+
+        /// #########################################################################################
+        ///  Update a card's charts
         private async Task UpdateCard(int i) {
             try {
                 string crypto = App.pinnedCoins[i];
                 vm.PriceCards[i].Info.CurrencySym = App.currencySymbol;
-
-                /// Get price
-                vm.PriceCards[i].Info.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
-                    crypto, App.currency);
 
                 /// Save the current timeSpan for navigating to another page
                 vm.PriceCards[i].Chart.TimeSpan = timeSpan;
