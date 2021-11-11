@@ -31,34 +31,16 @@ namespace UWP.Views {
 
         // ###############################################################################################
         public MainPage() {
-            this.InitializeComponent();
-
-            // Clear the current tile
-            //TileUpdateManager.CreateTileUpdaterForApplication().Clear();            
-
-            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
-                CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
-                var statusBar = StatusBar.GetForCurrentView();
-
-                if (ColorConstants.CurrentThemeIsDark()){
-                    statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23); //31 31 31
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
-                } else {
-                    statusBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242); // 230
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
-                }
-
-                DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
-            }
+            this.InitializeComponent();          
 
             /// Subscribe to light/dark theme change event
             uiSettings.ColorValuesChanged += ColorValuesChanged;
 
             ExtendAcrylicIntoTitleBar();
+
+            NavView.IsBackButtonVisible = App._LocalSettings.Get<bool>(UserSettings.IsBackButtonVisible) ? 
+                Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible :
+                Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
 
             Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed; ; ;
         }
@@ -152,7 +134,9 @@ namespace UWP.Views {
 
         /// Extend acrylic into the title bar. 
         private void ExtendAcrylicIntoTitleBar() {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
+                CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.BackgroundColor = Colors.Transparent;
             titleBar.InactiveBackgroundColor = Colors.Transparent;
