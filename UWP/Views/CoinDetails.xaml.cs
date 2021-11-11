@@ -120,6 +120,8 @@ namespace UWP.Views {
                         var _coin = App.coinListPaprika.Find(x => x.symbol == crypto) ?? new CoinPaprikaCoin();
                         vm.Coin.FullName = _coin?.name ?? "NULL";
 
+                        UpdatePrice();
+
                         await GetCoinGeckoInfo(vm.Coin.Name);
                         TimeRangeButtons_Tapped(null, null);
                         vm.Coin.IsLoading = false;
