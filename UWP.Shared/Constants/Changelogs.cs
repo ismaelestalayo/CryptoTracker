@@ -14,7 +14,7 @@ namespace UWP.Core.Constants {
 					"General: fixed auto-refresh",
 					"General: optional Back button (mapped to the mouse as well)",
 					"News: removed AmbCrypto (it crashed)",
-					"Portfolio: fixed rounding errors",
+					"Portfolio: fixed rounding errors with ROI",
 				}
 			},
 			{
