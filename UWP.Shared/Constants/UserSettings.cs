@@ -9,6 +9,7 @@ namespace UWP.Core.Constants {
 		public const string CoinListsDate = "CoinListsDate";
 		public const string Currency = "Currency";
 		public const string CurrencySymbol = "CurrencySymbol";
+		public const string IsBackButtonVisible = "IsBackButtonVisible";
 		public const string IsNewUser = "NewUser";
 		public const string LastVersion = "LastVersion";
 		public const string Monochrome = "Monochrome";
@@ -24,6 +25,7 @@ namespace UWP.Core.Constants {
 			{ CoinListsDate,  (double)0 },
 			{ Currency, "EUR" },
 			{ CurrencySymbol, "€" },
+			{ IsBackButtonVisible, true },
 			{ IsNewUser, true },
 			{ LastVersion, "0.0.0" },
 			{ Monochrome, false },
