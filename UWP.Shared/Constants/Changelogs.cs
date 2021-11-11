@@ -13,6 +13,7 @@ namespace UWP.Core.Constants {
 				new List<string>() {
 					"General: fixed auto-refresh",
 					"General: optional Back button (mapped to the mouse as well)",
+					"Home: adaptive layout",
 					"News: removed AmbCrypto (it crashed)",
 					"Portfolio: fixed rounding errors with ROI",
 				}
