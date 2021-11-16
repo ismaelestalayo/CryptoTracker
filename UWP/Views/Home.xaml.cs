@@ -88,7 +88,7 @@ namespace UWP.Views {
         }
 
         public async Task UpdatePrices() {
-            if ((DateTime.Now - lastPriceUpdate).TotalSeconds < 15)
+            if ((DateTime.Now - lastPriceUpdate).TotalSeconds < 10)
                 return;
 
             for (int i = 0; i < vm.PriceCards.Count; i++)

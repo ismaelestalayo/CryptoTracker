@@ -11,6 +11,7 @@ namespace UWP.Core.Constants {
 			{
 				"6.1",
 				new List<string>() {
+					"General: added CZK currency",
 					"General: fixed auto-refresh",
 					"General: optional Back button (mapped to the mouse as well)",
 					"Home: adaptive layout",
