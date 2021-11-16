@@ -17,6 +17,7 @@ namespace UWP.Shared.Constants {
             { "BTC", "₿"},
             { "CAD", "$" },
             { "CNY", "¥" },
+            { "CZK", "Kč" },
             { "ETH", "Ξ" },
             { "EUR", "€" },
             { "GBP", "£" },
