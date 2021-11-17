@@ -7,7 +7,7 @@ using UWP.Models;
 using UWP.Shared.Constants;
 
 namespace UWP.ViewModels {
-    class SettingsViewModel : ObservableRecipient {
+    partial class SettingsViewModel : ObservableRecipient {
 
         private ObservableCollection<PurchaseModel> purchaseList = new ObservableCollection<PurchaseModel>();
         public ObservableCollection<PurchaseModel> PurchaseList {
@@ -51,6 +51,13 @@ namespace UWP.ViewModels {
                 }
             }
         }
+
+        [ObservableProperty]
+        private string timespan;
+
+        [ObservableProperty]
+        private string startupPage;
+
 
         /// #######################################################################################
         ///  Notifications

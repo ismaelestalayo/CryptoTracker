@@ -56,7 +56,7 @@
 
             <TextBlock>
                 <Run Text="Visibility of the NavigationView's back button."/>
-                <Run Text="(You must restart the app)." FontStyle="Italic"/>
+                <Run Text="&#x0a;(You must restart the app)." FontStyle="Italic"/>
             </TextBlock>
             <ToggleSwitch x:Name="BackButtonSwitch" Margin="0 -10 0 0" Toggled="BackButton_Toggled"/>
 
