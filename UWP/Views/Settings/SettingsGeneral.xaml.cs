@@ -20,15 +20,11 @@ namespace UWP.Views {
         private void SettingsGeneral_Loaded(object sender, RoutedEventArgs e) {
             vm.AutoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
             vm.Currency = App._LocalSettings.Get<string>(UserSettings.Currency);
-            startupPage.PlaceholderText = App._LocalSettings.Get<string>(UserSettings.StartupPage).Replace("/", "");
+            vm.StartupPage = App._LocalSettings.Get<string>(UserSettings.StartupPage).Replace("/", "");
+            vm.Timespan = App._LocalSettings.Get<string>(UserSettings.Timespan);
         }
 
         // ###############################################################################################
-        private void startupPage_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var startupPage = ((ComboBox)sender).SelectedItem.ToString();
-            App._LocalSettings.Set(UserSettings.StartupPage, $"/{startupPage}");
-        }
-
         private async void SetAllPurchasesCurrency_Click(object sender, RoutedEventArgs e) {
             var portfolio = await PortfolioHelper.GetPortfolio();
             foreach (var purchase in portfolio)
@@ -41,5 +37,12 @@ namespace UWP.Views {
             }
             vm.InAppNotification("Currency of all purchases overrided.", "Please refresh the portfolio.");
         }
+
+        // ###############################################################################################
+        private void StartupPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.StartupPage, $"/{vm.StartupPage}");
+
+        private void Timespan_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.Timespan, vm.Timespan);
     }
 }

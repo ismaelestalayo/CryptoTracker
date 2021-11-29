@@ -16,6 +16,7 @@ namespace UWP.Core.Constants {
 		public const string PinnedCoins = "Pinned";
 		public const string StartupPage = "StartupPage";
 		public const string Theme = "Theme";
+		public const string Timespan = "Timespan";
 
 		/// <summary>
 		/// Default settings
@@ -32,6 +33,7 @@ namespace UWP.Core.Constants {
 			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
 			{ StartupPage, "Home" },
 			{ Theme, "Windows" },
+			{ Timespan, "1w" },
 		};
 	}
 

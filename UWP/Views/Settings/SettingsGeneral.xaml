@@ -87,6 +87,7 @@
                 <x:String>1 min</x:String>
                 <x:String>2 min</x:String>
             </ComboBox>
+            
 
             <!-- STARTUP PAGE -->
             <StackPanel Style="{StaticResource SettingsSectionTitle}">
@@ -94,14 +95,40 @@
                 <TextBlock Text="Startup page" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
             <TextBlock Text="Initial page to load when opening the app."/>
-            <ComboBox x:Name="startupPage" SelectionChanged="startupPage_SelectionChanged"
+            <ComboBox
+                SelectionChanged="StartupPage_SelectionChanged"
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                SelectedValue="{x:Bind vm.StartupPage, Mode=TwoWay}"
                 Margin="0 5 0 0" Width="110">
                 <x:String>Home</x:String>
                 <x:String>Coins</x:String>
                 <x:String>News</x:String>
                 <x:String>Portfolio</x:String>
             </ComboBox>
+            
+
+            <!-- DEFAULT TIMESPAN -->
+            <StackPanel Style="{StaticResource SettingsSectionTitle}">
+                <FontIcon Glyph="&#xE9D2;"/>
+                <TextBlock Text="Default timespan" Style="{ThemeResource SettingsSectionTitleText}"/>
+            </StackPanel>
+            <TextBlock Text="Initial graphs' timespan."/>
+            <ComboBox
+                SelectionChanged="Timespan_SelectionChanged"
+                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                SelectedValue="{x:Bind vm.Timespan, Mode=TwoWay}"
+                Margin="0 5 0 0" Width="110">
+                <x:String>1h</x:String>
+                <x:String>4h</x:String>
+                <x:String>1d</x:String>
+                <x:String>3d</x:String>
+                <x:String>1w</x:String>
+                <x:String>1m</x:String>
+                <x:String>3m</x:String>
+                <x:String>1y</x:String>
+                <x:String>all</x:String>
+            </ComboBox>
+
 
         </StackPanel>
     </ScrollViewer>
