@@ -303,16 +303,19 @@
 
         <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
         <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->
-        <Grid Grid.Row="3" x:Name="HistoricChartGrid"
-              x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+        <Grid Grid.Row="3"
               Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <userControls:ChartAreaFull ChartModel="{x:Bind vm.Chart}"/>
+            <userControls:ChartAreaFull
+                x:Name="_"
+                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+                ChartModel="{x:Bind vm.Chart}"/>
 
             <userControls:TimeRangeRadioButtons
+                x:Name="TimeRangeRadioButtons"
                 Grid.Row="1"
                 Margin="0 0 0 15"
                 Tapped="TimeRangeButtons_Tapped"/>

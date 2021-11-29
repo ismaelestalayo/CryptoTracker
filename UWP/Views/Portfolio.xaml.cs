@@ -40,10 +40,15 @@ namespace UWP.Views {
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
         public Portfolio() {
-            this.InitializeComponent();   
+            InitializeComponent();   
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            /// Get timespan before updating
+            timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
+            TimeRangeRadioButtons.TimeSpan = timeSpan;
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+
             LocalPurchases = await RetrievePortfolio();
             vm.Portfolio = LocalPurchases;
             if (vm.PurchasesAreGrouped)

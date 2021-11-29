@@ -40,7 +40,7 @@ namespace UWP.Views {
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            // Get timespan before updating
+            /// Get timespan before updating
             timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
             TimeRangeRadioButtons.TimeSpan = timeSpan;
             (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
