@@ -110,6 +110,7 @@
             </Grid.RowDefinitions>
 
             <userControls:TimeRangeRadioButtons
+                x:Name="TimeRangeRadioButtons"
                 Grid.ColumnSpan="2" TimeSpan="1w"
                 Margin="0 10 0 5"
                 Tapped="TimeRangeButtons_Tapped"/>

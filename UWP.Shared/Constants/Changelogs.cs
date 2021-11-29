@@ -13,7 +13,7 @@ namespace UWP.Core.Constants {
 				new List<string>() {
 					"General: added CZK currency",
 					"General: fixed auto-refresh",
-					"General: optional Back button (mapped to the mouse as well)",
+					"Settings: set the chart's default timespan and optional Back button",
 					"Home: adaptive layout",
 					"News: removed AmbCrypto (it crashed)",
 					"Portfolio: fixed rounding errors with ROI",
