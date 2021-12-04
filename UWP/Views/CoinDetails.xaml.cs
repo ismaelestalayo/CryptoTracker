@@ -20,7 +20,6 @@ using UWP.ViewModels;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
-using Windows.System;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -55,6 +54,13 @@ namespace UWP.Views {
             var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
             if (animation != null)
                 animation.TryStart(PriceChart, new UIElement[] { ChartCard });
+
+            
+            /// Get timespan before updating
+            timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
+            TimeRangeRadioButtons.TimeSpan = timeSpan;
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+
 
             /// Create the auto-refresh timer
             var autoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
