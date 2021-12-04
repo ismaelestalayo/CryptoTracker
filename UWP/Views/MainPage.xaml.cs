@@ -8,7 +8,6 @@ using UWP.UserControls;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
-using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;

@@ -6,7 +6,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 /// <summary>
-/// Must have the old namespace to read from LocalStorage successfully
+/// DONT REMOVE! Must keep the old namespace to read from LocalStorage successfully
 /// </summary>
 namespace CryptoTracker.Helpers {
     [DataContractAttribute()]

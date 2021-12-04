@@ -1,17 +1,11 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace UWP.Models {
-	public class HomeCard : ObservableObject {
+	public partial class HomeCard : ObservableObject {
+		[ObservableProperty]
 		private Coin info = new Coin();
-		public Coin Info {
-			get => info;
-			set => SetProperty(ref info, value);
-		}
 
+		[ObservableProperty]
 		private ChartModel chart = new ChartModel();
-		public ChartModel Chart {
-			get => chart;
-			set => SetProperty(ref chart, value);
-		}
 	}
 }

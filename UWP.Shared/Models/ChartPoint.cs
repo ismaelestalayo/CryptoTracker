@@ -3,9 +3,10 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
-    // #########################################################################################
-	//  Object for plotting charts
-	public class ChartPoint {
+    /// <summary>
+    /// Object for plotting charts
+    /// </summary>
+    public class ChartPoint {
         public DateTime Date { get; set; }
         public double Value { get; set; } = 0;
         public double Low { get; set; } = 0;
