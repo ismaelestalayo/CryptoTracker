@@ -62,10 +62,7 @@ namespace UWP.Models {
         /// and activate a Loading bar
         /// </summary>
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(Opacity))]
         private bool isLoading = false;
-        
-        public double Opacity => isLoading ? 0.33 : 1;
 
 
         /// <summary>

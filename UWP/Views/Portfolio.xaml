@@ -21,6 +21,7 @@
     <Page.Resources>
         <converters:BoolToVisibility x:Key="BoolToVisibility"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
+        <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
         <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
         <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
         <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityNOT"/>
@@ -312,7 +313,8 @@
             <userControls:ChartAreaFull
                 x:Name="_"
                 x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
-                ChartModel="{x:Bind vm.Chart}"/>
+                ChartModel="{x:Bind vm.Chart}"
+                Opacity="{x:Bind vm.Chart.IsLoading, Converter={StaticResource IsLoadingOpacity}}"/>
 
             <userControls:TimeRangeRadioButtons
                 x:Name="TimeRangeRadioButtons"

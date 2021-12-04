@@ -20,9 +20,10 @@
     </Page.DataContext>
 
     <Page.Resources>
+        <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
+        <converters:BoolToVisibility Inverse="True" x:Key="BoolInverse2Visibility"/>
         <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
         <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
-        <converters:BoolToVisibility Inverse="True" x:Key="BoolInverse2Visibility"/>
     </Page.Resources>
 
     <!-- 
@@ -162,7 +163,7 @@
                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             CornerRadius="6"
                             Margin="10 5"
-                            Opacity="{x:Bind Info.Opacity}">
+                            Opacity="{x:Bind Info.IsLoading, Converter={StaticResource IsLoadingOpacity}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>

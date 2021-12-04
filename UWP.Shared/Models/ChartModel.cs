@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media;
 namespace UWP.Models {
     public partial class ChartModel : ObservableObject {
         /// <summary>
-        /// List of ChartData containing the values for the chart
+        /// List of ChartPoints containing the values for the chart
         /// </summary>
         [ObservableProperty]
         private List<ChartPoint> chartData = new List<ChartPoint>();
@@ -23,6 +23,10 @@ namespace UWP.Models {
 
         [ObservableProperty]
         private double volumeMax = 0;
+
+        
+        [ObservableProperty]
+        private bool isLoading = false;
 
 
         /// <summary>

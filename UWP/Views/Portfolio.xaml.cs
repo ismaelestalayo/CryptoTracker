@@ -57,9 +57,10 @@ namespace UWP.Views {
         }
 
         public async Task UpdatePage() {
+            vm.Chart.IsLoading = true;
+
             vm.CurrencySymbol = App.currencySymbol;
             vm.Portfolio = await RetrievePortfolio();
-            
 
             /// Empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
@@ -214,6 +215,8 @@ namespace UWP.Views {
             vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max);
             vm.Chart.VolumeMax = GraphHelper.GetMaxOfVolume(chartData);
             vm.Chart.VolumeMax = (vm.Chart.VolumeMax == 0) ? 10 : vm.Chart.VolumeMax;
+
+            vm.Chart.IsLoading = false;
         }
 
         /// ###############################################################################################

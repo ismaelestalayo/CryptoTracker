@@ -35,6 +35,7 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
+        <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
         <converters:DateTimeShortener x:Key="DateShortener"/>
         <converters:DateTimeFormatter x:Key="DateFormater"/>
@@ -244,7 +245,10 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <usercontrols:FluentCard Grid.Row="2" Opacity="{x:Bind vm.Coin.Opacity}" x:Name="ChartCard">
+        <usercontrols:FluentCard
+            x:Name="ChartCard"
+            Grid.Row="2"
+            Opacity="{x:Bind vm.Coin.IsLoading, Converter={StaticResource IsLoadingOpacity}}">
             <usercontrols:FluentCard.TitleContent>
                 <Grid>
                     <!-- CHART VALUES (ON NOT HOVER) -->
@@ -373,7 +377,7 @@
             </usercontrols:FluentCard.TitleContent>
             <!-- CHART -->
             <usercontrols:FluentCard.ExpandableContent>
-                <Grid Opacity="{x:Bind vm.Coin.Opacity}">
+                <Grid Opacity="{x:Bind vm.Coin.IsLoading, Converter={StaticResource IsLoadingOpacity}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
