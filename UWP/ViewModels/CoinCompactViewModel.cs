@@ -2,24 +2,17 @@
 using UWP.Models;
 
 namespace UWP.ViewModels {
-    class CoinCompactViewModel : ObservableObject {
+    partial class CoinCompactViewModel : ObservableObject {
 
+		[ObservableProperty]
 		private Coin info = new Coin();
-		public Coin Info {
-			get => info;
-			set => SetProperty(ref info, value);
-		}
 
+		
+		[ObservableProperty]
 		private ChartModel chart = new ChartModel();
-		public ChartModel Chart {
-			get => chart;
-			set => SetProperty(ref chart, value);
-		}
 
+
+		[ObservableProperty]
 		private CoinDetailsViewModel coinDetailsVM;
-		public CoinDetailsViewModel CoinDetailsVM {
-			get => coinDetailsVM;
-			set => SetProperty(ref coinDetailsVM, value);
-		}
 	}
 }

@@ -2,76 +2,50 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
-using UWP.Helpers;
 using UWP.Models;
 
 namespace UWP.ViewModels {
-    public class PortfolioViewModel : ObservableRecipient {
+    public partial class PortfolioViewModel : ObservableRecipient {
 
 		public PortfolioViewModel() {  }
 
+		[ObservableProperty]
         private ObservableCollection<PurchaseModel> portfolio = new ObservableCollection<PurchaseModel>();
-		public ObservableCollection<PurchaseModel> Portfolio {
-			get => portfolio;
-			set => SetProperty(ref portfolio, value);
-		}
 
+		[ObservableProperty]
 		private PurchaseModel newPurchase = new PurchaseModel();
-		public PurchaseModel NewPurchase {
-			get => newPurchase;
-			set => SetProperty(ref newPurchase, value);
-		}
 
+		[ObservableProperty]
 		private ChartModel chart = new ChartModel();
-		public ChartModel Chart {
-			get => chart;
-			set => SetProperty(ref chart, value);
-		}
+
 
 		/// <summary>
 		/// Single variables for the page
 		/// </summary>
-		private string currencySym = App.currencySymbol;
-		public string CurrencySymbol {
-			get => currencySym;
-			set => SetProperty(ref currencySym, value);
-		}
+		[ObservableProperty]
+		private string currencySymbol = App.currencySymbol;
 
-		private bool _purchasesAreGroupable = false;
-		public bool PurchasesAreGroupable {
-			get => _purchasesAreGroupable;
-			set => SetProperty(ref _purchasesAreGroupable, value);
-		}
+		[ObservableProperty]
+		private bool purchasesAreGroupable = false;
 
-		private bool _purchasesAreGrouped = false;
-		public bool PurchasesAreGrouped {
-			get => _purchasesAreGrouped;
-			set => SetProperty(ref _purchasesAreGrouped, value);
-		}
+		[ObservableProperty]
+		private bool purchasesAreGrouped = false;
 
-		private bool _showDetails = false;
-		public bool ShowDetails {
-			get => _showDetails;
-			set => SetProperty(ref _showDetails, value);
-		}
+		[ObservableProperty]
+		private bool showDetails = false;
+
 
 		/// #############################################################################
 		/// Total values
+		[ObservableProperty]
 		private double totalInvested = 0;
-		public double TotalInvested {
-			get => totalInvested;
-			set => SetProperty(ref totalInvested, value);
-		}
+
+		[ObservableProperty]
 		private double totalWorth = 0;
-		public double TotalWorth {
-			get => totalWorth;
-			set => SetProperty(ref totalWorth, value);
-		}
+		
+		[ObservableProperty]
 		private double totalDelta = 0;
-		public double TotalDelta {
-			get => totalDelta;
-			set => SetProperty(ref totalDelta, value);
-		}
+		
 		private double roi = 0;
 		public double ROI {
 			get => roi;
@@ -79,16 +53,12 @@ namespace UWP.ViewModels {
 		}
 
 
+		[ObservableProperty]
 		private string allPurchasesCurrencySym = "";
-		public string AllPurchasesCurrencySym {
-			get => allPurchasesCurrencySym;
-			set => SetProperty(ref allPurchasesCurrencySym, value);
-		}
+
+		[ObservableProperty]
 		private bool allPurchasesInCurrency = true;
-		public bool AllPurchasesInCurrency {
-			get => allPurchasesInCurrency;
-			set => SetProperty(ref allPurchasesInCurrency, value);
-		}
+
 
 		/// #############################################################################
 		public void InAppNotification(string title, string message = "") {

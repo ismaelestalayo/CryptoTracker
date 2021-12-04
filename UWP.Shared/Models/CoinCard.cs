@@ -30,17 +30,11 @@ namespace UWP.Models {
         /// To indicate that data is loading, change the opacity of the charts
         /// and activate a Loading bar
         /// </summary>
-        private bool isLoading = false;
-        internal bool IsLoading {
-            get => isLoading;
-            set {
-                SetProperty(ref isLoading, value);
-                Opacity = value ? 0.33 : 1;
-            }
-        }
-
         [ObservableProperty]
-        private double opacity = 1;
+        [AlsoNotifyChangeFor(nameof(Opacity))]
+        private bool isLoading = false;
+
+        public double Opacity => isLoading ? 0.33 : 1;
 
 
         /// <summary>

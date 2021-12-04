@@ -61,19 +61,12 @@ namespace UWP.Models {
         /// To indicate that data is loading, change the opacity of the charts
         /// and activate a Loading bar
         /// </summary>
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(Opacity))]
         private bool isLoading = false;
         
-        public bool IsLoading {
-            get => isLoading;
-            set {
-                SetProperty(ref isLoading, value);
-                Opacity = value ? 0.33 : 1;
-            }
-        }
+        public double Opacity => isLoading ? 0.33 : 1;
 
-
-        [ObservableProperty]
-        private double opacity = 1;
 
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts

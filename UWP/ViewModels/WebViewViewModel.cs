@@ -2,12 +2,9 @@
 using UWP.Models;
 
 namespace UWP.ViewModels {
-    class WebViewViewModel : ObservableObject {
-        
+    partial class WebViewViewModel : ObservableObject {
+
+        [ObservableProperty]
         private NewsData news = new NewsData();
-        public NewsData News {
-            get => news;
-            set => SetProperty(ref news, value);
-        }
     }
 }
