@@ -50,7 +50,7 @@
 
             <!-- BACK BUTTON -->
             <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE830;"/>
+                <FontIcon Glyph="&#xE112;"/>
                 <TextBlock Text="Back button" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 

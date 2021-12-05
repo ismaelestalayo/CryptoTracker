@@ -73,7 +73,7 @@
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <Button Click="Donation_Paypal" Content="Paypal"/>
                 <Button Click="Donation_Kofi" Content="Ko-fi"/>
-                <Button Click="Donation_Crypto" Content="Crypto">
+                <!--<Button Click="Donation_Crypto" Content="Crypto">
                     <Button.Flyout>
                         <Flyout Placement="Bottom">
                             <StackPanel>
@@ -88,7 +88,7 @@
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
-                </Button>
+                </Button>-->
             </StackPanel>
 
         </StackPanel>
