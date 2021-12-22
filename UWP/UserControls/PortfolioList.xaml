@@ -57,7 +57,9 @@
                                         <SymbolIcon Symbol="Edit"/>
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem Text="Duplicate" Click="PurchaseDuplicate_Click">
+                                <MenuFlyoutItem
+                                    Text="Duplicate" Click="PurchaseDuplicate_Click"
+                                    Visibility="{Binding ElementName=ListView, FallbackValue=Collapsed, Path=DataContext.Grouped, Converter={StaticResource BoolVisibilityNOT}}">
                                     <MenuFlyoutItem.Icon>
                                         <SymbolIcon Symbol="Copy"/>
                                     </MenuFlyoutItem.Icon>

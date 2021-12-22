@@ -104,7 +104,7 @@ namespace UWP.UserControls {
                 NewPurchase = purchase,
                 SuggestionCoin = new SuggestionCoin(purchase.Crypto, purchase.CryptoName),
                 PrimaryButtonText = "Save",
-                Title = "💵 Edit purchase",
+                Title = "💵 Edit transaction",
                 RequestedTheme = ColorConstants.CurrentThemeIsDark() ? ElementTheme.Dark : ElementTheme.Light
             };
             var response = await dialog.ShowAsync();

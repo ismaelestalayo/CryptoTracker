@@ -229,7 +229,7 @@ namespace UWP.Views {
             var dialog = new PortfolioEntryDialog() {
                 NewPurchase = new PurchaseModel(),
                 PrimaryButtonText = "Add",
-                Title = "💵 New purchase"
+                Title = "💵 New transaction"
             };
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {

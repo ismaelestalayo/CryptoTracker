@@ -16,7 +16,7 @@
     PrimaryButtonText="Add"
     PrimaryButtonClick="PurchaseDialog_PrimaryButtonClick"
     TabIndex="6"
-    Title="New purchase">
+    Title="NEW TRANSACTION">
 
     <ContentDialog.Resources>
         <Style TargetType="muxc:NumberBox">
@@ -75,7 +75,7 @@
                 Margin="0 5 0 0"
                 TabIndex="2"/>
 
-            <ComboBox
+            <!--<ComboBox
                 Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                 Header=" Fiat"
                 Margin="0 0 0 0" Width="130"
@@ -88,8 +88,8 @@
                         <TextBlock Text="{Binding Key}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-            </ComboBox>
-            <!--<Rectangle />-->
+            </ComboBox>-->
+            <Rectangle />
 
 
             <!-- Row 3 -->
