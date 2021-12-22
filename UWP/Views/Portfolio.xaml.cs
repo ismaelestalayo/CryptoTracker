@@ -49,10 +49,9 @@ namespace UWP.Views {
             TimeRangeRadioButtons.TimeSpan = timeSpan;
             (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
 
+            /// Get the portfolio and group it
             LocalPurchases = await RetrievePortfolio();
-            vm.Portfolio = LocalPurchases;
-            if (vm.PurchasesAreGrouped)
-                vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
+            vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
             await UpdatePage();
         }
 
@@ -60,7 +59,6 @@ namespace UWP.Views {
             vm.Chart.IsLoading = true;
 
             vm.CurrencySymbol = App.currencySymbol;
-            vm.Portfolio = await RetrievePortfolio();
 
             /// Empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
@@ -73,9 +71,6 @@ namespace UWP.Views {
             vm.TotalInvested = vm.Portfolio.Sum(x => x.InvestedQty);
             vm.TotalWorth = vm.Portfolio.Sum(x => x.Worth);
             vm.TotalDelta = vm.Portfolio.Sum(x => x.Profit);
-            vm.AllPurchasesInCurrency = vm.Portfolio.Select(x => x.Currency).All(x => x == vm.Portfolio[0].Currency);
-            vm.AllPurchasesCurrencySym = vm.Portfolio.FirstOrDefault()?.CurrencySymbol ?? App.currencySymbol;
-            vm.PurchasesAreGroupable = vm.Portfolio.GroupBy(x => x.Crypto).Where(x => x.Count() > 1).Count() > 0;
             vm.ROI = Math.Round(100 * (vm.TotalWorth - vm.TotalInvested) / vm.TotalInvested, 1);
 
             /// Create the diversification grid
@@ -300,17 +295,6 @@ namespace UWP.Views {
             sortedBy = (sortedBy != sortBy) ? sortBy : "";
         }
 
-
-        /// #######################################################################################
-        /// <summary>
-        /// Group the same coins' purchases into one single entry (if grouped, reset the List to the LocalPurchases)
-        /// </summary>
-        private async void GroupPurchases_Click(object sender, RoutedEventArgs e) {
-            if (vm.PurchasesAreGrouped)
-                vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
-            else
-                vm.Portfolio = LocalPurchases;
-        }
 
         /// ###############################################################################################
         /// A purchase's right click ContextFlyout

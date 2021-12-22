@@ -116,24 +116,6 @@
                             <FontIcon Glyph="&#xE16A;" />
                         </userControls:ToggleIconButton.UncheckedIcon>
                     </userControls:ToggleIconButton>
-                    <userControls:ToggleIconButton
-                        x:Name="GroupPurchasesBtn"
-                        x:Load="{x:Bind vm.PurchasesAreGroupable}"
-                        Background="{ThemeResource ButtonBackground}"
-                        BorderBrush="{ThemeResource ButtonBorderBrush}"
-                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                        Click="GroupPurchases_Click"
-                        Grid.Column="2"
-                        IsChecked="{x:Bind vm.PurchasesAreGrouped, Mode=TwoWay}"
-                        Tooltip="Group purchases"
-                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
-                        <userControls:ToggleIconButton.UncheckedIcon>
-                            <FontIcon Glyph="&#xF168;" />
-                        </userControls:ToggleIconButton.UncheckedIcon>
-                        <userControls:ToggleIconButton.CheckedIcon>
-                            <FontIcon Glyph="&#xE8FD;" />
-                        </userControls:ToggleIconButton.CheckedIcon>
-                    </userControls:ToggleIconButton>
 
                     <Button Grid.Column="4" ToolTipService.ToolTip="Import portfolio backup">
                         <Button.Content>
@@ -239,7 +221,7 @@
                     <userControls:PortfolioList
                         ClickGoTo="PortfolioList_ClickGoTo"
                         UpdateParent="PortfolioList_UpdateParent"
-                        Grouped="{x:Bind vm.PurchasesAreGrouped}"
+                        Grouped="True"
                         Margin="7 0"
                         Purchases="{x:Bind vm.Portfolio}"
                         ShowDetails="{x:Bind vm.ShowDetails}"
@@ -250,8 +232,7 @@
             <Grid
                 x:Name="TotalsRow"
                 x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
-                Grid.Row="1" Margin="20 -10 20 10"
-                Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}">
+                Grid.Row="1" Margin="20 -10 20 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="28"/>
                     <ColumnDefinition Width="*"/>
@@ -280,7 +261,7 @@
                     <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center">
                         <Run Text="{x:Bind vm.TotalInvested}"/><!--
-                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                     </TextBlock>
                 </StackPanel>
 
@@ -288,7 +269,7 @@
                     <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center">
                         <Run Text="{x:Bind vm.TotalWorth}"/><!--
-                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                     </TextBlock>
                 </StackPanel>
 
@@ -296,7 +277,7 @@
                     <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
                         <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
-                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                     </TextBlock>
                 </StackPanel>
             </Grid>
@@ -319,7 +300,7 @@
             <userControls:TimeRangeRadioButtons
                 x:Name="TimeRangeRadioButtons"
                 Grid.Row="1"
-                Margin="0 0 0 15"
+                Margin="0 5 0 15"
                 Tapped="TimeRangeButtons_Tapped"/>
         </Grid>
 

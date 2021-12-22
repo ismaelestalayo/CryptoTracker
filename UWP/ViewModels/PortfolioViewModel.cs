@@ -26,12 +26,6 @@ namespace UWP.ViewModels {
 		private string currencySymbol = App.currencySymbol;
 
 		[ObservableProperty]
-		private bool purchasesAreGroupable = false;
-
-		[ObservableProperty]
-		private bool purchasesAreGrouped = false;
-
-		[ObservableProperty]
 		private bool showDetails = false;
 
 
@@ -51,13 +45,6 @@ namespace UWP.ViewModels {
 			get => roi;
 			set => SetProperty(ref roi, value);
 		}
-
-
-		[ObservableProperty]
-		private string allPurchasesCurrencySym = "";
-
-		[ObservableProperty]
-		private bool allPurchasesInCurrency = true;
 
 
 		/// #############################################################################
