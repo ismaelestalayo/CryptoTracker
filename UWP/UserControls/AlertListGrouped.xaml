@@ -13,7 +13,6 @@
         <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind CvsSource, Mode=OneWay}"/>
     </UserControl.Resources>
 
-    <!-- ItemsSource="{x:Bind vm.Purchases, Mode=OneWay}" -->
     <ListView
         ItemsSource="{Binding Source={StaticResource cvs}}"
         >

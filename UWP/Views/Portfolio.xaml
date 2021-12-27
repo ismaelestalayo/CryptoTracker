@@ -92,12 +92,12 @@
                         </Style>
                     </Grid.Resources>
                     <Button
-                        Click="AddPurchase_click"
+                        Click="AddTransaction_click"
                         Grid.Column="0" Padding="15 0"
-                        ToolTipService.ToolTip="Add a new purchase">
+                        ToolTipService.ToolTip="Add a new transaction">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon Glyph="&#xE109;" FontSize="16"/>
-                            <TextBlock Text="New purchase" VerticalAlignment="Center"/>
+                            <TextBlock Text="New transaction" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <userControls:ToggleIconButton

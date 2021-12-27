@@ -25,20 +25,6 @@ namespace UWP.Views {
         }
 
         // ###############################################################################################
-        private async void SetAllPurchasesCurrency_Click(object sender, RoutedEventArgs e) {
-            var portfolio = await PortfolioHelper.GetPortfolio();
-            foreach (var purchase in portfolio)
-                purchase.Currency = vm.Currency;
-            await LocalStorageHelper.SaveObject(UserStorage.Portfolio6, portfolio);
-            var openedpopups = VisualTreeHelper.GetOpenPopups(Window.Current);
-            foreach (var popup in openedpopups) {
-                if (popup.Child is ContentDialog)
-                    ((ContentDialog)popup.Child).Hide();
-            }
-            vm.InAppNotification("Currency of all purchases overrided.", "Please refresh the portfolio.");
-        }
-
-        // ###############################################################################################
         private void StartupPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
             => App._LocalSettings.Set(UserSettings.StartupPage, $"/{vm.StartupPage}");
 

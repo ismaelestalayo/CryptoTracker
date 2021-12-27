@@ -36,8 +36,7 @@
                 <TextBlock Text="Currency" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
-            <TextBlock
-                Text="Choose the currency in which to display prices."/>
+            <TextBlock Text="Choose the fiat in which to display prices and used in transactions."/>
 
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <ComboBox
@@ -55,17 +54,6 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-
-                <Button Content="Set to all purchases" VerticalAlignment="Bottom" Padding="18 6">
-                    <Button.Flyout>
-                        <Flyout>
-                            <StackPanel Spacing="10">
-                                <TextBlock Text="All of your purchases's currencies will be overwritten." Style="{ThemeResource BaseTextBlockStyle}"/>
-                                <Button Click="SetAllPurchasesCurrency_Click" Content="Yes, override" />
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
             </StackPanel>
 
 

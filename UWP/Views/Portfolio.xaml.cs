@@ -225,7 +225,7 @@ namespace UWP.Views {
 
         /// ###############################################################################################
         /// Add purchase dialog
-        private async void AddPurchase_click(object sender, RoutedEventArgs e) {
+        private async void AddTransaction_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {
                 NewPurchase = new PurchaseModel(),
                 PrimaryButtonText = "Add",
