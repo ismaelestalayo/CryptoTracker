@@ -145,6 +145,7 @@
     <Compile Include="Models\PurchaseModel.cs" />
     <Compile Include="Models\SuggestionCoin.cs" />
     <Compile Include="Models\Top100card.cs" />
+    <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ICoinPaprika.cs" />
     <Compile Include="Services\IGithub.cs" />
@@ -159,6 +160,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Mvvm">
       <Version>7.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Realm">
+      <Version>10.7.1</Version>
     </PackageReference>
     <PackageReference Include="Refit">
       <Version>6.1.15</Version>

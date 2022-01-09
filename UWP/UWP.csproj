@@ -564,6 +564,9 @@
     <PackageReference Include="NotificationsExtensions.Win10">
       <Version>14332.0.2</Version>
     </PackageReference>
+    <PackageReference Include="Realm">
+      <Version>10.7.1</Version>
+    </PackageReference>
     <PackageReference Include="Refit">
       <Version>6.1.15</Version>
     </PackageReference>
