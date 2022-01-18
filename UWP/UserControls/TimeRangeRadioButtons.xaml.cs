@@ -17,6 +17,7 @@ namespace UWP.UserControls {
 		public string TimeSpan {
 			get => timeSpan;
 			set {
+				timeSpan = value;
                 foreach (var children in ((Panel)this.Content).Children) {
 					if (children.GetType() == typeof(RadioButton)) {
 						var a = children as RadioButton;

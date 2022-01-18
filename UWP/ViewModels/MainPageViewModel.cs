@@ -4,7 +4,7 @@ using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 using System;
 
 namespace UWP.ViewModels {
-    public class MainPageViewModel : ObservableRecipient {
+    public partial class MainPageViewModel : ObservableRecipient {
 
         public MainPageViewModel() {
             IsActive = true;
@@ -27,17 +27,11 @@ namespace UWP.ViewModels {
             }
         }
 
+        [ObservableProperty]
         private string infoBarTitle = "";
-        public string InfoBarTitle {
-            get => infoBarTitle;
-            set => SetProperty(ref infoBarTitle, value);
-        }
 
+        [ObservableProperty]
         private bool infoBarOpened = false;
-        public bool InfoBarOpened {
-            get => infoBarOpened;
-            set => SetProperty(ref infoBarOpened, value);
-        }
     }
 
     public sealed class NotificationMessage : ValueChangedMessage<Tuple<string, string>> {

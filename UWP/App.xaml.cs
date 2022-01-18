@@ -1,8 +1,4 @@
-﻿using UWP.Core.Constants;
-using UWP.Helpers;
-using UWP.Services;
-using UWP.Views;
-using Microsoft.AppCenter;
+﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,19 +9,23 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
+using UWP.Core.Constants;
+using UWP.Helpers;
+using UWP.Services;
+using UWP.Views;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.System.UserProfile;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Popups;
 
 namespace UWP {
-	sealed partial class App : Application {
+    sealed partial class App : Application {
         /// <summary>
         /// Efficient socket usage
         /// https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
@@ -53,12 +53,12 @@ namespace UWP {
             pinnedCoins.Remove("");
 
             switch (_theme) {
-				case "Light":
-					RequestedTheme = ApplicationTheme.Light;
-					break;
-				case "Dark":
-					RequestedTheme = ApplicationTheme.Dark;
-					break;
+                case "Light":
+                    RequestedTheme = ApplicationTheme.Light;
+                    break;
+                case "Dark":
+                    RequestedTheme = ApplicationTheme.Dark;
+                    break;
                 default:
                     RequestedTheme = (new UISettings().GetColorValue(UIColorType.Background) == Colors.Black) ?
                         ApplicationTheme.Dark : ApplicationTheme.Light;
@@ -80,8 +80,8 @@ namespace UWP {
             this.Suspending += OnSuspending;
             this.UnhandledException += OnUnhandledException;
         }
-		// #########################################################################################
-		protected override void OnLaunched(LaunchActivatedEventArgs e) {
+        // #########################################################################################
+        protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content
@@ -170,6 +170,8 @@ namespace UWP {
                 jumpList.Items.Add(taskItem);
 
                 await jumpList.SaveAsync();
+            } catch (SystemException ex) {
+                Analytics.TrackEvent("JUMPLIST-ERR-CATCHED");
             } catch (Exception ex) {
                 Analytics.TrackEvent($"JUMPLIST_ERROR: {ex}");
             }

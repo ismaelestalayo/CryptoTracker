@@ -8,7 +8,7 @@ using UWP.UserControls;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
-using Windows.Graphics.Display;
+using Windows.System.Profile;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -31,34 +31,23 @@ namespace UWP.Views {
 
         // ###############################################################################################
         public MainPage() {
-            this.InitializeComponent();
-
-            // Clear the current tile
-            //TileUpdateManager.CreateTileUpdaterForApplication().Clear();            
-
-            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
-                CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
-                var statusBar = StatusBar.GetForCurrentView();
-
-                if (ColorConstants.CurrentThemeIsDark()){
-                    statusBar.BackgroundColor = Color.FromArgb(255, 23, 23, 23); //31 31 31
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.ForegroundColor = Color.FromArgb(255, 255, 255, 255);
-                } else {
-                    statusBar.BackgroundColor = Color.FromArgb(255, 242, 242, 242); // 230
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.ForegroundColor = Color.FromArgb(255, 0, 0, 0);
-                }
-
-                DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
-            }
+            this.InitializeComponent();          
 
             /// Subscribe to light/dark theme change event
             uiSettings.ColorValuesChanged += ColorValuesChanged;
 
             ExtendAcrylicIntoTitleBar();
+
+            NavView.IsBackButtonVisible = App._LocalSettings.Get<bool>(UserSettings.IsBackButtonVisible) ? 
+                Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible :
+                Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
+
+            Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed; ; ;
+        }
+
+        private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e) {
+            if (e.CurrentPoint.Properties.IsXButton1Pressed)
+                e.Handled = !TryGoBack();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
@@ -94,6 +83,9 @@ namespace UWP.Views {
         }
 
         private async void RegisterBackgroundTask() {
+            if (AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Desktop")
+                return;
+
             var backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
             if (backgroundAccessStatus == BackgroundAccessStatus.AllowedSubjectToSystemPolicy ||
                 backgroundAccessStatus == BackgroundAccessStatus.AlwaysAllowed) {
@@ -145,7 +137,9 @@ namespace UWP.Views {
 
         /// Extend acrylic into the title bar. 
         private void ExtendAcrylicIntoTitleBar() {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
+                CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.BackgroundColor = Colors.Transparent;
             titleBar.InactiveBackgroundColor = Colors.Transparent;
@@ -170,7 +164,15 @@ namespace UWP.Views {
             SyncIcon.Visibility = Visibility.Visible;
         }
 
-        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
+        public bool TryGoBack() {
+            if (ContentFrame.CanGoBack) {
+                ContentFrame.GoBack();
+                return true;
+            }
+            return false;
+        }
+
+        private void NavView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args) {
             string source = "null";
             string selected = "null";
 
@@ -271,7 +273,7 @@ namespace UWP.Views {
             AutoSuggestBox.Focus(FocusState.Programmatic);
         }
 
-        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
+        private void NavView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args) {
             string selected;
             string source = (((Frame)sender.Content).SourcePageType).Name;
             
@@ -288,5 +290,10 @@ namespace UWP.Views {
             
         }
 
+        private async void NavView_Settings_Tapped(object sender, TappedRoutedEventArgs e)
+            => await new SettingsDialog().ShowAsync();
+
+        private void NavView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+            => TryGoBack();
     }
 }

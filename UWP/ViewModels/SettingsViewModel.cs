@@ -7,25 +7,18 @@ using UWP.Models;
 using UWP.Shared.Constants;
 
 namespace UWP.ViewModels {
-    class SettingsViewModel : ObservableRecipient {
+    partial class SettingsViewModel : ObservableRecipient {
 
+        [ObservableProperty]
         private ObservableCollection<PurchaseModel> purchaseList = new ObservableCollection<PurchaseModel>();
-        public ObservableCollection<PurchaseModel> PurchaseList {
-            get => purchaseList;
-            set => SetProperty(ref purchaseList, value);
-        }
 
+        [ObservableProperty]
         private ObservableCollection<Alert> alerts = new ObservableCollection<Alert>();
-        public ObservableCollection<Alert> Alerts {
-            get => alerts;
-            set => SetProperty(ref alerts, value);
-        }
 
+
+        [ObservableProperty]
         private object cvsSource;
-        public object CvsSource {
-            get => cvsSource;
-            set => SetProperty(ref cvsSource, value);
-        }
+
 
         private string autoRefresh = "";
         public string AutoRefresh {
@@ -51,6 +44,13 @@ namespace UWP.ViewModels {
                 }
             }
         }
+
+        [ObservableProperty]
+        private string timespan;
+
+        [ObservableProperty]
+        private string startupPage;
+
 
         /// #######################################################################################
         ///  Notifications

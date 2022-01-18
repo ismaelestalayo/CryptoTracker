@@ -40,21 +40,25 @@ namespace UWP.Views {
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
         public Portfolio() {
-            this.InitializeComponent();   
+            InitializeComponent();   
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            /// Get timespan before updating
+            timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
+            TimeRangeRadioButtons.TimeSpan = timeSpan;
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+
+            /// Get the portfolio and group it
             LocalPurchases = await RetrievePortfolio();
-            vm.Portfolio = LocalPurchases;
-            if (vm.PurchasesAreGrouped)
-                vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
+            vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
             await UpdatePage();
         }
 
         public async Task UpdatePage() {
+            vm.Chart.IsLoading = true;
+
             vm.CurrencySymbol = App.currencySymbol;
-            vm.Portfolio = await RetrievePortfolio();
-            
 
             /// Empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
@@ -67,10 +71,7 @@ namespace UWP.Views {
             vm.TotalInvested = vm.Portfolio.Sum(x => x.InvestedQty);
             vm.TotalWorth = vm.Portfolio.Sum(x => x.Worth);
             vm.TotalDelta = vm.Portfolio.Sum(x => x.Profit);
-            vm.AllPurchasesInCurrency = vm.Portfolio.Select(x => x.Currency).All(x => x == vm.Portfolio[0].Currency);
-            vm.AllPurchasesCurrencySym = vm.Portfolio.FirstOrDefault()?.CurrencySymbol ?? App.currencySymbol;
-            vm.PurchasesAreGroupable = vm.Portfolio.GroupBy(x => x.Crypto).Where(x => x.Count() > 1).Count() > 0;
-            vm.ROI = Math.Round((vm.TotalWorth - vm.TotalInvested) / vm.TotalInvested, 1) * 100;
+            vm.ROI = Math.Round(100 * (vm.TotalWorth - vm.TotalInvested) / vm.TotalInvested, 1);
 
             /// Create the diversification grid
             var grouped = vm.Portfolio.GroupBy(x => x.Crypto).OrderByDescending(x => x.Sum(item => item.Worth));
@@ -209,6 +210,8 @@ namespace UWP.Views {
             vm.Chart.PricesMinMax = GraphHelper.OffsetMinMaxForChart(MinMax.Min, MinMax.Max);
             vm.Chart.VolumeMax = GraphHelper.GetMaxOfVolume(chartData);
             vm.Chart.VolumeMax = (vm.Chart.VolumeMax == 0) ? 10 : vm.Chart.VolumeMax;
+
+            vm.Chart.IsLoading = false;
         }
 
         /// ###############################################################################################
@@ -222,11 +225,11 @@ namespace UWP.Views {
 
         /// ###############################################################################################
         /// Add purchase dialog
-        private async void AddPurchase_click(object sender, RoutedEventArgs e) {
+        private async void AddTransaction_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {
                 NewPurchase = new PurchaseModel(),
                 PrimaryButtonText = "Add",
-                Title = "💵 New purchase"
+                Title = "💵 New transaction"
             };
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
@@ -292,17 +295,6 @@ namespace UWP.Views {
             sortedBy = (sortedBy != sortBy) ? sortBy : "";
         }
 
-
-        /// #######################################################################################
-        /// <summary>
-        /// Group the same coins' purchases into one single entry (if grouped, reset the List to the LocalPurchases)
-        /// </summary>
-        private async void GroupPurchases_Click(object sender, RoutedEventArgs e) {
-            if (vm.PurchasesAreGrouped)
-                vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
-            else
-                vm.Portfolio = LocalPurchases;
-        }
 
         /// ###############################################################################################
         /// A purchase's right click ContextFlyout

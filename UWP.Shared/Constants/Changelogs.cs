@@ -9,6 +9,17 @@ namespace UWP.Core.Constants {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
 			{
+				"6.1",
+				new List<string>() {
+					"General: added CZK currency",
+					"General: fixed auto-refresh",
+					"Settings: set the chart's default timespan and optional Back button",
+					"Home: adaptive layout",
+					"News: removed AmbCrypto (it crashed)",
+					"Portfolio: fixed rounding errors with ROI",
+				}
+			},
+			{
 				"6.0.4",
 				new List<string>() {
 					"General: fixed casting error on startup",

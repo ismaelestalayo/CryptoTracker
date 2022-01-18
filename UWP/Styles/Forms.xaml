@@ -3,13 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Chart.Primitives">
 
-    <Style TargetType="Polyline" x:Key="ChartTrackBallLine">
+    <Style x:Key="ChartTrackBallLine" TargetType="Polyline">
         <Setter Property="Stroke" Value="Gray"/>
         <Setter Property="StrokeThickness" Value="1"/>
         <Setter Property="Opacity" Value="0.5"/>
     </Style>
 
-    <Style TargetType="telerikPrimitives:TrackBallInfoControl" x:Key="ChartTrackBallInfo">
+    <Style x:Key="ChartTrackBallInfo" TargetType="telerikPrimitives:TrackBallInfoControl">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>

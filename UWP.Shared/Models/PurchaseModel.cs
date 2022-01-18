@@ -57,10 +57,9 @@ namespace UWP.Models {
         }
 
         /// #######################################################################################
-        private string currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
-        [DataMember()]
+        private string currency;
         public string Currency {
-            get => currency;
+            get => currency ?? Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
             set {
                 SetProperty(ref currency, value);
                 CurrencySymbol = Currencies.GetCurrencySymbol(Currency);

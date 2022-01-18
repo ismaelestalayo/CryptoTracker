@@ -20,6 +20,7 @@ using UWP.ViewModels;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
+using Windows.System.Profile;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -39,13 +40,16 @@ namespace UWP.Views {
         private static string timeUnit = "hour";
 
         /// Timer for auto-refresh
-        private static ThreadPoolTimer PeriodicTimer;
+        private static ThreadPoolTimer ChartPeriodicTimer;
+        private static ThreadPoolTimer PricePeriodicTimer;
 
         public CoinDetails() {
             InitializeComponent();
 
             if (ApplicationView.GetForCurrentView().IsViewModeSupported(ApplicationViewMode.CompactOverlay))
                 CompactOverlay_btn.Visibility = Visibility.Visible;
+            if (AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Desktop")
+                PinCoinBtn.Visibility = Visibility.Collapsed;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
@@ -53,6 +57,13 @@ namespace UWP.Views {
             var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("toCoinDetails");
             if (animation != null)
                 animation.TryStart(PriceChart, new UIElement[] { ChartCard });
+
+            
+            /// Get timespan before updating
+            timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
+            TimeRangeRadioButtons.TimeSpan = timeSpan;
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+
 
             /// Create the auto-refresh timer
             var autoRefresh = App._LocalSettings.Get<string>(UserSettings.AutoRefresh);
@@ -63,13 +74,23 @@ namespace UWP.Views {
                         period = TimeSpan.FromSeconds(30);
                         break;
                     case "1 min":
+                    default:
                         period = TimeSpan.FromSeconds(60);
                         break;
                     case "2 min":
                         period = TimeSpan.FromSeconds(120);
                         break;
                 }
-                PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+
+                // Update the price each 30 seconds
+                PricePeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                        UpdatePrice();
+                    });
+                }, TimeSpan.FromSeconds(30));
+                
+                // Update the chart & portfolio if
+                ChartPeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                         if (timeUnit == "minute")
                             TimeRangeButtons_Tapped(null, null);
@@ -108,6 +129,8 @@ namespace UWP.Views {
                         var _coin = App.coinListPaprika.Find(x => x.symbol == crypto) ?? new CoinPaprikaCoin();
                         vm.Coin.FullName = _coin?.name ?? "NULL";
 
+                        UpdatePrice();
+
                         await GetCoinGeckoInfo(vm.Coin.Name);
                         TimeRangeButtons_Tapped(null, null);
                         vm.Coin.IsLoading = false;
@@ -124,7 +147,8 @@ namespace UWP.Views {
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e) {
-            PeriodicTimer?.Cancel();
+            ChartPeriodicTimer?.Cancel();
+            PricePeriodicTimer?.Cancel();
         }
 
         public async Task UpdatePage() {
@@ -134,23 +158,6 @@ namespace UWP.Views {
             await UpdatePortfolio();
 
             //CryptoCompare.GetExchanges(crypto);
-        }
-
-        private async Task UpdatePortfolio() {
-            var portfolio = await PortfolioHelper.GetPortfolio(vm.Coin.Name);
-            vm.Purchases = new ObservableCollection<PurchaseModel>(portfolio);
-
-            for (int i = 0; i < vm.Purchases.Count; i++)
-                vm.Purchases[i] = await PortfolioHelper.UpdatePurchase(vm.Purchases[i]);
-
-            vm.TotalQty = vm.Purchases.Sum(x => x.CryptoQty);
-            vm.TotalProfit = vm.Purchases.Sum(x => x.Profit);
-            vm.TotalValue = vm.TotalQty * vm.Coin.Price;
-            //vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
-
-            var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
-            if (totalInvested != 0)
-                vm.AvgPrice = NumberHelper.Rounder(totalInvested / vm.TotalQty);
         }
 
         private async Task GetCoinGeckoInfo(string crypto) {
@@ -168,10 +175,12 @@ namespace UWP.Views {
         /// #########################################################################################
         /// #########################################################################################
         /// #########################################################################################
+        private async void UpdatePrice() {
+            vm.Coin.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
+                vm.Coin.Name, App.currency);
+        }
         private async Task UpdateCoin() {
             var crypto = vm.Coin.Name;
-            vm.Coin.Price = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
-                crypto, App.currency);
             vm.CurrencySymbol = Currencies.GetCurrencySymbol(App.currency);
 
             /// Colors
@@ -212,6 +221,23 @@ namespace UWP.Views {
             vm.Coin.Diff = newestPrice - oldestPrice;
 
             vm.Coin.IsLoading = false;
+        }
+
+        private async Task UpdatePortfolio() {
+            var portfolio = await PortfolioHelper.GetPortfolio(vm.Coin.Name);
+            vm.Purchases = new ObservableCollection<PurchaseModel>(portfolio);
+
+            for (int i = 0; i < vm.Purchases.Count; i++)
+                vm.Purchases[i] = await PortfolioHelper.UpdatePurchase(vm.Purchases[i]);
+
+            vm.TotalQty = vm.Purchases.Sum(x => x.CryptoQty);
+            vm.TotalProfit = vm.Purchases.Sum(x => x.Profit);
+            vm.TotalValue = vm.TotalQty * vm.Coin.Price;
+            //vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
+
+            var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
+            if (totalInvested != 0)
+                vm.AvgPrice = NumberHelper.Rounder(totalInvested / vm.TotalQty);
         }
 
         // #########################################################################################

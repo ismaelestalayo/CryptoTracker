@@ -1,44 +1,35 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace UWP.Models {
-    public class Alert : ObservableObject {
-        /// <summary>
-        /// Class that holds user Alerts
-        /// </summary>
+    /// <summary>
+    /// Class that holds user Alerts
+    /// </summary>
+    public partial class Alert : ObservableObject {
+        [ObservableProperty]
         private bool enabled = false;
-        public bool Enabled {
-            get => enabled;
-            set => SetProperty(ref enabled, value);
-        }
 
         public int Id { get; set; }
 
+
+        [ObservableProperty]
         private string crypto = "";
-        public string Crypto {
-            get => crypto;
-            set => SetProperty(ref crypto, value);
-        }
 
+
+        [ObservableProperty]
         private string currency = "";
-        public string Currency {
-            get => currency;
-            set => SetProperty(ref currency, value);
-        }
 
+
+        [ObservableProperty]
         private string currencySymbol = "";
-        public string CurrencySymbol {
-            get => currencySymbol;
-            set => SetProperty(ref currencySymbol, value);
-        }
 
-        private string mode = "";
+
         /// <summary>
         /// "above" or "below"
         /// </summary>
-        public string Mode {
-            get => mode;
-            set => SetProperty(ref mode, value);
-        }
+        /// TODO: use enum
+        [ObservableProperty]
+        private string mode = "above";
+
 
         private double threshold = 0;
         public double Threshold {

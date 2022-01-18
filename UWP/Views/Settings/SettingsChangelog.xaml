@@ -36,6 +36,15 @@
                 <FontIcon Glyph="&#xE14C;"/>
                 <TextBlock Text="Changelogs" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
+            
+            <TextBlock>
+                <Run Text="Check the current "/><!--
+                --><Hyperlink
+                    NavigateUri="https://github.com/ismaelestalayo/CryptoTracker/projects/2">
+                    roadmap
+                </Hyperlink><Run Text="."/>
+            </TextBlock>
+
             <StackPanel x:Name="ChangeLogList">
                 <d:TextBlock Text="X.Y.Z" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>

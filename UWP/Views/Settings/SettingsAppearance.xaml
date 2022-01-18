@@ -48,14 +48,17 @@
             </muxc:RadioButtons>
 
 
-            <!-- COLORS -->
-            <!--<StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE9D2;"/>
-                <TextBlock Text="Colors" Style="{ThemeResource SettingsSectionTitleText}"/>
+            <!-- BACK BUTTON -->
+            <StackPanel Style="{StaticResource Title}">
+                <FontIcon Glyph="&#xE112;"/>
+                <TextBlock Text="Back button" Style="{ThemeResource SettingsSectionTitleText}"/>
             </StackPanel>
 
-            <TextBlock Text="Monochrome"/>
-            <ToggleSwitch x:Name="MonochromeSwitch" Margin="0 -10 0 0" Toggled="Monochrome_Toggled"/>-->
+            <TextBlock>
+                <Run Text="Visibility of the NavigationView's back button."/>
+                <Run Text="&#x0a;(You must restart the app)." FontStyle="Italic"/>
+            </TextBlock>
+            <ToggleSwitch x:Name="BackButtonSwitch" Margin="0 -10 0 0" Toggled="BackButton_Toggled"/>
 
         </StackPanel>
     </ScrollViewer>

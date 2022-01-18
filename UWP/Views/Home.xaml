@@ -20,31 +20,44 @@
     </Page.DataContext>
 
     <Page.Resources>
+        <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
+        <converters:BoolToVisibility Inverse="True" x:Key="BoolInverse2Visibility"/>
         <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
         <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
-        <converters:BoolToVisibility Inverse="True" x:Key="BoolInverse2Visibility"/>
     </Page.Resources>
 
     <!-- 
     #################################################################################################### -->
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 0 0 5">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="NarrowState">
+                <VisualState x:Name="SuperNarrowState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
+                        <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HomeGridView.ItemHeight" Value="225"/>
+                        <Setter Target="HomeGridView.DesiredWidth" Value="400"/>
+                        <Setter Target="HomeGridView.ItemHeight" Value="115"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="530" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HomeGridView.DesiredWidth" Value="450"/>
+                        <Setter Target="HomeGridView.ItemHeight" Value="175"/>
                     </VisualState.Setters>
                 </VisualState>
 
                 <VisualState x:Name="MediumState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="700" />
+                        <AdaptiveTrigger MinWindowWidth="750" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HomeGridView.ItemHeight" Value="250"/>
+                        <Setter Target="HomeGridView.DesiredWidth" Value="500"/>
+                        <Setter Target="HomeGridView.ItemHeight" Value="210"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -53,7 +66,8 @@
                         <AdaptiveTrigger MinWindowWidth="900" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HomeGridView.ItemHeight" Value="275"/>
+                        <Setter Target="HomeGridView.DesiredWidth" Value="600"/>
+                        <Setter Target="HomeGridView.ItemHeight" Value="260"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -62,7 +76,28 @@
                         <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="HomeGridView.DesiredWidth" Value="700"/>
                         <Setter Target="HomeGridView.ItemHeight" Value="300"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="UltraWideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HomeGridView.DesiredWidth" Value="850"/>
+                        <Setter Target="HomeGridView.ItemHeight" Value="325"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="SuperUltraWideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1990" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HomeGridView.DesiredWidth" Value="1000"/>
+                        <Setter Target="HomeGridView.ItemHeight" Value="350"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -76,6 +111,7 @@
             </Grid.RowDefinitions>
 
             <userControls:TimeRangeRadioButtons
+                x:Name="TimeRangeRadioButtons"
                 Grid.ColumnSpan="2" TimeSpan="1w"
                 Margin="0 10 0 5"
                 Tapped="TimeRangeButtons_Tapped"/>
@@ -90,7 +126,7 @@
             <controls:AdaptiveGridView
                 x:Name="HomeGridView"
                 SelectionMode="None" IsItemClickEnabled="True" ItemClick="homeListView_Click" Grid.Row="1"
-                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1100"
+                CanDragItems="True" AllowDrop="True" CanReorderItems="True" DesiredWidth="1000"
                 DragItemsCompleted="HomeGridView_DragCompleted" ItemHeight="300"
                 ItemsSource="{x:Bind vm.PriceCards}">
                 <controls:AdaptiveGridView.Resources>
@@ -127,7 +163,7 @@
                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             CornerRadius="6"
                             Margin="10 5"
-                            Opacity="{x:Bind Info.Opacity}">
+                            Opacity="{x:Bind Info.IsLoading, Converter={StaticResource IsLoadingOpacity}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
@@ -137,16 +173,6 @@
                                     <MenuFlyoutItem Text="Un-favourite" Click="UnfavCoin">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xEA92;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Unpin from start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin}">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE77A;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Pin to start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin, Converter={StaticResource BoolInverse2Visibility}}">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE840;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
                                 </MenuFlyout>

@@ -5,18 +5,12 @@ using UWP.Services;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
-    public class Top100card : ObservableObject{
+    public partial class Top100card : ObservableObject{
+        [ObservableProperty]
         private CoinInfo _coinInfo = new CoinInfo();
-        public CoinInfo CoinInfo {
-            get => _coinInfo;
-            set => SetProperty(ref _coinInfo, value);
-        }
 
-        private Raw _raw = new Raw();
-        public Raw Raw {
-            get => _raw;
-            set => SetProperty(ref _raw, value);
-        }
+        [ObservableProperty]
+        private Raw raw = new Raw();
     }
 
     public class CoinInfo : ObservableObject {

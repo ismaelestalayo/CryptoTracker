@@ -4,13 +4,11 @@ using System.Linq;
 using UWP.Models;
 
 namespace UWP.ViewModels {
-    class NewsViewModel : ObservableRecipient {
+    partial class NewsViewModel : ObservableRecipient {
 
+        [ObservableProperty]
         private List<NewsData> news = Enumerable.Repeat(new NewsData(), 30).ToList();
-        public List<NewsData> News {
-            get => news;
-            set => SetProperty(ref news, value);
-        }
+
 
         public List<NewsCategories> Categories { get; set; }
         public List<string> Filters { get; set; } = new List<string>();

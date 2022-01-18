@@ -37,6 +37,9 @@ namespace UWP.Views {
             NewsAdaptiveGridView.IsItemClickEnabled = false;
             var news = await CryptoCompare.GetNews(vm.Filters);
             if (news.Count != 0) {
+                // Filter out websites that crash the WebView:
+                news = news.FindAll(x => !x.url.Contains("ambcrypto"));
+
                 vm.News = news;
                 NewsAdaptiveGridView.IsItemClickEnabled = true;
             } else

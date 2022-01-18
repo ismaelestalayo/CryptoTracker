@@ -13,6 +13,13 @@ namespace UWP.Converters {
             => throw new NotImplementedException();
     }
 
+    public class BoolIsLoadingToOpacity : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => (bool)val ? 0.33 : 1;
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
     public class BoolInverter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
             => !(bool)val;

@@ -6,19 +6,14 @@ using UWP.Models;
 using UWP.Services;
 
 namespace UWP.ViewModels {
-    public class CoinsViewModel : ObservableRecipient {
+    public partial class CoinsViewModel : ObservableRecipient {
 
+        [ObservableProperty]
         private GlobalStats globalStats = new GlobalStats();
-        public GlobalStats GlobalStats {
-            get => globalStats;
-            set => SetProperty(ref globalStats, value);
-        }
 
+        [ObservableProperty]
         private ObservableCollection<CoinMarket> coinMarket = new ObservableCollection<CoinMarket>();
-        public ObservableCollection<CoinMarket> CoinMarket {
-            get => coinMarket;
-            set => SetProperty(ref coinMarket, value);
-        }
+
 
         public void InAppNotification(string title, string message = "") {
             var tuple = new Tuple<string, string>(title, message);

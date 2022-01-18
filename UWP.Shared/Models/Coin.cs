@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
-    public class Coin : ObservableObject {
+    public partial class Coin : ObservableObject {
         /// <summary>
         /// Basic data of a coin that stays invariable through time
         /// </summary>
@@ -25,17 +25,13 @@ namespace UWP.Models {
             }
         }
 
-        private string _fullName = "NULL";
-        public string FullName {
-            get => _fullName;
-            set => SetProperty(ref _fullName, value);
-        }
 
-        private string _logo = "/Assets/Icons/iconNULL.png";
-        public string Logo {
-            get => _logo;
-            set => SetProperty(ref _logo, value);
-        }
+        [ObservableProperty]
+        private string fullName = "NULL";
+
+
+        [ObservableProperty]
+        private string logo = "/Assets/Icons/iconNULL.png";
 
 
         private bool isFav  = false;
@@ -58,55 +54,40 @@ namespace UWP.Models {
         public string FavIcon => IsFav ? "\xEB52" : "\xEB51";
         public string PinIcon => IsPin ? "\xE77A" : "\xE840";
 
+        [ObservableProperty]
         private string currencySym = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.CurrencySymbol);
-        public string CurrencySym {
-            get => currencySym;
-            set => SetProperty(ref currencySym, value);
-        }
 
         /// <summary>
         /// To indicate that data is loading, change the opacity of the charts
         /// and activate a Loading bar
         /// </summary>
+        [ObservableProperty]
         private bool isLoading = false;
-        private double opacity = 1;
 
-        public bool IsLoading {
-            get => isLoading;
-            set {
-                SetProperty(ref isLoading, value);
-                Opacity = value ? 0.33 : 1;
-            }
-        }
-
-        public double Opacity {
-            get => opacity;
-            set => SetProperty(ref opacity, value);
-        }
 
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
+        [ObservableProperty]
         private SolidColorBrush diffFG = (SolidColorBrush)Application.Current.Resources["pastelGreen"];
-        public SolidColorBrush DiffFG {
-            get => diffFG;
-            set => SetProperty(ref diffFG, value);
-        }
 
 
         /// <summary>
         /// Basic data of a coin that varies over time
         /// </summary>
+        [ObservableProperty]
         private double price = 0;
-        private double diff = 0;
+
+        [ObservableProperty]
         private double diffPct = 0;
+
+        [ObservableProperty]
         private double volumeToTotal = 0;
+
+        [ObservableProperty]
         private double volumeFromTotal = 0;
 
-        public double Price {
-            get => price;
-            set => SetProperty(ref price, value);
-        }
+        private double diff = 0;
         public double Diff {
             get => diff;
             set {
@@ -116,20 +97,6 @@ namespace UWP.Models {
                 DiffPct = (double)Math.Round((value / Price) * 100, 1);
                 SetProperty(ref diff, value);
             }
-        }
-
-        public double DiffPct {
-            get => diffPct;
-            set => SetProperty(ref diffPct, value);
-        }
-
-        public double VolumeToTotal {
-            get => volumeToTotal;
-            set => SetProperty(ref volumeToTotal, value);
-        }
-        public double VolumeFromTotal {
-            get => volumeFromTotal;
-            set => SetProperty(ref volumeFromTotal, value);
         }
     }
 }

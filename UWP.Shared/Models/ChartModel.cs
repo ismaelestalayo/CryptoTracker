@@ -3,85 +3,66 @@ using System;
 using System.Collections.Generic;
 using Telerik.Charting;
 using Windows.UI;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace UWP.Models {
-    public class ChartModel : ObservableObject {
+    public partial class ChartModel : ObservableObject {
         /// <summary>
-        /// List of ChartData containing the values for the chart
+        /// List of ChartPoints containing the values for the chart
         /// </summary>
+        [ObservableProperty]
         private List<ChartPoint> chartData = new List<ChartPoint>();
-        public List<ChartPoint> ChartData {
-            get => chartData;
-            set => SetProperty(ref chartData, value);
-        }
+
 
         /// <summary>
         /// Tuple with the minimum and maximum value to adjust the chart
         /// </summary>
+        [ObservableProperty]
         private (double Min, double Max) pricesMinMax = (0, 100);
-        public (double Min, double Max) PricesMinMax {
-            get => pricesMinMax;
-            set => SetProperty(ref pricesMinMax, value);
-        }
 
+
+        [ObservableProperty]
         private double volumeMax = 0;
-        public double VolumeMax {
-            get => volumeMax;
-            set => SetProperty(ref volumeMax, value);
-        }
+
+        
+        [ObservableProperty]
+        private bool isLoading = false;
+
 
         /// <summary>
         /// Stroke and two semi-transparent fills to paint the charts
         /// </summary>
+        [ObservableProperty]
         private SolidColorBrush chartStroke = new SolidColorBrush(Color.FromArgb(224, 127, 127, 127));
 
-        public SolidColorBrush ChartStroke {
-            get => chartStroke;
-            set => SetProperty(ref chartStroke, value);
-        }
 
         /// <summary>
         /// Attributes to adjust the axis to the plotted time interval
         /// </summary>
+        [ObservableProperty]
         private string labelFormat = "{0:HH:mm}";
-        public string LabelFormat {
-            get => labelFormat;
-            set => SetProperty(ref labelFormat, value);
-        }
 
+
+        [ObservableProperty]
         private TimeInterval majorStepUnit = TimeInterval.Minute;
-        public TimeInterval MajorStepUnit {
-            get => majorStepUnit;
-            set => SetProperty(ref majorStepUnit, value);
-        }
 
+
+        [ObservableProperty]
         private int majorStep = 10;
-        public int MajorStep {
-            get => majorStep;
-            set => SetProperty(ref majorStep, value);
-        }
 
+
+        [ObservableProperty]
         private DateTime minimum = DateTime.Now.AddHours(-1);
-        public DateTime Minimum {
-            get => minimum;
-            set => SetProperty(ref minimum, value);
-        }
 
+
+        [ObservableProperty]
         private int tickInterval = 10;
-        public int TickInterval {
-            get => tickInterval;
-            set => SetProperty(ref tickInterval, value);
-        }
+
 
         /// <summary>
         /// 
         /// </summary>
+        [ObservableProperty]
         private string timeSpan = "1w";
-        public string TimeSpan {
-            get => timeSpan;
-            set => SetProperty(ref timeSpan, value);
-        }
     }
 }

@@ -21,6 +21,7 @@
     <Page.Resources>
         <converters:BoolToVisibility x:Key="BoolToVisibility"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
+        <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
         <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
         <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
         <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityNOT"/>
@@ -91,12 +92,12 @@
                         </Style>
                     </Grid.Resources>
                     <Button
-                        Click="AddPurchase_click"
+                        Click="AddTransaction_click"
                         Grid.Column="0" Padding="15 0"
-                        ToolTipService.ToolTip="Add a new purchase">
+                        ToolTipService.ToolTip="Add a new transaction">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon Glyph="&#xE109;" FontSize="16"/>
-                            <TextBlock Text="New purchase" VerticalAlignment="Center"/>
+                            <TextBlock Text="New transaction" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <userControls:ToggleIconButton
@@ -114,24 +115,6 @@
                         <userControls:ToggleIconButton.UncheckedIcon>
                             <FontIcon Glyph="&#xE16A;" />
                         </userControls:ToggleIconButton.UncheckedIcon>
-                    </userControls:ToggleIconButton>
-                    <userControls:ToggleIconButton
-                        x:Name="GroupPurchasesBtn"
-                        x:Load="{x:Bind vm.PurchasesAreGroupable}"
-                        Background="{ThemeResource ButtonBackground}"
-                        BorderBrush="{ThemeResource ButtonBorderBrush}"
-                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                        Click="GroupPurchases_Click"
-                        Grid.Column="2"
-                        IsChecked="{x:Bind vm.PurchasesAreGrouped, Mode=TwoWay}"
-                        Tooltip="Group purchases"
-                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
-                        <userControls:ToggleIconButton.UncheckedIcon>
-                            <FontIcon Glyph="&#xF168;" />
-                        </userControls:ToggleIconButton.UncheckedIcon>
-                        <userControls:ToggleIconButton.CheckedIcon>
-                            <FontIcon Glyph="&#xE8FD;" />
-                        </userControls:ToggleIconButton.CheckedIcon>
                     </userControls:ToggleIconButton>
 
                     <Button Grid.Column="4" ToolTipService.ToolTip="Import portfolio backup">
@@ -238,7 +221,7 @@
                     <userControls:PortfolioList
                         ClickGoTo="PortfolioList_ClickGoTo"
                         UpdateParent="PortfolioList_UpdateParent"
-                        Grouped="{x:Bind vm.PurchasesAreGrouped}"
+                        Grouped="True"
                         Margin="7 0"
                         Purchases="{x:Bind vm.Portfolio}"
                         ShowDetails="{x:Bind vm.ShowDetails}"
@@ -249,8 +232,7 @@
             <Grid
                 x:Name="TotalsRow"
                 x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
-                Grid.Row="1" Margin="20 -10 20 10"
-                Visibility="{x:Bind vm.AllPurchasesInCurrency, Converter={StaticResource BoolToVisibility}}">
+                Grid.Row="1" Margin="20 -10 20 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="28"/>
                     <ColumnDefinition Width="*"/>
@@ -279,7 +261,7 @@
                     <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center">
                         <Run Text="{x:Bind vm.TotalInvested}"/><!--
-                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                     </TextBlock>
                 </StackPanel>
 
@@ -287,7 +269,7 @@
                     <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center">
                         <Run Text="{x:Bind vm.TotalWorth}"/><!--
-                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                     </TextBlock>
                 </StackPanel>
 
@@ -295,7 +277,7 @@
                     <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
                         <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
-                        --><Run Text="{x:Bind vm.AllPurchasesCurrencySym}"/>
+                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                     </TextBlock>
                 </StackPanel>
             </Grid>
@@ -303,18 +285,22 @@
 
         <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
         <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->
-        <Grid Grid.Row="3" x:Name="HistoricChartGrid"
-              x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+        <Grid Grid.Row="3"
               Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <userControls:ChartAreaFull ChartModel="{x:Bind vm.Chart}"/>
+            <userControls:ChartAreaFull
+                x:Name="_"
+                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+                ChartModel="{x:Bind vm.Chart}"
+                Opacity="{x:Bind vm.Chart.IsLoading, Converter={StaticResource IsLoadingOpacity}}"/>
 
             <userControls:TimeRangeRadioButtons
+                x:Name="TimeRangeRadioButtons"
                 Grid.Row="1"
-                Margin="0 0 0 15"
+                Margin="0 5 0 15"
                 Tapped="TimeRangeButtons_Tapped"/>
         </Grid>
 

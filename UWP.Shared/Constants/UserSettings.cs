@@ -9,12 +9,14 @@ namespace UWP.Core.Constants {
 		public const string CoinListsDate = "CoinListsDate";
 		public const string Currency = "Currency";
 		public const string CurrencySymbol = "CurrencySymbol";
+		public const string IsBackButtonVisible = "IsBackButtonVisible";
 		public const string IsNewUser = "NewUser";
 		public const string LastVersion = "LastVersion";
 		public const string Monochrome = "Monochrome";
 		public const string PinnedCoins = "Pinned";
 		public const string StartupPage = "StartupPage";
 		public const string Theme = "Theme";
+		public const string Timespan = "Timespan";
 
 		/// <summary>
 		/// Default settings
@@ -24,12 +26,14 @@ namespace UWP.Core.Constants {
 			{ CoinListsDate,  (double)0 },
 			{ Currency, "EUR" },
 			{ CurrencySymbol, "€" },
+			{ IsBackButtonVisible, true },
 			{ IsNewUser, true },
 			{ LastVersion, "0.0.0" },
 			{ Monochrome, false },
 			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
 			{ StartupPage, "Home" },
 			{ Theme, "Windows" },
+			{ Timespan, "1w" },
 		};
 	}
 

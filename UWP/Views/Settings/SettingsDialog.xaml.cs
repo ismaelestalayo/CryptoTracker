@@ -22,7 +22,7 @@ namespace CryptoTracker.Views {
             RequestedTheme = ColorConstants.CurrentThemeIsDark() ? ElementTheme.Dark : ElementTheme.Light;
 
             var version = Package.Current.Id.Version;
-            FooterVersion = string.Format("CryptoTracker {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+            FooterVersion = string.Format("Version {0}.{1}.{2}", version.Major, version.Minor, version.Build);
             NavigateFrame(initialPage);
         }
 

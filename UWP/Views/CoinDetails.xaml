@@ -19,18 +19,6 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style TargetType="Button" x:Key="IconBtn">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Opacity" Value="0.75"/>
-            <Setter Property="CornerRadius" Value="6"/>
-            <Setter Property="Padding" Value="5 0"/>
-            <Setter Property="Margin" Value="0 -3"/>
-            <Setter Property="Height" Value="24"/>
-            <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}"/>
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-
         <Style TargetType="StackPanel" x:Key="CardStackPanel">
             <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
             <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
@@ -47,6 +35,7 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
+        <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
         <converters:DateTimeShortener x:Key="DateShortener"/>
         <converters:DateTimeFormatter x:Key="DateFormater"/>
@@ -186,6 +175,7 @@
                                     ToolTipService.ToolTip="Toggle favourite"/>
                                 <Button
                                     d:Content="&#xE840;"
+                                    x:Name="PinCoinBtn"
                                     Click="PinCoin_click"
                                     Content="{x:Bind vm.Coin.PinIcon}"
                                     Style="{StaticResource IconBtn}"
@@ -256,7 +246,10 @@
         ####################################################################################################
         ############################################### Price Chart ########################################
         #################################################################################################### -->
-        <usercontrols:FluentCard Grid.Row="2" Opacity="{x:Bind vm.Coin.Opacity}" x:Name="ChartCard">
+        <usercontrols:FluentCard
+            x:Name="ChartCard"
+            Grid.Row="2"
+            Opacity="{x:Bind vm.Coin.IsLoading, Converter={StaticResource IsLoadingOpacity}}">
             <usercontrols:FluentCard.TitleContent>
                 <Grid>
                     <!-- CHART VALUES (ON NOT HOVER) -->
@@ -385,7 +378,7 @@
             </usercontrols:FluentCard.TitleContent>
             <!-- CHART -->
             <usercontrols:FluentCard.ExpandableContent>
-                <Grid Opacity="{x:Bind vm.Coin.Opacity}">
+                <Grid Opacity="{x:Bind vm.Coin.IsLoading, Converter={StaticResource IsLoadingOpacity}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>

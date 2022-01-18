@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:converters="using:UWP.Converters"
     xmlns:models="using:UWP.Models"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
@@ -16,6 +17,12 @@
     <Page.DataContext>
         <viewModels:MainPageViewModel x:Name="vm"/>
     </Page.DataContext>
+
+    <Page.Resources>
+        <converters:BoolToVisibility x:Key="BoolToVisibilityNOT" Inverse="True"/>
+        
+        <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent"/>
+    </Page.Resources>
 
     <!-- 
     ################################################################################################### -->
@@ -47,95 +54,111 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <NavigationView 
-            x:Name="NavView"
+        <muxc:NavigationView
+            x:Name="NavView" IsPaneVisible="True"
             Grid.RowSpan="2" OverflowLabelMode="NoLabel"
-            IsBackButtonVisible="Collapsed" PaneDisplayMode="Top"
+            IsSettingsVisible="False" BackRequested="NavView_BackRequested"
+            IsBackButtonVisible="Collapsed" IsBackEnabled="{x:Bind ContentFrame.CanGoBack}"
             ItemInvoked="NavView_ItemInvoked"
+            PaneDisplayMode="Top"
             SelectionChanged="NavView_SelectionChanged">
-            <NavigationView.MenuItems>
-                <NavigationViewItem Content="Home" Tag="home" FontWeight="Light">
-                    <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE10F;"/> <!-- Home -->
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem Content="Coins" Tag="top" FontWeight="Light">
-                    <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE179;"/> <!-- All Apps -->
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem  Content="News" Tag="news" FontWeight="Light">
-                    <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE12A;"/> <!-- Preview link -->
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem Content="Portfolio" Tag="portfolio" FontWeight="Light">
-                    <NavigationViewItem.Icon>
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem
+                    Content="Home" Icon="Home"
+                    Tag="home" FontWeight="Light"/>
+                <muxc:NavigationViewItem
+                    Content="Coins" Icon="AllApps"
+                    Tag="top" FontWeight="Light"/>
+                <muxc:NavigationViewItem
+                    Content="News" Icon="PreviewLink"
+                    Tag="news" FontWeight="Light"/>
+                <muxc:NavigationViewItem
+                    Content="Portfolio" Tag="portfolio" FontWeight="Light">
+                    <muxc:NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xEAFC;" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-            </NavigationView.MenuItems>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.MenuItems>
 
-            <!-- SEARCH -->
-            <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox
-                    x:Name="AutoSuggestBox" PlaceholderText="Search" Width="150"
-                    GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged" 
-                    UpdateTextOnSelect="False"
-                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-                    IsTabStop="False"
-                    Visibility="Collapsed" 
-                    LostFocus="AutoSuggestBox_LostFocus">
-                    <AutoSuggestBox.QueryIcon>
-                        <muxc:AnimatedIcon>
-                            <animatedvisuals:AnimatedFindVisualSource/>
-                        </muxc:AnimatedIcon>
-                    </AutoSuggestBox.QueryIcon>
-                    <AutoSuggestBox.TextBoxStyle>
-                        <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
-                    </AutoSuggestBox.TextBoxStyle>
-                    <AutoSuggestBox.ItemTemplate>
-                        <DataTemplate x:DataType="models:SuggestionCoin">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Width="30" Source="{x:Bind Icon}"/>
-                                <TextBlock Text="{x:Bind Symbol}" Margin="10 0" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </AutoSuggestBox.ItemTemplate>
-                </AutoSuggestBox>
-            </NavigationView.AutoSuggestBox>
-
+            
             <!-- FOOTER -->
-            <NavigationView.PaneFooter>
-                <StackPanel Orientation="Horizontal">
-                    <NavigationViewItem
+            <muxc:NavigationView.PaneFooter>
+                <StackPanel Orientation="Horizontal" Spacing="-5" Margin="0 0 -6 0">
+                    <!-- AutoSuggestBox -->
+                    <AutoSuggestBox
+                        x:Name="AutoSuggestBox" PlaceholderText="Search"
+                        HorizontalAlignment="Right" Width="130"
+                        GotFocus="AutoSuggestBox_GotFocus" TextChanged="AutoSuggestBox_TextChanged" 
+                        UpdateTextOnSelect="False"
+                        QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                        IsTabStop="False" Margin="0 0 10 0"
+                        Visibility="Collapsed"
+                        VerticalAlignment="Center"
+                        LostFocus="AutoSuggestBox_LostFocus">
+                        <AutoSuggestBox.QueryIcon>
+                            <muxc:AnimatedIcon>
+                                <animatedvisuals:AnimatedFindVisualSource/>
+                            </muxc:AnimatedIcon>
+                        </AutoSuggestBox.QueryIcon>
+                        <AutoSuggestBox.TextBoxStyle>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </AutoSuggestBox.TextBoxStyle>
+                        <AutoSuggestBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:SuggestionCoin">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Image Width="30" Source="{x:Bind Icon}"/>
+                                    <TextBlock Text="{x:Bind Symbol}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </AutoSuggestBox.ItemTemplate>
+                    </AutoSuggestBox>
+
+                    <!-- Search btn -->
+                    <muxc:NavigationViewItem
+                        FontFamily="Segoe MDL2 Assets"
                         Tapped="NavView_Search_Tapped"
-                        Visibility="{x:Bind AutoSuggestBox.Visibility, Converter={StaticResource VisibilityInverter}}"
-                        ToolTipService.ToolTip="Search">
-                        <NavigationViewItem.Icon>
-                            <FontIcon Glyph="&#xE11A;"/> <!-- Find -->
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
-                    <NavigationViewItem>
-                        <RelativePanel Margin="-15 0 0 0">
-                            <NavigationViewItem
-                                x:Name="SyncIcon"
-                                Tapped="NavView_Sync_Tapped"
-                                ToolTipService.ToolTip="Refresh">
-                                <NavigationViewItem.Icon>
-                                    <FontIcon Glyph="&#xE117;"/> <!-- Sync -->
-                                </NavigationViewItem.Icon>
-                            </NavigationViewItem>
-                            <ProgressRing
-                                x:Name="SyncLoading" IsActive="True"
-                                Height="24" Margin="10" Width="28"
-                                Visibility="{x:Bind SyncIcon.Visibility, Converter={StaticResource VisibilityInverter}}"/>
-                        </RelativePanel>
-                    </NavigationViewItem>
+                        ToolTipService.ToolTip="Search"
+                        Height="44" Width="50"
+                        Visibility="{x:Bind AutoSuggestBox.Visibility, Converter={StaticResource VisibilityInverter}}">
+                        <muxc:NavigationViewItem.Content>
+                            <FontIcon Glyph="&#xE721;" FontSize="16" Margin="0 0 -7 0"/>
+                        </muxc:NavigationViewItem.Content>
+                    </muxc:NavigationViewItem>
+
+                    <!-- Refresh btn -->
+                    <muxc:NavigationViewItem
+                        AutomationProperties.Name="Refresh"
+                        ToolTipService.ToolTip="Refresh"
+                        Tapped="NavView_Sync_Tapped"
+                        Height="44" Width="50">
+                        <muxc:NavigationViewItem.Content>
+                            <Grid Margin="0 0 -7 0">
+                                <FontIcon
+                                    x:Name="SyncIcon"
+                                    Glyph="&#xE117;" FontSize="{StaticResource ContentControlFontSize}"
+                                    AutomationProperties.Name="Refresh"/>
+                                <ProgressRing
+                                    IsActive="True" Margin="0" 
+                                    Visibility="{x:Bind SyncIcon.Visibility, Converter={StaticResource VisibilityInverter}}"/>
+                            </Grid>
+                        </muxc:NavigationViewItem.Content>
+                    </muxc:NavigationViewItem>
+
+                    <!-- Settings btn -->
+                    <muxc:NavigationViewItem
+                        AutomationProperties.Name="Settings" ToolTipService.ToolTip="Settings"
+                        Tapped="NavView_Settings_Tapped"
+                        Height="44" Width="50">
+                        <muxc:NavigationViewItem.Icon>
+                            <muxc:AnimatedIcon Width="16">
+                                <animatedvisuals:AnimatedSettingsVisualSource/>
+                            </muxc:AnimatedIcon>
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
                 </StackPanel>
-            </NavigationView.PaneFooter>
+            </muxc:NavigationView.PaneFooter>
 
             <!-- MAIN FRAME -->
             <Frame
@@ -146,7 +169,7 @@
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
-        </NavigationView>
+        </muxc:NavigationView>
 
         <StackPanel x:Name="CustomAppTitleBar" Background="Transparent"/>
 
