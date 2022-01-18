@@ -175,16 +175,6 @@
                                             <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xEA92;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Unpin from start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin}">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE77A;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="Pin to start" Click="PinUnpinCoin" Visibility="{x:Bind Info.IsPin, Converter={StaticResource BoolInverse2Visibility}}">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource FluentIconFont}" Glyph="&#xE840;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
                                 </MenuFlyout>
                             </Grid.ContextFlyout>
 

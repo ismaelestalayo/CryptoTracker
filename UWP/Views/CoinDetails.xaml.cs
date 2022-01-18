@@ -20,6 +20,7 @@ using UWP.ViewModels;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
+using Windows.System.Profile;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -47,6 +48,8 @@ namespace UWP.Views {
 
             if (ApplicationView.GetForCurrentView().IsViewModeSupported(ApplicationViewMode.CompactOverlay))
                 CompactOverlay_btn.Visibility = Visibility.Visible;
+            if (AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Desktop")
+                PinCoinBtn.Visibility = Visibility.Collapsed;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {

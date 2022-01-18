@@ -175,6 +175,7 @@
                                     ToolTipService.ToolTip="Toggle favourite"/>
                                 <Button
                                     d:Content="&#xE840;"
+                                    x:Name="PinCoinBtn"
                                     Click="PinCoin_click"
                                     Content="{x:Bind vm.Coin.PinIcon}"
                                     Style="{StaticResource IconBtn}"
