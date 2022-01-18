@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+﻿using Microsoft.AppCenter.Analytics;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using NotificationsExtensions;
 using NotificationsExtensions.Tiles;
 using System;
@@ -29,34 +30,43 @@ namespace UWP.Background {
         /// Generates the a Secondary Tile's background
         /// </summary>
         internal static async Task<Grid> SecondaryTileGrid(string crypto, List<HistoricPrice> hist = null) {
-            if (hist == null)
-                hist = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, "hour", 168);
-
-            var polyline = new Polyline();
-            polyline.Stroke = ColorConstants.GetCoinBrush(crypto);
-            polyline.Fill = ColorConstants.GetCoinBrush(crypto, 50);
-            polyline.FillRule = FillRule.Nonzero;
-            polyline.StrokeThickness = 1.5;
-            polyline.VerticalAlignment = VerticalAlignment.Bottom;
-
-            var points = new PointCollection();
-            int i = 0;
-            var ordered = hist.OrderByDescending(x => x.Average);
-            double min = ordered.LastOrDefault().Average;
-            double max = ordered.FirstOrDefault().Average;
-            foreach (var h in hist.GetRange(hist.Count - 150, 150))
-                points.Add(new Point(2 * ++i, 90 - (90 * ((h.Average - min) / (max - min)))));
-            points.Add(new Point(2 * i, 90 ));
-            points.Add(new Point(0, 90));
-            polyline.Points = points;
-            polyline.VerticalAlignment = VerticalAlignment.Bottom;
-
             var grid = new Grid() {
                 Background = new SolidColorBrush(Color.FromArgb(0, 128, 128, 128)),
-                Width = 300, Height = 150,
+                Width = 300,
+                Height = 150,
             };
-            grid.Children.Add(polyline);
-            return grid;
+
+            try {
+                if (hist == null)
+                    hist = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, "hour", 168);
+
+                var polyline = new Polyline();
+                polyline.Stroke = ColorConstants.GetCoinBrush(crypto);
+                polyline.Fill = ColorConstants.GetCoinBrush(crypto, 50);
+                polyline.FillRule = FillRule.Nonzero;
+                polyline.StrokeThickness = 1.5;
+                polyline.VerticalAlignment = VerticalAlignment.Bottom;
+
+                var points = new PointCollection();
+                int i = 0;
+                var ordered = hist.OrderByDescending(x => x.Average);
+                double min = ordered.LastOrDefault().Average;
+                double max = ordered.FirstOrDefault().Average;
+                foreach (var h in hist.GetRange(hist.Count - 150, 150))
+                    points.Add(new Point(2 * ++i, 90 - (90 * ((h.Average - min) / (max - min)))));
+                points.Add(new Point(2 * i, 90 ));
+                points.Add(new Point(0, 90));
+                polyline.Points = points;
+                polyline.VerticalAlignment = VerticalAlignment.Bottom;
+
+                
+                grid.Children.Add(polyline);
+                return grid;
+            }
+            catch (Exception ex) {
+                Analytics.TrackEvent("LiveTileGen-Err:" + ex.Message);
+                return grid;
+            }
         }
 
         /// <summary>
