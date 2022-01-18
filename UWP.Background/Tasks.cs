@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Analytics;
 using UWP.Core.Constants;
 using UWP.Helpers;
 using UWP.Models;
@@ -20,28 +21,34 @@ namespace UWP.Background {
 
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
-            /// Register services (Background task can't access services from the UWP)
-            Ioc.Default.ConfigureServices(
-                new ServiceCollection()
-                .AddSingleton(RestService.For<ICryptoCompare>("https://min-api.cryptocompare.com/"))
-                .AddTransient<LocalSettings>()
-                .BuildServiceProvider());
+            try {
+                /// Register services (Background task can't access services from the UWP)
+                Ioc.Default.ConfigureServices(
+                    new ServiceCollection()
+                    .AddSingleton(RestService.For<ICryptoCompare>("https://min-api.cryptocompare.com/"))
+                    .AddTransient<LocalSettings>()
+                    .BuildServiceProvider());
 
+                throw new NotImplementedException();
 
-
-            // TODO: update Primary Tile
-            var tiles = await SecondaryTile.FindAllAsync();
-            foreach (var tile in tiles) {
-                try {
-                    await LiveTileUpdater.AddSecondaryTile(tile.TileId);
+                // TODO: update Primary Tile
+                var tiles = await SecondaryTile.FindAllAsync();
+                foreach (var tile in tiles) {
+                    try {
+                        await LiveTileUpdater.AddSecondaryTile(tile.TileId);
+                    }
+                    catch (Exception ex) {
+                        var z = ex.Message;
+                    }
                 }
-                catch (Exception ex) {
-                    var z = ex.Message;
-                }
+
+                /// Check price alerts
+                await CheckAlerts();
+            }
+            catch (Exception ex) {
+                Analytics.TrackEvent("backgroundTask-crash:" + ex.Message);
             }
 
-            // TODO: check price alerts
-            await CheckAlerts();
 
             deferral.Complete();
         }
