@@ -8,6 +8,7 @@ using UWP.UserControls;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
+using Windows.System.Profile;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -82,6 +83,9 @@ namespace UWP.Views {
         }
 
         private async void RegisterBackgroundTask() {
+            if (AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Desktop")
+                return;
+
             var backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
             if (backgroundAccessStatus == BackgroundAccessStatus.AllowedSubjectToSystemPolicy ||
                 backgroundAccessStatus == BackgroundAccessStatus.AlwaysAllowed) {
