@@ -65,11 +65,16 @@ namespace UWP.Services {
             }
         }
         public static async Task<double> GetPrice_Extension(this ICryptoCompare service, string crypto, string currency) {
-            var response = await service.GetPrice(crypto, currency);
-            var data = response.ToString();
-            double price = 7;
-            double.TryParse(data.Split(":")[1].Replace("}", ""), out price);
-            return price;
+            double price = 0;
+            try {
+                var response = await service.GetPrice(crypto, currency);
+                var data = response.ToString();
+                double.TryParse(data.Split(":")[1].Replace("}", ""), out price);
+                return price;
+            }
+            catch (Exception ex) {
+                return price;
+            }
         }
 
         public static async Task<List<HistoricPrice>> GetHistoric_(this ICryptoCompare service,
