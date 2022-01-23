@@ -15,7 +15,7 @@ namespace UWP.Helpers {
                 if (!File.Exists(filename))
                     return $"https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@d5c68edec1f5eaec59ac77ff2b48144679cebca1/128/color/{coin.ToLowerInvariant()}.png";
                 else
-                    throw new Exception($"UWP.Shared: Coin {coin} not found.");
+                    return $"/Assets/Icons/icon{coin}.png";
             }
             catch (Exception ex) {
                 return "/Assets/Icons/iconNULL.png";

@@ -9,7 +9,13 @@ namespace UWP.Core.Constants {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
 			{
-				"6.1",
+				"6.1.X",
+				new List<string>() {
+					"General: bug fixes"
+				}
+			},
+			{
+				"6.1.0",
 				new List<string>() {
 					"General: added CZK currency",
 					"General: fixed auto-refresh",
@@ -20,17 +26,12 @@ namespace UWP.Core.Constants {
 				}
 			},
 			{
-				"6.0.4",
+				"6.0.X",
 				new List<string>() {
 					"General: fixed casting error on startup",
 					"Coins: SHIB and other alt-coins' empty graphs fixed",
-					"Portfolio: fixed rounding errors",
-				}
-			},
-			{
-				"6.0.3",
-				new List<string>(){
 					"Settings: set the currency to all purchases",
+					"Portfolio: fixed rounding errors",
 					"Portfolio: group button shown only when multiple same coin entries exist",
 					"Portfolio: fixed error saving the Portfolio",
 				}
