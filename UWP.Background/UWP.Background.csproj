@@ -145,13 +145,13 @@
       <Version>14332.0.2</Version>
     </PackageReference>
     <PackageReference Include="Refit">
-      <Version>6.1.15</Version>
+      <Version>6.3.2</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Json">
-      <Version>6.0.1</Version>
+      <Version>6.0.2</Version>
     </PackageReference>
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
-      <Version>1.0.2.7</Version>
+      <Version>1.0.2.8</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
