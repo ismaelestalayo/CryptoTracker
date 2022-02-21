@@ -29,9 +29,7 @@ namespace UWP.Background {
                     .AddTransient<LocalSettings>()
                     .BuildServiceProvider());
 
-                throw new NotImplementedException();
-
-                // TODO: update Primary Tile
+                
                 var tiles = await SecondaryTile.FindAllAsync();
                 foreach (var tile in tiles) {
                     try {
