@@ -64,7 +64,8 @@ namespace UWP.Background {
                 return grid;
             }
             catch (Exception ex) {
-                Analytics.TrackEvent("LiveTileGen-Err:" + ex.Message);
+                Analytics.TrackEvent("SecondaryTileGrid-error",
+                    new Dictionary<string, string>() { { "Exception", ex.Message } });
                 return grid;
             }
         }

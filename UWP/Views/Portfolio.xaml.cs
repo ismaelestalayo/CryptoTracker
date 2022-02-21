@@ -313,7 +313,6 @@ namespace UWP.Views {
         /// ###############################################################################################
         /// Import/Export functionality
         private async void ImportPortfolio_Click(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("portfolio-import");
             var picker = new FileOpenPicker() {
                 ViewMode = PickerViewMode.List,
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary
@@ -345,12 +344,12 @@ namespace UWP.Views {
             catch (Exception ex) {
                 var z = ex.Message;
                 vm.InAppNotification("Error importing portfolio.", ex.Message);
-                Analytics.TrackEvent("portfolio-importError");
+                Analytics.TrackEvent("Portfolio-importError",
+                    new Dictionary<string, string>() { { "Exception", ex.Message} });
             }            
         }
 
         private async void ExportPortfolio_Click(object sender, RoutedEventArgs e) {
-            Analytics.TrackEvent("portfolio-export");
             var allFiles = await ApplicationData.Current.LocalFolder.GetFilesAsync();
             var fileNames = allFiles.Select(x => x.Name).ToList();
 

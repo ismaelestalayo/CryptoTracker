@@ -44,7 +44,8 @@ namespace UWP.Background {
                 await CheckAlerts();
             }
             catch (Exception ex) {
-                Analytics.TrackEvent("backgroundTask-crash:" + ex.Message);
+                Analytics.TrackEvent("BackgroundTask-error",
+                    new Dictionary<string, string>() { { "Exception", ex.Message } });
             }
 
 
