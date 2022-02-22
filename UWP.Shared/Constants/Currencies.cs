@@ -9,6 +9,7 @@ namespace UWP.Shared.Constants {
 
         /// TODO: Once I add a good way to convert currencies, add the following:
         /// { "PHP", "₱"},
+        /// { "ZAR", "R"},
 
         public static readonly Dictionary<string, string> CurrencySymbol = new Dictionary<string, string>() {
             { "ARS", "$" },
