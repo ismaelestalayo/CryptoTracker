@@ -20,7 +20,7 @@
 
     <telerik:RadCartesianChart
         x:Name="Chart" IsHitTestVisible="{x:Bind IsZoomEnabled}"
-        Margin="-4 0 -24 0">
+        Margin="-3 0 -17 0">
 
         <telerik:RadCartesianChart.Behaviors>
             <telerik:ChartTrackBallBehavior
