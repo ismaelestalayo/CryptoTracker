@@ -111,10 +111,9 @@ namespace UWP.Views {
 			/// Calculate diff based on historic prices
 			double oldestPrice = histo[0].Average;
 			double newestPrice = histo[histo.Count - 1].Average;
-			var diff = newestPrice - oldestPrice;
-			vm.Info.Diff = diff;
+			vm.Info.Prices = (oldestPrice, newestPrice);
 
-			var brush = (diff > 0) ?
+			var brush = (vm.Info.Diff > 0) ?
 				(SolidColorBrush)Application.Current.Resources["pastelGreen"] :
 				(SolidColorBrush)Application.Current.Resources["pastelRed"];
 

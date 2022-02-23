@@ -140,7 +140,8 @@ namespace UWP {
         }
         private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e) {
             e.Handled = true;
-            Analytics.TrackEvent($"UNHANDLED-{CurrentPage}: " + e.Message);
+            Analytics.TrackEvent($"UNHANDLED-{CurrentPage}",
+                new Dictionary<string, string>() { { "Exception", e.Message } });
 
             var messageDialog = new MessageDialog(e.Message, "An error occurred");
             await messageDialog.ShowAsync();
@@ -171,9 +172,11 @@ namespace UWP {
 
                 await jumpList.SaveAsync();
             } catch (SystemException ex) {
-                Analytics.TrackEvent("JUMPLIST-ERR-CATCHED");
+                Analytics.TrackEvent("Jumplist-errorCatched",
+                    new Dictionary<string, string>() { { "Exception", ex.Message } });
             } catch (Exception ex) {
-                Analytics.TrackEvent($"JUMPLIST_ERROR: {ex}");
+                Analytics.TrackEvent($"Jumplist-error",
+                    new Dictionary<string, string>() { { "Exception", ex.Message } });
             }
         }
 

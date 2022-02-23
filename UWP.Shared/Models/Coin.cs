@@ -34,7 +34,7 @@ namespace UWP.Models {
         private string logo = "/Assets/Icons/iconNULL.png";
 
 
-        private bool isFav  = false;
+        private bool isFav = false;
         private bool isPin = false;
         public bool IsFav {
             get => isFav;
@@ -78,6 +78,18 @@ namespace UWP.Models {
         [ObservableProperty]
         private double price = 0;
 
+
+        private (double oldPrice, double newPrice) prices;
+        public (double oldPrice, double newPrice) Prices {
+            get => prices;
+            set {
+                prices = value;
+                Diff = Math.Round((value.newPrice - value.oldPrice), 2);
+                DiffPct = Math.Round(((value.newPrice - value.oldPrice) / value.oldPrice) * 100, 1);
+            }
+        }
+
+
         [ObservableProperty]
         private double diffPct = 0;
 
@@ -90,11 +102,10 @@ namespace UWP.Models {
         private double diff = 0;
         public double Diff {
             get => diff;
-            set {
+            private set {
                 DiffFG = (value >= 0) ?
                     (SolidColorBrush)Application.Current.Resources["pastelGreen"] :
                     (SolidColorBrush)Application.Current.Resources["pastelRed"];
-                DiffPct = (double)Math.Round((value / Price) * 100, 1);
                 SetProperty(ref diff, value);
             }
         }

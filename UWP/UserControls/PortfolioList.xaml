@@ -67,6 +67,11 @@
                                     <MenuFlyoutItem.Icon>
                                         <SymbolIcon Symbol="Delete"/>
                                     </MenuFlyoutItem.Icon>
+                                    <MenuFlyoutItem.Resources>
+                                        <SolidColorBrush x:Key="MenuFlyoutItemForeground" Color="IndianRed"/>
+                                        <SolidColorBrush x:Key="MenuFlyoutItemForegroundPointerOver" Color="Red"/>
+                                        <SolidColorBrush x:Key="MenuFlyoutItemForegroundPressed" Color="Red"/>
+                                    </MenuFlyoutItem.Resources>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
                         </StackPanel.ContextFlyout>

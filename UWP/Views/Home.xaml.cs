@@ -154,7 +154,7 @@ namespace UWP.Views {
             vm.PriceCards[i].Info.Price = price;
 
             var oldestPrice = vm.PriceCards[i].Chart.ChartData.FirstOrDefault()?.Value ?? price;
-            vm.PriceCards[i].Info.Diff = price - oldestPrice;
+            vm.PriceCards[i].Info.Prices = (oldestPrice, price);
         }
 
         /// #########################################################################################
@@ -202,7 +202,7 @@ namespace UWP.Views {
                 /// Calculate the price difference
                 double oldestPrice = histo[0].Average;
                 double newestPrice = histo[histo.Count - 1].Average;
-                vm.PriceCards[i].Info.Diff = newestPrice - oldestPrice;
+                vm.PriceCards[i].Info.Prices = (oldestPrice, newestPrice);
 
                 /// Sum total volume from historic
                 vm.PriceCards[i].Info.VolumeToTotal = histo.Sum(h => h.volumeto);

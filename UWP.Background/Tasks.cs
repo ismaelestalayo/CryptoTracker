@@ -29,9 +29,7 @@ namespace UWP.Background {
                     .AddTransient<LocalSettings>()
                     .BuildServiceProvider());
 
-                throw new NotImplementedException();
-
-                // TODO: update Primary Tile
+                
                 var tiles = await SecondaryTile.FindAllAsync();
                 foreach (var tile in tiles) {
                     try {
@@ -46,7 +44,8 @@ namespace UWP.Background {
                 await CheckAlerts();
             }
             catch (Exception ex) {
-                Analytics.TrackEvent("backgroundTask-crash:" + ex.Message);
+                Analytics.TrackEvent("BackgroundTask-error",
+                    new Dictionary<string, string>() { { "Exception", ex.Message } });
             }
 
 
