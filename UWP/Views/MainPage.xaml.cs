@@ -235,8 +235,14 @@ namespace UWP.Views {
         private void ContentFrame_Navigating(object sender, NavigatingCancelEventArgs e) {
             var toPage = e.SourcePageType.Name;
             App.CurrentPage = toPage;
-            NavView.IsPaneVisible = (toPage == "CoinCompact") ? false : true;
-            CustomAppTitleBar.Margin = (toPage == "CoinCompact") ? new Thickness(46, 0, 0, 0) : new Thickness(0);
+            if (toPage == "CoinCompact") {
+                NavView.IsPaneVisible = false;
+                CustomAppTitleBar.Margin = new Thickness(46, 0, 0, 0);
+            }
+            else {
+                NavView.IsPaneVisible = true;
+                CustomAppTitleBar.Margin = new Thickness(0);
+            }
         }
 
         /// #######################################################################################

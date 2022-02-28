@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using UWP.Models;
 using UWP.Services;
@@ -51,7 +52,8 @@ namespace UWP.APIs {
 
             try {
                 var resp = await Ioc.Default.GetService<ICoinGecko>().GetCoin(coin);
-                var coinData = JsonSerializer.Deserialize<CoinData>(resp.ToString());
+                var coinData = JsonSerializer.Deserialize<CoinData>(resp.ToString(),
+                    new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
                 string descr = await App.GetCoinDescription(coinData.symbol.ToUpper(CultureInfo.InvariantCulture), 5).ConfigureAwait(true);
                 coinData.description.en = (!String.IsNullOrEmpty(descr)) ? descr : coinData.description.en.Split('\n')[0];
 
@@ -209,7 +211,7 @@ namespace UWP.APIs {
             public CurrencyDoubleArray atl_change_percentage { get; set; }
             public CurrencyDateArray atl_date { get; set; }
             public CurrencyDoubleArray market_cap { get; set; }
-            public int market_cap_rank { get; set; }
+            public int? market_cap_rank { get; set; } = 0;
             public CurrencyDoubleArray total_volume { get; set; }
             public CurrencyDoubleArray high_24h { get; set; }
             public CurrencyDoubleArray low_24h { get; set; }
@@ -251,7 +253,7 @@ namespace UWP.APIs {
             public double market_cap {
                 get => market_data?.market_cap.GetValue(App.currency) ?? 0;
             }
-            public int market_cap_rank { get; set; } = 0;
+            public int? market_cap_rank { get; set; } = 0;
             public MarketData market_data { get; set; }
             public DateTime last_updated { get; set; } = DateTime.Now;
             public double total_volume {
