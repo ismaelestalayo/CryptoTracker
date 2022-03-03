@@ -15,6 +15,7 @@
         <converters:BoolToVisibility x:Key="BoolVisibility"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolVisibilityNOT"/>
         <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
+        <converters:DoubleToVisibilityConverter x:Key="DoubleToVisibilityNOT" Inverse="True"/>
         <converters:StringNullOrEmptyToBoolConverter Inverse="True" x:Key="StringEmptyBoolNOT"/>
 
         <Style TargetType="usercontrols:DoubleTextBlock">
@@ -99,7 +100,13 @@
                                 Source="{x:Bind CryptoLogo}" Width="28"/>
 
                             <StackPanel Grid.Column="1" Margin="7 0">
-                                <TextBlock d:Text="Crypto" Text="{x:Bind CryptoName}" FontWeight="Bold" Margin="0 0 0 -3"/>
+                                <StackPanel Orientation="Horizontal" Spacing="5" Margin="0 0 0 -3">
+                                    <TextBlock d:Text="Crypto" Text="{x:Bind CryptoName}" FontWeight="Bold"/>
+                                    <FontIcon Glyph="&#xE7BA;" FontSize="16"
+                                              ToolTipService.ToolTip="No price data found"
+                                              ToolTipService.Placement="Right"
+                                              Visibility="{x:Bind Current, Converter={StaticResource DoubleToVisibilityNOT}}"/>
+                                </StackPanel>
                                 <TextBlock d:Text="0.12 XXX">
                                     <Run Text="{x:Bind CryptoQty, Converter={StaticResource NumberFormatter}}"/>
                                     <Run Text="{x:Bind Crypto}"/>
