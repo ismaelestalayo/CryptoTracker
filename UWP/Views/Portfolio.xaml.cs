@@ -163,9 +163,12 @@ namespace UWP.Views {
             var histos = new List<List<HistoricPrice>>(nPurchases);
             foreach (var crypto in uniqueCryptos) {
                 var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);
-                var cryptoQty = vm.Portfolio.Where(x => x.Crypto == crypto).Sum(x => x.CryptoQty);
-                cryptoWorth.Add(histo.Select(x => x.Average * cryptoQty).ToList());
-                histos.Add(histo);
+                /// If histo is empty, dont add to chart
+                if (histo.Count > 0) {
+                    var cryptoQty = vm.Portfolio.Where(x => x.Crypto == crypto).Sum(x => x.CryptoQty);
+                    cryptoWorth.Add(histo.Select(x => x.Average * cryptoQty).ToList());
+                    histos.Add(histo);
+                }
             }
 
             /// There might be young cryptos that didnt exist in the past, so take the common minimum 
