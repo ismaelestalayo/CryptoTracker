@@ -69,8 +69,8 @@
                                     </MenuFlyoutItem.Icon>
                                     <MenuFlyoutItem.Resources>
                                         <SolidColorBrush x:Key="MenuFlyoutItemForeground" Color="IndianRed"/>
-                                        <SolidColorBrush x:Key="MenuFlyoutItemForegroundPointerOver" Color="Red"/>
-                                        <SolidColorBrush x:Key="MenuFlyoutItemForegroundPressed" Color="Red"/>
+                                        <SolidColorBrush x:Key="MenuFlyoutItemForegroundPointerOver" Color="IndianRed"/>
+                                        <SolidColorBrush x:Key="MenuFlyoutItemForegroundPressed" Color="IndianRed"/>
                                     </MenuFlyoutItem.Resources>
                                 </MenuFlyoutItem>
                             </MenuFlyout>

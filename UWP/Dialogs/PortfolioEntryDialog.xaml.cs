@@ -84,7 +84,7 @@ namespace CryptoTracker.Dialogs {
             purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
 
             /// If the user has also filled the invested quantity, we can calculate everything else
-            if (purchase.InvestedQty >= 0) {
+            if (purchase.InvestedQty >= 0 && curr > 0) {
                 double priceBought = (1 / purchase.CryptoQty) * purchase.InvestedQty;
                 priceBought = Math.Round(priceBought, 4);
 
