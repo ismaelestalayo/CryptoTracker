@@ -497,11 +497,19 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Button
-                        Background="Transparent" CornerRadius="6"
-                        BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
-                        Click="NewPurchase_click" Content="Add new purchase"
-                        HorizontalAlignment="Center" Margin="0 0 0 10"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10" Spacing="5">
+                        <Button
+                            Background="Transparent" CornerRadius="6"
+                            BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
+                            Click="NewPurchase_click" Content="Add new purchase"
+                            HorizontalAlignment="Center"/>
+                        <Button
+                            Background="Transparent" CornerRadius="6"
+                            BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
+                            Click="SortPurchases_click" Padding="7" ToolTipService.ToolTip="Toggle date sorting">
+                            <FontIcon Glyph="&#xE8CB;"/>
+                        </Button>
+                    </StackPanel>
                     <userControls:PortfolioList
                         Grid.Row="1"
                         Purchases="{x:Bind vm.Purchases}"
