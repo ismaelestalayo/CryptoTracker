@@ -9,6 +9,13 @@ namespace UWP.Core.Constants {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
 			{
+				"6.2.X",
+				new List<string>() {
+					"Coin details: Added sort button",
+					"Coin details: Added 'Buy price' column"
+				}
+			},
+			{
 				"6.1.X",
 				new List<string>() {
 					"General: bug fixes"

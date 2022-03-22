@@ -42,6 +42,28 @@
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource ButtonBorderBrush}" BorderThickness="1"
                         CornerRadius="6" Padding="15 10" Margin="0 5">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="NarrowState">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="0"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="Gridd.ColumnDefinitions[2].Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="NormalState">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="750" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="Gridd.ColumnDefinitions[2].Width" Value="*"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                         
                         <StackPanel.ContextFlyout>
                             <MenuFlyout>
@@ -93,6 +115,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <Image
@@ -115,6 +138,18 @@
 
                             <usercontrols:DoubleTextBlock
                                 Grid.Column="2"
+                                Header="Buy price"
+                                Orientation="Vertical"
+                                Spacing="-5">
+                                <usercontrols:DoubleTextBlock.Value>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind BoughtAt}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                    </TextBlock>
+                                </usercontrols:DoubleTextBlock.Value>
+                            </usercontrols:DoubleTextBlock>
+
+                            <usercontrols:DoubleTextBlock
+                                Grid.Column="3"
                                 Header="Invested"
                                 Orientation="Vertical"
                                 Spacing="-5">
@@ -126,7 +161,7 @@
                             </usercontrols:DoubleTextBlock>
 
                             <usercontrols:DoubleTextBlock
-                                Grid.Column="3"
+                                Grid.Column="4"
                                 Header="Worth"
                                 Orientation="Vertical"
                                 Spacing="-5">
@@ -138,7 +173,7 @@
                             </usercontrols:DoubleTextBlock>
 
                             <usercontrols:DoubleTextBlock
-                                Grid.Column="4"
+                                Grid.Column="5"
                                 Header="Delta"
                                 Orientation="Vertical"
                                 Spacing="-5">
