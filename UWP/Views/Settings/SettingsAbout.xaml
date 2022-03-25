@@ -16,7 +16,7 @@
     <Page.Resources>
         <Style TargetType="StackPanel" x:Key="Title">
             <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 5"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
@@ -25,47 +25,52 @@
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel>
-            <!-- MENTION -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE90A;"/>
-                <TextBlock Text="Mention" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+        <StackPanel Spacing="25">
 
-            <TextBlock>
-                <Run Text="Data provided by:"/>
+            <!-- MENTION -->
+            <StackPanel>
+                <StackPanel Style="{StaticResource Title}">
+                    <FontIcon Glyph="&#xE90A;"/>
+                    <TextBlock Text="Mention" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
+
+                <TextBlock>
+                    <Run Text="Data provided by:"/>
                 
-                <Hyperlink NavigateUri="https://www.coingecko.com/en">
-                    CoinGecko
-                </Hyperlink>
-                <Run Text=","/>
-                <Hyperlink NavigateUri="https://www.coingecko.com/en">
-                    CoinPaprika
-                </Hyperlink>
-                <Run Text="and"/>
-                <Hyperlink NavigateUri="https://www.cryptocompare.com/">
-                    CryptoCompare
-                </Hyperlink>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="Crypto Tracker's"/>
-                <Hyperlink NavigateUri="https://ismaelestalayo.com/privacy">
-                    Privacy policy
-                </Hyperlink>
-            </TextBlock>
+                    <Hyperlink NavigateUri="https://www.coingecko.com/en">
+                        CoinGecko
+                    </Hyperlink>
+                    <Run Text=","/>
+                    <Hyperlink NavigateUri="https://www.coingecko.com/en">
+                        CoinPaprika
+                    </Hyperlink>
+                    <Run Text="and"/>
+                    <Hyperlink NavigateUri="https://www.cryptocompare.com/">
+                        CryptoCompare
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock>
+                    <Run Text="Crypto Tracker's"/>
+                    <Hyperlink NavigateUri="https://ismaelestalayo.com/privacy">
+                        Privacy policy
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
 
 
             <!-- ABOUT ME -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE13D;"/>
-                <TextBlock Text="About me" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+            <StackPanel>
+                <StackPanel Style="{StaticResource Title}">
+                    <FontIcon Glyph="&#xE13D;"/>
+                    <TextBlock Text="About me" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
 
-            <TextBlock Text="Made with 🤍 by a former telecommunications engineer student."/>
-            <TextBlock>
-                <Run Text="More info at"/>
-                <Hyperlink NavigateUri="https://ismaelestalayo.com/">ismaelestalayo.com</Hyperlink>
-            </TextBlock>
+                <TextBlock Text="Made with 🤍 by a former telecommunications engineer student."/>
+                <TextBlock>
+                    <Run Text="More info at"/>
+                    <Hyperlink NavigateUri="https://ismaelestalayo.com/">ismaelestalayo.com</Hyperlink>
+                </TextBlock>
+            </StackPanel>
 
         </StackPanel>
     </ScrollViewer>

@@ -17,7 +17,7 @@
     <Page.Resources>
         <Style TargetType="StackPanel" x:Key="Title">
             <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 5"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
@@ -26,40 +26,46 @@
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Spacing="25">
             <StackPanel.BackgroundTransition>
                 <BrushTransition/>
             </StackPanel.BackgroundTransition>
             
             <!-- APPEARANCE -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE703;"/>
-                <TextBlock Text="Appearance" Style="{ThemeResource SettingsSectionTitleText}"/>
+            <StackPanel>
+                <StackPanel Style="{StaticResource Title}">
+                    <FontIcon Glyph="&#xE703;"/>
+                    <TextBlock Text="Appearance" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
+
+                <TextBlock Text="Theme"/>
+                <muxc:RadioButtons
+                    x:Name="ThemeRadioButtons"
+                    HorizontalAlignment="Left"
+                    SelectionChanged="ThemeRadioButtons_Changed"
+                    MaxColumns="3" Margin="0 -10 0 0" Width="400">
+                    <RadioButton Tag="theme" MinWidth="100" Content="Light"/>
+                    <RadioButton Tag="theme" MinWidth="100" Content="Dark"/>
+                    <RadioButton Tag="theme" MinWidth="100" Content="Windows"/>
+                </muxc:RadioButtons>
             </StackPanel>
-
-            <TextBlock Text="Theme"/>
-            <muxc:RadioButtons
-                x:Name="ThemeRadioButtons" 
-                SelectionChanged="ThemeRadioButtons_Changed"
-                MaxColumns="3" Margin="0 -10 0 0" Width="400">
-                <RadioButton Tag="theme" MinWidth="100" Content="Light"/>
-                <RadioButton Tag="theme" MinWidth="100" Content="Dark"/>
-                <RadioButton Tag="theme" MinWidth="100" Content="Windows"/>
-            </muxc:RadioButtons>
-
-
+            
+            
             <!-- BACK BUTTON -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE112;"/>
-                <TextBlock Text="Back button" Style="{ThemeResource SettingsSectionTitleText}"/>
+            <StackPanel>
+                <StackPanel Style="{StaticResource Title}">
+                    <FontIcon Glyph="&#xE112;"/>
+                    <TextBlock Text="Back button" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
+
+                <TextBlock>
+                    <Run Text="Visibility of the NavigationView's back button."/>
+                    <Run Text="&#x0a;(You must restart the app)." FontStyle="Italic"/>
+                </TextBlock>
+                <ToggleSwitch x:Name="BackButtonSwitch" Margin="0 -10 0 0" Toggled="BackButton_Toggled"/>
             </StackPanel>
-
-            <TextBlock>
-                <Run Text="Visibility of the NavigationView's back button."/>
-                <Run Text="&#x0a;(You must restart the app)." FontStyle="Italic"/>
-            </TextBlock>
-            <ToggleSwitch x:Name="BackButtonSwitch" Margin="0 -10 0 0" Toggled="BackButton_Toggled"/>
-
+            
+            
         </StackPanel>
     </ScrollViewer>
 </Page>

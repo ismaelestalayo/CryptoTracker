@@ -4,9 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="using:UWP.ViewModels"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600" d:Width="500" mc:Ignorable="d">
 
     <Page.DataContext>
@@ -16,7 +16,7 @@
     <Page.Resources>
         <Style TargetType="StackPanel" x:Key="Title">
             <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 5"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
@@ -25,7 +25,7 @@
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Spacing="25">
             <Canvas>
                 <Border Height="560">
                     <!--AnimatedVisualPlayer with AutoPlay-->
@@ -38,57 +38,61 @@
 
 
             <!-- REVIEW -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE134;"/>
-                <TextBlock Text="Review" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+            <StackPanel Margin="0 -25 0 0">
+                <StackPanel Style="{StaticResource Title}">
+                    <FontIcon Glyph="&#xE134;"/>
+                    <TextBlock Text="Review" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
 
-            <TextBlock Text="Take a minute and leave a review on the Store."/>
-            <StackPanel Orientation="Horizontal" Margin="0" Spacing="10">
-                <Button Content="Rate" Click="Feedback_Rating"/>
-                <Button Content="Review" Click="Feedback_Review"/>
-            </StackPanel>
+                <TextBlock Text="Take a minute and leave a review on the Store."/>
+                <StackPanel Orientation="Horizontal" Margin="0" Spacing="10">
+                    <Button Content="Rate" Click="Feedback_Rating"/>
+                    <Button Content="Review" Click="Feedback_Review"/>
+                </StackPanel>
 
-            <TextBlock Text="I would love to hear your thoughts about the app."/>
-            <StackPanel Orientation="Horizontal" Spacing="10">
-                <Button
-                    Click="Feedback_Mail" Content="Email"
-                    ToolTipService.ToolTip="ismael.em@outlook.com"/>
-                <Button
-                    Click="TwitterButton_Click" Content="Twitter"
-                    ToolTipService.ToolTip="@ismaelestalayo"/>
+                <TextBlock Text="I would love to hear your thoughts about the app."/>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Button
+                        Click="Feedback_Mail" Content="Email"
+                        ToolTipService.ToolTip="ismael.em@outlook.com"/>
+                    <Button
+                        Click="TwitterButton_Click" Content="Twitter"
+                        ToolTipService.ToolTip="@ismaelestalayo"/>
+                </StackPanel>
             </StackPanel>
 
 
             <!-- DONATE -->
-            <StackPanel Style="{StaticResource Title}">
-                <!--<FontIcon Glyph="&#xE8C7;"/>-->
-                <Path Stroke="{ThemeResource SystemChromeAltLowColor}" StrokeThickness="1.25"
-                      Data="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                <TextBlock Text="Donate" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+            <StackPanel>
+                <StackPanel Style="{StaticResource Title}">
+                    <!--<FontIcon Glyph="&#xE8C7;"/>-->
+                    <Path Stroke="{ThemeResource SystemChromeAltLowColor}" StrokeThickness="1.25"
+                          Data="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    <TextBlock Text="Donate" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
             
-            <TextBlock
-                Text="I have been developing this app since August 2017, so if you really enjoy using it and want to support it, you can donate in multiple ways:"/>
-            <StackPanel Orientation="Horizontal" Spacing="10">
-                <Button Click="Donation_Paypal" Content="Paypal"/>
-                <Button Click="Donation_Kofi" Content="Ko-fi"/>
-                <!--<Button Click="Donation_Crypto" Content="Crypto">
-                    <Button.Flyout>
-                        <Flyout Placement="Bottom">
-                            <StackPanel>
-                                <TextBlock Text="BAT address:"/>
-                                <TextBlock
-                                    Text="0x8e3e83a79689db4c253af87d1a9254b48c6245d3"
-                                    IsTextSelectionEnabled="True"/>
-                                <TextBlock Text="ETH address:"/>
-                                <TextBlock
-                                    Text="0xE1D40ce30E257af4753e607f7F4a4feC8900E3cD"
-                                    IsTextSelectionEnabled="True"/>
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>-->
+                <TextBlock
+                    Text="I have been developing this app since August 2017, so if you really enjoy using it and want to support it, you can donate in multiple ways:"/>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Button Click="Donation_Paypal" Content="Paypal"/>
+                    <Button Click="Donation_Kofi" Content="Ko-fi"/>
+                    <!--<Button Click="Donation_Crypto" Content="Crypto">
+                        <Button.Flyout>
+                            <Flyout Placement="Bottom">
+                                <StackPanel>
+                                    <TextBlock Text="BAT address:"/>
+                                    <TextBlock
+                                        Text="0x8e3e83a79689db4c253af87d1a9254b48c6245d3"
+                                        IsTextSelectionEnabled="True"/>
+                                    <TextBlock Text="ETH address:"/>
+                                    <TextBlock
+                                        Text="0xE1D40ce30E257af4753e607f7F4a4feC8900E3cD"
+                                        IsTextSelectionEnabled="True"/>
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>-->
+                </StackPanel>
             </StackPanel>
 
         </StackPanel>

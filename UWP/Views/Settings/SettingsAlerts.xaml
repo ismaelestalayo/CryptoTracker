@@ -18,7 +18,7 @@
     <Page.Resources>
         <Style TargetType="StackPanel" x:Key="Title">
             <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 5"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
@@ -30,24 +30,28 @@
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Spacing="25">
+            
             <!-- ALERTS -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xEA8F;"/>
-                <TextBlock Text="Alerts" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+            <StackPanel>
+                <StackPanel Style="{StaticResource Title}">
+                    <FontIcon Glyph="&#xEA8F;"/>
+                    <TextBlock Text="Alerts" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
 
-            <TextBlock
-                Text="Once an alert is fired it shows a toast notification and is then disabled not to spam (you can manually enable it again and change the threshold)."/>
-            <userControls:AlertListGrouped
-                Alerts="{x:Bind vm.Alerts, Mode=OneWay}"
-                Margin="-10 0"/>
+                <TextBlock Text="Once an alert is fired it shows a toast notification and is then disabled not to spam (you can manually enable it again and change the threshold)."/>
+                <userControls:AlertListGrouped
+                    Alerts="{x:Bind vm.Alerts, Mode=OneWay}"
+                    Margin="-10 0"/>
+
+                <TextBlock Text="aaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaa aaaaaaaa" Width="500"/>
+            </StackPanel>
+            
 
             <!-- NO ALERTS WARNING -->
             <StackPanel
-                HorizontalAlignment="Left"
-                Margin="0 25 0 0"
-                Width="325"
+                HorizontalAlignment="Center"
+                
                 Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
                 <TextBlock
                     FontWeight="Bold" HorizontalAlignment="Center"

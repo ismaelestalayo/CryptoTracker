@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     CornerRadius="6"
+    RequestedTheme="Dark"
     mc:Ignorable="d">
 
     <ContentDialog.Resources>
@@ -17,8 +18,8 @@
         x:Name="SettingsNavView"
         IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
         IsSettingsVisible="False" IsPaneOpen="True"
-        PaneDisplayMode="Left" OpenPaneLength="165"
-        Height="550" Width="520"
+        PaneDisplayMode="Top"
+        Height="600" Width="600"
         Margin="0 -1 0 0"
         SelectionChanged="NavView_SelectionChanged">
         <muxc:NavigationView.Resources>
@@ -27,7 +28,7 @@
                 <Setter Property="Padding" Value="0 0 0 0"/>
             </Style>
             <Thickness x:Key="NavigationViewContentPresenterMargin">0</Thickness>
-            <Thickness x:Key="NavigationViewPaneContentGridMargin">8,12,8,8</Thickness>
+            <Thickness x:Key="NavigationViewPaneContentGridMargin">8,68,8,8</Thickness>
             <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius >
         </muxc:NavigationView.Resources>
 
@@ -81,7 +82,10 @@
         <Frame
             x:Name="SettingsFrame"
             Background="{ThemeResource ContentDialogBackground}"
-            Padding="18 0 18 0" Margin="0">
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            Padding="17 17 5 17">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>
@@ -91,11 +95,7 @@
 
 
         <muxc:NavigationView.PaneFooter>
-            <muxc:NavigationViewItem
-                d:Content="CryptoTracker X.Y.Z"
-                IsEnabled="False"
-                Content="{x:Bind FooterVersion, Mode=OneWay}" FontWeight="Normal" Padding="-5 0">
-            </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem Margin="-3 0" Width="48" Height="40" Icon="Clear" Tapped="NavViewClose_Tapped"/>
         </muxc:NavigationView.PaneFooter>
     </muxc:NavigationView>
 </ContentDialog>

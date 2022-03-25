@@ -21,7 +21,7 @@
         </Style>
         <Style TargetType="StackPanel" x:Key="Title">
             <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 5"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>

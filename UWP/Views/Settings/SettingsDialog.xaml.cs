@@ -34,6 +34,7 @@ namespace CryptoTracker.Views {
             // get all open popups
             // normally there are 2 popups, one for your ContentDialog and one for Rectangle
             var popups = VisualTreeHelper.GetOpenPopups(Window.Current);
+            var z = VisualTreeHelper.GetOpenPopups(Window.Current).Count;
             foreach (var popup in popups) {
                 if (popup.Child is Rectangle) {
                     _lockRectangle = popup.Child as Rectangle;
@@ -49,11 +50,6 @@ namespace CryptoTracker.Views {
 
         /// #######################################################################################
         private void NavView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args) {
-            string source;
-            
-            if (((Frame)sender.Content).SourcePageType != null)
-                source = (((Frame)sender.Content).SourcePageType).Name;
-
             var selected = ((ContentControl)args.SelectedItem).Content.ToString();
             NavigateFrame(selected);
         }
@@ -86,8 +82,7 @@ namespace CryptoTracker.Views {
             }
         }
 
-        private void CloseDialog_Click(object sender, RoutedEventArgs e) {
-            this.Hide();
-        }
+        private void NavViewClose_Tapped(object sender, TappedRoutedEventArgs e)
+            => Hide();
     }
 }
