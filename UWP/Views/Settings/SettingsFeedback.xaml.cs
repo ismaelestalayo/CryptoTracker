@@ -47,11 +47,13 @@ namespace UWP.Views {
         private async void Donation_Paypal(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("feedback-donationPaypal");
             await Launcher.LaunchUriAsync(new Uri("https://paypal.me/ismaelEstalayo"));
+            await LottiePlayer.PlayAsync(0, 1, false);
         }
 
         private async void Donation_Kofi(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("feedback-donationKofi");
             await Launcher.LaunchUriAsync(new Uri("https://ko-fi.com/ismaelestalayo"));
+            await LottiePlayer.PlayAsync(0, 1, false);
         }
 
         private void Donation_Crypto(object sender, RoutedEventArgs e) {

@@ -43,8 +43,6 @@
                 <userControls:AlertListGrouped
                     Alerts="{x:Bind vm.Alerts, Mode=OneWay}"
                     Margin="-10 0"/>
-
-                <TextBlock Text="aaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaa aaaaaaaa" Width="500"/>
             </StackPanel>
             
 

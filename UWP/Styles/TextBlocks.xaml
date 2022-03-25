@@ -7,7 +7,7 @@
         <Setter Property="Foreground" Value="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Margin" Value="0 5"/>
-        <Setter Property="MaxWidth" Value="350"/>
+        <Setter Property="MaxWidth" Value="500"/>
     </Style>
     <Style TargetType="TextBlock" x:Key="SettingsSectionTitleText" BasedOn="{StaticResource SubtitleTextBlockStyle}">
         <Setter Property="TextLineBounds" Value="Tight"/>

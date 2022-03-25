@@ -19,7 +19,7 @@
         IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed"
         IsSettingsVisible="False" IsPaneOpen="True"
         PaneDisplayMode="Top"
-        Height="600" Width="600"
+        Height="600" MaxWidth="600"
         Margin="0 -1 0 0"
         SelectionChanged="NavView_SelectionChanged">
         <muxc:NavigationView.Resources>
@@ -51,11 +51,11 @@
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
 
-            <muxc:NavigationViewItem Content="Changelog">
+            <!--<muxc:NavigationViewItem Content="Changelog">
                 <muxc:NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE14C;"/>
                 </muxc:NavigationViewItem.Icon>
-            </muxc:NavigationViewItem>
+            </muxc:NavigationViewItem>-->
 
             <muxc:NavigationViewItem Content="Feedback">
                 <muxc:NavigationViewItem.Icon>

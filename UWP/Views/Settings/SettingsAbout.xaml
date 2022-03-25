@@ -48,12 +48,13 @@
                     <Hyperlink NavigateUri="https://www.cryptocompare.com/">
                         CryptoCompare
                     </Hyperlink>
-                </TextBlock>
-                <TextBlock>
-                    <Run Text="Crypto Tracker's"/>
+                    .
+                    
+                    <LineBreak/><Run Text="Crypto Tracker's"/>
                     <Hyperlink NavigateUri="https://ismaelestalayo.com/privacy">
                         Privacy policy
                     </Hyperlink>
+                    .
                 </TextBlock>
             </StackPanel>
 
@@ -65,13 +66,22 @@
                     <TextBlock Text="About me" Style="{ThemeResource SettingsSectionTitleText}"/>
                 </StackPanel>
 
-                <TextBlock Text="Made with 🤍 by a former telecommunications engineer student."/>
                 <TextBlock>
-                    <Run Text="More info at"/>
+                    <Run Text="Made with 🤍 by a former telecommunications engineer student."/>
+                    
+                    <LineBreak/><Run Text="You can get more info at"/>
                     <Hyperlink NavigateUri="https://ismaelestalayo.com/">ismaelestalayo.com</Hyperlink>
                 </TextBlock>
             </StackPanel>
-
+            
+            <!-- VERSION -->
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <Image Source="ms-appx:///Assets/AppIcon.png" Width="75"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="CryptoTracker" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBlock d:Text="v1.0.0" Text="{x:Bind FooterVersion}" Margin="0 -02 0 0"/>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </Page>

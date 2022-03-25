@@ -12,7 +12,8 @@ namespace UWP.Core.Constants {
 				"6.2.X",
 				new List<string>() {
 					"Coin details: Added sort button",
-					"Coin details: Added 'Buy price' column"
+					"Coin details: Added 'Buy price' column",
+					"Settings: new layout + close button"
 				}
 			},
 			{
