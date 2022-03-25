@@ -74,12 +74,32 @@
                 </TextBlock>
             </StackPanel>
             
+            
+            <!-- LAST CHANGELOG -->
+            <StackPanel>
+                <StackPanel Style="{StaticResource Title}">
+                    <FontIcon Glyph="&#xE14C;"/>
+                    <TextBlock Text="Changelog" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
+                
+                <TextBlock Text="{x:Bind Changelog}"/>
+
+                <TextBlock>
+                    <Run Text="You can also check the current roadmap"/>
+                    <Hyperlink
+                        NavigateUri="https://github.com/ismaelestalayo/CryptoTracker/projects/2">
+                        here
+                    </Hyperlink><Run Text="."/>
+                </TextBlock>
+            </StackPanel>
+            
+            
             <!-- VERSION -->
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <Image Source="ms-appx:///Assets/AppIcon.png" Width="75"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="CryptoTracker" Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock d:Text="v1.0.0" Text="{x:Bind FooterVersion}" Margin="0 -02 0 0"/>
+                    <TextBlock Text="CryptoTracker ©" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBlock d:Text="v1.0.0" Text="{x:Bind FooterVersion}" Margin="0 -2 0 0"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
