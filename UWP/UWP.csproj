@@ -30,7 +30,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <PackageCertificateThumbprint>264BACD5A4D966449E2078D3942B6101878D3CD7</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>706F47F4D71C39E5DBA1AB8F945E48534E4C548F</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>
     </PackageCertificateKeyFile>
   </PropertyGroup>
