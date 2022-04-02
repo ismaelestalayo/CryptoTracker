@@ -21,6 +21,7 @@
         SuggestionChosen="AutoSuggestBox_SuggestionChosen"
         QueryIcon="Find"
         QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+		UpdateTextOnSelect="False"
         VerticalAlignment="Top"
         Width="130">
         <AutoSuggestBox.ItemTemplate>
