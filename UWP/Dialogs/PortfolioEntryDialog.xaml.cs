@@ -10,7 +10,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace CryptoTracker.Dialogs {
     public sealed partial class PortfolioEntryDialog : ContentDialog {
@@ -19,6 +18,8 @@ namespace CryptoTracker.Dialogs {
 
         public PortfolioEntryDialog() {
             InitializeComponent();
+
+            RequestedTheme = ColorConstants.CurrentThemeIsDark() ? ElementTheme.Dark : ElementTheme.Light;
         }
 
         public static readonly DependencyProperty NewPurchaseProperty =
