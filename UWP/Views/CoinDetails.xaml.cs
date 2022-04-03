@@ -331,7 +331,9 @@ namespace UWP.Views {
         private async void NewPurchase_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {
                 NewPurchase = new PurchaseModel() { Crypto = vm.Coin.Name },
-                SuggestionCoin = new SuggestionCoin(vm.Coin)
+                SuggestionCoin = new SuggestionCoin(vm.Coin),
+                PrimaryButtonText = "Add",
+                Title = "💵 New transaction"
             };
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
