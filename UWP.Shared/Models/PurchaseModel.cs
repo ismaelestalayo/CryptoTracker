@@ -87,6 +87,13 @@ namespace UWP.Models {
             set => SetProperty(ref investedQty, value);
         }
 
+        private double transactionFee = 0;
+        [DataMember()]
+        public double TransactionFee {
+            get => transactionFee;
+            set => SetProperty(ref transactionFee, value);
+        }
+
         /// #######################################################################################
         /// Dates, notes...
         private DateTimeOffset date = DateTime.Today;

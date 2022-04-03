@@ -55,7 +55,7 @@ namespace UWP.Shared.Helpers {
 
             /// If the user has also filled the invested quantity, we can calculate everything else
             if (purchase.InvestedQty >= 0) {
-                double priceBought = purchase.InvestedQty / purchase.CryptoQty;
+                double priceBought = (purchase.InvestedQty - purchase.TransactionFee) / purchase.CryptoQty;
                 priceBought = NumberHelper.Rounder(priceBought);
 
                 var diff = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
