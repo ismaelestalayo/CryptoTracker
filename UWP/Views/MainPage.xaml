@@ -125,6 +125,9 @@
                         <muxc:NavigationViewItem.Content>
                             <FontIcon Glyph="&#xE721;" FontSize="16" Margin="0 0 -7 0"/>
                         </muxc:NavigationViewItem.Content>
+                        <muxc:NavigationViewItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="F" Invoked="CtrlF_Invoked" />
+                        </muxc:NavigationViewItem.KeyboardAccelerators>
                     </muxc:NavigationViewItem>
 
                     <!-- Refresh btn -->

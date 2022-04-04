@@ -274,7 +274,13 @@ namespace UWP.Views {
 
         /// #######################################################################################
         ///  Search button
-        private void NavView_Search_Tapped(object sender, TappedRoutedEventArgs e) {
+        private void NavView_Search_Tapped(object sender, TappedRoutedEventArgs e)
+            => ShowAutoSuggestBox();
+
+        private void CtrlF_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+            => ShowAutoSuggestBox();
+
+        private void ShowAutoSuggestBox() {
             AutoSuggestBox.Visibility = Visibility.Visible;
             AutoSuggestBox.Focus(FocusState.Programmatic);
         }
