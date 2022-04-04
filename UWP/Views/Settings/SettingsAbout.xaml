@@ -92,11 +92,22 @@
                     </Hyperlink><Run Text="."/>
                 </TextBlock>
             </StackPanel>
-            
-            
+
+            <!-- INSTALLATION FOLDER  -->
+            <StackPanel>
+                <StackPanel Style="{StaticResource Title}">
+                    <FontIcon Glyph="&#xE197;"/>
+                    <TextBlock Text="Installation folder" Style="{ThemeResource SettingsSectionTitleText}"/>
+                </StackPanel>
+
+                <TextBlock Text="Open the installation folder where CryptoTracker resides."/>
+                <Button Content="Open folder" Click="OpenInstallationFolder_Click"/>
+            </StackPanel>
+
+
             <!-- VERSION -->
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <Image Source="ms-appx:///Assets/AppIcon.png" Width="75"/>
+                <Image Source="ms-appx:///Assets/AppIcon.png" Width="50"/>
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="CryptoTracker ©" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBlock d:Text="v1.0.0" Text="{x:Bind FooterVersion}" Margin="0 -2 0 0"/>
