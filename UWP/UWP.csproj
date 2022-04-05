@@ -116,6 +116,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\SVSettings.cs" />
     <Compile Include="Converters\StringConverters.cs" />
     <Compile Include="Converters\OtherConverters.cs" />
     <Compile Include="Converters\DateConverters.cs" />
@@ -145,6 +146,12 @@
     </Compile>
     <Compile Include="UserControls\FluentCard.xaml.cs">
       <DependentUpon>FluentCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\SettingsBlockControl.xaml.cs">
+      <DependentUpon>SettingsBlockControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\SettingsDisplayControl.xaml.cs">
+      <DependentUpon>SettingsDisplayControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ToggleIconButton.xaml.cs">
       <DependentUpon>ToggleIconButton.xaml</DependentUpon>
@@ -410,6 +417,14 @@
     <Page Include="UserControls\FluentCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Settings\SettingsBlockControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\SettingsDisplayControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ToggleIconButton.xaml">
       <Generator>MSBuild:Compile</Generator>
