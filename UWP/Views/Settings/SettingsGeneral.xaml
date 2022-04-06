@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:UWP.ViewModels"
+    xmlns:usercontrols="using:UWP.UserControls"
     d:Height="600"
     d:Width="500"
     mc:Ignorable="d">
@@ -24,21 +25,23 @@
             <Setter Property="Height" Value="33"/>
         </Style>
 
-        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
+        <Style TargetType="usercontrols:SettingsBlockControl">
+            <Setter Property="Margin" Value="0 0 15 0"/>
+        </Style>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel Spacing="25">
+        <StackPanel Spacing="3">
             
             <!-- CURRENCY -->
-            <StackPanel>
-                <StackPanel Style="{StaticResource SettingsSectionTitle}">
-                    <FontIcon Glyph="&#xE909;"/>
-                    <TextBlock Text="Currency" Style="{ThemeResource SettingsSectionTitleText}"/>
-                </StackPanel>
-                <TextBlock Text="Choose the fiat in which to display prices and used in transactions."/>
+            <usercontrols:SettingsBlockControl
+                Title="Currency"
+                Description="Choose the fiat in which to display prices and use in transactions.">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE909;" />
+                </usercontrols:SettingsBlockControl.Icon>
                 <ComboBox
                     Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                     Margin="0 5 0 0" Width="110"
@@ -54,19 +57,16 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </StackPanel>
+            </usercontrols:SettingsBlockControl>
             
             
             <!-- AUTO-REFRESH -->
-            <StackPanel>
-                <StackPanel Style="{StaticResource SettingsSectionTitle}">
-                    <FontIcon Glyph="&#xE121;"/>
-                    <TextBlock Text="Auto-refresh" Style="{ThemeResource SettingsSectionTitleText}"/>
-                </StackPanel>
-                <TextBlock>
-                    <Run Text="Choose the frequency of auto-refresh on Home, Details and Compact Overlay pages."/>
-                    <Run Text="&#x0a;(Charts update minutely because of API limitations.)" FontStyle="Italic"/>
-                </TextBlock>
+            <usercontrols:SettingsBlockControl
+                Title="Auto-refresh"
+                Description="Automatic refresh frequency on Home, Details and Compact Overlay pages.">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE121;" />
+                </usercontrols:SettingsBlockControl.Icon>
                 <ComboBox
                     SelectedItem="{x:Bind vm.AutoRefresh, Mode=TwoWay}"
                     Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
@@ -76,16 +76,16 @@
                     <x:String>1 min</x:String>
                     <x:String>2 min</x:String>
                 </ComboBox>
-            </StackPanel>
-            
-            
+            </usercontrols:SettingsBlockControl>
+
+
             <!-- STARTUP PAGE -->
-            <StackPanel>
-                <StackPanel Style="{StaticResource SettingsSectionTitle}">
-                    <FontIcon Glyph="&#xE7E8;"/>
-                    <TextBlock Text="Startup page" Style="{ThemeResource SettingsSectionTitleText}"/>
-                </StackPanel>
-                <TextBlock Text="Initial page to load when opening the app."/>
+            <usercontrols:SettingsBlockControl
+                Title="Startup page"
+                Description="Initial page to load when opening the app.">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE7E8;" />
+                </usercontrols:SettingsBlockControl.Icon>
                 <ComboBox
                     SelectionChanged="StartupPage_SelectionChanged"
                     Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
@@ -96,34 +96,29 @@
                     <x:String>News</x:String>
                     <x:String>Portfolio</x:String>
                 </ComboBox>
-            </StackPanel>
-            
-            
+            </usercontrols:SettingsBlockControl>
+
+
             <!-- DEFAULT TIMESPAN -->
-            <StackPanel>
-                <StackPanel Style="{StaticResource SettingsSectionTitle}">
-                    <FontIcon Glyph="&#xE9D2;"/>
-                    <TextBlock Text="Default timespan" Style="{ThemeResource SettingsSectionTitleText}"/>
-                </StackPanel>
-                <TextBlock Text="Initial graphs' timespan."/>
+            <usercontrols:SettingsBlockControl
+                Title="Default timespan"
+                Description="Initial graphs' timespan.">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE9D2;" />
+                </usercontrols:SettingsBlockControl.Icon>
                 <ComboBox
-                    SelectionChanged="Timespan_SelectionChanged"
+                    SelectionChanged="StartupPage_SelectionChanged"
                     Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                    SelectedValue="{x:Bind vm.Timespan, Mode=TwoWay}"
+                    SelectedValue="{x:Bind vm.StartupPage, Mode=TwoWay}"
                     Margin="0 5 0 0" Width="110">
-                    <x:String>1h</x:String>
-                    <x:String>4h</x:String>
-                    <x:String>1d</x:String>
-                    <x:String>3d</x:String>
-                    <x:String>1w</x:String>
-                    <x:String>1m</x:String>
-                    <x:String>3m</x:String>
-                    <x:String>1y</x:String>
-                    <x:String>all</x:String>
+                    <x:String>Home</x:String>
+                    <x:String>Coins</x:String>
+                    <x:String>News</x:String>
+                    <x:String>Portfolio</x:String>
                 </ComboBox>
-            </StackPanel>
-            
-            
+            </usercontrols:SettingsBlockControl>
+
+
         </StackPanel>
     </ScrollViewer>
 </Page>
