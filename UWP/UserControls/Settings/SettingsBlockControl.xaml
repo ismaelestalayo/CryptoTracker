@@ -70,7 +70,7 @@
                     </muxc:Expander.Header>
 
                     <ContentPresenter
-                        Margin="-16"
+                        Margin="-16" Padding="58 10 0 10"
                         HorizontalAlignment="Stretch"
                         Content="{x:Bind ExpandableContent, Mode=OneWay}"/>
                 </muxc:Expander>

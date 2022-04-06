@@ -15,18 +15,12 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style TargetType="StackPanel" x:Key="SettingsSectionTitle">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-            <Setter Property="Spacing" Value="0"/>
+        <Style TargetType="usercontrols:SettingsBlockControl">
+            <Setter Property="Margin" Value="0 0 15 0"/>
         </Style>
 
         <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
             <Setter Property="Height" Value="33"/>
-        </Style>
-
-        <Style TargetType="usercontrols:SettingsBlockControl">
-            <Setter Property="Margin" Value="0 0 15 0"/>
         </Style>
     </Page.Resources>
 
@@ -34,6 +28,11 @@
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
         <StackPanel Spacing="3">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
             
             <!-- CURRENCY -->
             <usercontrols:SettingsBlockControl
@@ -107,14 +106,19 @@
                     <FontIcon Glyph="&#xE9D2;" />
                 </usercontrols:SettingsBlockControl.Icon>
                 <ComboBox
-                    SelectionChanged="StartupPage_SelectionChanged"
+                    SelectionChanged="Timespan_SelectionChanged"
                     Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                    SelectedValue="{x:Bind vm.StartupPage, Mode=TwoWay}"
+                    SelectedValue="{x:Bind vm.Timespan, Mode=TwoWay}"
                     Margin="0 5 0 0" Width="110">
-                    <x:String>Home</x:String>
-                    <x:String>Coins</x:String>
-                    <x:String>News</x:String>
-                    <x:String>Portfolio</x:String>
+                    <x:String>1h</x:String>
+                    <x:String>4h</x:String>
+                    <x:String>1d</x:String>
+                    <x:String>3d</x:String>
+                    <x:String>1w</x:String>
+                    <x:String>1m</x:String>
+                    <x:String>3m</x:String>
+                    <x:String>1y</x:String>
+                    <x:String>all</x:String>
                 </ComboBox>
             </usercontrols:SettingsBlockControl>
 

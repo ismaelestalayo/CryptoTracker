@@ -16,20 +16,13 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style x:Key="Title" TargetType="StackPanel">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-        </Style>
-
         <Style TargetType="usercontrols:SettingsBlockControl">
             <Setter Property="Margin" Value="0 0 15 0"/>
         </Style>
     </Page.Resources>
 
-    <!--
-        //////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////
-    -->
+    <!-- //////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
         <StackPanel Spacing="3">
             <StackPanel.BackgroundTransition>

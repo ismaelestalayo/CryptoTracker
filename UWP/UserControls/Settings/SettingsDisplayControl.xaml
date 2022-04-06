@@ -27,7 +27,7 @@
     </UserControl.Resources>
 
     <Grid
-        x:Name="MainPanel"
+        x:Name="MainPanel" MinHeight="38"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
