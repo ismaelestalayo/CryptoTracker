@@ -35,6 +35,29 @@
             <RowDefinition Height="2*" MinHeight="0"/>
             <RowDefinition Height="*" MaxHeight="300"/>
         </Grid.RowDefinitions>
+        
+        <!-- Adapt to PortfolioList's adaptive column -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="whole_portfolio_grid.ColumnDefinitions[2].Width" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="750" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="whole_portfolio_grid.ColumnDefinitions[2].Width" Value="*"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <!-- 
         ############################################################################################################### -->
@@ -191,12 +214,16 @@
             <ScrollViewer
                 x:Name="whole_portfolio"
                 x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
-                Padding="0 0 0 0" Margin="0 0 -5 0">
+                Padding="0 0 0 0" Margin="0 0 0 0">
+
                 <StackPanel>
-                    <Grid BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}"
-                          Margin="7 5" CornerRadius="4">
+                    <Grid
+                        x:Name="whole_portfolio_grid"
+                        BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}"
+                        Margin="7 5" CornerRadius="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="28"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -213,10 +240,10 @@
                             </Style>
                         </Grid.Resources>
 
-                        <Button Grid.Column="0" Click="SortPortfolio_click" Content="Coin" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" Padding="50 6 10 6"/>
-                        <Button Grid.Column="2" Click="SortPortfolio_click" Content="Invested"/>
-                        <Button Grid.Column="3" Click="SortPortfolio_click" Content="Worth"/>
-                        <Button Grid.Column="4" Click="SortPortfolio_click" Content="Delta" Padding="10 6 25 6"/>
+                        <Button Grid.Column="0" Click="SortPortfolio_click" Content="Coin" Grid.ColumnSpan="3" HorizontalContentAlignment="Left" Padding="50 6 10 6"/>
+                        <Button Grid.Column="3" Click="SortPortfolio_click" Content="Invested"/>
+                        <Button Grid.Column="4" Click="SortPortfolio_click" Content="Worth"/>
+                        <Button Grid.Column="5" Click="SortPortfolio_click" Content="Delta" Padding="10 6 25 6"/>
                     </Grid>
                     <userControls:PortfolioList
                         ClickGoTo="PortfolioList_ClickGoTo"

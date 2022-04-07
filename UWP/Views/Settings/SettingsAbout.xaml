@@ -106,7 +106,7 @@
 
                 <usercontrols:SettingsBlockControl.ExpandableContent>
                     <StackPanel Spacing="5">
-                        <TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords">
                             <Run Text="{x:Bind Changelog}"/>
                             
                             <Run Text="You can also check the current roadmap"/>
