@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:UWP.Converters"
-    xmlns:userControls="using:UWP.UserControls"
+    xmlns:usercontrols="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600"
     d:Width="500"
@@ -16,38 +16,33 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style TargetType="StackPanel" x:Key="Title">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-        </Style>
-
-        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
-
         <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind vm.CvsSource, Mode=OneWay}"/>
+        
         <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel Spacing="25">
+        <StackPanel Spacing="3" Margin="0 0 15 0">
             
             <!-- ALERTS -->
-            <StackPanel>
-                <StackPanel Style="{StaticResource Title}">
+            <usercontrols:SettingsBlockControl Title="Alerts">
+                <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xEA8F;"/>
-                    <TextBlock Text="Alerts" Style="{ThemeResource SettingsSectionTitleText}"/>
-                </StackPanel>
+                </usercontrols:SettingsBlockControl.Icon>
 
-                <TextBlock Text="Once an alert is fired it shows a toast notification and is then disabled not to spam (you can manually enable it again and change the threshold)."/>
-                <userControls:AlertListGrouped
-                    Alerts="{x:Bind vm.Alerts, Mode=OneWay}"
-                    Margin="-10 0"/>
-            </StackPanel>
-            
+                <usercontrols:SettingsBlockControl.ExpandableContent>
+                    <usercontrols:AlertListGrouped
+                        x:Name="_"
+                        Alerts="{x:Bind vm.Alerts, Mode=OneWay}"
+                        Margin="-10 0"/>
+                </usercontrols:SettingsBlockControl.ExpandableContent>
+            </usercontrols:SettingsBlockControl>
+
 
             <!-- NO ALERTS WARNING -->
-            <StackPanel
+            <StackPanel Margin="0 50 0 0"
                 HorizontalAlignment="Center"
                 
                 Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">

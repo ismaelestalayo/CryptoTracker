@@ -7,14 +7,14 @@ using Windows.UI.Xaml.Controls;
 namespace UWP.Views {
     public sealed partial class SettingsAppearance : Page {
 
+        internal bool InitialBackBtnStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.IsBackButtonVisible);
+
         public SettingsAppearance() {
             InitializeComponent();
             Loaded += SettingsAppearance_Loaded;
         }
 
         private void SettingsAppearance_Loaded(object sender, RoutedEventArgs e) {
-            BackButtonSwitch.IsOn = App._LocalSettings.Get<bool>(UserSettings.IsBackButtonVisible);
-
             var theme = App._LocalSettings.Get<string>(UserSettings.Theme);
             switch (theme) {
                 case "Light":
@@ -47,7 +47,8 @@ namespace UWP.Views {
             parentDialog.RequestedTheme = darkTheme ? ElementTheme.Dark : ElementTheme.Light;
         }
 
-        private void BackButton_Toggled(object sender, RoutedEventArgs e)
+        private void BackButtonSwitch_Toggled(object sender, RoutedEventArgs e)
             => App._LocalSettings.Set(UserSettings.IsBackButtonVisible, ((ToggleSwitch)sender).IsOn);
+
     }
 }

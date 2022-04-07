@@ -61,7 +61,7 @@ namespace UWP.Core.Constants {
 			}
 		};
 
-		public static readonly List<string> CurrentChangelog = LatestChangelogs[LatestChangelogs.Keys.ToList()[0]];
+		public static readonly List<string> CurrentChangelog = LatestChangelogs[LatestChangelogs.FirstOrDefault().Key];
 		public static readonly List<string> MajorChangelog = LatestChangelogs["6.0.0"];
 
 		public static string FormatChangelog(List<string> changelog) {

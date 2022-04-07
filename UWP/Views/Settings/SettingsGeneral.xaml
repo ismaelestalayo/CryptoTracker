@@ -14,30 +14,20 @@
         <viewModels:SettingsViewModel x:Name="vm"/>
     </Page.DataContext>
 
-    <Page.Resources>
-        <Style TargetType="usercontrols:SettingsBlockControl">
-            <Setter Property="Margin" Value="0 0 15 0"/>
-        </Style>
-
-        <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
-            <Setter Property="Height" Value="33"/>
-        </Style>
-    </Page.Resources>
-
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel Spacing="3">
+        <StackPanel Spacing="3" Margin="0 0 15 0">
             <StackPanel.ChildrenTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition />
                 </TransitionCollection>
             </StackPanel.ChildrenTransitions>
-            
+
             <!-- CURRENCY -->
             <usercontrols:SettingsBlockControl
                 Title="Currency"
-                Description="Choose the fiat in which to display prices and use in transactions.">
+                Description="Choose the fiat in which to display prices and use in transactions">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE909;" />
                 </usercontrols:SettingsBlockControl.Icon>
@@ -62,7 +52,7 @@
             <!-- AUTO-REFRESH -->
             <usercontrols:SettingsBlockControl
                 Title="Auto-refresh"
-                Description="Automatic refresh frequency on Home, Details and Compact Overlay pages.">
+                Description="Automatic refresh frequency on Home, Details and Compact Overlay pages">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE121;" />
                 </usercontrols:SettingsBlockControl.Icon>
@@ -81,7 +71,7 @@
             <!-- STARTUP PAGE -->
             <usercontrols:SettingsBlockControl
                 Title="Startup page"
-                Description="Initial page to load when opening the app.">
+                Description="Initial page to load when opening the app">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE7E8;" />
                 </usercontrols:SettingsBlockControl.Icon>
@@ -101,7 +91,7 @@
             <!-- DEFAULT TIMESPAN -->
             <usercontrols:SettingsBlockControl
                 Title="Default timespan"
-                Description="Initial graphs' timespan.">
+                Description="Initial graphs' timespan">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE9D2;" />
                 </usercontrols:SettingsBlockControl.Icon>
