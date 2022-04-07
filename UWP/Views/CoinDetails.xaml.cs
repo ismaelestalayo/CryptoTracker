@@ -163,7 +163,7 @@ namespace UWP.Views {
         private async Task GetCoinGeckoInfo(string crypto) {
             var matches = App.coinListGecko.Where(x => x.symbol.Equals(crypto,
                             StringComparison.InvariantCultureIgnoreCase)).ToList();
-            if (matches != null) {
+            if (matches != null && matches.Count > 0) {
                 var id = matches[0].id;
                 if (matches.Count > 1)
                     id = matches.FirstOrDefault(x => !x.name.Contains("Peg"))?.id ?? id;

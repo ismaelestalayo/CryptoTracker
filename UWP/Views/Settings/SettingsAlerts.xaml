@@ -17,43 +17,44 @@
 
     <Page.Resources>
         <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind vm.CvsSource, Mode=OneWay}"/>
-        
-        <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
+
+        <converters:ListCountToVisibleConverter x:Key="ListCount2VisibilityInverted" Inverse="True"/>
     </Page.Resources>
 
-    <!-- //////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!--
+        //////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////
+    -->
     <ScrollViewer>
-        <StackPanel Spacing="3" Margin="0 0 15 0">
-            
-            <!-- ALERTS -->
-            <usercontrols:SettingsBlockControl Title="Alerts">
+        <StackPanel Margin="0 0 15 0" Spacing="3">
+
+            <!--  ALERTS  -->
+            <usercontrols:SettingsBlockControl
+                Title="Alerts"
+                Description="A background job runs every 15mins to check price alerts">
                 <usercontrols:SettingsBlockControl.Icon>
-                    <FontIcon Glyph="&#xEA8F;"/>
+                    <FontIcon Glyph="&#xE121;"/>
                 </usercontrols:SettingsBlockControl.Icon>
 
-                <usercontrols:SettingsBlockControl.ExpandableContent>
-                    <usercontrols:AlertListGrouped
-                        x:Name="_"
-                        Alerts="{x:Bind vm.Alerts, Mode=OneWay}"
-                        Margin="-10 0"/>
-                </usercontrols:SettingsBlockControl.ExpandableContent>
+                <Button Content="Test" Click="AlertsTest_Click"/>
             </usercontrols:SettingsBlockControl>
 
+            <usercontrols:AlertListGrouped Margin="10 0" HorizontalAlignment="Left" Alerts="{x:Bind vm.Alerts, Mode=OneWay}"/>
 
-            <!-- NO ALERTS WARNING -->
-            <StackPanel Margin="0 50 0 0"
-                HorizontalAlignment="Center"
-                
-                Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
+
+            <!--  NO ALERTS WARNING  -->
+            <StackPanel Margin="0 50 0 0" HorizontalAlignment="Center" Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
                 <TextBlock
-                    FontWeight="Bold" HorizontalAlignment="Center"
-                    Text="You have no alerts"
-                    Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                <TextBlock
-                    FontWeight="Light" FontSize="16"
                     HorizontalAlignment="Center"
-                    Text="Try adding one from a coin's page" Opacity="0.7"/>
+                    FontWeight="Bold"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="You have no alerts"/>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="Light"
+                    Opacity="0.7"
+                    Text="Try adding one from a coin's page"/>
             </StackPanel>
 
         </StackPanel>
