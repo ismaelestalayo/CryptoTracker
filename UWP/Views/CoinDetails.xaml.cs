@@ -43,6 +43,8 @@ namespace UWP.Views {
         private static ThreadPoolTimer ChartPeriodicTimer;
         private static ThreadPoolTimer PricePeriodicTimer;
 
+        private bool newestFirst = true;
+
         public CoinDetails() {
             InitializeComponent();
 
@@ -337,8 +339,9 @@ namespace UWP.Views {
             };
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
-                vm.Purchases.Add(dialog.NewPurchase);
                 PortfolioHelper.AddPurchase(dialog.NewPurchase);
+                vm.Purchases.Add(dialog.NewPurchase);
+                SortPurchases(newestFirst);
             }
         }
 
@@ -366,12 +369,16 @@ namespace UWP.Views {
         }
 
         private void SortPurchases_click(object sender, RoutedEventArgs e) {
+            newestFirst = !newestFirst;
+            SortPurchases(newestFirst);
+        }
+
+        private void SortPurchases(bool descending) {
             List<PurchaseModel> sortedSource;
 
-            if (vm.Purchases.FirstOrDefault().Date > vm.Purchases.LastOrDefault().Date)
-                sortedSource = vm.Purchases.OrderBy(x => x.Date).ToList();
-            else
-                sortedSource = vm.Purchases.OrderByDescending(x => x.Date).ToList();
+            sortedSource = descending ?
+                vm.Purchases.OrderByDescending(x => x.Date).ToList() :
+                vm.Purchases.OrderBy(x => x.Date).ToList();
 
             for (var i = 0; i < sortedSource.Count; i++) {
                 var itemToSort = sortedSource[i];
@@ -383,6 +390,7 @@ namespace UWP.Views {
                 vm.Purchases.Remove(itemToSort);
                 vm.Purchases.Insert(i, itemToSort);
             }
+
         }
     }
 }

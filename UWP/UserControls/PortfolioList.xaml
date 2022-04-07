@@ -23,7 +23,7 @@
         </Style>
     </UserControl.Resources>
 
-    <ListView x:Name="ListView" ItemsSource="{x:Bind Purchases, Mode=OneWay}" Padding="0 0 10 0" Margin="0 0 -10 0">
+    <ListView x:Name="ListView" ItemsSource="{x:Bind Purchases, Mode=OneWay}" Padding="0 0 10 0" Margin="0 0 -10 0" SelectionMode="None">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
