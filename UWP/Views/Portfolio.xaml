@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:converters="using:UWP.Converters"
@@ -22,7 +23,7 @@
         <converters:BoolToVisibility x:Key="BoolToVisibility"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolToVisibilityNOT"/>
         <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
-        <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
+        <converters:NumberEqualTargetToBoolConverter x:Key="NumberNotEqZero" Inverse="True" Target="0"/>
         <converters:ListCountToVisibleConverter x:Key="ListCount2Visibility"/>
         <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityNOT"/>
     </Page.Resources>
@@ -213,8 +214,8 @@
             </Grid.RowDefinitions>
             <ScrollViewer
                 x:Name="whole_portfolio"
-                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
                 Padding="0 0 0 0" Margin="0 0 0 0">
+                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource NumberNotEqZero}}"
 
                 <StackPanel>
                     <Grid
@@ -258,7 +259,7 @@
 
             <Grid
                 x:Name="TotalsRow"
-                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
+                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource NumberNotEqZero}}"
                 Grid.Row="1" Margin="20 -10 20 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="28"/>
@@ -312,15 +313,16 @@
 
         <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
         <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->
-        <Grid Grid.Row="3"
-              Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}">
+        <Grid
+            x:Name="_"
+            x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource NumberNotEqZero}}"
+            Grid.Row="3"
+            Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <userControls:ChartAreaFull
-                x:Name="_"
-                x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource IntToBoolConverter}}"
                 ChartModel="{x:Bind vm.Chart}"
                 Opacity="{x:Bind vm.Chart.IsLoading, Converter={StaticResource IsLoadingOpacity}}"/>
 
@@ -328,7 +330,8 @@
                 x:Name="TimeRangeRadioButtons"
                 Grid.Row="1"
                 Margin="0 5 0 15"
-                Tapped="TimeRangeButtons_Tapped"/>
+                Tapped="TimeRangeButtons_Tapped"
+                TimeSpan="{x:Bind Timespan, Mode=OneTime}"/>
         </Grid>
 
     </Grid>

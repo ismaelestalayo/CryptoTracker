@@ -66,17 +66,4 @@ namespace UWP.Converters {
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
-
-    public class IntToBoolConverter : IValueConverter {
-        public bool Inverse { get; set; } = false;
-        public object Convert(object val, Type targetType, object param, string lang) {
-            if (Inverse)
-                return ((int)val) == 0;
-            else
-                return ((int)val) != 0;
-        }
-
-        public object ConvertBack(object val, Type targetType, object param, string lang)
-            => throw new NotImplementedException();
-    }
 }

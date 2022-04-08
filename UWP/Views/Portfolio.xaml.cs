@@ -33,7 +33,7 @@ namespace UWP.Views {
         /// Variables to get historic
         private static int limit = 168;
         private static int aggregate = 1;
-        private static string timeSpan = "1w";
+        private string Timespan { get; set; } = "1w";
         private static string timeUnit = "hour";
         private static string sortedBy = "";
 
@@ -45,9 +45,8 @@ namespace UWP.Views {
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             /// Get timespan before updating
-            timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
-            TimeRangeRadioButtons.TimeSpan = timeSpan;
-            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+            Timespan = App._LocalSettings.Get<string>(UserSettings.Timespan);
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[Timespan];
 
             /// Get the portfolio and group it
             LocalPurchases = await RetrievePortfolio();
@@ -198,7 +197,7 @@ namespace UWP.Views {
                 });
             }
             vm.Chart.ChartData = chartData;
-            var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
+            var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), Timespan);
             vm.Chart.LabelFormat = temp.LabelFormat;
             vm.Chart.Minimum = temp.Minimum;
             vm.Chart.MajorStepUnit = temp.MajorStepUnit;
@@ -249,9 +248,9 @@ namespace UWP.Views {
 
         private void TimeRangeButtons_Tapped(object sender, TappedRoutedEventArgs e) {
             if (sender != null)
-                timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
+                Timespan = ((TimeRangeRadioButtons)sender).TimeSpan;
 
-            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[Timespan];
             UpdatePage();
         }
 
