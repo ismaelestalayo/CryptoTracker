@@ -125,6 +125,7 @@
     <Compile Include="Constants\ColorConstants.cs" />
     <Compile Include="Constants\Currencies.cs" />
     <Compile Include="Constants\UserSettings.cs" />
+    <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Helpers\AlertsHelper.cs" />
     <Compile Include="Helpers\IconsHelper.cs" />
     <Compile Include="Helpers\LocalStorageHelper.cs" />
