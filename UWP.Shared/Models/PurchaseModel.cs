@@ -177,6 +177,12 @@ namespace UWP.Models {
             set => SetProperty(ref worth, value);
         }
 
+        private int groupedQty = 1;
+        public int GroupedQty {
+            get => groupedQty;
+            set => SetProperty(ref groupedQty, value);
+        }
+
 
         /// #######################################################################################
         /// <summary>

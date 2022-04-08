@@ -93,6 +93,7 @@ namespace UWP.Shared.Helpers {
                 g.Current = first.Current;
                 g.InvestedQty = q.Items.Sum(x => x.InvestedQty);
                 g.Date = q.Items.Select(x => x.Date).Max();
+                g.GroupedQty = q.Items.Count();
                 g = await UpdatePurchase(g);
                 grouped.Add(g);
             }

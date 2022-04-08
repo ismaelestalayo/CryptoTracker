@@ -35,4 +35,32 @@ namespace UWP.Converters {
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
+
+    public class NumberEqualTargetToBoolConverter : IValueConverter {
+        public bool Inverse { get; set; }
+        public int Target { get; set; }
+        public object Convert(object val, Type targetType, object param, string lang) {
+            if (Inverse)
+                return ((int)val) == Target;
+            else
+                return ((int)val) != Target;
+        }
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
+    public class NumberGreaterThanTargetToBoolConverter : IValueConverter {
+        public bool Inverse { get; set; }
+        public int Target { get; set; }
+        public object Convert(object val, Type targetType, object param, string lang) {
+            if (Inverse)
+                return ((int)val) <= Target;
+            else
+                return ((int)val) > Target;
+        }
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
 }

@@ -13,17 +13,23 @@
 
     <UserControl.Resources>
         <converters:BoolToVisibility x:Key="BoolVisibility"/>
-        <converters:BoolToVisibility Inverse="True" x:Key="BoolVisibilityNOT"/>
+        <converters:BoolToVisibility x:Key="BoolVisibilityNOT" Inverse="True"/>
         <converters:DateTimeOffsetShortener x:Key="DateOffsetShortener"/>
         <converters:DoubleToVisibilityConverter x:Key="DoubleToVisibilityNOT" Inverse="True"/>
-        <converters:StringNullOrEmptyToBoolConverter Inverse="True" x:Key="StringEmptyBoolNOT"/>
+        <converters:StringNullOrEmptyToBoolConverter x:Key="StringEmptyBoolNOT" Inverse="True"/>
+        <converters:NumberGreaterThanTargetToBoolConverter x:Key="BiggerThan1ToTrue" Target="1"/>
 
         <Style TargetType="usercontrols:DoubleTextBlock">
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
 
-    <ListView x:Name="ListView" ItemsSource="{x:Bind Purchases, Mode=OneWay}" Padding="0 0 10 0" Margin="0 0 -10 0" SelectionMode="None">
+    <ListView
+        x:Name="ListView"
+        Margin="0 0 -10 0"
+        Padding="0 0 10 0"
+        ItemsSource="{x:Bind Purchases, Mode=OneWay}"
+        SelectionMode="None">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -99,11 +105,20 @@
                             </MenuFlyout>
                         </StackPanel.ContextFlyout>
 
-                        <TextBlock d:Text="Purchase - 01 Jan, 2021" Opacity="0.7" FontWeight="SemiLight">
-                            <Run Text="{x:Bind Type}"/>
-                            <Run Text="-"/>
-                            <Run Text="{x:Bind Date, Converter={StaticResource DateOffsetShortener}}"/>
-                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock
+                                x:Name="_"
+                                x:Load="{x:Bind GroupedQty, Converter={StaticResource BiggerThan1ToTrue}}"
+                                FontWeight="SemiLight"
+                                Opacity="0.7">
+                                <Run Text="{x:Bind GroupedQty}"/><Run Text="x"/>
+                            </TextBlock>
+                            <TextBlock d:Text="Purchase - 01 Jan, 2021" Opacity="0.7" FontWeight="SemiLight">
+                                <Run Text="{x:Bind Type}"/>
+                                <Run Text="-"/>
+                                <Run Text="{x:Bind Date, Converter={StaticResource DateOffsetShortener}}"/>
+                            </TextBlock>
+                        </StackPanel>
                         <Grid x:Name="Gridd" Margin="0 5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
