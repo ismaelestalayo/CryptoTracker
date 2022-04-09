@@ -206,18 +206,7 @@
                             Margin="0 5 0 0" Padding="0 5 0 0"
                             Visibility="{Binding ElementName=ListView, Path=DataContext.ShowDetails, Converter={StaticResource BoolVisibility}, FallbackValue=Collapsed}">
                             <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal" Spacing="30">
-                                    <usercontrols:DoubleTextBlock
-                                        Header="Avg. Cost:"
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Left"
-                                        Spacing="10">
-                                        <usercontrols:DoubleTextBlock.Value>
-                                            <TextBlock FontSize="16">
-                                                <Run Text="{x:Bind BoughtAt}"/><Run Text="{x:Bind CurrencySymbol}"/>
-                                            </TextBlock>
-                                        </usercontrols:DoubleTextBlock.Value>
-                                    </usercontrols:DoubleTextBlock>
+                                <RelativePanel>
 
                                     <StackPanel Orientation="Horizontal">
                                         <usercontrols:DoubleTextBlock
@@ -228,16 +217,18 @@
                                             <usercontrols:DoubleTextBlock.Value>
                                                 <TextBlock FontSize="16">
                                                     <Run Text="{x:Bind Current}"/><Run Text="{x:Bind CurrencySymbol}"/>
-                                                    <Run
-                                                        Text="{x:Bind Delta, Converter={StaticResource NumberSymbol}}"
-                                                        FontSize="14"
-                                                        Foreground="{x:Bind ProfitFG}"/><!--
-                                                    --><Run Text="%" FontSize="14" Foreground="{x:Bind ProfitFG}"/>
                                                 </TextBlock>
                                             </usercontrols:DoubleTextBlock.Value>
                                         </usercontrols:DoubleTextBlock>
                                     </StackPanel>
-                                </StackPanel>
+
+                                    <TextBlock RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                                        <Run
+                                            Text="{x:Bind Delta, Converter={StaticResource NumberSymbol}}"
+                                            Foreground="{x:Bind ProfitFG}"/><!--
+                                        --><Run Text="%" FontSize="14" Foreground="{x:Bind ProfitFG}"/>
+                                    </TextBlock>
+                                </RelativePanel>
                             </StackPanel>
 
                             <!-- Row 2 -->
