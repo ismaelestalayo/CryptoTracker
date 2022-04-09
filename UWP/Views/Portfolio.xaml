@@ -45,7 +45,7 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="whole_portfolio_grid.ColumnDefinitions[2].Width" Value="0"/>
+                        <Setter Target="TotalsRow.ColumnDefinitions[2].Width" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -54,7 +54,7 @@
                         <AdaptiveTrigger MinWindowWidth="750" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="whole_portfolio_grid.ColumnDefinitions[2].Width" Value="*"/>
+                        <Setter Target="TotalsRow.ColumnDefinitions[2].Width" Value="*"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -141,6 +141,65 @@
                         </userControls:ToggleIconButton.UncheckedIcon>
                     </userControls:ToggleIconButton>
 
+                    <muxc:ToggleSplitButton
+                        x:Name="SortToggleSplitButton"
+                        Grid.Column="3" Margin="-10 0"
+                        IsCheckedChanged="SortToggleSplitButton_IsCheckedChanged"
+                        VerticalAlignment="Stretch"
+                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
+                        <FontIcon x:Name="myFontIcon" Glyph="&#x1F4C6;" FontFamily="Segoe UI Symbol" FontSize="18"/>
+                        <muxc:ToggleSplitButton.Flyout>
+                            <Flyout Placement="Bottom">
+                                <StackPanel Spacing="5">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="FontIcon">
+                                            <Setter Property="FontSize" Value="18"/>
+                                            <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+                                            <Setter Property="Margin" Value="0 -3 0 0"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <StackPanel Orientation="Horizontal" Spacing="5">
+                                        <Button Click="SortButton_Click" AutomationProperties.Name="Bulleted list">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon Glyph="&#x1F4C6;"/>
+                                                <TextBlock Text="Date"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Click="SortButton_Click" AutomationProperties.Name="Bulleted list">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon Glyph="&#x23FC;"/>
+                                                <TextBlock Text="Coin"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Click="SortButton_Click" AutomationProperties.Name="Roman numerals list">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon Glyph="&#x0025;"/>
+                                                <TextBlock Text="Delta"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Spacing="5">
+                                        <Button Click="SortButton_Click" AutomationProperties.Name="Bulleted list">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon Glyph="&#x0024;"/>
+                                                <TextBlock Text="Invested"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Click="SortButton_Click" AutomationProperties.Name="Roman numerals list">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon Glyph="&#x0024;" />
+                                                <TextBlock Text="Worth"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Flyout>
+                        </muxc:ToggleSplitButton.Flyout>
+                    </muxc:ToggleSplitButton>
+
+
+
                     <Button Grid.Column="4" ToolTipService.ToolTip="Import portfolio backup">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Spacing="10">
@@ -157,8 +216,11 @@
                             </Flyout>
                         </Button.Flyout>
                     </Button>
-                    <Button Grid.Column="5"  Click="ExportPortfolio_Click"
-                            ToolTipService.ToolTip="Export portfolio backup">
+                    <Button
+                        Grid.Column="5"
+                        Click="ExportPortfolio_Click"
+                        ToolTipService.ToolTip="Export portfolio backup"
+                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <FontIcon Glyph="&#xE105;" FontSize="16"/>
@@ -213,48 +275,18 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <ScrollViewer
-                x:Name="whole_portfolio"
-                Padding="0 0 0 0" Margin="0 0 0 0">
+                x:Name="_"
                 x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource NumberNotEqZero}}"
+                Padding="0 0 0 0" Margin="0 0 0 0">
 
-                <StackPanel>
-                    <Grid
-                        x:Name="whole_portfolio_grid"
-                        BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderBrush}"
-                        Margin="7 5" CornerRadius="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="28"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
-                                <Setter Property="BorderThickness" Value="0"/>
-                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                                <Setter Property="Padding" Value="10 6"/>
-                            </Style>
-                        </Grid.Resources>
-
-                        <Button Grid.Column="0" Click="SortPortfolio_click" Content="Coin" Grid.ColumnSpan="3" HorizontalContentAlignment="Left" Padding="50 6 10 6"/>
-                        <Button Grid.Column="3" Click="SortPortfolio_click" Content="Invested"/>
-                        <Button Grid.Column="4" Click="SortPortfolio_click" Content="Worth"/>
-                        <Button Grid.Column="5" Click="SortPortfolio_click" Content="Delta" Padding="10 6 25 6"/>
-                    </Grid>
-                    <userControls:PortfolioList
-                        ClickGoTo="PortfolioList_ClickGoTo"
-                        UpdateParent="PortfolioList_UpdateParent"
-                        Grouped="True"
-                        Margin="7 0"
-                        Purchases="{x:Bind vm.Portfolio}"
-                        ShowDetails="{x:Bind vm.ShowDetails}"
-                        VerticalAlignment="Top"/>
-                </StackPanel>
+                <userControls:PortfolioList
+                    ClickGoTo="PortfolioList_ClickGoTo"
+                    UpdateParent="PortfolioList_UpdateParent"
+                    Grouped="True"
+                    Margin="7 0"
+                    Purchases="{x:Bind vm.Portfolio}"
+                    ShowDetails="{x:Bind vm.ShowDetails}"
+                    VerticalAlignment="Top"/>
             </ScrollViewer>
 
             <Grid
@@ -263,6 +295,7 @@
                 Grid.Row="1" Margin="20 -10 20 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="28"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -285,7 +318,7 @@
                     </TextBlock>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                <StackPanel Grid.Column="3" HorizontalAlignment="Right">
                     <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center">
                         <Run Text="{x:Bind vm.TotalInvested}"/><!--
@@ -293,7 +326,7 @@
                     </TextBlock>
                 </StackPanel>
 
-                <StackPanel Grid.Column="3" HorizontalAlignment="Right">
+                <StackPanel Grid.Column="4" HorizontalAlignment="Right">
                     <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center">
                         <Run Text="{x:Bind vm.TotalWorth}"/><!--
@@ -301,7 +334,7 @@
                     </TextBlock>
                 </StackPanel>
 
-                <StackPanel Grid.Column="4" HorizontalAlignment="Right">
+                <StackPanel Grid.Column="5" HorizontalAlignment="Right">
                     <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
                     <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
                         <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
@@ -314,7 +347,7 @@
         <!-- PORTFOLIO HISTORIC CHART + TIMERANGE RADIO BUTTONS -->
         <!-- (only load them when there's at least 1 purchase, and toggle Visibility with ShowDetails) -->
         <Grid
-            x:Name="_"
+            x:Name="_2"
             x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource NumberNotEqZero}}"
             Grid.Row="3"
             Visibility="{x:Bind vm.ShowDetails, Converter={StaticResource BoolToVisibilityNOT}}">

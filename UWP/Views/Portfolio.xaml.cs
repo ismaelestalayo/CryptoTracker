@@ -14,6 +14,7 @@ using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
 using UWP.Shared.Constants;
+using UWP.Shared.Extensions;
 using UWP.Shared.Helpers;
 using UWP.Shared.Interfaces;
 using UWP.Shared.Models;
@@ -35,7 +36,7 @@ namespace UWP.Views {
         private static int aggregate = 1;
         private string Timespan { get; set; } = "1w";
         private static string timeUnit = "hour";
-        private static string sortedBy = "";
+        private static string sortedBy = "Date";
 
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
@@ -383,6 +384,37 @@ namespace UWP.Views {
                     vm.InAppNotification("Portfolio could not be saved.");
             }
             // else: Operation cancelled
+        }
+
+        private void SortToggleSplitButton_IsCheckedChanged(Microsoft.UI.Xaml.Controls.ToggleSplitButton sender, Microsoft.UI.Xaml.Controls.ToggleSplitButtonIsCheckedChangedEventArgs args) {
+            switch (sortedBy.ToLowerInvariant()) {
+                case "coin":
+                    vm.Portfolio.Sort(x => x.Crypto, SortToggleSplitButton.IsChecked);
+                    break;
+                case "date":
+                    vm.Portfolio.Sort(x => x.Date, !SortToggleSplitButton.IsChecked);
+                    break;
+                case "delta":
+                    vm.Portfolio.Sort(x => x.Delta, !SortToggleSplitButton.IsChecked);
+                    break;
+                case "invested":
+                    vm.Portfolio.Sort(x => x.InvestedQty, !SortToggleSplitButton.IsChecked);
+                    break;
+                case "worth":
+                    vm.Portfolio.Sort(x => x.Worth, !SortToggleSplitButton.IsChecked);
+                    break;
+            }
+        }
+
+        private void SortButton_Click(object sender, RoutedEventArgs e) {
+            var glyph = ((FontIcon)((StackPanel)((Button)sender).Content).Children[0]).Glyph;
+            var text = ((TextBlock)((StackPanel)((Button)sender).Content).Children[1]).Text;
+
+            sortedBy = text;
+
+            myFontIcon.Glyph = glyph;
+            SortToggleSplitButton.Flyout.Hide();
+            SortToggleSplitButton_IsCheckedChanged(null, null);
         }
     }
 }
