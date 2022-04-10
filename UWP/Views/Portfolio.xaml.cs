@@ -226,6 +226,9 @@ namespace UWP.Views {
                 MainGrid.RowDefinitions[3].Height = new GridLength(1, GridUnitType.Star);
         }
 
+        private void TogglePrivate_click(object sender, RoutedEventArgs e)
+            => vm.PrivateMode = !vm.PrivateMode;
+
         /// ###############################################################################################
         /// Add purchase dialog
         private async void AddTransaction_click(object sender, RoutedEventArgs e) {

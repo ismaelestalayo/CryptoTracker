@@ -19,10 +19,19 @@
             HorizontalAlignment="Center"
             Opacity="0.6"
             VerticalAlignment="Center"/>
-        <ContentPresenter
-            Content="{x:Bind Value}"
-            FontSize="16" FontWeight="SemiBold"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"/>
+        <Grid>
+            <ContentPresenter
+                Content="{x:Bind Value}"
+                FontSize="16" FontWeight="SemiBold"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
+            <Border
+                Height="12"
+                Margin="0 3 0 0"
+                VerticalAlignment="Center"
+                x:Name="HiddenBorder"
+                x:Load="{x:Bind Private}"
+                Background="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
+        </Grid>
     </StackPanel>
 </UserControl>

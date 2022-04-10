@@ -145,10 +145,16 @@
                                               ToolTipService.Placement="Right"
                                               Visibility="{x:Bind Current, Converter={StaticResource DoubleToVisibilityNOT}}"/>
                                 </StackPanel>
-                                <TextBlock d:Text="0.12 XXX">
-                                    <Run Text="{x:Bind CryptoQty, Converter={StaticResource NumberFormatter}}"/>
-                                    <Run Text="{x:Bind Crypto}"/>
-                                </TextBlock>
+                                <usercontrols:DoubleTextBlock
+                                    HorizontalAlignment="Left"
+                                    Private="{Binding ElementName=ListView, Path=DataContext.PrivateMode}">
+                                    <usercontrols:DoubleTextBlock.Value>
+                                        <TextBlock d:Text="0.12 XXX" FontWeight="Normal" FontSize="14">
+                                            <Run Text="{x:Bind CryptoQty, Converter={StaticResource NumberFormatter}}"/>
+                                            <Run Text="{x:Bind Crypto}"/>
+                                        </TextBlock>
+                                    </usercontrols:DoubleTextBlock.Value>
+                                </usercontrols:DoubleTextBlock>
                             </StackPanel>
 
                             <usercontrols:DoubleTextBlock
@@ -167,6 +173,7 @@
                                 Grid.Column="3"
                                 Header="Invested"
                                 Orientation="Vertical"
+                                Private="{Binding ElementName=ListView, Path=DataContext.PrivateMode}"
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock d:Text="0€">
@@ -178,6 +185,7 @@
                             <usercontrols:DoubleTextBlock
                                 Grid.Column="4"
                                 Header="Worth"
+                                Private="{Binding ElementName=ListView, Path=DataContext.PrivateMode}"
                                 Orientation="Vertical"
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
@@ -194,7 +202,8 @@
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
-                                        <Run Text="{x:Bind Profit}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                        <Run Text="{x:Bind Delta, Converter={StaticResource NumberSymbol}}"/><!--
+                                        --><Run Text="%" FontSize="14"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
                             </usercontrols:DoubleTextBlock>
@@ -222,12 +231,18 @@
                                         </usercontrols:DoubleTextBlock>
                                     </StackPanel>
 
-                                    <TextBlock RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                                        <Run
-                                            Text="{x:Bind Delta, Converter={StaticResource NumberSymbol}}"
-                                            Foreground="{x:Bind ProfitFG}"/><!--
-                                        --><Run Text="%" FontSize="14" Foreground="{x:Bind ProfitFG}"/>
-                                    </TextBlock>
+                                    <usercontrols:DoubleTextBlock
+                                        Header="Profits:"
+                                        Spacing="10"
+                                        Private="{Binding ElementName=ListView, Path=DataContext.PrivateMode}"
+                                        RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                                        <usercontrols:DoubleTextBlock.Value>
+                                            <TextBlock Foreground="{x:Bind Delta, Converter={StaticResource NumberForeground}}">
+                                                <Run Text="{x:Bind Profit}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                            </TextBlock>
+                                        </usercontrols:DoubleTextBlock.Value>
+                                    </usercontrols:DoubleTextBlock>
+
                                 </RelativePanel>
                             </StackPanel>
 

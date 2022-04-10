@@ -4,9 +4,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:usercontrols="using:CryptoTracker.UserControls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:converters="using:UWP.Converters"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
@@ -62,7 +63,7 @@
 
         <!-- 
         ############################################################################################################### -->
-        <Grid x:Name="PortfolioInfoGrid" Grid.Row="0" Margin="7 10 7 5" RowSpacing="10">
+        <Grid x:Name="PortfolioInfoGrid" Margin="7 10 7 5" RowSpacing="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
@@ -99,8 +100,9 @@
             </Grid>
 
             <Grid Grid.Row="2">
-                <Grid ColumnSpacing="10" Margin="0 -10 0 0">
+                <Grid ColumnSpacing="10">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
@@ -117,7 +119,7 @@
                     </Grid.Resources>
                     <Button
                         Click="AddTransaction_click"
-                        Grid.Column="0" Padding="15 0"
+                        Grid.Column="0" Padding="015 0"
                         ToolTipService.ToolTip="Add a new transaction">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon Glyph="&#xE109;" FontSize="16"/>
@@ -143,7 +145,7 @@
 
                     <muxc:ToggleSplitButton
                         x:Name="SortToggleSplitButton"
-                        Grid.Column="3" Margin="-10 0"
+                        Grid.Column="2" Margin="0 0"
                         IsCheckedChanged="SortToggleSplitButton_IsCheckedChanged"
                         VerticalAlignment="Stretch"
                         Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
@@ -198,9 +200,28 @@
                         </muxc:ToggleSplitButton.Flyout>
                     </muxc:ToggleSplitButton>
 
+                    <userControls:ToggleIconButton
+                        x:Name="PrivateToggle"
+                        Background="{ThemeResource ButtonBackground}"
+                        BorderBrush="{ThemeResource ButtonBorderBrush}"
+                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                        Click="TogglePrivate_click"
+                        Grid.Column="3"
+                        IsChecked="True"
+                        Tooltip="Toggle private data"
+                        Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
+                        <userControls:ToggleIconButton.CheckedIcon>
+                            <FontIcon Glyph="&#xF78D;" />
+                        </userControls:ToggleIconButton.CheckedIcon>
+                        <userControls:ToggleIconButton.UncheckedIcon>
+                            <PathIcon
+                                Data="M 0.8301 11.6699 C 0.7585 11.6699 0.6868 11.6602 0.6152 11.6406 C 0.4329 11.5885 0.2848 11.4876 0.1709 11.3379 C 0.057 11.1882 0 11.0189 0 10.8301 C 0 10.752 0.0098 10.6803 0.0293 10.6152 C 0.4134 9.2025 1.0954 7.9443 2.0752 6.8408 C 3.055 5.7373 4.2334 4.8763 5.6104 4.2578 C 6.9873 3.6393 8.4505 3.3301 10 3.3301 C 11.5495 3.3301 13.0127 3.6377 14.3896 4.2529 C 15.7666 4.8682 16.945 5.7275 17.9248 6.8311 C 18.9046 7.9346 19.5866 9.1895 19.9707 10.5957 C 19.9902 10.6738 20 10.7487 20 10.8203 C 20 11.0482 19.9219 11.2435 19.7656 11.4063 C 19.6094 11.569 19.4108 11.6504 19.1699 11.6504 C 18.9811 11.6504 18.8118 11.5951 18.6621 11.4844 C 18.5124 11.3737 18.4115 11.2272 18.3594 11.0449 C 18.0404 9.873 17.4723 8.8281 16.6553 7.9102 C 15.8382 6.9922 14.8503 6.2777 13.6914 5.7666 C 12.5326 5.2555 11.3021 5 10 5 C 8.6979 5 7.4674 5.2572 6.3086 5.7715 C 5.1497 6.2858 4.1618 7.002 3.3447 7.9199 C 2.5277 8.8379 1.9596 9.8828 1.6406 11.0547 C 1.5885 11.237 1.4876 11.3851 1.3379 11.499 C 1.1882 11.613 1.0189 11.6699 0.8301 11.6699 Z M 10 16.6699 C 9.0951 16.6699 8.2601 16.4453 7.4951 15.9961 C 6.7301 15.5469 6.123 14.9398 5.6738 14.1748 C 5.2246 13.4098 5 12.5749 5 11.6699 C 5 10.765 5.2246 9.93 5.6738 9.165 C 6.123 8.4001 6.7301 7.793 7.4951 7.3438 C 8.2601 6.8945 9.0951 6.6699 10 6.6699 C 10.9049 6.6699 11.7399 6.8945 12.5049 7.3438 C 13.2699 7.793 13.877 8.4001 14.3262 9.165 C 14.7754 9.93 15 10.765 15 11.6699 C 15 12.5749 14.7754 13.4098 14.3262 14.1748 C 13.877 14.9398 13.2699 15.5469 12.5049 15.9961 C 11.7399 16.4453 10.9049 16.6699 10 16.6699 Z M 19.8242 18.9355 C 19.9479 19.0527 20.0098 19.1992 20.0098 19.375 C 20.0098 19.5443 19.9479 19.6908 19.8242 19.8145 C 19.7005 19.9382 19.554 20 19.3848 20 C 19.209 20 19.0592 19.9382 18.9355 19.8145 L 12.6563 13.5352 L 6.123 7.002 L 0.1855 1.0645 C 0.0618 0.9277 0 0.7813 0 0.625 C 0 0.4557 0.0618 0.3092 0.1855 0.1855 C 0.3092 0.0619 0.459 0 0.6348 0 C 0.8105 0 0.957 0.0619 1.0742 0.1855 Z"/>
+                        </userControls:ToggleIconButton.UncheckedIcon>
+                    </userControls:ToggleIconButton>
 
 
-                    <Button Grid.Column="4" ToolTipService.ToolTip="Import portfolio backup">
+
+                    <Button Grid.Column="5" ToolTipService.ToolTip="Import portfolio backup">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <FontIcon Glyph="&#xED25;" FontSize="16"/>
@@ -217,7 +238,7 @@
                         </Button.Flyout>
                     </Button>
                     <Button
-                        Grid.Column="5"
+                        Grid.Column="6"
                         Click="ExportPortfolio_Click"
                         ToolTipService.ToolTip="Export portfolio backup"
                         Visibility="{x:Bind vm.Portfolio.Count, Converter={StaticResource ListCount2Visibility}}">
@@ -268,7 +289,7 @@
             </StackPanel>
         </Grid>
 
-        <!-- Column headers + PortfolioList + totals -->
+        <!-- PortfolioList + totals -->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -284,6 +305,7 @@
                     UpdateParent="PortfolioList_UpdateParent"
                     Grouped="True"
                     Margin="7 0"
+                    PrivateMode="{x:Bind vm.PrivateMode}"
                     Purchases="{x:Bind vm.Portfolio}"
                     ShowDetails="{x:Bind vm.ShowDetails}"
                     VerticalAlignment="Top"/>
@@ -302,45 +324,61 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Style TargetType="usercontrols:DoubleTextBlock">
                         <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
                     </Style>
                 </Grid.Resources>
 
-                <StackPanel Grid.Column="1" HorizontalAlignment="Left">
-                    <TextBlock Text="ROI" FontSize="14" FontWeight="Normal" Opacity="0"/>
-                    <TextBlock HorizontalAlignment="Center">
-                        <Run Text="ROI:"/>
-                        <Run Text="{x:Bind vm.ROI}" Foreground="{x:Bind vm.ROI, Converter={StaticResource NumberForeground}}"/><!--
-                        --><Run Text="%" Foreground="{x:Bind vm.ROI, Converter={StaticResource NumberForeground}}"/>
-                    </TextBlock>
-                </StackPanel>
+                <usercontrols:DoubleTextBlock
+                    Grid.Column="0" Grid.ColumnSpan="2"
+                    Header="ROI"
+                    HorizontalAlignment="Left"
+                    Margin="10 0 0 0"
+                    Spacing="10">
+                    <usercontrols:DoubleTextBlock.Value>
+                        <TextBlock d:Text="0€" Foreground="{x:Bind vm.ROI, Converter={StaticResource NumberForeground}}">
+                            <Run Text="{x:Bind vm.ROI}"/><Run Text="%"/>
+                        </TextBlock>
+                    </usercontrols:DoubleTextBlock.Value>
+                </usercontrols:DoubleTextBlock>
 
-                <StackPanel Grid.Column="3" HorizontalAlignment="Right">
-                    <TextBlock Text="Invested" FontSize="14" FontWeight="Normal" Opacity="0"/>
-                    <TextBlock HorizontalAlignment="Center">
-                        <Run Text="{x:Bind vm.TotalInvested}"/><!--
-                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                    </TextBlock>
-                </StackPanel>
+                <usercontrols:DoubleTextBlock
+                    Grid.Column="3"
+                    Header="Totals:"
+                    Private="{x:Bind vm.PrivateMode}"
+                    Spacing="10">
+                    <usercontrols:DoubleTextBlock.Value>
+                        <TextBlock d:Text="0€">
+                            <Run Text="{x:Bind vm.TotalInvested}"/><!--
+                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                        </TextBlock>
+                    </usercontrols:DoubleTextBlock.Value>
+                </usercontrols:DoubleTextBlock>
 
-                <StackPanel Grid.Column="4" HorizontalAlignment="Right">
-                    <TextBlock Text="Worth" FontSize="14" FontWeight="Normal" Opacity="0"/>
-                    <TextBlock HorizontalAlignment="Center">
-                        <Run Text="{x:Bind vm.TotalWorth}"/><!--
-                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                    </TextBlock>
-                </StackPanel>
+                <usercontrols:DoubleTextBlock
+                    Grid.Column="4"
+                    Private="{x:Bind vm.PrivateMode}"
+                    Spacing="-5">
+                    <usercontrols:DoubleTextBlock.Value>
+                        <TextBlock d:Text="0€">
+                            <Run Text="{x:Bind vm.TotalWorth}"/><!--
+                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                        </TextBlock>
+                    </usercontrols:DoubleTextBlock.Value>
+                </usercontrols:DoubleTextBlock>
 
-                <StackPanel Grid.Column="5" HorizontalAlignment="Right">
-                    <TextBlock Text="Delta" FontSize="14" FontWeight="Normal" Opacity="0"/>
-                    <TextBlock HorizontalAlignment="Center" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
-                        <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
-                        --><Run Text="{x:Bind vm.CurrencySymbol}"/>
-                    </TextBlock>
-                </StackPanel>
+                <usercontrols:DoubleTextBlock
+                    Grid.Column="5"
+                    Private="{x:Bind vm.PrivateMode}"
+                    Spacing="-5">
+                    <usercontrols:DoubleTextBlock.Value>
+                        <TextBlock d:Text="0€" Foreground="{x:Bind vm.TotalDelta, Converter={StaticResource NumberForeground}}">
+                            <Run Text="{x:Bind vm.TotalDelta, Converter={StaticResource NumberSign}}"/><!--
+                            --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                        </TextBlock>
+                    </usercontrols:DoubleTextBlock.Value>
+                </usercontrols:DoubleTextBlock>
             </Grid>
         </Grid>
 

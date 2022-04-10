@@ -28,6 +28,8 @@ namespace UWP.ViewModels {
 		[ObservableProperty]
 		private bool showDetails = false;
 
+		[ObservableProperty]
+		private bool privateMode = false;
 
 		/// #############################################################################
 		/// Total values

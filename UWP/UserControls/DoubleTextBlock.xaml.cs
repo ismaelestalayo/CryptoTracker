@@ -26,6 +26,13 @@ namespace CryptoTracker.UserControls {
             set => SetValue(ValueProperty, value);
         }
 
+        public static readonly DependencyProperty PrivateProperty = DependencyProperty.Register(
+            nameof(Private), typeof(bool), typeof(DoubleTextBlock), new PropertyMetadata(false));
+
+        public bool Private {
+            get => (bool)GetValue(PrivateProperty);
+            set => SetValue(PrivateProperty, value);
+        }
         public Orientation Orientation { get; set; } = Orientation.Horizontal;
 
         public double Spacing { get; set; } = 0;
