@@ -9,12 +9,20 @@
     d:DesignHeight="50"
     d:DesignWidth="100">
 
+    <UserControl.Resources>
+        <AcrylicBrush
+            x:Key="PrivateAcrylic" BackgroundSource="Backdrop" TintOpacity="0.5"
+            FallbackColor="{ThemeResource TextBoxDisabledForegroundThemeBrush}"
+            TintColor="{ThemeResource SystemAltLowColor}"/>
+    </UserControl.Resources>
+
     <StackPanel
         Orientation="{x:Bind Orientation}"
         HorizontalAlignment="Center"
         Spacing="{x:Bind Spacing}"
         VerticalAlignment="Center">
         <TextBlock
+            d:Text="Header"
             Text="{x:Bind Header}"
             HorizontalAlignment="Center"
             Opacity="0.6"
@@ -31,7 +39,7 @@
                 VerticalAlignment="Center"
                 x:Name="HiddenBorder"
                 x:Load="{x:Bind Private}"
-                Background="{ThemeResource TextBoxDisabledForegroundThemeBrush}"/>
+                Background="{ThemeResource PrivateAcrylic}"/>
         </Grid>
     </StackPanel>
 </UserControl>
