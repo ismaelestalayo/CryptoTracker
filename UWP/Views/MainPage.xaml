@@ -174,7 +174,23 @@
             </Frame>
         </muxc:NavigationView>
 
-        <StackPanel x:Name="CustomAppTitleBar" Background="Transparent"/>
+        <Grid
+            x:Name="CustomAppTitleBar"
+            Background="Transparent"
+            HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
+                <ColumnDefinition/>
+                <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                <Image Width="18" Style="{ThemeResource TitlebarAppIcon}"/>
+                <TextBlock
+                    Text="CryptoTracker"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
 
         <!--<controls:TeachingTip
             d:Title="Notification title" d:Subtitle="Notification message" d:IsOpen="True"
