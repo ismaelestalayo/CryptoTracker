@@ -53,7 +53,7 @@ namespace UWP.Views {
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
             this.RegisterBackgroundTask();
 
-            var param = e.Parameter.ToString();
+            var param = e.Parameter?.ToString();
             // if there's no param (tile or jump list) check user's startup page
             if (string.IsNullOrEmpty(param))
                 param = App._LocalSettings.Get<string>(UserSettings.StartupPage);            
