@@ -4,8 +4,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="using:UWP.ViewModels"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:converters="using:UWP.Converters"
     xmlns:usercontrols="using:UWP.UserControls"
+    xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600"
     d:Width="500"
     mc:Ignorable="d">
@@ -13,6 +15,10 @@
     <Page.DataContext>
         <viewModels:SettingsViewModel x:Name="vm"/>
     </Page.DataContext>
+
+    <Page.Resources>
+        <converters:BoolInverter x:Key="BoolInverter"/>
+    </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -73,7 +79,7 @@
                 Title="Startup page"
                 Description="Initial page to load when opening the app">
                 <usercontrols:SettingsBlockControl.Icon>
-                    <FontIcon Glyph="&#xE7E8;" />
+                    <FontIcon Glyph="&#xE161;" />
                 </usercontrols:SettingsBlockControl.Icon>
                 <ComboBox
                     SelectionChanged="StartupPage_SelectionChanged"
@@ -113,6 +119,29 @@
             </usercontrols:SettingsBlockControl>
 
 
+            <!-- STARTUP -->
+            <usercontrols:SettingsBlockControl
+                Title="Open CryptoTracker on Windows startup">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE7E8;" />
+                </usercontrols:SettingsBlockControl.Icon>
+                <ToggleSwitch
+                    x:Name="StartupToggleSwitch"
+                    IsEnabled="{x:Bind vm.CanOpenInLogin, Mode=OneWay}"
+                    IsOn="{x:Bind vm.OpenInLogin, Mode=OneWay}"
+                    Style="{StaticResource RightAlignedToggleSwitchStyle}">
+                </ToggleSwitch>
+            </usercontrols:SettingsBlockControl>
+            <muxc:InfoBar
+                IsOpen="{x:Bind vm.CanOpenInLogin, Converter={StaticResource BoolInverter}, Mode=OneWay}"
+                Margin="0 -7"
+                CornerRadius="0 0 4 4"
+                Severity="Warning"
+                Message="Startup permission is disabled">
+                <muxc:InfoBar.ActionButton>
+                    <Button Content="Settings" Click="StartupInfoBarBtn_Click" />
+                </muxc:InfoBar.ActionButton>
+            </muxc:InfoBar>
         </StackPanel>
     </ScrollViewer>
 </Page>
