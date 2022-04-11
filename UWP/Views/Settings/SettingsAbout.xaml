@@ -89,7 +89,7 @@
                 </usercontrols:SettingsBlockControl.Icon>
 
                 <Button Click="WebsiteBtn_Click" Margin="-5 0 0 0">
-                    <StackPanel Orientation="Horizontal" Spacing="5">
+                    <StackPanel Orientation="Horizontal" Spacing="7">
                         <FontIcon Glyph="&#xE12B;"/>
                         <TextBlock Text="Website"/>
                     </StackPanel>
@@ -100,23 +100,22 @@
             
             <!-- LAST CHANGELOG -->
             <usercontrols:SettingsBlockControl Title="Changelog">
+                <usercontrols:SettingsBlockControl.Description>
+                    Check the current roadmap or the latest changes
+                </usercontrols:SettingsBlockControl.Description>
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE14C;"/>
                 </usercontrols:SettingsBlockControl.Icon>
 
                 <usercontrols:SettingsBlockControl.ExpandableContent>
-                    <StackPanel Spacing="5">
-                        <TextBlock TextWrapping="WrapWholeWords">
-                            <Run Text="{x:Bind Changelog}"/>
-                            
-                            <Run Text="You can also check the current roadmap"/>
-                            <Hyperlink
-                                NavigateUri="https://github.com/ismaelestalayo/CryptoTracker/projects/2">
-                                here
-                            </Hyperlink><Run Text="."/>
-                        </TextBlock>
-                    </StackPanel>
+                    <TextBlock Text="{x:Bind Changelog}" TextWrapping="WrapWholeWords"/>
                 </usercontrols:SettingsBlockControl.ExpandableContent>
+                <Button Click="RoadmapBtn_Click" Margin="-5 0 0 0">
+                    <StackPanel Orientation="Horizontal" Spacing="7">
+                        <FontIcon Glyph="&#xE816;"/>
+                        <TextBlock Text="Roadmap"/>
+                    </StackPanel>
+                </Button>
             </usercontrols:SettingsBlockControl>
             
         </StackPanel>

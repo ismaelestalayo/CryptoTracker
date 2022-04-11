@@ -31,7 +31,7 @@
             <!--  ALERTS  -->
             <usercontrols:SettingsBlockControl
                 Title="Alerts"
-                Description="A background job runs every 15mins to check price alerts">
+                Description="A background job runs every 15mins to check price alerts. Once fired alerts are disabled not to spam (but you can re-enable them).">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE121;"/>
                 </usercontrols:SettingsBlockControl.Icon>

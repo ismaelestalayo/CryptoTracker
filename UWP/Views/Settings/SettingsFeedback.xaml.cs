@@ -43,6 +43,11 @@ namespace UWP.Views {
             await Launcher.LaunchUriAsync(new Uri("https://twitter.com/ismaelestalayo"));
         }
 
+        private async void GithubRepo_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("feedback-githubRepo");
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/ismaelestalayo/CryptoTracker"));
+        }
+
         /// #######################################################################################
         private async void Donation_Paypal(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("feedback-donationPaypal");
@@ -85,7 +90,5 @@ namespace UWP.Views {
             // rate or review the app.
             return false;
         }
-
-        
     }
 }

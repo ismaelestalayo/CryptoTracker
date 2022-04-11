@@ -30,5 +30,8 @@ namespace UWP.Views {
 
         private async void WebsiteBtn_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
             => await Launcher.LaunchUriAsync(new Uri("https://ismaelestalayo.com"));
+
+        private async void RoadmapBtn_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+            => await Launcher.LaunchUriAsync(new Uri("https://github.com/ismaelestalayo/CryptoTracker/projects/2"));
     }
 }

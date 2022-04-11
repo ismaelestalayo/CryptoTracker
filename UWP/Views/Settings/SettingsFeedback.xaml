@@ -38,7 +38,7 @@
             <!-- REVIEW -->
             <usercontrols:SettingsBlockControl
                 Title="Review"
-                Description="Take a minute and leave a review on the Store.">
+                Description="Take a minute and leave a review on the Store">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE134;"/>
                 </usercontrols:SettingsBlockControl.Icon>
@@ -53,7 +53,7 @@
             <!-- FEEDBACK -->
             <usercontrols:SettingsBlockControl
                 Title="Feedback"
-                Description="Let me know your thoughts about the app.">
+                Description="Let me know your thoughts about the app">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE939;"/>
                 </usercontrols:SettingsBlockControl.Icon>
@@ -69,12 +69,26 @@
                         ToolTipService.ToolTip="@ismaelestalayo"/>
                 </StackPanel>
             </usercontrols:SettingsBlockControl>
+            <usercontrols:SettingsBlockControl
+                Title="Code repository"
+                Description="Take a look at the source code and feel free to open issues or PRs">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE943;"/>
+                </usercontrols:SettingsBlockControl.Icon>
+
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button
+                        Click="GithubRepo_Click" Content="Github"
+                        Padding="23 7"
+                        ToolTipService.ToolTip="ismaelestalayo/CryptoTracker"/>
+                </StackPanel>
+            </usercontrols:SettingsBlockControl>
 
 
             <!-- DONATE -->
             <usercontrols:SettingsBlockControl
                 Title="Donate"
-                Description="I have been developing this app since August 2017, so if you really enjoy using it and want to support it, you can donate in multiple ways. 🤍">
+                Description="I have been developing this app since August 2017, so if you really enjoy using it and want to support it, you can donate in multiple ways 🤍">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE8C7;"/>
                 </usercontrols:SettingsBlockControl.Icon>
