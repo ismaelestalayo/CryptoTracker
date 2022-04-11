@@ -193,6 +193,9 @@
       <DependentUpon>Portfolio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\PortfolioAnalytics.xaml.cs">
+      <DependentUpon>PortfolioAnalytics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\SettingsCalculator.xaml.cs">
       <DependentUpon>SettingsCalculator.xaml</DependentUpon>
     </Compile>
@@ -463,6 +466,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Portfolio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PortfolioAnalytics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.Dialogs;
 using CryptoTracker.Helpers;
+using CryptoTracker.Views;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
@@ -418,6 +419,11 @@ namespace UWP.Views {
             myFontIcon.Glyph = glyph;
             SortToggleSplitButton.Flyout.Hide();
             SortToggleSplitButton_IsCheckedChanged(null, null);
+        }
+
+        private async void Analyics_Click(object sender, RoutedEventArgs e) {
+            var analyticsDialog = new PortfolioAnalytics(vm);
+            await analyticsDialog.ShowAsync();
         }
     }
 }
