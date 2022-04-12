@@ -533,6 +533,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.UWP">
+      <Version>2.0.0-beta.101</Version>
+    </PackageReference>
     <PackageReference Include="Microcharts.Uwp">
       <Version>1.0.0-preview1</Version>
     </PackageReference>

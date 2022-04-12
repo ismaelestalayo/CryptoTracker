@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:microcharts="using:Microcharts.Uwp"
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.UWP"
     xmlns:usercontrols="using:CryptoTracker.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     CloseButtonText="X"
@@ -51,13 +51,14 @@
                 </TextBlock>
             </usercontrols:DoubleTextBlock.Value>
         </usercontrols:DoubleTextBlock>
-
-        <!--<Grid x:Name="DiversificationGrid" Grid.Row="1"/>-->
-
-        <microcharts:ChartView
-            x:Name="chartView"
+        
+        <lvc:PieChart
+            x:Name="DiversificationPieChart"
             Grid.Row="1"
-            Height="250"/>
+            LegendBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            LegendTextBrush="{ThemeResource TextBoxButtonForegroundThemeBrush}"
+            LegendPosition="Right">
+        </lvc:PieChart>
 
     </Grid>
 </ContentDialog>

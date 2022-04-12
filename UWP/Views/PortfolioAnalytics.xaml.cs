@@ -1,10 +1,10 @@
-﻿using Microcharts;
-using SkiaSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UWP.Shared.Constants;
 using UWP.ViewModels;
 using Windows.UI.Xaml.Controls;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 
 namespace CryptoTracker.Views {
 
@@ -26,30 +26,19 @@ namespace CryptoTracker.Views {
             var vals = new[] { 5, 10, 10, 15, 20, 40 };
 
             double nextVal = 100;
-            var entries = new List<ChartEntry>();
 
-            
 
-            for (int i = 0; i < coins.Length; i++) {
-                entries.Add(new ChartEntry(vals[i]) {
-                    Color = SKColor.Parse(ColorConstants.GetColorBrush("coin_" + coins[i]).Color.ToString()),
-                    Label = coins[i],
-                    ValueLabel = vals[i].ToString() + "%",
-                    ValueLabelColor = SKColors.Gray
-                });
+            var seriess = new List<PieSeries<double>>();
+            foreach (var purchase in vm.Portfolio) {
+                seriess.Add(
+                    new PieSeries<double> {
+                        Values = new double[] { purchase.Worth },
+                        Name = purchase.Crypto + "€"
+                    }
+                );
             }
 
-            chartView.Chart = new DonutChart() {
-                BackgroundColor = SKColors.Transparent,
-                Entries = entries,
-                LabelColor = SKColors.Green,
-                AnimationDuration = TimeSpan.FromSeconds(1),
-                LabelMode = LabelMode.LeftAndRight
-            };
-
-            //foreach (var purchase in vm.Portfolio) {
-
-            //}
+            DiversificationPieChart.Series = seriess;
         }
     }
 }
