@@ -1,10 +1,13 @@
-﻿using System;
+﻿using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using UWP.Shared.Constants;
 using UWP.ViewModels;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
 
 namespace CryptoTracker.Views {
 
@@ -20,7 +23,7 @@ namespace CryptoTracker.Views {
             this.vm = vm;
         }
 
-        private void ContentDialog_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private void ContentDialog_Loaded(object sender, RoutedEventArgs e) {
 
             var coins = new[] { "BTC", "ETH", "XXX", "LTC", "XRP", "ADA" };
             var vals = new[] { 5, 10, 10, 15, 20, 40 };
@@ -33,12 +36,30 @@ namespace CryptoTracker.Views {
                 seriess.Add(
                     new PieSeries<double> {
                         Values = new double[] { purchase.Worth },
-                        Name = purchase.Crypto + "€"
+                        Name = purchase.Crypto,
+                        Fill = new SolidColorPaint(SKColor.Parse(
+                            ColorConverterExtensions.ToHexString(
+                                ColorConstants.GetColorBrush("coin_" + purchase.Crypto).Color)
+                            )
+                        ) { StrokeThickness = 8 }
                     }
                 );
             }
-
             DiversificationPieChart.Series = seriess;
         }
+
+        private void Ellipse_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            var ellipse = (sender as Windows.UI.Xaml.Shapes.Ellipse);
+            ellipse.Scale = new Vector3((float)1.2);
+        }
+
+        private void Ellipse_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            var ellipse = (sender as Windows.UI.Xaml.Shapes.Ellipse);
+            ellipse.Scale = new Vector3((float)1);
+        }
+
+    }
+    public static class ColorConverterExtensions {
+        public static string ToHexString(this Windows.UI.Color c) => $"#{c.R:X2}{c.G:X2}{c.B:X2}";
     }
 }
