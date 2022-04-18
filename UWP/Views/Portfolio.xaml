@@ -219,7 +219,7 @@
                         </userControls:ToggleIconButton.UncheckedIcon>
                     </userControls:ToggleIconButton>
 
-                    <Button Grid.Column="4" Click="Analyics_Click">
+                    <Button Grid.Column="4" Click="Analytics_Click" Visibility="Collapsed">
                         <FontIcon Glyph="&#xE15C;" />
                     </Button>
 

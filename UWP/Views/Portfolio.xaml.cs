@@ -421,7 +421,7 @@ namespace UWP.Views {
             SortToggleSplitButton_IsCheckedChanged(null, null);
         }
 
-        private async void Analyics_Click(object sender, RoutedEventArgs e) {
+        private async void Analytics_Click(object sender, RoutedEventArgs e) {
             var analyticsDialog = new PortfolioAnalytics(vm);
             await analyticsDialog.ShowAsync();
         }

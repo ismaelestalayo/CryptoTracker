@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:usercontrols="using:CryptoTracker.UserControls"
     xmlns:lvc="using:LiveChartsCore.SkiaSharpView.UWP"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:viewModels="using:UWP.ViewModels"
     CloseButtonText="X"
     CornerRadius="6"
@@ -61,60 +60,6 @@
             LegendPosition="Hidden">
         </lvc:PieChart>
 
-        <Grid Grid.Row="2" x:Name="GridTest">
-            <Grid.Resources>
-                <Style TargetType="Ellipse">
-                    <Setter Property="Height" Value="200"/>
-                    <Setter Property="StrokeThickness" Value="0"/>
-                    <Setter Property="Width" Value="200"/>
-                </Style>
-            </Grid.Resources>
-            <Grid.ScaleTransition>
-                <Vector3Transition/>
-            </Grid.ScaleTransition>
 
-            <Ellipse Fill="Cyan"  ToolTipService.ToolTip="Cyan"
-                     PointerEntered="Ellipse_PointerEntered" PointerExited="Ellipse_PointerExited">
-                <Ellipse.Clip>
-                    <RectangleGeometry Rect="0,0,100,200"/>
-                </Ellipse.Clip>
-            </Ellipse>
-
-            <Ellipse Fill="Green" ToolTipService.ToolTip="Green"
-                     PointerEntered="Ellipse_PointerEntered" PointerExited="Ellipse_PointerExited">
-                <Ellipse.Clip>
-                    <RectangleGeometry Rect="100,0,200,200"/>
-                </Ellipse.Clip>
-            </Ellipse>
-
-            <Ellipse Fill="Purple" ToolTipService.ToolTip="Green"
-                     PointerEntered="Ellipse_PointerEntered" PointerExited="Ellipse_PointerExited">
-                <Ellipse.Clip>
-                    <RectangleGeometry Rect="100,0,200,200"/>
-                </Ellipse.Clip>
-                <Ellipse.RenderTransform>
-                    <RotateTransform Angle="90" CenterX="100" CenterY="100"/>
-                </Ellipse.RenderTransform>
-            </Ellipse>
-
-        </Grid>
-
-        <Grid Grid.Row="1" Grid.Column="1">
-            <Grid.Resources>
-                <Style TargetType="muxc:ProgressRing">
-                    <Setter Property="Height" Value="200"/>
-                    <Setter Property="IsIndeterminate" Value="False"/>
-                    <Setter Property="Width" Value="200"/>
-                </Style>
-            </Grid.Resources>
-            <muxc:ProgressRing Foreground="Red" Value="100" ToolTipService.ToolTip="RED"/>
-            <muxc:ProgressRing Foreground="{ThemeResource ContentDialogBackground}" Value="39"/>
-            <muxc:ProgressRing
-                Foreground="Purple" Value="38" ToolTipService.ToolTip="MORADO"
-                BorderBrush="Black" BorderThickness="10">
-            </muxc:ProgressRing>
-        </Grid>
-        
-        
     </Grid>
 </ContentDialog>
