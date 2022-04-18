@@ -238,10 +238,12 @@ namespace UWP.Views {
             if (toPage == "CoinCompact") {
                 NavView.IsPaneVisible = false;
                 CustomAppTitleBar.Margin = new Thickness(46, 0, 0, 0);
+                CustomAppTitleBarLogo.Opacity = 0;
             }
             else {
                 NavView.IsPaneVisible = true;
                 CustomAppTitleBar.Margin = new Thickness(0);
+                CustomAppTitleBarLogo.Opacity = 1;
             }
         }
 

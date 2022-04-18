@@ -179,11 +179,12 @@
             Background="Transparent"
             HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
+                <ColumnDefinition Width="0"/>
                 <ColumnDefinition/>
-                <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
+                <ColumnDefinition Width="0"/>
             </Grid.ColumnDefinitions>
             <StackPanel
+                x:Name="CustomAppTitleBarLogo"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal"
