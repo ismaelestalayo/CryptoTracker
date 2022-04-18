@@ -340,7 +340,6 @@ namespace UWP.Views {
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
                 await PortfolioHelper.AddPurchase(dialog.NewPurchase);
-                dialog.NewPurchase = await PortfolioHelper.UpdatePurchase(dialog.NewPurchase);
 
                 vm.Purchases.Add(dialog.NewPurchase);
                 SortPurchases(newestFirst);
