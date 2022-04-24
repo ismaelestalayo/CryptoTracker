@@ -39,7 +39,7 @@ namespace CryptoTracker.Views {
                         Name = purchase.Crypto,
                         Fill = new SolidColorPaint(SKColor.Parse(
                             ColorConverterExtensions.ToHexString(
-                                ColorConstants.GetColorBrush("coin_" + purchase.Crypto).Color)
+                                ColorConstants.GetCoinBrush(purchase.Crypto).Color)
                             )
                         ) { StrokeThickness = 8 }
                     }

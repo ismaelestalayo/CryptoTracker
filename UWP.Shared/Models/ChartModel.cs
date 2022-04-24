@@ -30,7 +30,7 @@ namespace UWP.Models {
 
 
         /// <summary>
-        /// Stroke and two semi-transparent fills to paint the charts
+        /// Stroke to paint the charts
         /// </summary>
         [ObservableProperty]
         private SolidColorBrush chartStroke = new SolidColorBrush(Color.FromArgb(224, 127, 127, 127));

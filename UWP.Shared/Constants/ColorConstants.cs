@@ -25,11 +25,11 @@ namespace UWP.Shared.Constants {
 
             color = ColorDict.TryGetValue($"coin_{crypto}", out color) ? color : ColorDict["coin_NULL"];
 
-            //var localSettings = new LocalSettings();
-            //if (localSettings.Get<bool>(UserSettings.Monochrome)) {
-            //    var darkTheme = CurrentThemeIsDark();
-            //    color = (darkTheme) ? ParseHex("#f0f0f0") : ParseHex("#101010");
-            //}
+            var localSettings = new LocalSettings();
+            if (localSettings.Get<bool>(UserSettings.Monochrome)) {
+                var darkTheme = CurrentThemeIsDark();
+                color = darkTheme ? ParseHex("#f0f0f0") : ParseHex("#101010");
+            }
 
             if (opacity != 255)
                 color.A = (byte)opacity;

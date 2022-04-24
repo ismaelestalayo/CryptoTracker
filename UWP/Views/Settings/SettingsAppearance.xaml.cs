@@ -7,11 +7,15 @@ using Windows.UI.Xaml.Controls;
 namespace UWP.Views {
     public sealed partial class SettingsAppearance : Page {
 
+        /// To initialize toggle switches
         internal bool InitialBackBtnStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.IsBackButtonVisible);
+        internal bool InitialMinimalStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.Minimal);
+        internal bool InitialMonochromeStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.Monochrome);
 
         public SettingsAppearance() {
             InitializeComponent();
             Loaded += SettingsAppearance_Loaded;
+
         }
 
         private void SettingsAppearance_Loaded(object sender, RoutedEventArgs e) {
@@ -49,6 +53,12 @@ namespace UWP.Views {
 
         private void BackButtonSwitch_Toggled(object sender, RoutedEventArgs e)
             => App._LocalSettings.Set(UserSettings.IsBackButtonVisible, ((ToggleSwitch)sender).IsOn);
+
+        private void MinimalSwitch_Toggled(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.Minimal, ((ToggleSwitch)sender).IsOn);
+
+        private void MonochromeSwitch_Toggled(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.Monochrome, ((ToggleSwitch)sender).IsOn);
 
     }
 }

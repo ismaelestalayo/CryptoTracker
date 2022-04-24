@@ -12,6 +12,7 @@ namespace UWP.Core.Constants {
 		public const string IsBackButtonVisible = "IsBackButtonVisible";
 		public const string IsNewUser = "NewUser";
 		public const string LastVersion = "LastVersion";
+		public const string Minimal = "Minimal";
 		public const string Monochrome = "Monochrome";
 		public const string PinnedCoins = "Pinned";
 		public const string StartupPage = "StartupPage";
@@ -29,6 +30,7 @@ namespace UWP.Core.Constants {
 			{ IsBackButtonVisible, true },
 			{ IsNewUser, true },
 			{ LastVersion, "0.0.0" },
+			{ Minimal, true },
 			{ Monochrome, false },
 			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
 			{ StartupPage, "Home" },

@@ -48,12 +48,45 @@
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xE112;"/>
                 </usercontrols:SettingsBlockControl.Icon>
-                <ToggleSwitch Style="{StaticResource RightAlignedToggleSwitchStyle}"
+                <ToggleSwitch
                     x:Name="BackButtonSwitch"
                     IsOn="{x:Bind InitialBackBtnStatus, Mode=OneTime}"
+                    Style="{StaticResource RightAlignedToggleSwitchStyle}"
                     Toggled="BackButtonSwitch_Toggled"/>
             </usercontrols:SettingsBlockControl>
 
+            
+            <!--  MINIMAL BUTTON  -->
+            <usercontrols:SettingsBlockControl
+                Title="Minimal mode"
+                Description="Transparent fill inside chart areas">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE9D2;"/>
+                </usercontrols:SettingsBlockControl.Icon>
+
+                <ToggleSwitch
+                    x:Name="MinimalSwitch"
+                    IsOn="{x:Bind InitialMinimalStatus, Mode=OneTime}"
+                    Style="{StaticResource RightAlignedToggleSwitchStyle}"
+                    Toggled="MinimalSwitch_Toggled"/>
+            </usercontrols:SettingsBlockControl>
+
+            
+            <!--  MONOCHROME BUTTON  -->
+            <usercontrols:SettingsBlockControl
+                Title="Monochrome mode"
+                Description="Use  green/red colors for all charts">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xF570;"/>
+                </usercontrols:SettingsBlockControl.Icon>
+
+                <ToggleSwitch
+                    x:Name="MonochromeSwitch"
+                    IsOn="{x:Bind InitialMonochromeStatus, Mode=OneTime}"
+                    Style="{StaticResource RightAlignedToggleSwitchStyle}"
+                    Toggled="MonochromeSwitch_Toggled"/>
+            </usercontrols:SettingsBlockControl>
+            
         </StackPanel>
     </ScrollViewer>
 </Page>
