@@ -12,10 +12,11 @@
 
     <UserControl.Resources>
         <converters:DateTimeFormatter x:Key="DateFormatter"/>
-        <converters:BrushToColorTr1Converter x:Key="transparent1"/>
-        <converters:BrushToColorTr2Converter x:Key="transparent2"/>
+        <converters:BrushToColorConverter x:Key="BarFill"/>
+        <converters:BrushToColorTransparentConverter Transparency="64" x:Key="Gradient1"/>
+        <converters:BrushToColorTransparentConverter Transparency="16" x:Key="Gradient2"/>
 
-        <SolidColorBrush x:Key="Fill1" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
+        <SolidColorBrush x:Key="Fill1" Opacity="0.25" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource BarFill}}"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
@@ -87,8 +88,8 @@
                 StrokeThickness="1">
                 <telerik:AreaSeries.Fill>
                     <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}" Offset="0.5"/>
-                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}" Offset="1."/>
+                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource Gradient1}}" Offset="0.5"/>
+                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource Gradient2}}" Offset="1."/>
                     </LinearGradientBrush>
                 </telerik:AreaSeries.Fill>
 

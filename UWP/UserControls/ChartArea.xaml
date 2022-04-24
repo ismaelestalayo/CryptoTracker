@@ -10,8 +10,8 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <converters:BrushToColorTr1Converter x:Key="transparent1"/>
-        <converters:BrushToColorTr2Converter x:Key="transparent2"/>
+        <converters:BrushToColorTransparentConverter Transparency="64" x:Key="Gradient1"/>
+        <converters:BrushToColorTransparentConverter Transparency="16" x:Key="Gradient2"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
@@ -40,8 +40,8 @@
             StrokeThickness="1">
             <telerik:AreaSeries.Fill>
                 <LinearGradientBrush StartPoint="0.5, 0.2" EndPoint="0.5, 1">
-                    <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}" Offset="0.2"/>
-                    <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}" Offset="1.1"/>
+                    <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource Gradient1}}" Offset="0.2"/>
+                    <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource Gradient2}}" Offset="1.1"/>
                 </LinearGradientBrush>
             </telerik:AreaSeries.Fill>
 
