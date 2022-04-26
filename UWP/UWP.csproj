@@ -245,6 +245,7 @@
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconALGO.png" />
     <Content Include="Assets\Icons\iconAMPL.png" />
+    <Content Include="Assets\Icons\iconAVAX.png" />
     <Content Include="Assets\Icons\iconBAT.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
     <Content Include="Assets\Icons\iconBCN.png" />
@@ -261,9 +262,11 @@
     <Content Include="Assets\Icons\iconETC.png" />
     <Content Include="Assets\Icons\iconETH.png" />
     <Content Include="Assets\Icons\iconFIL.png" />
+    <Content Include="Assets\Icons\iconFLOW.png" />
     <Content Include="Assets\Icons\iconGRT.png" />
     <Content Include="Assets\Icons\iconICX.png" />
     <Content Include="Assets\Icons\iconIOT.png" />
+    <Content Include="Assets\Icons\iconKSM.png" />
     <Content Include="Assets\Icons\iconLINK.png" />
     <Content Include="Assets\Icons\iconLTC.png" />
     <Content Include="Assets\Icons\iconMATIC.png" />

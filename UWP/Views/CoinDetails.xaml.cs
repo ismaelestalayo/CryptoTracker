@@ -187,6 +187,9 @@ namespace UWP.Views {
 
             /// Colors
             vm.Chart.ChartStroke = ColorConstants.GetCoinBrush(crypto);
+            if (vm.Chart.ChartStroke.Color == ColorConstants.GetColorBrush("coin_NULL").Color)
+                Microsoft.AppCenter.Analytics.Analytics.TrackEvent("no-color-coin",
+                    new Dictionary<string, string>() { { "Coin", crypto } });
 
             /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
             var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);
