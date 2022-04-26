@@ -25,8 +25,9 @@ namespace UWP.Shared.Constants {
 
             color = ColorDict.TryGetValue($"coin_{crypto}", out color) ? color : ColorDict["coin_NULL"];
 
+            /// If Black & White mode is activated
             var localSettings = new LocalSettings();
-            if (localSettings.Get<bool>(UserSettings.Monochrome)) {
+            if (localSettings.Get<bool>(UserSettings.BW)) {
                 var darkTheme = CurrentThemeIsDark();
                 color = darkTheme ? ParseHex("#f0f0f0") : ParseHex("#101010");
             }

@@ -72,19 +72,19 @@
             </usercontrols:SettingsBlockControl>
 
             
-            <!--  MONOCHROME BUTTON  -->
+            <!--  B&W BUTTON  -->
             <usercontrols:SettingsBlockControl
-                Title="Monochrome mode"
-                Description="Use  green/red colors for all charts">
+                Title="B&amp;W mode"
+                Description="Use black/white colors for all charts">
                 <usercontrols:SettingsBlockControl.Icon>
                     <FontIcon Glyph="&#xF570;"/>
                 </usercontrols:SettingsBlockControl.Icon>
 
                 <ToggleSwitch
                     x:Name="MonochromeSwitch"
-                    IsOn="{x:Bind InitialMonochromeStatus, Mode=OneTime}"
+                    IsOn="{x:Bind InitialBWStatus, Mode=OneTime}"
                     Style="{StaticResource RightAlignedToggleSwitchStyle}"
-                    Toggled="MonochromeSwitch_Toggled"/>
+                    Toggled="BWSwitch_Toggled"/>
             </usercontrols:SettingsBlockControl>
             
         </StackPanel>

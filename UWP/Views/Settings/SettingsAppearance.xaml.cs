@@ -11,6 +11,7 @@ namespace UWP.Views {
         internal bool InitialBackBtnStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.IsBackButtonVisible);
         internal bool InitialMinimalStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.Minimal);
         internal bool InitialMonochromeStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.Monochrome);
+        internal bool InitialBWStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.BW);
 
         public SettingsAppearance() {
             InitializeComponent();
@@ -59,6 +60,9 @@ namespace UWP.Views {
 
         private void MonochromeSwitch_Toggled(object sender, RoutedEventArgs e)
             => App._LocalSettings.Set(UserSettings.Monochrome, ((ToggleSwitch)sender).IsOn);
+
+        private void BWSwitch_Toggled(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.BW, ((ToggleSwitch)sender).IsOn);
 
     }
 }

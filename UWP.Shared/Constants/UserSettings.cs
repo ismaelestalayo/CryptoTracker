@@ -14,6 +14,7 @@ namespace UWP.Core.Constants {
 		public const string LastVersion = "LastVersion";
 		public const string Minimal = "Minimal";
 		public const string Monochrome = "Monochrome";
+		public const string BW = "BlackAndWhite";
 		public const string PinnedCoins = "Pinned";
 		public const string StartupPage = "StartupPage";
 		public const string Theme = "Theme";
@@ -24,6 +25,7 @@ namespace UWP.Core.Constants {
 		/// </summary>
 		public static readonly Dictionary<string, object> Defaults = new Dictionary<string, object>(){
 			{ AutoRefresh, "1 min" },
+			{ BW, false },
 			{ CoinListsDate,  (double)0 },
 			{ Currency, "EUR" },
 			{ CurrencySymbol, "€" },
