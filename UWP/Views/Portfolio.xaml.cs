@@ -23,6 +23,7 @@ using UWP.UserControls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,6 +40,9 @@ namespace UWP.Views {
         private static string timeUnit = "hour";
         private static string sortedBy = "Date";
 
+        /// Timers for auto-refresh
+        private static ThreadPoolTimer PortfolioPeriodicTimer;
+
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
         public Portfolio() {
@@ -54,6 +58,17 @@ namespace UWP.Views {
             LocalPurchases = await RetrievePortfolio();
             vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
             await UpdatePage();
+
+
+            PortfolioPeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                    await UpdatePage();
+                });
+            }, TimeSpan.FromMinutes(2));
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e) {
+            PortfolioPeriodicTimer?.Cancel();
         }
 
         public async Task UpdatePage() {
@@ -425,5 +440,6 @@ namespace UWP.Views {
             var analyticsDialog = new PortfolioAnalytics(vm);
             await analyticsDialog.ShowAsync();
         }
+
     }
 }

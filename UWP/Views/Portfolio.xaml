@@ -12,6 +12,7 @@
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     Loaded="Page_Loaded"
+    Unloaded="Page_Unloaded"
     MaxWidth="1860"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -220,7 +221,7 @@
                     </userControls:ToggleIconButton>
 
                     <Button Grid.Column="4" Click="Analytics_Click" Visibility="Collapsed">
-                        <FontIcon Glyph="&#xE15C;" />
+                        <FontIcon Glyph="&#xEB05;" />
                     </Button>
 
 
