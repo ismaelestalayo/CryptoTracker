@@ -236,14 +236,7 @@ namespace UWP.Views {
             for (int i = 0; i < vm.Purchases.Count; i++)
                 vm.Purchases[i] = await PortfolioHelper.UpdatePurchase(vm.Purchases[i]);
 
-            vm.TotalQty = vm.Purchases.Sum(x => x.CryptoQty);
-            vm.TotalProfit = vm.Purchases.Sum(x => x.Profit);
-            vm.TotalValue = vm.TotalQty * vm.Coin.Price;
-            //vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
-
-            var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
-            if (totalInvested != 0)
-                vm.AvgPrice = NumberHelper.Rounder(totalInvested / vm.TotalQty);
+            vm.LastUpdate = DateTime.Now;
         }
 
         // #########################################################################################
@@ -395,6 +388,10 @@ namespace UWP.Views {
                 vm.Purchases.Insert(i, itemToSort);
             }
 
+        }
+
+        private void ToggleDetails_click(object sender, RoutedEventArgs e) {
+            vm.ShowDetails = !vm.ShowDetails;
         }
     }
 }

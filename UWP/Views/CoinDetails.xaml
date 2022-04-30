@@ -65,32 +65,17 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BottomUniformGrid.Columns" Value="1"/>
-                        <Setter Target="BottomUniformGrid.Rows" Value="5"/>
-                        <Setter Target="BottomUniformGrid.Height" Value="900"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState x:Name="Narrow">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="BottomUniformGrid.Columns" Value="2"/>
-                        <Setter Target="BottomUniformGrid.Rows" Value="3"/>
-                        <Setter Target="BottomUniformGrid.Height" Value="550"/>
+                        <Setter Target="TotalsGrid.ColumnDefinitions[1].Width" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
 
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="850"/>
+                        <AdaptiveTrigger MinWindowWidth="750"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BottomUniformGrid.Columns" Value="3"/>
-                        <Setter Target="BottomUniformGrid.Rows" Value="2"/>
-                        <Setter Target="BottomUniformGrid.Height" Value="370"/>
                         <Setter Target="ChartRow.MaxHeight" Value="850"/>
+                        <Setter Target="TotalsGrid.ColumnDefinitions[1].Width" Value="*"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -99,10 +84,6 @@
                         <AdaptiveTrigger MinWindowWidth="1300"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BottomUniformGrid.Columns" Value="4"/>
-                        <Setter Target="BottomUniformGrid.Rows" Value="2"/>
-                        <Setter Target="BottomUniformGrid.Height" Value="370"/>
-                        <Setter Target="InfoCard.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="ChartRow.MaxHeight" Value="900"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -453,38 +434,60 @@
         #################################################################################################### -->
         <usercontrols:FluentCard Grid.Row="3" VerticalAlignment="Top">
             <usercontrols:FluentCard.TitleContent>
-                <Grid>
+                <Grid x:Name="TotalsGrid" Margin="-10 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
                     <usercontrols:DoubleTextBlock
                         Header="Owned:"
                         HorizontalAlignment="Left"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.TotalQty, Mode=OneWay}"/>
+                                <Run Text="{x:Bind vm.TotalCryptoQty, Converter={StaticResource NumberFormatter}, Mode=OneWay}"/>
                                 <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
                     </usercontrols:DoubleTextBlock>
 
                     <usercontrols:DoubleTextBlock
-                        Header="Value:"
-                        HorizontalAlignment="Center"
+                        Header="Avg. Price:"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.TotalValue,
+                                <Run Text="{x:Bind vm.AvgPrice, Converter={StaticResource NumberRounder}}"/><!--
+                                --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                            </TextBlock>
+                        </usercontrols:DoubleTextBlock.Value>
+                    </usercontrols:DoubleTextBlock>
+                    
+                    <usercontrols:DoubleTextBlock
+                        Header="Invested:"
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Spacing="5">
+                        <usercontrols:DoubleTextBlock.Value>
+                            <TextBlock>
+                                <Run Text="{x:Bind vm.TotalInvested,
                                     Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.CurrencySymbol}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
                     </usercontrols:DoubleTextBlock>
 
                     <usercontrols:DoubleTextBlock
-                        Header="Avg. Price:"
+                        Header="Profit:"
                         HorizontalAlignment="Right"
+                        Grid.Column="3"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
-                            <TextBlock>
-                                <Run Text="{x:Bind vm.AvgPrice, Converter={StaticResource NumberRounder}}"/><!--
+                            <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
+                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberFormatter}}"/><!--
                                 --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
@@ -499,20 +502,18 @@
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10" Spacing="5">
                         <Button
-                            Background="Transparent" CornerRadius="6"
-                            BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
-                            Click="NewPurchase_click" Content="Add new purchase"
+                            Click="NewPurchase_click" Content="New transaction"
                             HorizontalAlignment="Center"/>
+
                         <Button
-                            Background="Transparent" CornerRadius="6"
-                            BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
-                            Click="SortPurchases_click" Padding="7" ToolTipService.ToolTip="Toggle date sorting">
+                            Click="SortPurchases_click" Padding="10 7" ToolTipService.ToolTip="Toggle date sorting">
                             <FontIcon Glyph="&#xE8CB;"/>
                         </Button>
                     </StackPanel>
                     <userControls:PortfolioList
                         Grid.Row="1"
                         Purchases="{x:Bind vm.Purchases}"
+                        ShowDetails="{x:Bind vm.ShowDetails}"
                         UpdateParent="PortfolioList_UpdateParent"/>
                 </Grid>
             </usercontrols:FluentCard.ExpandableContent>
