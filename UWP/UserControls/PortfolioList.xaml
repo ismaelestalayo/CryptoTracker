@@ -164,7 +164,7 @@
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock>
-                                        <Run Text="{x:Bind BoughtAt}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                        <Run Text="{x:Bind BoughtAt, Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
                             </usercontrols:DoubleTextBlock>
@@ -177,7 +177,7 @@
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock d:Text="0€">
-                                        <Run Text="{x:Bind InvestedQty}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                        <Run Text="{x:Bind InvestedQty, Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
                             </usercontrols:DoubleTextBlock>
@@ -190,7 +190,7 @@
                                 Spacing="-5">
                                 <usercontrols:DoubleTextBlock.Value>
                                     <TextBlock d:Text="0€">
-                                        <Run Text="{x:Bind Worth}"/><Run Text="{x:Bind CurrencySymbol}"/>
+                                        <Run Text="{x:Bind Worth, Converter={StaticResource NumberFormatter}}"/><Run Text="{x:Bind CurrencySymbol}"/>
                                     </TextBlock>
                                 </usercontrols:DoubleTextBlock.Value>
                             </usercontrols:DoubleTextBlock>
