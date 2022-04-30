@@ -49,9 +49,9 @@ namespace UWP.Converters {
 
     public class NumberSignPrefixer : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang) {
-            var z = new NumberRounder();
-            double num = double.Parse(z.Convert(val, targetType, param, lang).ToString(), App.UserCulture);
-            return string.Format("{0:+0.#####;-0.#####;}", (double)num);
+            var num = ((double)val).ToString("N5", App.UserCulture).TrimEnd('0').Trim(',');
+            var prefix = ((double)val >= 0) ? "+" : "-";
+            return prefix + num;
         }
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
@@ -59,9 +59,9 @@ namespace UWP.Converters {
 
     public class NumberSymbolPrefixer : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang) {
-            var z = new NumberRounder();
-            double num = double.Parse(z.Convert(val, targetType, param, lang).ToString(), App.UserCulture);
-            return string.Format("{0:▲ 0.#####;▼ 0.#####;}", (double)num);
+            var num = ((double)val).ToString("N5", App.UserCulture).TrimEnd('0').Trim(',');
+            var prefix = ((double)val >= 0) ? "▲ " : "▼ ";
+            return prefix + num;
         }
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
