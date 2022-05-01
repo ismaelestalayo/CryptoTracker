@@ -8,13 +8,22 @@ namespace UWP.Core.Constants {
     public class Changelogs {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
-            {
+			{
+				"6.3.X",
+				new List<string>() {
+					"General: improved decimal commas/dots",
+					"Coin details: added total invested values",
+					"Portfolio: auto-refresh each 2 mins",
+					"Settings: new minimal appearance",
+				}
+			},
+			{
 				"6.3.0",
 				new List<string>() {
 					"Purchases: add transaction fees",
 					"Portfolio: new private mode",
 					"Portfolio: new sorting mechanism",
-					"Settings: Windows 11 style",
+					"Settings: Windows 11 styled",
 					"Settings: startup task",
 				}
             },
