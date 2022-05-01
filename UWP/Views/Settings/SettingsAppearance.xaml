@@ -73,7 +73,7 @@
 
             
             <!--  B&W BUTTON  -->
-            <usercontrols:SettingsBlockControl
+            <usercontrols:SettingsBlockControl Visibility="Collapsed"
                 Title="B&amp;W mode"
                 Description="Use black/white colors for all charts">
                 <usercontrols:SettingsBlockControl.Icon>

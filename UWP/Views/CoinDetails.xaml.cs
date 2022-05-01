@@ -158,6 +158,7 @@ namespace UWP.Views {
 
             await UpdateCoin();
             await UpdatePortfolio();
+            UpdatePrice();
 
             //CryptoCompare.GetExchanges(crypto);
         }
@@ -339,6 +340,7 @@ namespace UWP.Views {
 
                 vm.Purchases.Add(dialog.NewPurchase);
                 SortPurchases(newestFirst);
+                await UpdatePortfolio();
             }
         }
 

@@ -23,7 +23,11 @@ namespace UWP.ViewModels {
         private ChartPoint chartPoint = new ChartPoint();
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(LastUpdate))]
+        [AlsoNotifyChangeFor(nameof(TotalCryptoQty))]
+        [AlsoNotifyChangeFor(nameof(TotalInvested))]
+        [AlsoNotifyChangeFor(nameof(TotalProfit))]
+        [AlsoNotifyChangeFor(nameof(TotalValue))]
+        [AlsoNotifyChangeFor(nameof(TotalAvgPrice))]
         private ObservableCollection<PurchaseModel> purchases;
 
         [ObservableProperty]
@@ -39,11 +43,11 @@ namespace UWP.ViewModels {
         /// Last update date to also trigger update on total values
         /// </summary>
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(AvgPrice))]
         [AlsoNotifyChangeFor(nameof(TotalCryptoQty))]
         [AlsoNotifyChangeFor(nameof(TotalInvested))]
         [AlsoNotifyChangeFor(nameof(TotalProfit))]
         [AlsoNotifyChangeFor(nameof(TotalValue))]
+        [AlsoNotifyChangeFor(nameof(TotalAvgPrice))]
         private DateTime lastUpdate;
 
 
@@ -57,7 +61,7 @@ namespace UWP.ViewModels {
         /// <summary>
         /// Total sum of purchases
         /// </summary>
-        internal double AvgPrice {
+        internal double TotalAvgPrice {
             get => NumberHelper.Rounder(TotalInvested / TotalCryptoQty);
         }
 

@@ -36,14 +36,15 @@
         </Style>
 
         <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
-        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
-        <converters:DateTimeShortener x:Key="DateShortener"/>
-        <converters:DateTimeFormatter x:Key="DateFormater"/>
         <converters:BoolToVisibility x:Key="BoolVisibilityConverter"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolVisibilityInverter"/>
         <converters:BoolInverter x:Key="BoolInverter"/>
+        <converters:DateTimeFormatter x:Key="DateFormater"/>
+        <converters:DateTimeShortener x:Key="DateShortener"/>
         <converters:DoubleToVisibilityConverter x:Key="DoubleToVisibility"/>
         <converters:DoubleToVisibilityConverter Inverse="True" x:Key="DoubleToVisibilityNOT"/>
+        <converters:NumberEqualTargetToVisibilityConverter Target="0" Inverse="True" x:Key="EmptyList2Invisibile"/>
+        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Margin="0 5" MaxWidth="1860">
@@ -213,7 +214,7 @@
                                 --><Run Text="{x:Bind vm.Coin.Diff, Converter={StaticResource NumberRounder}}"/><!--
                                 --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                             </TextBlock>
-                            <userControls:DiffTextBlock Visibility="Visible"
+                            <userControls:DiffTextBlock
                                 Diff="{x:Bind vm.Coin.DiffPct}"
                                 DiffFg="{x:Bind vm.Coin.DiffFG}"
                                 Margin="0 0 0 0"/>
@@ -434,7 +435,10 @@
         #################################################################################################### -->
         <usercontrols:FluentCard Grid.Row="3" VerticalAlignment="Top">
             <usercontrols:FluentCard.TitleContent>
-                <Grid x:Name="TotalsGrid" Margin="-10 0">
+                <Grid
+                    x:Name="TotalsGrid"
+                    Margin="-10 0"
+                    Visibility="{x:Bind vm.Purchases.Count, Converter={StaticResource EmptyList2Invisibile}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -461,7 +465,7 @@
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.AvgPrice, Converter={StaticResource NumberRounder}}"/><!--
+                                <Run Text="{x:Bind vm.TotalAvgPrice, Converter={StaticResource NumberRounder}}"/><!--
                                 --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
@@ -487,7 +491,7 @@
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
-                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberFormatter}}"/><!--
+                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
                                 --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
@@ -506,7 +510,8 @@
                             HorizontalAlignment="Center"/>
 
                         <Button
-                            Click="SortPurchases_click" Padding="10 7" ToolTipService.ToolTip="Toggle date sorting">
+                            Click="SortPurchases_click" Padding="10 7" ToolTipService.ToolTip="Toggle date sorting"
+                            Visibility="{x:Bind vm.Purchases.Count, Converter={StaticResource EmptyList2Invisibile}}">
                             <FontIcon Glyph="&#xE8CB;"/>
                         </Button>
                     </StackPanel>
