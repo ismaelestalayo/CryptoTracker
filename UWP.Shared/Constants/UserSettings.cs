@@ -34,7 +34,7 @@ namespace UWP.Core.Constants {
 			{ LastVersion, "0.0.0" },
 			{ Minimal, true },
 			{ Monochrome, false },
-			{ PinnedCoins, "BTC|ETH|LTC|XRP" },
+			{ PinnedCoins, "BTC|ETH|LTC|XRP|ADA|AVAX" },
 			{ StartupPage, "Home" },
 			{ Theme, "Windows" },
 			{ Timespan, "1w" },
