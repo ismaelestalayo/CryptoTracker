@@ -245,6 +245,7 @@
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconALGO.png" />
     <Content Include="Assets\Icons\iconAMPL.png" />
+    <Content Include="Assets\Icons\iconAPE.png" />
     <Content Include="Assets\Icons\iconAVAX.png" />
     <Content Include="Assets\Icons\iconBAT.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
@@ -254,6 +255,7 @@
     <Content Include="Assets\Icons\iconBTT.png" />
     <Content Include="Assets\Icons\iconCELO.png" />
     <Content Include="Assets\Icons\iconCOMP.png" />
+    <Content Include="Assets\Icons\iconCRO.png" />
     <Content Include="Assets\Icons\iconDASH.png" />
     <Content Include="Assets\Icons\iconDGB.png" />
     <Content Include="Assets\Icons\iconDOGE.png" />
@@ -264,6 +266,7 @@
     <Content Include="Assets\Icons\iconFIL.png" />
     <Content Include="Assets\Icons\iconFLOW.png" />
     <Content Include="Assets\Icons\iconGRT.png" />
+    <Content Include="Assets\Icons\iconICP.png" />
     <Content Include="Assets\Icons\iconICX.png" />
     <Content Include="Assets\Icons\iconIOT.png" />
     <Content Include="Assets\Icons\iconKSM.png" />
@@ -277,6 +280,7 @@
     <Content Include="Assets\Icons\iconONT.png" />
     <Content Include="Assets\Icons\iconQTUM.png" />
     <Content Include="Assets\Icons\iconSHIB.png" />
+    <Content Include="Assets\Icons\iconSLP.png" />
     <Content Include="Assets\Icons\iconSOL.png" />
     <Content Include="Assets\Icons\iconSTR.png" />
     <Content Include="Assets\Icons\iconTFUEL.png" />
