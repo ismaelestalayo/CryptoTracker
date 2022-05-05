@@ -246,6 +246,7 @@
     <Content Include="Assets\Icons\iconALGO.png" />
     <Content Include="Assets\Icons\iconAMPL.png" />
     <Content Include="Assets\Icons\iconAPE.png" />
+    <Content Include="Assets\Icons\iconATOM.png" />
     <Content Include="Assets\Icons\iconAVAX.png" />
     <Content Include="Assets\Icons\iconBAT.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
@@ -253,9 +254,11 @@
     <Content Include="Assets\Icons\iconBNB.png" />
     <Content Include="Assets\Icons\iconBTC.png" />
     <Content Include="Assets\Icons\iconBTT.png" />
+    <Content Include="Assets\Icons\iconCAKE.png" />
     <Content Include="Assets\Icons\iconCELO.png" />
     <Content Include="Assets\Icons\iconCOMP.png" />
     <Content Include="Assets\Icons\iconCRO.png" />
+    <Content Include="Assets\Icons\iconDAI.png" />
     <Content Include="Assets\Icons\iconDASH.png" />
     <Content Include="Assets\Icons\iconDGB.png" />
     <Content Include="Assets\Icons\iconDOGE.png" />
@@ -272,6 +275,7 @@
     <Content Include="Assets\Icons\iconKSM.png" />
     <Content Include="Assets\Icons\iconLINK.png" />
     <Content Include="Assets\Icons\iconLTC.png" />
+    <Content Include="Assets\Icons\iconLUNA.png" />
     <Content Include="Assets\Icons\iconMATIC.png" />
     <Content Include="Assets\Icons\iconNANO.png" />
     <Content Include="Assets\Icons\iconNEO.png" />
