@@ -188,7 +188,7 @@ namespace UWP.Views {
             }
 
             /// There might be young cryptos that didnt exist in the past, so take the common minimum 
-            var minCommon = histos.Min(x => x.Count);
+            var minCommon = histos.Min()?.Count ?? 1;
             if (minCommon == 1)
                 return;
 

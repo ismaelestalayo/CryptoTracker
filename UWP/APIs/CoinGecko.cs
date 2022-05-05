@@ -9,7 +9,6 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using UWP.Models;
 using UWP.Services;
-using UWP.Shared.Helpers;
 
 namespace UWP.APIs {
     class CoinGecko {
@@ -215,16 +214,16 @@ namespace UWP.APIs {
             public CurrencyDoubleArray total_volume { get; set; }
             public CurrencyDoubleArray high_24h { get; set; }
             public CurrencyDoubleArray low_24h { get; set; }
-            public double price_change_24h { get; set; }
-            public double price_change_percentage_24h { get; set; }
-            public double price_change_percentage_7d { get; set; }
-            public double price_change_percentage_14d { get; set; }
-            public double price_change_percentage_30d { get; set; }
-            public double price_change_percentage_60d { get; set; }
-            public double price_change_percentage_200d { get; set; }
-            public double price_change_percentage_1y { get; set; }
-            public double market_cap_change_24h { get; set; }
-            public double market_cap_change_percentage_24h { get; set; }
+            public double? price_change_24h { get; set; } = 0;
+            public double? price_change_percentage_24h { get; set; } = 0;
+            public double? price_change_percentage_7d { get; set; } = 0;
+            public double? price_change_percentage_14d { get; set; } = 0;
+            public double? price_change_percentage_30d { get; set; } = 0;
+            public double? price_change_percentage_60d { get; set; } = 0;
+            public double? price_change_percentage_200d { get; set; } = 0;
+            public double? price_change_percentage_1y { get; set; } = 0;
+            public double? market_cap_change_24h { get; set; } = 0;
+            public double? market_cap_change_percentage_24h { get; set; } = 0;
             public CurrencyDoubleArray price_change_24h_in_currency { get; set; }
             public CurrencyDoubleArray price_change_percentage_1h_in_currency { get; set; }
             public CurrencyDoubleArray price_change_percentage_24h_in_currency { get; set; }
