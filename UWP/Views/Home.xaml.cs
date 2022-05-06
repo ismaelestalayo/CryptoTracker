@@ -186,6 +186,9 @@ namespace UWP.Views {
                         Close = h.close
                     });
                 }
+                if (chartData.Count == 0)
+                    return;
+
                 vm.PriceCards[i].Chart.ChartData = chartData;
                 var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
                 vm.PriceCards[i].Chart.LabelFormat = temp.LabelFormat;
