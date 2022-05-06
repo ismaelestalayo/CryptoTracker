@@ -11,6 +11,8 @@ namespace UWP.Core.Constants {
 			{
 				"6.3.X",
 				new List<string>() {
+					"General: more custom crypto assetes and colors",
+					"General: bug fixes",
 					"General: improved decimal commas/dots",
 					"Coin details: added total invested values",
 					"Portfolio: auto-refresh each 2 mins",
