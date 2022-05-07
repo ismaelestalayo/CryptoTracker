@@ -319,7 +319,7 @@
             <Grid
                 x:Name="TotalsRow"
                 x:Load="{x:Bind vm.Portfolio.Count, Converter={StaticResource NumberNotEqZero}}"
-                Grid.Row="1" Margin="20 -10 20 10">
+                Grid.Row="1" Margin="20 -0 20 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="28"/>
                     <ColumnDefinition Width="*"/>

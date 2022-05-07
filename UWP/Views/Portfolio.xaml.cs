@@ -72,14 +72,16 @@ namespace UWP.Views {
         }
 
         public async Task UpdatePage() {
-            vm.Chart.IsLoading = true;
-
             vm.CurrencySymbol = App.currencySymbol;
 
             /// Empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
 
+            //if (vm.Portfolio.Count == 0)
+            //    return;
+
+            vm.Chart.IsLoading = true;
             /// Update the purchase details first
             for (int i = 0; i < vm.Portfolio.Count; i++)
                 await PortfolioHelper.UpdatePurchase(vm.Portfolio[i]);
@@ -187,9 +189,13 @@ namespace UWP.Views {
                 }
             }
 
+            /// If there's no data, return
+            if (histos.Count == 0)
+                return;
+
             /// There might be young cryptos that didnt exist in the past, so take the common minimum 
-            var minCommon = histos.Min()?.Count ?? 1;
-            if (minCommon == 1)
+            var minCommon = histos.Min(x => x.Count);
+            if (minCommon < 2)
                 return;
 
             /// Check if all arrays are equal length, if not, remove the leading values
