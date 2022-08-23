@@ -61,7 +61,7 @@
                                 CoinGecko
                             </Hyperlink>
                             <Run Text=","/>
-                            <Hyperlink NavigateUri="https://www.coingecko.com/en">
+                            <Hyperlink NavigateUri="https://coinpaprika.com/">
                                 CoinPaprika
                             </Hyperlink>
                             <Run Text="and"/>
