@@ -39,6 +39,7 @@ namespace UWP.Shared.Constants {
         }
 
         private static readonly Dictionary<string, Color> ColorDict = new Dictionary<string, Color>() {
+            { "coin_ACH",   ParseHex("#050f66") },
             { "coin_ADA",   ParseHex("#003bc7") },
             { "coin_ALGO",  ParseHex("#606060") },
             { "coin_AMPL",  ParseHex("#606060") },
@@ -54,6 +55,7 @@ namespace UWP.Shared.Constants {
             { "coin_CAKE",  ParseHex("#e7894a") },
             { "coin_CELO",  ParseHex("#fbcc5c") },
             { "coin_COMP",  ParseHex("#00d395") },
+            { "coin_COVAL", ParseHex("#4e4d48") },
             { "coin_CRO",   ParseHex("#004f8a") },
             { "coin_DASH",  ParseHex("#0076C0") },
             { "coin_DGB",   ParseHex("#006ad2") },
@@ -63,6 +65,7 @@ namespace UWP.Shared.Constants {
             { "coin_EOS",   ParseHex("#443F54") },
             { "coin_ETC",   ParseHex("#4C9172") },
             { "coin_ETH",   ParseHex("#6F7CBA") },
+            { "coin_FET",   ParseHex("#254873") },
             { "coin_FIL",   ParseHex("#0090ff") },
             { "coin_FLOW",  ParseHex("#00ee88") },
             { "coin_GRT",   ParseHex("#382991") },
@@ -79,9 +82,11 @@ namespace UWP.Shared.Constants {
             { "coin_NU",    ParseHex("#1e65f3") },
             { "coin_ONT",   ParseHex("#00a6c0") },
             { "coin_QTUM",  ParseHex("#2e9ad0") },
+            { "coin_RAY",   ParseHex("#604ffe") },
             { "coin_SHIB",  ParseHex("#ff9300") },
             { "coin_SLP",   ParseHex("#ff90a4") },
             { "coin_SOL",   ParseHex("#14f195") },
+            { "coin_SPELL", ParseHex("#221b47") },
             { "coin_STR",   ParseHex("#fc1c88") },
             { "coin_UNI",   ParseHex("#ff007a") },
             { "coin_USDT",  ParseHex("#26A17B") },
