@@ -242,6 +242,7 @@
     <Content Include="Assets\AppIcon-D.png" />
     <Content Include="Assets\AppIcon-L.png" />
     <Content Include="Assets\AppIcon.png" />
+    <Content Include="Assets\Icons\iconACH.png" />
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconALGO.png" />
     <Content Include="Assets\Icons\iconAMPL.png" />
@@ -257,6 +258,7 @@
     <Content Include="Assets\Icons\iconCAKE.png" />
     <Content Include="Assets\Icons\iconCELO.png" />
     <Content Include="Assets\Icons\iconCOMP.png" />
+    <Content Include="Assets\Icons\iconCOVAL.png" />
     <Content Include="Assets\Icons\iconCRO.png" />
     <Content Include="Assets\Icons\iconDAI.png" />
     <Content Include="Assets\Icons\iconDASH.png" />
@@ -266,6 +268,7 @@
     <Content Include="Assets\Icons\iconEOS.png" />
     <Content Include="Assets\Icons\iconETC.png" />
     <Content Include="Assets\Icons\iconETH.png" />
+    <Content Include="Assets\Icons\iconFET.png" />
     <Content Include="Assets\Icons\iconFIL.png" />
     <Content Include="Assets\Icons\iconFLOW.png" />
     <Content Include="Assets\Icons\iconGRT.png" />
@@ -283,9 +286,11 @@
     <Content Include="Assets\Icons\iconNULL.png" />
     <Content Include="Assets\Icons\iconONT.png" />
     <Content Include="Assets\Icons\iconQTUM.png" />
+    <Content Include="Assets\Icons\iconRAY.png" />
     <Content Include="Assets\Icons\iconSHIB.png" />
     <Content Include="Assets\Icons\iconSLP.png" />
     <Content Include="Assets\Icons\iconSOL.png" />
+    <Content Include="Assets\Icons\iconSPELL.png" />
     <Content Include="Assets\Icons\iconSTR.png" />
     <Content Include="Assets\Icons\iconTFUEL.png" />
     <Content Include="Assets\Icons\iconTHETA.png" />
@@ -635,22 +640,4 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
-  </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <Target Name="SpicNSpan" AfterTargets="Clean">
-    <!-- common vars https://msdn.microsoft.com/en-us/library/c02as0cs.aspx?f=255&MSPPError=-2147217396 -->
-    <RemoveDir Directories="$(TargetDir)" />
-    <!-- bin -->
-    <RemoveDir Directories="$(SolutionDir).vs" />
-    <!-- .vs -->
-    <RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" />
-    <!-- obj -->
-  </Target>
-</Project>
+  </Propert
