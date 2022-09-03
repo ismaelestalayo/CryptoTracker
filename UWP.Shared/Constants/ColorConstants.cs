@@ -39,7 +39,7 @@ namespace UWP.Shared.Constants {
         }
 
         private static readonly Dictionary<string, Color> ColorDict = new Dictionary<string, Color>() {
-            { "coin_ACH",   ParseHex("#050f66") },
+            { "coin_ACH",   ParseHex("#071486") },
             { "coin_ADA",   ParseHex("#003bc7") },
             { "coin_ALGO",  ParseHex("#606060") },
             { "coin_AMPL",  ParseHex("#606060") },
@@ -68,7 +68,7 @@ namespace UWP.Shared.Constants {
             { "coin_FET",   ParseHex("#254873") },
             { "coin_FIL",   ParseHex("#0090ff") },
             { "coin_FLOW",  ParseHex("#00ee88") },
-            { "coin_GRT",   ParseHex("#382991") },
+            { "coin_GRT",   ParseHex("#5336b8") },
             { "coin_ICP",   ParseHex("#927ddc") },
             { "coin_ICX",   ParseHex("#1aaaba") },
             { "coin_IOT",   ParseHex("#04A997") },
@@ -86,7 +86,7 @@ namespace UWP.Shared.Constants {
             { "coin_SHIB",  ParseHex("#ff9300") },
             { "coin_SLP",   ParseHex("#ff90a4") },
             { "coin_SOL",   ParseHex("#14f195") },
-            { "coin_SPELL", ParseHex("#221b47") },
+            { "coin_SPELL", ParseHex("#3F395C") },
             { "coin_STR",   ParseHex("#fc1c88") },
             { "coin_UNI",   ParseHex("#ff007a") },
             { "coin_USDT",  ParseHex("#26A17B") },
