@@ -55,10 +55,6 @@ namespace UWP.Models {
         private DateTime minimum = DateTime.Now.AddHours(-1);
 
 
-        [ObservableProperty]
-        private int tickInterval = 10;
-
-
         /// <summary>
         /// 
         /// </summary>

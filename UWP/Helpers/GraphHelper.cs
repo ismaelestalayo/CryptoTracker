@@ -55,7 +55,6 @@ namespace UWP.Helpers {
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     chartStyle.MajorStep = 10;
                     chartStyle.Minimum = DateTime.Now.AddHours(-1);
-                    chartStyle.TickInterval = 13;
                     break;
 
                 case "4h":
@@ -63,7 +62,6 @@ namespace UWP.Helpers {
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
                     chartStyle.MajorStep = 30;
                     chartStyle.Minimum = DateTime.Now.AddHours(-4);
-                    chartStyle.TickInterval = 45;
                     break;
 
                 case "1d":
@@ -71,7 +69,6 @@ namespace UWP.Helpers {
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     chartStyle.MajorStep = 3;
                     chartStyle.Minimum = DateTime.Now.AddDays(-1);
-                    chartStyle.TickInterval = 78;
                     break;
 
                 case "3d":
@@ -79,7 +76,6 @@ namespace UWP.Helpers {
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
                     chartStyle.MajorStep = 6;
                     chartStyle.Minimum = DateTime.Now.AddDays(-3);
-                    chartStyle.TickInterval = 12;
                     break;
 
                 default:
@@ -88,7 +84,6 @@ namespace UWP.Helpers {
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
                     chartStyle.MajorStep = 1;
                     chartStyle.Minimum = DateTime.Now.AddDays(-7);
-                    chartStyle.TickInterval = 36;
                     break;
 
                 case "1m":
@@ -96,7 +91,6 @@ namespace UWP.Helpers {
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     chartStyle.MajorStep = 1;
                     chartStyle.Minimum = DateTime.Now.AddMonths(-1);
-                    chartStyle.TickInterval = 66;
                     break;
 
                 case "3m":
@@ -104,7 +98,6 @@ namespace UWP.Helpers {
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
                     chartStyle.MajorStep = 1;
                     chartStyle.Minimum = DateTime.Now.AddMonths(-3);
-                    chartStyle.TickInterval = 20;
                     break;
 
                 case "1y":
@@ -112,15 +105,13 @@ namespace UWP.Helpers {
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     chartStyle.MajorStep = 1;
                     chartStyle.Minimum = DateTime.MinValue;
-                    chartStyle.TickInterval = 62;
                     break;
 
                 case "all":
-                    chartStyle.LabelFormat = "{0:MMM}";
+                    chartStyle.LabelFormat = "{0:yyyy MMM}";
                     chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
                     chartStyle.MajorStep = 6;
                     chartStyle.Minimum = DateTime.MinValue;
-                    chartStyle.TickInterval = 180;
                     break;
             }
             return chartStyle;

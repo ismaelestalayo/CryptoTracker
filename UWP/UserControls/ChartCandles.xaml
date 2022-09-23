@@ -36,13 +36,14 @@
         </telerik:RadCartesianChart.Grid>
 
         <telerik:RadCartesianChart.HorizontalAxis>
-            <telerik:DateTimeCategoricalAxis
+            <telerik:DateTimeContinuousAxis
                 FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 LabelFormat="{x:Bind ChartModel.LabelFormat}"
                 LabelOffset="1"
-                PlotMode="OnTicks"
-                MajorTickInterval="{x:Bind ChartModel.TickInterval}"/>
+                GapLength="0.98"
+                MaximumTicks="6"
+                PlotMode="OnTicks"/>
         </telerik:RadCartesianChart.HorizontalAxis>
 
         <telerik:RadCartesianChart.VerticalAxis>

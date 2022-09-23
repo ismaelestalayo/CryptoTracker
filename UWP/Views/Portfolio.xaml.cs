@@ -225,7 +225,6 @@ namespace UWP.Views {
             vm.Chart.Minimum = temp.Minimum;
             vm.Chart.MajorStepUnit = temp.MajorStepUnit;
             vm.Chart.MajorStep = temp.MajorStep;
-            vm.Chart.TickInterval = temp.TickInterval;
 
             vm.Chart.ChartStroke = (vm.TotalDelta >= 0) ?
                 ColorConstants.GetColorBrush("pastel_green") : ColorConstants.GetColorBrush("pastel_red");

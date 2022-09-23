@@ -39,13 +39,14 @@
         </telerik:RadCartesianChart.Grid>
 
         <telerik:RadCartesianChart.HorizontalAxis>
-            <telerik:DateTimeCategoricalAxis
+            <telerik:DateTimeContinuousAxis
                 FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 LabelFormat="{x:Bind ChartModel.LabelFormat}"
                 LabelOffset="1"
-                PlotMode="OnTicks"
-                MajorTickInterval="{x:Bind ChartModel.TickInterval}"/>
+                GapLength="0.98"
+                MaximumTicks="6"
+                PlotMode="OnTicks"/>
         </telerik:RadCartesianChart.HorizontalAxis>
 
         <telerik:RadCartesianChart.VerticalAxis>
@@ -62,16 +63,17 @@
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="{StaticResource Fill1}"/>
                         <Setter Property="Opacity" Value="1"/>
+                        <Setter Property="CornerRadius" Value="2"/>
                     </Style>
                 </telerik:BarSeries.DefaultVisualStyle>
                 <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                     <DataTemplate/>
                 </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                
+
                 <telerik:BarSeries.VerticalAxis>
                     <telerik:LinearAxis Visibility="Collapsed" Maximum="{x:Bind ChartModel.VolumeMax}"/>
                 </telerik:BarSeries.VerticalAxis>
-                
+
                 <telerik:BarSeries.CategoryBinding>
                     <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
                 </telerik:BarSeries.CategoryBinding>
