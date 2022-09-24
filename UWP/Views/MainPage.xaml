@@ -120,10 +120,9 @@
                         FontFamily="Segoe MDL2 Assets"
                         Tapped="NavView_Search_Tapped"
                         ToolTipService.ToolTip="Search"
-                        Height="44" Width="50"
                         Visibility="{x:Bind AutoSuggestBox.Visibility, Converter={StaticResource VisibilityInverter}}">
                         <muxc:NavigationViewItem.Content>
-                            <FontIcon Glyph="&#xE721;" FontSize="16" Margin="0 0 -7 0"/>
+                            <FontIcon Glyph="&#xE721;" Margin="0 0 -7 0"/>
                         </muxc:NavigationViewItem.Content>
                         <muxc:NavigationViewItem.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="F" Invoked="CtrlF_Invoked" />
@@ -155,7 +154,7 @@
                         Tapped="NavView_Settings_Tapped"
                         Height="44" Width="50">
                         <muxc:NavigationViewItem.Icon>
-                            <muxc:AnimatedIcon Width="16">
+                            <muxc:AnimatedIcon>
                                 <animatedvisuals:AnimatedSettingsVisualSource/>
                             </muxc:AnimatedIcon>
                         </muxc:NavigationViewItem.Icon>

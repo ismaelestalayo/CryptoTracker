@@ -44,6 +44,7 @@ namespace UWP.Views {
         private static ThreadPoolTimer PricePeriodicTimer;
 
         private bool newestFirst = true;
+        private bool showPurchases = false;
 
         public CoinDetails() {
             InitializeComponent();
@@ -60,7 +61,9 @@ namespace UWP.Views {
             if (animation != null)
                 animation.TryStart(PriceChart, new UIElement[] { ChartCard });
 
-            
+            /// Get showPurchases
+            showPurchases = App._LocalSettings.Get<bool>(UserSettings.ChartShowPurchases);
+
             /// Get timespan before updating
             timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
             TimeRangeRadioButtons.TimeSpan = timeSpan;
@@ -212,7 +215,6 @@ namespace UWP.Views {
             vm.Chart.Minimum = temp.Minimum;
             vm.Chart.MajorStepUnit = temp.MajorStepUnit;
             vm.Chart.MajorStep = temp.MajorStep;
-            vm.Chart.TickInterval = temp.TickInterval;
 
             vm.Coin.VolumeToTotal = histo.Sum(x => x.volumeto);
 
@@ -237,7 +239,17 @@ namespace UWP.Views {
             for (int i = 0; i < vm.Purchases.Count; i++)
                 vm.Purchases[i] = await PortfolioHelper.UpdatePurchase(vm.Purchases[i]);
 
+            UpdateChartAnnotations();
+
             vm.LastUpdate = DateTime.Now;
+        }
+
+        private void UpdateChartAnnotations() {
+            PriceChart.ClearAnnotations();
+            if (showPurchases)
+                foreach (var purchase in vm.Purchases)
+                    PriceChart.AddAnnotation(purchase.Date.DateTime, false);
+
         }
 
         // #########################################################################################
@@ -326,6 +338,11 @@ namespace UWP.Views {
 
         private void ShowCandles_Click(object sender, RoutedEventArgs e)
             => vm.ShowCandles = !vm.ShowCandles;
+
+        private void ShowPurchases_Click(object sender, RoutedEventArgs e) {
+            App._LocalSettings.Set<bool>(UserSettings.ChartShowPurchases, showPurchases);
+            UpdateChartAnnotations();
+        }
 
         private async void NewPurchase_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {

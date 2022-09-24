@@ -46,7 +46,7 @@ namespace UWP.Shared.Helpers {
         public async static Task<PurchaseModel> UpdatePurchase(PurchaseModel purchase) {
             string crypto = purchase.Crypto;
 
-            if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
+            if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 30)
                 purchase.Current = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
                     purchase.Crypto, purchase.Currency);
 

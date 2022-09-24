@@ -1,7 +1,9 @@
 ﻿using Telerik.UI.Xaml.Controls.Chart;
 using UWP.Models;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -45,6 +47,24 @@ namespace UWP.UserControls {
                 chartTrackBall = value ? Visibility.Visible : Visibility.Collapsed;
             }
         }
+
+        public void ClearAnnotations()
+            => Chart.Annotations.Clear();
+        public void AddAnnotation(object val, bool isHorizontalLine, string label = "") {
+            var dc = new DoubleCollection();
+            dc.Add(15);
+            Chart.Annotations.Add(new CartesianGridLineAnnotation() {
+                Axis = isHorizontalLine ? Chart.VerticalAxis : Chart.HorizontalAxis,
+                Label = label,
+                Stroke = new SolidColorBrush(Color.FromArgb(255, 128, 128, 128)),
+                StrokeDashArray = dc,
+                StrokeThickness = 0.75,
+                Value = val,
+                MaxHeight = 100,
+                Height = 100
+            });
+        }
+
         private ChartPanZoomMode chartZoomMode { get; set; } = ChartPanZoomMode.Horizontal;
         private Visibility chartTrackBall { get; set; } = Visibility.Visible;
 

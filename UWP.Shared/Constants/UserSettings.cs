@@ -6,6 +6,7 @@ namespace UWP.Core.Constants {
     /// </summary>
     public class UserSettings {
 		public const string AutoRefresh = "AutoRefresh";
+		public const string ChartShowPurchases = "ChartShowPurchases";
 		public const string CoinListsDate = "CoinListsDate";
 		public const string Currency = "Currency";
 		public const string CurrencySymbol = "CurrencySymbol";
@@ -26,6 +27,7 @@ namespace UWP.Core.Constants {
 		public static readonly Dictionary<string, object> Defaults = new Dictionary<string, object>(){
 			{ AutoRefresh, "1 min" },
 			{ BW, false },
+			{ ChartShowPurchases, false },
 			{ CoinListsDate,  (double)0 },
 			{ Currency, "EUR" },
 			{ CurrencySymbol, "€" },
