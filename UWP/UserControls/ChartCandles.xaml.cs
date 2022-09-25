@@ -3,39 +3,46 @@ using UWP.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace UWP.UserControls {
     public sealed partial class ChartCandles : UserControl {
 
         public ChartCandles() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
-        public static readonly DependencyProperty ChartModelProperty =
-        DependencyProperty.Register(
-            nameof(ChartModel),
-            typeof(ChartModel),
-            typeof(ChartAreaFull),
-            null);
+        public static readonly DependencyProperty ChartModelProperty = DependencyProperty.Register(
+            nameof(ChartModel), typeof(ChartModel),
+            typeof(ChartAreaFull), null);
+
+        public static readonly DependencyProperty ChartPointProperty = DependencyProperty.Register(
+            nameof(ChartPoint), typeof(ChartPoint),
+            typeof(ChartAreaFull), null);
+
+        public static readonly DependencyProperty ShowVerticalAxisProperty = DependencyProperty.Register(
+            nameof(ShowVerticalAxis), typeof(bool),
+            typeof(ChartAreaFull), null);
 
         public ChartModel ChartModel {
             get => (ChartModel)GetValue(ChartModelProperty);
             set => SetValue(ChartModelProperty, value);
         }
 
-        public static readonly DependencyProperty ChartPointProperty =
-        DependencyProperty.Register(
-            nameof(ChartPoint),
-            typeof(ChartPoint),
-            typeof(ChartAreaFull),
-            null);
-
         public ChartPoint ChartPoint {
             get => (ChartPoint)GetValue(ChartPointProperty);
             set => SetValue(ChartPointProperty, value);
         }
 
+        public bool? ShowVerticalAxis {
+            get => (bool)GetValue(ShowVerticalAxisProperty);
+            set {
+                SetValue(ShowVerticalAxisProperty, value);
+                CartesianChartGrid.MajorLinesVisibility = (VerticalAxis.Visibility == Visibility.Visible) ?
+                    GridLineVisibility.Y : GridLineVisibility.None;
+            }
+        }
+
+        // ###################################################################
         private void ChartTrackBall_Changed(FrameworkElement sender, DataContextChangedEventArgs args) {
             var point = ((DataPointInfo)sender.DataContext).DataPoint.DataItem as ChartPoint;
             ChartPoint = point;
