@@ -384,16 +384,18 @@
 
                     <userControls:ChartAreaFull
                         x:Name="PriceChart" Margin="-20 -15 -20 5"
+                        Alerts="{x:Bind vm.Alerts}"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
-                        ShowVerticalAxis="{x:Bind ShowVerticalAxis.IsChecked}"
+                        Purchases="{x:Bind vm.Purchases}"
+                        ShowAlerts="{x:Bind ShowAlertsCheckBox.IsChecked}"
+                        ShowPurchases="{x:Bind ShowPurchasesCheckBox.IsChecked}"
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityInverter}}"/>
 
                     <userControls:ChartCandles
                         x:Name="CandleChart" Margin="-20 -15 -20 5"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
-                        ShowVerticalAxis="{x:Bind ShowVerticalAxis.IsChecked}"
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityConverter}}"/>
                     
                     <!-- Time RadioButtons + side buttons -->
@@ -430,9 +432,9 @@
                             <Button.Flyout>
                                 <Flyout>
                                     <StackPanel>
-                                        <CheckBox x:Name="ShowVerticalAxis" Content="Vertical axis"/>
                                         <CheckBox Content="Candle chart" Click="ShowCandles_Click"/>
-                                        <CheckBox Content="Show purchases" Click="ShowPurchases_Click" IsChecked="{x:Bind showPurchases, Mode=TwoWay}"/>
+                                        <CheckBox x:Name="ShowAlertsCheckBox" Content="Show alerts"/>
+                                        <CheckBox x:Name="ShowPurchasesCheckBox" Content="Show purchases" Click="ShowPurchases_Click" IsChecked="{x:Bind showPurchases, Mode=TwoWay}"/>
                                     </StackPanel>
                                 </Flyout>
                             </Button.Flyout>

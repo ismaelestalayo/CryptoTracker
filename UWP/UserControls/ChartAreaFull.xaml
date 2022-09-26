@@ -71,23 +71,10 @@
         <telerik:RadCartesianChart.VerticalAxis>
             <telerik:LinearAxis
                 x:Name="VerticalAxis"
-                Visibility="{x:Bind ShowVerticalAxis, Converter={StaticResource BoolToVisibility}}"
+                Visibility="Collapsed"
                 LabelOffset="1"
                 Minimum="{x:Bind ChartModel.PricesMinMax.Item1}"
-                Maximum="{x:Bind ChartModel.PricesMinMax.Item2}">
-                <telerik:LinearAxis.LabelTemplate>
-                    <DataTemplate>
-                        <TextBlock
-                            Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
-                            Text="{Binding Converter={StaticResource StringToDoubleConverter}}"/>
-                    </DataTemplate>
-                </telerik:LinearAxis.LabelTemplate>
-                <telerik:LinearAxis.LineStyle>
-                    <Style TargetType="Line">
-                        <Setter Property="Stroke" Value="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
-                    </Style>
-                </telerik:LinearAxis.LineStyle>
-            </telerik:LinearAxis>
+                Maximum="{x:Bind ChartModel.PricesMinMax.Item2}"/>
         </telerik:RadCartesianChart.VerticalAxis>
 
         <telerik:RadCartesianChart.Series>

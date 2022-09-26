@@ -239,17 +239,7 @@ namespace UWP.Views {
             for (int i = 0; i < vm.Purchases.Count; i++)
                 vm.Purchases[i] = await PortfolioHelper.UpdatePurchase(vm.Purchases[i]);
 
-            UpdateChartAnnotations();
-
             vm.LastUpdate = DateTime.Now;
-        }
-
-        private void UpdateChartAnnotations() {
-            PriceChart.ClearAnnotations();
-            if (showPurchases)
-                foreach (var purchase in vm.Purchases)
-                    PriceChart.AddAnnotation(purchase.Date.DateTime, false);
-
         }
 
         // #########################################################################################
@@ -341,7 +331,6 @@ namespace UWP.Views {
 
         private void ShowPurchases_Click(object sender, RoutedEventArgs e) {
             App._LocalSettings.Set<bool>(UserSettings.ChartShowPurchases, showPurchases);
-            UpdateChartAnnotations();
         }
 
         private async void NewPurchase_click(object sender, RoutedEventArgs e) {
