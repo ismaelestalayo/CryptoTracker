@@ -44,7 +44,8 @@ namespace UWP.Views {
         private static ThreadPoolTimer PricePeriodicTimer;
 
         private bool newestFirst = true;
-        private bool showPurchases = false;
+        private bool chartShowAlerts = false;
+        private bool chartShowPurchases = false;
 
         public CoinDetails() {
             InitializeComponent();
@@ -62,7 +63,8 @@ namespace UWP.Views {
                 animation.TryStart(PriceChart, new UIElement[] { ChartCard });
 
             /// Get showPurchases
-            showPurchases = App._LocalSettings.Get<bool>(UserSettings.ChartShowPurchases);
+            chartShowAlerts = App._LocalSettings.Get<bool>(UserSettings.ChartShowAlerts);
+            chartShowPurchases = App._LocalSettings.Get<bool>(UserSettings.ChartShowPurchases);
 
             /// Get timespan before updating
             timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
@@ -329,9 +331,11 @@ namespace UWP.Views {
         private void ShowCandles_Click(object sender, RoutedEventArgs e)
             => vm.ShowCandles = !vm.ShowCandles;
 
-        private void ShowPurchases_Click(object sender, RoutedEventArgs e) {
-            App._LocalSettings.Set<bool>(UserSettings.ChartShowPurchases, showPurchases);
-        }
+        private void ShowPurchases_Click(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set<bool>(UserSettings.ChartShowPurchases, chartShowPurchases);
+
+        private void ShowAlerts_Click(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set<bool>(UserSettings.ChartShowAlerts, chartShowAlerts);
 
         private async void NewPurchase_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {

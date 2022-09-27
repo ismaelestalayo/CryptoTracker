@@ -2,7 +2,6 @@
 using Telerik.UI.Xaml.Controls.Chart;
 using UWP.Converters;
 using UWP.Models;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -15,7 +14,7 @@ namespace UWP.UserControls {
             InitializeComponent();
         }
 
-        
+        // ###################################################################
         public static readonly DependencyProperty ChartModelProperty = DependencyProperty.Register(
             nameof(ChartModel), typeof(ChartModel),
             typeof(ChartAreaFull), null);
@@ -98,7 +97,7 @@ namespace UWP.UserControls {
                             HorizontalOffset = 5,
                             Location = ChartAnnotationLabelLocation.Top
                         },
-                        Stroke = new SolidColorBrush(Color.FromArgb(255, 128, 128, 128)),
+                        Stroke = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 128, 128, 128)),
                         StrokeThickness = 0.75,
                         Opacity = 0.5,
                         Value = alert.Threshold
@@ -109,7 +108,7 @@ namespace UWP.UserControls {
                     Chart.Annotations.Add(new CartesianGridLineAnnotation() {
                         Axis = Chart.HorizontalAxis,
                         Label = purchase.Type[0].ToString().ToUpper(),
-                        Stroke = new SolidColorBrush(Color.FromArgb(255, 128, 128, 128)),
+                        Stroke = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 128, 128, 128)),
                         StrokeDashArray = new DoubleCollection() { 20, 10 },
                         StrokeThickness = 0.75,
                         Opacity = 0.5,
@@ -117,6 +116,7 @@ namespace UWP.UserControls {
                     });
         }
 
+        // ###################################################################
         private bool isZoomEnabled = true;
         public bool IsZoomEnabled {
             get => isZoomEnabled;
@@ -127,6 +127,7 @@ namespace UWP.UserControls {
             }
         }
 
+        // ###################################################################
         private ChartPanZoomMode chartZoomMode { get; set; } = ChartPanZoomMode.Horizontal;
         private Visibility chartTrackBall { get; set; } = Visibility.Visible;
 
