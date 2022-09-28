@@ -99,12 +99,12 @@
         #################################################################################################### -->
         <usercontrols:FluentCard>
             <usercontrols:FluentCard.ExpandableContent>
-                <Grid Margin="-7">
+                <Grid Margin="-10 -7">
                     <StackPanel Orientation="Horizontal">
                         <Image
                             d:Source="/Assets/Icons/iconBTC.png"
                             Source="{x:Bind vm.Coin.Logo}"
-                            Margin="0 0 7 0" Width="42"
+                            Margin="0 0 10 0" Width="42"
                             VerticalAlignment="Center"/>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
                             <StackPanel Orientation="Horizontal" Spacing="5" Margin="0 -5 0 0">
@@ -383,7 +383,7 @@
                     </controls:Loading>
 
                     <userControls:ChartAreaFull
-                        x:Name="PriceChart" Margin="-20 -15 -20 5"
+                        x:Name="PriceChart" Margin="-20 -15 -20 10"
                         Alerts="{x:Bind vm.Alerts}"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
@@ -393,7 +393,7 @@
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityInverter}}"/>
 
                     <userControls:ChartCandles
-                        x:Name="CandleChart" Margin="-20 -15 -20 5"
+                        x:Name="CandleChart" Margin="-20 -15 -20 10"
                         Alerts="{x:Bind vm.Alerts}"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
@@ -403,33 +403,26 @@
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityConverter}}"/>
                     
                     <!-- Time RadioButtons + side buttons -->
-                    <RelativePanel Grid.Row="1" Margin="-15 5 -15 0">
-                        
+                    <StackPanel
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Margin="-15 0"
+                        Orientation="Horizontal"
+                        Spacing="5">
+
                         <userControls:TimeRangeRadioButtons
                             x:Name="TimeRangeRadioButtons"
-                            Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan}"
+                            TimeSpan="{x:Bind vm.Chart.TimeSpan}"
                             HorizontalAlignment="Center"
-                            Margin="7 0"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True"
                             Tapped="TimeRangeButtons_Tapped"/>
-                        <!-- TODO -->
-                        <Button Visibility="Collapsed"
-                            Content="&#xE9A6;"
-                            FontSize="20"
-                            HorizontalAlignment="Right"
-                            RelativePanel.AlignVerticalCenterWithPanel="True"
-                            RelativePanel.RightOf="TimeRangeRadioButtons"
-                            Style="{StaticResource IconBtn}"
-                            ToolTipService.ToolTip="Go full screen"/>
 
                         <Button
                             Height="34" Width="34"
-                            RelativePanel.AlignVerticalCenterWithPanel="True"
                             RelativePanel.RightOf="TimeRangeRadioButtons"
                             Style="{StaticResource IconBtn}"
                             ToolTipService.ToolTip="Chart settings">
                             <Button.Content>
-                                <muxc:AnimatedIcon Width="22">
+                                <muxc:AnimatedIcon Width="20">
                                     <animatedvisuals:AnimatedSettingsVisualSource/>
                                 </muxc:AnimatedIcon>
                             </Button.Content>
@@ -451,7 +444,7 @@
                                 </Flyout>
                             </Button.Flyout>
                         </Button>
-                    </RelativePanel>
+                    </StackPanel>
                 </Grid>
             </usercontrols:FluentCard.ExpandableContent>
         </usercontrols:FluentCard>
@@ -544,6 +537,7 @@
                     </StackPanel>
                     <userControls:PortfolioList
                         Grid.Row="1"
+                        Margin="-7 0"
                         Purchases="{x:Bind vm.Purchases}"
                         ShowDetails="{x:Bind vm.ShowDetails}"
                         UpdateParent="PortfolioList_UpdateParent"/>
