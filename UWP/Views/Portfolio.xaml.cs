@@ -220,11 +220,7 @@ namespace UWP.Views {
                 });
             }
             vm.Chart.ChartData = chartData;
-            var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), Timespan);
-            vm.Chart.LabelFormat = temp.LabelFormat;
-            vm.Chart.Minimum = temp.Minimum;
-            vm.Chart.MajorStepUnit = temp.MajorStepUnit;
-            vm.Chart.MajorStep = temp.MajorStep;
+            vm.Chart.ChartStyling = GraphHelper.AdjustLinearAxis(new ChartStyling(), Timespan);
 
             vm.Chart.ChartStroke = (vm.TotalDelta >= 0) ?
                 ColorConstants.GetColorBrush("pastel_green") : ColorConstants.GetColorBrush("pastel_red");

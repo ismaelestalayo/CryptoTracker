@@ -29,7 +29,7 @@ namespace UWP.Core.Constants {
 			{ AutoRefresh, "1 min" },
 			{ BW, false },
 			{ ChartShowAlerts, true },
-			{ ChartShowPurchases, false },
+			{ ChartShowPurchases, true },
 			{ CoinListsDate,  (double)0 },
 			{ Currency, "EUR" },
 			{ CurrencySymbol, "€" },

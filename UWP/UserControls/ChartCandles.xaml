@@ -42,7 +42,7 @@
             <telerik:DateTimeContinuousAxis
                 FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                LabelFormat="{x:Bind ChartModel.LabelFormat}"
+                LabelFormat="{x:Bind ChartModel.ChartStyling.LabelFormat}"
                 MajorTickOffset="1"
                 GapLength="0.98"
                 MaximumTicks="6"

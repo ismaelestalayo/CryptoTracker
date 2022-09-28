@@ -190,11 +190,7 @@ namespace UWP.Views {
                     return;
 
                 vm.PriceCards[i].Chart.ChartData = chartData;
-                var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
-                vm.PriceCards[i].Chart.LabelFormat = temp.LabelFormat;
-                vm.PriceCards[i].Chart.Minimum = temp.Minimum;
-                vm.PriceCards[i].Chart.MajorStepUnit = temp.MajorStepUnit;
-                vm.PriceCards[i].Chart.MajorStep = temp.MajorStep;
+                vm.PriceCards[i].Chart.ChartStyling = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
 
                 /// Calculate min-max to adjust axis
                 var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());

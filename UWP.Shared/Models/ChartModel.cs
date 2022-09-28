@@ -1,7 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
-using Telerik.Charting;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
@@ -40,15 +39,7 @@ namespace UWP.Models {
         /// Attributes to adjust the axis to the plotted time interval
         /// </summary>
         [ObservableProperty]
-        private string labelFormat = "{0:HH:mm}";
-
-
-        [ObservableProperty]
-        private TimeInterval majorStepUnit = TimeInterval.Minute;
-
-
-        [ObservableProperty]
-        private int majorStep = 10;
+        private ChartStyling chartStyling = new ChartStyling();
 
 
         [ObservableProperty]
