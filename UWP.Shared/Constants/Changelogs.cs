@@ -8,7 +8,15 @@ namespace UWP.Core.Constants {
     public class Changelogs {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
-			{
+            {
+                "6.4.0",
+                new List<string>() {
+                    "General: added 4 days and 2 year time spans in charts",
+                    "Coin details: new optional horizontal and vertical annotations (for purchase dates and alert prices)",
+					"General: bug fixes"
+                }
+            },
+            {
 				"6.3.X",
 				new List<string>() {
 					"General: more custom crypto assetes and colors",
@@ -83,7 +91,7 @@ namespace UWP.Core.Constants {
 		};
 
 		public static readonly List<string> CurrentChangelog = LatestChangelogs[LatestChangelogs.FirstOrDefault().Key];
-		public static readonly List<string> MajorChangelog = LatestChangelogs["6.3.0"];
+		public static readonly List<string> MajorChangelog = LatestChangelogs["6.4.0"];
 
 		public static string FormatChangelog(List<string> changelog) {
 			string message = "";

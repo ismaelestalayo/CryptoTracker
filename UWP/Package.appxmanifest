@@ -6,7 +6,7 @@
 	xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
 	xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
 	IgnorableNamespaces="uap mp uap3">
-    <Identity Name="54989IsmaelEstalayoMena.CoinBaseUnofficial" Publisher="CN=CE0D17DE-AC9B-4B2D-AE14-FFACDE33BF50" Version="6.3.5.0" />
+    <Identity Name="54989IsmaelEstalayoMena.CoinBaseUnofficial" Publisher="CN=CE0D17DE-AC9B-4B2D-AE14-FFACDE33BF50" Version="6.4.0.0" />
     <mp:PhoneIdentity PhoneProductId="d53fba74-58a4-48f6-a015-c071212dff63" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
     <Properties>
         <DisplayName>CryptoTracker</DisplayName>
