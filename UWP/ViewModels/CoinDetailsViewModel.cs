@@ -2,7 +2,9 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UWP.Models;
+using UWP.Shared.Helpers;
 using static UWP.APIs.CoinGecko;
 
 namespace UWP.ViewModels {
@@ -21,6 +23,11 @@ namespace UWP.ViewModels {
         private ChartPoint chartPoint = new ChartPoint();
 
         [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(TotalCryptoQty))]
+        [AlsoNotifyChangeFor(nameof(TotalInvested))]
+        [AlsoNotifyChangeFor(nameof(TotalProfit))]
+        [AlsoNotifyChangeFor(nameof(TotalValue))]
+        [AlsoNotifyChangeFor(nameof(TotalAvgPrice))]
         private ObservableCollection<PurchaseModel> purchases;
 
         [ObservableProperty]
@@ -28,6 +35,20 @@ namespace UWP.ViewModels {
 
         [ObservableProperty]
         private bool showCandles = false;
+
+        [ObservableProperty]
+        private bool showDetails = false;
+
+        /// <summary>
+        /// Last update date to also trigger update on total values
+        /// </summary>
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(TotalCryptoQty))]
+        [AlsoNotifyChangeFor(nameof(TotalInvested))]
+        [AlsoNotifyChangeFor(nameof(TotalProfit))]
+        [AlsoNotifyChangeFor(nameof(TotalValue))]
+        [AlsoNotifyChangeFor(nameof(TotalAvgPrice))]
+        private DateTime lastUpdate;
 
 
         /// <summary>
@@ -40,17 +61,25 @@ namespace UWP.ViewModels {
         /// <summary>
         /// Total sum of purchases
         /// </summary>
-        [ObservableProperty]
-        private double avgPrice = 0;
+        internal double TotalAvgPrice {
+            get => NumberHelper.Rounder(TotalInvested / TotalCryptoQty);
+        }
 
-        [ObservableProperty]
-        private double totalQty = 0;
+        internal double TotalCryptoQty {
+            get => purchases?.Select(x => x.CryptoQty).Sum() ?? 0;
+        }
 
-        [ObservableProperty]
-        private double totalValue = 0;
+        internal double TotalValue {
+            get => TotalCryptoQty * coin.Price;
+        }
 
-        [ObservableProperty]
-        private double totalProfit = 0;
+        public double TotalInvested {
+            get => purchases?.Select(x => x.InvestedQty).Sum() ?? 0;
+        }
+
+        internal double TotalProfit {
+            get => purchases?.Select(x => x.Profit).Sum() ?? 0;
+        }
 
 
         /// #############################################################################

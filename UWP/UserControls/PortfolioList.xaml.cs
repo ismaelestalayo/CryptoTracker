@@ -8,7 +8,6 @@ using UWP.Helpers;
 using UWP.Models;
 using UWP.Shared.Constants;
 using UWP.Shared.Helpers;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -42,6 +41,17 @@ namespace UWP.UserControls {
         public bool ShowDetails {
             get => (bool)GetValue(ShowDetailsProperty);
             set => SetValue(ShowDetailsProperty, value);
+        }
+
+        public static readonly DependencyProperty PrivateModeProperty =
+        DependencyProperty.Register(
+            nameof(PrivateMode),
+            typeof(bool),
+            typeof(PortfolioList),
+            new PropertyMetadata(false));
+        public bool PrivateMode {
+            get => (bool)GetValue(PrivateModeProperty);
+            set => SetValue(PrivateModeProperty, value);
         }
 
         public static readonly DependencyProperty GroupedProperty =

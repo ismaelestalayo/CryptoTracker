@@ -30,7 +30,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <PackageCertificateThumbprint>3A120CB9AE7643F6DCF91A4F09447CE588064D2B</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>706F47F4D71C39E5DBA1AB8F945E48534E4C548F</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>
     </PackageCertificateKeyFile>
   </PropertyGroup>
@@ -116,6 +116,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\SVSettings.cs" />
     <Compile Include="Converters\StringConverters.cs" />
     <Compile Include="Converters\OtherConverters.cs" />
     <Compile Include="Converters\DateConverters.cs" />
@@ -145,6 +146,12 @@
     </Compile>
     <Compile Include="UserControls\FluentCard.xaml.cs">
       <DependentUpon>FluentCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\SettingsBlockControl.xaml.cs">
+      <DependentUpon>SettingsBlockControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings\SettingsDisplayControl.xaml.cs">
+      <DependentUpon>SettingsDisplayControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ToggleIconButton.xaml.cs">
       <DependentUpon>ToggleIconButton.xaml</DependentUpon>
@@ -186,6 +193,9 @@
       <DependentUpon>Portfolio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\PortfolioAnalytics.xaml.cs">
+      <DependentUpon>PortfolioAnalytics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\SettingsCalculator.xaml.cs">
       <DependentUpon>SettingsCalculator.xaml</DependentUpon>
     </Compile>
@@ -232,17 +242,25 @@
     <Content Include="Assets\AppIcon-D.png" />
     <Content Include="Assets\AppIcon-L.png" />
     <Content Include="Assets\AppIcon.png" />
+    <Content Include="Assets\Icons\iconACH.png" />
     <Content Include="Assets\Icons\iconADA.png" />
     <Content Include="Assets\Icons\iconALGO.png" />
     <Content Include="Assets\Icons\iconAMPL.png" />
+    <Content Include="Assets\Icons\iconAPE.png" />
+    <Content Include="Assets\Icons\iconATOM.png" />
+    <Content Include="Assets\Icons\iconAVAX.png" />
     <Content Include="Assets\Icons\iconBAT.png" />
     <Content Include="Assets\Icons\iconBCH.png" />
     <Content Include="Assets\Icons\iconBCN.png" />
     <Content Include="Assets\Icons\iconBNB.png" />
     <Content Include="Assets\Icons\iconBTC.png" />
     <Content Include="Assets\Icons\iconBTT.png" />
+    <Content Include="Assets\Icons\iconCAKE.png" />
     <Content Include="Assets\Icons\iconCELO.png" />
     <Content Include="Assets\Icons\iconCOMP.png" />
+    <Content Include="Assets\Icons\iconCOVAL.png" />
+    <Content Include="Assets\Icons\iconCRO.png" />
+    <Content Include="Assets\Icons\iconDAI.png" />
     <Content Include="Assets\Icons\iconDASH.png" />
     <Content Include="Assets\Icons\iconDGB.png" />
     <Content Include="Assets\Icons\iconDOGE.png" />
@@ -250,12 +268,17 @@
     <Content Include="Assets\Icons\iconEOS.png" />
     <Content Include="Assets\Icons\iconETC.png" />
     <Content Include="Assets\Icons\iconETH.png" />
+    <Content Include="Assets\Icons\iconFET.png" />
     <Content Include="Assets\Icons\iconFIL.png" />
+    <Content Include="Assets\Icons\iconFLOW.png" />
     <Content Include="Assets\Icons\iconGRT.png" />
+    <Content Include="Assets\Icons\iconICP.png" />
     <Content Include="Assets\Icons\iconICX.png" />
     <Content Include="Assets\Icons\iconIOT.png" />
+    <Content Include="Assets\Icons\iconKSM.png" />
     <Content Include="Assets\Icons\iconLINK.png" />
     <Content Include="Assets\Icons\iconLTC.png" />
+    <Content Include="Assets\Icons\iconLUNA.png" />
     <Content Include="Assets\Icons\iconMATIC.png" />
     <Content Include="Assets\Icons\iconNANO.png" />
     <Content Include="Assets\Icons\iconNEO.png" />
@@ -263,8 +286,11 @@
     <Content Include="Assets\Icons\iconNULL.png" />
     <Content Include="Assets\Icons\iconONT.png" />
     <Content Include="Assets\Icons\iconQTUM.png" />
+    <Content Include="Assets\Icons\iconRAY.png" />
     <Content Include="Assets\Icons\iconSHIB.png" />
+    <Content Include="Assets\Icons\iconSLP.png" />
     <Content Include="Assets\Icons\iconSOL.png" />
+    <Content Include="Assets\Icons\iconSPELL.png" />
     <Content Include="Assets\Icons\iconSTR.png" />
     <Content Include="Assets\Icons\iconTFUEL.png" />
     <Content Include="Assets\Icons\iconTHETA.png" />
@@ -411,6 +437,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\Settings\SettingsBlockControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Settings\SettingsDisplayControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControls\ToggleIconButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -451,6 +485,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PortfolioAnalytics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Settings\SettingsCalculator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -484,11 +522,6 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Styles\Colors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
     <Page Include="Styles\Forms.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -516,20 +549,23 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.UWP">
+      <Version>2.0.0-beta.101</Version>
+    </PackageReference>
     <PackageReference Include="Microcharts.Uwp">
       <Version>1.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>4.5.0</Version>
+      <Version>4.5.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>4.5.0</Version>
+      <Version>4.5.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection">
       <Version>6.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.13</Version>
+      <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.Engagement">
       <Version>10.1901.28001</Version>
@@ -553,13 +589,13 @@
       <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Lottie">
-      <Version>7.1.0</Version>
+      <Version>7.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Media">
       <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.7.0</Version>
+      <Version>2.7.1</Version>
     </PackageReference>
     <PackageReference Include="NotificationsExtensions.Win10">
       <Version>14332.0.2</Version>
@@ -571,10 +607,10 @@
       <Version>4.3.0</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Json">
-      <Version>6.0.2</Version>
+      <Version>6.0.5</Version>
     </PackageReference>
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
-      <Version>1.0.2.8</Version>
+      <Version>1.0.2.9</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

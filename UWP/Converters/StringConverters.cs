@@ -27,6 +27,22 @@ namespace UWP.Converters {
             => throw new NotImplementedException();
     }
 
+    public class StringToDoubleConverter : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang) {
+            try {
+                var num = double.Parse(val.ToString());
+                var nr = new NumberRounder();
+                return nr.Convert(num, null, null, null);
+            }
+            catch {
+                return 0;
+            }
+        }
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
     public class UpperCaseConverter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
             => val.ToString().ToUpperInvariant();

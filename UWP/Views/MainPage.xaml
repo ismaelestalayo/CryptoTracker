@@ -120,11 +120,13 @@
                         FontFamily="Segoe MDL2 Assets"
                         Tapped="NavView_Search_Tapped"
                         ToolTipService.ToolTip="Search"
-                        Height="44" Width="50"
                         Visibility="{x:Bind AutoSuggestBox.Visibility, Converter={StaticResource VisibilityInverter}}">
                         <muxc:NavigationViewItem.Content>
-                            <FontIcon Glyph="&#xE721;" FontSize="16" Margin="0 0 -7 0"/>
+                            <FontIcon Glyph="&#xE721;" Margin="0 0 -7 0"/>
                         </muxc:NavigationViewItem.Content>
+                        <muxc:NavigationViewItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="F" Invoked="CtrlF_Invoked" />
+                        </muxc:NavigationViewItem.KeyboardAccelerators>
                     </muxc:NavigationViewItem>
 
                     <!-- Refresh btn -->
@@ -152,7 +154,7 @@
                         Tapped="NavView_Settings_Tapped"
                         Height="44" Width="50">
                         <muxc:NavigationViewItem.Icon>
-                            <muxc:AnimatedIcon Width="16">
+                            <muxc:AnimatedIcon>
                                 <animatedvisuals:AnimatedSettingsVisualSource/>
                             </muxc:AnimatedIcon>
                         </muxc:NavigationViewItem.Icon>
@@ -171,7 +173,31 @@
             </Frame>
         </muxc:NavigationView>
 
-        <StackPanel x:Name="CustomAppTitleBar" Background="Transparent"/>
+        <Grid
+            x:Name="CustomAppTitleBar"
+            Background="Transparent"
+            HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                x:Name="CustomAppTitleBarLogo"
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Opacity="0.8"
+                Margin="0 2 0 0"
+                Spacing="8">
+                <Image Width="18" Style="{ThemeResource TitlebarAppIcon}"/>
+                <TextBlock
+                    Text="CryptoTracker"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Margin="0 0 0 2"
+                    VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
 
         <!--<controls:TeachingTip
             d:Title="Notification title" d:Subtitle="Notification message" d:IsOpen="True"

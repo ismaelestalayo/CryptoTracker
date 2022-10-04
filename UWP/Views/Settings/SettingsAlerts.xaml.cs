@@ -32,5 +32,9 @@ namespace UWP.Views {
         private async void SettingsAlerts_Unloaded(object sender, RoutedEventArgs e) {
             await LocalStorageHelper.SaveObject(UserStorage.Alerts, vm.Alerts);
         }
+
+        private void AlertsTest_Click(object sender, RoutedEventArgs e) {
+            UWP.Background.ToastGenerator.SendAlert("Test", "Notification demo", "");
+        }
     }
 }

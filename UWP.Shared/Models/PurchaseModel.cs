@@ -87,6 +87,13 @@ namespace UWP.Models {
             set => SetProperty(ref investedQty, value);
         }
 
+        private double transactionFee = 0;
+        [DataMember()]
+        public double TransactionFee {
+            get => transactionFee;
+            set => SetProperty(ref transactionFee, value);
+        }
+
         /// #######################################################################################
         /// Dates, notes...
         private DateTimeOffset date = DateTime.Today;
@@ -168,6 +175,12 @@ namespace UWP.Models {
         public double Worth {
             get => worth;
             set => SetProperty(ref worth, value);
+        }
+
+        private int groupedQty = 1;
+        public int GroupedQty {
+            get => groupedQty;
+            set => SetProperty(ref groupedQty, value);
         }
 
 

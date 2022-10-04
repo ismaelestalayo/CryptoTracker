@@ -4,28 +4,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="using:UWP.ViewModels"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:usercontrols="using:UWP.UserControls"
+    xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600" d:Width="500" mc:Ignorable="d">
 
     <Page.DataContext>
         <viewModels:SettingsViewModel x:Name="vm"/>
     </Page.DataContext>
-
-    <Page.Resources>
-        <Style TargetType="StackPanel" x:Key="Title">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 5"/>
-        </Style>
-
-        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
-    </Page.Resources>
-
+    
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Spacing="3" Margin="0 0 15 0">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
+
             <Canvas>
                 <Border Height="560">
                     <!--AnimatedVisualPlayer with AutoPlay-->
@@ -35,61 +33,71 @@
                     </muxc:AnimatedVisualPlayer>
                 </Border>
             </Canvas>
-
-
+            
+            
             <!-- REVIEW -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE134;"/>
-                <TextBlock Text="Review" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+            <usercontrols:SettingsBlockControl
+                Title="Review"
+                Description="Take a minute and leave a review on the Store">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE134;"/>
+                </usercontrols:SettingsBlockControl.Icon>
 
-            <TextBlock Text="Take a minute and leave a review on the Store."/>
-            <StackPanel Orientation="Horizontal" Margin="0" Spacing="10">
-                <Button Content="Rate" Click="Feedback_Rating"/>
-                <Button Content="Review" Click="Feedback_Review"/>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Click="Feedback_Rating" Content="Rate"/>
+                    <Button Click="Feedback_Review" Content="Review"/>
+                </StackPanel>
+            </usercontrols:SettingsBlockControl>
+            
+            
+            <!-- FEEDBACK -->
+            <usercontrols:SettingsBlockControl
+                Title="Feedback"
+                Description="Let me know your thoughts about the app">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE939;"/>
+                </usercontrols:SettingsBlockControl.Icon>
 
-            <TextBlock Text="I would love to hear your thoughts about the app."/>
-            <StackPanel Orientation="Horizontal" Spacing="10">
-                <Button
-                    Click="Feedback_Mail" Content="Email"
-                    ToolTipService.ToolTip="ismael.em@outlook.com"/>
-                <Button
-                    Click="TwitterButton_Click" Content="Twitter"
-                    ToolTipService.ToolTip="@ismaelestalayo"/>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button
+                        Click="Feedback_Mail" Content="Mail"
+                        Padding="24 7"
+                        ToolTipService.ToolTip="ismael.em@outlook.com"/>
+                    <Button
+                        Click="TwitterButton_Click" Content="Twitter"
+                        Padding="23 7"
+                        ToolTipService.ToolTip="@ismaelestalayo"/>
+                </StackPanel>
+            </usercontrols:SettingsBlockControl>
+            <usercontrols:SettingsBlockControl
+                Title="Code repository"
+                Description="Take a look at the source code and feel free to open issues or PRs">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE943;"/>
+                </usercontrols:SettingsBlockControl.Icon>
+
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button
+                        Click="GithubRepo_Click" Content="Github"
+                        Padding="23 7"
+                        ToolTipService.ToolTip="ismaelestalayo/CryptoTracker"/>
+                </StackPanel>
+            </usercontrols:SettingsBlockControl>
 
 
             <!-- DONATE -->
-            <StackPanel Style="{StaticResource Title}">
-                <!--<FontIcon Glyph="&#xE8C7;"/>-->
-                <Path Stroke="{ThemeResource SystemChromeAltLowColor}" StrokeThickness="1.25"
-                      Data="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                <TextBlock Text="Donate" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
-            
-            <TextBlock
-                Text="I have been developing this app since August 2017, so if you really enjoy using it and want to support it, you can donate in multiple ways:"/>
-            <StackPanel Orientation="Horizontal" Spacing="10">
-                <Button Click="Donation_Paypal" Content="Paypal"/>
-                <Button Click="Donation_Kofi" Content="Ko-fi"/>
-                <!--<Button Click="Donation_Crypto" Content="Crypto">
-                    <Button.Flyout>
-                        <Flyout Placement="Bottom">
-                            <StackPanel>
-                                <TextBlock Text="BAT address:"/>
-                                <TextBlock
-                                    Text="0x8e3e83a79689db4c253af87d1a9254b48c6245d3"
-                                    IsTextSelectionEnabled="True"/>
-                                <TextBlock Text="ETH address:"/>
-                                <TextBlock
-                                    Text="0xE1D40ce30E257af4753e607f7F4a4feC8900E3cD"
-                                    IsTextSelectionEnabled="True"/>
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>-->
-            </StackPanel>
+            <usercontrols:SettingsBlockControl
+                Title="Donate"
+                Description="I have been developing this app since August 2017, so if you really enjoy using it and want to support it, you can donate in multiple ways 🤍">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE8C7;"/>
+                </usercontrols:SettingsBlockControl.Icon>
+
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Click="Donation_Paypal" Content="Paypal"/>
+                    <Button Click="Donation_Kofi" Content="Ko-fi"/>
+                </StackPanel>
+            </usercontrols:SettingsBlockControl>
 
         </StackPanel>
     </ScrollViewer>

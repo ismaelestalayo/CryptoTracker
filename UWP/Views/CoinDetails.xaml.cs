@@ -43,6 +43,10 @@ namespace UWP.Views {
         private static ThreadPoolTimer ChartPeriodicTimer;
         private static ThreadPoolTimer PricePeriodicTimer;
 
+        private bool newestFirst = true;
+        private bool chartShowAlerts = false;
+        private bool chartShowPurchases = false;
+
         public CoinDetails() {
             InitializeComponent();
 
@@ -58,7 +62,10 @@ namespace UWP.Views {
             if (animation != null)
                 animation.TryStart(PriceChart, new UIElement[] { ChartCard });
 
-            
+            /// Get showPurchases
+            chartShowAlerts = App._LocalSettings.Get<bool>(UserSettings.ChartShowAlerts);
+            chartShowPurchases = App._LocalSettings.Get<bool>(UserSettings.ChartShowPurchases);
+
             /// Get timespan before updating
             timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
             TimeRangeRadioButtons.TimeSpan = timeSpan;
@@ -156,6 +163,7 @@ namespace UWP.Views {
 
             await UpdateCoin();
             await UpdatePortfolio();
+            UpdatePrice();
 
             //CryptoCompare.GetExchanges(crypto);
         }
@@ -163,7 +171,7 @@ namespace UWP.Views {
         private async Task GetCoinGeckoInfo(string crypto) {
             var matches = App.coinListGecko.Where(x => x.symbol.Equals(crypto,
                             StringComparison.InvariantCultureIgnoreCase)).ToList();
-            if (matches != null) {
+            if (matches != null && matches.Count > 0) {
                 var id = matches[0].id;
                 if (matches.Count > 1)
                     id = matches.FirstOrDefault(x => !x.name.Contains("Peg"))?.id ?? id;
@@ -185,6 +193,9 @@ namespace UWP.Views {
 
             /// Colors
             vm.Chart.ChartStroke = ColorConstants.GetCoinBrush(crypto);
+            if (vm.Chart.ChartStroke.Color == ColorConstants.GetColorBrush("coin_NULL").Color)
+                Microsoft.AppCenter.Analytics.Analytics.TrackEvent("no-color-coin",
+                    new Dictionary<string, string>() { { "Coin", crypto } });
 
             /// Get Historic and create List of ChartData for the chart (plus LinearAxis)
             var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);
@@ -201,12 +212,7 @@ namespace UWP.Views {
                 });
             }
             vm.Chart.ChartData = chartData;
-            var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
-            vm.Chart.LabelFormat = temp.LabelFormat;
-            vm.Chart.Minimum = temp.Minimum;
-            vm.Chart.MajorStepUnit = temp.MajorStepUnit;
-            vm.Chart.MajorStep = temp.MajorStep;
-            vm.Chart.TickInterval = temp.TickInterval;
+            vm.Chart.ChartStyling = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
 
             vm.Coin.VolumeToTotal = histo.Sum(x => x.volumeto);
 
@@ -225,19 +231,13 @@ namespace UWP.Views {
 
         private async Task UpdatePortfolio() {
             var portfolio = await PortfolioHelper.GetPortfolio(vm.Coin.Name);
+            portfolio = portfolio.OrderByDescending(x => x.Date).ToList();
             vm.Purchases = new ObservableCollection<PurchaseModel>(portfolio);
 
             for (int i = 0; i < vm.Purchases.Count; i++)
                 vm.Purchases[i] = await PortfolioHelper.UpdatePurchase(vm.Purchases[i]);
 
-            vm.TotalQty = vm.Purchases.Sum(x => x.CryptoQty);
-            vm.TotalProfit = vm.Purchases.Sum(x => x.Profit);
-            vm.TotalValue = vm.TotalQty * vm.Coin.Price;
-            //vm.TotalValue = vm.Purchases.Sum(x => x.Worth);
-
-            var totalInvested = vm.Purchases.Sum(x => x.InvestedQty);
-            if (totalInvested != 0)
-                vm.AvgPrice = NumberHelper.Rounder(totalInvested / vm.TotalQty);
+            vm.LastUpdate = DateTime.Now;
         }
 
         // #########################################################################################
@@ -327,15 +327,26 @@ namespace UWP.Views {
         private void ShowCandles_Click(object sender, RoutedEventArgs e)
             => vm.ShowCandles = !vm.ShowCandles;
 
+        private void ShowPurchases_Click(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set<bool>(UserSettings.ChartShowPurchases, chartShowPurchases);
+
+        private void ShowAlerts_Click(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set<bool>(UserSettings.ChartShowAlerts, chartShowAlerts);
+
         private async void NewPurchase_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {
                 NewPurchase = new PurchaseModel() { Crypto = vm.Coin.Name },
-                SuggestionCoin = new SuggestionCoin(vm.Coin)
+                SuggestionCoin = new SuggestionCoin(vm.Coin),
+                PrimaryButtonText = "Add",
+                Title = "💵 New transaction"
             };
             var response = await dialog.ShowAsync();
             if (response == ContentDialogResult.Primary) {
+                await PortfolioHelper.AddPurchase(dialog.NewPurchase);
+
                 vm.Purchases.Add(dialog.NewPurchase);
-                PortfolioHelper.AddPurchase(dialog.NewPurchase);
+                SortPurchases(newestFirst);
+                await UpdatePortfolio();
             }
         }
 
@@ -360,6 +371,35 @@ namespace UWP.Views {
 
         private async void PortfolioList_UpdateParent(object sender, EventArgs e) {
             await UpdatePage();
+        }
+
+        private void SortPurchases_click(object sender, RoutedEventArgs e) {
+            newestFirst = !newestFirst;
+            SortPurchases(newestFirst);
+        }
+
+        private void SortPurchases(bool descending) {
+            List<PurchaseModel> sortedSource;
+
+            sortedSource = descending ?
+                vm.Purchases.OrderByDescending(x => x.Date).ToList() :
+                vm.Purchases.OrderBy(x => x.Date).ToList();
+
+            for (var i = 0; i < sortedSource.Count; i++) {
+                var itemToSort = sortedSource[i];
+
+                // If the item is already at the right position, leave it and continue.
+                if (vm.Purchases.IndexOf(itemToSort) == i)
+                    continue;
+
+                vm.Purchases.Remove(itemToSort);
+                vm.Purchases.Insert(i, itemToSort);
+            }
+
+        }
+
+        private void ToggleDetails_click(object sender, RoutedEventArgs e) {
+            vm.ShowDetails = !vm.ShowDetails;
         }
     }
 }

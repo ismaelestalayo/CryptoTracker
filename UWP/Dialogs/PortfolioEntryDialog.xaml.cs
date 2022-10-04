@@ -1,16 +1,11 @@
-﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using UWP;
 using UWP.Models;
-using UWP.Services;
 using UWP.Shared.Constants;
+using UWP.Shared.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
-// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace CryptoTracker.Dialogs {
     public sealed partial class PortfolioEntryDialog : ContentDialog {
@@ -19,6 +14,8 @@ namespace CryptoTracker.Dialogs {
 
         public PortfolioEntryDialog() {
             InitializeComponent();
+
+            RequestedTheme = ColorConstants.CurrentThemeIsDark() ? ElementTheme.Dark : ElementTheme.Light;
         }
 
         public static readonly DependencyProperty NewPurchaseProperty =
@@ -73,35 +70,8 @@ namespace CryptoTracker.Dialogs {
 
         /// ###############################################################################################
         ///  Calculate a purchase's profit and worth live
-        internal async Task<PurchaseModel> UpdatePurchaseAsync(PurchaseModel purchase) {
-            string crypto = purchase.Crypto;
+        internal async Task<PurchaseModel> UpdatePurchaseAsync(PurchaseModel purchase)
+            => await PortfolioHelper.UpdatePurchase(purchase);
 
-            if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
-                purchase.Current = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
-                    crypto, purchase.Currency);
-
-            var curr = purchase.Current;
-            purchase.Worth = Math.Round(curr * purchase.CryptoQty, 2);
-
-            /// If the user has also filled the invested quantity, we can calculate everything else
-            if (purchase.InvestedQty >= 0) {
-                double priceBought = (1 / purchase.CryptoQty) * purchase.InvestedQty;
-                priceBought = Math.Round(priceBought, 4);
-
-                double earningz = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
-                purchase.BoughtAt = priceBought;
-                purchase.Delta = Math.Round(curr / priceBought, 2) * 100;
-                if (purchase.Delta > 100)
-                    purchase.Delta -= 100;
-                purchase.Profit = Math.Round(earningz, 2);
-                purchase.ProfitFG = (earningz < 0) ?
-                    (SolidColorBrush)App.Current.Resources["pastelRed"] :
-                    (SolidColorBrush)App.Current.Resources["pastelGreen"];
-            }
-            if (purchase.InvestedQty == 0)
-                purchase.Delta = 0;
-
-            return purchase;
-        }
     }
 }

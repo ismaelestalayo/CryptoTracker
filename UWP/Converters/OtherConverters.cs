@@ -1,4 +1,5 @@
 ﻿using System;
+using UWP.Core.Constants;
 using UWP.Shared.Constants;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -46,20 +47,25 @@ namespace UWP.Converters {
             => throw new NotImplementedException();
     }
 
-    public class BrushToColorTr1Converter : IValueConverter {
+    public class BrushToColorTransparentConverter : IValueConverter {
+        public int Transparency { get; set; }
         public object Convert(object val, Type targetType, object param, string lang) {
             var color = ((SolidColorBrush)val).Color;
-            return Color.FromArgb(64, color.R, color.G, color.B);
+
+            if (App._LocalSettings.Get<bool>(UserSettings.Minimal))
+                return Color.FromArgb(0, color.R, color.G, color.B);
+
+            return Color.FromArgb((byte)Transparency, color.R, color.G, color.B);
         }
 
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
 
-    public class BrushToColorTr2Converter : IValueConverter {
+    public class BrushToColorConverter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang) {
             var color = ((SolidColorBrush)val).Color;
-            return Color.FromArgb(16, color.R, color.G, color.B);
+            return Color.FromArgb(255, color.R, color.G, color.B);
         }
 
         public object ConvertBack(object val, Type targetType, object param, string lang)

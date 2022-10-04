@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:UWP.Converters"
-    xmlns:userControls="using:UWP.UserControls"
+    xmlns:usercontrols="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600"
     d:Width="500"
@@ -16,47 +16,45 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style TargetType="StackPanel" x:Key="Title">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 5"/>
-        </Style>
-
-        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
-
         <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind vm.CvsSource, Mode=OneWay}"/>
-        <converters:ListCountToVisibleConverter Inverse="True" x:Key="ListCount2VisibilityInverted"/>
+
+        <converters:ListCountToVisibleConverter x:Key="ListCount2VisibilityInverted" Inverse="True"/>
     </Page.Resources>
 
-    <!-- //////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!--
+        //////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////
+    -->
     <ScrollViewer>
-        <StackPanel>
-            <!-- ALERTS -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xEA8F;"/>
-                <TextBlock Text="Alerts" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+        <StackPanel Margin="0 0 15 0" Spacing="3">
 
-            <TextBlock
-                Text="Once an alert is fired it shows a toast notification and is then disabled not to spam (you can manually enable it again and change the threshold)."/>
-            <userControls:AlertListGrouped
-                Alerts="{x:Bind vm.Alerts, Mode=OneWay}"
-                Margin="-10 0"/>
+            <!--  ALERTS  -->
+            <usercontrols:SettingsBlockControl
+                Title="Alerts"
+                Description="A background job runs every 15mins to check price alerts. Once fired alerts are disabled not to spam (but you can re-enable them).">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE121;"/>
+                </usercontrols:SettingsBlockControl.Icon>
 
-            <!-- NO ALERTS WARNING -->
-            <StackPanel
-                HorizontalAlignment="Left"
-                Margin="0 25 0 0"
-                Width="325"
-                Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
+                <Button Content="Test" Click="AlertsTest_Click"/>
+            </usercontrols:SettingsBlockControl>
+
+            <usercontrols:AlertListGrouped Margin="10 0" HorizontalAlignment="Left" Alerts="{x:Bind vm.Alerts, Mode=OneWay}"/>
+
+
+            <!--  NO ALERTS WARNING  -->
+            <StackPanel Margin="0 50 0 0" HorizontalAlignment="Center" Visibility="{x:Bind vm.Alerts.Count, Mode=OneWay, Converter={StaticResource ListCount2VisibilityInverted}}">
                 <TextBlock
-                    FontWeight="Bold" HorizontalAlignment="Center"
-                    Text="You have no alerts"
-                    Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                <TextBlock
-                    FontWeight="Light" FontSize="16"
                     HorizontalAlignment="Center"
-                    Text="Try adding one from a coin's page" Opacity="0.7"/>
+                    FontWeight="Bold"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="You have no alerts"/>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="Light"
+                    Opacity="0.7"
+                    Text="Try adding one from a coin's page"/>
             </StackPanel>
 
         </StackPanel>

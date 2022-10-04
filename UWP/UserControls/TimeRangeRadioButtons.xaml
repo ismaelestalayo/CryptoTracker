@@ -119,7 +119,7 @@
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="1d"/>
 
         <Border Visibility="{x:Bind FullRange}"/>
-        <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="3d" Visibility="{x:Bind FullRange}"/>
+        <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="4d" Visibility="{x:Bind FullRange}"/>
 
         <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="1w" Visibility="{x:Bind FullRange}" IsChecked="True"/>
@@ -132,6 +132,9 @@
 
         <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="1y" Visibility="{x:Bind FullRange}"/>
+
+        <Border Visibility="{x:Bind FullRange}"/>
+        <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="2y" Visibility="{x:Bind FullRange}"/>
 
         <Border Visibility="{x:Bind FullRange}"/>
         <RadioButton GroupName="Home" Click="UpdateTimeSpan" Content="all" Visibility="{x:Bind FullRange}"/>

@@ -1,5 +1,6 @@
 ﻿using CryptoTracker.Dialogs;
 using CryptoTracker.Helpers;
+using CryptoTracker.Views;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
@@ -14,6 +15,7 @@ using UWP.Helpers;
 using UWP.Models;
 using UWP.Services;
 using UWP.Shared.Constants;
+using UWP.Shared.Extensions;
 using UWP.Shared.Helpers;
 using UWP.Shared.Interfaces;
 using UWP.Shared.Models;
@@ -21,6 +23,7 @@ using UWP.UserControls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,9 +36,12 @@ namespace UWP.Views {
         /// Variables to get historic
         private static int limit = 168;
         private static int aggregate = 1;
-        private static string timeSpan = "1w";
+        private string Timespan { get; set; } = "1w";
         private static string timeUnit = "hour";
-        private static string sortedBy = "";
+        private static string sortedBy = "Date";
+
+        /// Timers for auto-refresh
+        private static ThreadPoolTimer PortfolioPeriodicTimer;
 
         private ObservableCollection<PurchaseModel> LocalPurchases;
 
@@ -45,25 +51,37 @@ namespace UWP.Views {
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             /// Get timespan before updating
-            timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
-            TimeRangeRadioButtons.TimeSpan = timeSpan;
-            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+            Timespan = App._LocalSettings.Get<string>(UserSettings.Timespan);
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[Timespan];
 
             /// Get the portfolio and group it
             LocalPurchases = await RetrievePortfolio();
             vm.Portfolio = await PortfolioHelper.GroupPortfolio(LocalPurchases);
             await UpdatePage();
+
+
+            PortfolioPeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) => {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                    await UpdatePage();
+                });
+            }, TimeSpan.FromMinutes(2));
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e) {
+            PortfolioPeriodicTimer?.Cancel();
         }
 
         public async Task UpdatePage() {
-            vm.Chart.IsLoading = true;
-
             vm.CurrencySymbol = App.currencySymbol;
 
             /// Empty diversification chart and reset the Total amounts
             PortfolioChartGrid.ColumnDefinitions.Clear();
             PortfolioChartGrid.Children.Clear();
 
+            //if (vm.Portfolio.Count == 0)
+            //    return;
+
+            vm.Chart.IsLoading = true;
             /// Update the purchase details first
             for (int i = 0; i < vm.Portfolio.Count; i++)
                 await PortfolioHelper.UpdatePurchase(vm.Portfolio[i]);
@@ -163,14 +181,21 @@ namespace UWP.Views {
             var histos = new List<List<HistoricPrice>>(nPurchases);
             foreach (var crypto in uniqueCryptos) {
                 var histo = await Ioc.Default.GetService<ICryptoCompare>().GetHistoric_(crypto, timeUnit, limit, aggregate);
-                var cryptoQty = vm.Portfolio.Where(x => x.Crypto == crypto).Sum(x => x.CryptoQty);
-                cryptoWorth.Add(histo.Select(x => x.Average * cryptoQty).ToList());
-                histos.Add(histo);
+                /// If histo is empty, dont add to chart
+                if (histo.Count > 0) {
+                    var cryptoQty = vm.Portfolio.Where(x => x.Crypto == crypto).Sum(x => x.CryptoQty);
+                    cryptoWorth.Add(histo.Select(x => x.Average * cryptoQty).ToList());
+                    histos.Add(histo);
+                }
             }
+
+            /// If there's no data, return
+            if (histos.Count == 0)
+                return;
 
             /// There might be young cryptos that didnt exist in the past, so take the common minimum 
             var minCommon = histos.Min(x => x.Count);
-            if (minCommon == 1)
+            if (minCommon < 2)
                 return;
 
             /// Check if all arrays are equal length, if not, remove the leading values
@@ -195,12 +220,7 @@ namespace UWP.Views {
                 });
             }
             vm.Chart.ChartData = chartData;
-            var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
-            vm.Chart.LabelFormat = temp.LabelFormat;
-            vm.Chart.Minimum = temp.Minimum;
-            vm.Chart.MajorStepUnit = temp.MajorStepUnit;
-            vm.Chart.MajorStep = temp.MajorStep;
-            vm.Chart.TickInterval = temp.TickInterval;
+            vm.Chart.ChartStyling = GraphHelper.AdjustLinearAxis(new ChartStyling(), Timespan);
 
             vm.Chart.ChartStroke = (vm.TotalDelta >= 0) ?
                 ColorConstants.GetColorBrush("pastel_green") : ColorConstants.GetColorBrush("pastel_red");
@@ -222,6 +242,9 @@ namespace UWP.Views {
             else
                 MainGrid.RowDefinitions[3].Height = new GridLength(1, GridUnitType.Star);
         }
+
+        private void TogglePrivate_click(object sender, RoutedEventArgs e)
+            => vm.PrivateMode = !vm.PrivateMode;
 
         /// ###############################################################################################
         /// Add purchase dialog
@@ -246,9 +269,9 @@ namespace UWP.Views {
 
         private void TimeRangeButtons_Tapped(object sender, TappedRoutedEventArgs e) {
             if (sender != null)
-                timeSpan = ((TimeRangeRadioButtons)sender).TimeSpan;
+                Timespan = ((TimeRangeRadioButtons)sender).TimeSpan;
 
-            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[timeSpan];
+            (timeUnit, limit, aggregate) = GraphHelper.TimeSpanParser[Timespan];
             UpdatePage();
         }
 
@@ -382,5 +405,42 @@ namespace UWP.Views {
             }
             // else: Operation cancelled
         }
+
+        private void SortToggleSplitButton_IsCheckedChanged(Microsoft.UI.Xaml.Controls.ToggleSplitButton sender, Microsoft.UI.Xaml.Controls.ToggleSplitButtonIsCheckedChangedEventArgs args) {
+            switch (sortedBy.ToLowerInvariant()) {
+                case "coin":
+                    vm.Portfolio.Sort(x => x.Crypto, SortToggleSplitButton.IsChecked);
+                    break;
+                case "date":
+                    vm.Portfolio.Sort(x => x.Date, !SortToggleSplitButton.IsChecked);
+                    break;
+                case "delta":
+                    vm.Portfolio.Sort(x => x.Delta, !SortToggleSplitButton.IsChecked);
+                    break;
+                case "invested":
+                    vm.Portfolio.Sort(x => x.InvestedQty, !SortToggleSplitButton.IsChecked);
+                    break;
+                case "worth":
+                    vm.Portfolio.Sort(x => x.Worth, !SortToggleSplitButton.IsChecked);
+                    break;
+            }
+        }
+
+        private void SortButton_Click(object sender, RoutedEventArgs e) {
+            var glyph = ((FontIcon)((StackPanel)((Button)sender).Content).Children[0]).Glyph;
+            var text = ((TextBlock)((StackPanel)((Button)sender).Content).Children[1]).Text;
+
+            sortedBy = text;
+
+            myFontIcon.Glyph = glyph;
+            SortToggleSplitButton.Flyout.Hide();
+            SortToggleSplitButton_IsCheckedChanged(null, null);
+        }
+
+        private async void Analytics_Click(object sender, RoutedEventArgs e) {
+            var analyticsDialog = new PortfolioAnalytics(vm);
+            await analyticsDialog.ShowAsync();
+        }
+
     }
 }

@@ -53,7 +53,7 @@ namespace UWP.Views {
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
             this.RegisterBackgroundTask();
 
-            var param = e.Parameter.ToString();
+            var param = e.Parameter?.ToString();
             // if there's no param (tile or jump list) check user's startup page
             if (string.IsNullOrEmpty(param))
                 param = App._LocalSettings.Get<string>(UserSettings.StartupPage);            
@@ -235,8 +235,16 @@ namespace UWP.Views {
         private void ContentFrame_Navigating(object sender, NavigatingCancelEventArgs e) {
             var toPage = e.SourcePageType.Name;
             App.CurrentPage = toPage;
-            NavView.IsPaneVisible = (toPage == "CoinCompact") ? false : true;
-            CustomAppTitleBar.Margin = (toPage == "CoinCompact") ? new Thickness(46, 0, 0, 0) : new Thickness(0);
+            if (toPage == "CoinCompact") {
+                NavView.IsPaneVisible = false;
+                CustomAppTitleBar.Margin = new Thickness(46, 0, 0, 0);
+                CustomAppTitleBarLogo.Opacity = 0;
+            }
+            else {
+                NavView.IsPaneVisible = true;
+                CustomAppTitleBar.Margin = new Thickness(0);
+                CustomAppTitleBarLogo.Opacity = 1;
+            }
         }
 
         /// #######################################################################################
@@ -268,7 +276,13 @@ namespace UWP.Views {
 
         /// #######################################################################################
         ///  Search button
-        private void NavView_Search_Tapped(object sender, TappedRoutedEventArgs e) {
+        private void NavView_Search_Tapped(object sender, TappedRoutedEventArgs e)
+            => ShowAutoSuggestBox();
+
+        private void CtrlF_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+            => ShowAutoSuggestBox();
+
+        private void ShowAutoSuggestBox() {
             AutoSuggestBox.Visibility = Visibility.Visible;
             AutoSuggestBox.Focus(FocusState.Programmatic);
         }

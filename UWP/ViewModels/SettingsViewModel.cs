@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using UWP.Core.Constants;
 using UWP.Models;
 using UWP.Shared.Constants;
+using Windows.ApplicationModel;
 
 namespace UWP.ViewModels {
     partial class SettingsViewModel : ObservableRecipient {
@@ -50,6 +51,12 @@ namespace UWP.ViewModels {
 
         [ObservableProperty]
         private string startupPage;
+
+        [ObservableProperty]
+        private bool openInLogin = false;
+
+        [ObservableProperty]
+        private bool canOpenInLogin = false;
 
 
         /// #######################################################################################

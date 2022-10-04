@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:usercontrols="using:CryptoTracker.UserControls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:converters="using:UWP.Converters"
     xmlns:userControls="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
@@ -36,14 +38,15 @@
         </Style>
 
         <converters:BoolIsLoadingToOpacity x:Key="IsLoadingOpacity"/>
-        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
-        <converters:DateTimeShortener x:Key="DateShortener"/>
-        <converters:DateTimeFormatter x:Key="DateFormater"/>
         <converters:BoolToVisibility x:Key="BoolVisibilityConverter"/>
         <converters:BoolToVisibility Inverse="True" x:Key="BoolVisibilityInverter"/>
         <converters:BoolInverter x:Key="BoolInverter"/>
+        <converters:DateTimeFormatter x:Key="DateFormater"/>
+        <converters:DateTimeShortener x:Key="DateShortener"/>
         <converters:DoubleToVisibilityConverter x:Key="DoubleToVisibility"/>
         <converters:DoubleToVisibilityConverter Inverse="True" x:Key="DoubleToVisibilityNOT"/>
+        <converters:NumberEqualTargetToVisibilityConverter Target="0" Inverse="True" x:Key="EmptyList2Invisibile"/>
+        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Margin="0 5" MaxWidth="1860">
@@ -65,32 +68,17 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BottomUniformGrid.Columns" Value="1"/>
-                        <Setter Target="BottomUniformGrid.Rows" Value="5"/>
-                        <Setter Target="BottomUniformGrid.Height" Value="900"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState x:Name="Narrow">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="BottomUniformGrid.Columns" Value="2"/>
-                        <Setter Target="BottomUniformGrid.Rows" Value="3"/>
-                        <Setter Target="BottomUniformGrid.Height" Value="550"/>
+                        <Setter Target="TotalsGrid.ColumnDefinitions[1].Width" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
 
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="850"/>
+                        <AdaptiveTrigger MinWindowWidth="750"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BottomUniformGrid.Columns" Value="3"/>
-                        <Setter Target="BottomUniformGrid.Rows" Value="2"/>
-                        <Setter Target="BottomUniformGrid.Height" Value="370"/>
                         <Setter Target="ChartRow.MaxHeight" Value="850"/>
+                        <Setter Target="TotalsGrid.ColumnDefinitions[1].Width" Value="*"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -99,10 +87,6 @@
                         <AdaptiveTrigger MinWindowWidth="1300"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BottomUniformGrid.Columns" Value="4"/>
-                        <Setter Target="BottomUniformGrid.Rows" Value="2"/>
-                        <Setter Target="BottomUniformGrid.Height" Value="370"/>
-                        <Setter Target="InfoCard.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="ChartRow.MaxHeight" Value="900"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -115,12 +99,12 @@
         #################################################################################################### -->
         <usercontrols:FluentCard>
             <usercontrols:FluentCard.ExpandableContent>
-                <Grid Margin="-7">
+                <Grid Margin="-10 -7">
                     <StackPanel Orientation="Horizontal">
                         <Image
                             d:Source="/Assets/Icons/iconBTC.png"
                             Source="{x:Bind vm.Coin.Logo}"
-                            Margin="0 0 7 0" Width="42"
+                            Margin="0 0 10 0" Width="42"
                             VerticalAlignment="Center"/>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
                             <StackPanel Orientation="Horizontal" Spacing="5" Margin="0 -5 0 0">
@@ -232,7 +216,7 @@
                                 --><Run Text="{x:Bind vm.Coin.Diff, Converter={StaticResource NumberRounder}}"/><!--
                                 --><Run Text="{x:Bind vm.Coin.CurrencySym}"/>
                             </TextBlock>
-                            <userControls:DiffTextBlock Visibility="Visible"
+                            <userControls:DiffTextBlock
                                 Diff="{x:Bind vm.Coin.DiffPct}"
                                 DiffFg="{x:Bind vm.Coin.DiffFG}"
                                 Margin="0 0 0 0"/>
@@ -399,50 +383,68 @@
                     </controls:Loading>
 
                     <userControls:ChartAreaFull
-                        x:Name="PriceChart" Margin="-20 -15 -20 5"
+                        x:Name="PriceChart" Margin="-20 -15 -20 10"
+                        Alerts="{x:Bind vm.Alerts}"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
+                        Purchases="{x:Bind vm.Purchases}"
+                        ShowAlerts="{x:Bind ShowAlertsCheckBox.IsChecked}"
+                        ShowPurchases="{x:Bind ShowPurchasesCheckBox.IsChecked}"
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityInverter}}"/>
 
                     <userControls:ChartCandles
-                        x:Name="CandleChart" Margin="-20 -15 -20 5"
+                        x:Name="CandleChart" Margin="-20 -15 -20 10"
+                        Alerts="{x:Bind vm.Alerts}"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
+                        Purchases="{x:Bind vm.Purchases}"
+                        ShowAlerts="{x:Bind ShowAlertsCheckBox.IsChecked}"
+                        ShowPurchases="{x:Bind ShowPurchasesCheckBox.IsChecked}"
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityConverter}}"/>
                     
                     <!-- Time RadioButtons + side buttons -->
-                    <RelativePanel Grid.Row="1" Margin="-15 5 -15 0">
-                        <userControls:ToggleIconButton
-                            Click="ShowCandles_Click"
-                            Height="28" Opacity="0.75"
-                            Tooltip="Toggle chart type"
-                            RelativePanel.LeftOf="TimeRangeRadioButtons">
-                            <userControls:ToggleIconButton.CheckedIcon>
-                                <FontIcon Glyph="&#xE9D2;"/>
-                            </userControls:ToggleIconButton.CheckedIcon>
-                            <userControls:ToggleIconButton.UncheckedIcon>
-                                <PathIcon
-                                    Data="M12 0.999999C12 0.729156 12.099 0.494781 12.2969 0.296875C12.4948 0.0989684 12.7292 0 13 0L15 0C15.2708 0 15.5052 0.0989684 15.7031 0.296875C15.901 0.494781 16 0.729156 16 0.999999L16 13C16 13.2708 15.901 13.5052 15.7031 13.7031C15.5052 13.901 15.2708 14 15 14L13 14C12.7292 14 12.4948 13.901 12.2969 13.7031C12.099 13.5052 12 13.2708 12 13L12 0.999999ZM3 4C3.27084 4 3.50522 4.09897 3.70312 4.29687C3.90103 4.49478 4 4.72916 4 5L4 13C4 13.2708 3.90103 13.5052 3.70312 13.7031C3.50522 13.901 3.27084 14 3 14L1 14C0.729156 14 0.494781 13.901 0.296875 13.7031C0.0989685 13.5052 0 13.2708 0 13L0 5C0 4.72916 0.0989685 4.49478 0.296875 4.29687C0.494781 4.09897 0.729156 4 1 4L3 4ZM9 8C9.27084 8 9.50522 8.09897 9.70312 8.29688C9.90103 8.49478 10 8.72916 10 9L10 13C10 13.2708 9.90103 13.5052 9.70312 13.7031C9.50522 13.901 9.27084 14 9 14L7 14C6.72916 14 6.49478 13.901 6.29688 13.7031C6.09897 13.5052 6 13.2708 6 13L6 9C6 8.72916 6.09897 8.49478 6.29688 8.29688C6.49478 8.09897 6.72916 8 7 8L9 8Z"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </userControls:ToggleIconButton.UncheckedIcon>
-                        </userControls:ToggleIconButton>
+                    <StackPanel
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Margin="-15 0"
+                        Orientation="Horizontal"
+                        Spacing="5">
+
                         <userControls:TimeRangeRadioButtons
                             x:Name="TimeRangeRadioButtons"
-                            Grid.Row="1" TimeSpan="{x:Bind vm.Chart.TimeSpan}"
+                            TimeSpan="{x:Bind vm.Chart.TimeSpan}"
                             HorizontalAlignment="Center"
-                            Margin="7 0"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True"
                             Tapped="TimeRangeButtons_Tapped"/>
-                        <!-- TODO -->
-                        <Button Visibility="Collapsed"
-                            Content="&#xE9A6;"
-                            FontSize="20"
-                            HorizontalAlignment="Right"
-                            RelativePanel.AlignVerticalCenterWithPanel="True"
+
+                        <Button
+                            Height="34" Width="34"
                             RelativePanel.RightOf="TimeRangeRadioButtons"
                             Style="{StaticResource IconBtn}"
-                            ToolTipService.ToolTip="Go full screen"/>
-                    </RelativePanel>
+                            ToolTipService.ToolTip="Chart settings">
+                            <Button.Content>
+                                <muxc:AnimatedIcon Width="20">
+                                    <animatedvisuals:AnimatedSettingsVisualSource/>
+                                </muxc:AnimatedIcon>
+                            </Button.Content>
+                            <Button.Flyout>
+                                <Flyout>
+                                    <StackPanel>
+                                        <CheckBox Content="Candle chart" Click="ShowCandles_Click"/>
+                                        <CheckBox
+                                            x:Name="ShowAlertsCheckBox"
+                                            Content="Show alerts"
+                                            Click="ShowAlerts_Click"
+                                            IsChecked="{x:Bind chartShowAlerts, Mode=TwoWay}"/>
+                                        <CheckBox
+                                            x:Name="ShowPurchasesCheckBox"
+                                            Content="Show purchases"
+                                            Click="ShowPurchases_Click"
+                                            IsChecked="{x:Bind chartShowPurchases, Mode=TwoWay}"/>
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </StackPanel>
                 </Grid>
             </usercontrols:FluentCard.ExpandableContent>
         </usercontrols:FluentCard>
@@ -453,38 +455,63 @@
         #################################################################################################### -->
         <usercontrols:FluentCard Grid.Row="3" VerticalAlignment="Top">
             <usercontrols:FluentCard.TitleContent>
-                <Grid>
+                <Grid
+                    x:Name="TotalsGrid"
+                    Margin="-10 0"
+                    Visibility="{x:Bind vm.Purchases.Count, Converter={StaticResource EmptyList2Invisibile}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
                     <usercontrols:DoubleTextBlock
                         Header="Owned:"
                         HorizontalAlignment="Left"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.TotalQty, Mode=OneWay}"/>
+                                <Run Text="{x:Bind vm.TotalCryptoQty, Converter={StaticResource NumberFormatter}, Mode=OneWay}"/>
                                 <Run Text="{x:Bind vm.Coin.Name, Mode=OneWay}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
                     </usercontrols:DoubleTextBlock>
 
                     <usercontrols:DoubleTextBlock
-                        Header="Value:"
-                        HorizontalAlignment="Center"
+                        Header="Avg. Price:"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
                             <TextBlock>
-                                <Run Text="{x:Bind vm.TotalValue,
+                                <Run Text="{x:Bind vm.TotalAvgPrice, Converter={StaticResource NumberRounder}}"/><!--
+                                --><Run Text="{x:Bind vm.CurrencySymbol}"/>
+                            </TextBlock>
+                        </usercontrols:DoubleTextBlock.Value>
+                    </usercontrols:DoubleTextBlock>
+                    
+                    <usercontrols:DoubleTextBlock
+                        Header="Invested:"
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Spacing="5">
+                        <usercontrols:DoubleTextBlock.Value>
+                            <TextBlock>
+                                <Run Text="{x:Bind vm.TotalInvested,
                                     Converter={StaticResource NumberRounder}}"/><Run Text="{x:Bind vm.CurrencySymbol}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
                     </usercontrols:DoubleTextBlock>
 
                     <usercontrols:DoubleTextBlock
-                        Header="Avg. Price:"
+                        Header="Profit:"
                         HorizontalAlignment="Right"
+                        Grid.Column="3"
                         Spacing="5">
                         <usercontrols:DoubleTextBlock.Value>
-                            <TextBlock>
-                                <Run Text="{x:Bind vm.AvgPrice, Converter={StaticResource NumberRounder}}"/><!--
+                            <TextBlock Foreground="{x:Bind vm.TotalProfit, Converter={StaticResource NumberForeground}}">
+                                <Run Text="{x:Bind vm.TotalProfit, Converter={StaticResource NumberSign}}"/><!--
                                 --><Run Text="{x:Bind vm.CurrencySymbol}"/>
                             </TextBlock>
                         </usercontrols:DoubleTextBlock.Value>
@@ -497,14 +524,22 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Button
-                        Background="Transparent" CornerRadius="6"
-                        BorderThickness="0.5" BorderBrush="{ThemeResource ButtonForegroundThemeBrush}"
-                        Click="NewPurchase_click" Content="Add new purchase"
-                        HorizontalAlignment="Center" Margin="0 0 0 10"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10" Spacing="5">
+                        <Button
+                            Click="NewPurchase_click" Content="New transaction"
+                            HorizontalAlignment="Center"/>
+
+                        <Button
+                            Click="SortPurchases_click" Padding="10 7" ToolTipService.ToolTip="Toggle date sorting"
+                            Visibility="{x:Bind vm.Purchases.Count, Converter={StaticResource EmptyList2Invisibile}}">
+                            <FontIcon Glyph="&#xE8CB;"/>
+                        </Button>
+                    </StackPanel>
                     <userControls:PortfolioList
                         Grid.Row="1"
+                        Margin="-7 0"
                         Purchases="{x:Bind vm.Purchases}"
+                        ShowDetails="{x:Bind vm.ShowDetails}"
                         UpdateParent="PortfolioList_UpdateParent"/>
                 </Grid>
             </usercontrols:FluentCard.ExpandableContent>

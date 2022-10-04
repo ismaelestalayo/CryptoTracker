@@ -4,6 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:converters="using:UWP.Converters"
+    xmlns:usercontrols="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
     d:Height="600"
     d:Width="500"
@@ -14,31 +17,26 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <Style TargetType="StackPanel" x:Key="SettingsSectionTitle">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 0"/>
-        </Style>
-
-        <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
-            <Setter Property="Height" Value="33"/>
-        </Style>
-
-        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
+        <converters:BoolInverter x:Key="BoolInverter"/>
     </Page.Resources>
 
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Spacing="3" Margin="0 0 15 0">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
+
             <!-- CURRENCY -->
-            <StackPanel Style="{StaticResource SettingsSectionTitle}">
-                <FontIcon Glyph="&#xE909;"/>
-                <TextBlock Text="Currency" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
-
-            <TextBlock Text="Choose the fiat in which to display prices and used in transactions."/>
-
-            <StackPanel Orientation="Horizontal" Spacing="10">
+            <usercontrols:SettingsBlockControl
+                Title="Currency"
+                Description="Choose the fiat in which to display prices and use in transactions">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE909;" />
+                </usercontrols:SettingsBlockControl.Icon>
                 <ComboBox
                     Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
                     Margin="0 5 0 0" Width="110"
@@ -54,70 +52,96 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </StackPanel>
-
-
-            <!-- AUTO-REFRESH -->
-            <StackPanel Style="{StaticResource SettingsSectionTitle}">
-                <FontIcon Glyph="&#xE121;"/>
-                <TextBlock Text="Auto-refresh" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
-            <TextBlock>
-                <Run Text="Choose the frequency of auto-refresh on Home, Details and Compact Overlay pages."/>
-                <Run Text="&#x0a;(Charts update minutely because of API limitations.)" FontStyle="Italic"/>
-            </TextBlock>
-            <ComboBox
-                SelectedItem="{x:Bind vm.AutoRefresh, Mode=TwoWay}"
-                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                Margin="0 5 0 0" Width="110">
-                <x:String>None</x:String>
-                <x:String>30 sec</x:String>
-                <x:String>1 min</x:String>
-                <x:String>2 min</x:String>
-            </ComboBox>
+            </usercontrols:SettingsBlockControl>
             
+            
+            <!-- AUTO-REFRESH -->
+            <usercontrols:SettingsBlockControl
+                Title="Auto-refresh"
+                Description="Automatic refresh frequency on Home, Details and Compact Overlay pages">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE121;" />
+                </usercontrols:SettingsBlockControl.Icon>
+                <ComboBox
+                    SelectedItem="{x:Bind vm.AutoRefresh, Mode=TwoWay}"
+                    Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                    Margin="0 5 0 0" Width="110">
+                    <x:String>None</x:String>
+                    <x:String>30 sec</x:String>
+                    <x:String>1 min</x:String>
+                    <x:String>2 min</x:String>
+                </ComboBox>
+            </usercontrols:SettingsBlockControl>
+
 
             <!-- STARTUP PAGE -->
-            <StackPanel Style="{StaticResource SettingsSectionTitle}">
-                <FontIcon Glyph="&#xE7E8;"/>
-                <TextBlock Text="Startup page" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
-            <TextBlock Text="Initial page to load when opening the app."/>
-            <ComboBox
-                SelectionChanged="StartupPage_SelectionChanged"
-                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                SelectedValue="{x:Bind vm.StartupPage, Mode=TwoWay}"
-                Margin="0 5 0 0" Width="110">
-                <x:String>Home</x:String>
-                <x:String>Coins</x:String>
-                <x:String>News</x:String>
-                <x:String>Portfolio</x:String>
-            </ComboBox>
-            
+            <usercontrols:SettingsBlockControl
+                Title="Startup page"
+                Description="Initial page to load when opening the app">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE161;" />
+                </usercontrols:SettingsBlockControl.Icon>
+                <ComboBox
+                    SelectionChanged="StartupPage_SelectionChanged"
+                    Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                    SelectedValue="{x:Bind vm.StartupPage, Mode=TwoWay}"
+                    Margin="0 5 0 0" Width="110">
+                    <x:String>Home</x:String>
+                    <x:String>Coins</x:String>
+                    <x:String>News</x:String>
+                    <x:String>Portfolio</x:String>
+                </ComboBox>
+            </usercontrols:SettingsBlockControl>
+
 
             <!-- DEFAULT TIMESPAN -->
-            <StackPanel Style="{StaticResource SettingsSectionTitle}">
-                <FontIcon Glyph="&#xE9D2;"/>
-                <TextBlock Text="Default timespan" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
-            <TextBlock Text="Initial graphs' timespan."/>
-            <ComboBox
-                SelectionChanged="Timespan_SelectionChanged"
-                Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
-                SelectedValue="{x:Bind vm.Timespan, Mode=TwoWay}"
-                Margin="0 5 0 0" Width="110">
-                <x:String>1h</x:String>
-                <x:String>4h</x:String>
-                <x:String>1d</x:String>
-                <x:String>3d</x:String>
-                <x:String>1w</x:String>
-                <x:String>1m</x:String>
-                <x:String>3m</x:String>
-                <x:String>1y</x:String>
-                <x:String>all</x:String>
-            </ComboBox>
+            <usercontrols:SettingsBlockControl
+                Title="Default timespan"
+                Description="Initial graphs' timespan">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE9D2;" />
+                </usercontrols:SettingsBlockControl.Icon>
+                <ComboBox
+                    SelectionChanged="Timespan_SelectionChanged"
+                    Foreground="{ThemeResource ApplicationPointerOverForegroundThemeBrush}"
+                    SelectedValue="{x:Bind vm.Timespan, Mode=TwoWay}"
+                    Margin="0 5 0 0" Width="110">
+                    <x:String>1h</x:String>
+                    <x:String>4h</x:String>
+                    <x:String>1d</x:String>
+                    <x:String>3d</x:String>
+                    <x:String>1w</x:String>
+                    <x:String>1m</x:String>
+                    <x:String>3m</x:String>
+                    <x:String>1y</x:String>
+                    <x:String>all</x:String>
+                </ComboBox>
+            </usercontrols:SettingsBlockControl>
 
 
+            <!-- STARTUP -->
+            <usercontrols:SettingsBlockControl
+                Title="Open CryptoTracker on Windows startup">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE7E8;" />
+                </usercontrols:SettingsBlockControl.Icon>
+                <ToggleSwitch
+                    x:Name="StartupToggleSwitch"
+                    IsEnabled="{x:Bind vm.CanOpenInLogin, Mode=OneWay}"
+                    IsOn="{x:Bind vm.OpenInLogin, Mode=OneWay}"
+                    Style="{StaticResource RightAlignedToggleSwitchStyle}">
+                </ToggleSwitch>
+            </usercontrols:SettingsBlockControl>
+            <muxc:InfoBar
+                IsOpen="{x:Bind vm.CanOpenInLogin, Converter={StaticResource BoolInverter}, Mode=OneWay}"
+                Margin="0 -7"
+                CornerRadius="0 0 4 4"
+                Severity="Warning"
+                Message="Startup permission is disabled">
+                <muxc:InfoBar.ActionButton>
+                    <Button Content="Settings" Click="StartupInfoBarBtn_Click" />
+                </muxc:InfoBar.ActionButton>
+            </muxc:InfoBar>
         </StackPanel>
     </ScrollViewer>
 </Page>

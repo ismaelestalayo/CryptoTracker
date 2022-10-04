@@ -43,15 +43,22 @@ namespace UWP.Views {
             await Launcher.LaunchUriAsync(new Uri("https://twitter.com/ismaelestalayo"));
         }
 
+        private async void GithubRepo_Click(object sender, RoutedEventArgs e) {
+            Analytics.TrackEvent("feedback-githubRepo");
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/ismaelestalayo/CryptoTracker"));
+        }
+
         /// #######################################################################################
         private async void Donation_Paypal(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("feedback-donationPaypal");
             await Launcher.LaunchUriAsync(new Uri("https://paypal.me/ismaelEstalayo"));
+            await LottiePlayer.PlayAsync(0, 1, false);
         }
 
         private async void Donation_Kofi(object sender, RoutedEventArgs e) {
             Analytics.TrackEvent("feedback-donationKofi");
             await Launcher.LaunchUriAsync(new Uri("https://ko-fi.com/ismaelestalayo"));
+            await LottiePlayer.PlayAsync(0, 1, false);
         }
 
         private void Donation_Crypto(object sender, RoutedEventArgs e) {
@@ -83,7 +90,5 @@ namespace UWP.Views {
             // rate or review the app.
             return false;
         }
-
-        
     }
 }

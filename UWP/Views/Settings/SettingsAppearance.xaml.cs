@@ -7,14 +7,19 @@ using Windows.UI.Xaml.Controls;
 namespace UWP.Views {
     public sealed partial class SettingsAppearance : Page {
 
+        /// To initialize toggle switches
+        internal bool InitialBackBtnStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.IsBackButtonVisible);
+        internal bool InitialMinimalStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.Minimal);
+        internal bool InitialMonochromeStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.Monochrome);
+        internal bool InitialBWStatus { get; } = App._LocalSettings.Get<bool>(UserSettings.BW);
+
         public SettingsAppearance() {
             InitializeComponent();
             Loaded += SettingsAppearance_Loaded;
+
         }
 
         private void SettingsAppearance_Loaded(object sender, RoutedEventArgs e) {
-            BackButtonSwitch.IsOn = App._LocalSettings.Get<bool>(UserSettings.IsBackButtonVisible);
-
             var theme = App._LocalSettings.Get<string>(UserSettings.Theme);
             switch (theme) {
                 case "Light":
@@ -47,7 +52,17 @@ namespace UWP.Views {
             parentDialog.RequestedTheme = darkTheme ? ElementTheme.Dark : ElementTheme.Light;
         }
 
-        private void BackButton_Toggled(object sender, RoutedEventArgs e)
+        private void BackButtonSwitch_Toggled(object sender, RoutedEventArgs e)
             => App._LocalSettings.Set(UserSettings.IsBackButtonVisible, ((ToggleSwitch)sender).IsOn);
+
+        private void MinimalSwitch_Toggled(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.Minimal, ((ToggleSwitch)sender).IsOn);
+
+        private void MonochromeSwitch_Toggled(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.Monochrome, ((ToggleSwitch)sender).IsOn);
+
+        private void BWSwitch_Toggled(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set(UserSettings.BW, ((ToggleSwitch)sender).IsOn);
+
     }
 }

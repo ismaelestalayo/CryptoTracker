@@ -1,5 +1,6 @@
 ﻿using System;
 using UWP.Shared.Helpers;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace UWP.Converters {
@@ -22,6 +23,36 @@ namespace UWP.Converters {
             double perc = Math.Round((double)val, 2);
             return new NumberSignPrefixer().Convert(perc, targetType, param, lang) + "%";
         }
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
+    public class NumberEqualTargetToBoolConverter : IValueConverter {
+        public bool Inverse { get; set; }
+        public int Target { get; set; }
+        public object Convert(object val, Type targetType, object param, string lang) {
+            if (Inverse)
+                return ((int)val) != Target;
+            else
+                return ((int)val) == Target;
+        }
+
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
+    public class NumberEqualTargetToVisibilityConverter : IValueConverter {
+        public bool Inverse { get; set; }
+        public int Target { get; set; }
+        public object Convert(object val, Type targetType, object param, string lang) {
+            var num = (int)val;
+
+            if (Inverse)
+                return (num != Target) ? Visibility.Visible : Visibility.Collapsed;
+            else
+                return (num == Target) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }
@@ -49,9 +80,13 @@ namespace UWP.Converters {
 
     public class NumberSignPrefixer : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang) {
-            var z = new NumberRounder();
-            double num = double.Parse(z.Convert(val, targetType, param, lang).ToString(), App.UserCulture);
-            return string.Format("{0:+0.#####;-0.#####;}", (double)num);
+            var num = ((double)val).ToString("N5", App.UserCulture).TrimEnd('0').Trim(',');
+            
+            // Negative numbers already has the negative symbol
+            if ((double)val < 0)
+                return num;
+            else
+                return "+" + num;
         }
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
@@ -59,23 +94,10 @@ namespace UWP.Converters {
 
     public class NumberSymbolPrefixer : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang) {
-            var z = new NumberRounder();
-            double num = double.Parse(z.Convert(val, targetType, param, lang).ToString(), App.UserCulture);
-            return string.Format("{0:▲0.#####;▼0.#####;}", (double)num);
+            var num = ((double)val).ToString("N5", App.UserCulture).TrimEnd('0').Trim(',');
+            var prefix = ((double)val >= 0) ? "▲ " : "▼ ";
+            return prefix + num;
         }
-        public object ConvertBack(object val, Type targetType, object param, string lang)
-            => throw new NotImplementedException();
-    }
-
-    public class IntToBoolConverter : IValueConverter {
-        public bool Inverse { get; set; } = false;
-        public object Convert(object val, Type targetType, object param, string lang) {
-            if (Inverse)
-                return ((int)val) == 0;
-            else
-                return ((int)val) != 0;
-        }
-
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }

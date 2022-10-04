@@ -83,21 +83,29 @@ namespace UWP.Services {
             var currency = Ioc.Default.GetService<LocalSettings>().Get<string>(UserSettings.Currency);
             
 
-            object resp;
+            object body;
             try {
                 if (limit == 0)
-                    resp = await service.GetHistoricAll(time, crypto, currency);
+                    body = await service.GetHistoricAll(time, crypto, currency);
                 else
-                    resp = await service.GetHistoric(time, crypto, currency, limit, aggregate);
+                    body = await service.GetHistoric(time, crypto, currency, limit, aggregate);
 
-                var response = JsonSerializer.Deserialize<object>(resp.ToString());
+                var deserialized = JsonSerializer.Deserialize<object>(body.ToString());
 
-                var okey = ((JsonElement)response).GetProperty("Response").ToString();
-                var data = ((JsonElement)response).GetProperty("Data");
+                var response = ((JsonElement)deserialized).GetProperty("Response").ToString();
+                var message = ((JsonElement)deserialized).GetProperty("Message").ToString();
+
+                if (response.ToLowerInvariant() != "success") {
+                    if (message.Contains("market does not exist"))
+                        throw new Exception("Market");
+
+                    throw new Exception();
+                }
+                var data = ((JsonElement)deserialized).GetProperty("Data");
 
                 var timeTo = data.GetProperty("TimeTo").ToString();
                 var timeFrom = data.GetProperty("TimeFrom").ToString();
-                if (!okey.Equals("Success", StringComparison.InvariantCultureIgnoreCase) || timeTo == timeFrom)
+                if (timeTo == timeFrom)
                     throw new Exception();
 
                 var historic = JsonSerializer.Deserialize<List<HistoricPrice>>(data.GetProperty("Data").ToString());

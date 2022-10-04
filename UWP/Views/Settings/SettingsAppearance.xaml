@@ -5,61 +5,88 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:usercontrols="using:UWP.UserControls"
     xmlns:viewModels="using:UWP.ViewModels"
-    d:Height="600"
-    d:Width="500"
+    d:Height="600" d:Width="500"
     mc:Ignorable="d">
 
     <Page.DataContext>
         <viewModels:SettingsViewModel x:Name="vm"/>
     </Page.DataContext>
 
-    <Page.Resources>
-        <Style TargetType="StackPanel" x:Key="Title">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Margin" Value="0 25 0 5"/>
-        </Style>
-
-        <Style TargetType="TextBlock" BasedOn="{StaticResource SettingsSectionDescription}"/>
-    </Page.Resources>
-
     <!-- //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////// -->
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Spacing="3" Margin="0 0 15 0">
             <StackPanel.BackgroundTransition>
                 <BrushTransition/>
             </StackPanel.BackgroundTransition>
+
+            <!--  APPEARANCE  -->
+            <usercontrols:SettingsBlockControl Title="Theme">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE703;"/>
+                </usercontrols:SettingsBlockControl.Icon>
+
+                <Canvas Margin="-235 -24 0 0">
+                    <muxc:RadioButtons
+                        x:Name="ThemeRadioButtons"
+                        Width="270"
+                        HorizontalAlignment="Right"
+                        MaxColumns="3"
+                        SelectionChanged="ThemeRadioButtons_Changed">
+                        <RadioButton MinWidth="80" Tag="theme" Content="Light"/>
+                        <RadioButton MinWidth="80" Tag="theme" Content="Dark"/>
+                        <RadioButton MinWidth="50" Tag="theme" Content="Auto"/>
+                    </muxc:RadioButtons>
+                </Canvas>
+            </usercontrols:SettingsBlockControl>
             
-            <!-- APPEARANCE -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE703;"/>
-                <TextBlock Text="Appearance" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+            
+            <!--  BACK BUTTON  -->
+            <usercontrols:SettingsBlockControl Title="Back button">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE112;"/>
+                </usercontrols:SettingsBlockControl.Icon>
+                <ToggleSwitch
+                    x:Name="BackButtonSwitch"
+                    IsOn="{x:Bind InitialBackBtnStatus, Mode=OneTime}"
+                    Style="{StaticResource RightAlignedToggleSwitchStyle}"
+                    Toggled="BackButtonSwitch_Toggled"/>
+            </usercontrols:SettingsBlockControl>
 
-            <TextBlock Text="Theme"/>
-            <muxc:RadioButtons
-                x:Name="ThemeRadioButtons" 
-                SelectionChanged="ThemeRadioButtons_Changed"
-                MaxColumns="3" Margin="0 -10 0 0" Width="400">
-                <RadioButton Tag="theme" MinWidth="100" Content="Light"/>
-                <RadioButton Tag="theme" MinWidth="100" Content="Dark"/>
-                <RadioButton Tag="theme" MinWidth="100" Content="Windows"/>
-            </muxc:RadioButtons>
+            
+            <!--  MINIMAL BUTTON  -->
+            <usercontrols:SettingsBlockControl
+                Title="Minimal mode"
+                Description="Transparent fill inside chart areas">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xE9D2;"/>
+                </usercontrols:SettingsBlockControl.Icon>
 
+                <ToggleSwitch
+                    x:Name="MinimalSwitch"
+                    IsOn="{x:Bind InitialMinimalStatus, Mode=OneTime}"
+                    Style="{StaticResource RightAlignedToggleSwitchStyle}"
+                    Toggled="MinimalSwitch_Toggled"/>
+            </usercontrols:SettingsBlockControl>
 
-            <!-- BACK BUTTON -->
-            <StackPanel Style="{StaticResource Title}">
-                <FontIcon Glyph="&#xE112;"/>
-                <TextBlock Text="Back button" Style="{ThemeResource SettingsSectionTitleText}"/>
-            </StackPanel>
+            
+            <!--  B&W BUTTON  -->
+            <usercontrols:SettingsBlockControl Visibility="Collapsed"
+                Title="B&amp;W mode"
+                Description="Use black/white colors for all charts">
+                <usercontrols:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xF570;"/>
+                </usercontrols:SettingsBlockControl.Icon>
 
-            <TextBlock>
-                <Run Text="Visibility of the NavigationView's back button."/>
-                <Run Text="&#x0a;(You must restart the app)." FontStyle="Italic"/>
-            </TextBlock>
-            <ToggleSwitch x:Name="BackButtonSwitch" Margin="0 -10 0 0" Toggled="BackButton_Toggled"/>
-
+                <ToggleSwitch
+                    x:Name="MonochromeSwitch"
+                    IsOn="{x:Bind InitialBWStatus, Mode=OneTime}"
+                    Style="{StaticResource RightAlignedToggleSwitchStyle}"
+                    Toggled="BWSwitch_Toggled"/>
+            </usercontrols:SettingsBlockControl>
+            
         </StackPanel>
     </ScrollViewer>
 </Page>

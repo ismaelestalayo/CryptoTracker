@@ -186,13 +186,11 @@ namespace UWP.Views {
                         Close = h.close
                     });
                 }
+                if (chartData.Count == 0)
+                    return;
+
                 vm.PriceCards[i].Chart.ChartData = chartData;
-                var temp = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
-                vm.PriceCards[i].Chart.LabelFormat = temp.LabelFormat;
-                vm.PriceCards[i].Chart.Minimum = temp.Minimum;
-                vm.PriceCards[i].Chart.MajorStepUnit = temp.MajorStepUnit;
-                vm.PriceCards[i].Chart.MajorStep = temp.MajorStep;
-                vm.PriceCards[i].Chart.TickInterval = temp.TickInterval;
+                vm.PriceCards[i].Chart.ChartStyling = GraphHelper.AdjustLinearAxis(new ChartStyling(), timeSpan);
 
                 /// Calculate min-max to adjust axis
                 var MinMax = GraphHelper.GetMinMaxOfArray(chartData.Select(d => d.Value).ToList());
@@ -200,8 +198,8 @@ namespace UWP.Views {
                 vm.PriceCards[i].Chart.VolumeMax = GraphHelper.GetMaxOfVolume(chartData);
 
                 /// Calculate the price difference
-                double oldestPrice = histo[0].Average;
-                double newestPrice = histo[histo.Count - 1].Average;
+                double oldestPrice = histo.FirstOrDefault()?.Average ?? 0;
+                double newestPrice = histo.LastOrDefault()?.Average ?? 0;
                 vm.PriceCards[i].Info.Prices = (oldestPrice, newestPrice);
 
                 /// Sum total volume from historic

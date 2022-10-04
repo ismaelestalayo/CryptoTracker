@@ -7,17 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Chart"
     xmlns:converters="using:UWP.Converters"
-    mc:Ignorable="d"
-    PointerExited="Chart_PointerExited">
+    PointerExited="Chart_PointerExited"
+    mc:Ignorable="d">
 
     <UserControl.Resources>
         <converters:DateTimeFormatter x:Key="DateFormatter"/>
+        <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+        <converters:BoolToVisibility x:Key="BoolToVisibility"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
         x:Name="Chart"
-        Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"
-        Margin="-5 0 -22 0">
+        Margin="-5 0 -17 0">
 
         <telerik:RadCartesianChart.Behaviors>
             <telerik:ChartTrackBallBehavior
@@ -31,23 +32,34 @@
 
         <telerik:RadCartesianChart.Grid>
             <telerik:CartesianChartGrid
-                MajorYLinesRenderMode="Inner"
-                MajorLinesVisibility="X"/>
+                x:Name="CartesianChartGrid"
+                MajorYLinesRenderMode="InnerAndLast"
+                MajorXLinesRenderMode="Inner"
+                MajorLinesVisibility="None"/>
         </telerik:RadCartesianChart.Grid>
 
         <telerik:RadCartesianChart.HorizontalAxis>
-            <telerik:DateTimeCategoricalAxis
+            <telerik:DateTimeContinuousAxis
                 FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                LabelFormat="{x:Bind ChartModel.LabelFormat}"
-                LabelOffset="1"
-                PlotMode="OnTicks"
-                MajorTickInterval="{x:Bind ChartModel.TickInterval}"/>
+                LabelFormat="{x:Bind ChartModel.ChartStyling.LabelFormat}"
+                MajorTickOffset="1"
+                GapLength="0.98"
+                MaximumTicks="6"
+                PlotMode="OnTicks">
+                <telerik:DateTimeContinuousAxis.LineStyle>
+                    <Style TargetType="Line">
+                        <Setter Property="Stroke" Value="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                    </Style>
+                </telerik:DateTimeContinuousAxis.LineStyle>
+            </telerik:DateTimeContinuousAxis>
         </telerik:RadCartesianChart.HorizontalAxis>
 
         <telerik:RadCartesianChart.VerticalAxis>
             <telerik:LinearAxis
+                x:Name="VerticalAxis"
                 Visibility="Collapsed"
+                LabelOffset="1"
                 Minimum="{x:Bind ChartModel.PricesMinMax.Item1}"
                 Maximum="{x:Bind ChartModel.PricesMinMax.Item2}"/>
         </telerik:RadCartesianChart.VerticalAxis>

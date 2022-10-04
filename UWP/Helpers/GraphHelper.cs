@@ -36,12 +36,14 @@ namespace UWP.Helpers {
             new Dictionary<string, (string, int, int)>() {
                 { "1h",  ("minute",   60, 1) }, // 1 h ----------->   60 mins
                 { "4h",  ("minute",  240, 1) }, // 4 h = 60 * 4 -->  240 mins
-                { "1d",  ("minute", 720, 2) }, // 1 d = 60 * 24 -> 1440 mins (300 * 5)
-                { "3d",  ("hour",     72, 1) }, // 3 d = 24 * 3 -->   72 hours 
+                { "1d",  ("minute", 720, 2) },  // 1 d = 60 * 24 -> 1440 mins (300 * 5)
+                { "3d",  ("hour",     72, 1) }, // 3 d = 24 * 3 -->   72 hours
+                { "4d",  ("hour",     96, 1) }, // 4 d = 24 * 4 -->   96 hours
                 { "1w",  ("hour",    168, 1) }, // 1 w = 24 * 7 -->  168 hours
                 { "1m",  ("hour",    372, 2) }, // 1 m = 24 * 31 ->  744 hours (372 * 2)
                 { "3m",  ("day",      93, 1) }, // 3 m = 31 * 3 -->   93 days
                 { "1y",  ("day",     365, 1) }, // 1 y ----------->  365 days
+                { "2y",  ("day",     730, 1) }, // 1 y ----------->  365 days
                 { "all", ("day",       0, 1) }
             };
 
@@ -52,75 +54,53 @@ namespace UWP.Helpers {
             switch (timeSpan) {
                 case "1h":
                     chartStyle.LabelFormat = "{0:HH:mm}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
-                    chartStyle.MajorStep = 10;
-                    chartStyle.Minimum = DateTime.Now.AddHours(-1);
-                    chartStyle.TickInterval = 13;
+                    chartStyle.GapLength = 0.96;
                     break;
 
                 case "4h":
                     chartStyle.LabelFormat = "{0:HH:mm}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Minute;
-                    chartStyle.MajorStep = 30;
-                    chartStyle.Minimum = DateTime.Now.AddHours(-4);
-                    chartStyle.TickInterval = 45;
+                    chartStyle.GapLength = 0.99;
                     break;
 
                 case "1d":
                     chartStyle.LabelFormat = "{0:HH:mm}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    chartStyle.MajorStep = 3;
-                    chartStyle.Minimum = DateTime.Now.AddDays(-1);
-                    chartStyle.TickInterval = 78;
+                    chartStyle.GapLength = 0.99;
                     break;
 
-                case "3d":
+                case "4d":
                     chartStyle.LabelFormat = "{0:HH:mm}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Hour;
-                    chartStyle.MajorStep = 6;
-                    chartStyle.Minimum = DateTime.Now.AddDays(-3);
-                    chartStyle.TickInterval = 12;
+                    chartStyle.GapLength = 0.98;
+                    break;
+
+                case "1w":
+                    chartStyle.LabelFormat = "{0:ddd d}";
+                    chartStyle.GapLength = 0.985;
                     break;
 
                 default:
-                case "1w":
-                    chartStyle.LabelFormat = "{0:ddd d}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Day;
-                    chartStyle.MajorStep = 1;
-                    chartStyle.Minimum = DateTime.Now.AddDays(-7);
-                    chartStyle.TickInterval = 36;
-                    break;
-
                 case "1m":
                     chartStyle.LabelFormat = "{0:d/M}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
-                    chartStyle.MajorStep = 1;
-                    chartStyle.Minimum = DateTime.Now.AddMonths(-1);
-                    chartStyle.TickInterval = 66;
+                    chartStyle.GapLength = 0.99;
                     break;
 
                 case "3m":
                     chartStyle.LabelFormat = "{0:d/M}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Week;
-                    chartStyle.MajorStep = 1;
-                    chartStyle.Minimum = DateTime.Now.AddMonths(-3);
-                    chartStyle.TickInterval = 20;
+                    chartStyle.GapLength = 0.97;
                     break;
 
                 case "1y":
                     chartStyle.LabelFormat = "{0:MMM}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    chartStyle.MajorStep = 1;
-                    chartStyle.Minimum = DateTime.MinValue;
-                    chartStyle.TickInterval = 62;
+                    chartStyle.GapLength = 0.99;
+                    break;
+
+                case "2y":
+                    chartStyle.LabelFormat = "{0:MMM}";
+                    chartStyle.GapLength = 0.992;
                     break;
 
                 case "all":
-                    chartStyle.LabelFormat = "{0:MMM}";
-                    chartStyle.MajorStepUnit = Telerik.Charting.TimeInterval.Month;
-                    chartStyle.MajorStep = 6;
-                    chartStyle.Minimum = DateTime.MinValue;
-                    chartStyle.TickInterval = 180;
+                    chartStyle.LabelFormat = "{0:yyyy MMM}";
+                    chartStyle.GapLength = 0.992;
                     break;
             }
             return chartStyle;

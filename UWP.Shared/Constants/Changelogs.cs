@@ -8,6 +8,43 @@ namespace UWP.Core.Constants {
     public class Changelogs {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
+            {
+                "6.4.0",
+                new List<string>() {
+                    "General: added 4 days and 2 year time spans in charts",
+                    "Coin details: new optional horizontal and vertical annotations (for purchase dates and alert prices)",
+					"General: bug fixes"
+                }
+            },
+            {
+				"6.3.X",
+				new List<string>() {
+					"General: more custom crypto assetes and colors",
+					"General: bug fixes",
+					"General: improved decimal commas/dots",
+					"Coin details: added total invested values",
+					"Portfolio: auto-refresh each 2 mins",
+					"Settings: new minimal appearance",
+				}
+			},
+			{
+				"6.3.0",
+				new List<string>() {
+					"Purchases: add transaction fees",
+					"Portfolio: new private mode",
+					"Portfolio: new sorting mechanism",
+					"Settings: Windows 11 styled",
+					"Settings: startup task",
+				}
+            },
+			{
+				"6.2.0",
+				new List<string>() {
+					"Coin details: Added sort button",
+					"Coin details: Added 'Buy price' column",
+					"Settings: new layout + close button"
+				}
+			},
 			{
 				"6.1.X",
 				new List<string>() {
@@ -53,8 +90,8 @@ namespace UWP.Core.Constants {
 			}
 		};
 
-		public static readonly List<string> CurrentChangelog = LatestChangelogs[LatestChangelogs.Keys.ToList()[0]];
-		public static readonly List<string> MajorChangelog = LatestChangelogs["6.0.0"];
+		public static readonly List<string> CurrentChangelog = LatestChangelogs[LatestChangelogs.FirstOrDefault().Key];
+		public static readonly List<string> MajorChangelog = LatestChangelogs["6.4.0"];
 
 		public static string FormatChangelog(List<string> changelog) {
 			string message = "";

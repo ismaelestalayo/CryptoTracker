@@ -15,14 +15,14 @@
         Header="{x:Bind Header}"
         PlaceholderText="Search" 
         GotFocus="AutoSuggestBox_GotFocus"
-        HorizontalAlignment="Left"
+        HorizontalAlignment="Stretch"
         LostFocus="AutoSuggestBox_LostFocus"
         TextChanged="AutoSuggestBox_TextChanged"
         SuggestionChosen="AutoSuggestBox_SuggestionChosen"
         QueryIcon="Find"
         QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-        VerticalAlignment="Top"
-        Width="130">
+		UpdateTextOnSelect="False"
+        VerticalAlignment="Top">
         <AutoSuggestBox.ItemTemplate>
             <DataTemplate x:DataType="models:SuggestionCoin">
                 <StackPanel Orientation="Horizontal">

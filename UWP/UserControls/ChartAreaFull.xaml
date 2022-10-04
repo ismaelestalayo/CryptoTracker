@@ -12,15 +12,18 @@
 
     <UserControl.Resources>
         <converters:DateTimeFormatter x:Key="DateFormatter"/>
-        <converters:BrushToColorTr1Converter x:Key="transparent1"/>
-        <converters:BrushToColorTr2Converter x:Key="transparent2"/>
+        <converters:BrushToColorConverter x:Key="BarFill"/>
+        <converters:BrushToColorTransparentConverter Transparency="64" x:Key="Gradient1"/>
+        <converters:BrushToColorTransparentConverter Transparency="16" x:Key="Gradient2"/>
+        <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+        <converters:BoolToVisibility x:Key="BoolToVisibility"/>
 
-        <SolidColorBrush x:Key="Fill1" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}"/>
+        <SolidColorBrush x:Key="Fill1" Opacity="0.25" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource BarFill}}"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
         x:Name="Chart" IsHitTestVisible="{x:Bind IsZoomEnabled}"
-        Margin="-4 0 -24 0">
+        Margin="-5 0 -17 0">
 
         <telerik:RadCartesianChart.Behaviors>
             <telerik:ChartTrackBallBehavior
@@ -33,23 +36,34 @@
 
         <telerik:RadCartesianChart.Grid>
             <telerik:CartesianChartGrid
+                x:Name="CartesianChartGrid"
                 MajorYLinesRenderMode="InnerAndLast"
-                MajorLinesVisibility="Y"/>
+                MajorXLinesRenderMode="Inner"
+                MajorLinesVisibility="None"/>
         </telerik:RadCartesianChart.Grid>
 
         <telerik:RadCartesianChart.HorizontalAxis>
-            <telerik:DateTimeCategoricalAxis
+            <telerik:DateTimeContinuousAxis
                 FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
-                LabelFormat="{x:Bind ChartModel.LabelFormat}"
-                LabelOffset="1"
-                PlotMode="OnTicks"
-                MajorTickInterval="{x:Bind ChartModel.TickInterval}"/>
+                LabelFormat="{x:Bind ChartModel.ChartStyling.LabelFormat}"
+                MajorTickOffset="1"
+                GapLength="{x:Bind ChartModel.ChartStyling.GapLength}"
+                MaximumTicks="6"
+                PlotMode="OnTicks">
+                <telerik:DateTimeContinuousAxis.LineStyle>
+                    <Style TargetType="Line">
+                        <Setter Property="Stroke" Value="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                    </Style>
+                </telerik:DateTimeContinuousAxis.LineStyle>
+            </telerik:DateTimeContinuousAxis>
         </telerik:RadCartesianChart.HorizontalAxis>
 
         <telerik:RadCartesianChart.VerticalAxis>
             <telerik:LinearAxis
+                x:Name="VerticalAxis"
                 Visibility="Collapsed"
+                LabelOffset="1"
                 Minimum="{x:Bind ChartModel.PricesMinMax.Item1}"
                 Maximum="{x:Bind ChartModel.PricesMinMax.Item2}"/>
         </telerik:RadCartesianChart.VerticalAxis>
@@ -61,16 +75,17 @@
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="{StaticResource Fill1}"/>
                         <Setter Property="Opacity" Value="1"/>
+                        <Setter Property="CornerRadius" Value="2"/>
                     </Style>
                 </telerik:BarSeries.DefaultVisualStyle>
                 <telerik:ChartTrackBallBehavior.TrackInfoTemplate>
                     <DataTemplate/>
                 </telerik:ChartTrackBallBehavior.TrackInfoTemplate>
-                
+
                 <telerik:BarSeries.VerticalAxis>
                     <telerik:LinearAxis Visibility="Collapsed" Maximum="{x:Bind ChartModel.VolumeMax}"/>
                 </telerik:BarSeries.VerticalAxis>
-                
+
                 <telerik:BarSeries.CategoryBinding>
                     <telerik:PropertyNameDataPointBinding PropertyName="Date"/>
                 </telerik:BarSeries.CategoryBinding>
@@ -87,8 +102,8 @@
                 StrokeThickness="1">
                 <telerik:AreaSeries.Fill>
                     <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
-                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent1}}" Offset="0.5"/>
-                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource transparent2}}" Offset="1."/>
+                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource Gradient1}}" Offset="0.5"/>
+                        <GradientStop Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource Gradient2}}" Offset="1."/>
                     </LinearGradientBrush>
                 </telerik:AreaSeries.Fill>
 

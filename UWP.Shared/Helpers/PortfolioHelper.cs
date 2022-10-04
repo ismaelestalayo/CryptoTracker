@@ -46,7 +46,7 @@ namespace UWP.Shared.Helpers {
         public async static Task<PurchaseModel> UpdatePurchase(PurchaseModel purchase) {
             string crypto = purchase.Crypto;
 
-            if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 20)
+            if (purchase.Current <= 0 || (DateTime.Now - purchase.LastUpdate).TotalSeconds > 30)
                 purchase.Current = await Ioc.Default.GetService<ICryptoCompare>().GetPrice_Extension(
                     purchase.Crypto, purchase.Currency);
 
@@ -55,7 +55,7 @@ namespace UWP.Shared.Helpers {
 
             /// If the user has also filled the invested quantity, we can calculate everything else
             if (purchase.InvestedQty >= 0) {
-                double priceBought = purchase.InvestedQty / purchase.CryptoQty;
+                double priceBought = (purchase.InvestedQty - purchase.TransactionFee) / purchase.CryptoQty;
                 priceBought = NumberHelper.Rounder(priceBought);
 
                 var diff = Math.Round((curr - priceBought) * purchase.CryptoQty, 4);
@@ -92,6 +92,8 @@ namespace UWP.Shared.Helpers {
                 g.CurrencySymbol = first.CurrencySymbol;
                 g.Current = first.Current;
                 g.InvestedQty = q.Items.Sum(x => x.InvestedQty);
+                g.Date = q.Items.Select(x => x.Date).Max();
+                g.GroupedQty = q.Items.Count();
                 g = await UpdatePurchase(g);
                 grouped.Add(g);
             }
