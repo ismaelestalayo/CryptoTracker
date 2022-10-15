@@ -155,11 +155,11 @@
     <EmbeddedResource Include="Properties\UWP.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>7.1.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Mvvm">
-      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Refit">
       <Version>6.3.2</Version>
