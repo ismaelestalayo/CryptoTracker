@@ -23,11 +23,11 @@ namespace UWP.ViewModels {
         private ChartPoint chartPoint = new ChartPoint();
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(TotalCryptoQty))]
-        [AlsoNotifyChangeFor(nameof(TotalInvested))]
-        [AlsoNotifyChangeFor(nameof(TotalProfit))]
-        [AlsoNotifyChangeFor(nameof(TotalValue))]
-        [AlsoNotifyChangeFor(nameof(TotalAvgPrice))]
+        [NotifyPropertyChangedFor(nameof(TotalCryptoQty))]
+        [NotifyPropertyChangedFor(nameof(TotalInvested))]
+        [NotifyPropertyChangedFor(nameof(TotalProfit))]
+        [NotifyPropertyChangedFor(nameof(TotalValue))]
+        [NotifyPropertyChangedFor(nameof(TotalAvgPrice))]
         private ObservableCollection<PurchaseModel> purchases;
 
         [ObservableProperty]
@@ -43,11 +43,11 @@ namespace UWP.ViewModels {
         /// Last update date to also trigger update on total values
         /// </summary>
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(TotalCryptoQty))]
-        [AlsoNotifyChangeFor(nameof(TotalInvested))]
-        [AlsoNotifyChangeFor(nameof(TotalProfit))]
-        [AlsoNotifyChangeFor(nameof(TotalValue))]
-        [AlsoNotifyChangeFor(nameof(TotalAvgPrice))]
+        [NotifyPropertyChangedFor(nameof(TotalCryptoQty))]
+        [NotifyPropertyChangedFor(nameof(TotalInvested))]
+        [NotifyPropertyChangedFor(nameof(TotalProfit))]
+        [NotifyPropertyChangedFor(nameof(TotalValue))]
+        [NotifyPropertyChangedFor(nameof(TotalAvgPrice))]
         private DateTime lastUpdate;
 
 
