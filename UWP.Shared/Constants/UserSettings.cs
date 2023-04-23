@@ -8,6 +8,7 @@ namespace UWP.Core.Constants {
 		public const string AutoRefresh = "AutoRefresh";
 		public const string ChartShowAlerts = "ChartShowAlerts";
 		public const string ChartShowPurchases = "ChartShowPurchases";
+		public const string ChartShowVerticalAxis = "ChartShowVerticalAxis";
 		public const string CoinListsDate = "CoinListsDate";
 		public const string Currency = "Currency";
 		public const string CurrencySymbol = "CurrencySymbol";
@@ -30,6 +31,7 @@ namespace UWP.Core.Constants {
 			{ BW, false },
 			{ ChartShowAlerts, true },
 			{ ChartShowPurchases, true },
+			{ ChartShowVerticalAxis, true },
 			{ CoinListsDate,  (double)0 },
 			{ Currency, "EUR" },
 			{ CurrencySymbol, "€" },

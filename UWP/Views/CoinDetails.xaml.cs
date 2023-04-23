@@ -46,6 +46,7 @@ namespace UWP.Views {
         private bool newestFirst = true;
         private bool chartShowAlerts = false;
         private bool chartShowPurchases = false;
+        private bool chartShowVerticalAxis = false;
 
         public CoinDetails() {
             InitializeComponent();
@@ -65,6 +66,7 @@ namespace UWP.Views {
             /// Get showPurchases
             chartShowAlerts = App._LocalSettings.Get<bool>(UserSettings.ChartShowAlerts);
             chartShowPurchases = App._LocalSettings.Get<bool>(UserSettings.ChartShowPurchases);
+            chartShowVerticalAxis = App._LocalSettings.Get<bool>(UserSettings.ChartShowVerticalAxis);
 
             /// Get timespan before updating
             timeSpan = App._LocalSettings.Get<string>(UserSettings.Timespan);
@@ -325,13 +327,21 @@ namespace UWP.Views {
         }
 
         private void ShowCandles_Click(object sender, RoutedEventArgs e)
+        // Chart quick settings functions
+        private void ToggleShowCandles_Click(object sender, RoutedEventArgs e)
             => vm.ShowCandles = !vm.ShowCandles;
 
         private void ShowPurchases_Click(object sender, RoutedEventArgs e)
+        private void ToggleShowPurchases_Click(object sender, RoutedEventArgs e)
             => App._LocalSettings.Set<bool>(UserSettings.ChartShowPurchases, chartShowPurchases);
 
         private void ShowAlerts_Click(object sender, RoutedEventArgs e)
+        private void ToggleShowAlerts_Click(object sender, RoutedEventArgs e)
             => App._LocalSettings.Set<bool>(UserSettings.ChartShowAlerts, chartShowAlerts);
+
+        private void ToggleShowVerticalAxis_Click(object sender, RoutedEventArgs e)
+            => App._LocalSettings.Set<bool>(UserSettings.ChartShowVerticalAxis, chartShowVerticalAxis);
+
 
         private async void NewPurchase_click(object sender, RoutedEventArgs e) {
             var dialog = new PortfolioEntryDialog() {

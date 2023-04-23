@@ -1,4 +1,5 @@
 ﻿using System;
+using Telerik.UI.Xaml.Controls.Chart;
 using UWP.Core.Constants;
 using UWP.Shared.Constants;
 using Windows.UI;
@@ -17,6 +18,14 @@ namespace UWP.Converters {
     public class VisibilityInverter : IValueConverter {
         public object Convert(object val, Type targetType, object param, string lang)
             => (Visibility)val == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        public object ConvertBack(object val, Type targetType, object param, string lang)
+            => throw new NotImplementedException();
+    }
+
+    // Converts Visibility value to GridLineVisibility value for showing/hiding strip lines
+    public class VisibilityToStripLinesConverter : IValueConverter {
+        public object Convert(object val, Type targetType, object param, string lang)
+            => (Visibility)val == Visibility.Visible ? GridLineVisibility.Y : GridLineVisibility.None;
         public object ConvertBack(object val, Type targetType, object param, string lang)
             => throw new NotImplementedException();
     }

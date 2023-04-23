@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UWP.Models;
+using UWP.Shared.Helpers;
 
 namespace UWP.Helpers {
     class GraphHelper {
@@ -20,13 +21,24 @@ namespace UWP.Helpers {
             return 4 * historic.Select(x => x.Volume).ToList().DefaultIfEmpty().Max();
         }
 
-        internal static (double Min, double Max) OffsetMinMaxForChart(double min, double max, double offMin = 0.15, double offMax = 0.07) {
+        internal static (double Min, double Max) OffsetMinMaxForChart(double min, double max, double offMin = 0.15, double offMax = 0.05) {
             double diff = max - min;
             min -= (double)(diff * offMin);
             max += (double)(diff * offMax);
-
             min = (min < 0) ? 0 : min;
-            return (min, max);
+
+            if (diff > 1)
+                return (Math.Round(min, 0), Math.Round(max, 0));
+            else if (diff > 0.1)
+                return (Math.Round(min, 1), Math.Round(max, 1));
+            else if (diff > 0.01)
+                return (Math.Round(min, 2), Math.Round(max, 2));
+            else if (diff > 0.001)
+                return (Math.Round(min, 3), Math.Round(max, 3));
+            else if (diff > 0.0001)
+                return (Math.Round(min, 4), Math.Round(max, 4));
+            else
+                return (Math.Round(min, 6), Math.Round(max, 6));
         }
 
         /// <summary>
