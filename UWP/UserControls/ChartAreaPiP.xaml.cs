@@ -5,8 +5,8 @@ using Windows.UI.Xaml.Controls;
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace UWP.UserControls {
-    public sealed partial class ChartArea : UserControl {
-        public ChartArea() {
+    public sealed partial class ChartAreaPiP : UserControl {
+        public ChartAreaPiP() {
             this.InitializeComponent();
         }
 
@@ -14,7 +14,7 @@ namespace UWP.UserControls {
         DependencyProperty.Register(
             nameof(ChartModel),
             typeof(ChartModel),
-            typeof(ChartArea),
+            typeof(ChartAreaPiP),
             null);
 
         public ChartModel ChartModel {

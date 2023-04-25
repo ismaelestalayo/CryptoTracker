@@ -132,8 +132,8 @@
     <Compile Include="UserControls\AlertList.xaml.cs">
       <DependentUpon>AlertList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ChartArea.xaml.cs">
-      <DependentUpon>ChartArea.xaml</DependentUpon>
+    <Compile Include="UserControls\ChartAreaPiP.xaml.cs">
+      <DependentUpon>ChartAreaPiP.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ChartCandles.xaml.cs">
       <DependentUpon>ChartCandles.xaml</DependentUpon>
@@ -417,7 +417,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\ChartArea.xaml">
+    <Page Include="UserControls\ChartAreaPiP.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
