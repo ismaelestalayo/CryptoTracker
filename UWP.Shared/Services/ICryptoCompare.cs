@@ -126,7 +126,19 @@ namespace UWP.Services {
                         historic.RemoveRange(0, i - 1);
                 }
 
-                return historic;
+                // percentage difference threshold for outlier detection
+                var threshold = 10;
+                var filteredHistoric = historic
+                    .Where((h, i) => {
+                        if (i == 0 || i == historic.Count - 1)
+                            return true; // keep first and last prices
+                        var deltaPrev = Math.Abs(h.Average - historic[i - 1].Average) / historic[i - 1].Average;
+                        var deltaNext = Math.Abs(h.Average - historic[i + 1].Average) / historic[i + 1].Average;
+                        return deltaPrev < threshold && deltaNext < threshold;
+                    }).ToList();
+                // if outliers are less than 5%, return filteres list
+                var outlierNum = historic.Count - filteredHistoric.Count;
+                return outlierNum < (int)(historic.Count * 0.05) ? filteredHistoric : historic;
             }
             catch (Exception ex) {
                 var z = ex.Message;
