@@ -326,16 +326,13 @@ namespace UWP.Views {
             UpdatePage();
         }
 
-        private void ShowCandles_Click(object sender, RoutedEventArgs e)
         // Chart quick settings functions
         private void ToggleShowCandles_Click(object sender, RoutedEventArgs e)
             => vm.ShowCandles = !vm.ShowCandles;
 
-        private void ShowPurchases_Click(object sender, RoutedEventArgs e)
         private void ToggleShowPurchases_Click(object sender, RoutedEventArgs e)
             => App._LocalSettings.Set<bool>(UserSettings.ChartShowPurchases, chartShowPurchases);
 
-        private void ShowAlerts_Click(object sender, RoutedEventArgs e)
         private void ToggleShowAlerts_Click(object sender, RoutedEventArgs e)
             => App._LocalSettings.Set<bool>(UserSettings.ChartShowAlerts, chartShowAlerts);
 

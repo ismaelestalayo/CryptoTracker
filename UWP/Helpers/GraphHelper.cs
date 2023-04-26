@@ -27,18 +27,20 @@ namespace UWP.Helpers {
             max += (double)(diff * offMax);
             min = (min < 0) ? 0 : min;
 
-            if (diff > 1)
+            if (diff > 10)
                 return (Math.Round(min, 0), Math.Round(max, 0));
-            else if (diff > 0.1)
+            else if (diff > 1)
                 return (Math.Round(min, 1), Math.Round(max, 1));
-            else if (diff > 0.01)
+            else if (diff > 0.1)
                 return (Math.Round(min, 2), Math.Round(max, 2));
-            else if (diff > 0.001)
+            else if (diff > 0.01)
                 return (Math.Round(min, 3), Math.Round(max, 3));
-            else if (diff > 0.0001)
+            else if (diff > 0.001)
                 return (Math.Round(min, 4), Math.Round(max, 4));
+            else if (diff > 0.0001)
+                return (Math.Round(min, 5), Math.Round(max, 5));
             else
-                return (Math.Round(min, 6), Math.Round(max, 6));
+                return (Math.Round(min, 8), Math.Round(max, 8));
         }
 
         /// <summary>
