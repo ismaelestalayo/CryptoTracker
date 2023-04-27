@@ -399,7 +399,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <userControls:ChartAreaFull
-                ChartModel="{x:Bind vm.Chart}"
+                ChartModel="{x:Bind vm.Chart}" ShowVerticalAxis="True" Margin="0 0 10 0"
                 Opacity="{x:Bind vm.Chart.IsLoading, Converter={StaticResource IsLoadingOpacity}}"/>
 
             <userControls:TimeRangeRadioButtons

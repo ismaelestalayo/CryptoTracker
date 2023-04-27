@@ -383,7 +383,7 @@
                     </controls:Loading>
 
                     <userControls:ChartAreaFull
-                        x:Name="PriceChart" Margin="-20 -15 -20 10"
+                        x:Name="PriceChart" Margin="-20 -15 -15 10"
                         Alerts="{x:Bind vm.Alerts}"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"

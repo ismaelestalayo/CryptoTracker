@@ -24,7 +24,7 @@
 
     <telerik:RadCartesianChart
         x:Name="Chart" IsHitTestVisible="{x:Bind IsZoomEnabled}"
-        Margin="-5 0 -17 0">
+        Margin="-5 0 -10 0">
 
         <telerik:RadCartesianChart.Behaviors>
             <telerik:ChartTrackBallBehavior
@@ -54,8 +54,7 @@
                 FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 LabelFormat="{x:Bind ChartModel.ChartStyling.LabelFormat}"
-                MajorTickOffset="1"
-                LastLabelVisibility="Hidden"
+                MajorTickOffset="1" LastLabelVisibility="Hidden"
                 GapLength="{x:Bind ChartModel.ChartStyling.GapLength}"
                 MaximumTicks="6"
                 PlotMode="OnTicks">
