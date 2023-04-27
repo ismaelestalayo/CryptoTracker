@@ -9,6 +9,13 @@ namespace UWP.Core.Constants {
 
 		public static readonly Dictionary<string, List<string>> LatestChangelogs = new Dictionary<string, List<string>>(){
             {
+                "6.5.0",
+                new List<string>() {
+                    "Coin details: new toggle for vertical axis",
+                    "General: Improved historic chart accuracy by removing outlier data points"
+                }
+            },
+            {
                 "6.4.0",
                 new List<string>() {
                     "General: added 4 days and 2 year time spans in charts",
@@ -91,7 +98,7 @@ namespace UWP.Core.Constants {
 		};
 
 		public static readonly List<string> CurrentChangelog = LatestChangelogs[LatestChangelogs.FirstOrDefault().Key];
-		public static readonly List<string> MajorChangelog = LatestChangelogs["6.4.0"];
+		public static readonly List<string> MajorChangelog = LatestChangelogs["6.5.0"];
 
 		public static string FormatChangelog(List<string> changelog) {
 			string message = "";
