@@ -383,13 +383,14 @@
                     </controls:Loading>
 
                     <userControls:ChartAreaFull
-                        x:Name="PriceChart" Margin="-20 -15 -20 10"
+                        x:Name="PriceChart" Margin="-20 -15 -15 10"
                         Alerts="{x:Bind vm.Alerts}"
                         ChartModel="{x:Bind vm.Chart}"
                         ChartPoint="{x:Bind vm.ChartPoint, Mode=TwoWay}"
                         Purchases="{x:Bind vm.Purchases}"
                         ShowAlerts="{x:Bind ShowAlertsCheckBox.IsChecked}"
                         ShowPurchases="{x:Bind ShowPurchasesCheckBox.IsChecked}"
+                        ShowVerticalAxis="{x:Bind ShowVerticalAxisCheckBox.IsChecked}"
                         Visibility="{x:Bind vm.ShowCandles, Converter={StaticResource BoolVisibilityInverter}}"/>
 
                     <userControls:ChartCandles
@@ -429,17 +430,24 @@
                             <Button.Flyout>
                                 <Flyout>
                                     <StackPanel>
-                                        <CheckBox Content="Candle chart" Click="ShowCandles_Click"/>
+                                        <CheckBox
+                                            Content="Candle chart"
+                                            Click="ToggleShowCandles_Click"/>
                                         <CheckBox
                                             x:Name="ShowAlertsCheckBox"
                                             Content="Show alerts"
-                                            Click="ShowAlerts_Click"
+                                            Click="ToggleShowAlerts_Click"
                                             IsChecked="{x:Bind chartShowAlerts, Mode=TwoWay}"/>
                                         <CheckBox
                                             x:Name="ShowPurchasesCheckBox"
                                             Content="Show purchases"
-                                            Click="ShowPurchases_Click"
+                                            Click="ToggleShowPurchases_Click"
                                             IsChecked="{x:Bind chartShowPurchases, Mode=TwoWay}"/>
+                                        <CheckBox
+                                            x:Name="ShowVerticalAxisCheckBox"
+                                            Content="Show vertical axis"
+                                            Click="ToggleShowVerticalAxis_Click"
+                                            IsChecked="{x:Bind chartShowVerticalAxis, Mode=TwoWay}"/>
                                     </StackPanel>
                                 </Flyout>
                             </Button.Flyout>

@@ -39,6 +39,10 @@ namespace UWP.UserControls {
             nameof(ShowPurchases), typeof(bool),
             typeof(ChartAreaFull), null);
 
+        public static readonly DependencyProperty ShowVerticalAxisProperty = DependencyProperty.Register(
+            nameof(ShowVerticalAxis), typeof(bool),
+            typeof(ChartAreaFull), null);
+
 
         public ChartModel ChartModel {
             get => (ChartModel)GetValue(ChartModelProperty);
@@ -79,6 +83,14 @@ namespace UWP.UserControls {
             set {
                 SetValue(ShowPurchasesProperty, value);
                 DrawAllAnnotations();
+            }
+        }
+
+        public bool? ShowVerticalAxis {
+            get => (bool)GetValue(ShowVerticalAxisProperty);
+            set {
+                SetValue(ShowVerticalAxisProperty, value);
+                VerticalAxis.Visibility = (bool)value ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 

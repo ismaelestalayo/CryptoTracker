@@ -1,4 +1,4 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using Telerik.UI.Xaml.Controls.Chart;
 using UWP.Converters;

@@ -2,7 +2,7 @@
 using CryptoTracker.Helpers;
 using CryptoTracker.Views;
 using Microsoft.AppCenter.Analytics;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

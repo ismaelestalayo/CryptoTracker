@@ -17,13 +17,14 @@
         <converters:BrushToColorTransparentConverter Transparency="16" x:Key="Gradient2"/>
         <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
         <converters:BoolToVisibility x:Key="BoolToVisibility"/>
+        <converters:VisibilityToStripLinesConverter x:Key="VisibilityToStripLinesConverter"/>
 
         <SolidColorBrush x:Key="Fill1" Opacity="0.25" Color="{x:Bind ChartModel.ChartStroke, Converter={StaticResource BarFill}}"/>
     </UserControl.Resources>
 
     <telerik:RadCartesianChart
         x:Name="Chart" IsHitTestVisible="{x:Bind IsZoomEnabled}"
-        Margin="-5 0 -17 0">
+        Margin="-5 0 -10 0">
 
         <telerik:RadCartesianChart.Behaviors>
             <telerik:ChartTrackBallBehavior
@@ -37,9 +38,15 @@
         <telerik:RadCartesianChart.Grid>
             <telerik:CartesianChartGrid
                 x:Name="CartesianChartGrid"
-                MajorYLinesRenderMode="InnerAndLast"
-                MajorXLinesRenderMode="Inner"
-                MajorLinesVisibility="None"/>
+                StripLinesVisibility="{x:Bind VerticalAxis.Visibility, Converter={StaticResource VisibilityToStripLinesConverter}}"
+                MajorLinesVisibility="None">
+                <telerik:CartesianChartGrid.MajorYLineStyle>
+                    <Style TargetType="Line">
+                        <Setter Property="Stroke" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
+                        <Setter Property="Opacity" Value="0.3"/>
+                    </Style>
+                </telerik:CartesianChartGrid.MajorYLineStyle>
+            </telerik:CartesianChartGrid>
         </telerik:RadCartesianChart.Grid>
 
         <telerik:RadCartesianChart.HorizontalAxis>
@@ -47,7 +54,7 @@
                 FontWeight="Light" FontFamily="Segoe UI" FontSize="12"
                 Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 LabelFormat="{x:Bind ChartModel.ChartStyling.LabelFormat}"
-                MajorTickOffset="1"
+                MajorTickOffset="1" LastLabelVisibility="Hidden"
                 GapLength="{x:Bind ChartModel.ChartStyling.GapLength}"
                 MaximumTicks="6"
                 PlotMode="OnTicks">
@@ -63,9 +70,22 @@
             <telerik:LinearAxis
                 x:Name="VerticalAxis"
                 Visibility="Collapsed"
-                LabelOffset="1"
+                DesiredTickCount="5"
+                FontFamily="Consolas"
+                FontSize="12"
+                Margin="5 0"
                 Minimum="{x:Bind ChartModel.PricesMinMax.Item1}"
-                Maximum="{x:Bind ChartModel.PricesMinMax.Item2}"/>
+                Maximum="{x:Bind ChartModel.PricesMinMax.Item2}">
+                <telerik:LinearAxis.MajorTickTemplate>
+                    <DataTemplate/>
+                </telerik:LinearAxis.MajorTickTemplate>
+                <telerik:LinearAxis.LineStyle>
+                    <Style TargetType="Line">
+                        <Setter Property="Stroke" Value="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                        <Setter Property="Margin" Value="-5 0"/>
+                    </Style>
+                </telerik:LinearAxis.LineStyle>
+            </telerik:LinearAxis>
         </telerik:RadCartesianChart.VerticalAxis>
 
         <telerik:RadCartesianChart.Series>
